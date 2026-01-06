@@ -1,0 +1,47 @@
+# Proj03_freefly_api_uart
+# 2025-09-05 23:30:44Z
+
+# IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 0
+# IO_1@[IOP=(1)][IoId=(1)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 1
+# IO_3@[IOP=(1)][IoId=(3)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 3
+set_location "ClockBlock" clockblockcell -1 -1 0
+set_io "Rx_1(0)" iocell 12 6
+set_io "Tx_1(0)" iocell 12 7
+set_io "SW1(0)" iocell 2 2
+set_io "SW1_debounced(0)" iocell 2 1
+set_location "Net_64" 1 1 1 3
+set_location "\UART:BUART:counter_load_not\" 1 2 1 3
+set_location "\UART:BUART:tx_status_0\" 0 1 1 3
+set_location "\UART:BUART:tx_status_2\" 1 1 1 2
+set_location "\UART:BUART:rx_counter_load\" 1 2 0 2
+set_location "\UART:BUART:rx_postpoll\" 0 1 0 2
+set_location "\UART:BUART:rx_status_4\" 0 2 0 1
+set_location "\UART:BUART:rx_status_5\" 0 0 0 1
+set_location "Net_101" 0 1 1 1
+set_location "\UART:BUART:sTX:TxShifter:u0\" 1 0 2
+set_location "\UART:BUART:sTX:sCLOCK:TxBitClkGen\" 1 2 2
+set_location "\UART:BUART:sTX:TxSts\" 1 1 4
+set_location "\UART:BUART:sRX:RxShifter:u0\" 0 2 2
+set_location "\UART:BUART:sRX:RxBitCounter\" 0 2 7
+set_location "\UART:BUART:sRX:RxSts\" 0 0 4
+set_location "isr_rx" interrupt -1 -1 0
+set_location "\UART:BUART:txn\" 1 1 0 0
+set_location "\UART:BUART:tx_state_1\" 1 1 0 1
+set_location "\UART:BUART:tx_state_0\" 1 1 1 0
+set_location "\UART:BUART:tx_state_2\" 1 0 0 0
+set_location "\UART:BUART:tx_bitclk\" 1 0 1 3
+set_location "\UART:BUART:tx_ctrl_mark_last\" 1 2 0 1
+set_location "\UART:BUART:rx_state_0\" 0 2 1 0
+set_location "\UART:BUART:rx_load_fifo\" 0 2 1 3
+set_location "\UART:BUART:rx_state_3\" 0 2 1 2
+set_location "\UART:BUART:rx_state_2\" 0 1 0 0
+set_location "\UART:BUART:rx_bitclk_enable\" 0 2 0 3
+set_location "\UART:BUART:rx_state_stop1_reg\" 1 0 1 1
+set_location "\UART:BUART:pollcount_1\" 0 0 1 0
+set_location "\UART:BUART:pollcount_0\" 0 0 0 3
+set_location "\UART:BUART:rx_status_3\" 0 0 0 0
+set_location "\UART:BUART:rx_last\" 0 0 1 3
+set_location "Net_71" 0 1 1 0

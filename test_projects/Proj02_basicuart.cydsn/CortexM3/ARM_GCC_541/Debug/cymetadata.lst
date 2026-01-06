@@ -1,0 +1,1498 @@
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"cymetadata.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	cy_metadata
+  20              		.global	cy_meta_flashprotect
+  21              		.global	cy_meta_wonvl
+  22              		.global	cy_meta_custnvl
+  23              		.global	cy_meta_configecc
+  24              		.section	.cyconfigecc,"a",%progbits
+  25              		.align	2
+  26              		.type	cy_meta_configecc, %object
+  27              		.size	cy_meta_configecc, 964
+  28              	cy_meta_configecc:
+  29 0000 01       		.byte	1
+  30 0001 64       		.byte	100
+  31 0002 00       		.byte	0
+  32 0003 40       		.byte	64
+  33 0004 02       		.byte	2
+  34 0005 65       		.byte	101
+  35 0006 00       		.byte	0
+  36 0007 40       		.byte	64
+  37 0008 56       		.byte	86
+  38 0009 08       		.byte	8
+  39 000a 01       		.byte	1
+  40 000b 40       		.byte	64
+  41 000c 36       		.byte	54
+  42 000d 09       		.byte	9
+  43 000e 01       		.byte	1
+  44 000f 40       		.byte	64
+  45 0010 02       		.byte	2
+  46 0011 0B       		.byte	11
+  47 0012 01       		.byte	1
+  48 0013 40       		.byte	64
+  49 0014 3F       		.byte	63
+  50 0015 18       		.byte	24
+  51 0016 01       		.byte	1
+  52 0017 40       		.byte	64
+  53 0018 39       		.byte	57
+  54 0019 19       		.byte	25
+  55 001a 01       		.byte	1
+  56 001b 40       		.byte	64
+  57 001c 52       		.byte	82
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 2
+
+
+  58 001d 1A       		.byte	26
+  59 001e 01       		.byte	1
+  60 001f 40       		.byte	64
+  61 0020 44       		.byte	68
+  62 0021 1B       		.byte	27
+  63 0022 01       		.byte	1
+  64 0023 40       		.byte	64
+  65 0024 02       		.byte	2
+  66 0025 45       		.byte	69
+  67 0026 01       		.byte	1
+  68 0027 40       		.byte	64
+  69 0028 02       		.byte	2
+  70 0029 46       		.byte	70
+  71 002a 01       		.byte	1
+  72 002b 40       		.byte	64
+  73 002c 01       		.byte	1
+  74 002d 47       		.byte	71
+  75 002e 01       		.byte	1
+  76 002f 40       		.byte	64
+  77 0030 01       		.byte	1
+  78 0031 4C       		.byte	76
+  79 0032 01       		.byte	1
+  80 0033 40       		.byte	64
+  81 0034 07       		.byte	7
+  82 0035 4D       		.byte	77
+  83 0036 01       		.byte	1
+  84 0037 40       		.byte	64
+  85 0038 04       		.byte	4
+  86 0039 50       		.byte	80
+  87 003a 01       		.byte	1
+  88 003b 40       		.byte	64
+  89 003c 88       		.byte	-120
+  90 003d 0F       		.byte	15
+  91 003e 89       		.byte	-119
+  92 003f 72       		.byte	114
+  93 0040 8B       		.byte	-117
+  94 0041 38       		.byte	56
+  95 0042 00       		.byte	0
+  96 0043 10       		.byte	16
+  97 0044 02       		.byte	2
+  98 0045 40       		.byte	64
+  99 0046 04       		.byte	4
+ 100 0047 0C       		.byte	12
+ 101 0048 06       		.byte	6
+ 102 0049 71       		.byte	113
+ 103 004a 0A       		.byte	10
+ 104 004b 20       		.byte	32
+ 105 004c 0C       		.byte	12
+ 106 004d 09       		.byte	9
+ 107 004e 0D       		.byte	13
+ 108 004f 03       		.byte	3
+ 109 0050 0E       		.byte	14
+ 110 0051 D0       		.byte	-48
+ 111 0052 0F       		.byte	15
+ 112 0053 04       		.byte	4
+ 113 0054 13       		.byte	19
+ 114 0055 C8       		.byte	-56
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 3
+
+
+ 115 0056 16       		.byte	22
+ 116 0057 03       		.byte	3
+ 117 0058 19       		.byte	25
+ 118 0059 13       		.byte	19
+ 119 005a 1B       		.byte	27
+ 120 005b 6C       		.byte	108
+ 121 005c 1C       		.byte	28
+ 122 005d 14       		.byte	20
+ 123 005e 1D       		.byte	29
+ 124 005f CA       		.byte	-54
+ 125 0060 1F       		.byte	31
+ 126 0061 34       		.byte	52
+ 127 0062 25       		.byte	37
+ 128 0063 13       		.byte	19
+ 129 0064 27       		.byte	39
+ 130 0065 E4       		.byte	-28
+ 131 0066 28       		.byte	40
+ 132 0067 10       		.byte	16
+ 133 0068 2A       		.byte	42
+ 134 0069 AC       		.byte	-84
+ 135 006a 2B       		.byte	43
+ 136 006b 35       		.byte	53
+ 137 006c 2C       		.byte	44
+ 138 006d DC       		.byte	-36
+ 139 006e 2E       		.byte	46
+ 140 006f 22       		.byte	34
+ 141 0070 2F       		.byte	47
+ 142 0071 80       		.byte	-128
+ 143 0072 31       		.byte	49
+ 144 0073 F0       		.byte	-16
+ 145 0074 32       		.byte	50
+ 146 0075 1F       		.byte	31
+ 147 0076 33       		.byte	51
+ 148 0077 0F       		.byte	15
+ 149 0078 34       		.byte	52
+ 150 0079 E0       		.byte	-32
+ 151 007a 3A       		.byte	58
+ 152 007b 20       		.byte	32
+ 153 007c 3B       		.byte	59
+ 154 007d 0A       		.byte	10
+ 155 007e 40       		.byte	64
+ 156 007f 36       		.byte	54
+ 157 0080 41       		.byte	65
+ 158 0081 02       		.byte	2
+ 159 0082 46       		.byte	70
+ 160 0083 CC       		.byte	-52
+ 161 0084 47       		.byte	71
+ 162 0085 BE       		.byte	-66
+ 163 0086 48       		.byte	72
+ 164 0087 3C       		.byte	60
+ 165 0088 49       		.byte	73
+ 166 0089 FF       		.byte	-1
+ 167 008a 4A       		.byte	74
+ 168 008b FF       		.byte	-1
+ 169 008c 4B       		.byte	75
+ 170 008d FF       		.byte	-1
+ 171 008e 4E       		.byte	78
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 4
+
+
+ 172 008f F0       		.byte	-16
+ 173 0090 4F       		.byte	79
+ 174 0091 44       		.byte	68
+ 175 0092 50       		.byte	80
+ 176 0093 0C       		.byte	12
+ 177 0094 54       		.byte	84
+ 178 0095 01       		.byte	1
+ 179 0096 58       		.byte	88
+ 180 0097 04       		.byte	4
+ 181 0098 59       		.byte	89
+ 182 0099 04       		.byte	4
+ 183 009a 5A       		.byte	90
+ 184 009b 04       		.byte	4
+ 185 009c 5B       		.byte	91
+ 186 009d 04       		.byte	4
+ 187 009e 5F       		.byte	95
+ 188 009f 01       		.byte	1
+ 189 00a0 66       		.byte	102
+ 190 00a1 C0       		.byte	-64
+ 191 00a2 6A       		.byte	106
+ 192 00a3 40       		.byte	64
+ 193 00a4 6B       		.byte	107
+ 194 00a5 02       		.byte	2
+ 195 00a6 86       		.byte	-122
+ 196 00a7 03       		.byte	3
+ 197 00a8 8C       		.byte	-116
+ 198 00a9 04       		.byte	4
+ 199 00aa 8E       		.byte	-114
+ 200 00ab 08       		.byte	8
+ 201 00ac 95       		.byte	-107
+ 202 00ad 01       		.byte	1
+ 203 00ae 96       		.byte	-106
+ 204 00af 04       		.byte	4
+ 205 00b0 9A       		.byte	-102
+ 206 00b1 01       		.byte	1
+ 207 00b2 9C       		.byte	-100
+ 208 00b3 02       		.byte	2
+ 209 00b4 A7       		.byte	-89
+ 210 00b5 02       		.byte	2
+ 211 00b6 AA       		.byte	-86
+ 212 00b7 10       		.byte	16
+ 213 00b8 B0       		.byte	-80
+ 214 00b9 04       		.byte	4
+ 215 00ba B1       		.byte	-79
+ 216 00bb 02       		.byte	2
+ 217 00bc B2       		.byte	-78
+ 218 00bd 08       		.byte	8
+ 219 00be B3       		.byte	-77
+ 220 00bf 01       		.byte	1
+ 221 00c0 B4       		.byte	-76
+ 222 00c1 03       		.byte	3
+ 223 00c2 B6       		.byte	-74
+ 224 00c3 10       		.byte	16
+ 225 00c4 BF       		.byte	-65
+ 226 00c5 04       		.byte	4
+ 227 00c6 C0       		.byte	-64
+ 228 00c7 03       		.byte	3
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 5
+
+
+ 229 00c8 C7       		.byte	-57
+ 230 00c9 40       		.byte	64
+ 231 00ca C9       		.byte	-55
+ 232 00cb FF       		.byte	-1
+ 233 00cc CA       		.byte	-54
+ 234 00cd 07       		.byte	7
+ 235 00ce CB       		.byte	-53
+ 236 00cf FF       		.byte	-1
+ 237 00d0 CC       		.byte	-52
+ 238 00d1 40       		.byte	64
+ 239 00d2 CD       		.byte	-51
+ 240 00d3 20       		.byte	32
+ 241 00d4 CE       		.byte	-50
+ 242 00d5 F0       		.byte	-16
+ 243 00d6 CF       		.byte	-49
+ 244 00d7 05       		.byte	5
+ 245 00d8 D0       		.byte	-48
+ 246 00d9 08       		.byte	8
+ 247 00da D8       		.byte	-40
+ 248 00db 04       		.byte	4
+ 249 00dc D9       		.byte	-39
+ 250 00dd 04       		.byte	4
+ 251 00de DA       		.byte	-38
+ 252 00df 04       		.byte	4
+ 253 00e0 DB       		.byte	-37
+ 254 00e1 04       		.byte	4
+ 255 00e2 DC       		.byte	-36
+ 256 00e3 01       		.byte	1
+ 257 00e4 DF       		.byte	-33
+ 258 00e5 01       		.byte	1
+ 259 00e6 E0       		.byte	-32
+ 260 00e7 40       		.byte	64
+ 261 00e8 E1       		.byte	-31
+ 262 00e9 A8       		.byte	-88
+ 263 00ea E2       		.byte	-30
+ 264 00eb 40       		.byte	64
+ 265 00ec E3       		.byte	-29
+ 266 00ed 20       		.byte	32
+ 267 00ee 01       		.byte	1
+ 268 00ef 80       		.byte	-128
+ 269 00f0 02       		.byte	2
+ 270 00f1 20       		.byte	32
+ 271 00f2 04       		.byte	4
+ 272 00f3 06       		.byte	6
+ 273 00f4 05       		.byte	5
+ 274 00f5 20       		.byte	32
+ 275 00f6 07       		.byte	7
+ 276 00f7 01       		.byte	1
+ 277 00f8 0A       		.byte	10
+ 278 00f9 26       		.byte	38
+ 279 00fa 0E       		.byte	14
+ 280 00fb 10       		.byte	16
+ 281 00fc 0F       		.byte	15
+ 282 00fd 02       		.byte	2
+ 283 00fe 10       		.byte	16
+ 284 00ff 04       		.byte	4
+ 285 0100 17       		.byte	23
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 6
+
+
+ 286 0101 50       		.byte	80
+ 287 0102 19       		.byte	25
+ 288 0103 90       		.byte	-112
+ 289 0104 1A       		.byte	26
+ 290 0105 24       		.byte	36
+ 291 0106 1B       		.byte	27
+ 292 0107 02       		.byte	2
+ 293 0108 1C       		.byte	28
+ 294 0109 04       		.byte	4
+ 295 010a 1D       		.byte	29
+ 296 010b 20       		.byte	32
+ 297 010c 1E       		.byte	30
+ 298 010d 10       		.byte	16
+ 299 010e 1F       		.byte	31
+ 300 010f 18       		.byte	24
+ 301 0110 21       		.byte	33
+ 302 0111 02       		.byte	2
+ 303 0112 22       		.byte	34
+ 304 0113 08       		.byte	8
+ 305 0114 25       		.byte	37
+ 306 0115 08       		.byte	8
+ 307 0116 27       		.byte	39
+ 308 0117 50       		.byte	80
+ 309 0118 28       		.byte	40
+ 310 0119 20       		.byte	32
+ 311 011a 2F       		.byte	47
+ 312 011b 15       		.byte	21
+ 313 011c 33       		.byte	51
+ 314 011d 08       		.byte	8
+ 315 011e 36       		.byte	54
+ 316 011f 01       		.byte	1
+ 317 0120 37       		.byte	55
+ 318 0121 51       		.byte	81
+ 319 0122 3F       		.byte	63
+ 320 0123 80       		.byte	-128
+ 321 0124 43       		.byte	67
+ 322 0125 04       		.byte	4
+ 323 0126 45       		.byte	69
+ 324 0127 28       		.byte	40
+ 325 0128 4B       		.byte	75
+ 326 0129 08       		.byte	8
+ 327 012a 4D       		.byte	77
+ 328 012b 20       		.byte	32
+ 329 012c 50       		.byte	80
+ 330 012d 01       		.byte	1
+ 331 012e 53       		.byte	83
+ 332 012f 01       		.byte	1
+ 333 0130 56       		.byte	86
+ 334 0131 08       		.byte	8
+ 335 0132 57       		.byte	87
+ 336 0133 51       		.byte	81
+ 337 0134 59       		.byte	89
+ 338 0135 10       		.byte	16
+ 339 0136 5A       		.byte	90
+ 340 0137 88       		.byte	-120
+ 341 0138 5E       		.byte	94
+ 342 0139 88       		.byte	-120
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 7
+
+
+ 343 013a 5F       		.byte	95
+ 344 013b 12       		.byte	18
+ 345 013c 63       		.byte	99
+ 346 013d 30       		.byte	48
+ 347 013e 65       		.byte	101
+ 348 013f 20       		.byte	32
+ 349 0140 67       		.byte	103
+ 350 0141 08       		.byte	8
+ 351 0142 86       		.byte	-122
+ 352 0143 08       		.byte	8
+ 353 0144 98       		.byte	-104
+ 354 0145 04       		.byte	4
+ 355 0146 C0       		.byte	-64
+ 356 0147 F5       		.byte	-11
+ 357 0148 C2       		.byte	-62
+ 358 0149 A7       		.byte	-89
+ 359 014a C4       		.byte	-60
+ 360 014b C2       		.byte	-62
+ 361 014c CA       		.byte	-54
+ 362 014d 72       		.byte	114
+ 363 014e CC       		.byte	-52
+ 364 014f B2       		.byte	-78
+ 365 0150 CE       		.byte	-50
+ 366 0151 10       		.byte	16
+ 367 0152 D0       		.byte	-48
+ 368 0153 62       		.byte	98
+ 369 0154 D2       		.byte	-46
+ 370 0155 20       		.byte	32
+ 371 0156 D6       		.byte	-42
+ 372 0157 FE       		.byte	-2
+ 373 0158 E0       		.byte	-32
+ 374 0159 08       		.byte	8
+ 375 015a 98       		.byte	-104
+ 376 015b 04       		.byte	4
+ 377 015c B0       		.byte	-80
+ 378 015d 04       		.byte	4
+ 379 015e 01       		.byte	1
+ 380 015f 05       		.byte	5
+ 381 0160 03       		.byte	3
+ 382 0161 02       		.byte	2
+ 383 0162 05       		.byte	5
+ 384 0163 03       		.byte	3
+ 385 0164 09       		.byte	9
+ 386 0165 03       		.byte	3
+ 387 0166 0D       		.byte	13
+ 388 0167 0C       		.byte	12
+ 389 0168 11       		.byte	17
+ 390 0169 0A       		.byte	10
+ 391 016a 13       		.byte	19
+ 392 016b 01       		.byte	1
+ 393 016c 15       		.byte	21
+ 394 016d 0C       		.byte	12
+ 395 016e 1B       		.byte	27
+ 396 016f 0C       		.byte	12
+ 397 0170 23       		.byte	35
+ 398 0171 0C       		.byte	12
+ 399 0172 25       		.byte	37
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 8
+
+
+ 400 0173 0C       		.byte	12
+ 401 0174 28       		.byte	40
+ 402 0175 01       		.byte	1
+ 403 0176 2B       		.byte	43
+ 404 0177 0C       		.byte	12
+ 405 0178 31       		.byte	49
+ 406 0179 03       		.byte	3
+ 407 017a 34       		.byte	52
+ 408 017b 01       		.byte	1
+ 409 017c 35       		.byte	53
+ 410 017d 0C       		.byte	12
+ 411 017e 3E       		.byte	62
+ 412 017f 10       		.byte	16
+ 413 0180 58       		.byte	88
+ 414 0181 04       		.byte	4
+ 415 0182 59       		.byte	89
+ 416 0183 04       		.byte	4
+ 417 0184 5F       		.byte	95
+ 418 0185 01       		.byte	1
+ 419 0186 81       		.byte	-127
+ 420 0187 04       		.byte	4
+ 421 0188 82       		.byte	-126
+ 422 0189 23       		.byte	35
+ 423 018a 84       		.byte	-124
+ 424 018b 3F       		.byte	63
+ 425 018c 85       		.byte	-123
+ 426 018d 18       		.byte	24
+ 427 018e 88       		.byte	-120
+ 428 018f 1F       		.byte	31
+ 429 0190 89       		.byte	-119
+ 430 0191 08       		.byte	8
+ 431 0192 8A       		.byte	-118
+ 432 0193 20       		.byte	32
+ 433 0194 8C       		.byte	-116
+ 434 0195 03       		.byte	3
+ 435 0196 90       		.byte	-112
+ 436 0197 33       		.byte	51
+ 437 0198 92       		.byte	-110
+ 438 0199 0C       		.byte	12
+ 439 019a 93       		.byte	-109
+ 440 019b 04       		.byte	4
+ 441 019c 94       		.byte	-108
+ 442 019d 1C       		.byte	28
+ 443 019e 95       		.byte	-107
+ 444 019f 3C       		.byte	60
+ 445 01a0 96       		.byte	-106
+ 446 01a1 23       		.byte	35
+ 447 01a2 97       		.byte	-105
+ 448 01a3 42       		.byte	66
+ 449 01a4 98       		.byte	-104
+ 450 01a5 01       		.byte	1
+ 451 01a6 99       		.byte	-103
+ 452 01a7 7F       		.byte	127
+ 453 01a8 9D       		.byte	-99
+ 454 01a9 10       		.byte	16
+ 455 01aa A0       		.byte	-96
+ 456 01ab 08       		.byte	8
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 9
+
+
+ 457 01ac A3       		.byte	-93
+ 458 01ad 23       		.byte	35
+ 459 01ae A4       		.byte	-92
+ 460 01af 04       		.byte	4
+ 461 01b0 A8       		.byte	-88
+ 462 01b1 0C       		.byte	12
+ 463 01b2 A9       		.byte	-87
+ 464 01b3 1C       		.byte	28
+ 465 01b4 AB       		.byte	-85
+ 466 01b5 61       		.byte	97
+ 467 01b6 AC       		.byte	-84
+ 468 01b7 02       		.byte	2
+ 469 01b8 AD       		.byte	-83
+ 470 01b9 67       		.byte	103
+ 471 01ba AF       		.byte	-81
+ 472 01bb 18       		.byte	24
+ 473 01bc B0       		.byte	-80
+ 474 01bd 0F       		.byte	15
+ 475 01be B1       		.byte	-79
+ 476 01bf 38       		.byte	56
+ 477 01c0 B2       		.byte	-78
+ 478 01c1 2C       		.byte	44
+ 479 01c2 B3       		.byte	-77
+ 480 01c3 1F       		.byte	31
+ 481 01c4 B6       		.byte	-74
+ 482 01c5 10       		.byte	16
+ 483 01c6 B7       		.byte	-73
+ 484 01c7 40       		.byte	64
+ 485 01c8 B9       		.byte	-71
+ 486 01c9 80       		.byte	-128
+ 487 01ca BA       		.byte	-70
+ 488 01cb 2A       		.byte	42
+ 489 01cc BB       		.byte	-69
+ 490 01cd 08       		.byte	8
+ 491 01ce BE       		.byte	-66
+ 492 01cf 40       		.byte	64
+ 493 01d0 D6       		.byte	-42
+ 494 01d1 02       		.byte	2
+ 495 01d2 D7       		.byte	-41
+ 496 01d3 10       		.byte	16
+ 497 01d4 D8       		.byte	-40
+ 498 01d5 04       		.byte	4
+ 499 01d6 D9       		.byte	-39
+ 500 01d7 04       		.byte	4
+ 501 01d8 DB       		.byte	-37
+ 502 01d9 04       		.byte	4
+ 503 01da DF       		.byte	-33
+ 504 01db 01       		.byte	1
+ 505 01dc 00       		.byte	0
+ 506 01dd 44       		.byte	68
+ 507 01de 03       		.byte	3
+ 508 01df 98       		.byte	-104
+ 509 01e0 08       		.byte	8
+ 510 01e1 20       		.byte	32
+ 511 01e2 09       		.byte	9
+ 512 01e3 08       		.byte	8
+ 513 01e4 0A       		.byte	10
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 10
+
+
+ 514 01e5 40       		.byte	64
+ 515 01e6 10       		.byte	16
+ 516 01e7 80       		.byte	-128
+ 517 01e8 12       		.byte	18
+ 518 01e9 02       		.byte	2
+ 519 01ea 13       		.byte	19
+ 520 01eb 14       		.byte	20
+ 521 01ec 16       		.byte	22
+ 522 01ed 08       		.byte	8
+ 523 01ee 18       		.byte	24
+ 524 01ef 04       		.byte	4
+ 525 01f0 19       		.byte	25
+ 526 01f1 40       		.byte	64
+ 527 01f2 1A       		.byte	26
+ 528 01f3 40       		.byte	64
+ 529 01f4 1B       		.byte	27
+ 530 01f5 29       		.byte	41
+ 531 01f6 1E       		.byte	30
+ 532 01f7 08       		.byte	8
+ 533 01f8 21       		.byte	33
+ 534 01f9 08       		.byte	8
+ 535 01fa 22       		.byte	34
+ 536 01fb 80       		.byte	-128
+ 537 01fc 23       		.byte	35
+ 538 01fd 60       		.byte	96
+ 539 01fe 25       		.byte	37
+ 540 01ff 11       		.byte	17
+ 541 0200 26       		.byte	38
+ 542 0201 02       		.byte	2
+ 543 0202 2B       		.byte	43
+ 544 0203 89       		.byte	-119
+ 545 0204 2F       		.byte	47
+ 546 0205 A8       		.byte	-88
+ 547 0206 30       		.byte	48
+ 548 0207 80       		.byte	-128
+ 549 0208 31       		.byte	49
+ 550 0209 0A       		.byte	10
+ 551 020a 33       		.byte	51
+ 552 020b 10       		.byte	16
+ 553 020c 36       		.byte	54
+ 554 020d 0A       		.byte	10
+ 555 020e 37       		.byte	55
+ 556 020f 20       		.byte	32
+ 557 0210 38       		.byte	56
+ 558 0211 28       		.byte	40
+ 559 0212 3A       		.byte	58
+ 560 0213 02       		.byte	2
+ 561 0214 3C       		.byte	60
+ 562 0215 40       		.byte	64
+ 563 0216 3D       		.byte	61
+ 564 0217 14       		.byte	20
+ 565 0218 3E       		.byte	62
+ 566 0219 02       		.byte	2
+ 567 021a 59       		.byte	89
+ 568 021b 40       		.byte	64
+ 569 021c 69       		.byte	105
+ 570 021d 54       		.byte	84
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 11
+
+
+ 571 021e 70       		.byte	112
+ 572 021f 94       		.byte	-108
+ 573 0220 73       		.byte	115
+ 574 0221 14       		.byte	20
+ 575 0222 8E       		.byte	-114
+ 576 0223 48       		.byte	72
+ 577 0224 93       		.byte	-109
+ 578 0225 28       		.byte	40
+ 579 0226 96       		.byte	-106
+ 580 0227 8A       		.byte	-118
+ 581 0228 98       		.byte	-104
+ 582 0229 01       		.byte	1
+ 583 022a 9A       		.byte	-102
+ 584 022b 08       		.byte	8
+ 585 022c 9B       		.byte	-101
+ 586 022d 40       		.byte	64
+ 587 022e 9C       		.byte	-100
+ 588 022f 20       		.byte	32
+ 589 0230 9F       		.byte	-97
+ 590 0231 04       		.byte	4
+ 591 0232 A1       		.byte	-95
+ 592 0233 02       		.byte	2
+ 593 0234 A3       		.byte	-93
+ 594 0235 42       		.byte	66
+ 595 0236 A6       		.byte	-90
+ 596 0237 65       		.byte	101
+ 597 0238 AA       		.byte	-86
+ 598 0239 08       		.byte	8
+ 599 023a AB       		.byte	-85
+ 600 023b 02       		.byte	2
+ 601 023c B0       		.byte	-80
+ 602 023d 01       		.byte	1
+ 603 023e B1       		.byte	-79
+ 604 023f 08       		.byte	8
+ 605 0240 C0       		.byte	-64
+ 606 0241 0F       		.byte	15
+ 607 0242 C2       		.byte	-62
+ 608 0243 0E       		.byte	14
+ 609 0244 C4       		.byte	-60
+ 610 0245 4F       		.byte	79
+ 611 0246 CA       		.byte	-54
+ 612 0247 ED       		.byte	-19
+ 613 0248 CC       		.byte	-52
+ 614 0249 EF       		.byte	-17
+ 615 024a CE       		.byte	-50
+ 616 024b F7       		.byte	-9
+ 617 024c D6       		.byte	-42
+ 618 024d 08       		.byte	8
+ 619 024e 01       		.byte	1
+ 620 024f 27       		.byte	39
+ 621 0250 02       		.byte	2
+ 622 0251 02       		.byte	2
+ 623 0252 03       		.byte	3
+ 624 0253 D8       		.byte	-40
+ 625 0254 0B       		.byte	11
+ 626 0255 40       		.byte	64
+ 627 0256 0F       		.byte	15
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 12
+
+
+ 628 0257 10       		.byte	16
+ 629 0258 19       		.byte	25
+ 630 0259 A9       		.byte	-87
+ 631 025a 1B       		.byte	27
+ 632 025b 16       		.byte	22
+ 633 025c 22       		.byte	34
+ 634 025d 02       		.byte	2
+ 635 025e 24       		.byte	36
+ 636 025f 01       		.byte	1
+ 637 0260 28       		.byte	40
+ 638 0261 01       		.byte	1
+ 639 0262 2C       		.byte	44
+ 640 0263 01       		.byte	1
+ 641 0264 2D       		.byte	45
+ 642 0265 0A       		.byte	10
+ 643 0266 2F       		.byte	47
+ 644 0267 05       		.byte	5
+ 645 0268 31       		.byte	49
+ 646 0269 0C       		.byte	12
+ 647 026a 33       		.byte	51
+ 648 026b C0       		.byte	-64
+ 649 026c 34       		.byte	52
+ 650 026d 02       		.byte	2
+ 651 026e 35       		.byte	53
+ 652 026f 03       		.byte	3
+ 653 0270 36       		.byte	54
+ 654 0271 01       		.byte	1
+ 655 0272 37       		.byte	55
+ 656 0273 30       		.byte	48
+ 657 0274 3E       		.byte	62
+ 658 0275 10       		.byte	16
+ 659 0276 58       		.byte	88
+ 660 0277 04       		.byte	4
+ 661 0278 59       		.byte	89
+ 662 0279 04       		.byte	4
+ 663 027a 5C       		.byte	92
+ 664 027b 10       		.byte	16
+ 665 027c 5F       		.byte	95
+ 666 027d 01       		.byte	1
+ 667 027e 81       		.byte	-127
+ 668 027f 20       		.byte	32
+ 669 0280 82       		.byte	-126
+ 670 0281 01       		.byte	1
+ 671 0282 83       		.byte	-125
+ 672 0283 88       		.byte	-120
+ 673 0284 85       		.byte	-123
+ 674 0285 38       		.byte	56
+ 675 0286 88       		.byte	-120
+ 676 0287 01       		.byte	1
+ 677 0288 89       		.byte	-119
+ 678 0289 38       		.byte	56
+ 679 028a 8F       		.byte	-113
+ 680 028b 04       		.byte	4
+ 681 028c 92       		.byte	-110
+ 682 028d 04       		.byte	4
+ 683 028e 95       		.byte	-107
+ 684 028f 08       		.byte	8
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 13
+
+
+ 685 0290 97       		.byte	-105
+ 686 0291 70       		.byte	112
+ 687 0292 99       		.byte	-103
+ 688 0293 10       		.byte	16
+ 689 0294 9A       		.byte	-102
+ 690 0295 04       		.byte	4
+ 691 0296 9B       		.byte	-101
+ 692 0297 88       		.byte	-120
+ 693 0298 9D       		.byte	-99
+ 694 0299 02       		.byte	2
+ 695 029a 9F       		.byte	-97
+ 696 029b 04       		.byte	4
+ 697 029c A4       		.byte	-92
+ 698 029d 02       		.byte	2
+ 699 029e A5       		.byte	-91
+ 700 029f 07       		.byte	7
+ 701 02a0 AB       		.byte	-85
+ 702 02a1 05       		.byte	5
+ 703 02a2 AC       		.byte	-84
+ 704 02a3 01       		.byte	1
+ 705 02a4 AD       		.byte	-83
+ 706 02a5 07       		.byte	7
+ 707 02a6 B0       		.byte	-80
+ 708 02a7 04       		.byte	4
+ 709 02a8 B1       		.byte	-79
+ 710 02a9 C0       		.byte	-64
+ 711 02aa B3       		.byte	-77
+ 712 02ab 38       		.byte	56
+ 713 02ac B5       		.byte	-75
+ 714 02ad 03       		.byte	3
+ 715 02ae B6       		.byte	-74
+ 716 02af 03       		.byte	3
+ 717 02b0 B7       		.byte	-73
+ 718 02b1 04       		.byte	4
+ 719 02b2 B8       		.byte	-72
+ 720 02b3 80       		.byte	-128
+ 721 02b4 B9       		.byte	-71
+ 722 02b5 20       		.byte	32
+ 723 02b6 BE       		.byte	-66
+ 724 02b7 01       		.byte	1
+ 725 02b8 BF       		.byte	-65
+ 726 02b9 51       		.byte	81
+ 727 02ba C0       		.byte	-64
+ 728 02bb 65       		.byte	101
+ 729 02bc C1       		.byte	-63
+ 730 02bd 02       		.byte	2
+ 731 02be C2       		.byte	-62
+ 732 02bf 04       		.byte	4
+ 733 02c0 C4       		.byte	-60
+ 734 02c1 01       		.byte	1
+ 735 02c2 C5       		.byte	-59
+ 736 02c3 EC       		.byte	-20
+ 737 02c4 C8       		.byte	-56
+ 738 02c5 03       		.byte	3
+ 739 02c6 C9       		.byte	-55
+ 740 02c7 FF       		.byte	-1
+ 741 02c8 CA       		.byte	-54
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 14
+
+
+ 742 02c9 FF       		.byte	-1
+ 743 02ca CB       		.byte	-53
+ 744 02cb FF       		.byte	-1
+ 745 02cc CC       		.byte	-52
+ 746 02cd 62       		.byte	98
+ 747 02ce CD       		.byte	-51
+ 748 02cf A0       		.byte	-96
+ 749 02d0 CE       		.byte	-50
+ 750 02d1 F0       		.byte	-16
+ 751 02d2 CF       		.byte	-49
+ 752 02d3 41       		.byte	65
+ 753 02d4 D0       		.byte	-48
+ 754 02d5 0C       		.byte	12
+ 755 02d6 D4       		.byte	-44
+ 756 02d7 18       		.byte	24
+ 757 02d8 D8       		.byte	-40
+ 758 02d9 04       		.byte	4
+ 759 02da D9       		.byte	-39
+ 760 02db 04       		.byte	4
+ 761 02dc DA       		.byte	-38
+ 762 02dd 04       		.byte	4
+ 763 02de DB       		.byte	-37
+ 764 02df 04       		.byte	4
+ 765 02e0 DF       		.byte	-33
+ 766 02e1 01       		.byte	1
+ 767 02e2 E6       		.byte	-26
+ 768 02e3 40       		.byte	64
+ 769 02e4 E7       		.byte	-25
+ 770 02e5 02       		.byte	2
+ 771 02e6 E9       		.byte	-23
+ 772 02e7 10       		.byte	16
+ 773 02e8 EA       		.byte	-22
+ 774 02e9 30       		.byte	48
+ 775 02ea EB       		.byte	-21
+ 776 02eb 10       		.byte	16
+ 777 02ec ED       		.byte	-19
+ 778 02ed 10       		.byte	16
+ 779 02ee EE       		.byte	-18
+ 780 02ef 10       		.byte	16
+ 781 02f0 EF       		.byte	-17
+ 782 02f1 12       		.byte	18
+ 783 02f2 02       		.byte	2
+ 784 02f3 80       		.byte	-128
+ 785 02f4 06       		.byte	6
+ 786 02f5 08       		.byte	8
+ 787 02f6 07       		.byte	7
+ 788 02f7 40       		.byte	64
+ 789 02f8 0D       		.byte	13
+ 790 02f9 02       		.byte	2
+ 791 02fa 0F       		.byte	15
+ 792 02fb 48       		.byte	72
+ 793 02fc 10       		.byte	16
+ 794 02fd 80       		.byte	-128
+ 795 02fe 11       		.byte	17
+ 796 02ff 54       		.byte	84
+ 797 0300 14       		.byte	20
+ 798 0301 01       		.byte	1
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 15
+
+
+ 799 0302 16       		.byte	22
+ 800 0303 20       		.byte	32
+ 801 0304 18       		.byte	24
+ 802 0305 02       		.byte	2
+ 803 0306 19       		.byte	25
+ 804 0307 20       		.byte	32
+ 805 0308 1B       		.byte	27
+ 806 0309 80       		.byte	-128
+ 807 030a 1E       		.byte	30
+ 808 030b 02       		.byte	2
+ 809 030c 1F       		.byte	31
+ 810 030d 01       		.byte	1
+ 811 030e 20       		.byte	32
+ 812 030f 10       		.byte	16
+ 813 0310 21       		.byte	33
+ 814 0311 41       		.byte	65
+ 815 0312 22       		.byte	34
+ 816 0313 65       		.byte	101
+ 817 0314 26       		.byte	38
+ 818 0315 44       		.byte	68
+ 819 0316 27       		.byte	39
+ 820 0317 84       		.byte	-124
+ 821 0318 2B       		.byte	43
+ 822 0319 02       		.byte	2
+ 823 031a 2C       		.byte	44
+ 824 031b 01       		.byte	1
+ 825 031c 2E       		.byte	46
+ 826 031d 28       		.byte	40
+ 827 031e 2F       		.byte	47
+ 828 031f 14       		.byte	20
+ 829 0320 32       		.byte	50
+ 830 0321 20       		.byte	32
+ 831 0322 36       		.byte	54
+ 832 0323 14       		.byte	20
+ 833 0324 37       		.byte	55
+ 834 0325 40       		.byte	64
+ 835 0326 38       		.byte	56
+ 836 0327 10       		.byte	16
+ 837 0328 39       		.byte	57
+ 838 0329 82       		.byte	-126
+ 839 032a 3D       		.byte	61
+ 840 032b 16       		.byte	22
+ 841 032c 3F       		.byte	63
+ 842 032d 80       		.byte	-128
+ 843 032e 45       		.byte	69
+ 844 032f 02       		.byte	2
+ 845 0330 47       		.byte	71
+ 846 0331 90       		.byte	-112
+ 847 0332 4C       		.byte	76
+ 848 0333 81       		.byte	-127
+ 849 0334 4E       		.byte	78
+ 850 0335 08       		.byte	8
+ 851 0336 4F       		.byte	79
+ 852 0337 08       		.byte	8
+ 853 0338 5F       		.byte	95
+ 854 0339 01       		.byte	1
+ 855 033a 65       		.byte	101
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 16
+
+
+ 856 033b 20       		.byte	32
+ 857 033c 67       		.byte	103
+ 858 033d 02       		.byte	2
+ 859 033e 80       		.byte	-128
+ 860 033f 40       		.byte	64
+ 861 0340 82       		.byte	-126
+ 862 0341 04       		.byte	4
+ 863 0342 88       		.byte	-120
+ 864 0343 20       		.byte	32
+ 865 0344 8A       		.byte	-118
+ 866 0345 12       		.byte	18
+ 867 0346 91       		.byte	-111
+ 868 0347 54       		.byte	84
+ 869 0348 93       		.byte	-109
+ 870 0349 69       		.byte	105
+ 871 034a 94       		.byte	-108
+ 872 034b 40       		.byte	64
+ 873 034c 96       		.byte	-106
+ 874 034d 8A       		.byte	-118
+ 875 034e 98       		.byte	-104
+ 876 034f 01       		.byte	1
+ 877 0350 9B       		.byte	-101
+ 878 0351 50       		.byte	80
+ 879 0352 9C       		.byte	-100
+ 880 0353 20       		.byte	32
+ 881 0354 9E       		.byte	-98
+ 882 0355 02       		.byte	2
+ 883 0356 9F       		.byte	-97
+ 884 0357 04       		.byte	4
+ 885 0358 A1       		.byte	-95
+ 886 0359 01       		.byte	1
+ 887 035a A2       		.byte	-94
+ 888 035b 88       		.byte	-120
+ 889 035c A3       		.byte	-93
+ 890 035d 42       		.byte	66
+ 891 035e A6       		.byte	-90
+ 892 035f 61       		.byte	97
+ 893 0360 A7       		.byte	-89
+ 894 0361 80       		.byte	-128
+ 895 0362 B5       		.byte	-75
+ 896 0363 10       		.byte	16
+ 897 0364 B7       		.byte	-73
+ 898 0365 01       		.byte	1
+ 899 0366 C0       		.byte	-64
+ 900 0367 58       		.byte	88
+ 901 0368 C2       		.byte	-62
+ 902 0369 50       		.byte	80
+ 903 036a C4       		.byte	-60
+ 904 036b AF       		.byte	-81
+ 905 036c CA       		.byte	-54
+ 906 036d 78       		.byte	120
+ 907 036e CC       		.byte	-52
+ 908 036f 74       		.byte	116
+ 909 0370 CE       		.byte	-50
+ 910 0371 FD       		.byte	-3
+ 911 0372 D0       		.byte	-48
+ 912 0373 B0       		.byte	-80
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 17
+
+
+ 913 0374 D2       		.byte	-46
+ 914 0375 30       		.byte	48
+ 915 0376 D6       		.byte	-42
+ 916 0377 80       		.byte	-128
+ 917 0378 D8       		.byte	-40
+ 918 0379 30       		.byte	48
+ 919 037a 00       		.byte	0
+ 920 037b 20       		.byte	32
+ 921 037c C0       		.byte	-64
+ 922 037d 02       		.byte	2
+ 923 037e B0       		.byte	-80
+ 924 037f 10       		.byte	16
+ 925 0380 EE       		.byte	-18
+ 926 0381 01       		.byte	1
+ 927 0382 84       		.byte	-124
+ 928 0383 02       		.byte	2
+ 929 0384 A0       		.byte	-96
+ 930 0385 02       		.byte	2
+ 931 0386 10       		.byte	16
+ 932 0387 40       		.byte	64
+ 933 0388 74       		.byte	116
+ 934 0389 02       		.byte	2
+ 935 038a 88       		.byte	-120
+ 936 038b 40       		.byte	64
+ 937 038c A0       		.byte	-96
+ 938 038d 02       		.byte	2
+ 939 038e C4       		.byte	-60
+ 940 038f 08       		.byte	8
+ 941 0390 DE       		.byte	-34
+ 942 0391 04       		.byte	4
+ 943 0392 E2       		.byte	-30
+ 944 0393 01       		.byte	1
+ 945 0394 00       		.byte	0
+ 946 0395 03       		.byte	3
+ 947 0396 0C       		.byte	12
+ 948 0397 03       		.byte	3
+ 949 0398 10       		.byte	16
+ 950 0399 03       		.byte	3
+ 951 039a 1C       		.byte	28
+ 952 039b 03       		.byte	3
+ 953 039c 80       		.byte	-128
+ 954 039d 80       		.byte	-128
+ 955 039e 00       		.byte	0
+ 956 039f 00       		.byte	0
+ 957 03a0 40       		.byte	64
+ 958 03a1 00       		.byte	0
+ 959 03a2 00       		.byte	0
+ 960 03a3 00       		.byte	0
+ 961 03a4 80       		.byte	-128
+ 962 03a5 00       		.byte	0
+ 963 03a6 40       		.byte	64
+ 964 03a7 80       		.byte	-128
+ 965 03a8 80       		.byte	-128
+ 966 03a9 00       		.byte	0
+ 967 03aa 80       		.byte	-128
+ 968 03ab 00       		.byte	0
+ 969 03ac 00       		.byte	0
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 18
+
+
+ 970 03ad 00       		.byte	0
+ 971 03ae 00       		.byte	0
+ 972 03af 00       		.byte	0
+ 973 03b0 00       		.byte	0
+ 974 03b1 0B       		.byte	11
+ 975 03b2 0B       		.byte	11
+ 976 03b3 00       		.byte	0
+ 977 03b4 00       		.byte	0
+ 978 03b5 00       		.byte	0
+ 979 03b6 00       		.byte	0
+ 980 03b7 00       		.byte	0
+ 981 03b8 04       		.byte	4
+ 982 03b9 00       		.byte	0
+ 983 03ba 00       		.byte	0
+ 984 03bb 04       		.byte	4
+ 985 03bc 00       		.byte	0
+ 986 03bd 00       		.byte	0
+ 987 03be 00       		.byte	0
+ 988 03bf 00       		.byte	0
+ 989 03c0 00       		.byte	0
+ 990 03c1 00       		.byte	0
+ 991 03c2 00       		.byte	0
+ 992 03c3 00       		.byte	0
+ 993              		.section	.cywolatch,"a",%progbits
+ 994              		.align	2
+ 995              		.type	cy_meta_wonvl, %object
+ 996              		.size	cy_meta_wonvl, 4
+ 997              	cy_meta_wonvl:
+ 998 0000 BC       		.byte	-68
+ 999 0001 90       		.byte	-112
+ 1000 0002 AC       		.byte	-84
+ 1001 0003 AF       		.byte	-81
+ 1002              		.section	.cycustnvl,"a",%progbits
+ 1003              		.align	2
+ 1004              		.type	cy_meta_custnvl, %object
+ 1005              		.size	cy_meta_custnvl, 4
+ 1006              	cy_meta_custnvl:
+ 1007 0000 00       		.byte	0
+ 1008 0001 00       		.byte	0
+ 1009 0002 40       		.byte	64
+ 1010 0003 05       		.byte	5
+ 1011              		.section	.cymeta,"a",%progbits
+ 1012              		.align	2
+ 1013              		.type	cy_metadata, %object
+ 1014              		.size	cy_metadata, 12
+ 1015              	cy_metadata:
+ 1016 0000 00       		.byte	0
+ 1017 0001 01       		.byte	1
+ 1018 0002 2E       		.byte	46
+ 1019 0003 16       		.byte	22
+ 1020 0004 10       		.byte	16
+ 1021 0005 69       		.byte	105
+ 1022 0006 00       		.byte	0
+ 1023 0007 01       		.byte	1
+ 1024 0008 00       		.byte	0
+ 1025 0009 00       		.byte	0
+ 1026 000a 00       		.byte	0
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 19
+
+
+ 1027 000b 00       		.byte	0
+ 1028              		.section	.cyflashprotect,"a",%progbits
+ 1029              		.align	2
+ 1030              		.type	cy_meta_flashprotect, %object
+ 1031              		.size	cy_meta_flashprotect, 256
+ 1032              	cy_meta_flashprotect:
+ 1033 0000 00000000 		.space	256
+ 1033      00000000 
+ 1033      00000000 
+ 1033      00000000 
+ 1033      00000000 
+ 1034              		.text
+ 1035              	.Letext0:
+ 1036              		.file 1 "d:\\program files (x86)\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-no
+ 1037              		.file 2 "d:\\program files (x86)\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-no
+ 1038              		.file 3 "Generated_Source\\PSoC5\\cymetadata.c"
+ 1039              		.section	.debug_info,"",%progbits
+ 1040              	.Ldebug_info0:
+ 1041 0000 31010000 		.4byte	0x131
+ 1042 0004 0400     		.2byte	0x4
+ 1043 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1044 000a 04       		.byte	0x4
+ 1045 000b 01       		.uleb128 0x1
+ 1046 000c 5A000000 		.4byte	.LASF17
+ 1047 0010 0C       		.byte	0xc
+ 1048 0011 B4010000 		.4byte	.LASF18
+ 1049 0015 0A000000 		.4byte	.LASF19
+ 1050 0019 00000000 		.4byte	.Ldebug_line0
+ 1051 001d 02       		.uleb128 0x2
+ 1052 001e 01       		.byte	0x1
+ 1053 001f 06       		.byte	0x6
+ 1054 0020 A8010000 		.4byte	.LASF0
+ 1055 0024 03       		.uleb128 0x3
+ 1056 0025 00000000 		.4byte	.LASF9
+ 1057 0029 01       		.byte	0x1
+ 1058 002a 1D       		.byte	0x1d
+ 1059 002b 2F000000 		.4byte	0x2f
+ 1060 002f 02       		.uleb128 0x2
+ 1061 0030 01       		.byte	0x1
+ 1062 0031 08       		.byte	0x8
+ 1063 0032 4C000000 		.4byte	.LASF1
+ 1064 0036 02       		.uleb128 0x2
+ 1065 0037 02       		.byte	0x2
+ 1066 0038 05       		.byte	0x5
+ 1067 0039 95010000 		.4byte	.LASF2
+ 1068 003d 02       		.uleb128 0x2
+ 1069 003e 02       		.byte	0x2
+ 1070 003f 07       		.byte	0x7
+ 1071 0040 FA000000 		.4byte	.LASF3
+ 1072 0044 02       		.uleb128 0x2
+ 1073 0045 04       		.byte	0x4
+ 1074 0046 05       		.byte	0x5
+ 1075 0047 9F010000 		.4byte	.LASF4
+ 1076 004b 02       		.uleb128 0x2
+ 1077 004c 04       		.byte	0x4
+ 1078 004d 07       		.byte	0x7
+ 1079 004e E8000000 		.4byte	.LASF5
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 20
+
+
+ 1080 0052 02       		.uleb128 0x2
+ 1081 0053 08       		.byte	0x8
+ 1082 0054 05       		.byte	0x5
+ 1083 0055 87010000 		.4byte	.LASF6
+ 1084 0059 02       		.uleb128 0x2
+ 1085 005a 08       		.byte	0x8
+ 1086 005b 07       		.byte	0x7
+ 1087 005c 3C010000 		.4byte	.LASF7
+ 1088 0060 04       		.uleb128 0x4
+ 1089 0061 04       		.byte	0x4
+ 1090 0062 05       		.byte	0x5
+ 1091 0063 696E7400 		.ascii	"int\000"
+ 1092 0067 02       		.uleb128 0x2
+ 1093 0068 04       		.byte	0x4
+ 1094 0069 07       		.byte	0x7
+ 1095 006a 2F010000 		.4byte	.LASF8
+ 1096 006e 03       		.uleb128 0x3
+ 1097 006f 53010000 		.4byte	.LASF10
+ 1098 0073 02       		.byte	0x2
+ 1099 0074 18       		.byte	0x18
+ 1100 0075 24000000 		.4byte	0x24
+ 1101 0079 05       		.uleb128 0x5
+ 1102 007a 91000000 		.4byte	0x91
+ 1103 007e 8A000000 		.4byte	0x8a
+ 1104 0082 06       		.uleb128 0x6
+ 1105 0083 8A000000 		.4byte	0x8a
+ 1106 0087 C303     		.2byte	0x3c3
+ 1107 0089 00       		.byte	0
+ 1108 008a 02       		.uleb128 0x2
+ 1109 008b 04       		.byte	0x4
+ 1110 008c 07       		.byte	0x7
+ 1111 008d 7E010000 		.4byte	.LASF11
+ 1112 0091 07       		.uleb128 0x7
+ 1113 0092 6E000000 		.4byte	0x6e
+ 1114 0096 08       		.uleb128 0x8
+ 1115 0097 1D010000 		.4byte	.LASF12
+ 1116 009b 03       		.byte	0x3
+ 1117 009c 1F       		.byte	0x1f
+ 1118 009d A7000000 		.4byte	0xa7
+ 1119 00a1 05       		.uleb128 0x5
+ 1120 00a2 03       		.byte	0x3
+ 1121 00a3 00000000 		.4byte	cy_meta_configecc
+ 1122 00a7 07       		.uleb128 0x7
+ 1123 00a8 79000000 		.4byte	0x79
+ 1124 00ac 05       		.uleb128 0x5
+ 1125 00ad 91000000 		.4byte	0x91
+ 1126 00b1 BC000000 		.4byte	0xbc
+ 1127 00b5 09       		.uleb128 0x9
+ 1128 00b6 8A000000 		.4byte	0x8a
+ 1129 00ba 03       		.byte	0x3
+ 1130 00bb 00       		.byte	0
+ 1131 00bc 08       		.uleb128 0x8
+ 1132 00bd 0D010000 		.4byte	.LASF13
+ 1133 00c1 03       		.byte	0x3
+ 1134 00c2 A5       		.byte	0xa5
+ 1135 00c3 CD000000 		.4byte	0xcd
+ 1136 00c7 05       		.uleb128 0x5
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 21
+
+
+ 1137 00c8 03       		.byte	0x3
+ 1138 00c9 00000000 		.4byte	cy_meta_custnvl
+ 1139 00cd 07       		.uleb128 0x7
+ 1140 00ce AC000000 		.4byte	0xac
+ 1141 00d2 08       		.uleb128 0x8
+ 1142 00d3 70010000 		.4byte	.LASF14
+ 1143 00d7 03       		.byte	0x3
+ 1144 00d8 B3       		.byte	0xb3
+ 1145 00d9 E3000000 		.4byte	0xe3
+ 1146 00dd 05       		.uleb128 0x5
+ 1147 00de 03       		.byte	0x3
+ 1148 00df 00000000 		.4byte	cy_meta_wonvl
+ 1149 00e3 07       		.uleb128 0x7
+ 1150 00e4 AC000000 		.4byte	0xac
+ 1151 00e8 05       		.uleb128 0x5
+ 1152 00e9 91000000 		.4byte	0x91
+ 1153 00ed F8000000 		.4byte	0xf8
+ 1154 00f1 09       		.uleb128 0x9
+ 1155 00f2 8A000000 		.4byte	0x8a
+ 1156 00f6 FF       		.byte	0xff
+ 1157 00f7 00       		.byte	0
+ 1158 00f8 08       		.uleb128 0x8
+ 1159 00f9 5B010000 		.4byte	.LASF15
+ 1160 00fd 03       		.byte	0x3
+ 1161 00fe C1       		.byte	0xc1
+ 1162 00ff 09010000 		.4byte	0x109
+ 1163 0103 05       		.uleb128 0x5
+ 1164 0104 03       		.byte	0x3
+ 1165 0105 00000000 		.4byte	cy_meta_flashprotect
+ 1166 0109 07       		.uleb128 0x7
+ 1167 010a E8000000 		.4byte	0xe8
+ 1168 010e 05       		.uleb128 0x5
+ 1169 010f 91000000 		.4byte	0x91
+ 1170 0113 1E010000 		.4byte	0x11e
+ 1171 0117 09       		.uleb128 0x9
+ 1172 0118 8A000000 		.4byte	0x8a
+ 1173 011c 0B       		.byte	0xb
+ 1174 011d 00       		.byte	0
+ 1175 011e 08       		.uleb128 0x8
+ 1176 011f 40000000 		.4byte	.LASF16
+ 1177 0123 03       		.byte	0x3
+ 1178 0124 EE       		.byte	0xee
+ 1179 0125 2F010000 		.4byte	0x12f
+ 1180 0129 05       		.uleb128 0x5
+ 1181 012a 03       		.byte	0x3
+ 1182 012b 00000000 		.4byte	cy_metadata
+ 1183 012f 07       		.uleb128 0x7
+ 1184 0130 0E010000 		.4byte	0x10e
+ 1185 0134 00       		.byte	0
+ 1186              		.section	.debug_abbrev,"",%progbits
+ 1187              	.Ldebug_abbrev0:
+ 1188 0000 01       		.uleb128 0x1
+ 1189 0001 11       		.uleb128 0x11
+ 1190 0002 01       		.byte	0x1
+ 1191 0003 25       		.uleb128 0x25
+ 1192 0004 0E       		.uleb128 0xe
+ 1193 0005 13       		.uleb128 0x13
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 22
+
+
+ 1194 0006 0B       		.uleb128 0xb
+ 1195 0007 03       		.uleb128 0x3
+ 1196 0008 0E       		.uleb128 0xe
+ 1197 0009 1B       		.uleb128 0x1b
+ 1198 000a 0E       		.uleb128 0xe
+ 1199 000b 10       		.uleb128 0x10
+ 1200 000c 17       		.uleb128 0x17
+ 1201 000d 00       		.byte	0
+ 1202 000e 00       		.byte	0
+ 1203 000f 02       		.uleb128 0x2
+ 1204 0010 24       		.uleb128 0x24
+ 1205 0011 00       		.byte	0
+ 1206 0012 0B       		.uleb128 0xb
+ 1207 0013 0B       		.uleb128 0xb
+ 1208 0014 3E       		.uleb128 0x3e
+ 1209 0015 0B       		.uleb128 0xb
+ 1210 0016 03       		.uleb128 0x3
+ 1211 0017 0E       		.uleb128 0xe
+ 1212 0018 00       		.byte	0
+ 1213 0019 00       		.byte	0
+ 1214 001a 03       		.uleb128 0x3
+ 1215 001b 16       		.uleb128 0x16
+ 1216 001c 00       		.byte	0
+ 1217 001d 03       		.uleb128 0x3
+ 1218 001e 0E       		.uleb128 0xe
+ 1219 001f 3A       		.uleb128 0x3a
+ 1220 0020 0B       		.uleb128 0xb
+ 1221 0021 3B       		.uleb128 0x3b
+ 1222 0022 0B       		.uleb128 0xb
+ 1223 0023 49       		.uleb128 0x49
+ 1224 0024 13       		.uleb128 0x13
+ 1225 0025 00       		.byte	0
+ 1226 0026 00       		.byte	0
+ 1227 0027 04       		.uleb128 0x4
+ 1228 0028 24       		.uleb128 0x24
+ 1229 0029 00       		.byte	0
+ 1230 002a 0B       		.uleb128 0xb
+ 1231 002b 0B       		.uleb128 0xb
+ 1232 002c 3E       		.uleb128 0x3e
+ 1233 002d 0B       		.uleb128 0xb
+ 1234 002e 03       		.uleb128 0x3
+ 1235 002f 08       		.uleb128 0x8
+ 1236 0030 00       		.byte	0
+ 1237 0031 00       		.byte	0
+ 1238 0032 05       		.uleb128 0x5
+ 1239 0033 01       		.uleb128 0x1
+ 1240 0034 01       		.byte	0x1
+ 1241 0035 49       		.uleb128 0x49
+ 1242 0036 13       		.uleb128 0x13
+ 1243 0037 01       		.uleb128 0x1
+ 1244 0038 13       		.uleb128 0x13
+ 1245 0039 00       		.byte	0
+ 1246 003a 00       		.byte	0
+ 1247 003b 06       		.uleb128 0x6
+ 1248 003c 21       		.uleb128 0x21
+ 1249 003d 00       		.byte	0
+ 1250 003e 49       		.uleb128 0x49
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 23
+
+
+ 1251 003f 13       		.uleb128 0x13
+ 1252 0040 2F       		.uleb128 0x2f
+ 1253 0041 05       		.uleb128 0x5
+ 1254 0042 00       		.byte	0
+ 1255 0043 00       		.byte	0
+ 1256 0044 07       		.uleb128 0x7
+ 1257 0045 26       		.uleb128 0x26
+ 1258 0046 00       		.byte	0
+ 1259 0047 49       		.uleb128 0x49
+ 1260 0048 13       		.uleb128 0x13
+ 1261 0049 00       		.byte	0
+ 1262 004a 00       		.byte	0
+ 1263 004b 08       		.uleb128 0x8
+ 1264 004c 34       		.uleb128 0x34
+ 1265 004d 00       		.byte	0
+ 1266 004e 03       		.uleb128 0x3
+ 1267 004f 0E       		.uleb128 0xe
+ 1268 0050 3A       		.uleb128 0x3a
+ 1269 0051 0B       		.uleb128 0xb
+ 1270 0052 3B       		.uleb128 0x3b
+ 1271 0053 0B       		.uleb128 0xb
+ 1272 0054 49       		.uleb128 0x49
+ 1273 0055 13       		.uleb128 0x13
+ 1274 0056 3F       		.uleb128 0x3f
+ 1275 0057 19       		.uleb128 0x19
+ 1276 0058 02       		.uleb128 0x2
+ 1277 0059 18       		.uleb128 0x18
+ 1278 005a 00       		.byte	0
+ 1279 005b 00       		.byte	0
+ 1280 005c 09       		.uleb128 0x9
+ 1281 005d 21       		.uleb128 0x21
+ 1282 005e 00       		.byte	0
+ 1283 005f 49       		.uleb128 0x49
+ 1284 0060 13       		.uleb128 0x13
+ 1285 0061 2F       		.uleb128 0x2f
+ 1286 0062 0B       		.uleb128 0xb
+ 1287 0063 00       		.byte	0
+ 1288 0064 00       		.byte	0
+ 1289 0065 00       		.byte	0
+ 1290              		.section	.debug_aranges,"",%progbits
+ 1291 0000 14000000 		.4byte	0x14
+ 1292 0004 0200     		.2byte	0x2
+ 1293 0006 00000000 		.4byte	.Ldebug_info0
+ 1294 000a 04       		.byte	0x4
+ 1295 000b 00       		.byte	0
+ 1296 000c 0000     		.2byte	0
+ 1297 000e 0000     		.2byte	0
+ 1298 0010 00000000 		.4byte	0
+ 1299 0014 00000000 		.4byte	0
+ 1300              		.section	.debug_line,"",%progbits
+ 1301              	.Ldebug_line0:
+ 1302 0000 2D010000 		.section	.debug_str,"MS",%progbits,1
+ 1302      02002701 
+ 1302      00000201 
+ 1302      FB0E0D00 
+ 1302      01010101 
+ 1303              	.LASF9:
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 24
+
+
+ 1304 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 1304      6E74385F 
+ 1304      7400
+ 1305              	.LASF19:
+ 1306 000a 443A5C50 		.ascii	"D:\\PSoC Programs\\test_projects\\Proj02_basicuart."
+ 1306      536F4320 
+ 1306      50726F67 
+ 1306      72616D73 
+ 1306      5C746573 
+ 1307 003a 63796473 		.ascii	"cydsn\000"
+ 1307      6E00
+ 1308              	.LASF16:
+ 1309 0040 63795F6D 		.ascii	"cy_metadata\000"
+ 1309      65746164 
+ 1309      61746100 
+ 1310              	.LASF1:
+ 1311 004c 756E7369 		.ascii	"unsigned char\000"
+ 1311      676E6564 
+ 1311      20636861 
+ 1311      7200
+ 1312              	.LASF17:
+ 1313 005a 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1313      43313120 
+ 1313      352E342E 
+ 1313      31203230 
+ 1313      31363036 
+ 1314 008d 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1314      20726576 
+ 1314      6973696F 
+ 1314      6E203233 
+ 1314      37373135 
+ 1315 00c0 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1315      66756E63 
+ 1315      74696F6E 
+ 1315      2D736563 
+ 1315      74696F6E 
+ 1316              	.LASF5:
+ 1317 00e8 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1317      20756E73 
+ 1317      69676E65 
+ 1317      6420696E 
+ 1317      7400
+ 1318              	.LASF3:
+ 1319 00fa 73686F72 		.ascii	"short unsigned int\000"
+ 1319      7420756E 
+ 1319      7369676E 
+ 1319      65642069 
+ 1319      6E7400
+ 1320              	.LASF13:
+ 1321 010d 63795F6D 		.ascii	"cy_meta_custnvl\000"
+ 1321      6574615F 
+ 1321      63757374 
+ 1321      6E766C00 
+ 1322              	.LASF12:
+ 1323 011d 63795F6D 		.ascii	"cy_meta_configecc\000"
+ 1323      6574615F 
+ 1323      636F6E66 
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccysZfJg.s 			page 25
+
+
+ 1323      69676563 
+ 1323      6300
+ 1324              	.LASF8:
+ 1325 012f 756E7369 		.ascii	"unsigned int\000"
+ 1325      676E6564 
+ 1325      20696E74 
+ 1325      00
+ 1326              	.LASF7:
+ 1327 013c 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1327      206C6F6E 
+ 1327      6720756E 
+ 1327      7369676E 
+ 1327      65642069 
+ 1328              	.LASF10:
+ 1329 0153 75696E74 		.ascii	"uint8_t\000"
+ 1329      385F7400 
+ 1330              	.LASF15:
+ 1331 015b 63795F6D 		.ascii	"cy_meta_flashprotect\000"
+ 1331      6574615F 
+ 1331      666C6173 
+ 1331      6870726F 
+ 1331      74656374 
+ 1332              	.LASF14:
+ 1333 0170 63795F6D 		.ascii	"cy_meta_wonvl\000"
+ 1333      6574615F 
+ 1333      776F6E76 
+ 1333      6C00
+ 1334              	.LASF11:
+ 1335 017e 73697A65 		.ascii	"sizetype\000"
+ 1335      74797065 
+ 1335      00
+ 1336              	.LASF6:
+ 1337 0187 6C6F6E67 		.ascii	"long long int\000"
+ 1337      206C6F6E 
+ 1337      6720696E 
+ 1337      7400
+ 1338              	.LASF2:
+ 1339 0195 73686F72 		.ascii	"short int\000"
+ 1339      7420696E 
+ 1339      7400
+ 1340              	.LASF4:
+ 1341 019f 6C6F6E67 		.ascii	"long int\000"
+ 1341      20696E74 
+ 1341      00
+ 1342              	.LASF0:
+ 1343 01a8 7369676E 		.ascii	"signed char\000"
+ 1343      65642063 
+ 1343      68617200 
+ 1344              	.LASF18:
+ 1345 01b4 47656E65 		.ascii	"Generated_Source\\PSoC5\\cymetadata.c\000"
+ 1345      72617465 
+ 1345      645F536F 
+ 1345      75726365 
+ 1345      5C50536F 
+ 1346              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

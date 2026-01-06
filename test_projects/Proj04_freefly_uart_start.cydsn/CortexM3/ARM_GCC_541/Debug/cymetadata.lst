@@ -1,0 +1,2154 @@
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"cymetadata.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	cy_metadata
+  20              		.global	cy_meta_flashprotect
+  21              		.global	cy_meta_wonvl
+  22              		.global	cy_meta_custnvl
+  23              		.global	cy_meta_configecc
+  24              		.section	.cyconfigecc,"a",%progbits
+  25              		.align	2
+  26              		.type	cy_meta_configecc, %object
+  27              		.size	cy_meta_configecc, 1568
+  28              	cy_meta_configecc:
+  29 0000 01       		.byte	1
+  30 0001 52       		.byte	82
+  31 0002 00       		.byte	0
+  32 0003 40       		.byte	64
+  33 0004 03       		.byte	3
+  34 0005 64       		.byte	100
+  35 0006 00       		.byte	0
+  36 0007 40       		.byte	64
+  37 0008 03       		.byte	3
+  38 0009 65       		.byte	101
+  39 000a 00       		.byte	0
+  40 000b 40       		.byte	64
+  41 000c 01       		.byte	1
+  42 000d 05       		.byte	5
+  43 000e 01       		.byte	1
+  44 000f 40       		.byte	64
+  45 0010 73       		.byte	115
+  46 0011 08       		.byte	8
+  47 0012 01       		.byte	1
+  48 0013 40       		.byte	64
+  49 0014 44       		.byte	68
+  50 0015 09       		.byte	9
+  51 0016 01       		.byte	1
+  52 0017 40       		.byte	64
+  53 0018 14       		.byte	20
+  54 0019 0A       		.byte	10
+  55 001a 01       		.byte	1
+  56 001b 40       		.byte	64
+  57 001c 38       		.byte	56
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 2
+
+
+  58 001d 0B       		.byte	11
+  59 001e 01       		.byte	1
+  60 001f 40       		.byte	64
+  61 0020 02       		.byte	2
+  62 0021 0D       		.byte	13
+  63 0022 01       		.byte	1
+  64 0023 40       		.byte	64
+  65 0024 01       		.byte	1
+  66 0025 17       		.byte	23
+  67 0026 01       		.byte	1
+  68 0027 40       		.byte	64
+  69 0028 61       		.byte	97
+  70 0029 18       		.byte	24
+  71 002a 01       		.byte	1
+  72 002b 40       		.byte	64
+  73 002c 4A       		.byte	74
+  74 002d 19       		.byte	25
+  75 002e 01       		.byte	1
+  76 002f 40       		.byte	64
+  77 0030 1B       		.byte	27
+  78 0031 1A       		.byte	26
+  79 0032 01       		.byte	1
+  80 0033 40       		.byte	64
+  81 0034 43       		.byte	67
+  82 0035 1B       		.byte	27
+  83 0036 01       		.byte	1
+  84 0037 40       		.byte	64
+  85 0038 03       		.byte	3
+  86 0039 40       		.byte	64
+  87 003a 01       		.byte	1
+  88 003b 40       		.byte	64
+  89 003c 02       		.byte	2
+  90 003d 41       		.byte	65
+  91 003e 01       		.byte	1
+  92 003f 40       		.byte	64
+  93 0040 04       		.byte	4
+  94 0041 42       		.byte	66
+  95 0042 01       		.byte	1
+  96 0043 40       		.byte	64
+  97 0044 01       		.byte	1
+  98 0045 43       		.byte	67
+  99 0046 01       		.byte	1
+ 100 0047 40       		.byte	64
+ 101 0048 02       		.byte	2
+ 102 0049 44       		.byte	68
+ 103 004a 01       		.byte	1
+ 104 004b 40       		.byte	64
+ 105 004c 06       		.byte	6
+ 106 004d 45       		.byte	69
+ 107 004e 01       		.byte	1
+ 108 004f 40       		.byte	64
+ 109 0050 02       		.byte	2
+ 110 0051 46       		.byte	70
+ 111 0052 01       		.byte	1
+ 112 0053 40       		.byte	64
+ 113 0054 06       		.byte	6
+ 114 0055 47       		.byte	71
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 3
+
+
+ 115 0056 01       		.byte	1
+ 116 0057 40       		.byte	64
+ 117 0058 03       		.byte	3
+ 118 0059 48       		.byte	72
+ 119 005a 01       		.byte	1
+ 120 005b 40       		.byte	64
+ 121 005c 03       		.byte	3
+ 122 005d 4C       		.byte	76
+ 123 005e 01       		.byte	1
+ 124 005f 40       		.byte	64
+ 125 0060 0A       		.byte	10
+ 126 0061 4D       		.byte	77
+ 127 0062 01       		.byte	1
+ 128 0063 40       		.byte	64
+ 129 0064 04       		.byte	4
+ 130 0065 50       		.byte	80
+ 131 0066 01       		.byte	1
+ 132 0067 40       		.byte	64
+ 133 0068 01       		.byte	1
+ 134 0069 51       		.byte	81
+ 135 006a 01       		.byte	1
+ 136 006b 40       		.byte	64
+ 137 006c 11       		.byte	17
+ 138 006d 02       		.byte	2
+ 139 006e 89       		.byte	-119
+ 140 006f 0F       		.byte	15
+ 141 0070 8A       		.byte	-118
+ 142 0071 38       		.byte	56
+ 143 0072 8B       		.byte	-117
+ 144 0073 72       		.byte	114
+ 145 0074 88       		.byte	-120
+ 146 0075 0F       		.byte	15
+ 147 0076 89       		.byte	-119
+ 148 0077 38       		.byte	56
+ 149 0078 8A       		.byte	-118
+ 150 0079 72       		.byte	114
+ 151 007a E2       		.byte	-30
+ 152 007b 04       		.byte	4
+ 153 007c 01       		.byte	1
+ 154 007d 10       		.byte	16
+ 155 007e 03       		.byte	3
+ 156 007f A0       		.byte	-96
+ 157 0080 04       		.byte	4
+ 158 0081 6C       		.byte	108
+ 159 0082 05       		.byte	5
+ 160 0083 30       		.byte	48
+ 161 0084 06       		.byte	6
+ 162 0085 11       		.byte	17
+ 163 0086 08       		.byte	8
+ 164 0087 5C       		.byte	92
+ 165 0088 09       		.byte	9
+ 166 0089 30       		.byte	48
+ 167 008a 0A       		.byte	10
+ 168 008b 02       		.byte	2
+ 169 008c 0C       		.byte	12
+ 170 008d 14       		.byte	20
+ 171 008e 0D       		.byte	13
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 4
+
+
+ 172 008f 20       		.byte	32
+ 173 0090 0F       		.byte	15
+ 174 0091 90       		.byte	-112
+ 175 0092 12       		.byte	18
+ 176 0093 03       		.byte	3
+ 177 0094 13       		.byte	19
+ 178 0095 40       		.byte	64
+ 179 0096 14       		.byte	20
+ 180 0097 80       		.byte	-128
+ 181 0098 15       		.byte	21
+ 182 0099 0A       		.byte	10
+ 183 009a 17       		.byte	23
+ 184 009b 04       		.byte	4
+ 185 009c 18       		.byte	24
+ 186 009d 80       		.byte	-128
+ 187 009e 19       		.byte	25
+ 188 009f 03       		.byte	3
+ 189 00a0 1B       		.byte	27
+ 190 00a1 04       		.byte	4
+ 191 00a2 1E       		.byte	30
+ 192 00a3 20       		.byte	32
+ 193 00a4 20       		.byte	32
+ 194 00a5 09       		.byte	9
+ 195 00a6 22       		.byte	34
+ 196 00a7 10       		.byte	16
+ 197 00a8 23       		.byte	35
+ 198 00a9 05       		.byte	5
+ 199 00aa 24       		.byte	36
+ 200 00ab 70       		.byte	112
+ 201 00ac 26       		.byte	38
+ 202 00ad 0C       		.byte	12
+ 203 00ae 27       		.byte	39
+ 204 00af 08       		.byte	8
+ 205 00b0 28       		.byte	40
+ 206 00b1 10       		.byte	16
+ 207 00b2 29       		.byte	41
+ 208 00b3 03       		.byte	3
+ 209 00b4 2B       		.byte	43
+ 210 00b5 0C       		.byte	12
+ 211 00b6 2C       		.byte	44
+ 212 00b7 80       		.byte	-128
+ 213 00b8 2D       		.byte	45
+ 214 00b9 03       		.byte	3
+ 215 00ba 2F       		.byte	47
+ 216 00bb 04       		.byte	4
+ 217 00bc 30       		.byte	48
+ 218 00bd 1F       		.byte	31
+ 219 00be 31       		.byte	49
+ 220 00bf C0       		.byte	-64
+ 221 00c0 32       		.byte	50
+ 222 00c1 60       		.byte	96
+ 223 00c2 34       		.byte	52
+ 224 00c3 80       		.byte	-128
+ 225 00c4 35       		.byte	53
+ 226 00c5 0F       		.byte	15
+ 227 00c6 37       		.byte	55
+ 228 00c7 30       		.byte	48
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 5
+
+
+ 229 00c8 38       		.byte	56
+ 230 00c9 08       		.byte	8
+ 231 00ca 3B       		.byte	59
+ 232 00cb 20       		.byte	32
+ 233 00cc 3E       		.byte	62
+ 234 00cd 04       		.byte	4
+ 235 00ce 3F       		.byte	63
+ 236 00cf 01       		.byte	1
+ 237 00d0 40       		.byte	64
+ 238 00d1 03       		.byte	3
+ 239 00d2 47       		.byte	71
+ 240 00d3 04       		.byte	4
+ 241 00d4 49       		.byte	73
+ 242 00d5 FF       		.byte	-1
+ 243 00d6 4A       		.byte	74
+ 244 00d7 07       		.byte	7
+ 245 00d8 4B       		.byte	75
+ 246 00d9 FF       		.byte	-1
+ 247 00da 4C       		.byte	76
+ 248 00db 40       		.byte	64
+ 249 00dc 4D       		.byte	77
+ 250 00dd 20       		.byte	32
+ 251 00de 4E       		.byte	78
+ 252 00df F0       		.byte	-16
+ 253 00e0 4F       		.byte	79
+ 254 00e1 05       		.byte	5
+ 255 00e2 50       		.byte	80
+ 256 00e3 08       		.byte	8
+ 257 00e4 58       		.byte	88
+ 258 00e5 04       		.byte	4
+ 259 00e6 59       		.byte	89
+ 260 00e7 04       		.byte	4
+ 261 00e8 5A       		.byte	90
+ 262 00e9 04       		.byte	4
+ 263 00ea 5C       		.byte	92
+ 264 00eb 11       		.byte	17
+ 265 00ec 5D       		.byte	93
+ 266 00ed 01       		.byte	1
+ 267 00ee 5F       		.byte	95
+ 268 00ef 01       		.byte	1
+ 269 00f0 60       		.byte	96
+ 270 00f1 40       		.byte	64
+ 271 00f2 61       		.byte	97
+ 272 00f3 A8       		.byte	-88
+ 273 00f4 62       		.byte	98
+ 274 00f5 40       		.byte	64
+ 275 00f6 63       		.byte	99
+ 276 00f7 20       		.byte	32
+ 277 00f8 80       		.byte	-128
+ 278 00f9 01       		.byte	1
+ 279 00fa 82       		.byte	-126
+ 280 00fb 0E       		.byte	14
+ 281 00fc 87       		.byte	-121
+ 282 00fd A0       		.byte	-96
+ 283 00fe 88       		.byte	-120
+ 284 00ff 2C       		.byte	44
+ 285 0100 8A       		.byte	-118
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 6
+
+
+ 286 0101 03       		.byte	3
+ 287 0102 8B       		.byte	-117
+ 288 0103 03       		.byte	3
+ 289 0104 8D       		.byte	-115
+ 290 0105 09       		.byte	9
+ 291 0106 8F       		.byte	-113
+ 292 0107 10       		.byte	16
+ 293 0108 92       		.byte	-110
+ 294 0109 2C       		.byte	44
+ 295 010a 95       		.byte	-107
+ 296 010b F0       		.byte	-16
+ 297 010c 97       		.byte	-105
+ 298 010d 0C       		.byte	12
+ 299 010e 9A       		.byte	-102
+ 300 010f 03       		.byte	3
+ 301 0110 9B       		.byte	-101
+ 302 0111 80       		.byte	-128
+ 303 0112 9C       		.byte	-100
+ 304 0113 10       		.byte	16
+ 305 0114 9D       		.byte	-99
+ 306 0115 14       		.byte	20
+ 307 0116 A1       		.byte	-95
+ 308 0117 EC       		.byte	-20
+ 309 0118 A3       		.byte	-93
+ 310 0119 11       		.byte	17
+ 311 011a A5       		.byte	-91
+ 312 011b 10       		.byte	16
+ 313 011c A6       		.byte	-90
+ 314 011d 08       		.byte	8
+ 315 011e A8       		.byte	-88
+ 316 011f 01       		.byte	1
+ 317 0120 A9       		.byte	-87
+ 318 0121 5C       		.byte	92
+ 319 0122 AA       		.byte	-86
+ 320 0123 26       		.byte	38
+ 321 0124 AB       		.byte	-85
+ 322 0125 82       		.byte	-126
+ 323 0126 B0       		.byte	-80
+ 324 0127 2A       		.byte	42
+ 325 0128 B2       		.byte	-78
+ 326 0129 10       		.byte	16
+ 327 012a B3       		.byte	-77
+ 328 012b 60       		.byte	96
+ 329 012c B4       		.byte	-76
+ 330 012d 0F       		.byte	15
+ 331 012e B5       		.byte	-75
+ 332 012f 1F       		.byte	31
+ 333 0130 B7       		.byte	-73
+ 334 0131 80       		.byte	-128
+ 335 0132 B9       		.byte	-71
+ 336 0133 08       		.byte	8
+ 337 0134 BA       		.byte	-70
+ 338 0135 22       		.byte	34
+ 339 0136 BE       		.byte	-66
+ 340 0137 04       		.byte	4
+ 341 0138 BF       		.byte	-65
+ 342 0139 44       		.byte	68
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 7
+
+
+ 343 013a C0       		.byte	-64
+ 344 013b 03       		.byte	3
+ 345 013c C6       		.byte	-58
+ 346 013d 40       		.byte	64
+ 347 013e C9       		.byte	-55
+ 348 013f FF       		.byte	-1
+ 349 0140 CA       		.byte	-54
+ 350 0141 07       		.byte	7
+ 351 0142 CB       		.byte	-53
+ 352 0143 FF       		.byte	-1
+ 353 0144 CC       		.byte	-52
+ 354 0145 40       		.byte	64
+ 355 0146 CD       		.byte	-51
+ 356 0147 20       		.byte	32
+ 357 0148 CE       		.byte	-50
+ 358 0149 F0       		.byte	-16
+ 359 014a CF       		.byte	-49
+ 360 014b 05       		.byte	5
+ 361 014c D0       		.byte	-48
+ 362 014d 08       		.byte	8
+ 363 014e D4       		.byte	-44
+ 364 014f 01       		.byte	1
+ 365 0150 D8       		.byte	-40
+ 366 0151 04       		.byte	4
+ 367 0152 D9       		.byte	-39
+ 368 0153 04       		.byte	4
+ 369 0154 DA       		.byte	-38
+ 370 0155 04       		.byte	4
+ 371 0156 DB       		.byte	-37
+ 372 0157 04       		.byte	4
+ 373 0158 DF       		.byte	-33
+ 374 0159 01       		.byte	1
+ 375 015a E0       		.byte	-32
+ 376 015b 40       		.byte	64
+ 377 015c E1       		.byte	-31
+ 378 015d A8       		.byte	-88
+ 379 015e E2       		.byte	-30
+ 380 015f 40       		.byte	64
+ 381 0160 E3       		.byte	-29
+ 382 0161 20       		.byte	32
+ 383 0162 01       		.byte	1
+ 384 0163 22       		.byte	34
+ 385 0164 06       		.byte	6
+ 386 0165 01       		.byte	1
+ 387 0166 07       		.byte	7
+ 388 0167 28       		.byte	40
+ 389 0168 0B       		.byte	11
+ 390 0169 8A       		.byte	-118
+ 391 016a 0E       		.byte	14
+ 392 016b 94       		.byte	-108
+ 393 016c 0F       		.byte	15
+ 394 016d 01       		.byte	1
+ 395 016e 10       		.byte	16
+ 396 016f 04       		.byte	4
+ 397 0170 12       		.byte	18
+ 398 0171 10       		.byte	16
+ 399 0172 15       		.byte	21
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 8
+
+
+ 400 0173 42       		.byte	66
+ 401 0174 16       		.byte	22
+ 402 0175 28       		.byte	40
+ 403 0176 17       		.byte	23
+ 404 0177 04       		.byte	4
+ 405 0178 18       		.byte	24
+ 406 0179 20       		.byte	32
+ 407 017a 19       		.byte	25
+ 408 017b 22       		.byte	34
+ 409 017c 1D       		.byte	29
+ 410 017d 18       		.byte	24
+ 411 017e 1E       		.byte	30
+ 412 017f 80       		.byte	-128
+ 413 0180 1F       		.byte	31
+ 414 0181 01       		.byte	1
+ 415 0182 21       		.byte	33
+ 416 0183 14       		.byte	20
+ 417 0184 22       		.byte	34
+ 418 0185 50       		.byte	80
+ 419 0186 25       		.byte	37
+ 420 0187 50       		.byte	80
+ 421 0188 27       		.byte	39
+ 422 0189 44       		.byte	68
+ 423 018a 29       		.byte	41
+ 424 018b 22       		.byte	34
+ 425 018c 2B       		.byte	43
+ 426 018d 20       		.byte	32
+ 427 018e 2D       		.byte	45
+ 428 018f 01       		.byte	1
+ 429 0190 2E       		.byte	46
+ 430 0191 A0       		.byte	-96
+ 431 0192 2F       		.byte	47
+ 432 0193 10       		.byte	16
+ 433 0194 30       		.byte	48
+ 434 0195 14       		.byte	20
+ 435 0196 32       		.byte	50
+ 436 0197 A0       		.byte	-96
+ 437 0198 33       		.byte	51
+ 438 0199 08       		.byte	8
+ 439 019a 37       		.byte	55
+ 440 019b 29       		.byte	41
+ 441 019c 38       		.byte	56
+ 442 019d 08       		.byte	8
+ 443 019e 39       		.byte	57
+ 444 019f 20       		.byte	32
+ 445 01a0 3B       		.byte	59
+ 446 01a1 80       		.byte	-128
+ 447 01a2 3D       		.byte	61
+ 448 01a3 80       		.byte	-128
+ 449 01a4 3E       		.byte	62
+ 450 01a5 15       		.byte	21
+ 451 01a6 41       		.byte	65
+ 452 01a7 04       		.byte	4
+ 453 01a8 45       		.byte	69
+ 454 01a9 08       		.byte	8
+ 455 01aa 49       		.byte	73
+ 456 01ab 10       		.byte	16
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 9
+
+
+ 457 01ac 4B       		.byte	75
+ 458 01ad 10       		.byte	16
+ 459 01ae 4D       		.byte	77
+ 460 01af 01       		.byte	1
+ 461 01b0 4F       		.byte	79
+ 462 01b1 03       		.byte	3
+ 463 01b2 50       		.byte	80
+ 464 01b3 0C       		.byte	12
+ 465 01b4 52       		.byte	82
+ 466 01b5 10       		.byte	16
+ 467 01b6 53       		.byte	83
+ 468 01b7 24       		.byte	36
+ 469 01b8 56       		.byte	86
+ 470 01b9 08       		.byte	8
+ 471 01ba 58       		.byte	88
+ 472 01bb 10       		.byte	16
+ 473 01bc 59       		.byte	89
+ 474 01bd 05       		.byte	5
+ 475 01be 5A       		.byte	90
+ 476 01bf 80       		.byte	-128
+ 477 01c0 5D       		.byte	93
+ 478 01c1 02       		.byte	2
+ 479 01c2 5E       		.byte	94
+ 480 01c3 02       		.byte	2
+ 481 01c4 89       		.byte	-119
+ 482 01c5 01       		.byte	1
+ 483 01c6 8B       		.byte	-117
+ 484 01c7 10       		.byte	16
+ 485 01c8 8C       		.byte	-116
+ 486 01c9 10       		.byte	16
+ 487 01ca 91       		.byte	-111
+ 488 01cb 40       		.byte	64
+ 489 01cc 92       		.byte	-110
+ 490 01cd 15       		.byte	21
+ 491 01ce 97       		.byte	-105
+ 492 01cf 10       		.byte	16
+ 493 01d0 9F       		.byte	-97
+ 494 01d1 41       		.byte	65
+ 495 01d2 A4       		.byte	-92
+ 496 01d3 20       		.byte	32
+ 497 01d4 A7       		.byte	-89
+ 498 01d5 02       		.byte	2
+ 499 01d6 B0       		.byte	-80
+ 500 01d7 13       		.byte	19
+ 501 01d8 B1       		.byte	-79
+ 502 01d9 81       		.byte	-127
+ 503 01da C0       		.byte	-64
+ 504 01db EA       		.byte	-22
+ 505 01dc C2       		.byte	-62
+ 506 01dd FB       		.byte	-5
+ 507 01de C4       		.byte	-60
+ 508 01df F6       		.byte	-10
+ 509 01e0 CA       		.byte	-54
+ 510 01e1 F7       		.byte	-9
+ 511 01e2 CC       		.byte	-52
+ 512 01e3 EE       		.byte	-18
+ 513 01e4 CE       		.byte	-50
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 10
+
+
+ 514 01e5 FE       		.byte	-2
+ 515 01e6 D0       		.byte	-48
+ 516 01e7 42       		.byte	66
+ 517 01e8 D6       		.byte	-42
+ 518 01e9 0F       		.byte	15
+ 519 01ea 03       		.byte	3
+ 520 01eb 01       		.byte	1
+ 521 01ec 06       		.byte	6
+ 522 01ed 02       		.byte	2
+ 523 01ee 11       		.byte	17
+ 524 01ef 02       		.byte	2
+ 525 01f0 12       		.byte	18
+ 526 01f1 01       		.byte	1
+ 527 01f2 26       		.byte	38
+ 528 01f3 01       		.byte	1
+ 529 01f4 2E       		.byte	46
+ 530 01f5 02       		.byte	2
+ 531 01f6 30       		.byte	48
+ 532 01f7 01       		.byte	1
+ 533 01f8 31       		.byte	49
+ 534 01f9 01       		.byte	1
+ 535 01fa 34       		.byte	52
+ 536 01fb 02       		.byte	2
+ 537 01fc 37       		.byte	55
+ 538 01fd 02       		.byte	2
+ 539 01fe 3E       		.byte	62
+ 540 01ff 11       		.byte	17
+ 541 0200 3F       		.byte	63
+ 542 0201 40       		.byte	64
+ 543 0202 54       		.byte	84
+ 544 0203 18       		.byte	24
+ 545 0204 56       		.byte	86
+ 546 0205 04       		.byte	4
+ 547 0206 58       		.byte	88
+ 548 0207 04       		.byte	4
+ 549 0208 59       		.byte	89
+ 550 0209 04       		.byte	4
+ 551 020a 5B       		.byte	91
+ 552 020b 04       		.byte	4
+ 553 020c 5C       		.byte	92
+ 554 020d 20       		.byte	32
+ 555 020e 5D       		.byte	93
+ 556 020f 10       		.byte	16
+ 557 0210 5F       		.byte	95
+ 558 0211 01       		.byte	1
+ 559 0212 00       		.byte	0
+ 560 0213 08       		.byte	8
+ 561 0214 05       		.byte	5
+ 562 0215 01       		.byte	1
+ 563 0216 06       		.byte	6
+ 564 0217 22       		.byte	34
+ 565 0218 07       		.byte	7
+ 566 0219 14       		.byte	20
+ 567 021a 0B       		.byte	11
+ 568 021b C0       		.byte	-64
+ 569 021c 0C       		.byte	12
+ 570 021d 22       		.byte	34
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 11
+
+
+ 571 021e 0E       		.byte	14
+ 572 021f 01       		.byte	1
+ 573 0220 0F       		.byte	15
+ 574 0221 10       		.byte	16
+ 575 0222 11       		.byte	17
+ 576 0223 80       		.byte	-128
+ 577 0224 13       		.byte	19
+ 578 0225 04       		.byte	4
+ 579 0226 17       		.byte	23
+ 580 0227 29       		.byte	41
+ 581 0228 18       		.byte	24
+ 582 0229 04       		.byte	4
+ 583 022a 1B       		.byte	27
+ 584 022b 01       		.byte	1
+ 585 022c 1C       		.byte	28
+ 586 022d 20       		.byte	32
+ 587 022e 1D       		.byte	29
+ 588 022f 09       		.byte	9
+ 589 0230 1E       		.byte	30
+ 590 0231 48       		.byte	72
+ 591 0232 1F       		.byte	31
+ 592 0233 40       		.byte	64
+ 593 0234 20       		.byte	32
+ 594 0235 02       		.byte	2
+ 595 0236 21       		.byte	33
+ 596 0237 02       		.byte	2
+ 597 0238 25       		.byte	37
+ 598 0239 60       		.byte	96
+ 599 023a 26       		.byte	38
+ 600 023b 01       		.byte	1
+ 601 023c 27       		.byte	39
+ 602 023d 14       		.byte	20
+ 603 023e 2C       		.byte	44
+ 604 023f 20       		.byte	32
+ 605 0240 2E       		.byte	46
+ 606 0241 22       		.byte	34
+ 607 0242 2F       		.byte	47
+ 608 0243 02       		.byte	2
+ 609 0244 31       		.byte	49
+ 610 0245 02       		.byte	2
+ 611 0246 35       		.byte	53
+ 612 0247 80       		.byte	-128
+ 613 0248 37       		.byte	55
+ 614 0249 25       		.byte	37
+ 615 024a 39       		.byte	57
+ 616 024b 02       		.byte	2
+ 617 024c 3E       		.byte	62
+ 618 024d 49       		.byte	73
+ 619 024e 3F       		.byte	63
+ 620 024f 10       		.byte	16
+ 621 0250 45       		.byte	69
+ 622 0251 28       		.byte	40
+ 623 0252 47       		.byte	71
+ 624 0253 40       		.byte	64
+ 625 0254 4F       		.byte	79
+ 626 0255 54       		.byte	84
+ 627 0256 54       		.byte	84
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 12
+
+
+ 628 0257 04       		.byte	4
+ 629 0258 58       		.byte	88
+ 630 0259 02       		.byte	2
+ 631 025a 5C       		.byte	92
+ 632 025b 02       		.byte	2
+ 633 025c 5E       		.byte	94
+ 634 025d 0A       		.byte	10
+ 635 025e 60       		.byte	96
+ 636 025f 04       		.byte	4
+ 637 0260 63       		.byte	99
+ 638 0261 82       		.byte	-126
+ 639 0262 6D       		.byte	109
+ 640 0263 40       		.byte	64
+ 641 0264 6E       		.byte	110
+ 642 0265 14       		.byte	20
+ 643 0266 76       		.byte	118
+ 644 0267 0A       		.byte	10
+ 645 0268 77       		.byte	119
+ 646 0269 28       		.byte	40
+ 647 026a 83       		.byte	-125
+ 648 026b 40       		.byte	64
+ 649 026c 92       		.byte	-110
+ 650 026d 01       		.byte	1
+ 651 026e C0       		.byte	-64
+ 652 026f F4       		.byte	-12
+ 653 0270 C2       		.byte	-62
+ 654 0271 F8       		.byte	-8
+ 655 0272 C4       		.byte	-60
+ 656 0273 75       		.byte	117
+ 657 0274 CA       		.byte	-54
+ 658 0275 F0       		.byte	-16
+ 659 0276 CC       		.byte	-52
+ 660 0277 F1       		.byte	-15
+ 661 0278 CE       		.byte	-50
+ 662 0279 F1       		.byte	-15
+ 663 027a D0       		.byte	-48
+ 664 027b 70       		.byte	112
+ 665 027c D2       		.byte	-46
+ 666 027d 30       		.byte	48
+ 667 027e D6       		.byte	-42
+ 668 027f 41       		.byte	65
+ 669 0280 D8       		.byte	-40
+ 670 0281 0D       		.byte	13
+ 671 0282 92       		.byte	-110
+ 672 0283 01       		.byte	1
+ 673 0284 B2       		.byte	-78
+ 674 0285 01       		.byte	1
+ 675 0286 E6       		.byte	-26
+ 676 0287 01       		.byte	1
+ 677 0288 01       		.byte	1
+ 678 0289 40       		.byte	64
+ 679 028a 03       		.byte	3
+ 680 028b 83       		.byte	-125
+ 681 028c 04       		.byte	4
+ 682 028d 20       		.byte	32
+ 683 028e 06       		.byte	6
+ 684 028f 05       		.byte	5
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 13
+
+
+ 685 0290 07       		.byte	7
+ 686 0291 08       		.byte	8
+ 687 0292 08       		.byte	8
+ 688 0293 0A       		.byte	10
+ 689 0294 09       		.byte	9
+ 690 0295 A1       		.byte	-95
+ 691 0296 0A       		.byte	10
+ 692 0297 14       		.byte	20
+ 693 0298 0B       		.byte	11
+ 694 0299 16       		.byte	22
+ 695 029a 0C       		.byte	12
+ 696 029b 13       		.byte	19
+ 697 029c 0E       		.byte	14
+ 698 029d 04       		.byte	4
+ 699 029e 14       		.byte	20
+ 700 029f 13       		.byte	19
+ 701 02a0 15       		.byte	21
+ 702 02a1 1C       		.byte	28
+ 703 02a2 16       		.byte	22
+ 704 02a3 0C       		.byte	12
+ 705 02a4 17       		.byte	23
+ 706 02a5 A3       		.byte	-93
+ 707 02a6 18       		.byte	24
+ 708 02a7 40       		.byte	64
+ 709 02a8 19       		.byte	25
+ 710 02a9 A1       		.byte	-95
+ 711 02aa 1B       		.byte	27
+ 712 02ab 0E       		.byte	14
+ 713 02ac 1E       		.byte	30
+ 714 02ad 08       		.byte	8
+ 715 02ae 23       		.byte	35
+ 716 02af 80       		.byte	-128
+ 717 02b0 24       		.byte	36
+ 718 02b1 03       		.byte	3
+ 719 02b2 26       		.byte	38
+ 720 02b3 04       		.byte	4
+ 721 02b4 27       		.byte	39
+ 722 02b5 1C       		.byte	28
+ 723 02b6 31       		.byte	49
+ 724 02b7 80       		.byte	-128
+ 725 02b8 32       		.byte	50
+ 726 02b9 0F       		.byte	15
+ 727 02ba 33       		.byte	51
+ 728 02bb 1A       		.byte	26
+ 729 02bc 34       		.byte	52
+ 730 02bd 40       		.byte	64
+ 731 02be 35       		.byte	53
+ 732 02bf 0F       		.byte	15
+ 733 02c0 36       		.byte	54
+ 734 02c1 30       		.byte	48
+ 735 02c2 37       		.byte	55
+ 736 02c3 60       		.byte	96
+ 737 02c4 38       		.byte	56
+ 738 02c5 80       		.byte	-128
+ 739 02c6 39       		.byte	57
+ 740 02c7 80       		.byte	-128
+ 741 02c8 3A       		.byte	58
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 14
+
+
+ 742 02c9 08       		.byte	8
+ 743 02ca 3B       		.byte	59
+ 744 02cb 28       		.byte	40
+ 745 02cc 3E       		.byte	62
+ 746 02cd 10       		.byte	16
+ 747 02ce 3F       		.byte	63
+ 748 02cf 01       		.byte	1
+ 749 02d0 40       		.byte	64
+ 750 02d1 31       		.byte	49
+ 751 02d2 41       		.byte	65
+ 752 02d3 02       		.byte	2
+ 753 02d4 45       		.byte	69
+ 754 02d5 E0       		.byte	-32
+ 755 02d6 46       		.byte	70
+ 756 02d7 0C       		.byte	12
+ 757 02d8 47       		.byte	71
+ 758 02d9 BE       		.byte	-66
+ 759 02da 48       		.byte	72
+ 760 02db 36       		.byte	54
+ 761 02dc 49       		.byte	73
+ 762 02dd FF       		.byte	-1
+ 763 02de 4A       		.byte	74
+ 764 02df FF       		.byte	-1
+ 765 02e0 4B       		.byte	75
+ 766 02e1 FF       		.byte	-1
+ 767 02e2 4E       		.byte	78
+ 768 02e3 F0       		.byte	-16
+ 769 02e4 4F       		.byte	79
+ 770 02e5 44       		.byte	68
+ 771 02e6 50       		.byte	80
+ 772 02e7 0C       		.byte	12
+ 773 02e8 54       		.byte	84
+ 774 02e9 01       		.byte	1
+ 775 02ea 58       		.byte	88
+ 776 02eb 04       		.byte	4
+ 777 02ec 59       		.byte	89
+ 778 02ed 04       		.byte	4
+ 779 02ee 5A       		.byte	90
+ 780 02ef 04       		.byte	4
+ 781 02f0 5B       		.byte	91
+ 782 02f1 04       		.byte	4
+ 783 02f2 5C       		.byte	92
+ 784 02f3 10       		.byte	16
+ 785 02f4 5D       		.byte	93
+ 786 02f5 11       		.byte	17
+ 787 02f6 5F       		.byte	95
+ 788 02f7 01       		.byte	1
+ 789 02f8 66       		.byte	102
+ 790 02f9 C0       		.byte	-64
+ 791 02fa 6A       		.byte	106
+ 792 02fb 40       		.byte	64
+ 793 02fc 6B       		.byte	107
+ 794 02fd 02       		.byte	2
+ 795 02fe 83       		.byte	-125
+ 796 02ff 02       		.byte	2
+ 797 0300 87       		.byte	-121
+ 798 0301 04       		.byte	4
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 15
+
+
+ 799 0302 94       		.byte	-108
+ 800 0303 02       		.byte	2
+ 801 0304 97       		.byte	-105
+ 802 0305 04       		.byte	4
+ 803 0306 98       		.byte	-104
+ 804 0307 04       		.byte	4
+ 805 0308 9E       		.byte	-98
+ 806 0309 01       		.byte	1
+ 807 030a A3       		.byte	-93
+ 808 030b 01       		.byte	1
+ 809 030c AF       		.byte	-81
+ 810 030d 01       		.byte	1
+ 811 030e B0       		.byte	-80
+ 812 030f 01       		.byte	1
+ 813 0310 B1       		.byte	-79
+ 814 0311 01       		.byte	1
+ 815 0312 B2       		.byte	-78
+ 816 0313 04       		.byte	4
+ 817 0314 B3       		.byte	-77
+ 818 0315 02       		.byte	2
+ 819 0316 B4       		.byte	-76
+ 820 0317 02       		.byte	2
+ 821 0318 B5       		.byte	-75
+ 822 0319 04       		.byte	4
+ 823 031a BE       		.byte	-66
+ 824 031b 14       		.byte	20
+ 825 031c BF       		.byte	-65
+ 826 031d 11       		.byte	17
+ 827 031e C0       		.byte	-64
+ 828 031f 36       		.byte	54
+ 829 0320 C1       		.byte	-63
+ 830 0321 05       		.byte	5
+ 831 0322 C5       		.byte	-59
+ 832 0323 EE       		.byte	-18
+ 833 0324 C6       		.byte	-58
+ 834 0325 CB       		.byte	-53
+ 835 0326 C8       		.byte	-56
+ 836 0327 0F       		.byte	15
+ 837 0328 C9       		.byte	-55
+ 838 0329 FF       		.byte	-1
+ 839 032a CA       		.byte	-54
+ 840 032b FF       		.byte	-1
+ 841 032c CB       		.byte	-53
+ 842 032d FF       		.byte	-1
+ 843 032e CE       		.byte	-50
+ 844 032f F0       		.byte	-16
+ 845 0330 CF       		.byte	-49
+ 846 0331 44       		.byte	68
+ 847 0332 D0       		.byte	-48
+ 848 0333 0C       		.byte	12
+ 849 0334 D4       		.byte	-44
+ 850 0335 18       		.byte	24
+ 851 0336 D6       		.byte	-42
+ 852 0337 04       		.byte	4
+ 853 0338 D8       		.byte	-40
+ 854 0339 04       		.byte	4
+ 855 033a D9       		.byte	-39
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 16
+
+
+ 856 033b 04       		.byte	4
+ 857 033c DA       		.byte	-38
+ 858 033d 04       		.byte	4
+ 859 033e DB       		.byte	-37
+ 860 033f 04       		.byte	4
+ 861 0340 DC       		.byte	-36
+ 862 0341 01       		.byte	1
+ 863 0342 DF       		.byte	-33
+ 864 0343 01       		.byte	1
+ 865 0344 E6       		.byte	-26
+ 866 0345 C0       		.byte	-64
+ 867 0346 EA       		.byte	-22
+ 868 0347 40       		.byte	64
+ 869 0348 EB       		.byte	-21
+ 870 0349 02       		.byte	2
+ 871 034a 04       		.byte	4
+ 872 034b 08       		.byte	8
+ 873 034c 05       		.byte	5
+ 874 034d 60       		.byte	96
+ 875 034e 0A       		.byte	10
+ 876 034f 21       		.byte	33
+ 877 0350 0B       		.byte	11
+ 878 0351 08       		.byte	8
+ 879 0352 0D       		.byte	13
+ 880 0353 80       		.byte	-128
+ 881 0354 0E       		.byte	14
+ 882 0355 20       		.byte	32
+ 883 0356 0F       		.byte	15
+ 884 0357 08       		.byte	8
+ 885 0358 16       		.byte	22
+ 886 0359 10       		.byte	16
+ 887 035a 19       		.byte	25
+ 888 035b 04       		.byte	4
+ 889 035c 1B       		.byte	27
+ 890 035d 22       		.byte	34
+ 891 035e 1D       		.byte	29
+ 892 035f 80       		.byte	-128
+ 893 0360 1E       		.byte	30
+ 894 0361 28       		.byte	40
+ 895 0362 1F       		.byte	31
+ 896 0363 48       		.byte	72
+ 897 0364 20       		.byte	32
+ 898 0365 04       		.byte	4
+ 899 0366 23       		.byte	35
+ 900 0367 50       		.byte	80
+ 901 0368 24       		.byte	36
+ 902 0369 40       		.byte	64
+ 903 036a 26       		.byte	38
+ 904 036b 40       		.byte	64
+ 905 036c 27       		.byte	39
+ 906 036d 28       		.byte	40
+ 907 036e 29       		.byte	41
+ 908 036f 82       		.byte	-126
+ 909 0370 2F       		.byte	47
+ 910 0371 90       		.byte	-112
+ 911 0372 32       		.byte	50
+ 912 0373 08       		.byte	8
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 17
+
+
+ 913 0374 37       		.byte	55
+ 914 0375 28       		.byte	40
+ 915 0376 39       		.byte	57
+ 916 0377 02       		.byte	2
+ 917 0378 3A       		.byte	58
+ 918 0379 40       		.byte	64
+ 919 037a 3B       		.byte	59
+ 920 037b 44       		.byte	68
+ 921 037c 3D       		.byte	61
+ 922 037d 20       		.byte	32
+ 923 037e 3E       		.byte	62
+ 924 037f 0A       		.byte	10
+ 925 0380 3F       		.byte	63
+ 926 0381 02       		.byte	2
+ 927 0382 43       		.byte	67
+ 928 0383 08       		.byte	8
+ 929 0384 46       		.byte	70
+ 930 0385 02       		.byte	2
+ 931 0386 47       		.byte	71
+ 932 0387 24       		.byte	36
+ 933 0388 48       		.byte	72
+ 934 0389 08       		.byte	8
+ 935 038a 49       		.byte	73
+ 936 038b 41       		.byte	65
+ 937 038c 4A       		.byte	74
+ 938 038d 01       		.byte	1
+ 939 038e 4B       		.byte	75
+ 940 038f 08       		.byte	8
+ 941 0390 4D       		.byte	77
+ 942 0391 01       		.byte	1
+ 943 0392 52       		.byte	82
+ 944 0393 B0       		.byte	-80
+ 945 0394 56       		.byte	86
+ 946 0395 81       		.byte	-127
+ 947 0396 57       		.byte	87
+ 948 0397 84       		.byte	-124
+ 949 0398 5A       		.byte	90
+ 950 0399 02       		.byte	2
+ 951 039a 5C       		.byte	92
+ 952 039b 60       		.byte	96
+ 953 039c 5D       		.byte	93
+ 954 039d 01       		.byte	1
+ 955 039e 5E       		.byte	94
+ 956 039f 08       		.byte	8
+ 957 03a0 60       		.byte	96
+ 958 03a1 84       		.byte	-124
+ 959 03a2 62       		.byte	98
+ 960 03a3 40       		.byte	64
+ 961 03a4 80       		.byte	-128
+ 962 03a5 80       		.byte	-128
+ 963 03a6 8F       		.byte	-113
+ 964 03a7 20       		.byte	32
+ 965 03a8 90       		.byte	-112
+ 966 03a9 08       		.byte	8
+ 967 03aa 92       		.byte	-110
+ 968 03ab 35       		.byte	53
+ 969 03ac 97       		.byte	-105
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 18
+
+
+ 970 03ad A0       		.byte	-96
+ 971 03ae 99       		.byte	-103
+ 972 03af 20       		.byte	32
+ 973 03b0 9A       		.byte	-102
+ 974 03b1 08       		.byte	8
+ 975 03b2 9B       		.byte	-101
+ 976 03b3 04       		.byte	4
+ 977 03b4 9D       		.byte	-99
+ 978 03b5 05       		.byte	5
+ 979 03b6 9E       		.byte	-98
+ 980 03b7 81       		.byte	-127
+ 981 03b8 9F       		.byte	-97
+ 982 03b9 29       		.byte	41
+ 983 03ba A0       		.byte	-96
+ 984 03bb 08       		.byte	8
+ 985 03bc A1       		.byte	-95
+ 986 03bd 50       		.byte	80
+ 987 03be A2       		.byte	-94
+ 988 03bf 01       		.byte	1
+ 989 03c0 A3       		.byte	-93
+ 990 03c1 01       		.byte	1
+ 991 03c2 A6       		.byte	-90
+ 992 03c3 A0       		.byte	-96
+ 993 03c4 A7       		.byte	-89
+ 994 03c5 0A       		.byte	10
+ 995 03c6 B0       		.byte	-80
+ 996 03c7 20       		.byte	32
+ 997 03c8 B1       		.byte	-79
+ 998 03c9 40       		.byte	64
+ 999 03ca C0       		.byte	-64
+ 1000 03cb E0       		.byte	-32
+ 1001 03cc C2       		.byte	-62
+ 1002 03cd E7       		.byte	-25
+ 1003 03ce C4       		.byte	-60
+ 1004 03cf 20       		.byte	32
+ 1005 03d0 CA       		.byte	-54
+ 1006 03d1 C9       		.byte	-55
+ 1007 03d2 CC       		.byte	-52
+ 1008 03d3 62       		.byte	98
+ 1009 03d4 CE       		.byte	-50
+ 1010 03d5 E3       		.byte	-29
+ 1011 03d6 D0       		.byte	-48
+ 1012 03d7 72       		.byte	114
+ 1013 03d8 D2       		.byte	-46
+ 1014 03d9 0C       		.byte	12
+ 1015 03da D6       		.byte	-42
+ 1016 03db F1       		.byte	-15
+ 1017 03dc D8       		.byte	-40
+ 1018 03dd 0D       		.byte	13
+ 1019 03de 81       		.byte	-127
+ 1020 03df 02       		.byte	2
+ 1021 03e0 83       		.byte	-125
+ 1022 03e1 01       		.byte	1
+ 1023 03e2 84       		.byte	-124
+ 1024 03e3 E7       		.byte	-25
+ 1025 03e4 85       		.byte	-123
+ 1026 03e5 07       		.byte	7
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 19
+
+
+ 1027 03e6 89       		.byte	-119
+ 1028 03e7 07       		.byte	7
+ 1029 03e8 8D       		.byte	-115
+ 1030 03e9 04       		.byte	4
+ 1031 03ea 8F       		.byte	-113
+ 1032 03eb 01       		.byte	1
+ 1033 03ec 94       		.byte	-108
+ 1034 03ed 02       		.byte	2
+ 1035 03ee 96       		.byte	-106
+ 1036 03ef 15       		.byte	21
+ 1037 03f0 98       		.byte	-104
+ 1038 03f1 44       		.byte	68
+ 1039 03f2 9A       		.byte	-102
+ 1040 03f3 2A       		.byte	42
+ 1041 03f4 9D       		.byte	-99
+ 1042 03f5 01       		.byte	1
+ 1043 03f6 9F       		.byte	-97
+ 1044 03f7 06       		.byte	6
+ 1045 03f8 A0       		.byte	-96
+ 1046 03f9 21       		.byte	33
+ 1047 03fa A2       		.byte	-94
+ 1048 03fb 4A       		.byte	74
+ 1049 03fc A8       		.byte	-88
+ 1050 03fd E7       		.byte	-25
+ 1051 03fe AC       		.byte	-84
+ 1052 03ff 80       		.byte	-128
+ 1053 0400 B0       		.byte	-80
+ 1054 0401 18       		.byte	24
+ 1055 0402 B2       		.byte	-78
+ 1056 0403 07       		.byte	7
+ 1057 0404 B4       		.byte	-76
+ 1058 0405 60       		.byte	96
+ 1059 0406 B6       		.byte	-74
+ 1060 0407 80       		.byte	-128
+ 1061 0408 B7       		.byte	-73
+ 1062 0409 07       		.byte	7
+ 1063 040a BE       		.byte	-66
+ 1064 040b 01       		.byte	1
+ 1065 040c D8       		.byte	-40
+ 1066 040d 04       		.byte	4
+ 1067 040e D9       		.byte	-39
+ 1068 040f 04       		.byte	4
+ 1069 0410 DC       		.byte	-36
+ 1070 0411 10       		.byte	16
+ 1071 0412 DF       		.byte	-33
+ 1072 0413 01       		.byte	1
+ 1073 0414 00       		.byte	0
+ 1074 0415 A6       		.byte	-90
+ 1075 0416 07       		.byte	7
+ 1076 0417 10       		.byte	16
+ 1077 0418 08       		.byte	8
+ 1078 0419 90       		.byte	-112
+ 1079 041a 0A       		.byte	10
+ 1080 041b 20       		.byte	32
+ 1081 041c 0C       		.byte	12
+ 1082 041d 10       		.byte	16
+ 1083 041e 0E       		.byte	14
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 20
+
+
+ 1084 041f 28       		.byte	40
+ 1085 0420 10       		.byte	16
+ 1086 0421 A8       		.byte	-88
+ 1087 0422 13       		.byte	19
+ 1088 0423 40       		.byte	64
+ 1089 0424 15       		.byte	21
+ 1090 0425 52       		.byte	82
+ 1091 0426 18       		.byte	24
+ 1092 0427 04       		.byte	4
+ 1093 0428 19       		.byte	25
+ 1094 0429 81       		.byte	-127
+ 1095 042a 1A       		.byte	26
+ 1096 042b 20       		.byte	32
+ 1097 042c 1B       		.byte	27
+ 1098 042d 04       		.byte	4
+ 1099 042e 1C       		.byte	28
+ 1100 042f 20       		.byte	32
+ 1101 0430 1D       		.byte	29
+ 1102 0431 04       		.byte	4
+ 1103 0432 1E       		.byte	30
+ 1104 0433 68       		.byte	104
+ 1105 0434 1F       		.byte	31
+ 1106 0435 E0       		.byte	-32
+ 1107 0436 20       		.byte	32
+ 1108 0437 82       		.byte	-126
+ 1109 0438 22       		.byte	34
+ 1110 0439 2A       		.byte	42
+ 1111 043a 23       		.byte	35
+ 1112 043b 01       		.byte	1
+ 1113 043c 26       		.byte	38
+ 1114 043d 80       		.byte	-128
+ 1115 043e 27       		.byte	39
+ 1116 043f 01       		.byte	1
+ 1117 0440 28       		.byte	40
+ 1118 0441 80       		.byte	-128
+ 1119 0442 2B       		.byte	43
+ 1120 0443 26       		.byte	38
+ 1121 0444 30       		.byte	48
+ 1122 0445 A0       		.byte	-96
+ 1123 0446 31       		.byte	49
+ 1124 0447 04       		.byte	4
+ 1125 0448 32       		.byte	50
+ 1126 0449 02       		.byte	2
+ 1127 044a 36       		.byte	54
+ 1128 044b 80       		.byte	-128
+ 1129 044c 38       		.byte	56
+ 1130 044d 08       		.byte	8
+ 1131 044e 3B       		.byte	59
+ 1132 044f D1       		.byte	-47
+ 1133 0450 3D       		.byte	61
+ 1134 0451 80       		.byte	-128
+ 1135 0452 3E       		.byte	62
+ 1136 0453 15       		.byte	21
+ 1137 0454 40       		.byte	64
+ 1138 0455 24       		.byte	36
+ 1139 0456 42       		.byte	66
+ 1140 0457 40       		.byte	64
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 21
+
+
+ 1141 0458 43       		.byte	67
+ 1142 0459 80       		.byte	-128
+ 1143 045a 49       		.byte	73
+ 1144 045b 82       		.byte	-126
+ 1145 045c 4B       		.byte	75
+ 1146 045d 04       		.byte	4
+ 1147 045e 59       		.byte	89
+ 1148 045f 01       		.byte	1
+ 1149 0460 69       		.byte	105
+ 1150 0461 50       		.byte	80
+ 1151 0462 6B       		.byte	107
+ 1152 0463 10       		.byte	16
+ 1153 0464 70       		.byte	112
+ 1154 0465 AC       		.byte	-84
+ 1155 0466 80       		.byte	-128
+ 1156 0467 04       		.byte	4
+ 1157 0468 83       		.byte	-125
+ 1158 0469 02       		.byte	2
+ 1159 046a 86       		.byte	-122
+ 1160 046b 21       		.byte	33
+ 1161 046c 88       		.byte	-120
+ 1162 046d A1       		.byte	-95
+ 1163 046e 89       		.byte	-119
+ 1164 046f 01       		.byte	1
+ 1165 0470 92       		.byte	-110
+ 1166 0471 15       		.byte	21
+ 1167 0472 93       		.byte	-109
+ 1168 0473 10       		.byte	16
+ 1169 0474 95       		.byte	-107
+ 1170 0475 02       		.byte	2
+ 1171 0476 96       		.byte	-106
+ 1172 0477 02       		.byte	2
+ 1173 0478 97       		.byte	-105
+ 1174 0479 04       		.byte	4
+ 1175 047a 9D       		.byte	-99
+ 1176 047b 82       		.byte	-126
+ 1177 047c 9F       		.byte	-97
+ 1178 047d 01       		.byte	1
+ 1179 047e A1       		.byte	-95
+ 1180 047f 40       		.byte	64
+ 1181 0480 A6       		.byte	-90
+ 1182 0481 08       		.byte	8
+ 1183 0482 B0       		.byte	-80
+ 1184 0483 20       		.byte	32
+ 1185 0484 B2       		.byte	-78
+ 1186 0485 40       		.byte	64
+ 1187 0486 B3       		.byte	-77
+ 1188 0487 90       		.byte	-112
+ 1189 0488 C0       		.byte	-64
+ 1190 0489 2F       		.byte	47
+ 1191 048a C2       		.byte	-62
+ 1192 048b 67       		.byte	103
+ 1193 048c C4       		.byte	-60
+ 1194 048d DF       		.byte	-33
+ 1195 048e CA       		.byte	-54
+ 1196 048f 0F       		.byte	15
+ 1197 0490 CC       		.byte	-52
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 22
+
+
+ 1198 0491 1F       		.byte	31
+ 1199 0492 CE       		.byte	-50
+ 1200 0493 FF       		.byte	-1
+ 1201 0494 D0       		.byte	-48
+ 1202 0495 0F       		.byte	15
+ 1203 0496 D2       		.byte	-46
+ 1204 0497 08       		.byte	8
+ 1205 0498 D6       		.byte	-42
+ 1206 0499 01       		.byte	1
+ 1207 049a 32       		.byte	50
+ 1208 049b 40       		.byte	64
+ 1209 049c 35       		.byte	53
+ 1210 049d 80       		.byte	-128
+ 1211 049e CC       		.byte	-52
+ 1212 049f 30       		.byte	48
+ 1213 04a0 96       		.byte	-106
+ 1214 04a1 80       		.byte	-128
+ 1215 04a2 9D       		.byte	-99
+ 1216 04a3 80       		.byte	-128
+ 1217 04a4 81       		.byte	-127
+ 1218 04a5 80       		.byte	-128
+ 1219 04a6 96       		.byte	-106
+ 1220 04a7 80       		.byte	-128
+ 1221 04a8 9D       		.byte	-99
+ 1222 04a9 80       		.byte	-128
+ 1223 04aa E2       		.byte	-30
+ 1224 04ab 20       		.byte	32
+ 1225 04ac 96       		.byte	-106
+ 1226 04ad 80       		.byte	-128
+ 1227 04ae 10       		.byte	16
+ 1228 04af 80       		.byte	-128
+ 1229 04b0 C4       		.byte	-60
+ 1230 04b1 08       		.byte	8
+ 1231 04b2 03       		.byte	3
+ 1232 04b3 08       		.byte	8
+ 1233 04b4 58       		.byte	88
+ 1234 04b5 40       		.byte	64
+ 1235 04b6 B0       		.byte	-80
+ 1236 04b7 80       		.byte	-128
+ 1237 04b8 C0       		.byte	-64
+ 1238 04b9 02       		.byte	2
+ 1239 04ba D4       		.byte	-44
+ 1240 04bb 01       		.byte	1
+ 1241 04bc EE       		.byte	-18
+ 1242 04bd 01       		.byte	1
+ 1243 04be 9C       		.byte	-100
+ 1244 04bf 40       		.byte	64
+ 1245 04c0 A3       		.byte	-93
+ 1246 04c1 08       		.byte	8
+ 1247 04c2 8F       		.byte	-113
+ 1248 04c3 02       		.byte	2
+ 1249 04c4 B0       		.byte	-80
+ 1250 04c5 40       		.byte	64
+ 1251 04c6 B3       		.byte	-77
+ 1252 04c7 08       		.byte	8
+ 1253 04c8 E4       		.byte	-28
+ 1254 04c9 02       		.byte	2
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 23
+
+
+ 1255 04ca E8       		.byte	-24
+ 1256 04cb 01       		.byte	1
+ 1257 04cc EA       		.byte	-22
+ 1258 04cd 04       		.byte	4
+ 1259 04ce 82       		.byte	-126
+ 1260 04cf 40       		.byte	64
+ 1261 04d0 96       		.byte	-106
+ 1262 04d1 80       		.byte	-128
+ 1263 04d2 E6       		.byte	-26
+ 1264 04d3 80       		.byte	-128
+ 1265 04d4 8C       		.byte	-116
+ 1266 04d5 01       		.byte	1
+ 1267 04d6 A3       		.byte	-93
+ 1268 04d7 02       		.byte	2
+ 1269 04d8 E0       		.byte	-32
+ 1270 04d9 02       		.byte	2
+ 1271 04da 10       		.byte	16
+ 1272 04db 10       		.byte	16
+ 1273 04dc 70       		.byte	112
+ 1274 04dd 01       		.byte	1
+ 1275 04de 7F       		.byte	127
+ 1276 04df 02       		.byte	2
+ 1277 04e0 88       		.byte	-120
+ 1278 04e1 10       		.byte	16
+ 1279 04e2 90       		.byte	-112
+ 1280 04e3 02       		.byte	2
+ 1281 04e4 A3       		.byte	-93
+ 1282 04e5 02       		.byte	2
+ 1283 04e6 C4       		.byte	-60
+ 1284 04e7 08       		.byte	8
+ 1285 04e8 DC       		.byte	-36
+ 1286 04e9 01       		.byte	1
+ 1287 04ea DE       		.byte	-34
+ 1288 04eb 04       		.byte	4
+ 1289 04ec E2       		.byte	-30
+ 1290 04ed 04       		.byte	4
+ 1291 04ee 00       		.byte	0
+ 1292 04ef 07       		.byte	7
+ 1293 04f0 0C       		.byte	12
+ 1294 04f1 07       		.byte	7
+ 1295 04f2 10       		.byte	16
+ 1296 04f3 03       		.byte	3
+ 1297 04f4 1C       		.byte	28
+ 1298 04f5 03       		.byte	3
+ 1299 04f6 00       		.byte	0
+ 1300 04f7 0F       		.byte	15
+ 1301 04f8 20       		.byte	32
+ 1302 04f9 A0       		.byte	-96
+ 1303 04fa 00       		.byte	0
+ 1304 04fb 00       		.byte	0
+ 1305 04fc 50       		.byte	80
+ 1306 04fd 00       		.byte	0
+ 1307 04fe 00       		.byte	0
+ 1308 04ff 00       		.byte	0
+ 1309 0500 1F       		.byte	31
+ 1310 0501 24       		.byte	36
+ 1311 0502 60       		.byte	96
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 24
+
+
+ 1312 0503 00       		.byte	0
+ 1313 0504 5C       		.byte	92
+ 1314 0505 08       		.byte	8
+ 1315 0506 23       		.byte	35
+ 1316 0507 00       		.byte	0
+ 1317 0508 7F       		.byte	127
+ 1318 0509 00       		.byte	0
+ 1319 050a 00       		.byte	0
+ 1320 050b 63       		.byte	99
+ 1321 050c 08       		.byte	8
+ 1322 050d 1C       		.byte	28
+ 1323 050e 00       		.byte	0
+ 1324 050f E1       		.byte	-31
+ 1325 0510 73       		.byte	115
+ 1326 0511 60       		.byte	96
+ 1327 0512 0C       		.byte	12
+ 1328 0513 00       		.byte	0
+ 1329 0514 00       		.byte	0
+ 1330 0515 FF       		.byte	-1
+ 1331 0516 63       		.byte	99
+ 1332 0517 00       		.byte	0
+ 1333 0518 02       		.byte	2
+ 1334 0519 18       		.byte	24
+ 1335 051a 00       		.byte	0
+ 1336 051b 00       		.byte	0
+ 1337 051c 01       		.byte	1
+ 1338 051d E7       		.byte	-25
+ 1339 051e 00       		.byte	0
+ 1340 051f 18       		.byte	24
+ 1341 0520 03       		.byte	3
+ 1342 0521 10       		.byte	16
+ 1343 0522 00       		.byte	0
+ 1344 0523 00       		.byte	0
+ 1345 0524 04       		.byte	4
+ 1346 0525 40       		.byte	64
+ 1347 0526 00       		.byte	0
+ 1348 0527 00       		.byte	0
+ 1349 0528 0C       		.byte	12
+ 1350 0529 1C       		.byte	28
+ 1351 052a 00       		.byte	0
+ 1352 052b E2       		.byte	-30
+ 1353 052c 00       		.byte	0
+ 1354 052d 00       		.byte	0
+ 1355 052e 00       		.byte	0
+ 1356 052f 04       		.byte	4
+ 1357 0530 2C       		.byte	44
+ 1358 0531 60       		.byte	96
+ 1359 0532 0F       		.byte	15
+ 1360 0533 1F       		.byte	31
+ 1361 0534 10       		.byte	16
+ 1362 0535 00       		.byte	0
+ 1363 0536 4C       		.byte	76
+ 1364 0537 80       		.byte	-128
+ 1365 0538 00       		.byte	0
+ 1366 0539 80       		.byte	-128
+ 1367 053a 0A       		.byte	10
+ 1368 053b 28       		.byte	40
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 25
+
+
+ 1369 053c 00       		.byte	0
+ 1370 053d 00       		.byte	0
+ 1371 053e 10       		.byte	16
+ 1372 053f 00       		.byte	0
+ 1373 0540 36       		.byte	54
+ 1374 0541 02       		.byte	2
+ 1375 0542 05       		.byte	5
+ 1376 0543 00       		.byte	0
+ 1377 0544 01       		.byte	1
+ 1378 0545 0C       		.byte	12
+ 1379 0546 00       		.byte	0
+ 1380 0547 0E       		.byte	14
+ 1381 0548 11       		.byte	17
+ 1382 0549 FF       		.byte	-1
+ 1383 054a FF       		.byte	-1
+ 1384 054b FF       		.byte	-1
+ 1385 054c 62       		.byte	98
+ 1386 054d A0       		.byte	-96
+ 1387 054e F0       		.byte	-16
+ 1388 054f 41       		.byte	65
+ 1389 0550 0C       		.byte	12
+ 1390 0551 00       		.byte	0
+ 1391 0552 00       		.byte	0
+ 1392 0553 00       		.byte	0
+ 1393 0554 00       		.byte	0
+ 1394 0555 00       		.byte	0
+ 1395 0556 02       		.byte	2
+ 1396 0557 12       		.byte	18
+ 1397 0558 04       		.byte	4
+ 1398 0559 04       		.byte	4
+ 1399 055a 04       		.byte	4
+ 1400 055b 04       		.byte	4
+ 1401 055c 11       		.byte	17
+ 1402 055d 11       		.byte	17
+ 1403 055e 00       		.byte	0
+ 1404 055f 01       		.byte	1
+ 1405 0560 00       		.byte	0
+ 1406 0561 00       		.byte	0
+ 1407 0562 00       		.byte	0
+ 1408 0563 00       		.byte	0
+ 1409 0564 00       		.byte	0
+ 1410 0565 00       		.byte	0
+ 1411 0566 40       		.byte	64
+ 1412 0567 02       		.byte	2
+ 1413 0568 00       		.byte	0
+ 1414 0569 10       		.byte	16
+ 1415 056a 30       		.byte	48
+ 1416 056b 10       		.byte	16
+ 1417 056c 00       		.byte	0
+ 1418 056d 10       		.byte	16
+ 1419 056e 10       		.byte	16
+ 1420 056f 12       		.byte	18
+ 1421 0570 00       		.byte	0
+ 1422 0571 00       		.byte	0
+ 1423 0572 00       		.byte	0
+ 1424 0573 00       		.byte	0
+ 1425 0574 00       		.byte	0
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 26
+
+
+ 1426 0575 00       		.byte	0
+ 1427 0576 00       		.byte	0
+ 1428 0577 00       		.byte	0
+ 1429 0578 00       		.byte	0
+ 1430 0579 00       		.byte	0
+ 1431 057a 00       		.byte	0
+ 1432 057b 00       		.byte	0
+ 1433 057c 00       		.byte	0
+ 1434 057d 00       		.byte	0
+ 1435 057e 00       		.byte	0
+ 1436 057f 00       		.byte	0
+ 1437 0580 7F       		.byte	127
+ 1438 0581 FF       		.byte	-1
+ 1439 0582 00       		.byte	0
+ 1440 0583 00       		.byte	0
+ 1441 0584 73       		.byte	115
+ 1442 0585 18       		.byte	24
+ 1443 0586 0C       		.byte	12
+ 1444 0587 00       		.byte	0
+ 1445 0588 03       		.byte	3
+ 1446 0589 00       		.byte	0
+ 1447 058a 00       		.byte	0
+ 1448 058b 04       		.byte	4
+ 1449 058c 5C       		.byte	92
+ 1450 058d 00       		.byte	0
+ 1451 058e 23       		.byte	35
+ 1452 058f 63       		.byte	99
+ 1453 0590 00       		.byte	0
+ 1454 0591 1C       		.byte	28
+ 1455 0592 00       		.byte	0
+ 1456 0593 E2       		.byte	-30
+ 1457 0594 1F       		.byte	31
+ 1458 0595 60       		.byte	96
+ 1459 0596 60       		.byte	96
+ 1460 0597 00       		.byte	0
+ 1461 0598 02       		.byte	2
+ 1462 0599 08       		.byte	8
+ 1463 059a 00       		.byte	0
+ 1464 059b 00       		.byte	0
+ 1465 059c 01       		.byte	1
+ 1466 059d 10       		.byte	16
+ 1467 059e 00       		.byte	0
+ 1468 059f 00       		.byte	0
+ 1469 05a0 08       		.byte	8
+ 1470 05a1 24       		.byte	36
+ 1471 05a2 00       		.byte	0
+ 1472 05a3 00       		.byte	0
+ 1473 05a4 04       		.byte	4
+ 1474 05a5 40       		.byte	64
+ 1475 05a6 00       		.byte	0
+ 1476 05a7 00       		.byte	0
+ 1477 05a8 0C       		.byte	12
+ 1478 05a9 1C       		.byte	28
+ 1479 05aa 00       		.byte	0
+ 1480 05ab E1       		.byte	-31
+ 1481 05ac 00       		.byte	0
+ 1482 05ad E7       		.byte	-25
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 27
+
+
+ 1483 05ae 63       		.byte	99
+ 1484 05af 18       		.byte	24
+ 1485 05b0 10       		.byte	16
+ 1486 05b1 1F       		.byte	31
+ 1487 05b2 2C       		.byte	44
+ 1488 05b3 80       		.byte	-128
+ 1489 05b4 0F       		.byte	15
+ 1490 05b5 60       		.byte	96
+ 1491 05b6 4C       		.byte	76
+ 1492 05b7 00       		.byte	0
+ 1493 05b8 00       		.byte	0
+ 1494 05b9 08       		.byte	8
+ 1495 05ba 28       		.byte	40
+ 1496 05bb 82       		.byte	-126
+ 1497 05bc 00       		.byte	0
+ 1498 05bd 00       		.byte	0
+ 1499 05be 01       		.byte	1
+ 1500 05bf 00       		.byte	0
+ 1501 05c0 21       		.byte	33
+ 1502 05c1 03       		.byte	3
+ 1503 05c2 05       		.byte	5
+ 1504 05c3 00       		.byte	0
+ 1505 05c4 04       		.byte	4
+ 1506 05c5 CE       		.byte	-50
+ 1507 05c6 00       		.byte	0
+ 1508 05c7 00       		.byte	0
+ 1509 05c8 03       		.byte	3
+ 1510 05c9 FF       		.byte	-1
+ 1511 05ca FF       		.byte	-1
+ 1512 05cb FF       		.byte	-1
+ 1513 05cc 62       		.byte	98
+ 1514 05cd A0       		.byte	-96
+ 1515 05ce F0       		.byte	-16
+ 1516 05cf 41       		.byte	65
+ 1517 05d0 0C       		.byte	12
+ 1518 05d1 00       		.byte	0
+ 1519 05d2 00       		.byte	0
+ 1520 05d3 00       		.byte	0
+ 1521 05d4 00       		.byte	0
+ 1522 05d5 00       		.byte	0
+ 1523 05d6 02       		.byte	2
+ 1524 05d7 13       		.byte	19
+ 1525 05d8 04       		.byte	4
+ 1526 05d9 04       		.byte	4
+ 1527 05da 04       		.byte	4
+ 1528 05db 04       		.byte	4
+ 1529 05dc 00       		.byte	0
+ 1530 05dd 00       		.byte	0
+ 1531 05de 00       		.byte	0
+ 1532 05df 01       		.byte	1
+ 1533 05e0 00       		.byte	0
+ 1534 05e1 00       		.byte	0
+ 1535 05e2 00       		.byte	0
+ 1536 05e3 00       		.byte	0
+ 1537 05e4 00       		.byte	0
+ 1538 05e5 00       		.byte	0
+ 1539 05e6 40       		.byte	64
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 28
+
+
+ 1540 05e7 02       		.byte	2
+ 1541 05e8 00       		.byte	0
+ 1542 05e9 10       		.byte	16
+ 1543 05ea 30       		.byte	48
+ 1544 05eb 10       		.byte	16
+ 1545 05ec 00       		.byte	0
+ 1546 05ed 10       		.byte	16
+ 1547 05ee 10       		.byte	16
+ 1548 05ef 12       		.byte	18
+ 1549 05f0 00       		.byte	0
+ 1550 05f1 00       		.byte	0
+ 1551 05f2 00       		.byte	0
+ 1552 05f3 00       		.byte	0
+ 1553 05f4 00       		.byte	0
+ 1554 05f5 00       		.byte	0
+ 1555 05f6 00       		.byte	0
+ 1556 05f7 00       		.byte	0
+ 1557 05f8 00       		.byte	0
+ 1558 05f9 00       		.byte	0
+ 1559 05fa 00       		.byte	0
+ 1560 05fb 00       		.byte	0
+ 1561 05fc 00       		.byte	0
+ 1562 05fd 00       		.byte	0
+ 1563 05fe 00       		.byte	0
+ 1564 05ff 00       		.byte	0
+ 1565 0600 A0       		.byte	-96
+ 1566 0601 00       		.byte	0
+ 1567 0602 50       		.byte	80
+ 1568 0603 A0       		.byte	-96
+ 1569 0604 A0       		.byte	-96
+ 1570 0605 00       		.byte	0
+ 1571 0606 A0       		.byte	-96
+ 1572 0607 00       		.byte	0
+ 1573 0608 00       		.byte	0
+ 1574 0609 00       		.byte	0
+ 1575 060a 00       		.byte	0
+ 1576 060b 00       		.byte	0
+ 1577 060c 00       		.byte	0
+ 1578 060d 0B       		.byte	11
+ 1579 060e 0B       		.byte	11
+ 1580 060f 00       		.byte	0
+ 1581 0610 00       		.byte	0
+ 1582 0611 00       		.byte	0
+ 1583 0612 00       		.byte	0
+ 1584 0613 00       		.byte	0
+ 1585 0614 04       		.byte	4
+ 1586 0615 00       		.byte	0
+ 1587 0616 00       		.byte	0
+ 1588 0617 06       		.byte	6
+ 1589 0618 02       		.byte	2
+ 1590 0619 00       		.byte	0
+ 1591 061a 02       		.byte	2
+ 1592 061b 00       		.byte	0
+ 1593 061c 00       		.byte	0
+ 1594 061d 00       		.byte	0
+ 1595 061e 00       		.byte	0
+ 1596 061f 00       		.byte	0
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 29
+
+
+ 1597              		.section	.cywolatch,"a",%progbits
+ 1598              		.align	2
+ 1599              		.type	cy_meta_wonvl, %object
+ 1600              		.size	cy_meta_wonvl, 4
+ 1601              	cy_meta_wonvl:
+ 1602 0000 BC       		.byte	-68
+ 1603 0001 90       		.byte	-112
+ 1604 0002 AC       		.byte	-84
+ 1605 0003 AF       		.byte	-81
+ 1606              		.section	.cycustnvl,"a",%progbits
+ 1607              		.align	2
+ 1608              		.type	cy_meta_custnvl, %object
+ 1609              		.size	cy_meta_custnvl, 4
+ 1610              	cy_meta_custnvl:
+ 1611 0000 00       		.byte	0
+ 1612 0001 00       		.byte	0
+ 1613 0002 40       		.byte	64
+ 1614 0003 05       		.byte	5
+ 1615              		.section	.cymeta,"a",%progbits
+ 1616              		.align	2
+ 1617              		.type	cy_metadata, %object
+ 1618              		.size	cy_metadata, 12
+ 1619              	cy_metadata:
+ 1620 0000 00       		.byte	0
+ 1621 0001 01       		.byte	1
+ 1622 0002 2E       		.byte	46
+ 1623 0003 16       		.byte	22
+ 1624 0004 10       		.byte	16
+ 1625 0005 69       		.byte	105
+ 1626 0006 00       		.byte	0
+ 1627 0007 01       		.byte	1
+ 1628 0008 00       		.byte	0
+ 1629 0009 00       		.byte	0
+ 1630 000a 00       		.byte	0
+ 1631 000b 00       		.byte	0
+ 1632              		.section	.cyflashprotect,"a",%progbits
+ 1633              		.align	2
+ 1634              		.type	cy_meta_flashprotect, %object
+ 1635              		.size	cy_meta_flashprotect, 256
+ 1636              	cy_meta_flashprotect:
+ 1637 0000 00000000 		.space	256
+ 1637      00000000 
+ 1637      00000000 
+ 1637      00000000 
+ 1637      00000000 
+ 1638              		.text
+ 1639              	.Letext0:
+ 1640              		.file 1 "d:\\program files (x86)\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-no
+ 1641              		.file 2 "d:\\program files (x86)\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-no
+ 1642              		.file 3 "Generated_Source\\PSoC5\\cymetadata.c"
+ 1643              		.section	.debug_info,"",%progbits
+ 1644              	.Ldebug_info0:
+ 1645 0000 33010000 		.4byte	0x133
+ 1646 0004 0400     		.2byte	0x4
+ 1647 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1648 000a 04       		.byte	0x4
+ 1649 000b 01       		.uleb128 0x1
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 30
+
+
+ 1650 000c 24000000 		.4byte	.LASF17
+ 1651 0010 0C       		.byte	0xc
+ 1652 0011 BD010000 		.4byte	.LASF18
+ 1653 0015 06010000 		.4byte	.LASF19
+ 1654 0019 00000000 		.4byte	.Ldebug_line0
+ 1655 001d 02       		.uleb128 0x2
+ 1656 001e 01       		.byte	0x1
+ 1657 001f 06       		.byte	0x6
+ 1658 0020 B1010000 		.4byte	.LASF0
+ 1659 0024 03       		.uleb128 0x3
+ 1660 0025 00000000 		.4byte	.LASF9
+ 1661 0029 01       		.byte	0x1
+ 1662 002a 1D       		.byte	0x1d
+ 1663 002b 2F000000 		.4byte	0x2f
+ 1664 002f 02       		.uleb128 0x2
+ 1665 0030 01       		.byte	0x1
+ 1666 0031 08       		.byte	0x8
+ 1667 0032 16000000 		.4byte	.LASF1
+ 1668 0036 02       		.uleb128 0x2
+ 1669 0037 02       		.byte	0x2
+ 1670 0038 05       		.byte	0x5
+ 1671 0039 9E010000 		.4byte	.LASF2
+ 1672 003d 02       		.uleb128 0x2
+ 1673 003e 02       		.byte	0x2
+ 1674 003f 07       		.byte	0x7
+ 1675 0040 C4000000 		.4byte	.LASF3
+ 1676 0044 02       		.uleb128 0x2
+ 1677 0045 04       		.byte	0x4
+ 1678 0046 05       		.byte	0x5
+ 1679 0047 A8010000 		.4byte	.LASF4
+ 1680 004b 02       		.uleb128 0x2
+ 1681 004c 04       		.byte	0x4
+ 1682 004d 07       		.byte	0x7
+ 1683 004e B2000000 		.4byte	.LASF5
+ 1684 0052 02       		.uleb128 0x2
+ 1685 0053 08       		.byte	0x8
+ 1686 0054 05       		.byte	0x5
+ 1687 0055 90010000 		.4byte	.LASF6
+ 1688 0059 02       		.uleb128 0x2
+ 1689 005a 08       		.byte	0x8
+ 1690 005b 07       		.byte	0x7
+ 1691 005c 45010000 		.4byte	.LASF7
+ 1692 0060 04       		.uleb128 0x4
+ 1693 0061 04       		.byte	0x4
+ 1694 0062 05       		.byte	0x5
+ 1695 0063 696E7400 		.ascii	"int\000"
+ 1696 0067 02       		.uleb128 0x2
+ 1697 0068 04       		.byte	0x4
+ 1698 0069 07       		.byte	0x7
+ 1699 006a F9000000 		.4byte	.LASF8
+ 1700 006e 03       		.uleb128 0x3
+ 1701 006f 5C010000 		.4byte	.LASF10
+ 1702 0073 02       		.byte	0x2
+ 1703 0074 18       		.byte	0x18
+ 1704 0075 24000000 		.4byte	0x24
+ 1705 0079 05       		.uleb128 0x5
+ 1706 007a 91000000 		.4byte	0x91
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 31
+
+
+ 1707 007e 8A000000 		.4byte	0x8a
+ 1708 0082 06       		.uleb128 0x6
+ 1709 0083 8A000000 		.4byte	0x8a
+ 1710 0087 1F06     		.2byte	0x61f
+ 1711 0089 00       		.byte	0
+ 1712 008a 02       		.uleb128 0x2
+ 1713 008b 04       		.byte	0x4
+ 1714 008c 07       		.byte	0x7
+ 1715 008d 87010000 		.4byte	.LASF11
+ 1716 0091 07       		.uleb128 0x7
+ 1717 0092 6E000000 		.4byte	0x6e
+ 1718 0096 08       		.uleb128 0x8
+ 1719 0097 E7000000 		.4byte	.LASF12
+ 1720 009b 03       		.byte	0x3
+ 1721 009c 1F       		.byte	0x1f
+ 1722 009d A7000000 		.4byte	0xa7
+ 1723 00a1 05       		.uleb128 0x5
+ 1724 00a2 03       		.byte	0x3
+ 1725 00a3 00000000 		.4byte	cy_meta_configecc
+ 1726 00a7 07       		.uleb128 0x7
+ 1727 00a8 79000000 		.4byte	0x79
+ 1728 00ac 05       		.uleb128 0x5
+ 1729 00ad 91000000 		.4byte	0x91
+ 1730 00b1 BC000000 		.4byte	0xbc
+ 1731 00b5 09       		.uleb128 0x9
+ 1732 00b6 8A000000 		.4byte	0x8a
+ 1733 00ba 03       		.byte	0x3
+ 1734 00bb 00       		.byte	0
+ 1735 00bc 08       		.uleb128 0x8
+ 1736 00bd D7000000 		.4byte	.LASF13
+ 1737 00c1 03       		.byte	0x3
+ 1738 00c2 F0       		.byte	0xf0
+ 1739 00c3 CD000000 		.4byte	0xcd
+ 1740 00c7 05       		.uleb128 0x5
+ 1741 00c8 03       		.byte	0x3
+ 1742 00c9 00000000 		.4byte	cy_meta_custnvl
+ 1743 00cd 07       		.uleb128 0x7
+ 1744 00ce AC000000 		.4byte	0xac
+ 1745 00d2 08       		.uleb128 0x8
+ 1746 00d3 79010000 		.4byte	.LASF14
+ 1747 00d7 03       		.byte	0x3
+ 1748 00d8 FE       		.byte	0xfe
+ 1749 00d9 E3000000 		.4byte	0xe3
+ 1750 00dd 05       		.uleb128 0x5
+ 1751 00de 03       		.byte	0x3
+ 1752 00df 00000000 		.4byte	cy_meta_wonvl
+ 1753 00e3 07       		.uleb128 0x7
+ 1754 00e4 AC000000 		.4byte	0xac
+ 1755 00e8 05       		.uleb128 0x5
+ 1756 00e9 91000000 		.4byte	0x91
+ 1757 00ed F8000000 		.4byte	0xf8
+ 1758 00f1 09       		.uleb128 0x9
+ 1759 00f2 8A000000 		.4byte	0x8a
+ 1760 00f6 FF       		.byte	0xff
+ 1761 00f7 00       		.byte	0
+ 1762 00f8 0A       		.uleb128 0xa
+ 1763 00f9 64010000 		.4byte	.LASF15
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 32
+
+
+ 1764 00fd 03       		.byte	0x3
+ 1765 00fe 0C01     		.2byte	0x10c
+ 1766 0100 0A010000 		.4byte	0x10a
+ 1767 0104 05       		.uleb128 0x5
+ 1768 0105 03       		.byte	0x3
+ 1769 0106 00000000 		.4byte	cy_meta_flashprotect
+ 1770 010a 07       		.uleb128 0x7
+ 1771 010b E8000000 		.4byte	0xe8
+ 1772 010f 05       		.uleb128 0x5
+ 1773 0110 91000000 		.4byte	0x91
+ 1774 0114 1F010000 		.4byte	0x11f
+ 1775 0118 09       		.uleb128 0x9
+ 1776 0119 8A000000 		.4byte	0x8a
+ 1777 011d 0B       		.byte	0xb
+ 1778 011e 00       		.byte	0
+ 1779 011f 0A       		.uleb128 0xa
+ 1780 0120 0A000000 		.4byte	.LASF16
+ 1781 0124 03       		.byte	0x3
+ 1782 0125 3901     		.2byte	0x139
+ 1783 0127 31010000 		.4byte	0x131
+ 1784 012b 05       		.uleb128 0x5
+ 1785 012c 03       		.byte	0x3
+ 1786 012d 00000000 		.4byte	cy_metadata
+ 1787 0131 07       		.uleb128 0x7
+ 1788 0132 0F010000 		.4byte	0x10f
+ 1789 0136 00       		.byte	0
+ 1790              		.section	.debug_abbrev,"",%progbits
+ 1791              	.Ldebug_abbrev0:
+ 1792 0000 01       		.uleb128 0x1
+ 1793 0001 11       		.uleb128 0x11
+ 1794 0002 01       		.byte	0x1
+ 1795 0003 25       		.uleb128 0x25
+ 1796 0004 0E       		.uleb128 0xe
+ 1797 0005 13       		.uleb128 0x13
+ 1798 0006 0B       		.uleb128 0xb
+ 1799 0007 03       		.uleb128 0x3
+ 1800 0008 0E       		.uleb128 0xe
+ 1801 0009 1B       		.uleb128 0x1b
+ 1802 000a 0E       		.uleb128 0xe
+ 1803 000b 10       		.uleb128 0x10
+ 1804 000c 17       		.uleb128 0x17
+ 1805 000d 00       		.byte	0
+ 1806 000e 00       		.byte	0
+ 1807 000f 02       		.uleb128 0x2
+ 1808 0010 24       		.uleb128 0x24
+ 1809 0011 00       		.byte	0
+ 1810 0012 0B       		.uleb128 0xb
+ 1811 0013 0B       		.uleb128 0xb
+ 1812 0014 3E       		.uleb128 0x3e
+ 1813 0015 0B       		.uleb128 0xb
+ 1814 0016 03       		.uleb128 0x3
+ 1815 0017 0E       		.uleb128 0xe
+ 1816 0018 00       		.byte	0
+ 1817 0019 00       		.byte	0
+ 1818 001a 03       		.uleb128 0x3
+ 1819 001b 16       		.uleb128 0x16
+ 1820 001c 00       		.byte	0
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 33
+
+
+ 1821 001d 03       		.uleb128 0x3
+ 1822 001e 0E       		.uleb128 0xe
+ 1823 001f 3A       		.uleb128 0x3a
+ 1824 0020 0B       		.uleb128 0xb
+ 1825 0021 3B       		.uleb128 0x3b
+ 1826 0022 0B       		.uleb128 0xb
+ 1827 0023 49       		.uleb128 0x49
+ 1828 0024 13       		.uleb128 0x13
+ 1829 0025 00       		.byte	0
+ 1830 0026 00       		.byte	0
+ 1831 0027 04       		.uleb128 0x4
+ 1832 0028 24       		.uleb128 0x24
+ 1833 0029 00       		.byte	0
+ 1834 002a 0B       		.uleb128 0xb
+ 1835 002b 0B       		.uleb128 0xb
+ 1836 002c 3E       		.uleb128 0x3e
+ 1837 002d 0B       		.uleb128 0xb
+ 1838 002e 03       		.uleb128 0x3
+ 1839 002f 08       		.uleb128 0x8
+ 1840 0030 00       		.byte	0
+ 1841 0031 00       		.byte	0
+ 1842 0032 05       		.uleb128 0x5
+ 1843 0033 01       		.uleb128 0x1
+ 1844 0034 01       		.byte	0x1
+ 1845 0035 49       		.uleb128 0x49
+ 1846 0036 13       		.uleb128 0x13
+ 1847 0037 01       		.uleb128 0x1
+ 1848 0038 13       		.uleb128 0x13
+ 1849 0039 00       		.byte	0
+ 1850 003a 00       		.byte	0
+ 1851 003b 06       		.uleb128 0x6
+ 1852 003c 21       		.uleb128 0x21
+ 1853 003d 00       		.byte	0
+ 1854 003e 49       		.uleb128 0x49
+ 1855 003f 13       		.uleb128 0x13
+ 1856 0040 2F       		.uleb128 0x2f
+ 1857 0041 05       		.uleb128 0x5
+ 1858 0042 00       		.byte	0
+ 1859 0043 00       		.byte	0
+ 1860 0044 07       		.uleb128 0x7
+ 1861 0045 26       		.uleb128 0x26
+ 1862 0046 00       		.byte	0
+ 1863 0047 49       		.uleb128 0x49
+ 1864 0048 13       		.uleb128 0x13
+ 1865 0049 00       		.byte	0
+ 1866 004a 00       		.byte	0
+ 1867 004b 08       		.uleb128 0x8
+ 1868 004c 34       		.uleb128 0x34
+ 1869 004d 00       		.byte	0
+ 1870 004e 03       		.uleb128 0x3
+ 1871 004f 0E       		.uleb128 0xe
+ 1872 0050 3A       		.uleb128 0x3a
+ 1873 0051 0B       		.uleb128 0xb
+ 1874 0052 3B       		.uleb128 0x3b
+ 1875 0053 0B       		.uleb128 0xb
+ 1876 0054 49       		.uleb128 0x49
+ 1877 0055 13       		.uleb128 0x13
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 34
+
+
+ 1878 0056 3F       		.uleb128 0x3f
+ 1879 0057 19       		.uleb128 0x19
+ 1880 0058 02       		.uleb128 0x2
+ 1881 0059 18       		.uleb128 0x18
+ 1882 005a 00       		.byte	0
+ 1883 005b 00       		.byte	0
+ 1884 005c 09       		.uleb128 0x9
+ 1885 005d 21       		.uleb128 0x21
+ 1886 005e 00       		.byte	0
+ 1887 005f 49       		.uleb128 0x49
+ 1888 0060 13       		.uleb128 0x13
+ 1889 0061 2F       		.uleb128 0x2f
+ 1890 0062 0B       		.uleb128 0xb
+ 1891 0063 00       		.byte	0
+ 1892 0064 00       		.byte	0
+ 1893 0065 0A       		.uleb128 0xa
+ 1894 0066 34       		.uleb128 0x34
+ 1895 0067 00       		.byte	0
+ 1896 0068 03       		.uleb128 0x3
+ 1897 0069 0E       		.uleb128 0xe
+ 1898 006a 3A       		.uleb128 0x3a
+ 1899 006b 0B       		.uleb128 0xb
+ 1900 006c 3B       		.uleb128 0x3b
+ 1901 006d 05       		.uleb128 0x5
+ 1902 006e 49       		.uleb128 0x49
+ 1903 006f 13       		.uleb128 0x13
+ 1904 0070 3F       		.uleb128 0x3f
+ 1905 0071 19       		.uleb128 0x19
+ 1906 0072 02       		.uleb128 0x2
+ 1907 0073 18       		.uleb128 0x18
+ 1908 0074 00       		.byte	0
+ 1909 0075 00       		.byte	0
+ 1910 0076 00       		.byte	0
+ 1911              		.section	.debug_aranges,"",%progbits
+ 1912 0000 14000000 		.4byte	0x14
+ 1913 0004 0200     		.2byte	0x2
+ 1914 0006 00000000 		.4byte	.Ldebug_info0
+ 1915 000a 04       		.byte	0x4
+ 1916 000b 00       		.byte	0
+ 1917 000c 0000     		.2byte	0
+ 1918 000e 0000     		.2byte	0
+ 1919 0010 00000000 		.4byte	0
+ 1920 0014 00000000 		.4byte	0
+ 1921              		.section	.debug_line,"",%progbits
+ 1922              	.Ldebug_line0:
+ 1923 0000 2D010000 		.section	.debug_str,"MS",%progbits,1
+ 1923      02002701 
+ 1923      00000201 
+ 1923      FB0E0D00 
+ 1923      01010101 
+ 1924              	.LASF9:
+ 1925 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 1925      6E74385F 
+ 1925      7400
+ 1926              	.LASF16:
+ 1927 000a 63795F6D 		.ascii	"cy_metadata\000"
+ 1927      65746164 
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 35
+
+
+ 1927      61746100 
+ 1928              	.LASF1:
+ 1929 0016 756E7369 		.ascii	"unsigned char\000"
+ 1929      676E6564 
+ 1929      20636861 
+ 1929      7200
+ 1930              	.LASF17:
+ 1931 0024 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1931      43313120 
+ 1931      352E342E 
+ 1931      31203230 
+ 1931      31363036 
+ 1932 0057 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1932      20726576 
+ 1932      6973696F 
+ 1932      6E203233 
+ 1932      37373135 
+ 1933 008a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1933      66756E63 
+ 1933      74696F6E 
+ 1933      2D736563 
+ 1933      74696F6E 
+ 1934              	.LASF5:
+ 1935 00b2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1935      20756E73 
+ 1935      69676E65 
+ 1935      6420696E 
+ 1935      7400
+ 1936              	.LASF3:
+ 1937 00c4 73686F72 		.ascii	"short unsigned int\000"
+ 1937      7420756E 
+ 1937      7369676E 
+ 1937      65642069 
+ 1937      6E7400
+ 1938              	.LASF13:
+ 1939 00d7 63795F6D 		.ascii	"cy_meta_custnvl\000"
+ 1939      6574615F 
+ 1939      63757374 
+ 1939      6E766C00 
+ 1940              	.LASF12:
+ 1941 00e7 63795F6D 		.ascii	"cy_meta_configecc\000"
+ 1941      6574615F 
+ 1941      636F6E66 
+ 1941      69676563 
+ 1941      6300
+ 1942              	.LASF8:
+ 1943 00f9 756E7369 		.ascii	"unsigned int\000"
+ 1943      676E6564 
+ 1943      20696E74 
+ 1943      00
+ 1944              	.LASF19:
+ 1945 0106 443A5C50 		.ascii	"D:\\PSoC Programs\\test_projects\\Proj04_freefly_ua"
+ 1945      536F4320 
+ 1945      50726F67 
+ 1945      72616D73 
+ 1945      5C746573 
+ 1946 0136 72745F73 		.ascii	"rt_start.cydsn\000"
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccy1aMs7.s 			page 36
+
+
+ 1946      74617274 
+ 1946      2E637964 
+ 1946      736E00
+ 1947              	.LASF7:
+ 1948 0145 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1948      206C6F6E 
+ 1948      6720756E 
+ 1948      7369676E 
+ 1948      65642069 
+ 1949              	.LASF10:
+ 1950 015c 75696E74 		.ascii	"uint8_t\000"
+ 1950      385F7400 
+ 1951              	.LASF15:
+ 1952 0164 63795F6D 		.ascii	"cy_meta_flashprotect\000"
+ 1952      6574615F 
+ 1952      666C6173 
+ 1952      6870726F 
+ 1952      74656374 
+ 1953              	.LASF14:
+ 1954 0179 63795F6D 		.ascii	"cy_meta_wonvl\000"
+ 1954      6574615F 
+ 1954      776F6E76 
+ 1954      6C00
+ 1955              	.LASF11:
+ 1956 0187 73697A65 		.ascii	"sizetype\000"
+ 1956      74797065 
+ 1956      00
+ 1957              	.LASF6:
+ 1958 0190 6C6F6E67 		.ascii	"long long int\000"
+ 1958      206C6F6E 
+ 1958      6720696E 
+ 1958      7400
+ 1959              	.LASF2:
+ 1960 019e 73686F72 		.ascii	"short int\000"
+ 1960      7420696E 
+ 1960      7400
+ 1961              	.LASF4:
+ 1962 01a8 6C6F6E67 		.ascii	"long int\000"
+ 1962      20696E74 
+ 1962      00
+ 1963              	.LASF0:
+ 1964 01b1 7369676E 		.ascii	"signed char\000"
+ 1964      65642063 
+ 1964      68617200 
+ 1965              	.LASF18:
+ 1966 01bd 47656E65 		.ascii	"Generated_Source\\PSoC5\\cymetadata.c\000"
+ 1966      72617465 
+ 1966      645F536F 
+ 1966      75726365 
+ 1966      5C50536F 
+ 1967              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

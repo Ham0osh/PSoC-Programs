@@ -1,0 +1,10 @@
+.\objects\qx_protocol.o: ..\QX_Lib\QX_Protocol.c
+.\objects\qx_protocol.o: ..\QX_Lib\QX_Protocol.h
+.\objects\qx_protocol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\qx_protocol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\qx_protocol.o: ../Inc/QX_App_Config.h
+.\objects\qx_protocol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\qx_protocol.o: ../Inc/QX_Protocol_App.h
+.\objects\qx_protocol.o: ../Inc/simple_buffer.h
+.\objects\qx_protocol.o: ..\QX_Lib\QX_Parsing_Functions.h
+.\objects\qx_protocol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h

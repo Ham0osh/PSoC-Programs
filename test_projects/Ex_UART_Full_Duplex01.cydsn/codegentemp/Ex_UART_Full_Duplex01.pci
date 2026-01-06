@@ -1,0 +1,11 @@
+# Ex_UART_Full_Duplex01
+# 2025-09-04 22:00:50Z
+
+# IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 0
+# IO_1@[IOP=(1)][IoId=(1)] is reserved: SWDDebugEnabled
+dont_use_io iocell 1 1
+set_io "LED(0)" iocell 2 6
+set_io "SW2(0)" iocell 2 7
+set_io "Rx(0)" iocell 12 6
+set_io "Tx(0)" iocell 12 7

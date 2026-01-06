@@ -1,0 +1,23 @@
+--------------- Rebuild Started: 11/12/2025 15:42:10 Project: main.c, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb "-ID:\PSoC Programs\FreeflyAPI" -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM3\ARM_GCC_541\Debug\main.o
+main.c: In function 'ff_api_encode_control':
+main.c:43:5: warning: implicit declaration of function 'QX_InitMsg' [-Wimplicit-function-declaration]
+     QX_InitMsg(&TxMsg);
+     ^
+main.c:55:5: warning: implicit declaration of function 'QX_TxMsg_Setup' [-Wimplicit-function-declaration]
+     QX_TxMsg_Setup(&TxMsg);
+     ^
+main.c:58:5: warning: implicit declaration of function 'QX_TxMsg_Finish' [-Wimplicit-function-declaration]
+     QX_TxMsg_Finish(&TxMsg);
+     ^
+main.c: In function 'UART_MONITOR_RX_ISR':
+main.c:73:13: warning: unused variable 'rxByte' [-Wunused-variable]
+     uint8_t rxByte;
+             ^
+main.c: In function 'main':
+main.c:116:9: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+         sprintf(msg, "SW1: %d\r\n", button_state); // Converts 0/1 to ASCII
+         ^
+main.c:116:9: warning: incompatible implicit declaration of built-in function 'sprintf'
+main.c:116:9: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+--------------- Rebuild Succeeded: 11/12/2025 15:42:10 ---------------

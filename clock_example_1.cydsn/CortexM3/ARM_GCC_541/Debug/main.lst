@@ -1,0 +1,1391 @@
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.Led_Blink,"ax",%progbits
+  20              		.align	2
+  21              		.global	Led_Blink
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	Led_Blink, %function
+  25              	Led_Blink:
+  26              	.LFB64:
+  27              		.file 1 "main.c"
+   1:main.c        **** /*******************************************************************************
+   2:main.c        **** * File Name: main.c
+   3:main.c        **** *
+   4:main.c        **** * Version: 1.0
+   5:main.c        **** *
+   6:main.c        **** * Description:
+   7:main.c        **** *  This is the source code for the Clock example project of the cy_boot
+   8:main.c        **** *  component.
+   9:main.c        **** *
+  10:main.c        **** ********************************************************************************
+  11:main.c        **** * Copyright 2015, Cypress Semiconductor Corporation. All rights reserved.
+  12:main.c        **** * This software is owned by Cypress Semiconductor Corporation and is protected
+  13:main.c        **** * by and subject to worldwide patent and copyright laws and treaties.
+  14:main.c        **** * Therefore, you may use this software only as provided in the license agreement
+  15:main.c        **** * accompanying the software package from which you obtained this software.
+  16:main.c        **** * CYPRESS AND ITS SUPPLIERS MAKE NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  17:main.c        **** * WITH REGARD TO THIS SOFTWARE, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT,
+  18:main.c        **** * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  19:main.c        **** *******************************************************************************/
+  20:main.c        **** 
+  21:main.c        **** #include <project.h>
+  22:main.c        **** 
+  23:main.c        **** #define CLK_IMO_MHZ                 (32u)
+  24:main.c        **** #define SYSCLK_DIVIDER              (2u)
+  25:main.c        **** 
+  26:main.c        **** #define HZ_IN_MHZ                   (1000000u)
+  27:main.c        **** #define BLINK_DELAY_MS              (1000u)
+  28:main.c        **** #define VISIBILITY_DELAY_MS         (1000u)
+  29:main.c        **** 
+  30:main.c        **** #define WAIT_IMO_TO_SETTLE          (1u)
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 2
+
+
+  31:main.c        **** #define WAIT_PLL_TO_SETTLE          (1u)
+  32:main.c        **** #define IMO_FREQ                    (CY_IMO_FREQ_3MHZ) /* CyIMO_SetFreq() parameter */
+  33:main.c        **** 
+  34:main.c        **** 
+  35:main.c        **** #define LED_OFF                     (0u)
+  36:main.c        **** #define LED_ON                      (1u)
+  37:main.c        **** 
+  38:main.c        **** #define PLL_Q                       (1u)    /* 1 MHz <= (Fin / Q) <= 3 MHz */
+  39:main.c        **** #define PLL_P                       (16u)   /* Fout = Fin * P/Q */
+  40:main.c        **** #define PLL_ICP                     (1u)    /* Valid for all configurations */
+  41:main.c        **** 
+  42:main.c        **** /* Conversion between CyIMO_SetFreq() parameter and frequency in 3-62 MHz range */
+  43:main.c        **** const uint8 CYCODE imoFreqParam2Frequency[6u] = {3u, 6u, 12u, 24u, 48, 62u};
+  44:main.c        **** 
+  45:main.c        **** /* Function prototype */
+  46:main.c        **** void Led_Blink(void);
+  47:main.c        **** 
+  48:main.c        **** 
+  49:main.c        **** /*******************************************************************************
+  50:main.c        **** * Function Name: main
+  51:main.c        **** ********************************************************************************
+  52:main.c        **** *
+  53:main.c        **** * Summary:
+  54:main.c        **** *  Reconfigures the clock tree from "XTAL -> Master Clock -> Bus Clock" to "IMO
+  55:main.c        **** *  -> PLL -> Master Clock -> Bus Clock". Reconfigures ILO 1 KHz to route it out
+  56:main.c        **** *  of the ILO block instead of ILO 100 KHz. Disables the unused clock source:
+  57:main.c        **** *  XTAL and ILO 100 KHz. The LCD displays the execution status. The LED blinks
+  58:main.c        **** *  twice for the same period of time before clock configuration changes and
+  59:main.c        **** *  after.
+  60:main.c        **** *
+  61:main.c        **** * Parameters:
+  62:main.c        **** *  None
+  63:main.c        **** *
+  64:main.c        **** * Return:
+  65:main.c        **** *  None
+  66:main.c        **** *
+  67:main.c        **** *******************************************************************************/
+  68:main.c        **** int main(void)
+  69:main.c        **** {
+  70:main.c        ****     LCD_Start();
+  71:main.c        ****     LCD_Position(0u, 0u);
+  72:main.c        ****     LCD_PrintString("Clock Example");
+  73:main.c        **** 
+  74:main.c        ****     Led_Blink();
+  75:main.c        **** 
+  76:main.c        ****     /* Configure and start IMO */
+  77:main.c        ****     CyIMO_SetFreq(IMO_FREQ);
+  78:main.c        **** 
+  79:main.c        ****     /* PLLout = Fimo * P /Q */
+  80:main.c        ****     CyPLL_OUT_SetPQ(PLL_P, PLL_Q, PLL_ICP);
+  81:main.c        ****     CyIMO_Start(WAIT_IMO_TO_SETTLE);
+  82:main.c        **** 
+  83:main.c        ****     /* Configure and start PLL */
+  84:main.c        ****     CyPLL_OUT_SetSource(CY_PLL_SOURCE_IMO);
+  85:main.c        ****     if(CYRET_SUCCESS == CyPLL_OUT_Start(WAIT_PLL_TO_SETTLE))
+  86:main.c        ****     {
+  87:main.c        ****         /***********************************************************************
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 3
+
+
+  88:main.c        ****         * Set the number of clock cycles the cache waits before it samples
+  89:main.c        ****         * data coming back from the Flash. This function must be called before
+  90:main.c        ****         * increasing the CPU clock frequency. It can optionally be called after
+  91:main.c        ****         * lowering the CPU clock frequency to improve the CPU performance.
+  92:main.c        ****         ***********************************************************************/
+  93:main.c        ****         CyFlash_SetWaitCycles(imoFreqParam2Frequency[IMO_FREQ] * PLL_P / PLL_Q);
+  94:main.c        **** 
+  95:main.c        **** 
+  96:main.c        ****         /***********************************************************************
+  97:main.c        ****         * Adjustments to keep the CyDelay function accurate.
+  98:main.c        ****         * By default, the number of cycles to delay in CyDelay() and CyDelayUs()
+  99:main.c        ****         * is calculated based on the clock configuration entered in PSoC Creator.
+ 100:main.c        ****         * If the clock configuration changes at the run-time, the CyDelayFreq()
+ 101:main.c        ****         * function is used to indicate a new frequency.
+ 102:main.c        ****         ***********************************************************************/
+ 103:main.c        ****         CyDelayFreq(HZ_IN_MHZ * imoFreqParam2Frequency[IMO_FREQ] * PLL_P / PLL_Q);
+ 104:main.c        **** 
+ 105:main.c        ****         /* Change Master clock source to PLL */
+ 106:main.c        ****         CyMasterClk_SetSource(CY_MASTER_SOURCE_PLL);
+ 107:main.c        **** 
+ 108:main.c        ****         /* Master clock is not sourced by XTAL - safe to stop it */
+ 109:main.c        ****         CyXTAL_Stop();
+ 110:main.c        ****     }
+ 111:main.c        ****     else
+ 112:main.c        ****     {
+ 113:main.c        ****         LCD_Position(1u, 0u);
+ 114:main.c        ****         LCD_PrintString("PLL - Failed.");
+ 115:main.c        ****         CyDelay(VISIBILITY_DELAY_MS);
+ 116:main.c        ****     }
+ 117:main.c        **** 
+ 118:main.c        ****     /* ILO 1 KHz is enabled by default, so route ILO 1 KHz and disable 100 KHz */
+ 119:main.c        ****     CyILO_SetSource(CY_ILO_SOURCE_1K);
+ 120:main.c        ****     CyILO_Stop100K();
+ 121:main.c        **** 
+ 122:main.c        ****     LCD_Position(1u, 0u);
+ 123:main.c        ****     LCD_PrintString("Reconfigured");
+ 124:main.c        **** 
+ 125:main.c        ****     Led_Blink();
+ 126:main.c        **** 
+ 127:main.c        ****     for(;;)
+ 128:main.c        ****     {
+ 129:main.c        ****     }
+ 130:main.c        **** 
+ 131:main.c        **** }
+ 132:main.c        **** 
+ 133:main.c        **** 
+ 134:main.c        **** /*******************************************************************************
+ 135:main.c        **** * Function Name: Led_Blink
+ 136:main.c        **** ********************************************************************************
+ 137:main.c        **** * Summary:
+ 138:main.c        **** *  Blinks LED with the LED_Status pin.
+ 139:main.c        **** *
+ 140:main.c        **** * Parameters:
+ 141:main.c        **** *  None
+ 142:main.c        **** *
+ 143:main.c        **** * Return:
+ 144:main.c        **** *  None
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 4
+
+
+ 145:main.c        **** *
+ 146:main.c        **** *******************************************************************************/
+ 147:main.c        **** void Led_Blink(void)
+ 148:main.c        **** {
+  28              		.loc 1 148 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+ 149:main.c        ****     LED_Status_Write(LED_ON);
+  36              		.loc 1 149 0
+  37 0002 0120     		movs	r0, #1
+  38 0004 FFF7FEFF 		bl	LED_Status_Write
+  39              	.LVL0:
+ 150:main.c        ****     CyDelay(BLINK_DELAY_MS);
+  40              		.loc 1 150 0
+  41 0008 4FF47A70 		mov	r0, #1000
+  42 000c FFF7FEFF 		bl	CyDelay
+  43              	.LVL1:
+ 151:main.c        ****     LED_Status_Write(LED_OFF);
+  44              		.loc 1 151 0
+  45 0010 0020     		movs	r0, #0
+  46 0012 FFF7FEFF 		bl	LED_Status_Write
+  47              	.LVL2:
+ 152:main.c        ****     CyDelay(BLINK_DELAY_MS);
+  48              		.loc 1 152 0
+  49 0016 4FF47A70 		mov	r0, #1000
+  50 001a FFF7FEFF 		bl	CyDelay
+  51              	.LVL3:
+  52 001e 08BD     		pop	{r3, pc}
+  53              		.cfi_endproc
+  54              	.LFE64:
+  55              		.size	Led_Blink, .-Led_Blink
+  56              		.section	.text.main,"ax",%progbits
+  57              		.align	2
+  58              		.global	main
+  59              		.thumb
+  60              		.thumb_func
+  61              		.type	main, %function
+  62              	main:
+  63              	.LFB63:
+  69:main.c        ****     LCD_Start();
+  64              		.loc 1 69 0
+  65              		.cfi_startproc
+  66              		@ Volatile: function does not return.
+  67              		@ args = 0, pretend = 0, frame = 0
+  68              		@ frame_needed = 0, uses_anonymous_args = 0
+  69 0000 08B5     		push	{r3, lr}
+  70              		.cfi_def_cfa_offset 8
+  71              		.cfi_offset 3, -8
+  72              		.cfi_offset 14, -4
+  70:main.c        ****     LCD_Position(0u, 0u);
+  73              		.loc 1 70 0
+  74 0002 FFF7FEFF 		bl	LCD_Start
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 5
+
+
+  75              	.LVL4:
+  71:main.c        ****     LCD_PrintString("Clock Example");
+  76              		.loc 1 71 0
+  77 0006 0021     		movs	r1, #0
+  78 0008 0846     		mov	r0, r1
+  79 000a FFF7FEFF 		bl	LCD_Position
+  80              	.LVL5:
+  72:main.c        **** 
+  81              		.loc 1 72 0
+  82 000e 1E48     		ldr	r0, .L8
+  83 0010 FFF7FEFF 		bl	LCD_PrintString
+  84              	.LVL6:
+  74:main.c        **** 
+  85              		.loc 1 74 0
+  86 0014 FFF7FEFF 		bl	Led_Blink
+  87              	.LVL7:
+  77:main.c        **** 
+  88              		.loc 1 77 0
+  89 0018 0020     		movs	r0, #0
+  90 001a FFF7FEFF 		bl	CyIMO_SetFreq
+  91              	.LVL8:
+  80:main.c        ****     CyIMO_Start(WAIT_IMO_TO_SETTLE);
+  92              		.loc 1 80 0
+  93 001e 0122     		movs	r2, #1
+  94 0020 1146     		mov	r1, r2
+  95 0022 1020     		movs	r0, #16
+  96 0024 FFF7FEFF 		bl	CyPLL_OUT_SetPQ
+  97              	.LVL9:
+  81:main.c        **** 
+  98              		.loc 1 81 0
+  99 0028 0120     		movs	r0, #1
+ 100 002a FFF7FEFF 		bl	CyIMO_Start
+ 101              	.LVL10:
+  84:main.c        ****     if(CYRET_SUCCESS == CyPLL_OUT_Start(WAIT_PLL_TO_SETTLE))
+ 102              		.loc 1 84 0
+ 103 002e 0020     		movs	r0, #0
+ 104 0030 FFF7FEFF 		bl	CyPLL_OUT_SetSource
+ 105              	.LVL11:
+  85:main.c        ****     {
+ 106              		.loc 1 85 0
+ 107 0034 0120     		movs	r0, #1
+ 108 0036 FFF7FEFF 		bl	CyPLL_OUT_Start
+ 109              	.LVL12:
+ 110 003a 58B9     		cbnz	r0, .L4
+  93:main.c        **** 
+ 111              		.loc 1 93 0
+ 112 003c 3020     		movs	r0, #48
+ 113 003e FFF7FEFF 		bl	CyFlash_SetWaitCycles
+ 114              	.LVL13:
+ 103:main.c        **** 
+ 115              		.loc 1 103 0
+ 116 0042 1248     		ldr	r0, .L8+4
+ 117 0044 FFF7FEFF 		bl	CyDelayFreq
+ 118              	.LVL14:
+ 106:main.c        **** 
+ 119              		.loc 1 106 0
+ 120 0048 0120     		movs	r0, #1
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 6
+
+
+ 121 004a FFF7FEFF 		bl	CyMasterClk_SetSource
+ 122              	.LVL15:
+ 109:main.c        ****     }
+ 123              		.loc 1 109 0
+ 124 004e FFF7FEFF 		bl	CyXTAL_Stop
+ 125              	.LVL16:
+ 126 0052 0AE0     		b	.L5
+ 127              	.L4:
+ 113:main.c        ****         LCD_PrintString("PLL - Failed.");
+ 128              		.loc 1 113 0
+ 129 0054 0021     		movs	r1, #0
+ 130 0056 0120     		movs	r0, #1
+ 131 0058 FFF7FEFF 		bl	LCD_Position
+ 132              	.LVL17:
+ 114:main.c        ****         CyDelay(VISIBILITY_DELAY_MS);
+ 133              		.loc 1 114 0
+ 134 005c 0C48     		ldr	r0, .L8+8
+ 135 005e FFF7FEFF 		bl	LCD_PrintString
+ 136              	.LVL18:
+ 115:main.c        ****     }
+ 137              		.loc 1 115 0
+ 138 0062 4FF47A70 		mov	r0, #1000
+ 139 0066 FFF7FEFF 		bl	CyDelay
+ 140              	.LVL19:
+ 141              	.L5:
+ 119:main.c        ****     CyILO_Stop100K();
+ 142              		.loc 1 119 0
+ 143 006a 0220     		movs	r0, #2
+ 144 006c FFF7FEFF 		bl	CyILO_SetSource
+ 145              	.LVL20:
+ 120:main.c        **** 
+ 146              		.loc 1 120 0
+ 147 0070 FFF7FEFF 		bl	CyILO_Stop100K
+ 148              	.LVL21:
+ 122:main.c        ****     LCD_PrintString("Reconfigured");
+ 149              		.loc 1 122 0
+ 150 0074 0021     		movs	r1, #0
+ 151 0076 0120     		movs	r0, #1
+ 152 0078 FFF7FEFF 		bl	LCD_Position
+ 153              	.LVL22:
+ 123:main.c        **** 
+ 154              		.loc 1 123 0
+ 155 007c 0548     		ldr	r0, .L8+12
+ 156 007e FFF7FEFF 		bl	LCD_PrintString
+ 157              	.LVL23:
+ 125:main.c        **** 
+ 158              		.loc 1 125 0
+ 159 0082 FFF7FEFF 		bl	Led_Blink
+ 160              	.LVL24:
+ 161              	.L6:
+ 162 0086 FEE7     		b	.L6
+ 163              	.L9:
+ 164              		.align	2
+ 165              	.L8:
+ 166 0088 00000000 		.word	.LC0
+ 167 008c 006CDC02 		.word	48000000
+ 168 0090 10000000 		.word	.LC1
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 7
+
+
+ 169 0094 20000000 		.word	.LC2
+ 170              		.cfi_endproc
+ 171              	.LFE63:
+ 172              		.size	main, .-main
+ 173              		.global	imoFreqParam2Frequency
+ 174              		.section	.rodata
+ 175              		.align	2
+ 176              		.type	imoFreqParam2Frequency, %object
+ 177              		.size	imoFreqParam2Frequency, 6
+ 178              	imoFreqParam2Frequency:
+ 179 0000 03       		.byte	3
+ 180 0001 06       		.byte	6
+ 181 0002 0C       		.byte	12
+ 182 0003 18       		.byte	24
+ 183 0004 30       		.byte	48
+ 184 0005 3E       		.byte	62
+ 185              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 186              		.align	2
+ 187              	.LC0:
+ 188 0000 436C6F63 		.ascii	"Clock Example\000"
+ 188      6B204578 
+ 188      616D706C 
+ 188      6500
+ 189 000e 0000     		.space	2
+ 190              	.LC1:
+ 191 0010 504C4C20 		.ascii	"PLL - Failed.\000"
+ 191      2D204661 
+ 191      696C6564 
+ 191      2E00
+ 192 001e 0000     		.space	2
+ 193              	.LC2:
+ 194 0020 5265636F 		.ascii	"Reconfigured\000"
+ 194      6E666967 
+ 194      75726564 
+ 194      00
+ 195              		.text
+ 196              	.Letext0:
+ 197              		.file 2 "d:\\program files (x86)\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-no
+ 198              		.file 3 "d:\\program files (x86)\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-no
+ 199              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 200              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 201              		.file 6 "Generated_Source\\PSoC5/LED_Status.h"
+ 202              		.file 7 "Generated_Source\\PSoC5/CyLib.h"
+ 203              		.file 8 "Generated_Source\\PSoC5/LCD.h"
+ 204              		.file 9 "Generated_Source\\PSoC5/CyFlash.h"
+ 205              		.section	.debug_info,"",%progbits
+ 206              	.Ldebug_info0:
+ 207 0000 9E030000 		.4byte	0x39e
+ 208 0004 0400     		.2byte	0x4
+ 209 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 210 000a 04       		.byte	0x4
+ 211 000b 01       		.uleb128 0x1
+ 212 000c A9000000 		.4byte	.LASF35
+ 213 0010 0C       		.byte	0xc
+ 214 0011 5E020000 		.4byte	.LASF36
+ 215 0015 A3010000 		.4byte	.LASF37
+ 216 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 8
+
+
+ 217 001d 00000000 		.4byte	0
+ 218 0021 00000000 		.4byte	.Ldebug_line0
+ 219 0025 02       		.uleb128 0x2
+ 220 0026 01       		.byte	0x1
+ 221 0027 06       		.byte	0x6
+ 222 0028 8F020000 		.4byte	.LASF0
+ 223 002c 02       		.uleb128 0x2
+ 224 002d 01       		.byte	0x1
+ 225 002e 08       		.byte	0x8
+ 226 002f 89010000 		.4byte	.LASF1
+ 227 0033 02       		.uleb128 0x2
+ 228 0034 02       		.byte	0x2
+ 229 0035 05       		.byte	0x5
+ 230 0036 6A020000 		.4byte	.LASF2
+ 231 003a 02       		.uleb128 0x2
+ 232 003b 02       		.byte	0x2
+ 233 003c 07       		.byte	0x7
+ 234 003d 55010000 		.4byte	.LASF3
+ 235 0041 03       		.uleb128 0x3
+ 236 0042 0A000000 		.4byte	.LASF9
+ 237 0046 02       		.byte	0x2
+ 238 0047 3F       		.byte	0x3f
+ 239 0048 4C000000 		.4byte	0x4c
+ 240 004c 02       		.uleb128 0x2
+ 241 004d 04       		.byte	0x4
+ 242 004e 05       		.byte	0x5
+ 243 004f 7A020000 		.4byte	.LASF4
+ 244 0053 02       		.uleb128 0x2
+ 245 0054 04       		.byte	0x4
+ 246 0055 07       		.byte	0x7
+ 247 0056 43010000 		.4byte	.LASF5
+ 248 005a 02       		.uleb128 0x2
+ 249 005b 08       		.byte	0x8
+ 250 005c 05       		.byte	0x5
+ 251 005d 40020000 		.4byte	.LASF6
+ 252 0061 02       		.uleb128 0x2
+ 253 0062 08       		.byte	0x8
+ 254 0063 07       		.byte	0x7
+ 255 0064 03020000 		.4byte	.LASF7
+ 256 0068 04       		.uleb128 0x4
+ 257 0069 04       		.byte	0x4
+ 258 006a 05       		.byte	0x5
+ 259 006b 696E7400 		.ascii	"int\000"
+ 260 006f 02       		.uleb128 0x2
+ 261 0070 04       		.byte	0x4
+ 262 0071 07       		.byte	0x7
+ 263 0072 F6010000 		.4byte	.LASF8
+ 264 0076 03       		.uleb128 0x3
+ 265 0077 44000000 		.4byte	.LASF10
+ 266 007b 03       		.byte	0x3
+ 267 007c 2C       		.byte	0x2c
+ 268 007d 41000000 		.4byte	0x41
+ 269 0081 05       		.uleb128 0x5
+ 270 0082 74020000 		.4byte	.LASF11
+ 271 0086 04       		.byte	0x4
+ 272 0087 9201     		.2byte	0x192
+ 273 0089 2C000000 		.4byte	0x2c
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 9
+
+
+ 274 008d 02       		.uleb128 0x2
+ 275 008e 04       		.byte	0x4
+ 276 008f 04       		.byte	0x4
+ 277 0090 70000000 		.4byte	.LASF12
+ 278 0094 02       		.uleb128 0x2
+ 279 0095 08       		.byte	0x8
+ 280 0096 04       		.byte	0x4
+ 281 0097 97010000 		.4byte	.LASF13
+ 282 009b 02       		.uleb128 0x2
+ 283 009c 01       		.byte	0x1
+ 284 009d 08       		.byte	0x8
+ 285 009e 65020000 		.4byte	.LASF14
+ 286 00a2 02       		.uleb128 0x2
+ 287 00a3 04       		.byte	0x4
+ 288 00a4 07       		.byte	0x7
+ 289 00a5 37020000 		.4byte	.LASF15
+ 290 00a9 02       		.uleb128 0x2
+ 291 00aa 08       		.byte	0x8
+ 292 00ab 04       		.byte	0x4
+ 293 00ac 83020000 		.4byte	.LASF16
+ 294 00b0 06       		.uleb128 0x6
+ 295 00b1 68010000 		.4byte	.LASF38
+ 296 00b5 01       		.byte	0x1
+ 297 00b6 93       		.byte	0x93
+ 298 00b7 00000000 		.4byte	.LFB64
+ 299 00bb 20000000 		.4byte	.LFE64-.LFB64
+ 300 00bf 01       		.uleb128 0x1
+ 301 00c0 9C       		.byte	0x9c
+ 302 00c1 12010000 		.4byte	0x112
+ 303 00c5 07       		.uleb128 0x7
+ 304 00c6 08000000 		.4byte	.LVL0
+ 305 00ca F1020000 		.4byte	0x2f1
+ 306 00ce D8000000 		.4byte	0xd8
+ 307 00d2 08       		.uleb128 0x8
+ 308 00d3 01       		.uleb128 0x1
+ 309 00d4 50       		.byte	0x50
+ 310 00d5 01       		.uleb128 0x1
+ 311 00d6 31       		.byte	0x31
+ 312 00d7 00       		.byte	0
+ 313 00d8 07       		.uleb128 0x7
+ 314 00d9 10000000 		.4byte	.LVL1
+ 315 00dd FC020000 		.4byte	0x2fc
+ 316 00e1 ED000000 		.4byte	0xed
+ 317 00e5 08       		.uleb128 0x8
+ 318 00e6 01       		.uleb128 0x1
+ 319 00e7 50       		.byte	0x50
+ 320 00e8 03       		.uleb128 0x3
+ 321 00e9 0A       		.byte	0xa
+ 322 00ea E803     		.2byte	0x3e8
+ 323 00ec 00       		.byte	0
+ 324 00ed 07       		.uleb128 0x7
+ 325 00ee 16000000 		.4byte	.LVL2
+ 326 00f2 F1020000 		.4byte	0x2f1
+ 327 00f6 00010000 		.4byte	0x100
+ 328 00fa 08       		.uleb128 0x8
+ 329 00fb 01       		.uleb128 0x1
+ 330 00fc 50       		.byte	0x50
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 10
+
+
+ 331 00fd 01       		.uleb128 0x1
+ 332 00fe 30       		.byte	0x30
+ 333 00ff 00       		.byte	0
+ 334 0100 09       		.uleb128 0x9
+ 335 0101 1E000000 		.4byte	.LVL3
+ 336 0105 FC020000 		.4byte	0x2fc
+ 337 0109 08       		.uleb128 0x8
+ 338 010a 01       		.uleb128 0x1
+ 339 010b 50       		.byte	0x50
+ 340 010c 03       		.uleb128 0x3
+ 341 010d 0A       		.byte	0xa
+ 342 010e E803     		.2byte	0x3e8
+ 343 0110 00       		.byte	0
+ 344 0111 00       		.byte	0
+ 345 0112 0A       		.uleb128 0xa
+ 346 0113 9E010000 		.4byte	.LASF39
+ 347 0117 01       		.byte	0x1
+ 348 0118 44       		.byte	0x44
+ 349 0119 68000000 		.4byte	0x68
+ 350 011d 00000000 		.4byte	.LFB63
+ 351 0121 98000000 		.4byte	.LFE63-.LFB63
+ 352 0125 01       		.uleb128 0x1
+ 353 0126 9C       		.byte	0x9c
+ 354 0127 B5020000 		.4byte	0x2b5
+ 355 012b 0B       		.uleb128 0xb
+ 356 012c 06000000 		.4byte	.LVL4
+ 357 0130 07030000 		.4byte	0x307
+ 358 0134 07       		.uleb128 0x7
+ 359 0135 0E000000 		.4byte	.LVL5
+ 360 0139 12030000 		.4byte	0x312
+ 361 013d 4C010000 		.4byte	0x14c
+ 362 0141 08       		.uleb128 0x8
+ 363 0142 01       		.uleb128 0x1
+ 364 0143 50       		.byte	0x50
+ 365 0144 01       		.uleb128 0x1
+ 366 0145 30       		.byte	0x30
+ 367 0146 08       		.uleb128 0x8
+ 368 0147 01       		.uleb128 0x1
+ 369 0148 51       		.byte	0x51
+ 370 0149 01       		.uleb128 0x1
+ 371 014a 30       		.byte	0x30
+ 372 014b 00       		.byte	0
+ 373 014c 07       		.uleb128 0x7
+ 374 014d 14000000 		.4byte	.LVL6
+ 375 0151 1D030000 		.4byte	0x31d
+ 376 0155 63010000 		.4byte	0x163
+ 377 0159 08       		.uleb128 0x8
+ 378 015a 01       		.uleb128 0x1
+ 379 015b 50       		.byte	0x50
+ 380 015c 05       		.uleb128 0x5
+ 381 015d 03       		.byte	0x3
+ 382 015e 00000000 		.4byte	.LC0
+ 383 0162 00       		.byte	0
+ 384 0163 0B       		.uleb128 0xb
+ 385 0164 18000000 		.4byte	.LVL7
+ 386 0168 B0000000 		.4byte	0xb0
+ 387 016c 07       		.uleb128 0x7
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 11
+
+
+ 388 016d 1E000000 		.4byte	.LVL8
+ 389 0171 28030000 		.4byte	0x328
+ 390 0175 7F010000 		.4byte	0x17f
+ 391 0179 08       		.uleb128 0x8
+ 392 017a 01       		.uleb128 0x1
+ 393 017b 50       		.byte	0x50
+ 394 017c 01       		.uleb128 0x1
+ 395 017d 30       		.byte	0x30
+ 396 017e 00       		.byte	0
+ 397 017f 07       		.uleb128 0x7
+ 398 0180 28000000 		.4byte	.LVL9
+ 399 0184 33030000 		.4byte	0x333
+ 400 0188 9C010000 		.4byte	0x19c
+ 401 018c 08       		.uleb128 0x8
+ 402 018d 01       		.uleb128 0x1
+ 403 018e 50       		.byte	0x50
+ 404 018f 01       		.uleb128 0x1
+ 405 0190 40       		.byte	0x40
+ 406 0191 08       		.uleb128 0x8
+ 407 0192 01       		.uleb128 0x1
+ 408 0193 51       		.byte	0x51
+ 409 0194 01       		.uleb128 0x1
+ 410 0195 31       		.byte	0x31
+ 411 0196 08       		.uleb128 0x8
+ 412 0197 01       		.uleb128 0x1
+ 413 0198 52       		.byte	0x52
+ 414 0199 01       		.uleb128 0x1
+ 415 019a 31       		.byte	0x31
+ 416 019b 00       		.byte	0
+ 417 019c 07       		.uleb128 0x7
+ 418 019d 2E000000 		.4byte	.LVL10
+ 419 01a1 3E030000 		.4byte	0x33e
+ 420 01a5 AF010000 		.4byte	0x1af
+ 421 01a9 08       		.uleb128 0x8
+ 422 01aa 01       		.uleb128 0x1
+ 423 01ab 50       		.byte	0x50
+ 424 01ac 01       		.uleb128 0x1
+ 425 01ad 31       		.byte	0x31
+ 426 01ae 00       		.byte	0
+ 427 01af 07       		.uleb128 0x7
+ 428 01b0 34000000 		.4byte	.LVL11
+ 429 01b4 49030000 		.4byte	0x349
+ 430 01b8 C2010000 		.4byte	0x1c2
+ 431 01bc 08       		.uleb128 0x8
+ 432 01bd 01       		.uleb128 0x1
+ 433 01be 50       		.byte	0x50
+ 434 01bf 01       		.uleb128 0x1
+ 435 01c0 30       		.byte	0x30
+ 436 01c1 00       		.byte	0
+ 437 01c2 07       		.uleb128 0x7
+ 438 01c3 3A000000 		.4byte	.LVL12
+ 439 01c7 54030000 		.4byte	0x354
+ 440 01cb D5010000 		.4byte	0x1d5
+ 441 01cf 08       		.uleb128 0x8
+ 442 01d0 01       		.uleb128 0x1
+ 443 01d1 50       		.byte	0x50
+ 444 01d2 01       		.uleb128 0x1
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 12
+
+
+ 445 01d3 31       		.byte	0x31
+ 446 01d4 00       		.byte	0
+ 447 01d5 07       		.uleb128 0x7
+ 448 01d6 42000000 		.4byte	.LVL13
+ 449 01da 5F030000 		.4byte	0x35f
+ 450 01de E9010000 		.4byte	0x1e9
+ 451 01e2 08       		.uleb128 0x8
+ 452 01e3 01       		.uleb128 0x1
+ 453 01e4 50       		.byte	0x50
+ 454 01e5 02       		.uleb128 0x2
+ 455 01e6 08       		.byte	0x8
+ 456 01e7 30       		.byte	0x30
+ 457 01e8 00       		.byte	0
+ 458 01e9 07       		.uleb128 0x7
+ 459 01ea 48000000 		.4byte	.LVL14
+ 460 01ee 6A030000 		.4byte	0x36a
+ 461 01f2 00020000 		.4byte	0x200
+ 462 01f6 08       		.uleb128 0x8
+ 463 01f7 01       		.uleb128 0x1
+ 464 01f8 50       		.byte	0x50
+ 465 01f9 05       		.uleb128 0x5
+ 466 01fa 0C       		.byte	0xc
+ 467 01fb 006CDC02 		.4byte	0x2dc6c00
+ 468 01ff 00       		.byte	0
+ 469 0200 07       		.uleb128 0x7
+ 470 0201 4E000000 		.4byte	.LVL15
+ 471 0205 75030000 		.4byte	0x375
+ 472 0209 13020000 		.4byte	0x213
+ 473 020d 08       		.uleb128 0x8
+ 474 020e 01       		.uleb128 0x1
+ 475 020f 50       		.byte	0x50
+ 476 0210 01       		.uleb128 0x1
+ 477 0211 31       		.byte	0x31
+ 478 0212 00       		.byte	0
+ 479 0213 0B       		.uleb128 0xb
+ 480 0214 52000000 		.4byte	.LVL16
+ 481 0218 80030000 		.4byte	0x380
+ 482 021c 07       		.uleb128 0x7
+ 483 021d 5C000000 		.4byte	.LVL17
+ 484 0221 12030000 		.4byte	0x312
+ 485 0225 34020000 		.4byte	0x234
+ 486 0229 08       		.uleb128 0x8
+ 487 022a 01       		.uleb128 0x1
+ 488 022b 50       		.byte	0x50
+ 489 022c 01       		.uleb128 0x1
+ 490 022d 31       		.byte	0x31
+ 491 022e 08       		.uleb128 0x8
+ 492 022f 01       		.uleb128 0x1
+ 493 0230 51       		.byte	0x51
+ 494 0231 01       		.uleb128 0x1
+ 495 0232 30       		.byte	0x30
+ 496 0233 00       		.byte	0
+ 497 0234 07       		.uleb128 0x7
+ 498 0235 62000000 		.4byte	.LVL18
+ 499 0239 1D030000 		.4byte	0x31d
+ 500 023d 4B020000 		.4byte	0x24b
+ 501 0241 08       		.uleb128 0x8
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 13
+
+
+ 502 0242 01       		.uleb128 0x1
+ 503 0243 50       		.byte	0x50
+ 504 0244 05       		.uleb128 0x5
+ 505 0245 03       		.byte	0x3
+ 506 0246 10000000 		.4byte	.LC1
+ 507 024a 00       		.byte	0
+ 508 024b 07       		.uleb128 0x7
+ 509 024c 6A000000 		.4byte	.LVL19
+ 510 0250 FC020000 		.4byte	0x2fc
+ 511 0254 60020000 		.4byte	0x260
+ 512 0258 08       		.uleb128 0x8
+ 513 0259 01       		.uleb128 0x1
+ 514 025a 50       		.byte	0x50
+ 515 025b 03       		.uleb128 0x3
+ 516 025c 0A       		.byte	0xa
+ 517 025d E803     		.2byte	0x3e8
+ 518 025f 00       		.byte	0
+ 519 0260 07       		.uleb128 0x7
+ 520 0261 70000000 		.4byte	.LVL20
+ 521 0265 8B030000 		.4byte	0x38b
+ 522 0269 73020000 		.4byte	0x273
+ 523 026d 08       		.uleb128 0x8
+ 524 026e 01       		.uleb128 0x1
+ 525 026f 50       		.byte	0x50
+ 526 0270 01       		.uleb128 0x1
+ 527 0271 32       		.byte	0x32
+ 528 0272 00       		.byte	0
+ 529 0273 0B       		.uleb128 0xb
+ 530 0274 74000000 		.4byte	.LVL21
+ 531 0278 96030000 		.4byte	0x396
+ 532 027c 07       		.uleb128 0x7
+ 533 027d 7C000000 		.4byte	.LVL22
+ 534 0281 12030000 		.4byte	0x312
+ 535 0285 94020000 		.4byte	0x294
+ 536 0289 08       		.uleb128 0x8
+ 537 028a 01       		.uleb128 0x1
+ 538 028b 50       		.byte	0x50
+ 539 028c 01       		.uleb128 0x1
+ 540 028d 31       		.byte	0x31
+ 541 028e 08       		.uleb128 0x8
+ 542 028f 01       		.uleb128 0x1
+ 543 0290 51       		.byte	0x51
+ 544 0291 01       		.uleb128 0x1
+ 545 0292 30       		.byte	0x30
+ 546 0293 00       		.byte	0
+ 547 0294 07       		.uleb128 0x7
+ 548 0295 82000000 		.4byte	.LVL23
+ 549 0299 1D030000 		.4byte	0x31d
+ 550 029d AB020000 		.4byte	0x2ab
+ 551 02a1 08       		.uleb128 0x8
+ 552 02a2 01       		.uleb128 0x1
+ 553 02a3 50       		.byte	0x50
+ 554 02a4 05       		.uleb128 0x5
+ 555 02a5 03       		.byte	0x3
+ 556 02a6 20000000 		.4byte	.LC2
+ 557 02aa 00       		.byte	0
+ 558 02ab 0B       		.uleb128 0xb
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 14
+
+
+ 559 02ac 86000000 		.4byte	.LVL24
+ 560 02b0 B0000000 		.4byte	0xb0
+ 561 02b4 00       		.byte	0
+ 562 02b5 0C       		.uleb128 0xc
+ 563 02b6 CA010000 		.4byte	.LASF17
+ 564 02ba 05       		.byte	0x5
+ 565 02bb 1207     		.2byte	0x712
+ 566 02bd C1020000 		.4byte	0x2c1
+ 567 02c1 0D       		.uleb128 0xd
+ 568 02c2 76000000 		.4byte	0x76
+ 569 02c6 0E       		.uleb128 0xe
+ 570 02c7 D6020000 		.4byte	0x2d6
+ 571 02cb D6020000 		.4byte	0x2d6
+ 572 02cf 0F       		.uleb128 0xf
+ 573 02d0 A2000000 		.4byte	0xa2
+ 574 02d4 05       		.byte	0x5
+ 575 02d5 00       		.byte	0
+ 576 02d6 10       		.uleb128 0x10
+ 577 02d7 81000000 		.4byte	0x81
+ 578 02db 11       		.uleb128 0x11
+ 579 02dc 72010000 		.4byte	.LASF18
+ 580 02e0 01       		.byte	0x1
+ 581 02e1 2B       		.byte	0x2b
+ 582 02e2 EC020000 		.4byte	0x2ec
+ 583 02e6 05       		.uleb128 0x5
+ 584 02e7 03       		.byte	0x3
+ 585 02e8 00000000 		.4byte	imoFreqParam2Frequency
+ 586 02ec 10       		.uleb128 0x10
+ 587 02ed C6020000 		.4byte	0x2c6
+ 588 02f1 12       		.uleb128 0x12
+ 589 02f2 98000000 		.4byte	.LASF19
+ 590 02f6 98000000 		.4byte	.LASF19
+ 591 02fa 06       		.byte	0x6
+ 592 02fb 26       		.byte	0x26
+ 593 02fc 12       		.uleb128 0x12
+ 594 02fd 9B020000 		.4byte	.LASF20
+ 595 0301 9B020000 		.4byte	.LASF20
+ 596 0305 07       		.byte	0x7
+ 597 0306 76       		.byte	0x76
+ 598 0307 12       		.uleb128 0x12
+ 599 0308 00000000 		.4byte	.LASF21
+ 600 030c 00000000 		.4byte	.LASF21
+ 601 0310 08       		.byte	0x8
+ 602 0311 38       		.byte	0x38
+ 603 0312 12       		.uleb128 0x12
+ 604 0313 1A020000 		.4byte	.LASF22
+ 605 0317 1A020000 		.4byte	.LASF22
+ 606 031b 08       		.byte	0x8
+ 607 031c 3D       		.byte	0x3d
+ 608 031d 12       		.uleb128 0x12
+ 609 031e 27020000 		.4byte	.LASF23
+ 610 0322 27020000 		.4byte	.LASF23
+ 611 0326 08       		.byte	0x8
+ 612 0327 3C       		.byte	0x3c
+ 613 0328 12       		.uleb128 0x12
+ 614 0329 14000000 		.4byte	.LASF24
+ 615 032d 14000000 		.4byte	.LASF24
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 15
+
+
+ 616 0331 07       		.byte	0x7
+ 617 0332 48       		.byte	0x48
+ 618 0333 12       		.uleb128 0x12
+ 619 0334 4E020000 		.4byte	.LASF25
+ 620 0338 4E020000 		.4byte	.LASF25
+ 621 033c 07       		.byte	0x7
+ 622 033d 43       		.byte	0x43
+ 623 033e 12       		.uleb128 0x12
+ 624 033f 22000000 		.4byte	.LASF26
+ 625 0343 22000000 		.4byte	.LASF26
+ 626 0347 07       		.byte	0x7
+ 627 0348 46       		.byte	0x46
+ 628 0349 12       		.uleb128 0x12
+ 629 034a 5C000000 		.4byte	.LASF27
+ 630 034e 5C000000 		.4byte	.LASF27
+ 631 0352 07       		.byte	0x7
+ 632 0353 44       		.byte	0x44
+ 633 0354 12       		.uleb128 0x12
+ 634 0355 D7010000 		.4byte	.LASF28
+ 635 0359 D7010000 		.4byte	.LASF28
+ 636 035d 07       		.byte	0x7
+ 637 035e 41       		.byte	0x41
+ 638 035f 12       		.uleb128 0x12
+ 639 0360 76000000 		.4byte	.LASF29
+ 640 0364 76000000 		.4byte	.LASF29
+ 641 0368 09       		.byte	0x9
+ 642 0369 50       		.byte	0x50
+ 643 036a 12       		.uleb128 0x12
+ 644 036b 8C000000 		.4byte	.LASF30
+ 645 036f 8C000000 		.4byte	.LASF30
+ 646 0373 07       		.byte	0x7
+ 647 0374 78       		.byte	0x78
+ 648 0375 12       		.uleb128 0x12
+ 649 0376 2E000000 		.4byte	.LASF31
+ 650 037a 2E000000 		.4byte	.LASF31
+ 651 037e 07       		.byte	0x7
+ 652 037f 4D       		.byte	0x4d
+ 653 0380 12       		.uleb128 0x12
+ 654 0381 37010000 		.4byte	.LASF32
+ 655 0385 37010000 		.4byte	.LASF32
+ 656 0389 07       		.byte	0x7
+ 657 038a 66       		.byte	0x66
+ 658 038b 12       		.uleb128 0x12
+ 659 038c 4C000000 		.4byte	.LASF33
+ 660 0390 4C000000 		.4byte	.LASF33
+ 661 0394 07       		.byte	0x7
+ 662 0395 5D       		.byte	0x5d
+ 663 0396 12       		.uleb128 0x12
+ 664 0397 E7010000 		.4byte	.LASF34
+ 665 039b E7010000 		.4byte	.LASF34
+ 666 039f 07       		.byte	0x7
+ 667 03a0 5A       		.byte	0x5a
+ 668 03a1 00       		.byte	0
+ 669              		.section	.debug_abbrev,"",%progbits
+ 670              	.Ldebug_abbrev0:
+ 671 0000 01       		.uleb128 0x1
+ 672 0001 11       		.uleb128 0x11
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 16
+
+
+ 673 0002 01       		.byte	0x1
+ 674 0003 25       		.uleb128 0x25
+ 675 0004 0E       		.uleb128 0xe
+ 676 0005 13       		.uleb128 0x13
+ 677 0006 0B       		.uleb128 0xb
+ 678 0007 03       		.uleb128 0x3
+ 679 0008 0E       		.uleb128 0xe
+ 680 0009 1B       		.uleb128 0x1b
+ 681 000a 0E       		.uleb128 0xe
+ 682 000b 55       		.uleb128 0x55
+ 683 000c 17       		.uleb128 0x17
+ 684 000d 11       		.uleb128 0x11
+ 685 000e 01       		.uleb128 0x1
+ 686 000f 10       		.uleb128 0x10
+ 687 0010 17       		.uleb128 0x17
+ 688 0011 00       		.byte	0
+ 689 0012 00       		.byte	0
+ 690 0013 02       		.uleb128 0x2
+ 691 0014 24       		.uleb128 0x24
+ 692 0015 00       		.byte	0
+ 693 0016 0B       		.uleb128 0xb
+ 694 0017 0B       		.uleb128 0xb
+ 695 0018 3E       		.uleb128 0x3e
+ 696 0019 0B       		.uleb128 0xb
+ 697 001a 03       		.uleb128 0x3
+ 698 001b 0E       		.uleb128 0xe
+ 699 001c 00       		.byte	0
+ 700 001d 00       		.byte	0
+ 701 001e 03       		.uleb128 0x3
+ 702 001f 16       		.uleb128 0x16
+ 703 0020 00       		.byte	0
+ 704 0021 03       		.uleb128 0x3
+ 705 0022 0E       		.uleb128 0xe
+ 706 0023 3A       		.uleb128 0x3a
+ 707 0024 0B       		.uleb128 0xb
+ 708 0025 3B       		.uleb128 0x3b
+ 709 0026 0B       		.uleb128 0xb
+ 710 0027 49       		.uleb128 0x49
+ 711 0028 13       		.uleb128 0x13
+ 712 0029 00       		.byte	0
+ 713 002a 00       		.byte	0
+ 714 002b 04       		.uleb128 0x4
+ 715 002c 24       		.uleb128 0x24
+ 716 002d 00       		.byte	0
+ 717 002e 0B       		.uleb128 0xb
+ 718 002f 0B       		.uleb128 0xb
+ 719 0030 3E       		.uleb128 0x3e
+ 720 0031 0B       		.uleb128 0xb
+ 721 0032 03       		.uleb128 0x3
+ 722 0033 08       		.uleb128 0x8
+ 723 0034 00       		.byte	0
+ 724 0035 00       		.byte	0
+ 725 0036 05       		.uleb128 0x5
+ 726 0037 16       		.uleb128 0x16
+ 727 0038 00       		.byte	0
+ 728 0039 03       		.uleb128 0x3
+ 729 003a 0E       		.uleb128 0xe
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 17
+
+
+ 730 003b 3A       		.uleb128 0x3a
+ 731 003c 0B       		.uleb128 0xb
+ 732 003d 3B       		.uleb128 0x3b
+ 733 003e 05       		.uleb128 0x5
+ 734 003f 49       		.uleb128 0x49
+ 735 0040 13       		.uleb128 0x13
+ 736 0041 00       		.byte	0
+ 737 0042 00       		.byte	0
+ 738 0043 06       		.uleb128 0x6
+ 739 0044 2E       		.uleb128 0x2e
+ 740 0045 01       		.byte	0x1
+ 741 0046 3F       		.uleb128 0x3f
+ 742 0047 19       		.uleb128 0x19
+ 743 0048 03       		.uleb128 0x3
+ 744 0049 0E       		.uleb128 0xe
+ 745 004a 3A       		.uleb128 0x3a
+ 746 004b 0B       		.uleb128 0xb
+ 747 004c 3B       		.uleb128 0x3b
+ 748 004d 0B       		.uleb128 0xb
+ 749 004e 27       		.uleb128 0x27
+ 750 004f 19       		.uleb128 0x19
+ 751 0050 11       		.uleb128 0x11
+ 752 0051 01       		.uleb128 0x1
+ 753 0052 12       		.uleb128 0x12
+ 754 0053 06       		.uleb128 0x6
+ 755 0054 40       		.uleb128 0x40
+ 756 0055 18       		.uleb128 0x18
+ 757 0056 9742     		.uleb128 0x2117
+ 758 0058 19       		.uleb128 0x19
+ 759 0059 01       		.uleb128 0x1
+ 760 005a 13       		.uleb128 0x13
+ 761 005b 00       		.byte	0
+ 762 005c 00       		.byte	0
+ 763 005d 07       		.uleb128 0x7
+ 764 005e 898201   		.uleb128 0x4109
+ 765 0061 01       		.byte	0x1
+ 766 0062 11       		.uleb128 0x11
+ 767 0063 01       		.uleb128 0x1
+ 768 0064 31       		.uleb128 0x31
+ 769 0065 13       		.uleb128 0x13
+ 770 0066 01       		.uleb128 0x1
+ 771 0067 13       		.uleb128 0x13
+ 772 0068 00       		.byte	0
+ 773 0069 00       		.byte	0
+ 774 006a 08       		.uleb128 0x8
+ 775 006b 8A8201   		.uleb128 0x410a
+ 776 006e 00       		.byte	0
+ 777 006f 02       		.uleb128 0x2
+ 778 0070 18       		.uleb128 0x18
+ 779 0071 9142     		.uleb128 0x2111
+ 780 0073 18       		.uleb128 0x18
+ 781 0074 00       		.byte	0
+ 782 0075 00       		.byte	0
+ 783 0076 09       		.uleb128 0x9
+ 784 0077 898201   		.uleb128 0x4109
+ 785 007a 01       		.byte	0x1
+ 786 007b 11       		.uleb128 0x11
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 18
+
+
+ 787 007c 01       		.uleb128 0x1
+ 788 007d 31       		.uleb128 0x31
+ 789 007e 13       		.uleb128 0x13
+ 790 007f 00       		.byte	0
+ 791 0080 00       		.byte	0
+ 792 0081 0A       		.uleb128 0xa
+ 793 0082 2E       		.uleb128 0x2e
+ 794 0083 01       		.byte	0x1
+ 795 0084 3F       		.uleb128 0x3f
+ 796 0085 19       		.uleb128 0x19
+ 797 0086 03       		.uleb128 0x3
+ 798 0087 0E       		.uleb128 0xe
+ 799 0088 3A       		.uleb128 0x3a
+ 800 0089 0B       		.uleb128 0xb
+ 801 008a 3B       		.uleb128 0x3b
+ 802 008b 0B       		.uleb128 0xb
+ 803 008c 27       		.uleb128 0x27
+ 804 008d 19       		.uleb128 0x19
+ 805 008e 49       		.uleb128 0x49
+ 806 008f 13       		.uleb128 0x13
+ 807 0090 8701     		.uleb128 0x87
+ 808 0092 19       		.uleb128 0x19
+ 809 0093 11       		.uleb128 0x11
+ 810 0094 01       		.uleb128 0x1
+ 811 0095 12       		.uleb128 0x12
+ 812 0096 06       		.uleb128 0x6
+ 813 0097 40       		.uleb128 0x40
+ 814 0098 18       		.uleb128 0x18
+ 815 0099 9742     		.uleb128 0x2117
+ 816 009b 19       		.uleb128 0x19
+ 817 009c 01       		.uleb128 0x1
+ 818 009d 13       		.uleb128 0x13
+ 819 009e 00       		.byte	0
+ 820 009f 00       		.byte	0
+ 821 00a0 0B       		.uleb128 0xb
+ 822 00a1 898201   		.uleb128 0x4109
+ 823 00a4 00       		.byte	0
+ 824 00a5 11       		.uleb128 0x11
+ 825 00a6 01       		.uleb128 0x1
+ 826 00a7 31       		.uleb128 0x31
+ 827 00a8 13       		.uleb128 0x13
+ 828 00a9 00       		.byte	0
+ 829 00aa 00       		.byte	0
+ 830 00ab 0C       		.uleb128 0xc
+ 831 00ac 34       		.uleb128 0x34
+ 832 00ad 00       		.byte	0
+ 833 00ae 03       		.uleb128 0x3
+ 834 00af 0E       		.uleb128 0xe
+ 835 00b0 3A       		.uleb128 0x3a
+ 836 00b1 0B       		.uleb128 0xb
+ 837 00b2 3B       		.uleb128 0x3b
+ 838 00b3 05       		.uleb128 0x5
+ 839 00b4 49       		.uleb128 0x49
+ 840 00b5 13       		.uleb128 0x13
+ 841 00b6 3F       		.uleb128 0x3f
+ 842 00b7 19       		.uleb128 0x19
+ 843 00b8 3C       		.uleb128 0x3c
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 19
+
+
+ 844 00b9 19       		.uleb128 0x19
+ 845 00ba 00       		.byte	0
+ 846 00bb 00       		.byte	0
+ 847 00bc 0D       		.uleb128 0xd
+ 848 00bd 35       		.uleb128 0x35
+ 849 00be 00       		.byte	0
+ 850 00bf 49       		.uleb128 0x49
+ 851 00c0 13       		.uleb128 0x13
+ 852 00c1 00       		.byte	0
+ 853 00c2 00       		.byte	0
+ 854 00c3 0E       		.uleb128 0xe
+ 855 00c4 01       		.uleb128 0x1
+ 856 00c5 01       		.byte	0x1
+ 857 00c6 49       		.uleb128 0x49
+ 858 00c7 13       		.uleb128 0x13
+ 859 00c8 01       		.uleb128 0x1
+ 860 00c9 13       		.uleb128 0x13
+ 861 00ca 00       		.byte	0
+ 862 00cb 00       		.byte	0
+ 863 00cc 0F       		.uleb128 0xf
+ 864 00cd 21       		.uleb128 0x21
+ 865 00ce 00       		.byte	0
+ 866 00cf 49       		.uleb128 0x49
+ 867 00d0 13       		.uleb128 0x13
+ 868 00d1 2F       		.uleb128 0x2f
+ 869 00d2 0B       		.uleb128 0xb
+ 870 00d3 00       		.byte	0
+ 871 00d4 00       		.byte	0
+ 872 00d5 10       		.uleb128 0x10
+ 873 00d6 26       		.uleb128 0x26
+ 874 00d7 00       		.byte	0
+ 875 00d8 49       		.uleb128 0x49
+ 876 00d9 13       		.uleb128 0x13
+ 877 00da 00       		.byte	0
+ 878 00db 00       		.byte	0
+ 879 00dc 11       		.uleb128 0x11
+ 880 00dd 34       		.uleb128 0x34
+ 881 00de 00       		.byte	0
+ 882 00df 03       		.uleb128 0x3
+ 883 00e0 0E       		.uleb128 0xe
+ 884 00e1 3A       		.uleb128 0x3a
+ 885 00e2 0B       		.uleb128 0xb
+ 886 00e3 3B       		.uleb128 0x3b
+ 887 00e4 0B       		.uleb128 0xb
+ 888 00e5 49       		.uleb128 0x49
+ 889 00e6 13       		.uleb128 0x13
+ 890 00e7 3F       		.uleb128 0x3f
+ 891 00e8 19       		.uleb128 0x19
+ 892 00e9 02       		.uleb128 0x2
+ 893 00ea 18       		.uleb128 0x18
+ 894 00eb 00       		.byte	0
+ 895 00ec 00       		.byte	0
+ 896 00ed 12       		.uleb128 0x12
+ 897 00ee 2E       		.uleb128 0x2e
+ 898 00ef 00       		.byte	0
+ 899 00f0 3F       		.uleb128 0x3f
+ 900 00f1 19       		.uleb128 0x19
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 20
+
+
+ 901 00f2 3C       		.uleb128 0x3c
+ 902 00f3 19       		.uleb128 0x19
+ 903 00f4 6E       		.uleb128 0x6e
+ 904 00f5 0E       		.uleb128 0xe
+ 905 00f6 03       		.uleb128 0x3
+ 906 00f7 0E       		.uleb128 0xe
+ 907 00f8 3A       		.uleb128 0x3a
+ 908 00f9 0B       		.uleb128 0xb
+ 909 00fa 3B       		.uleb128 0x3b
+ 910 00fb 0B       		.uleb128 0xb
+ 911 00fc 00       		.byte	0
+ 912 00fd 00       		.byte	0
+ 913 00fe 00       		.byte	0
+ 914              		.section	.debug_aranges,"",%progbits
+ 915 0000 24000000 		.4byte	0x24
+ 916 0004 0200     		.2byte	0x2
+ 917 0006 00000000 		.4byte	.Ldebug_info0
+ 918 000a 04       		.byte	0x4
+ 919 000b 00       		.byte	0
+ 920 000c 0000     		.2byte	0
+ 921 000e 0000     		.2byte	0
+ 922 0010 00000000 		.4byte	.LFB64
+ 923 0014 20000000 		.4byte	.LFE64-.LFB64
+ 924 0018 00000000 		.4byte	.LFB63
+ 925 001c 98000000 		.4byte	.LFE63-.LFB63
+ 926 0020 00000000 		.4byte	0
+ 927 0024 00000000 		.4byte	0
+ 928              		.section	.debug_ranges,"",%progbits
+ 929              	.Ldebug_ranges0:
+ 930 0000 00000000 		.4byte	.LFB64
+ 931 0004 20000000 		.4byte	.LFE64
+ 932 0008 00000000 		.4byte	.LFB63
+ 933 000c 98000000 		.4byte	.LFE63
+ 934 0010 00000000 		.4byte	0
+ 935 0014 00000000 		.4byte	0
+ 936              		.section	.debug_line,"",%progbits
+ 937              	.Ldebug_line0:
+ 938 0000 AE010000 		.section	.debug_str,"MS",%progbits,1
+ 938      02006D01 
+ 938      00000201 
+ 938      FB0E0D00 
+ 938      01010101 
+ 939              	.LASF21:
+ 940 0000 4C43445F 		.ascii	"LCD_Start\000"
+ 940      53746172 
+ 940      7400
+ 941              	.LASF9:
+ 942 000a 5F5F696E 		.ascii	"__int32_t\000"
+ 942      7433325F 
+ 942      7400
+ 943              	.LASF24:
+ 944 0014 4379494D 		.ascii	"CyIMO_SetFreq\000"
+ 944      4F5F5365 
+ 944      74467265 
+ 944      7100
+ 945              	.LASF26:
+ 946 0022 4379494D 		.ascii	"CyIMO_Start\000"
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 21
+
+
+ 946      4F5F5374 
+ 946      61727400 
+ 947              	.LASF31:
+ 948 002e 43794D61 		.ascii	"CyMasterClk_SetSource\000"
+ 948      73746572 
+ 948      436C6B5F 
+ 948      53657453 
+ 948      6F757263 
+ 949              	.LASF10:
+ 950 0044 696E7433 		.ascii	"int32_t\000"
+ 950      325F7400 
+ 951              	.LASF33:
+ 952 004c 4379494C 		.ascii	"CyILO_SetSource\000"
+ 952      4F5F5365 
+ 952      74536F75 
+ 952      72636500 
+ 953              	.LASF27:
+ 954 005c 4379504C 		.ascii	"CyPLL_OUT_SetSource\000"
+ 954      4C5F4F55 
+ 954      545F5365 
+ 954      74536F75 
+ 954      72636500 
+ 955              	.LASF12:
+ 956 0070 666C6F61 		.ascii	"float\000"
+ 956      7400
+ 957              	.LASF29:
+ 958 0076 4379466C 		.ascii	"CyFlash_SetWaitCycles\000"
+ 958      6173685F 
+ 958      53657457 
+ 958      61697443 
+ 958      79636C65 
+ 959              	.LASF30:
+ 960 008c 43794465 		.ascii	"CyDelayFreq\000"
+ 960      6C617946 
+ 960      72657100 
+ 961              	.LASF19:
+ 962 0098 4C45445F 		.ascii	"LED_Status_Write\000"
+ 962      53746174 
+ 962      75735F57 
+ 962      72697465 
+ 962      00
+ 963              	.LASF35:
+ 964 00a9 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 964      43313120 
+ 964      352E342E 
+ 964      31203230 
+ 964      31363036 
+ 965 00dc 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 965      20726576 
+ 965      6973696F 
+ 965      6E203233 
+ 965      37373135 
+ 966 010f 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 966      66756E63 
+ 966      74696F6E 
+ 966      2D736563 
+ 966      74696F6E 
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 22
+
+
+ 967              	.LASF32:
+ 968 0137 43795854 		.ascii	"CyXTAL_Stop\000"
+ 968      414C5F53 
+ 968      746F7000 
+ 969              	.LASF5:
+ 970 0143 6C6F6E67 		.ascii	"long unsigned int\000"
+ 970      20756E73 
+ 970      69676E65 
+ 970      6420696E 
+ 970      7400
+ 971              	.LASF3:
+ 972 0155 73686F72 		.ascii	"short unsigned int\000"
+ 972      7420756E 
+ 972      7369676E 
+ 972      65642069 
+ 972      6E7400
+ 973              	.LASF38:
+ 974 0168 4C65645F 		.ascii	"Led_Blink\000"
+ 974      426C696E 
+ 974      6B00
+ 975              	.LASF18:
+ 976 0172 696D6F46 		.ascii	"imoFreqParam2Frequency\000"
+ 976      72657150 
+ 976      6172616D 
+ 976      32467265 
+ 976      7175656E 
+ 977              	.LASF1:
+ 978 0189 756E7369 		.ascii	"unsigned char\000"
+ 978      676E6564 
+ 978      20636861 
+ 978      7200
+ 979              	.LASF13:
+ 980 0197 646F7562 		.ascii	"double\000"
+ 980      6C6500
+ 981              	.LASF39:
+ 982 019e 6D61696E 		.ascii	"main\000"
+ 982      00
+ 983              	.LASF37:
+ 984 01a3 443A5C50 		.ascii	"D:\\PSoC Programs\\clock_example_1.cydsn\000"
+ 984      536F4320 
+ 984      50726F67 
+ 984      72616D73 
+ 984      5C636C6F 
+ 985              	.LASF17:
+ 986 01ca 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 986      52784275 
+ 986      66666572 
+ 986      00
+ 987              	.LASF28:
+ 988 01d7 4379504C 		.ascii	"CyPLL_OUT_Start\000"
+ 988      4C5F4F55 
+ 988      545F5374 
+ 988      61727400 
+ 989              	.LASF34:
+ 990 01e7 4379494C 		.ascii	"CyILO_Stop100K\000"
+ 990      4F5F5374 
+ 990      6F703130 
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 23
+
+
+ 990      304B00
+ 991              	.LASF8:
+ 992 01f6 756E7369 		.ascii	"unsigned int\000"
+ 992      676E6564 
+ 992      20696E74 
+ 992      00
+ 993              	.LASF7:
+ 994 0203 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 994      206C6F6E 
+ 994      6720756E 
+ 994      7369676E 
+ 994      65642069 
+ 995              	.LASF22:
+ 996 021a 4C43445F 		.ascii	"LCD_Position\000"
+ 996      506F7369 
+ 996      74696F6E 
+ 996      00
+ 997              	.LASF23:
+ 998 0227 4C43445F 		.ascii	"LCD_PrintString\000"
+ 998      5072696E 
+ 998      74537472 
+ 998      696E6700 
+ 999              	.LASF15:
+ 1000 0237 73697A65 		.ascii	"sizetype\000"
+ 1000      74797065 
+ 1000      00
+ 1001              	.LASF6:
+ 1002 0240 6C6F6E67 		.ascii	"long long int\000"
+ 1002      206C6F6E 
+ 1002      6720696E 
+ 1002      7400
+ 1003              	.LASF25:
+ 1004 024e 4379504C 		.ascii	"CyPLL_OUT_SetPQ\000"
+ 1004      4C5F4F55 
+ 1004      545F5365 
+ 1004      74505100 
+ 1005              	.LASF36:
+ 1006 025e 6D61696E 		.ascii	"main.c\000"
+ 1006      2E6300
+ 1007              	.LASF14:
+ 1008 0265 63686172 		.ascii	"char\000"
+ 1008      00
+ 1009              	.LASF2:
+ 1010 026a 73686F72 		.ascii	"short int\000"
+ 1010      7420696E 
+ 1010      7400
+ 1011              	.LASF11:
+ 1012 0274 75696E74 		.ascii	"uint8\000"
+ 1012      3800
+ 1013              	.LASF4:
+ 1014 027a 6C6F6E67 		.ascii	"long int\000"
+ 1014      20696E74 
+ 1014      00
+ 1015              	.LASF16:
+ 1016 0283 6C6F6E67 		.ascii	"long double\000"
+ 1016      20646F75 
+ 1016      626C6500 
+ARM GAS  C:\Users\hamis\AppData\Local\Temp\ccrvUx4B.s 			page 24
+
+
+ 1017              	.LASF0:
+ 1018 028f 7369676E 		.ascii	"signed char\000"
+ 1018      65642063 
+ 1018      68617200 
+ 1019              	.LASF20:
+ 1020 029b 43794465 		.ascii	"CyDelay\000"
+ 1020      6C617900 
+ 1021              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
