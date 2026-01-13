@@ -1,5 +1,5 @@
 # Proj04_freefly_uart_start
-# 2025-11-12 22:22:46Z
+# 2026-01-08 00:07:47Z
 
 # IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 0
@@ -37,7 +37,7 @@ set_location "\UART_MONITOR:BUART:sTX:TxSts\" 0 2 4
 set_location "\UART_MONITOR:BUART:sRX:RxShifter:u0\" 0 0 2
 set_location "\UART_MONITOR:BUART:sRX:RxBitCounter\" 0 0 7
 set_location "\UART_MONITOR:BUART:sRX:RxSts\" 0 1 4
-set_location "isr_rx" interrupt -1 -1 0
+set_location "isr_rx_monitor" interrupt -1 -1 0
 set_location "\UART_MOVI:BUART:sTX:TxShifter:u0\" 1 1 2
 set_location "\UART_MOVI:BUART:sTX:sCLOCK:TxBitClkGen\" 1 2 2
 set_location "\UART_MOVI:BUART:sTX:TxSts\" 1 1 4

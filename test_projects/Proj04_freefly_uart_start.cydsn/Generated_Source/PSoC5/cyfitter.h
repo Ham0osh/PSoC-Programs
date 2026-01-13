@@ -217,24 +217,6 @@
 #define Tx_2__SIO_REG_HIFREQ CYREG_PRT12_SIO_REG_HIFREQ
 #define Tx_2__SLW CYREG_PRT12_SLW
 
-/* isr_rx */
-#define isr_rx__INTC_CLR_EN_REG CYREG_NVIC_CLRENA0
-#define isr_rx__INTC_CLR_PD_REG CYREG_NVIC_CLRPEND0
-#define isr_rx__INTC_MASK 0x01u
-#define isr_rx__INTC_NUMBER 0u
-#define isr_rx__INTC_PRIOR_NUM 7u
-#define isr_rx__INTC_PRIOR_REG CYREG_NVIC_PRI_0
-#define isr_rx__INTC_SET_EN_REG CYREG_NVIC_SETENA0
-#define isr_rx__INTC_SET_PD_REG CYREG_NVIC_SETPEND0
-#define isr_rx_movi__INTC_CLR_EN_REG CYREG_NVIC_CLRENA0
-#define isr_rx_movi__INTC_CLR_PD_REG CYREG_NVIC_CLRPEND0
-#define isr_rx_movi__INTC_MASK 0x02u
-#define isr_rx_movi__INTC_NUMBER 1u
-#define isr_rx_movi__INTC_PRIOR_NUM 7u
-#define isr_rx_movi__INTC_PRIOR_REG CYREG_NVIC_PRI_1
-#define isr_rx_movi__INTC_SET_EN_REG CYREG_NVIC_SETENA0
-#define isr_rx_movi__INTC_SET_PD_REG CYREG_NVIC_SETPEND0
-
 /* UART_MOVI */
 #define UART_MOVI_BUART_sRX_RxBitCounter__16BIT_CONTROL_AUX_CTL_REG CYREG_B0_UDB11_12_ACTL
 #define UART_MOVI_BUART_sRX_RxBitCounter__16BIT_CONTROL_CONTROL_REG CYREG_B0_UDB11_12_CTL
@@ -352,6 +334,16 @@
 #define Clock_Movi__PM_ACT_MSK 0x02u
 #define Clock_Movi__PM_STBY_CFG CYREG_PM_STBY_CFG2
 #define Clock_Movi__PM_STBY_MSK 0x02u
+
+/* isr_rx_movi */
+#define isr_rx_movi__INTC_CLR_EN_REG CYREG_NVIC_CLRENA0
+#define isr_rx_movi__INTC_CLR_PD_REG CYREG_NVIC_CLRPEND0
+#define isr_rx_movi__INTC_MASK 0x02u
+#define isr_rx_movi__INTC_NUMBER 1u
+#define isr_rx_movi__INTC_PRIOR_NUM 7u
+#define isr_rx_movi__INTC_PRIOR_REG CYREG_NVIC_PRI_1
+#define isr_rx_movi__INTC_SET_EN_REG CYREG_NVIC_SETENA0
+#define isr_rx_movi__INTC_SET_PD_REG CYREG_NVIC_SETPEND0
 
 /* UART_MONITOR */
 #define UART_MONITOR_BUART_sRX_RxBitCounter__16BIT_CONTROL_AUX_CTL_REG CYREG_B1_UDB10_11_ACTL
@@ -479,6 +471,16 @@
 #define debounce_clock__PM_ACT_MSK 0x04u
 #define debounce_clock__PM_STBY_CFG CYREG_PM_STBY_CFG2
 #define debounce_clock__PM_STBY_MSK 0x04u
+
+/* isr_rx_monitor */
+#define isr_rx_monitor__INTC_CLR_EN_REG CYREG_NVIC_CLRENA0
+#define isr_rx_monitor__INTC_CLR_PD_REG CYREG_NVIC_CLRPEND0
+#define isr_rx_monitor__INTC_MASK 0x01u
+#define isr_rx_monitor__INTC_NUMBER 0u
+#define isr_rx_monitor__INTC_PRIOR_NUM 7u
+#define isr_rx_monitor__INTC_PRIOR_REG CYREG_NVIC_PRI_0
+#define isr_rx_monitor__INTC_SET_EN_REG CYREG_NVIC_SETENA0
+#define isr_rx_monitor__INTC_SET_PD_REG CYREG_NVIC_SETPEND0
 
 /* Miscellaneous */
 #define BCLK__BUS_CLK__HZ 24000000U

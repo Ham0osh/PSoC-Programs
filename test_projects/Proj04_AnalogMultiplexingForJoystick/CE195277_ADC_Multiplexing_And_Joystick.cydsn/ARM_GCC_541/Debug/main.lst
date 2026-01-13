@@ -1,0 +1,1707 @@
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.rodata
+  20              		.align	2
+  21              	.LC0:
+  22 0000 0D0A4341 		.ascii	"\015\012CAL MODE\015\012\000"
+  22      4C204D4F 
+  22      44450D0A 
+  22      00
+  23 000d 000000   		.align	2
+  24              	.LC1:
+  25 0010 53746570 		.ascii	"Step 1: Move joystick through FULL range (all direc"
+  25      20313A20 
+  25      4D6F7665 
+  25      206A6F79 
+  25      73746963 
+  26 0043 74696F6E 		.ascii	"tions), then release to center.\015\012\000"
+  26      73292C20 
+  26      7468656E 
+  26      2072656C 
+  26      65617365 
+  27 0065 000000   		.align	2
+  28              	.LC2:
+  29 0068 50726573 		.ascii	"Press 'c' to capture CENTER (averaged), 'x' to canc"
+  29      73202763 
+  29      2720746F 
+  29      20636170 
+  29      74757265 
+  30 009b 656C2E0D 		.ascii	"el.\015\012\000"
+  30      0A00
+  31 00a1 000000   		.align	2
+  32              	.LC3:
+  33 00a4 0D0A5374 		.ascii	"\015\012Step 2: Capturing CENTER (averaging)... kee"
+  33      65702032 
+  33      3A204361 
+  33      70747572 
+  33      696E6720 
+  34 00d1 70206A6F 		.ascii	"p joystick relaxed.\015\012\000"
+  34      79737469 
+  34      636B2072 
+  34      656C6178 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 2
+
+
+  34      65642E0D 
+  35 00e7 00       		.align	2
+  36              	.LC4:
+  37 00e8 57616974 		.ascii	"Wait for capture to complete, then press 'c' to SAV"
+  37      20666F72 
+  37      20636170 
+  37      74757265 
+  37      20746F20 
+  38 011b 452E0D0A 		.ascii	"E.\015\012\000"
+  38      00
+  39              		.align	2
+  40              	.LC5:
+  41 0120 0D0A4365 		.ascii	"\015\012Center captured.\015\012\000"
+  41      6E746572 
+  41      20636170 
+  41      74757265 
+  41      642E0D0A 
+  42 0135 000000   		.align	2
+  43              	.LC6:
+  44 0138 53746570 		.ascii	"Step 3: Press 'c' to SAVE, 'x' to cancel.\015\012\000"
+  44      20333A20 
+  44      50726573 
+  44      73202763 
+  44      2720746F 
+  45              		.align	2
+  46              	.LC7:
+  47 0164 0D0A4341 		.ascii	"\015\012CAL exited.\015\012\000"
+  47      4C206578 
+  47      69746564 
+  47      2E0D0A00 
+  48              		.section	.text.print_cal_prompt_on_state_change,"ax",%progbits
+  49              		.align	2
+  50              		.thumb
+  51              		.thumb_func
+  52              		.type	print_cal_prompt_on_state_change, %function
+  53              	print_cal_prompt_on_state_change:
+  54              	.LFB64:
+  55              		.file 1 "main.c"
+   1:main.c        **** /* main.c
+   2:main.c        ****  *
+   3:main.c        ****  * Uses:
+   4:main.c        ****  *  - adc_balanced.c/.h  : round-robin ADC sampling over AMux (N_CH channels)
+   5:main.c        ****  *  - joystick.c/.h      : calibration + mapping (deadband, inversion, scaling)
+   6:main.c        ****  *
+   7:main.c        ****  * CLI stays here:
+   8:main.c        ****  *   'c' : calibration advance (start -> center capture -> save)
+   9:main.c        ****  *   'x' : stop streaming (and also cancels calibration if active)
+  10:main.c        ****  *   's' : start streaming
+  11:main.c        ****  */
+  12:main.c        **** 
+  13:main.c        **** #include <project.h>
+  14:main.c        **** #include <stdio.h>
+  15:main.c        **** 
+  16:main.c        **** #include "adc_balanced.h"
+  17:main.c        **** #include "joystick.h"
+  18:main.c        **** 
+  19:main.c        **** /* Project Defines */
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 3
+
+
+  20:main.c        **** #define FALSE  0
+  21:main.c        **** #define TRUE   1
+  22:main.c        **** 
+  23:main.c        **** #define TRANSMIT_BUFFER_SIZE  96
+  24:main.c        **** 
+  25:main.c        **** /* N_CH should be consistent across modules (defaults to 2 if not defined) */
+  26:main.c        **** /* #define N_CH (2u) */
+  27:main.c        **** 
+  28:main.c        **** /* Channel assignments */
+  29:main.c        **** #define CH_X (0u)
+  30:main.c        **** #define CH_Y (1u)
+  31:main.c        **** 
+  32:main.c        **** static void print_cal_prompt_on_state_change(joy_cal_state_t prev, joy_cal_state_t now)
+  33:main.c        **** {
+  56              		.loc 1 33 0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 8
+  59              		@ frame_needed = 1, uses_anonymous_args = 0
+  60 0000 80B5     		push	{r7, lr}
+  61              		.cfi_def_cfa_offset 8
+  62              		.cfi_offset 7, -8
+  63              		.cfi_offset 14, -4
+  64 0002 82B0     		sub	sp, sp, #8
+  65              		.cfi_def_cfa_offset 16
+  66 0004 00AF     		add	r7, sp, #0
+  67              		.cfi_def_cfa_register 7
+  68 0006 0346     		mov	r3, r0
+  69 0008 0A46     		mov	r2, r1
+  70 000a FB71     		strb	r3, [r7, #7]
+  71 000c 1346     		mov	r3, r2
+  72 000e BB71     		strb	r3, [r7, #6]
+  34:main.c        ****     if (prev == now) return;
+  73              		.loc 1 34 0
+  74 0010 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+  75 0012 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+  76 0014 9A42     		cmp	r2, r3
+  77 0016 2AD0     		beq	.L7
+  35:main.c        **** 
+  36:main.c        ****     if (now == JOY_CAL_RANGE_CAPTURE)
+  78              		.loc 1 36 0
+  79 0018 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+  80 001a 012B     		cmp	r3, #1
+  81 001c 09D1     		bne	.L4
+  37:main.c        ****     {
+  38:main.c        ****         UART_1_PutString("\r\nCAL MODE\r\n");
+  82              		.loc 1 38 0
+  83 001e 1648     		ldr	r0, .L8
+  84 0020 FFF7FEFF 		bl	UART_1_PutString
+  39:main.c        ****         UART_1_PutString("Step 1: Move joystick through FULL range (all directions), then release t
+  85              		.loc 1 39 0
+  86 0024 1548     		ldr	r0, .L8+4
+  87 0026 FFF7FEFF 		bl	UART_1_PutString
+  40:main.c        ****         UART_1_PutString("Press 'c' to capture CENTER (averaged), 'x' to cancel.\r\n");
+  88              		.loc 1 40 0
+  89 002a 1548     		ldr	r0, .L8+8
+  90 002c FFF7FEFF 		bl	UART_1_PutString
+  91 0030 1EE0     		b	.L1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 4
+
+
+  92              	.L4:
+  41:main.c        ****     }
+  42:main.c        ****     else if (now == JOY_CAL_CENTER_CAPTURE)
+  93              		.loc 1 42 0
+  94 0032 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+  95 0034 022B     		cmp	r3, #2
+  96 0036 06D1     		bne	.L5
+  43:main.c        ****     {
+  44:main.c        ****         UART_1_PutString("\r\nStep 2: Capturing CENTER (averaging)... keep joystick relaxed.\r\n");
+  97              		.loc 1 44 0
+  98 0038 1248     		ldr	r0, .L8+12
+  99 003a FFF7FEFF 		bl	UART_1_PutString
+  45:main.c        ****         UART_1_PutString("Wait for capture to complete, then press 'c' to SAVE.\r\n");
+ 100              		.loc 1 45 0
+ 101 003e 1248     		ldr	r0, .L8+16
+ 102 0040 FFF7FEFF 		bl	UART_1_PutString
+ 103 0044 14E0     		b	.L1
+ 104              	.L5:
+  46:main.c        ****     }
+  47:main.c        ****     else if (now == JOY_CAL_CONFIRM_SAVE)
+ 105              		.loc 1 47 0
+ 106 0046 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 107 0048 032B     		cmp	r3, #3
+ 108 004a 06D1     		bne	.L6
+  48:main.c        ****     {
+  49:main.c        ****         UART_1_PutString("\r\nCenter captured.\r\n");
+ 109              		.loc 1 49 0
+ 110 004c 0F48     		ldr	r0, .L8+20
+ 111 004e FFF7FEFF 		bl	UART_1_PutString
+  50:main.c        ****         UART_1_PutString("Step 3: Press 'c' to SAVE, 'x' to cancel.\r\n");
+ 112              		.loc 1 50 0
+ 113 0052 0F48     		ldr	r0, .L8+24
+ 114 0054 FFF7FEFF 		bl	UART_1_PutString
+ 115 0058 0AE0     		b	.L1
+ 116              	.L6:
+  51:main.c        ****     }
+  52:main.c        ****     else if (now == JOY_CAL_OFF && prev != JOY_CAL_OFF)
+ 117              		.loc 1 52 0
+ 118 005a BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 119 005c 002B     		cmp	r3, #0
+ 120 005e 07D1     		bne	.L1
+ 121              		.loc 1 52 0 is_stmt 0 discriminator 1
+ 122 0060 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 123 0062 002B     		cmp	r3, #0
+ 124 0064 04D0     		beq	.L1
+  53:main.c        ****     {
+  54:main.c        ****         /* Could have been cancel or save; joystick module stays print-free */
+  55:main.c        ****         UART_1_PutString("\r\nCAL exited.\r\n");
+ 125              		.loc 1 55 0 is_stmt 1
+ 126 0066 0B48     		ldr	r0, .L8+28
+ 127 0068 FFF7FEFF 		bl	UART_1_PutString
+ 128 006c 00E0     		b	.L1
+ 129              	.L7:
+  34:main.c        **** 
+ 130              		.loc 1 34 0
+ 131 006e 00BF     		nop
+ 132              	.L1:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 5
+
+
+  56:main.c        ****     }
+  57:main.c        **** }
+ 133              		.loc 1 57 0
+ 134 0070 0837     		adds	r7, r7, #8
+ 135              		.cfi_def_cfa_offset 8
+ 136 0072 BD46     		mov	sp, r7
+ 137              		.cfi_def_cfa_register 13
+ 138              		@ sp needed
+ 139 0074 80BD     		pop	{r7, pc}
+ 140              	.L9:
+ 141 0076 00BF     		.align	2
+ 142              	.L8:
+ 143 0078 00000000 		.word	.LC0
+ 144 007c 10000000 		.word	.LC1
+ 145 0080 68000000 		.word	.LC2
+ 146 0084 A4000000 		.word	.LC3
+ 147 0088 E8000000 		.word	.LC4
+ 148 008c 20010000 		.word	.LC5
+ 149 0090 38010000 		.word	.LC6
+ 150 0094 64010000 		.word	.LC7
+ 151              		.cfi_endproc
+ 152              	.LFE64:
+ 153              		.size	print_cal_prompt_on_state_change, .-print_cal_prompt_on_state_change
+ 154              		.section	.rodata
+ 155              		.align	2
+ 156              	.LC8:
+ 157 0174 434F4D20 		.ascii	"COM Port Open\015\012\000"
+ 157      506F7274 
+ 157      204F7065 
+ 157      6E0D0A00 
+ 158              		.align	2
+ 159              	.LC9:
+ 160 0184 4B657973 		.ascii	"Keys: s=start stream, x=stop stream/cancel cal, c=c"
+ 160      3A20733D 
+ 160      73746172 
+ 160      74207374 
+ 160      7265616D 
+ 161 01b7 616C2061 		.ascii	"al advance\015\012\000"
+ 161      6476616E 
+ 161      63650D0A 
+ 161      00
+ 162              		.global	__aeabi_fmul
+ 163              		.global	__aeabi_f2iz
+ 164              		.align	2
+ 165              	.LC10:
+ 166 01c4 583A256C 		.ascii	"X:%ld mV Y:%ld mV  pan:%d/1000  tilt:%d/1000\015\012"
+ 166      64206D56 
+ 166      20593A25 
+ 166      6C64206D 
+ 166      56202070 
+ 167 01f2 00       		.ascii	"\000"
+ 168 01f3 00       		.align	2
+ 169              	.LC11:
+ 170 01f4 43656E74 		.ascii	"Center samples: %u/%u\015\012\000"
+ 170      65722073 
+ 170      616D706C 
+ 170      65733A20 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 6
+
+
+ 170      25752F25 
+ 171              		.section	.text.main,"ax",%progbits
+ 172              		.align	2
+ 173              		.global	main
+ 174              		.thumb
+ 175              		.thumb_func
+ 176              		.type	main, %function
+ 177              	main:
+ 178              	.LFB65:
+  58:main.c        **** 
+  59:main.c        **** int main(void)
+  60:main.c        **** {
+ 179              		.loc 1 60 0
+ 180              		.cfi_startproc
+ 181              		@ args = 0, pretend = 0, frame = 152
+ 182              		@ frame_needed = 1, uses_anonymous_args = 0
+ 183 0000 80B5     		push	{r7, lr}
+ 184              		.cfi_def_cfa_offset 8
+ 185              		.cfi_offset 7, -8
+ 186              		.cfi_offset 14, -4
+ 187 0002 A8B0     		sub	sp, sp, #160
+ 188              		.cfi_def_cfa_offset 168
+ 189 0004 02AF     		add	r7, sp, #8
+ 190              		.cfi_def_cfa 7, 160
+  61:main.c        ****     char tx[TRANSMIT_BUFFER_SIZE];
+  62:main.c        **** 
+  63:main.c        ****     uint8 ch;
+  64:main.c        ****     uint8 streaming = FALSE;
+ 191              		.loc 1 64 0
+ 192 0006 0023     		movs	r3, #0
+ 193 0008 87F89730 		strb	r3, [r7, #151]
+  65:main.c        **** 
+  66:main.c        ****     /* Latest raw counts from ADC frame */
+  67:main.c        ****     int16 counts[N_CH];
+  68:main.c        **** 
+  69:main.c        ****     /* Telemetry */
+  70:main.c        ****     int32 x_mv = 0;
+ 194              		.loc 1 70 0
+ 195 000c 0023     		movs	r3, #0
+ 196 000e C7F89030 		str	r3, [r7, #144]
+  71:main.c        ****     int32 y_mv = 0;
+ 197              		.loc 1 71 0
+ 198 0012 0023     		movs	r3, #0
+ 199 0014 C7F88C30 		str	r3, [r7, #140]
+  72:main.c        **** 
+  73:main.c        ****     /* Commands */
+  74:main.c        ****     joy_cmd_t cmd;
+  75:main.c        **** 
+  76:main.c        ****     /* Calibration state tracking for prompts */
+  77:main.c        ****     joy_cal_state_t cal_prev = JOY_CAL_OFF;
+ 200              		.loc 1 77 0
+ 201 0018 0023     		movs	r3, #0
+ 202 001a 87F89630 		strb	r3, [r7, #150]
+ 203              	.LBB2:
+  78:main.c        **** 
+  79:main.c        ****     /* Default calibration (best guess) */
+  80:main.c        ****     joy_cal_t defaults;
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 7
+
+
+  81:main.c        ****     for (uint8 i = 0u; i < (uint8)N_CH; i++)
+ 204              		.loc 1 81 0
+ 205 001e 0023     		movs	r3, #0
+ 206 0020 87F89530 		strb	r3, [r7, #149]
+ 207 0024 20E0     		b	.L11
+ 208              	.L12:
+  82:main.c        ****     {
+  83:main.c        ****         defaults.minv[i]   = 0;
+ 209              		.loc 1 83 0 discriminator 3
+ 210 0026 97F89530 		ldrb	r3, [r7, #149]	@ zero_extendqisi2
+ 211 002a 5B00     		lsls	r3, r3, #1
+ 212 002c 07F19802 		add	r2, r7, #152
+ 213 0030 1344     		add	r3, r3, r2
+ 214 0032 0022     		movs	r2, #0
+ 215 0034 23F8942C 		strh	r2, [r3, #-148]	@ movhi
+  84:main.c        ****         defaults.maxv[i]   = 255;
+ 216              		.loc 1 84 0 discriminator 3
+ 217 0038 97F89530 		ldrb	r3, [r7, #149]	@ zero_extendqisi2
+ 218 003c 5B00     		lsls	r3, r3, #1
+ 219 003e 07F19802 		add	r2, r7, #152
+ 220 0042 1344     		add	r3, r3, r2
+ 221 0044 FF22     		movs	r2, #255
+ 222 0046 23F8902C 		strh	r2, [r3, #-144]	@ movhi
+  85:main.c        ****         defaults.center[i] = 128;
+ 223              		.loc 1 85 0 discriminator 3
+ 224 004a 97F89530 		ldrb	r3, [r7, #149]	@ zero_extendqisi2
+ 225 004e 0433     		adds	r3, r3, #4
+ 226 0050 5B00     		lsls	r3, r3, #1
+ 227 0052 07F19802 		add	r2, r7, #152
+ 228 0056 1344     		add	r3, r3, r2
+ 229 0058 8022     		movs	r2, #128
+ 230 005a 23F8942C 		strh	r2, [r3, #-148]	@ movhi
+  81:main.c        ****     {
+ 231              		.loc 1 81 0 discriminator 3
+ 232 005e 97F89530 		ldrb	r3, [r7, #149]	@ zero_extendqisi2
+ 233 0062 0133     		adds	r3, r3, #1
+ 234 0064 87F89530 		strb	r3, [r7, #149]
+ 235              	.L11:
+  81:main.c        ****     {
+ 236              		.loc 1 81 0 is_stmt 0 discriminator 1
+ 237 0068 97F89530 		ldrb	r3, [r7, #149]	@ zero_extendqisi2
+ 238 006c 012B     		cmp	r3, #1
+ 239 006e DAD9     		bls	.L12
+ 240              	.LBE2:
+  86:main.c        ****     }
+  87:main.c        ****     defaults.valid = 0u;
+ 241              		.loc 1 87 0 is_stmt 1
+ 242 0070 0023     		movs	r3, #0
+ 243 0072 3B74     		strb	r3, [r7, #16]
+  88:main.c        **** 
+  89:main.c        ****     /* Inversion mask: flip X for “pan” direction, leave Y normal */
+  90:main.c        ****     uint32 invert_mask = (1u << CH_X);
+ 244              		.loc 1 90 0
+ 245 0074 0123     		movs	r3, #1
+ 246 0076 C7F88830 		str	r3, [r7, #136]
+  91:main.c        **** 
+  92:main.c        ****     /* Start UART early for user feedback */
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 8
+
+
+  93:main.c        ****     CyGlobalIntEnable;
+ 247              		.loc 1 93 0
+ 248              		.syntax unified
+ 249              	@ 93 "main.c" 1
+ 250 007a 62B6     		CPSIE   i
+ 251              	@ 0 "" 2
+  94:main.c        ****     UART_1_Start();
+ 252              		.loc 1 94 0
+ 253              		.thumb
+ 254              		.syntax unified
+ 255 007c FFF7FEFF 		bl	UART_1_Start
+  95:main.c        ****     UART_1_PutString("COM Port Open\r\n");
+ 256              		.loc 1 95 0
+ 257 0080 5F48     		ldr	r0, .L22
+ 258 0082 FFF7FEFF 		bl	UART_1_PutString
+  96:main.c        ****     UART_1_PutString("Keys: s=start stream, x=stop stream/cancel cal, c=cal advance\r\n");
+ 259              		.loc 1 96 0
+ 260 0086 5F48     		ldr	r0, .L22+4
+ 261 0088 FFF7FEFF 		bl	UART_1_PutString
+  97:main.c        **** 
+  98:main.c        ****     /* Init modules */
+  99:main.c        ****     joystick_init(&defaults, invert_mask);
+ 262              		.loc 1 99 0
+ 263 008c 3B1D     		adds	r3, r7, #4
+ 264 008e D7F88810 		ldr	r1, [r7, #136]
+ 265 0092 1846     		mov	r0, r3
+ 266 0094 FFF7FEFF 		bl	joystick_init
+ 100:main.c        ****     adc_balanced_init();
+ 267              		.loc 1 100 0
+ 268 0098 FFF7FEFF 		bl	adc_balanced_init
+ 269              	.L21:
+ 101:main.c        **** 
+ 102:main.c        ****     for (;;)
+ 103:main.c        ****     {
+ 104:main.c        ****         /* ---------- CLI ---------- */
+ 105:main.c        ****         ch = (uint8)UART_1_GetChar();
+ 270              		.loc 1 105 0
+ 271 009c FFF7FEFF 		bl	UART_1_GetChar
+ 272 00a0 0346     		mov	r3, r0
+ 273 00a2 87F88730 		strb	r3, [r7, #135]
+ 106:main.c        **** 
+ 107:main.c        ****         if (ch == 's' || ch == 'S')
+ 274              		.loc 1 107 0
+ 275 00a6 97F88730 		ldrb	r3, [r7, #135]	@ zero_extendqisi2
+ 276 00aa 732B     		cmp	r3, #115
+ 277 00ac 03D0     		beq	.L13
+ 278              		.loc 1 107 0 is_stmt 0 discriminator 1
+ 279 00ae 97F88730 		ldrb	r3, [r7, #135]	@ zero_extendqisi2
+ 280 00b2 532B     		cmp	r3, #83
+ 281 00b4 03D1     		bne	.L14
+ 282              	.L13:
+ 108:main.c        ****         {
+ 109:main.c        ****             streaming = TRUE;
+ 283              		.loc 1 109 0 is_stmt 1
+ 284 00b6 0123     		movs	r3, #1
+ 285 00b8 87F89730 		strb	r3, [r7, #151]
+ 286 00bc 1DE0     		b	.L15
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 9
+
+
+ 287              	.L14:
+ 110:main.c        ****         }
+ 111:main.c        ****         else if (ch == 'x' || ch == 'X')
+ 288              		.loc 1 111 0
+ 289 00be 97F88730 		ldrb	r3, [r7, #135]	@ zero_extendqisi2
+ 290 00c2 782B     		cmp	r3, #120
+ 291 00c4 03D0     		beq	.L16
+ 292              		.loc 1 111 0 is_stmt 0 discriminator 1
+ 293 00c6 97F88730 		ldrb	r3, [r7, #135]	@ zero_extendqisi2
+ 294 00ca 582B     		cmp	r3, #88
+ 295 00cc 08D1     		bne	.L17
+ 296              	.L16:
+ 112:main.c        ****         {
+ 113:main.c        ****             streaming = FALSE;
+ 297              		.loc 1 113 0 is_stmt 1
+ 298 00ce 0023     		movs	r3, #0
+ 299 00d0 87F89730 		strb	r3, [r7, #151]
+ 114:main.c        ****             joystick_on_key((char)ch); /* also cancels calibration if active */
+ 300              		.loc 1 114 0
+ 301 00d4 97F88730 		ldrb	r3, [r7, #135]	@ zero_extendqisi2
+ 302 00d8 1846     		mov	r0, r3
+ 303 00da FFF7FEFF 		bl	joystick_on_key
+ 304 00de 0CE0     		b	.L15
+ 305              	.L17:
+ 115:main.c        ****         }
+ 116:main.c        ****         else if (ch == 'c' || ch == 'C')
+ 306              		.loc 1 116 0
+ 307 00e0 97F88730 		ldrb	r3, [r7, #135]	@ zero_extendqisi2
+ 308 00e4 632B     		cmp	r3, #99
+ 309 00e6 03D0     		beq	.L18
+ 310              		.loc 1 116 0 is_stmt 0 discriminator 1
+ 311 00e8 97F88730 		ldrb	r3, [r7, #135]	@ zero_extendqisi2
+ 312 00ec 432B     		cmp	r3, #67
+ 313 00ee 04D1     		bne	.L15
+ 314              	.L18:
+ 117:main.c        ****         {
+ 118:main.c        ****             joystick_on_key((char)ch);
+ 315              		.loc 1 118 0 is_stmt 1
+ 316 00f0 97F88730 		ldrb	r3, [r7, #135]	@ zero_extendqisi2
+ 317 00f4 1846     		mov	r0, r3
+ 318 00f6 FFF7FEFF 		bl	joystick_on_key
+ 319              	.L15:
+ 320              	.LBB3:
+ 119:main.c        ****         }
+ 120:main.c        **** 
+ 121:main.c        ****         /* Provide prompts when cal state changes */
+ 122:main.c        ****         {
+ 123:main.c        ****             joy_cal_state_t cal_now = joystick_cal_state();
+ 321              		.loc 1 123 0
+ 322 00fa FFF7FEFF 		bl	joystick_cal_state
+ 323 00fe 0346     		mov	r3, r0
+ 324 0100 87F88630 		strb	r3, [r7, #134]
+ 124:main.c        ****             print_cal_prompt_on_state_change(cal_prev, cal_now);
+ 325              		.loc 1 124 0
+ 326 0104 97F88620 		ldrb	r2, [r7, #134]	@ zero_extendqisi2
+ 327 0108 97F89630 		ldrb	r3, [r7, #150]	@ zero_extendqisi2
+ 328 010c 1146     		mov	r1, r2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 10
+
+
+ 329 010e 1846     		mov	r0, r3
+ 330 0110 FFF7FEFF 		bl	print_cal_prompt_on_state_change
+ 125:main.c        ****             cal_prev = cal_now;
+ 331              		.loc 1 125 0
+ 332 0114 97F88630 		ldrb	r3, [r7, #134]
+ 333 0118 87F89630 		strb	r3, [r7, #150]
+ 334              	.LBE3:
+ 126:main.c        ****         }
+ 127:main.c        **** 
+ 128:main.c        ****         /* ---------- ADC sampling ---------- */
+ 129:main.c        ****         if (adc_balanced_poll_frame(counts))
+ 335              		.loc 1 129 0
+ 336 011c 07F11C03 		add	r3, r7, #28
+ 337 0120 1846     		mov	r0, r3
+ 338 0122 FFF7FEFF 		bl	adc_balanced_poll_frame
+ 339 0126 0346     		mov	r3, r0
+ 340 0128 002B     		cmp	r3, #0
+ 341 012a B7D0     		beq	.L21
+ 130:main.c        ****         {
+ 131:main.c        ****             /* Feed joystick module the fresh frame */
+ 132:main.c        ****             joystick_on_sample(counts);
+ 342              		.loc 1 132 0
+ 343 012c 07F11C03 		add	r3, r7, #28
+ 344 0130 1846     		mov	r0, r3
+ 345 0132 FFF7FEFF 		bl	joystick_on_sample
+ 133:main.c        **** 
+ 134:main.c        ****             /* Convert to mV for telemetry (optional) */
+ 135:main.c        ****             x_mv = adc_balanced_counts_to_mv(counts[CH_X]);
+ 346              		.loc 1 135 0
+ 347 0136 B7F91C30 		ldrsh	r3, [r7, #28]
+ 348 013a 1846     		mov	r0, r3
+ 349 013c FFF7FEFF 		bl	adc_balanced_counts_to_mv
+ 350 0140 C7F89000 		str	r0, [r7, #144]
+ 136:main.c        ****             y_mv = adc_balanced_counts_to_mv(counts[CH_Y]);
+ 351              		.loc 1 136 0
+ 352 0144 B7F91E30 		ldrsh	r3, [r7, #30]
+ 353 0148 1846     		mov	r0, r3
+ 354 014a FFF7FEFF 		bl	adc_balanced_counts_to_mv
+ 355 014e C7F88C00 		str	r0, [r7, #140]
+ 137:main.c        **** 
+ 138:main.c        ****             /* Get mapped commands */
+ 139:main.c        ****             joystick_get_cmd(&cmd);
+ 356              		.loc 1 139 0
+ 357 0152 07F11403 		add	r3, r7, #20
+ 358 0156 1846     		mov	r0, r3
+ 359 0158 FFF7FEFF 		bl	joystick_get_cmd
+ 140:main.c        **** 
+ 141:main.c        ****             if (streaming)
+ 360              		.loc 1 141 0
+ 361 015c 97F89730 		ldrb	r3, [r7, #151]	@ zero_extendqisi2
+ 362 0160 002B     		cmp	r3, #0
+ 363 0162 2BD0     		beq	.L20
+ 364              	.LBB4:
+ 142:main.c        ****             {
+ 143:main.c        ****                 /* Avoid printf-float settings: print milli-units */
+ 144:main.c        ****                 int16 pan_milli  = (int16)(cmd.u[CH_X] * 1000.0f);
+ 365              		.loc 1 144 0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 11
+
+
+ 366 0164 7B69     		ldr	r3, [r7, #20]	@ float
+ 367 0166 2849     		ldr	r1, .L22+8
+ 368 0168 1846     		mov	r0, r3
+ 369 016a FFF7FEFF 		bl	__aeabi_fmul
+ 370 016e 0346     		mov	r3, r0
+ 371 0170 1846     		mov	r0, r3
+ 372 0172 FFF7FEFF 		bl	__aeabi_f2iz
+ 373 0176 0346     		mov	r3, r0
+ 374 0178 A7F88430 		strh	r3, [r7, #132]	@ movhi
+ 145:main.c        ****                 int16 tilt_milli = (int16)(cmd.u[CH_Y] * 1000.0f);
+ 375              		.loc 1 145 0
+ 376 017c BB69     		ldr	r3, [r7, #24]	@ float
+ 377 017e 2249     		ldr	r1, .L22+8
+ 378 0180 1846     		mov	r0, r3
+ 379 0182 FFF7FEFF 		bl	__aeabi_fmul
+ 380 0186 0346     		mov	r3, r0
+ 381 0188 1846     		mov	r0, r3
+ 382 018a FFF7FEFF 		bl	__aeabi_f2iz
+ 383 018e 0346     		mov	r3, r0
+ 384 0190 A7F88230 		strh	r3, [r7, #130]	@ movhi
+ 146:main.c        **** 
+ 147:main.c        ****                 sprintf(tx,
+ 385              		.loc 1 147 0
+ 386 0194 B7F98430 		ldrsh	r3, [r7, #132]
+ 387 0198 B7F98220 		ldrsh	r2, [r7, #130]
+ 388 019c 07F12000 		add	r0, r7, #32
+ 389 01a0 0192     		str	r2, [sp, #4]
+ 390 01a2 0093     		str	r3, [sp]
+ 391 01a4 D7F88C30 		ldr	r3, [r7, #140]
+ 392 01a8 D7F89020 		ldr	r2, [r7, #144]
+ 393 01ac 1749     		ldr	r1, .L22+12
+ 394 01ae FFF7FEFF 		bl	sprintf
+ 148:main.c        ****                         "X:%ld mV Y:%ld mV  pan:%d/1000  tilt:%d/1000\r\n",
+ 149:main.c        ****                         (long)x_mv, (long)y_mv, pan_milli, tilt_milli);
+ 150:main.c        ****                 UART_1_PutString(tx);
+ 395              		.loc 1 150 0
+ 396 01b2 07F12003 		add	r3, r7, #32
+ 397 01b6 1846     		mov	r0, r3
+ 398 01b8 FFF7FEFF 		bl	UART_1_PutString
+ 399              	.L20:
+ 400              	.LBE4:
+ 151:main.c        ****             }
+ 152:main.c        **** 
+ 153:main.c        ****             /* Optional: while center capture is running, show progress */
+ 154:main.c        ****             if (joystick_cal_state() == JOY_CAL_CENTER_CAPTURE)
+ 401              		.loc 1 154 0
+ 402 01bc FFF7FEFF 		bl	joystick_cal_state
+ 403 01c0 0346     		mov	r3, r0
+ 404 01c2 022B     		cmp	r3, #2
+ 405 01c4 7FF46AAF 		bne	.L21
+ 406              	.LBB5:
+ 155:main.c        ****             {
+ 156:main.c        ****                 uint16 n = joystick_center_samples_collected();
+ 407              		.loc 1 156 0
+ 408 01c8 FFF7FEFF 		bl	joystick_center_samples_collected
+ 409 01cc 0346     		mov	r3, r0
+ 410 01ce A7F88030 		strh	r3, [r7, #128]	@ movhi
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 12
+
+
+ 157:main.c        ****                 if ((n % 8u) == 0u) /* throttle prints */
+ 411              		.loc 1 157 0
+ 412 01d2 B7F88030 		ldrh	r3, [r7, #128]	@ movhi
+ 413 01d6 03F00703 		and	r3, r3, #7
+ 414 01da 9BB2     		uxth	r3, r3
+ 415 01dc 002B     		cmp	r3, #0
+ 416 01de 7FF45DAF 		bne	.L21
+ 158:main.c        ****                 {
+ 159:main.c        ****                     sprintf(tx, "Center samples: %u/%u\r\n", (unsigned)n, (unsigned)CAL_CENTER_SAMP
+ 417              		.loc 1 159 0
+ 418 01e2 B7F88020 		ldrh	r2, [r7, #128]
+ 419 01e6 07F12000 		add	r0, r7, #32
+ 420 01ea 2023     		movs	r3, #32
+ 421 01ec 0849     		ldr	r1, .L22+16
+ 422 01ee FFF7FEFF 		bl	sprintf
+ 160:main.c        ****                     UART_1_PutString(tx);
+ 423              		.loc 1 160 0
+ 424 01f2 07F12003 		add	r3, r7, #32
+ 425 01f6 1846     		mov	r0, r3
+ 426 01f8 FFF7FEFF 		bl	UART_1_PutString
+ 427              	.LBE5:
+ 161:main.c        ****                 }
+ 162:main.c        ****             }
+ 163:main.c        ****         }
+ 164:main.c        ****     }
+ 428              		.loc 1 164 0
+ 429 01fc 4EE7     		b	.L21
+ 430              	.L23:
+ 431 01fe 00BF     		.align	2
+ 432              	.L22:
+ 433 0200 74010000 		.word	.LC8
+ 434 0204 84010000 		.word	.LC9
+ 435 0208 00007A44 		.word	1148846080
+ 436 020c C4010000 		.word	.LC10
+ 437 0210 F4010000 		.word	.LC11
+ 438              		.cfi_endproc
+ 439              	.LFE65:
+ 440              		.size	main, .-main
+ 441              		.text
+ 442              	.Letext0:
+ 443              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 444              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 445              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 446              		.file 5 "joystick.h"
+ 447              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 448              		.section	.debug_info,"",%progbits
+ 449              	.Ldebug_info0:
+ 450 0000 00030000 		.4byte	0x300
+ 451 0004 0400     		.2byte	0x4
+ 452 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 453 000a 04       		.byte	0x4
+ 454 000b 01       		.uleb128 0x1
+ 455 000c 0B000000 		.4byte	.LASF43
+ 456 0010 0C       		.byte	0xc
+ 457 0011 79020000 		.4byte	.LASF44
+ 458 0015 10010000 		.4byte	.LASF45
+ 459 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 13
+
+
+ 460 001d 00000000 		.4byte	0
+ 461 0021 00000000 		.4byte	.Ldebug_line0
+ 462 0025 02       		.uleb128 0x2
+ 463 0026 01       		.byte	0x1
+ 464 0027 06       		.byte	0x6
+ 465 0028 CA020000 		.4byte	.LASF0
+ 466 002c 02       		.uleb128 0x2
+ 467 002d 01       		.byte	0x1
+ 468 002e 08       		.byte	0x8
+ 469 002f EC000000 		.4byte	.LASF1
+ 470 0033 02       		.uleb128 0x2
+ 471 0034 02       		.byte	0x2
+ 472 0035 05       		.byte	0x5
+ 473 0036 9E020000 		.4byte	.LASF2
+ 474 003a 02       		.uleb128 0x2
+ 475 003b 02       		.byte	0x2
+ 476 003c 07       		.byte	0x7
+ 477 003d D6020000 		.4byte	.LASF3
+ 478 0041 03       		.uleb128 0x3
+ 479 0042 99000000 		.4byte	.LASF9
+ 480 0046 02       		.byte	0x2
+ 481 0047 3F       		.byte	0x3f
+ 482 0048 4C000000 		.4byte	0x4c
+ 483 004c 02       		.uleb128 0x2
+ 484 004d 04       		.byte	0x4
+ 485 004e 05       		.byte	0x5
+ 486 004f B5020000 		.4byte	.LASF4
+ 487 0053 02       		.uleb128 0x2
+ 488 0054 04       		.byte	0x4
+ 489 0055 07       		.byte	0x7
+ 490 0056 88010000 		.4byte	.LASF5
+ 491 005a 02       		.uleb128 0x2
+ 492 005b 08       		.byte	0x8
+ 493 005c 05       		.byte	0x5
+ 494 005d 6B020000 		.4byte	.LASF6
+ 495 0061 02       		.uleb128 0x2
+ 496 0062 08       		.byte	0x8
+ 497 0063 07       		.byte	0x7
+ 498 0064 2C020000 		.4byte	.LASF7
+ 499 0068 04       		.uleb128 0x4
+ 500 0069 04       		.byte	0x4
+ 501 006a 05       		.byte	0x5
+ 502 006b 696E7400 		.ascii	"int\000"
+ 503 006f 02       		.uleb128 0x2
+ 504 0070 04       		.byte	0x4
+ 505 0071 07       		.byte	0x7
+ 506 0072 18020000 		.4byte	.LASF8
+ 507 0076 03       		.uleb128 0x3
+ 508 0077 DE000000 		.4byte	.LASF10
+ 509 007b 03       		.byte	0x3
+ 510 007c 2C       		.byte	0x2c
+ 511 007d 41000000 		.4byte	0x41
+ 512 0081 05       		.uleb128 0x5
+ 513 0082 AF020000 		.4byte	.LASF11
+ 514 0086 04       		.byte	0x4
+ 515 0087 E401     		.2byte	0x1e4
+ 516 0089 2C000000 		.4byte	0x2c
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 14
+
+
+ 517 008d 05       		.uleb128 0x5
+ 518 008e 00020000 		.4byte	.LASF12
+ 519 0092 04       		.byte	0x4
+ 520 0093 E501     		.2byte	0x1e5
+ 521 0095 3A000000 		.4byte	0x3a
+ 522 0099 05       		.uleb128 0x5
+ 523 009a 11020000 		.4byte	.LASF13
+ 524 009e 04       		.byte	0x4
+ 525 009f E601     		.2byte	0x1e6
+ 526 00a1 53000000 		.4byte	0x53
+ 527 00a5 05       		.uleb128 0x5
+ 528 00a6 82010000 		.4byte	.LASF14
+ 529 00aa 04       		.byte	0x4
+ 530 00ab E801     		.2byte	0x1e8
+ 531 00ad 33000000 		.4byte	0x33
+ 532 00b1 05       		.uleb128 0x5
+ 533 00b2 9A010000 		.4byte	.LASF15
+ 534 00b6 04       		.byte	0x4
+ 535 00b7 E901     		.2byte	0x1e9
+ 536 00b9 4C000000 		.4byte	0x4c
+ 537 00bd 02       		.uleb128 0x2
+ 538 00be 04       		.byte	0x4
+ 539 00bf 04       		.byte	0x4
+ 540 00c0 E6000000 		.4byte	.LASF16
+ 541 00c4 02       		.uleb128 0x2
+ 542 00c5 08       		.byte	0x8
+ 543 00c6 04       		.byte	0x4
+ 544 00c7 C9010000 		.4byte	.LASF17
+ 545 00cb 02       		.uleb128 0x2
+ 546 00cc 01       		.byte	0x1
+ 547 00cd 08       		.byte	0x8
+ 548 00ce 80020000 		.4byte	.LASF18
+ 549 00d2 02       		.uleb128 0x2
+ 550 00d3 08       		.byte	0x8
+ 551 00d4 04       		.byte	0x4
+ 552 00d5 BE020000 		.4byte	.LASF19
+ 553 00d9 02       		.uleb128 0x2
+ 554 00da 04       		.byte	0x4
+ 555 00db 07       		.byte	0x7
+ 556 00dc 62020000 		.4byte	.LASF20
+ 557 00e0 06       		.uleb128 0x6
+ 558 00e1 0E       		.byte	0xe
+ 559 00e2 05       		.byte	0x5
+ 560 00e3 3A       		.byte	0x3a
+ 561 00e4 19010000 		.4byte	0x119
+ 562 00e8 07       		.uleb128 0x7
+ 563 00e9 E9020000 		.4byte	.LASF21
+ 564 00ed 05       		.byte	0x5
+ 565 00ee 3B       		.byte	0x3b
+ 566 00ef 19010000 		.4byte	0x119
+ 567 00f3 00       		.byte	0
+ 568 00f4 07       		.uleb128 0x7
+ 569 00f5 D0010000 		.4byte	.LASF22
+ 570 00f9 05       		.byte	0x5
+ 571 00fa 3C       		.byte	0x3c
+ 572 00fb 19010000 		.4byte	0x119
+ 573 00ff 04       		.byte	0x4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 15
+
+
+ 574 0100 07       		.uleb128 0x7
+ 575 0101 A8020000 		.4byte	.LASF23
+ 576 0105 05       		.byte	0x5
+ 577 0106 3D       		.byte	0x3d
+ 578 0107 19010000 		.4byte	0x119
+ 579 010b 08       		.byte	0x8
+ 580 010c 07       		.uleb128 0x7
+ 581 010d 8F020000 		.4byte	.LASF24
+ 582 0111 05       		.byte	0x5
+ 583 0112 3E       		.byte	0x3e
+ 584 0113 81000000 		.4byte	0x81
+ 585 0117 0C       		.byte	0xc
+ 586 0118 00       		.byte	0
+ 587 0119 08       		.uleb128 0x8
+ 588 011a A5000000 		.4byte	0xa5
+ 589 011e 29010000 		.4byte	0x129
+ 590 0122 09       		.uleb128 0x9
+ 591 0123 D9000000 		.4byte	0xd9
+ 592 0127 01       		.byte	0x1
+ 593 0128 00       		.byte	0
+ 594 0129 03       		.uleb128 0x3
+ 595 012a 85020000 		.4byte	.LASF25
+ 596 012e 05       		.byte	0x5
+ 597 012f 3F       		.byte	0x3f
+ 598 0130 E0000000 		.4byte	0xe0
+ 599 0134 0A       		.uleb128 0xa
+ 600 0135 01       		.byte	0x1
+ 601 0136 2C000000 		.4byte	0x2c
+ 602 013a 05       		.byte	0x5
+ 603 013b 41       		.byte	0x41
+ 604 013c 59010000 		.4byte	0x159
+ 605 0140 0B       		.uleb128 0xb
+ 606 0141 A3000000 		.4byte	.LASF26
+ 607 0145 00       		.byte	0
+ 608 0146 0B       		.uleb128 0xb
+ 609 0147 FA000000 		.4byte	.LASF27
+ 610 014b 01       		.byte	0x1
+ 611 014c 0B       		.uleb128 0xb
+ 612 014d B2010000 		.4byte	.LASF28
+ 613 0151 02       		.byte	0x2
+ 614 0152 0B       		.uleb128 0xb
+ 615 0153 C0000000 		.4byte	.LASF29
+ 616 0157 03       		.byte	0x3
+ 617 0158 00       		.byte	0
+ 618 0159 03       		.uleb128 0x3
+ 619 015a 52020000 		.4byte	.LASF30
+ 620 015e 05       		.byte	0x5
+ 621 015f 46       		.byte	0x46
+ 622 0160 34010000 		.4byte	0x134
+ 623 0164 06       		.uleb128 0x6
+ 624 0165 08       		.byte	0x8
+ 625 0166 05       		.byte	0x5
+ 626 0167 48       		.byte	0x48
+ 627 0168 77010000 		.4byte	0x177
+ 628 016c 0C       		.uleb128 0xc
+ 629 016d 7500     		.ascii	"u\000"
+ 630 016f 05       		.byte	0x5
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 16
+
+
+ 631 0170 49       		.byte	0x49
+ 632 0171 77010000 		.4byte	0x177
+ 633 0175 00       		.byte	0
+ 634 0176 00       		.byte	0
+ 635 0177 08       		.uleb128 0x8
+ 636 0178 BD000000 		.4byte	0xbd
+ 637 017c 87010000 		.4byte	0x187
+ 638 0180 09       		.uleb128 0x9
+ 639 0181 D9000000 		.4byte	0xd9
+ 640 0185 01       		.byte	0x1
+ 641 0186 00       		.byte	0
+ 642 0187 03       		.uleb128 0x3
+ 643 0188 07020000 		.4byte	.LASF31
+ 644 018c 05       		.byte	0x5
+ 645 018d 4A       		.byte	0x4a
+ 646 018e 64010000 		.4byte	0x164
+ 647 0192 0D       		.uleb128 0xd
+ 648 0193 D5010000 		.4byte	.LASF46
+ 649 0197 01       		.byte	0x1
+ 650 0198 20       		.byte	0x20
+ 651 0199 00000000 		.4byte	.LFB64
+ 652 019d 98000000 		.4byte	.LFE64-.LFB64
+ 653 01a1 01       		.uleb128 0x1
+ 654 01a2 9C       		.byte	0x9c
+ 655 01a3 C4010000 		.4byte	0x1c4
+ 656 01a7 0E       		.uleb128 0xe
+ 657 01a8 EE020000 		.4byte	.LASF32
+ 658 01ac 01       		.byte	0x1
+ 659 01ad 20       		.byte	0x20
+ 660 01ae 59010000 		.4byte	0x159
+ 661 01b2 02       		.uleb128 0x2
+ 662 01b3 91       		.byte	0x91
+ 663 01b4 77       		.sleb128 -9
+ 664 01b5 0F       		.uleb128 0xf
+ 665 01b6 6E6F7700 		.ascii	"now\000"
+ 666 01ba 01       		.byte	0x1
+ 667 01bb 20       		.byte	0x20
+ 668 01bc 59010000 		.4byte	0x159
+ 669 01c0 02       		.uleb128 0x2
+ 670 01c1 91       		.byte	0x91
+ 671 01c2 76       		.sleb128 -10
+ 672 01c3 00       		.byte	0
+ 673 01c4 10       		.uleb128 0x10
+ 674 01c5 4D020000 		.4byte	.LASF47
+ 675 01c9 01       		.byte	0x1
+ 676 01ca 3B       		.byte	0x3b
+ 677 01cb 68000000 		.4byte	0x68
+ 678 01cf 00000000 		.4byte	.LFB65
+ 679 01d3 14020000 		.4byte	.LFE65-.LFB65
+ 680 01d7 01       		.uleb128 0x1
+ 681 01d8 9C       		.byte	0x9c
+ 682 01d9 E2020000 		.4byte	0x2e2
+ 683 01dd 11       		.uleb128 0x11
+ 684 01de 747800   		.ascii	"tx\000"
+ 685 01e1 01       		.byte	0x1
+ 686 01e2 3D       		.byte	0x3d
+ 687 01e3 E2020000 		.4byte	0x2e2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 17
+
+
+ 688 01e7 03       		.uleb128 0x3
+ 689 01e8 91       		.byte	0x91
+ 690 01e9 807F     		.sleb128 -128
+ 691 01eb 11       		.uleb128 0x11
+ 692 01ec 636800   		.ascii	"ch\000"
+ 693 01ef 01       		.byte	0x1
+ 694 01f0 3F       		.byte	0x3f
+ 695 01f1 81000000 		.4byte	0x81
+ 696 01f5 02       		.uleb128 0x2
+ 697 01f6 91       		.byte	0x91
+ 698 01f7 67       		.sleb128 -25
+ 699 01f8 12       		.uleb128 0x12
+ 700 01f9 F6010000 		.4byte	.LASF33
+ 701 01fd 01       		.byte	0x1
+ 702 01fe 40       		.byte	0x40
+ 703 01ff 81000000 		.4byte	0x81
+ 704 0203 02       		.uleb128 0x2
+ 705 0204 91       		.byte	0x91
+ 706 0205 77       		.sleb128 -9
+ 707 0206 12       		.uleb128 0x12
+ 708 0207 25020000 		.4byte	.LASF34
+ 709 020b 01       		.byte	0x1
+ 710 020c 43       		.byte	0x43
+ 711 020d 19010000 		.4byte	0x119
+ 712 0211 03       		.uleb128 0x3
+ 713 0212 91       		.byte	0x91
+ 714 0213 FC7E     		.sleb128 -132
+ 715 0215 12       		.uleb128 0x12
+ 716 0216 AF000000 		.4byte	.LASF35
+ 717 021a 01       		.byte	0x1
+ 718 021b 46       		.byte	0x46
+ 719 021c B1000000 		.4byte	0xb1
+ 720 0220 02       		.uleb128 0x2
+ 721 0221 91       		.byte	0x91
+ 722 0222 70       		.sleb128 -16
+ 723 0223 12       		.uleb128 0x12
+ 724 0224 A0010000 		.4byte	.LASF36
+ 725 0228 01       		.byte	0x1
+ 726 0229 47       		.byte	0x47
+ 727 022a B1000000 		.4byte	0xb1
+ 728 022e 02       		.uleb128 0x2
+ 729 022f 91       		.byte	0x91
+ 730 0230 6C       		.sleb128 -20
+ 731 0231 11       		.uleb128 0x11
+ 732 0232 636D6400 		.ascii	"cmd\000"
+ 733 0236 01       		.byte	0x1
+ 734 0237 4A       		.byte	0x4a
+ 735 0238 87010000 		.4byte	0x187
+ 736 023c 03       		.uleb128 0x3
+ 737 023d 91       		.byte	0x91
+ 738 023e F47E     		.sleb128 -140
+ 739 0240 12       		.uleb128 0x12
+ 740 0241 D5000000 		.4byte	.LASF37
+ 741 0245 01       		.byte	0x1
+ 742 0246 4D       		.byte	0x4d
+ 743 0247 59010000 		.4byte	0x159
+ 744 024b 02       		.uleb128 0x2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 18
+
+
+ 745 024c 91       		.byte	0x91
+ 746 024d 76       		.sleb128 -10
+ 747 024e 12       		.uleb128 0x12
+ 748 024f 95020000 		.4byte	.LASF38
+ 749 0253 01       		.byte	0x1
+ 750 0254 50       		.byte	0x50
+ 751 0255 29010000 		.4byte	0x129
+ 752 0259 03       		.uleb128 0x3
+ 753 025a 91       		.byte	0x91
+ 754 025b E47E     		.sleb128 -156
+ 755 025d 12       		.uleb128 0x12
+ 756 025e B4000000 		.4byte	.LASF39
+ 757 0262 01       		.byte	0x1
+ 758 0263 5A       		.byte	0x5a
+ 759 0264 99000000 		.4byte	0x99
+ 760 0268 02       		.uleb128 0x2
+ 761 0269 91       		.byte	0x91
+ 762 026a 68       		.sleb128 -24
+ 763 026b 13       		.uleb128 0x13
+ 764 026c 1E000000 		.4byte	.LBB2
+ 765 0270 52000000 		.4byte	.LBE2-.LBB2
+ 766 0274 85020000 		.4byte	0x285
+ 767 0278 11       		.uleb128 0x11
+ 768 0279 6900     		.ascii	"i\000"
+ 769 027b 01       		.byte	0x1
+ 770 027c 51       		.byte	0x51
+ 771 027d 81000000 		.4byte	0x81
+ 772 0281 02       		.uleb128 0x2
+ 773 0282 91       		.byte	0x91
+ 774 0283 75       		.sleb128 -11
+ 775 0284 00       		.byte	0
+ 776 0285 13       		.uleb128 0x13
+ 777 0286 FA000000 		.4byte	.LBB3
+ 778 028a 22000000 		.4byte	.LBE3-.LBB3
+ 779 028e A1020000 		.4byte	0x2a1
+ 780 0292 12       		.uleb128 0x12
+ 781 0293 F3020000 		.4byte	.LASF40
+ 782 0297 01       		.byte	0x1
+ 783 0298 7B       		.byte	0x7b
+ 784 0299 59010000 		.4byte	0x159
+ 785 029d 02       		.uleb128 0x2
+ 786 029e 91       		.byte	0x91
+ 787 029f 66       		.sleb128 -26
+ 788 02a0 00       		.byte	0
+ 789 02a1 13       		.uleb128 0x13
+ 790 02a2 64010000 		.4byte	.LBB4
+ 791 02a6 58000000 		.4byte	.LBE4-.LBB4
+ 792 02aa CB020000 		.4byte	0x2cb
+ 793 02ae 12       		.uleb128 0x12
+ 794 02af 43020000 		.4byte	.LASF41
+ 795 02b3 01       		.byte	0x1
+ 796 02b4 90       		.byte	0x90
+ 797 02b5 A5000000 		.4byte	0xa5
+ 798 02b9 02       		.uleb128 0x2
+ 799 02ba 91       		.byte	0x91
+ 800 02bb 64       		.sleb128 -28
+ 801 02bc 12       		.uleb128 0x12
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 19
+
+
+ 802 02bd 00000000 		.4byte	.LASF42
+ 803 02c1 01       		.byte	0x1
+ 804 02c2 91       		.byte	0x91
+ 805 02c3 A5000000 		.4byte	0xa5
+ 806 02c7 02       		.uleb128 0x2
+ 807 02c8 91       		.byte	0x91
+ 808 02c9 62       		.sleb128 -30
+ 809 02ca 00       		.byte	0
+ 810 02cb 14       		.uleb128 0x14
+ 811 02cc C8010000 		.4byte	.LBB5
+ 812 02d0 34000000 		.4byte	.LBE5-.LBB5
+ 813 02d4 11       		.uleb128 0x11
+ 814 02d5 6E00     		.ascii	"n\000"
+ 815 02d7 01       		.byte	0x1
+ 816 02d8 9C       		.byte	0x9c
+ 817 02d9 8D000000 		.4byte	0x8d
+ 818 02dd 02       		.uleb128 0x2
+ 819 02de 91       		.byte	0x91
+ 820 02df 60       		.sleb128 -32
+ 821 02e0 00       		.byte	0
+ 822 02e1 00       		.byte	0
+ 823 02e2 08       		.uleb128 0x8
+ 824 02e3 CB000000 		.4byte	0xcb
+ 825 02e7 F2020000 		.4byte	0x2f2
+ 826 02eb 09       		.uleb128 0x9
+ 827 02ec D9000000 		.4byte	0xd9
+ 828 02f0 5F       		.byte	0x5f
+ 829 02f1 00       		.byte	0
+ 830 02f2 15       		.uleb128 0x15
+ 831 02f3 A5010000 		.4byte	.LASF48
+ 832 02f7 06       		.byte	0x6
+ 833 02f8 1207     		.2byte	0x712
+ 834 02fa FE020000 		.4byte	0x2fe
+ 835 02fe 16       		.uleb128 0x16
+ 836 02ff 76000000 		.4byte	0x76
+ 837 0303 00       		.byte	0
+ 838              		.section	.debug_abbrev,"",%progbits
+ 839              	.Ldebug_abbrev0:
+ 840 0000 01       		.uleb128 0x1
+ 841 0001 11       		.uleb128 0x11
+ 842 0002 01       		.byte	0x1
+ 843 0003 25       		.uleb128 0x25
+ 844 0004 0E       		.uleb128 0xe
+ 845 0005 13       		.uleb128 0x13
+ 846 0006 0B       		.uleb128 0xb
+ 847 0007 03       		.uleb128 0x3
+ 848 0008 0E       		.uleb128 0xe
+ 849 0009 1B       		.uleb128 0x1b
+ 850 000a 0E       		.uleb128 0xe
+ 851 000b 55       		.uleb128 0x55
+ 852 000c 17       		.uleb128 0x17
+ 853 000d 11       		.uleb128 0x11
+ 854 000e 01       		.uleb128 0x1
+ 855 000f 10       		.uleb128 0x10
+ 856 0010 17       		.uleb128 0x17
+ 857 0011 00       		.byte	0
+ 858 0012 00       		.byte	0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 20
+
+
+ 859 0013 02       		.uleb128 0x2
+ 860 0014 24       		.uleb128 0x24
+ 861 0015 00       		.byte	0
+ 862 0016 0B       		.uleb128 0xb
+ 863 0017 0B       		.uleb128 0xb
+ 864 0018 3E       		.uleb128 0x3e
+ 865 0019 0B       		.uleb128 0xb
+ 866 001a 03       		.uleb128 0x3
+ 867 001b 0E       		.uleb128 0xe
+ 868 001c 00       		.byte	0
+ 869 001d 00       		.byte	0
+ 870 001e 03       		.uleb128 0x3
+ 871 001f 16       		.uleb128 0x16
+ 872 0020 00       		.byte	0
+ 873 0021 03       		.uleb128 0x3
+ 874 0022 0E       		.uleb128 0xe
+ 875 0023 3A       		.uleb128 0x3a
+ 876 0024 0B       		.uleb128 0xb
+ 877 0025 3B       		.uleb128 0x3b
+ 878 0026 0B       		.uleb128 0xb
+ 879 0027 49       		.uleb128 0x49
+ 880 0028 13       		.uleb128 0x13
+ 881 0029 00       		.byte	0
+ 882 002a 00       		.byte	0
+ 883 002b 04       		.uleb128 0x4
+ 884 002c 24       		.uleb128 0x24
+ 885 002d 00       		.byte	0
+ 886 002e 0B       		.uleb128 0xb
+ 887 002f 0B       		.uleb128 0xb
+ 888 0030 3E       		.uleb128 0x3e
+ 889 0031 0B       		.uleb128 0xb
+ 890 0032 03       		.uleb128 0x3
+ 891 0033 08       		.uleb128 0x8
+ 892 0034 00       		.byte	0
+ 893 0035 00       		.byte	0
+ 894 0036 05       		.uleb128 0x5
+ 895 0037 16       		.uleb128 0x16
+ 896 0038 00       		.byte	0
+ 897 0039 03       		.uleb128 0x3
+ 898 003a 0E       		.uleb128 0xe
+ 899 003b 3A       		.uleb128 0x3a
+ 900 003c 0B       		.uleb128 0xb
+ 901 003d 3B       		.uleb128 0x3b
+ 902 003e 05       		.uleb128 0x5
+ 903 003f 49       		.uleb128 0x49
+ 904 0040 13       		.uleb128 0x13
+ 905 0041 00       		.byte	0
+ 906 0042 00       		.byte	0
+ 907 0043 06       		.uleb128 0x6
+ 908 0044 13       		.uleb128 0x13
+ 909 0045 01       		.byte	0x1
+ 910 0046 0B       		.uleb128 0xb
+ 911 0047 0B       		.uleb128 0xb
+ 912 0048 3A       		.uleb128 0x3a
+ 913 0049 0B       		.uleb128 0xb
+ 914 004a 3B       		.uleb128 0x3b
+ 915 004b 0B       		.uleb128 0xb
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 21
+
+
+ 916 004c 01       		.uleb128 0x1
+ 917 004d 13       		.uleb128 0x13
+ 918 004e 00       		.byte	0
+ 919 004f 00       		.byte	0
+ 920 0050 07       		.uleb128 0x7
+ 921 0051 0D       		.uleb128 0xd
+ 922 0052 00       		.byte	0
+ 923 0053 03       		.uleb128 0x3
+ 924 0054 0E       		.uleb128 0xe
+ 925 0055 3A       		.uleb128 0x3a
+ 926 0056 0B       		.uleb128 0xb
+ 927 0057 3B       		.uleb128 0x3b
+ 928 0058 0B       		.uleb128 0xb
+ 929 0059 49       		.uleb128 0x49
+ 930 005a 13       		.uleb128 0x13
+ 931 005b 38       		.uleb128 0x38
+ 932 005c 0B       		.uleb128 0xb
+ 933 005d 00       		.byte	0
+ 934 005e 00       		.byte	0
+ 935 005f 08       		.uleb128 0x8
+ 936 0060 01       		.uleb128 0x1
+ 937 0061 01       		.byte	0x1
+ 938 0062 49       		.uleb128 0x49
+ 939 0063 13       		.uleb128 0x13
+ 940 0064 01       		.uleb128 0x1
+ 941 0065 13       		.uleb128 0x13
+ 942 0066 00       		.byte	0
+ 943 0067 00       		.byte	0
+ 944 0068 09       		.uleb128 0x9
+ 945 0069 21       		.uleb128 0x21
+ 946 006a 00       		.byte	0
+ 947 006b 49       		.uleb128 0x49
+ 948 006c 13       		.uleb128 0x13
+ 949 006d 2F       		.uleb128 0x2f
+ 950 006e 0B       		.uleb128 0xb
+ 951 006f 00       		.byte	0
+ 952 0070 00       		.byte	0
+ 953 0071 0A       		.uleb128 0xa
+ 954 0072 04       		.uleb128 0x4
+ 955 0073 01       		.byte	0x1
+ 956 0074 0B       		.uleb128 0xb
+ 957 0075 0B       		.uleb128 0xb
+ 958 0076 49       		.uleb128 0x49
+ 959 0077 13       		.uleb128 0x13
+ 960 0078 3A       		.uleb128 0x3a
+ 961 0079 0B       		.uleb128 0xb
+ 962 007a 3B       		.uleb128 0x3b
+ 963 007b 0B       		.uleb128 0xb
+ 964 007c 01       		.uleb128 0x1
+ 965 007d 13       		.uleb128 0x13
+ 966 007e 00       		.byte	0
+ 967 007f 00       		.byte	0
+ 968 0080 0B       		.uleb128 0xb
+ 969 0081 28       		.uleb128 0x28
+ 970 0082 00       		.byte	0
+ 971 0083 03       		.uleb128 0x3
+ 972 0084 0E       		.uleb128 0xe
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 22
+
+
+ 973 0085 1C       		.uleb128 0x1c
+ 974 0086 0B       		.uleb128 0xb
+ 975 0087 00       		.byte	0
+ 976 0088 00       		.byte	0
+ 977 0089 0C       		.uleb128 0xc
+ 978 008a 0D       		.uleb128 0xd
+ 979 008b 00       		.byte	0
+ 980 008c 03       		.uleb128 0x3
+ 981 008d 08       		.uleb128 0x8
+ 982 008e 3A       		.uleb128 0x3a
+ 983 008f 0B       		.uleb128 0xb
+ 984 0090 3B       		.uleb128 0x3b
+ 985 0091 0B       		.uleb128 0xb
+ 986 0092 49       		.uleb128 0x49
+ 987 0093 13       		.uleb128 0x13
+ 988 0094 38       		.uleb128 0x38
+ 989 0095 0B       		.uleb128 0xb
+ 990 0096 00       		.byte	0
+ 991 0097 00       		.byte	0
+ 992 0098 0D       		.uleb128 0xd
+ 993 0099 2E       		.uleb128 0x2e
+ 994 009a 01       		.byte	0x1
+ 995 009b 03       		.uleb128 0x3
+ 996 009c 0E       		.uleb128 0xe
+ 997 009d 3A       		.uleb128 0x3a
+ 998 009e 0B       		.uleb128 0xb
+ 999 009f 3B       		.uleb128 0x3b
+ 1000 00a0 0B       		.uleb128 0xb
+ 1001 00a1 27       		.uleb128 0x27
+ 1002 00a2 19       		.uleb128 0x19
+ 1003 00a3 11       		.uleb128 0x11
+ 1004 00a4 01       		.uleb128 0x1
+ 1005 00a5 12       		.uleb128 0x12
+ 1006 00a6 06       		.uleb128 0x6
+ 1007 00a7 40       		.uleb128 0x40
+ 1008 00a8 18       		.uleb128 0x18
+ 1009 00a9 9642     		.uleb128 0x2116
+ 1010 00ab 19       		.uleb128 0x19
+ 1011 00ac 01       		.uleb128 0x1
+ 1012 00ad 13       		.uleb128 0x13
+ 1013 00ae 00       		.byte	0
+ 1014 00af 00       		.byte	0
+ 1015 00b0 0E       		.uleb128 0xe
+ 1016 00b1 05       		.uleb128 0x5
+ 1017 00b2 00       		.byte	0
+ 1018 00b3 03       		.uleb128 0x3
+ 1019 00b4 0E       		.uleb128 0xe
+ 1020 00b5 3A       		.uleb128 0x3a
+ 1021 00b6 0B       		.uleb128 0xb
+ 1022 00b7 3B       		.uleb128 0x3b
+ 1023 00b8 0B       		.uleb128 0xb
+ 1024 00b9 49       		.uleb128 0x49
+ 1025 00ba 13       		.uleb128 0x13
+ 1026 00bb 02       		.uleb128 0x2
+ 1027 00bc 18       		.uleb128 0x18
+ 1028 00bd 00       		.byte	0
+ 1029 00be 00       		.byte	0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 23
+
+
+ 1030 00bf 0F       		.uleb128 0xf
+ 1031 00c0 05       		.uleb128 0x5
+ 1032 00c1 00       		.byte	0
+ 1033 00c2 03       		.uleb128 0x3
+ 1034 00c3 08       		.uleb128 0x8
+ 1035 00c4 3A       		.uleb128 0x3a
+ 1036 00c5 0B       		.uleb128 0xb
+ 1037 00c6 3B       		.uleb128 0x3b
+ 1038 00c7 0B       		.uleb128 0xb
+ 1039 00c8 49       		.uleb128 0x49
+ 1040 00c9 13       		.uleb128 0x13
+ 1041 00ca 02       		.uleb128 0x2
+ 1042 00cb 18       		.uleb128 0x18
+ 1043 00cc 00       		.byte	0
+ 1044 00cd 00       		.byte	0
+ 1045 00ce 10       		.uleb128 0x10
+ 1046 00cf 2E       		.uleb128 0x2e
+ 1047 00d0 01       		.byte	0x1
+ 1048 00d1 3F       		.uleb128 0x3f
+ 1049 00d2 19       		.uleb128 0x19
+ 1050 00d3 03       		.uleb128 0x3
+ 1051 00d4 0E       		.uleb128 0xe
+ 1052 00d5 3A       		.uleb128 0x3a
+ 1053 00d6 0B       		.uleb128 0xb
+ 1054 00d7 3B       		.uleb128 0x3b
+ 1055 00d8 0B       		.uleb128 0xb
+ 1056 00d9 27       		.uleb128 0x27
+ 1057 00da 19       		.uleb128 0x19
+ 1058 00db 49       		.uleb128 0x49
+ 1059 00dc 13       		.uleb128 0x13
+ 1060 00dd 11       		.uleb128 0x11
+ 1061 00de 01       		.uleb128 0x1
+ 1062 00df 12       		.uleb128 0x12
+ 1063 00e0 06       		.uleb128 0x6
+ 1064 00e1 40       		.uleb128 0x40
+ 1065 00e2 18       		.uleb128 0x18
+ 1066 00e3 9642     		.uleb128 0x2116
+ 1067 00e5 19       		.uleb128 0x19
+ 1068 00e6 01       		.uleb128 0x1
+ 1069 00e7 13       		.uleb128 0x13
+ 1070 00e8 00       		.byte	0
+ 1071 00e9 00       		.byte	0
+ 1072 00ea 11       		.uleb128 0x11
+ 1073 00eb 34       		.uleb128 0x34
+ 1074 00ec 00       		.byte	0
+ 1075 00ed 03       		.uleb128 0x3
+ 1076 00ee 08       		.uleb128 0x8
+ 1077 00ef 3A       		.uleb128 0x3a
+ 1078 00f0 0B       		.uleb128 0xb
+ 1079 00f1 3B       		.uleb128 0x3b
+ 1080 00f2 0B       		.uleb128 0xb
+ 1081 00f3 49       		.uleb128 0x49
+ 1082 00f4 13       		.uleb128 0x13
+ 1083 00f5 02       		.uleb128 0x2
+ 1084 00f6 18       		.uleb128 0x18
+ 1085 00f7 00       		.byte	0
+ 1086 00f8 00       		.byte	0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 24
+
+
+ 1087 00f9 12       		.uleb128 0x12
+ 1088 00fa 34       		.uleb128 0x34
+ 1089 00fb 00       		.byte	0
+ 1090 00fc 03       		.uleb128 0x3
+ 1091 00fd 0E       		.uleb128 0xe
+ 1092 00fe 3A       		.uleb128 0x3a
+ 1093 00ff 0B       		.uleb128 0xb
+ 1094 0100 3B       		.uleb128 0x3b
+ 1095 0101 0B       		.uleb128 0xb
+ 1096 0102 49       		.uleb128 0x49
+ 1097 0103 13       		.uleb128 0x13
+ 1098 0104 02       		.uleb128 0x2
+ 1099 0105 18       		.uleb128 0x18
+ 1100 0106 00       		.byte	0
+ 1101 0107 00       		.byte	0
+ 1102 0108 13       		.uleb128 0x13
+ 1103 0109 0B       		.uleb128 0xb
+ 1104 010a 01       		.byte	0x1
+ 1105 010b 11       		.uleb128 0x11
+ 1106 010c 01       		.uleb128 0x1
+ 1107 010d 12       		.uleb128 0x12
+ 1108 010e 06       		.uleb128 0x6
+ 1109 010f 01       		.uleb128 0x1
+ 1110 0110 13       		.uleb128 0x13
+ 1111 0111 00       		.byte	0
+ 1112 0112 00       		.byte	0
+ 1113 0113 14       		.uleb128 0x14
+ 1114 0114 0B       		.uleb128 0xb
+ 1115 0115 01       		.byte	0x1
+ 1116 0116 11       		.uleb128 0x11
+ 1117 0117 01       		.uleb128 0x1
+ 1118 0118 12       		.uleb128 0x12
+ 1119 0119 06       		.uleb128 0x6
+ 1120 011a 00       		.byte	0
+ 1121 011b 00       		.byte	0
+ 1122 011c 15       		.uleb128 0x15
+ 1123 011d 34       		.uleb128 0x34
+ 1124 011e 00       		.byte	0
+ 1125 011f 03       		.uleb128 0x3
+ 1126 0120 0E       		.uleb128 0xe
+ 1127 0121 3A       		.uleb128 0x3a
+ 1128 0122 0B       		.uleb128 0xb
+ 1129 0123 3B       		.uleb128 0x3b
+ 1130 0124 05       		.uleb128 0x5
+ 1131 0125 49       		.uleb128 0x49
+ 1132 0126 13       		.uleb128 0x13
+ 1133 0127 3F       		.uleb128 0x3f
+ 1134 0128 19       		.uleb128 0x19
+ 1135 0129 3C       		.uleb128 0x3c
+ 1136 012a 19       		.uleb128 0x19
+ 1137 012b 00       		.byte	0
+ 1138 012c 00       		.byte	0
+ 1139 012d 16       		.uleb128 0x16
+ 1140 012e 35       		.uleb128 0x35
+ 1141 012f 00       		.byte	0
+ 1142 0130 49       		.uleb128 0x49
+ 1143 0131 13       		.uleb128 0x13
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 25
+
+
+ 1144 0132 00       		.byte	0
+ 1145 0133 00       		.byte	0
+ 1146 0134 00       		.byte	0
+ 1147              		.section	.debug_aranges,"",%progbits
+ 1148 0000 24000000 		.4byte	0x24
+ 1149 0004 0200     		.2byte	0x2
+ 1150 0006 00000000 		.4byte	.Ldebug_info0
+ 1151 000a 04       		.byte	0x4
+ 1152 000b 00       		.byte	0
+ 1153 000c 0000     		.2byte	0
+ 1154 000e 0000     		.2byte	0
+ 1155 0010 00000000 		.4byte	.LFB64
+ 1156 0014 98000000 		.4byte	.LFE64-.LFB64
+ 1157 0018 00000000 		.4byte	.LFB65
+ 1158 001c 14020000 		.4byte	.LFE65-.LFB65
+ 1159 0020 00000000 		.4byte	0
+ 1160 0024 00000000 		.4byte	0
+ 1161              		.section	.debug_ranges,"",%progbits
+ 1162              	.Ldebug_ranges0:
+ 1163 0000 00000000 		.4byte	.LFB64
+ 1164 0004 98000000 		.4byte	.LFE64
+ 1165 0008 00000000 		.4byte	.LFB65
+ 1166 000c 14020000 		.4byte	.LFE65
+ 1167 0010 00000000 		.4byte	0
+ 1168 0014 00000000 		.4byte	0
+ 1169              		.section	.debug_line,"",%progbits
+ 1170              	.Ldebug_line0:
+ 1171 0000 F0010000 		.section	.debug_str,"MS",%progbits,1
+ 1171      02005A01 
+ 1171      00000201 
+ 1171      FB0E0D00 
+ 1171      01010101 
+ 1172              	.LASF42:
+ 1173 0000 74696C74 		.ascii	"tilt_milli\000"
+ 1173      5F6D696C 
+ 1173      6C6900
+ 1174              	.LASF43:
+ 1175 000b 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1175      43313120 
+ 1175      352E342E 
+ 1175      31203230 
+ 1175      31363036 
+ 1176 003e 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1176      20726576 
+ 1176      6973696F 
+ 1176      6E203233 
+ 1176      37373135 
+ 1177 0071 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 1177      66756E63 
+ 1177      74696F6E 
+ 1177      2D736563 
+ 1177      74696F6E 
+ 1178              	.LASF9:
+ 1179 0099 5F5F696E 		.ascii	"__int32_t\000"
+ 1179      7433325F 
+ 1179      7400
+ 1180              	.LASF26:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 26
+
+
+ 1181 00a3 4A4F595F 		.ascii	"JOY_CAL_OFF\000"
+ 1181      43414C5F 
+ 1181      4F464600 
+ 1182              	.LASF35:
+ 1183 00af 785F6D76 		.ascii	"x_mv\000"
+ 1183      00
+ 1184              	.LASF39:
+ 1185 00b4 696E7665 		.ascii	"invert_mask\000"
+ 1185      72745F6D 
+ 1185      61736B00 
+ 1186              	.LASF29:
+ 1187 00c0 4A4F595F 		.ascii	"JOY_CAL_CONFIRM_SAVE\000"
+ 1187      43414C5F 
+ 1187      434F4E46 
+ 1187      49524D5F 
+ 1187      53415645 
+ 1188              	.LASF37:
+ 1189 00d5 63616C5F 		.ascii	"cal_prev\000"
+ 1189      70726576 
+ 1189      00
+ 1190              	.LASF10:
+ 1191 00de 696E7433 		.ascii	"int32_t\000"
+ 1191      325F7400 
+ 1192              	.LASF16:
+ 1193 00e6 666C6F61 		.ascii	"float\000"
+ 1193      7400
+ 1194              	.LASF1:
+ 1195 00ec 756E7369 		.ascii	"unsigned char\000"
+ 1195      676E6564 
+ 1195      20636861 
+ 1195      7200
+ 1196              	.LASF27:
+ 1197 00fa 4A4F595F 		.ascii	"JOY_CAL_RANGE_CAPTURE\000"
+ 1197      43414C5F 
+ 1197      52414E47 
+ 1197      455F4341 
+ 1197      50545552 
+ 1198              	.LASF45:
+ 1199 0110 433A5C55 		.ascii	"C:\\Users\\Jennewein\\Documents\\hamish-workspace\\"
+ 1199      73657273 
+ 1199      5C4A656E 
+ 1199      6E657765 
+ 1199      696E5C44 
+ 1200 013e 70736F63 		.ascii	"psoc_059_examples\\CE195277_ADC_and_UART\\CE195277_"
+ 1200      5F303539 
+ 1200      5F657861 
+ 1200      6D706C65 
+ 1200      735C4345 
+ 1201 016f 4144435F 		.ascii	"ADC_and_UART.cydsn\000"
+ 1201      616E645F 
+ 1201      55415254 
+ 1201      2E637964 
+ 1201      736E00
+ 1202              	.LASF14:
+ 1203 0182 696E7431 		.ascii	"int16\000"
+ 1203      3600
+ 1204              	.LASF5:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 27
+
+
+ 1205 0188 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1205      20756E73 
+ 1205      69676E65 
+ 1205      6420696E 
+ 1205      7400
+ 1206              	.LASF15:
+ 1207 019a 696E7433 		.ascii	"int32\000"
+ 1207      3200
+ 1208              	.LASF36:
+ 1209 01a0 795F6D76 		.ascii	"y_mv\000"
+ 1209      00
+ 1210              	.LASF48:
+ 1211 01a5 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1211      52784275 
+ 1211      66666572 
+ 1211      00
+ 1212              	.LASF28:
+ 1213 01b2 4A4F595F 		.ascii	"JOY_CAL_CENTER_CAPTURE\000"
+ 1213      43414C5F 
+ 1213      43454E54 
+ 1213      45525F43 
+ 1213      41505455 
+ 1214              	.LASF17:
+ 1215 01c9 646F7562 		.ascii	"double\000"
+ 1215      6C6500
+ 1216              	.LASF22:
+ 1217 01d0 6D617876 		.ascii	"maxv\000"
+ 1217      00
+ 1218              	.LASF46:
+ 1219 01d5 7072696E 		.ascii	"print_cal_prompt_on_state_change\000"
+ 1219      745F6361 
+ 1219      6C5F7072 
+ 1219      6F6D7074 
+ 1219      5F6F6E5F 
+ 1220              	.LASF33:
+ 1221 01f6 73747265 		.ascii	"streaming\000"
+ 1221      616D696E 
+ 1221      6700
+ 1222              	.LASF12:
+ 1223 0200 75696E74 		.ascii	"uint16\000"
+ 1223      313600
+ 1224              	.LASF31:
+ 1225 0207 6A6F795F 		.ascii	"joy_cmd_t\000"
+ 1225      636D645F 
+ 1225      7400
+ 1226              	.LASF13:
+ 1227 0211 75696E74 		.ascii	"uint32\000"
+ 1227      333200
+ 1228              	.LASF8:
+ 1229 0218 756E7369 		.ascii	"unsigned int\000"
+ 1229      676E6564 
+ 1229      20696E74 
+ 1229      00
+ 1230              	.LASF34:
+ 1231 0225 636F756E 		.ascii	"counts\000"
+ 1231      747300
+ 1232              	.LASF7:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 28
+
+
+ 1233 022c 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1233      206C6F6E 
+ 1233      6720756E 
+ 1233      7369676E 
+ 1233      65642069 
+ 1234              	.LASF41:
+ 1235 0243 70616E5F 		.ascii	"pan_milli\000"
+ 1235      6D696C6C 
+ 1235      6900
+ 1236              	.LASF47:
+ 1237 024d 6D61696E 		.ascii	"main\000"
+ 1237      00
+ 1238              	.LASF30:
+ 1239 0252 6A6F795F 		.ascii	"joy_cal_state_t\000"
+ 1239      63616C5F 
+ 1239      73746174 
+ 1239      655F7400 
+ 1240              	.LASF20:
+ 1241 0262 73697A65 		.ascii	"sizetype\000"
+ 1241      74797065 
+ 1241      00
+ 1242              	.LASF6:
+ 1243 026b 6C6F6E67 		.ascii	"long long int\000"
+ 1243      206C6F6E 
+ 1243      6720696E 
+ 1243      7400
+ 1244              	.LASF44:
+ 1245 0279 6D61696E 		.ascii	"main.c\000"
+ 1245      2E6300
+ 1246              	.LASF18:
+ 1247 0280 63686172 		.ascii	"char\000"
+ 1247      00
+ 1248              	.LASF25:
+ 1249 0285 6A6F795F 		.ascii	"joy_cal_t\000"
+ 1249      63616C5F 
+ 1249      7400
+ 1250              	.LASF24:
+ 1251 028f 76616C69 		.ascii	"valid\000"
+ 1251      6400
+ 1252              	.LASF38:
+ 1253 0295 64656661 		.ascii	"defaults\000"
+ 1253      756C7473 
+ 1253      00
+ 1254              	.LASF2:
+ 1255 029e 73686F72 		.ascii	"short int\000"
+ 1255      7420696E 
+ 1255      7400
+ 1256              	.LASF23:
+ 1257 02a8 63656E74 		.ascii	"center\000"
+ 1257      657200
+ 1258              	.LASF11:
+ 1259 02af 75696E74 		.ascii	"uint8\000"
+ 1259      3800
+ 1260              	.LASF4:
+ 1261 02b5 6C6F6E67 		.ascii	"long int\000"
+ 1261      20696E74 
+ 1261      00
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccbTgyOf.s 			page 29
+
+
+ 1262              	.LASF19:
+ 1263 02be 6C6F6E67 		.ascii	"long double\000"
+ 1263      20646F75 
+ 1263      626C6500 
+ 1264              	.LASF0:
+ 1265 02ca 7369676E 		.ascii	"signed char\000"
+ 1265      65642063 
+ 1265      68617200 
+ 1266              	.LASF3:
+ 1267 02d6 73686F72 		.ascii	"short unsigned int\000"
+ 1267      7420756E 
+ 1267      7369676E 
+ 1267      65642069 
+ 1267      6E7400
+ 1268              	.LASF21:
+ 1269 02e9 6D696E76 		.ascii	"minv\000"
+ 1269      00
+ 1270              	.LASF32:
+ 1271 02ee 70726576 		.ascii	"prev\000"
+ 1271      00
+ 1272              	.LASF40:
+ 1273 02f3 63616C5F 		.ascii	"cal_now\000"
+ 1273      6E6F7700 
+ 1274              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

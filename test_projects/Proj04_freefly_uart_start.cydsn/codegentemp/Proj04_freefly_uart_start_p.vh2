@@ -1,5 +1,5 @@
 -- Project:   Proj04_freefly_uart_start
--- Generated: 11/12/2025 14:22:45
+-- Generated: 01/07/2026 16:07:46
 -- PSoC Creator  4.4
 
 ENTITY Proj04_freefly_uart_start IS
@@ -1450,7 +1450,7 @@ BEGIN
             status_0 => open,
             interrupt => Net_110);
 
-    isr_rx:interrupt
+    isr_rx_monitor:interrupt
         GENERIC MAP(
             int_type => "10",
             is_nmi => 0)

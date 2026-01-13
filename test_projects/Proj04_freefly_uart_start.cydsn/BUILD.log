@@ -1,34 +1,22 @@
---------------- Build Started: 11/12/2025 16:04:16 Project: Proj04_freefly_uart_start, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
-The code generation step is up to date.
+--------------- Build Started: 01/07/2026 16:07:44 Project: Proj04_freefly_uart_start, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+cydsfit.exe -.appdatapath "C:\Users\Jennewein\AppData\Local\Cypress Semiconductor\PSoC Creator\4.4" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p C:\Users\Jennewein\Documents\hamish-workspace\PSoC-Programs\test_projects\Proj04_freefly_uart_start.cydsn\Proj04_freefly_uart_start.cyprj -d CY8C5888LTI-LP097 -s C:\Users\Jennewein\Documents\hamish-workspace\PSoC-Programs\test_projects\Proj04_freefly_uart_start.cydsn\Generated_Source\PSoC5 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
+Elaborating Design...
+HDL Generation...
+Synthesis...
+Tech Mapping...
+Analog Placement...
+Analog Routing...
+Analog Code Generation...
+Digital Placement...
+Digital Routing...
+Bitstream Generation...
+Bitstream Verification...
+Static timing analysis...
+API Generation...
+Dependency Generation...
+Cleanup...
 arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb "-ID:\PSoC Programs\FreeflyAPI" -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM3\ARM_GCC_541\Debug\main.o
-main.c: In function 'ff_api_encode_control':
-main.c:32:5: warning: implicit declaration of function 'QX_InitMsg' [-Wimplicit-function-declaration]
-     QX_InitMsg(&TxMsg);
-     ^
-main.c:44:5: warning: implicit declaration of function 'QX_TxMsg_Setup' [-Wimplicit-function-declaration]
-     QX_TxMsg_Setup(&TxMsg);
-     ^
-main.c:47:5: warning: implicit declaration of function 'QX_TxMsg_Finish' [-Wimplicit-function-declaration]
-     QX_TxMsg_Finish(&TxMsg);
-     ^
-main.c: In function 'UART_MONITOR_RX_ISR':
-main.c:62:13: warning: unused variable 'rxByte' [-Wunused-variable]
-     uint8_t rxByte;
-             ^
-main.c: In function 'main':
-main.c:109:9: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
-         sprintf(msg, "SW1: %d\r\n", button_state); // Converts 0/1 to ASCII
-         ^
-main.c:109:9: warning: incompatible implicit declaration of built-in function 'sprintf'
-main.c:109:9: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-arm-none-eabi-ar.exe -rs .\CortexM3\ARM_GCC_541\Debug\Proj04_freefly_uart_start.a .\CortexM3\ARM_GCC_541\Debug\isr_rx.o .\CortexM3\ARM_GCC_541\Debug\SW1.o .\CortexM3\ARM_GCC_541\Debug\debounce_clock.o .\CortexM3\ARM_GCC_541\Debug\SW1_debounced.o .\CortexM3\ARM_GCC_541\Debug\CyDmac.o .\CortexM3\ARM_GCC_541\Debug\CyFlash.o .\CortexM3\ARM_GCC_541\Debug\CyLib.o .\CortexM3\ARM_GCC_541\Debug\cyPm.o .\CortexM3\ARM_GCC_541\Debug\CySpc.o .\CortexM3\ARM_GCC_541\Debug\cyutils.o .\CortexM3\ARM_GCC_541\Debug\cy_em_eeprom.o .\CortexM3\ARM_GCC_541\Debug\UART_MONITOR.o .\CortexM3\ARM_GCC_541\Debug\UART_MONITOR_PM.o .\CortexM3\ARM_GCC_541\Debug\UART_MONITOR_INT.o .\CortexM3\ARM_GCC_541\Debug\UART_MONITOR_BOOT.o .\CortexM3\ARM_GCC_541\Debug\UART_MOVI.o .\CortexM3\ARM_GCC_541\Debug\UART_MOVI_PM.o .\CortexM3\ARM_GCC_541\Debug\UART_MOVI_INT.o .\CortexM3\ARM_GCC_541\Debug\UART_MOVI_BOOT.o .\CortexM3\ARM_GCC_541\Debug\isr_rx_movi.o .\CortexM3\ARM_GCC_541\Debug\Clock_Movi.o .\CortexM3\ARM_GCC_541\Debug\UART_MONITOR_IntClock.o .\CortexM3\ARM_GCC_541\Debug\CyBootAsmGnu.o
-arm-none-eabi-ar.exe: creating .\CortexM3\ARM_GCC_541\Debug\Proj04_freefly_uart_start.a
-arm-none-eabi-gcc.exe -Wl,--start-group -o "D:\PSoC Programs\test_projects\Proj04_freefly_uart_start.cydsn\CortexM3\ARM_GCC_541\Debug\Proj04_freefly_uart_start.elf" .\CortexM3\ARM_GCC_541\Debug\main.o .\CortexM3\ARM_GCC_541\Debug\QX_Parsing_Functions.o .\CortexM3\ARM_GCC_541\Debug\QX_Protocol.o .\CortexM3\ARM_GCC_541\Debug\QX_Protocol_App.o .\CortexM3\ARM_GCC_541\Debug\simple_buffer.o .\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o .\CortexM3\ARM_GCC_541\Debug\cymetadata.o .\CortexM3\ARM_GCC_541\Debug\Cm3Start.o .\CortexM3\ARM_GCC_541\Debug\Proj04_freefly_uart_start.a "D:\Program Files (x86)\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_541\Debug\CyComponentLibrary.a" -mcpu=cortex-m3 -mthumb -L Generated_Source\PSoC5 -Wl,-Map,.\CortexM3\ARM_GCC_541\Debug/Proj04_freefly_uart_start.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -u _printf_float -g -ffunction-sections -Og -ffat-lto-objects -Wl,--end-group
-cyelftool.exe -C "D:\PSoC Programs\test_projects\Proj04_freefly_uart_start.cydsn\CortexM3\ARM_GCC_541\Debug\Proj04_freefly_uart_start.elf" --flash_row_size 256 --flash_size 262144 --flash_offset 0x00000000
-No ELF section .cychecksum found, creating one
-Application checksum calculated and stored in ELF section .cychecksum
-Checksum calculated and stored in ELF section .cymeta
-cyelftool.exe -S "D:\PSoC Programs\test_projects\Proj04_freefly_uart_start.cydsn\CortexM3\ARM_GCC_541\Debug\Proj04_freefly_uart_start.elf"
-Flash used: 20844 of 262144 bytes (8.0%).
-SRAM used: 3033 of 65536 bytes (4.6%). Stack: 2048 bytes. Heap: 128 bytes.
---------------- Build Succeeded: 11/12/2025 16:04:17 ---------------
+main.c:15:25: fatal error: QX_Protocol.h: No such file or directory
+compilation terminated.
+The command 'arm-none-eabi-gcc.exe' failed with exit code '1'.
+--------------- Build Failed: 01/07/2026 16:07:49 ---------------

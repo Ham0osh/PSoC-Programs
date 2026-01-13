@@ -1,5 +1,5 @@
--- Project:   D:\PSoC Programs\test_projects\Proj04_freefly_uart_start.cydsn\Proj04_freefly_uart_start.cyprj
--- Generated: 11/12/2025 14:22:48
+-- Project:   C:\Users\Jennewein\Documents\hamish-workspace\PSoC-Programs\test_projects\Proj04_freefly_uart_start.cydsn\Proj04_freefly_uart_start.cyprj
+-- Generated: 01/07/2026 16:07:48
 -- PSoC Creator  4.4
 
 ENTITY Proj04_freefly_uart_start IS
@@ -252,7 +252,7 @@ ARCHITECTURE __DEFAULT__ OF Proj04_freefly_uart_start IS
     ATTRIBUTE Location OF \UART_MONITOR:BUART:sRX:RxBitCounter\ : LABEL IS "U(0,0)";
     ATTRIBUTE lib_model OF \UART_MONITOR:BUART:sRX:RxSts\ : LABEL IS "statusicell2";
     ATTRIBUTE Location OF \UART_MONITOR:BUART:sRX:RxSts\ : LABEL IS "U(0,1)";
-    ATTRIBUTE Location OF isr_rx : LABEL IS "[IntrContainer=(0)][IntrId=(0)]";
+    ATTRIBUTE Location OF isr_rx_monitor : LABEL IS "[IntrContainer=(0)][IntrId=(0)]";
     ATTRIBUTE lib_model OF \UART_MOVI:BUART:sTX:TxShifter:u0\ : LABEL IS "datapathcell4";
     ATTRIBUTE Location OF \UART_MOVI:BUART:sTX:TxShifter:u0\ : LABEL IS "U(1,1)";
     ATTRIBUTE lib_model OF \UART_MOVI:BUART:sTX:sCLOCK:TxBitClkGen\ : LABEL IS "datapathcell5";
@@ -1546,7 +1546,7 @@ BEGIN
             status_0 => open,
             interrupt => Net_110);
 
-    isr_rx:interrupt
+    isr_rx_monitor:interrupt
         GENERIC MAP(
             int_type => "10",
             is_nmi => 0)

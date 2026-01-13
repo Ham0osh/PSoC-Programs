@@ -217,24 +217,6 @@
 .set Tx_2__SIO_REG_HIFREQ, CYREG_PRT12_SIO_REG_HIFREQ
 .set Tx_2__SLW, CYREG_PRT12_SLW
 
-/* isr_rx */
-.set isr_rx__INTC_CLR_EN_REG, CYREG_NVIC_CLRENA0
-.set isr_rx__INTC_CLR_PD_REG, CYREG_NVIC_CLRPEND0
-.set isr_rx__INTC_MASK, 0x01
-.set isr_rx__INTC_NUMBER, 0
-.set isr_rx__INTC_PRIOR_NUM, 7
-.set isr_rx__INTC_PRIOR_REG, CYREG_NVIC_PRI_0
-.set isr_rx__INTC_SET_EN_REG, CYREG_NVIC_SETENA0
-.set isr_rx__INTC_SET_PD_REG, CYREG_NVIC_SETPEND0
-.set isr_rx_movi__INTC_CLR_EN_REG, CYREG_NVIC_CLRENA0
-.set isr_rx_movi__INTC_CLR_PD_REG, CYREG_NVIC_CLRPEND0
-.set isr_rx_movi__INTC_MASK, 0x02
-.set isr_rx_movi__INTC_NUMBER, 1
-.set isr_rx_movi__INTC_PRIOR_NUM, 7
-.set isr_rx_movi__INTC_PRIOR_REG, CYREG_NVIC_PRI_1
-.set isr_rx_movi__INTC_SET_EN_REG, CYREG_NVIC_SETENA0
-.set isr_rx_movi__INTC_SET_PD_REG, CYREG_NVIC_SETPEND0
-
 /* UART_MOVI */
 .set UART_MOVI_BUART_sRX_RxBitCounter__16BIT_CONTROL_AUX_CTL_REG, CYREG_B0_UDB11_12_ACTL
 .set UART_MOVI_BUART_sRX_RxBitCounter__16BIT_CONTROL_CONTROL_REG, CYREG_B0_UDB11_12_CTL
@@ -352,6 +334,16 @@
 .set Clock_Movi__PM_ACT_MSK, 0x02
 .set Clock_Movi__PM_STBY_CFG, CYREG_PM_STBY_CFG2
 .set Clock_Movi__PM_STBY_MSK, 0x02
+
+/* isr_rx_movi */
+.set isr_rx_movi__INTC_CLR_EN_REG, CYREG_NVIC_CLRENA0
+.set isr_rx_movi__INTC_CLR_PD_REG, CYREG_NVIC_CLRPEND0
+.set isr_rx_movi__INTC_MASK, 0x02
+.set isr_rx_movi__INTC_NUMBER, 1
+.set isr_rx_movi__INTC_PRIOR_NUM, 7
+.set isr_rx_movi__INTC_PRIOR_REG, CYREG_NVIC_PRI_1
+.set isr_rx_movi__INTC_SET_EN_REG, CYREG_NVIC_SETENA0
+.set isr_rx_movi__INTC_SET_PD_REG, CYREG_NVIC_SETPEND0
 
 /* UART_MONITOR */
 .set UART_MONITOR_BUART_sRX_RxBitCounter__16BIT_CONTROL_AUX_CTL_REG, CYREG_B1_UDB10_11_ACTL
@@ -479,6 +471,16 @@
 .set debounce_clock__PM_ACT_MSK, 0x04
 .set debounce_clock__PM_STBY_CFG, CYREG_PM_STBY_CFG2
 .set debounce_clock__PM_STBY_MSK, 0x04
+
+/* isr_rx_monitor */
+.set isr_rx_monitor__INTC_CLR_EN_REG, CYREG_NVIC_CLRENA0
+.set isr_rx_monitor__INTC_CLR_PD_REG, CYREG_NVIC_CLRPEND0
+.set isr_rx_monitor__INTC_MASK, 0x01
+.set isr_rx_monitor__INTC_NUMBER, 0
+.set isr_rx_monitor__INTC_PRIOR_NUM, 7
+.set isr_rx_monitor__INTC_PRIOR_REG, CYREG_NVIC_PRI_0
+.set isr_rx_monitor__INTC_SET_EN_REG, CYREG_NVIC_SETENA0
+.set isr_rx_monitor__INTC_SET_PD_REG, CYREG_NVIC_SETPEND0
 
 /* Miscellaneous */
 .set BCLK__BUS_CLK__HZ, 24000000

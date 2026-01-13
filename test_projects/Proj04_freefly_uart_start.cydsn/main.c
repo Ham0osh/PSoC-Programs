@@ -1,17 +1,17 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
+ * Copyright Hamish Johnson 2026
  * All Rights Reserved
  * UNPUBLISHED, LICENSED SOFTWARE.
  *
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+ * WHICH IS THE PROPERTY OF SFU Physics.
  *
  * ========================================
 */
 #include "project.h"
 
-// Necessary ports of the FreeflyAPI
+// Include FreeflyAPI
 #include "QX_Protocol.h"
 #include "QX_Protocol_App.h"
 
