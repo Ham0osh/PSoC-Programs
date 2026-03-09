@@ -7,7 +7,7 @@
       <Tool Name="prebuild" Command="" Options="" />
       <Tool Name="assembler" Command="arm-none-eabi-as.exe" Options="-mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -alh=${OutputDir}/${CompileFile}.lst -g" />
       <Tool Name="compiler" Command="arm-none-eabi-gcc.exe" Options="-mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -ffunction-sections -ffat-lto-objects -O0" />
-      <Tool Name="linker" Command="arm-none-eabi-gcc.exe" Options="-mcpu=cortex-m3 -mthumb -L Generated_Source\PSoC5 -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -Wl,--trace-symbol=joystick_validate -g -ffunction-sections -O0 -ffat-lto-objects" />
+      <Tool Name="linker" Command="arm-none-eabi-gcc.exe" Options="-mcpu=cortex-m3 -mthumb -l m -L Generated_Source\PSoC5 -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -Wl,--trace-symbol=joystick_validate -g -ffunction-sections -O0 -ffat-lto-objects" />
       <Tool Name="postbuild" Command="" Options="" />
     </Toolchain>
     <Toolchain Name="ARM MDK Generic" Selected="False">
@@ -25,7 +25,7 @@
       <Tool Name="postbuild" Command="" Options="" />
     </Toolchain>
   </Toolchains>
-  <Project Name="Proj05_freefly_uart_control" Path="C:\Users\Jennewein\Documents\hamish-workspace\PSoC-Programs\test_projects\Proj05_freefly_uart_control.cydsn" Version="5.70" Type="Normal">
+  <Project Name="Proj05_freefly_uart_control" Path="C:\Users\Jennewein\Documents\hamish-workspace\PSoC-Programs\test_projects\Proj05_freefly_uart_control.cydsn" Version="6.10" Type="Normal">
     <CMSIS_SVD_File>Proj05_freefly_uart_control.svd</CMSIS_SVD_File>
     <Datasheet />
     <LinkerFiles>
@@ -38,11 +38,13 @@
         <Files Root="C:\Users\Jennewein\Documents\hamish-workspace\PSoC-Programs\test_projects\Proj05_freefly_uart_control.cydsn">
           <File BuildType="BUILD" Toolchain="">adc_balanced.h</File>
           <File BuildType="BUILD" Toolchain="">joystick.h</File>
-          <File BuildType="BUILD" Toolchain="">movi_qx.h</File>
+          <File BuildType="BUILD" Toolchain="">movi_rb.h</File>
+          <File BuildType="BUILD" Toolchain="">movi_comm.h</File>
           <File BuildType="BUILD" Toolchain="">main.c</File>
           <File BuildType="BUILD" Toolchain="">adc_balanced.c</File>
           <File BuildType="BUILD" Toolchain="">joystick.c</File>
-          <File BuildType="BUILD" Toolchain="">movi_qx.c</File>
+          <File BuildType="BUILD" Toolchain="">movi_rb.c</File>
+          <File BuildType="BUILD" Toolchain="">movi_comm.c</File>
           <File BuildType="BUILD" Toolchain="">FreeflyAPI.h</File>
           <File BuildType="BUILD" Toolchain="">QX_App_Config.h</File>
           <File BuildType="BUILD" Toolchain="">QX_Parsing_Functions.c</File>
@@ -144,6 +146,17 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\isr_rx_movi.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Clock_Movi.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Clock_Movi.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\ModeSwitch_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\ModeSwitch.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\ModeSwitch.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Looptimer.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Looptimer.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Looptimer_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\isr_Looptimer.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\isr_Looptimer.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Pin_LED_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Pin_LED.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Pin_LED.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="C:\Users\Jennewein\Documents\hamish-workspace\PSoC-Programs\test_projects\Proj05_freefly_uart_control.cydsn\Export\ARM_GCC_Generic">
