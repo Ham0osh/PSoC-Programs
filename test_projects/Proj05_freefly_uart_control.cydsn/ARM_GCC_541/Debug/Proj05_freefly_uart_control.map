@@ -170,8 +170,8 @@ Discarded input sections
                 0x00000000       0x38 .\ARM_GCC_541\Debug\movi_comm.o
  .text.movi_comm_clear_statistics
                 0x00000000       0x28 .\ARM_GCC_541\Debug\movi_comm.o
- .text.movi_comm_kill
-                0x00000000       0x2c .\ARM_GCC_541\Debug\movi_comm.o
+ .text.movi_comm_get_control
+                0x00000000       0x34 .\ARM_GCC_541\Debug\movi_comm.o
  .text.movi_comm_build_control_frame
                 0x00000000       0x28 .\ARM_GCC_541\Debug\movi_comm.o
  .text          0x00000000        0x0 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
@@ -978,7 +978,7 @@ END GROUP
                 0x00000800                ee_size = (CY_APPL_LOADABLE && ! (CY_EE_IN_BTLDR))?(CY_EE_SIZE / CY_APPL_MAX):CY_EE_SIZE
                 [!provide]                PROVIDE (CY_ECC_OFFSET, ecc_offset)
 
-.text           0x00000000     0x6e80
+.text           0x00000000     0x7338
  CREATE_OBJECT_SYMBOLS
                 0x00000000                PROVIDE (__cy_interrupt_vector, RomVectors)
  *(.romvectors)
@@ -995,700 +995,704 @@ END GROUP
                 0x00000001                ASSERT ((((appl_start + .) <= 0x10000) || 0x1), DMA Init must be within the first 64k of flash)
  *(.text .text.* .gnu.linkonce.t.*)
  .text          0x00000028       0x5c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+ .text.decomp   0x00000084       0xa8 .\ARM_GCC_541\Debug\main.o
+ .text.compute_euler_ints
+                0x0000012c      0x1bc .\ARM_GCC_541\Debug\main.o
+ .text.mode_str
+                0x000002e8       0x38 .\ARM_GCC_541\Debug\main.o
  .text.print_cal_prompt_on_state_change
-                0x00000084       0x98 .\ARM_GCC_541\Debug\main.o
+                0x00000320       0x78 .\ARM_GCC_541\Debug\main.o
  .text.movi_uart_putc
-                0x0000011c       0x1c .\ARM_GCC_541\Debug\main.o
+                0x00000398       0x1c .\ARM_GCC_541\Debug\main.o
  .text.isr_rx_movi_Handler
-                0x00000138       0x60 .\ARM_GCC_541\Debug\main.o
-                0x00000138                isr_rx_movi_Handler
+                0x000003b4       0x60 .\ARM_GCC_541\Debug\main.o
+                0x000003b4                isr_rx_movi_Handler
  .text.isr_Looptimer_Handler
-                0x00000198       0x1c .\ARM_GCC_541\Debug\main.o
-                0x00000198                isr_Looptimer_Handler
- .text.main     0x000001b4      0x6a0 .\ARM_GCC_541\Debug\main.o
-                0x000001b4                main
+                0x00000414       0x1c .\ARM_GCC_541\Debug\main.o
+                0x00000414                isr_Looptimer_Handler
+ .text.do_kill  0x00000430       0x58 .\ARM_GCC_541\Debug\main.o
+ .text.main     0x00000488      0x890 .\ARM_GCC_541\Debug\main.o
+                0x00000488                main
  .text.isr_adc_Handler
-                0x00000854       0x18 .\ARM_GCC_541\Debug\adc_balanced.o
-                0x00000854                isr_adc_Handler
+                0x00000d18       0x18 .\ARM_GCC_541\Debug\adc_balanced.o
+                0x00000d18                isr_adc_Handler
  .text.adc_balanced_init
-                0x0000086c       0x6c .\ARM_GCC_541\Debug\adc_balanced.o
-                0x0000086c                adc_balanced_init
+                0x00000d30       0x6c .\ARM_GCC_541\Debug\adc_balanced.o
+                0x00000d30                adc_balanced_init
  .text.adc_balanced_advance_on_eoc
-                0x000008d8       0x64 .\ARM_GCC_541\Debug\adc_balanced.o
+                0x00000d9c       0x64 .\ARM_GCC_541\Debug\adc_balanced.o
  .text.adc_balanced_poll_frame
-                0x0000093c       0x6c .\ARM_GCC_541\Debug\adc_balanced.o
-                0x0000093c                adc_balanced_poll_frame
+                0x00000e00       0x6c .\ARM_GCC_541\Debug\adc_balanced.o
+                0x00000e00                adc_balanced_poll_frame
  .text.adc_balanced_counts_to_mv
-                0x000009a8       0x20 .\ARM_GCC_541\Debug\adc_balanced.o
-                0x000009a8                adc_balanced_counts_to_mv
+                0x00000e6c       0x20 .\ARM_GCC_541\Debug\adc_balanced.o
+                0x00000e6c                adc_balanced_counts_to_mv
  .text.normalize_axis
-                0x000009c8       0xd0 .\ARM_GCC_541\Debug\joystick.o
+                0x00000e8c       0xd0 .\ARM_GCC_541\Debug\joystick.o
  .text.apply_deadband
-                0x00000a98       0x90 .\ARM_GCC_541\Debug\joystick.o
+                0x00000f5c       0x90 .\ARM_GCC_541\Debug\joystick.o
  .text.joystick_validate
-                0x00000b28       0x84 .\ARM_GCC_541\Debug\joystick.o
-                0x00000b28                joystick_validate
+                0x00000fec       0x84 .\ARM_GCC_541\Debug\joystick.o
+                0x00000fec                joystick_validate
  .text.cal_begin_range_capture
-                0x00000bac       0x84 .\ARM_GCC_541\Debug\joystick.o
+                0x00001070       0x84 .\ARM_GCC_541\Debug\joystick.o
  .text.cal_update_ranges
-                0x00000c30       0x98 .\ARM_GCC_541\Debug\joystick.o
+                0x000010f4       0x98 .\ARM_GCC_541\Debug\joystick.o
  .text.cal_start_center_capture
-                0x00000cc8       0x44 .\ARM_GCC_541\Debug\joystick.o
+                0x0000118c       0x44 .\ARM_GCC_541\Debug\joystick.o
  .text.cal_center_capture_update
-                0x00000d0c       0xa8 .\ARM_GCC_541\Debug\joystick.o
+                0x000011d0       0xa8 .\ARM_GCC_541\Debug\joystick.o
  .text.cal_save_or_restart
-                0x00000db4       0x44 .\ARM_GCC_541\Debug\joystick.o
+                0x00001278       0x44 .\ARM_GCC_541\Debug\joystick.o
  .text.joystick_init
-                0x00000df8       0xa4 .\ARM_GCC_541\Debug\joystick.o
-                0x00000df8                joystick_init
+                0x000012bc       0xa4 .\ARM_GCC_541\Debug\joystick.o
+                0x000012bc                joystick_init
  .text.joystick_on_sample
-                0x00000e9c       0x48 .\ARM_GCC_541\Debug\joystick.o
-                0x00000e9c                joystick_on_sample
+                0x00001360       0x48 .\ARM_GCC_541\Debug\joystick.o
+                0x00001360                joystick_on_sample
  .text.joystick_on_key
-                0x00000ee4       0x70 .\ARM_GCC_541\Debug\joystick.o
-                0x00000ee4                joystick_on_key
+                0x000013a8       0x70 .\ARM_GCC_541\Debug\joystick.o
+                0x000013a8                joystick_on_key
  .text.joystick_cal_state
-                0x00000f54       0x14 .\ARM_GCC_541\Debug\joystick.o
-                0x00000f54                joystick_cal_state
+                0x00001418       0x14 .\ARM_GCC_541\Debug\joystick.o
+                0x00001418                joystick_cal_state
  .text.joystick_center_samples_collected
-                0x00000f68       0x14 .\ARM_GCC_541\Debug\joystick.o
-                0x00000f68                joystick_center_samples_collected
+                0x0000142c       0x14 .\ARM_GCC_541\Debug\joystick.o
+                0x0000142c                joystick_center_samples_collected
  .text.joystick_get_cmd
-                0x00000f7c       0xa8 .\ARM_GCC_541\Debug\joystick.o
-                0x00000f7c                joystick_get_cmd
- .text.rb_next  0x00001024       0x28 .\ARM_GCC_541\Debug\movi_rb.o
+                0x00001440       0xa8 .\ARM_GCC_541\Debug\joystick.o
+                0x00001440                joystick_get_cmd
+ .text.rb_next  0x000014e8       0x28 .\ARM_GCC_541\Debug\movi_rb.o
  .text.movi_rb_init
-                0x0000104c       0x2c .\ARM_GCC_541\Debug\movi_rb.o
-                0x0000104c                movi_rb_init
+                0x00001510       0x2c .\ARM_GCC_541\Debug\movi_rb.o
+                0x00001510                movi_rb_init
  .text.movi_rb_push
-                0x00001078       0x64 .\ARM_GCC_541\Debug\movi_rb.o
-                0x00001078                movi_rb_push
+                0x0000153c       0x64 .\ARM_GCC_541\Debug\movi_rb.o
+                0x0000153c                movi_rb_push
  .text.movi_rb_pop
-                0x000010dc       0x58 .\ARM_GCC_541\Debug\movi_rb.o
-                0x000010dc                movi_rb_pop
+                0x000015a0       0x58 .\ARM_GCC_541\Debug\movi_rb.o
+                0x000015a0                movi_rb_pop
  .text.load_freefly_control_from_movi
-                0x00001134      0x128 .\ARM_GCC_541\Debug\movi_comm.o
+                0x000015f8      0x128 .\ARM_GCC_541\Debug\movi_comm.o
  .text.copy_status_from_freefly
-                0x0000125c       0x60 .\ARM_GCC_541\Debug\movi_comm.o
+                0x00001720       0x60 .\ARM_GCC_541\Debug\movi_comm.o
  .text.movi_comm_init
-                0x000012bc       0x5c .\ARM_GCC_541\Debug\movi_comm.o
-                0x000012bc                movi_comm_init
+                0x00001780       0x5c .\ARM_GCC_541\Debug\movi_comm.o
+                0x00001780                movi_comm_init
  .text.movi_comm_on_uart_error_flags
-                0x00001318       0x30 .\ARM_GCC_541\Debug\movi_comm.o
-                0x00001318                movi_comm_on_uart_error_flags
+                0x000017dc       0x30 .\ARM_GCC_541\Debug\movi_comm.o
+                0x000017dc                movi_comm_on_uart_error_flags
  .text.movi_comm_on_rx_byte
-                0x00001348       0x38 .\ARM_GCC_541\Debug\movi_comm.o
-                0x00001348                movi_comm_on_rx_byte
+                0x0000180c       0x38 .\ARM_GCC_541\Debug\movi_comm.o
+                0x0000180c                movi_comm_on_rx_byte
  .text.movi_comm_pump
-                0x00001380       0x9c .\ARM_GCC_541\Debug\movi_comm.o
-                0x00001380                movi_comm_pump
+                0x00001844       0x9c .\ARM_GCC_541\Debug\movi_comm.o
+                0x00001844                movi_comm_pump
  .text.movi_comm_set_control
-                0x0000141c       0x34 .\ARM_GCC_541\Debug\movi_comm.o
-                0x0000141c                movi_comm_set_control
- .text.movi_comm_get_control
-                0x00001450       0x34 .\ARM_GCC_541\Debug\movi_comm.o
-                0x00001450                movi_comm_get_control
+                0x000018e0       0x34 .\ARM_GCC_541\Debug\movi_comm.o
+                0x000018e0                movi_comm_set_control
+ .text.movi_comm_kill
+                0x00001914       0x2c .\ARM_GCC_541\Debug\movi_comm.o
+                0x00001914                movi_comm_kill
  .text.movi_comm_send_control
-                0x00001484       0x88 .\ARM_GCC_541\Debug\movi_comm.o
-                0x00001484                movi_comm_send_control
+                0x00001940       0x88 .\ARM_GCC_541\Debug\movi_comm.o
+                0x00001940                movi_comm_send_control
  .text.movi_comm_get_status
-                0x0000150c       0x38 .\ARM_GCC_541\Debug\movi_comm.o
-                0x0000150c                movi_comm_get_status
+                0x000019c8       0x38 .\ARM_GCC_541\Debug\movi_comm.o
+                0x000019c8                movi_comm_get_status
  .text.movi_comm_get_statistics
-                0x00001544       0x48 .\ARM_GCC_541\Debug\movi_comm.o
-                0x00001544                movi_comm_get_statistics
+                0x00001a00       0x48 .\ARM_GCC_541\Debug\movi_comm.o
+                0x00001a00                movi_comm_get_statistics
  .text.QX_Parser_SetMsgPtr
-                0x0000158c       0x1c .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x0000158c                QX_Parser_SetMsgPtr
+                0x00001a48       0x1c .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00001a48                QX_Parser_SetMsgPtr
  .text.QX_Parser_AdvMsgPtr
-                0x000015a8       0x1c .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x000015a8                QX_Parser_AdvMsgPtr
+                0x00001a64       0x1c .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00001a64                QX_Parser_AdvMsgPtr
  .text.QX_Parser_GetMsgPtr
-                0x000015c4       0x14 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x000015c4                QX_Parser_GetMsgPtr
+                0x00001a80       0x14 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00001a80                QX_Parser_GetMsgPtr
  .text.QX_Parser_SetDir_Read
-                0x000015d8       0x18 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x000015d8                QX_Parser_SetDir_Read
+                0x00001a94       0x18 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00001a94                QX_Parser_SetDir_Read
  .text.QX_Parser_SetDir_WriteAbs
-                0x000015f0       0x18 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x000015f0                QX_Parser_SetDir_WriteAbs
+                0x00001aac       0x18 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00001aac                QX_Parser_SetDir_WriteAbs
  .text.AddFloatAsSignedShort
-                0x00001608       0xc8 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x00001608                AddFloatAsSignedShort
+                0x00001ac4       0xc8 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00001ac4                AddFloatAsSignedShort
  .text.GetFloatAsSignedShort
-                0x000016d0      0x170 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x000016d0                GetFloatAsSignedShort
+                0x00001b8c      0x170 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00001b8c                GetFloatAsSignedShort
  .text.AddSignedShortAsSignedShort
-                0x00001840       0x58 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x00001840                AddSignedShortAsSignedShort
+                0x00001cfc       0x58 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00001cfc                AddSignedShortAsSignedShort
  .text.GetSignedShortAsSignedShort
-                0x00001898      0x15c .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x00001898                GetSignedShortAsSignedShort
+                0x00001d54      0x15c .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00001d54                GetSignedShortAsSignedShort
  .text.AddUnsignedCharAsUnsignedChar
-                0x000019f4       0x3c .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x000019f4                AddUnsignedCharAsUnsignedChar
+                0x00001eb0       0x3c .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00001eb0                AddUnsignedCharAsUnsignedChar
  .text.GetUnsignedCharAsUnsignedChar
-                0x00001a30       0xc8 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x00001a30                GetUnsignedCharAsUnsignedChar
+                0x00001eec       0xc8 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00001eec                GetUnsignedCharAsUnsignedChar
  .text.AddUnsignedShortAsUnsignedShort
-                0x00001af8       0x54 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x00001af8                AddUnsignedShortAsUnsignedShort
+                0x00001fb4       0x54 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00001fb4                AddUnsignedShortAsUnsignedShort
  .text.GetUnsignedShortAsUnsignedShort
-                0x00001b4c       0xf8 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x00001b4c                GetUnsignedShortAsUnsignedShort
+                0x00002008       0xf8 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00002008                GetUnsignedShortAsUnsignedShort
  .text.AddBitsAsByte
-                0x00001c44       0xc8 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x00001c44                AddBitsAsByte
+                0x00002100       0xc8 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00002100                AddBitsAsByte
  .text.GetBitsAsByte
-                0x00001d0c       0xd8 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x00001d0c                GetBitsAsByte
+                0x000021c8       0xd8 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x000021c8                GetBitsAsByte
  .text.QX_InitMsg
-                0x00001de4       0x30 .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00001de4                QX_InitMsg
+                0x000022a0       0x30 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x000022a0                QX_InitMsg
  .text.QX_RxMsg
-                0x00001e14       0xec .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00001e14                QX_RxMsg
+                0x000022d0       0xec .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x000022d0                QX_RxMsg
  .text.QX_Srv_Rx_Read
-                0x00001f00       0x90 .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00001f00                QX_Srv_Rx_Read
+                0x000023bc       0x90 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x000023bc                QX_Srv_Rx_Read
  .text.QX_Srv_Rx_Write
-                0x00001f90       0xc4 .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00001f90                QX_Srv_Rx_Write
+                0x0000244c       0xc4 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x0000244c                QX_Srv_Rx_Write
  .text.QX_Cli_Rx_CurVal
-                0x00002054       0x3c .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00002054                QX_Cli_Rx_CurVal
+                0x00002510       0x3c .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x00002510                QX_Cli_Rx_CurVal
  .text.QX_TxMsg_Setup
-                0x00002090       0x4c .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00002090                QX_TxMsg_Setup
+                0x0000254c       0x4c .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x0000254c                QX_TxMsg_Setup
  .text.QX_TxMsg_Finish
-                0x000020dc      0x1dc .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x000020dc                QX_TxMsg_Finish
+                0x00002598      0x1dc .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x00002598                QX_TxMsg_Finish
  .text.QX_BuildHeader
-                0x000022b8      0x188 .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x000022b8                QX_BuildHeader
+                0x00002774      0x188 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x00002774                QX_BuildHeader
  .text.QX_ParseHeader
-                0x00002440      0x114 .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00002440                QX_ParseHeader
+                0x000028fc      0x114 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x000028fc                QX_ParseHeader
  .text.QX_Calc8bChecksum
-                0x00002554       0x3c .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00002554                QX_Calc8bChecksum
+                0x00002a10       0x3c .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x00002a10                QX_Calc8bChecksum
  .text.QX_AddExtdValToBuf
-                0x00002590       0x88 .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00002590                QX_AddExtdValToBuf
+                0x00002a4c       0x88 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x00002a4c                QX_AddExtdValToBuf
  .text.QX_GetExtdValFromBuf
-                0x00002618       0x6c .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00002618                QX_GetExtdValFromBuf
+                0x00002ad4       0x6c .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x00002ad4                QX_GetExtdValFromBuf
  .text.QX_compute_crc32
-                0x00002684       0x4c .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00002684                QX_compute_crc32
+                0x00002b40       0x4c .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x00002b40                QX_compute_crc32
  .text.QX_accumulate_crc32
-                0x000026d0       0x54 .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x000026d0                QX_accumulate_crc32
+                0x00002b8c       0x54 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x00002b8c                QX_accumulate_crc32
  .text.QX_InitCli
-                0x00002724       0x24 .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00002724                QX_InitCli
+                0x00002be0       0x24 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x00002be0                QX_InitCli
  .text.QX_StreamRxCharSM
-                0x00002748      0x6e0 .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00002748                QX_StreamRxCharSM
+                0x00002c04      0x6e0 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x00002c04                QX_StreamRxCharSM
  .text.QX_InitTxOptions
-                0x00002e28       0x3c .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00002e28                QX_InitTxOptions
+                0x000032e4       0x3c .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x000032e4                QX_InitTxOptions
  .text.QX_SendPacket_Srv_CurVal
-                0x00002e64       0x98 .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00002e64                QX_SendPacket_Srv_CurVal
+                0x00003320       0x98 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x00003320                QX_SendPacket_Srv_CurVal
  .text.QX_SendPacket_Cli_WriteABS
-                0x00002efc       0x98 .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x00002efc                QX_SendPacket_Cli_WriteABS
+                0x000033b8       0x98 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x000033b8                QX_SendPacket_Cli_WriteABS
  .text.ff_api_init
-                0x00002f94       0x7c .\ARM_GCC_541\Debug\QX_Protocol_App.o
-                0x00002f94                ff_api_init
+                0x00003450       0x7c .\ARM_GCC_541\Debug\QX_Protocol_App.o
+                0x00003450                ff_api_init
  .text.ff_api_send
-                0x00003010       0x44 .\ARM_GCC_541\Debug\QX_Protocol_App.o
-                0x00003010                ff_api_send
+                0x000034cc       0x44 .\ARM_GCC_541\Debug\QX_Protocol_App.o
+                0x000034cc                ff_api_send
  .text.QX_ParsePacket_Cli_MoVI_Ctrl_CB
-                0x00003054      0x818 .\ARM_GCC_541\Debug\QX_Protocol_App.o
-                0x00003054                QX_ParsePacket_Cli_MoVI_Ctrl_CB
+                0x00003510      0x818 .\ARM_GCC_541\Debug\QX_Protocol_App.o
+                0x00003510                QX_ParsePacket_Cli_MoVI_Ctrl_CB
  .text.QX_SendMsg2CommsPort_CB
-                0x0000386c       0x54 .\ARM_GCC_541\Debug\QX_Protocol_App.o
-                0x0000386c                QX_SendMsg2CommsPort_CB
+                0x00003d28       0x54 .\ARM_GCC_541\Debug\QX_Protocol_App.o
+                0x00003d28                QX_SendMsg2CommsPort_CB
  .text.QX_FwdMsg_CB
-                0x000038c0       0x14 .\ARM_GCC_541\Debug\QX_Protocol_App.o
-                0x000038c0                QX_FwdMsg_CB
+                0x00003d7c       0x14 .\ARM_GCC_541\Debug\QX_Protocol_App.o
+                0x00003d7c                QX_FwdMsg_CB
  .text.QX_GetTicks_ms
-                0x000038d4       0x10 .\ARM_GCC_541\Debug\QX_Protocol_App.o
-                0x000038d4                QX_GetTicks_ms
- .text.BufAdd   0x000038e4       0xac .\ARM_GCC_541\Debug\simple_buffer.o
-                0x000038e4                BufAdd
+                0x00003d90       0x10 .\ARM_GCC_541\Debug\QX_Protocol_App.o
+                0x00003d90                QX_GetTicks_ms
+ .text.BufAdd   0x00003da0       0xac .\ARM_GCC_541\Debug\simple_buffer.o
+                0x00003da0                BufAdd
  .text.BufRemove
-                0x00003990       0x80 .\ARM_GCC_541\Debug\simple_buffer.o
-                0x00003990                BufRemove
+                0x00003e4c       0x80 .\ARM_GCC_541\Debug\simple_buffer.o
+                0x00003e4c                BufRemove
  .text.CYMEMZERO
-                0x00003a10       0x1c .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00003ecc       0x1c .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .text.CYCONFIGCPY
-                0x00003a2c       0x20 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00003ee8       0x20 .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .text.CyClockStartupError
-                0x00003a4c        0xc .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00003f08        0xc .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .text.cfg_write_bytes32
-                0x00003a58       0x74 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00003f14       0x74 .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .text.ClockSetup
-                0x00003acc      0x16c .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00003f88      0x16c .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .text.AnalogSetDefault
-                0x00003c38       0x44 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x000040f4       0x44 .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .text.AMux_1_Set
-                0x00003c7c       0x6c .\ARM_GCC_541\Debug\cyfitter_cfg.o
-                0x00003c7c                AMux_1_Set
+                0x00004138       0x6c .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00004138                AMux_1_Set
  .text.AMux_1_Unset
-                0x00003ce8       0x74 .\ARM_GCC_541\Debug\cyfitter_cfg.o
-                0x00003ce8                AMux_1_Unset
+                0x000041a4       0x74 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x000041a4                AMux_1_Unset
  .text.ADC_DelSig_1_AMux_Set
-                0x00003d5c       0x40 .\ARM_GCC_541\Debug\cyfitter_cfg.o
-                0x00003d5c                ADC_DelSig_1_AMux_Set
+                0x00004218       0x40 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00004218                ADC_DelSig_1_AMux_Set
  .text.ADC_DelSig_1_AMux_Unset
-                0x00003d9c       0x44 .\ARM_GCC_541\Debug\cyfitter_cfg.o
-                0x00003d9c                ADC_DelSig_1_AMux_Unset
+                0x00004258       0x44 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00004258                ADC_DelSig_1_AMux_Unset
  .text.cyfitter_cfg
-                0x00003de0      0x164 .\ARM_GCC_541\Debug\cyfitter_cfg.o
-                0x00003de0                cyfitter_cfg
+                0x0000429c      0x164 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x0000429c                cyfitter_cfg
  .text.IntDefaultHandler
-                0x00003f44       0x14 .\ARM_GCC_541\Debug\Cm3Start.o
-                0x00003f44                IntDefaultHandler
- .text._sbrk    0x00003f58       0x50 .\ARM_GCC_541\Debug\Cm3Start.o
-                0x00003f58                _sbrk
- .text.Start_c  0x00003fa8       0x98 .\ARM_GCC_541\Debug\Cm3Start.o
-                0x00003fa8                Start_c
+                0x00004400       0x14 .\ARM_GCC_541\Debug\Cm3Start.o
+                0x00004400                IntDefaultHandler
+ .text._sbrk    0x00004414       0x50 .\ARM_GCC_541\Debug\Cm3Start.o
+                0x00004414                _sbrk
+ .text.Start_c  0x00004464       0x98 .\ARM_GCC_541\Debug\Cm3Start.o
+                0x00004464                Start_c
  .text.initialize_psoc
-                0x00004040       0x90 .\ARM_GCC_541\Debug\Cm3Start.o
-                0x00004040                initialize_psoc
+                0x000044fc       0x90 .\ARM_GCC_541\Debug\Cm3Start.o
+                0x000044fc                initialize_psoc
  .text.ADC_DelSig_1_Init
-                0x000040d0      0x11c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
-                0x000040d0                ADC_DelSig_1_Init
+                0x0000458c      0x11c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x0000458c                ADC_DelSig_1_Init
  .text.ADC_DelSig_1_Enable
-                0x000041ec      0x158 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
-                0x000041ec                ADC_DelSig_1_Enable
+                0x000046a8      0x158 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x000046a8                ADC_DelSig_1_Enable
  .text.ADC_DelSig_1_Start
-                0x00004344       0x30 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
-                0x00004344                ADC_DelSig_1_Start
+                0x00004800       0x30 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x00004800                ADC_DelSig_1_Start
  .text.ADC_DelSig_1_StartConvert
-                0x00004374       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
-                0x00004374                ADC_DelSig_1_StartConvert
+                0x00004830       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x00004830                ADC_DelSig_1_StartConvert
  .text.ADC_DelSig_1_StopConvert
-                0x00004394       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
-                0x00004394                ADC_DelSig_1_StopConvert
+                0x00004850       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x00004850                ADC_DelSig_1_StopConvert
  .text.ADC_DelSig_1_GetResult16
-                0x000043b4       0x7c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
-                0x000043b4                ADC_DelSig_1_GetResult16
+                0x00004870       0x7c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x00004870                ADC_DelSig_1_GetResult16
  .text.ADC_DelSig_1_CountsTo_mVolts
-                0x00004430       0x3c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
-                0x00004430                ADC_DelSig_1_CountsTo_mVolts
+                0x000048ec       0x3c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x000048ec                ADC_DelSig_1_CountsTo_mVolts
  .text.ADC_DelSig_1_InitConfig
-                0x0000446c      0x164 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x00004928      0x164 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_GainCompensation
-                0x000045d0      0x170 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x00004a8c      0x170 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_SetDSMRef0Reg
-                0x00004740       0x7c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x00004bfc       0x7c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_ISR1
-                0x000047bc        0xc .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
-                0x000047bc                ADC_DelSig_1_ISR1
+                0x00004c78        0xc .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
+                0x00004c78                ADC_DelSig_1_ISR1
  .text.UART_1_Start
-                0x000047c8       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
-                0x000047c8                UART_1_Start
+                0x00004c84       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+                0x00004c84                UART_1_Start
  .text.UART_1_Init
-                0x000047ec       0x40 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
-                0x000047ec                UART_1_Init
+                0x00004ca8       0x40 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+                0x00004ca8                UART_1_Init
  .text.UART_1_Enable
-                0x0000482c       0x60 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
-                0x0000482c                UART_1_Enable
+                0x00004ce8       0x60 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+                0x00004ce8                UART_1_Enable
  .text.UART_1_GetChar
-                0x0000488c       0x44 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
-                0x0000488c                UART_1_GetChar
+                0x00004d48       0x44 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+                0x00004d48                UART_1_GetChar
  .text.UART_1_PutChar
-                0x000048d0       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
-                0x000048d0                UART_1_PutChar
+                0x00004d8c       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+                0x00004d8c                UART_1_PutChar
  .text.UART_1_PutString
-                0x00004904       0x44 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
-                0x00004904                UART_1_PutString
+                0x00004dc0       0x44 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+                0x00004dc0                UART_1_PutString
  .text.ADC_DelSig_1_AMux_Start
-                0x00004948       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
-                0x00004948                ADC_DelSig_1_AMux_Start
+                0x00004e04       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
+                0x00004e04                ADC_DelSig_1_AMux_Start
  .text.ADC_DelSig_1_AMux_Select
-                0x0000497c       0x28 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
-                0x0000497c                ADC_DelSig_1_AMux_Select
+                0x00004e38       0x28 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
+                0x00004e38                ADC_DelSig_1_AMux_Select
  .text.ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister
-                0x000049a4      0x164 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
-                0x000049a4                ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister
+                0x00004e60      0x164 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x00004e60                ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister
  .text.ADC_DelSig_1_Ext_CP_Clk_GetDividerRegister
-                0x00004b08       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
-                0x00004b08                ADC_DelSig_1_Ext_CP_Clk_GetDividerRegister
+                0x00004fc4       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x00004fc4                ADC_DelSig_1_Ext_CP_Clk_GetDividerRegister
  .text.ADC_DelSig_1_Ext_CP_Clk_SetModeRegister
-                0x00004b20       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
-                0x00004b20                ADC_DelSig_1_Ext_CP_Clk_SetModeRegister
+                0x00004fdc       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x00004fdc                ADC_DelSig_1_Ext_CP_Clk_SetModeRegister
  .text.ADC_DelSig_1_Ext_CP_Clk_GetSourceRegister
-                0x00004b54       0x1c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
-                0x00004b54                ADC_DelSig_1_Ext_CP_Clk_GetSourceRegister
+                0x00005010       0x1c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x00005010                ADC_DelSig_1_Ext_CP_Clk_GetSourceRegister
  .text.ADC_DelSig_1_theACLK_SetDividerRegister
-                0x00004b70      0x164 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
-                0x00004b70                ADC_DelSig_1_theACLK_SetDividerRegister
+                0x0000502c      0x164 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
+                0x0000502c                ADC_DelSig_1_theACLK_SetDividerRegister
  .text.ADC_DelSig_1_theACLK_GetDividerRegister
-                0x00004cd4       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
-                0x00004cd4                ADC_DelSig_1_theACLK_GetDividerRegister
+                0x00005190       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
+                0x00005190                ADC_DelSig_1_theACLK_GetDividerRegister
  .text.ADC_DelSig_1_theACLK_SetModeRegister
-                0x00004cec       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
-                0x00004cec                ADC_DelSig_1_theACLK_SetModeRegister
+                0x000051a8       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
+                0x000051a8                ADC_DelSig_1_theACLK_SetModeRegister
  .text.ADC_DelSig_1_theACLK_GetSourceRegister
-                0x00004d20       0x1c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
-                0x00004d20                ADC_DelSig_1_theACLK_GetSourceRegister
+                0x000051dc       0x1c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
+                0x000051dc                ADC_DelSig_1_theACLK_GetSourceRegister
  .text.UART_1_IntClock_Start
-                0x00004d3c       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
-                0x00004d3c                UART_1_IntClock_Start
- .text.CyHalt   0x00004d70       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
-                0x00004d70                CyHalt
+                0x000051f8       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
+                0x000051f8                UART_1_IntClock_Start
+ .text.CyHalt   0x0000522c       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
+                0x0000522c                CyHalt
  .text.CyDelayUs
-                0x00004d88       0x28 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
-                0x00004d88                CyDelayUs
+                0x00005244       0x28 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
+                0x00005244                CyDelayUs
  .text.CyIntSetVector
-                0x00004db0       0x50 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
-                0x00004db0                CyIntSetVector
+                0x0000526c       0x50 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
+                0x0000526c                CyIntSetVector
  .text.CyIntSetPriority
-                0x00004e00       0x48 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
-                0x00004e00                CyIntSetPriority
+                0x000052bc       0x48 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
+                0x000052bc                CyIntSetPriority
  .text.AMux_1_Start
-                0x00004e48       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
-                0x00004e48                AMux_1_Start
+                0x00005304       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
+                0x00005304                AMux_1_Start
  .text.AMux_1_FastSelect
-                0x00004e7c       0x38 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
-                0x00004e7c                AMux_1_FastSelect
+                0x00005338       0x38 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
+                0x00005338                AMux_1_FastSelect
  .text.isr_adc_StartEx
-                0x00004eb4       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
-                0x00004eb4                isr_adc_StartEx
+                0x00005370       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+                0x00005370                isr_adc_StartEx
  .text.isr_adc_SetVector
-                0x00004ed8       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
-                0x00004ed8                isr_adc_SetVector
+                0x00005394       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+                0x00005394                isr_adc_SetVector
  .text.isr_adc_SetPriority
-                0x00004efc       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
-                0x00004efc                isr_adc_SetPriority
+                0x000053b8       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+                0x000053b8                isr_adc_SetPriority
  .text.isr_adc_Enable
-                0x00004f20       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
-                0x00004f20                isr_adc_Enable
+                0x000053dc       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+                0x000053dc                isr_adc_Enable
  .text.isr_adc_Disable
-                0x00004f38       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
-                0x00004f38                isr_adc_Disable
+                0x000053f4       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+                0x000053f4                isr_adc_Disable
  .text.isr_adc_ClearPending
-                0x00004f50       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
-                0x00004f50                isr_adc_ClearPending
+                0x0000540c       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+                0x0000540c                isr_adc_ClearPending
  .text.UART_MOVI_Start
-                0x00004f68       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
-                0x00004f68                UART_MOVI_Start
+                0x00005424       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+                0x00005424                UART_MOVI_Start
  .text.UART_MOVI_Init
-                0x00004f8c       0x40 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
-                0x00004f8c                UART_MOVI_Init
+                0x00005448       0x40 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+                0x00005448                UART_MOVI_Init
  .text.UART_MOVI_Enable
-                0x00004fcc       0x5c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
-                0x00004fcc                UART_MOVI_Enable
+                0x00005488       0x5c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+                0x00005488                UART_MOVI_Enable
  .text.UART_MOVI_ClearRxBuffer
-                0x00005028       0x44 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
-                0x00005028                UART_MOVI_ClearRxBuffer
+                0x000054e4       0x44 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+                0x000054e4                UART_MOVI_ClearRxBuffer
  .text.UART_MOVI_PutChar
-                0x0000506c       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
-                0x0000506c                UART_MOVI_PutChar
+                0x00005528       0x34 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+                0x00005528                UART_MOVI_PutChar
  .text.UART_MOVI_ClearTxBuffer
-                0x000050a0       0x44 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
-                0x000050a0                UART_MOVI_ClearTxBuffer
+                0x0000555c       0x44 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+                0x0000555c                UART_MOVI_ClearTxBuffer
  .text.isr_rx_movi_StartEx
-                0x000050e4       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
-                0x000050e4                isr_rx_movi_StartEx
+                0x000055a0       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
+                0x000055a0                isr_rx_movi_StartEx
  .text.isr_rx_movi_SetVector
-                0x00005108       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
-                0x00005108                isr_rx_movi_SetVector
+                0x000055c4       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
+                0x000055c4                isr_rx_movi_SetVector
  .text.isr_rx_movi_SetPriority
-                0x0000512c       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
-                0x0000512c                isr_rx_movi_SetPriority
+                0x000055e8       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
+                0x000055e8                isr_rx_movi_SetPriority
  .text.isr_rx_movi_Enable
-                0x00005150       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
-                0x00005150                isr_rx_movi_Enable
+                0x0000560c       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
+                0x0000560c                isr_rx_movi_Enable
  .text.isr_rx_movi_Disable
-                0x00005168       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
-                0x00005168                isr_rx_movi_Disable
+                0x00005624       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
+                0x00005624                isr_rx_movi_Disable
  .text.Looptimer_Init
-                0x00005180       0xa0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
-                0x00005180                Looptimer_Init
+                0x0000563c       0xa0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+                0x0000563c                Looptimer_Init
  .text.Looptimer_Enable
-                0x00005220       0x48 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
-                0x00005220                Looptimer_Enable
+                0x000056dc       0x48 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+                0x000056dc                Looptimer_Enable
  .text.Looptimer_Start
-                0x00005268       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
-                0x00005268                Looptimer_Start
+                0x00005724       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+                0x00005724                Looptimer_Start
  .text.Looptimer_SetInterruptMode
-                0x0000528c       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
-                0x0000528c                Looptimer_SetInterruptMode
+                0x00005748       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+                0x00005748                Looptimer_SetInterruptMode
  .text.Looptimer_ReadStatusRegister
-                0x000052ac       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
-                0x000052ac                Looptimer_ReadStatusRegister
+                0x00005768       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+                0x00005768                Looptimer_ReadStatusRegister
  .text.Looptimer_WritePeriod
-                0x000052c4       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
-                0x000052c4                Looptimer_WritePeriod
+                0x00005780       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+                0x00005780                Looptimer_WritePeriod
  .text.Looptimer_WriteCounter
-                0x000052e8       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
-                0x000052e8                Looptimer_WriteCounter
+                0x000057a4       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+                0x000057a4                Looptimer_WriteCounter
  .text.isr_Looptimer_StartEx
-                0x00005308       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
-                0x00005308                isr_Looptimer_StartEx
+                0x000057c4       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
+                0x000057c4                isr_Looptimer_StartEx
  .text.isr_Looptimer_SetVector
-                0x0000532c       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
-                0x0000532c                isr_Looptimer_SetVector
+                0x000057e8       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
+                0x000057e8                isr_Looptimer_SetVector
  .text.isr_Looptimer_SetPriority
-                0x00005350       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
-                0x00005350                isr_Looptimer_SetPriority
+                0x0000580c       0x24 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
+                0x0000580c                isr_Looptimer_SetPriority
  .text.isr_Looptimer_Enable
-                0x00005374       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
-                0x00005374                isr_Looptimer_Enable
+                0x00005830       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
+                0x00005830                isr_Looptimer_Enable
  .text.isr_Looptimer_Disable
-                0x0000538c       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
-                0x0000538c                isr_Looptimer_Disable
- *fill*         0x000053a4        0x4 
- .text          0x000053a8       0x54 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyBootAsmGnu.o)
-                0x000053a8                CyDelayCycles
-                0x000053e6                CyEnterCriticalSection
-                0x000053ee                CyExitCriticalSection
- .text.asinf    0x000053fc       0xa4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_asin.o)
-                0x000053fc                asinf
- .text.atan2f   0x000054a0        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_atan2.o)
-                0x000054a0                atan2f
+                0x00005848       0x18 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
+                0x00005848                isr_Looptimer_Disable
+ .text          0x00005860       0x54 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyBootAsmGnu.o)
+                0x00005860                CyDelayCycles
+                0x0000589e                CyEnterCriticalSection
+                0x000058a6                CyExitCriticalSection
+ .text.asinf    0x000058b4       0xa4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_asin.o)
+                0x000058b4                asinf
+ .text.atan2f   0x00005958        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_atan2.o)
+                0x00005958                atan2f
  .text.__ieee754_asinf
-                0x000054a4      0x294 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_asin.o)
-                0x000054a4                __ieee754_asinf
+                0x0000595c      0x294 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_asin.o)
+                0x0000595c                __ieee754_asinf
  .text.__ieee754_atan2f
-                0x00005738      0x124 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_atan2.o)
-                0x00005738                __ieee754_atan2f
+                0x00005bf0      0x124 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_atan2.o)
+                0x00005bf0                __ieee754_atan2f
  .text.__ieee754_sqrtf
-                0x0000585c       0xa8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_sqrt.o)
-                0x0000585c                __ieee754_sqrtf
- .text.matherr  0x00005904        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_matherr.o)
-                0x00005904                matherr
- .text.nan      0x00005908        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_nan.o)
-                0x00005908                nan
- .text.atanf    0x00005914      0x22c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
-                0x00005914                atanf
- .text.fabsf    0x00005b40        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_fabs.o)
-                0x00005b40                fabsf
- .text          0x00005b48      0x370 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubdf3.o)
-                0x00005b48                __aeabi_drsub
-                0x00005b50                __aeabi_dsub
-                0x00005b50                __subdf3
-                0x00005b54                __aeabi_dadd
-                0x00005b54                __adddf3
-                0x00005dcc                __floatunsidf
-                0x00005dcc                __aeabi_ui2d
-                0x00005dec                __floatsidf
-                0x00005dec                __aeabi_i2d
-                0x00005e10                __aeabi_f2d
-                0x00005e10                __extendsfdf2
-                0x00005e4c                __floatundidf
-                0x00005e4c                __aeabi_ul2d
-                0x00005e5c                __floatdidf
-                0x00005e5c                __aeabi_l2d
- .text          0x00005eb8       0xa0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_truncdfsf2.o)
-                0x00005eb8                __truncdfsf2
-                0x00005eb8                __aeabi_d2f
- .text          0x00005f58      0x21c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubsf3.o)
-                0x00005f58                __aeabi_frsub
-                0x00005f60                __subsf3
-                0x00005f60                __aeabi_fsub
-                0x00005f64                __aeabi_fadd
-                0x00005f64                __addsf3
-                0x000060c4                __aeabi_ui2f
-                0x000060c4                __floatunsisf
-                0x000060cc                __aeabi_i2f
-                0x000060cc                __floatsisf
-                0x000060e8                __aeabi_ul2f
-                0x000060e8                __floatundisf
-                0x000060f8                __aeabi_l2f
-                0x000060f8                __floatdisf
- .text          0x00006174      0x2a0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_muldivsf3.o)
-                0x00006174                __mulsf3
-                0x00006174                __aeabi_fmul
-                0x000062dc                __aeabi_fdiv
-                0x000062dc                __divsf3
- .text          0x00006414       0xec c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_cmpsf2.o)
-                0x00006414                __gesf2
-                0x00006414                __gtsf2
-                0x0000641c                __lesf2
-                0x0000641c                __ltsf2
-                0x00006424                __nesf2
-                0x00006424                __eqsf2
-                0x00006424                __cmpsf2
-                0x00006484                __aeabi_cfrcmple
-                0x0000648c                __aeabi_cfcmpeq
-                0x0000648c                __aeabi_cfcmple
-                0x0000649c                __aeabi_fcmpeq
-                0x000064b0                __aeabi_fcmplt
-                0x000064c4                __aeabi_fcmple
-                0x000064d8                __aeabi_fcmpge
-                0x000064ec                __aeabi_fcmpgt
- .text          0x00006500       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_unordsf2.o)
-                0x00006500                __unordsf2
-                0x00006500                __aeabi_fcmpun
- .text          0x0000652c       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixsfsi.o)
-                0x0000652c                __aeabi_f2iz
-                0x0000652c                __fixsfsi
- .text          0x00006578       0x40 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixunssfsi.o)
-                0x00006578                __fixunssfsi
-                0x00006578                __aeabi_f2uiz
- .text.__errno  0x000065b8        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
-                0x000065b8                __errno
+                0x00005d14       0xa8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_sqrt.o)
+                0x00005d14                __ieee754_sqrtf
+ .text.matherr  0x00005dbc        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_matherr.o)
+                0x00005dbc                matherr
+ .text.nan      0x00005dc0        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_nan.o)
+                0x00005dc0                nan
+ .text.atanf    0x00005dcc      0x22c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
+                0x00005dcc                atanf
+ .text.fabsf    0x00005ff8        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_fabs.o)
+                0x00005ff8                fabsf
+ .text          0x00006000      0x370 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubdf3.o)
+                0x00006000                __aeabi_drsub
+                0x00006008                __aeabi_dsub
+                0x00006008                __subdf3
+                0x0000600c                __aeabi_dadd
+                0x0000600c                __adddf3
+                0x00006284                __floatunsidf
+                0x00006284                __aeabi_ui2d
+                0x000062a4                __floatsidf
+                0x000062a4                __aeabi_i2d
+                0x000062c8                __aeabi_f2d
+                0x000062c8                __extendsfdf2
+                0x00006304                __floatundidf
+                0x00006304                __aeabi_ul2d
+                0x00006314                __floatdidf
+                0x00006314                __aeabi_l2d
+ .text          0x00006370       0xa0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_truncdfsf2.o)
+                0x00006370                __truncdfsf2
+                0x00006370                __aeabi_d2f
+ .text          0x00006410      0x21c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubsf3.o)
+                0x00006410                __aeabi_frsub
+                0x00006418                __subsf3
+                0x00006418                __aeabi_fsub
+                0x0000641c                __aeabi_fadd
+                0x0000641c                __addsf3
+                0x0000657c                __aeabi_ui2f
+                0x0000657c                __floatunsisf
+                0x00006584                __aeabi_i2f
+                0x00006584                __floatsisf
+                0x000065a0                __aeabi_ul2f
+                0x000065a0                __floatundisf
+                0x000065b0                __aeabi_l2f
+                0x000065b0                __floatdisf
+ .text          0x0000662c      0x2a0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_muldivsf3.o)
+                0x0000662c                __mulsf3
+                0x0000662c                __aeabi_fmul
+                0x00006794                __aeabi_fdiv
+                0x00006794                __divsf3
+ .text          0x000068cc       0xec c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_cmpsf2.o)
+                0x000068cc                __gesf2
+                0x000068cc                __gtsf2
+                0x000068d4                __lesf2
+                0x000068d4                __ltsf2
+                0x000068dc                __nesf2
+                0x000068dc                __eqsf2
+                0x000068dc                __cmpsf2
+                0x0000693c                __aeabi_cfrcmple
+                0x00006944                __aeabi_cfcmpeq
+                0x00006944                __aeabi_cfcmple
+                0x00006954                __aeabi_fcmpeq
+                0x00006968                __aeabi_fcmplt
+                0x0000697c                __aeabi_fcmple
+                0x00006990                __aeabi_fcmpge
+                0x000069a4                __aeabi_fcmpgt
+ .text          0x000069b8       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_unordsf2.o)
+                0x000069b8                __unordsf2
+                0x000069b8                __aeabi_fcmpun
+ .text          0x000069e4       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixsfsi.o)
+                0x000069e4                __aeabi_f2iz
+                0x000069e4                __fixsfsi
+ .text          0x00006a30       0x40 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixunssfsi.o)
+                0x00006a30                __fixunssfsi
+                0x00006a30                __aeabi_f2uiz
+ .text.__errno  0x00006a70        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+                0x00006a70                __errno
  .text.__libc_init_array
-                0x000065c4       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
-                0x000065c4                __libc_init_array
- .text.memcpy   0x00006610       0x16 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy-stub.o)
-                0x00006610                memcpy
- .text.memset   0x00006626       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
-                0x00006626                memset
- *fill*         0x00006636        0x2 
- .text.sprintf  0x00006638       0x48 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sprintf.o)
-                0x00006638                siprintf
-                0x00006638                sprintf
+                0x00006a7c       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+                0x00006a7c                __libc_init_array
+ .text.memcpy   0x00006ac8       0x16 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy-stub.o)
+                0x00006ac8                memcpy
+ .text.memset   0x00006ade       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+                0x00006ade                memset
+ *fill*         0x00006aee        0x2 
+ .text.sprintf  0x00006af0       0x48 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sprintf.o)
+                0x00006af0                siprintf
+                0x00006af0                sprintf
  .text.__ssputs_r
-                0x00006680       0xb2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
-                0x00006680                __ssputs_r
- *fill*         0x00006732        0x2 
+                0x00006b38       0xb2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
+                0x00006b38                __ssputs_r
+ *fill*         0x00006bea        0x2 
  .text._svfprintf_r
-                0x00006734      0x1e8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
-                0x00006734                _svfiprintf_r
-                0x00006734                _svfprintf_r
+                0x00006bec      0x1e8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
+                0x00006bec                _svfiprintf_r
+                0x00006bec                _svfprintf_r
  .text._printf_common
-                0x0000691c       0xec c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
-                0x0000691c                _printf_common
+                0x00006dd4       0xec c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x00006dd4                _printf_common
  .text._printf_i
-                0x00006a08      0x24c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
-                0x00006a08                _printf_i
- .text.memchr   0x00006c54       0x1c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memchr-stub.o)
-                0x00006c54                memchr
- .text.memmove  0x00006c70       0x36 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memmove.o)
-                0x00006c70                memmove
- *fill*         0x00006ca6        0x2 
- .text._free_r  0x00006ca8       0x98 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-freer.o)
-                0x00006ca8                _free_r
+                0x00006ec0      0x24c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x00006ec0                _printf_i
+ .text.memchr   0x0000710c       0x1c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memchr-stub.o)
+                0x0000710c                memchr
+ .text.memmove  0x00007128       0x36 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memmove.o)
+                0x00007128                memmove
+ *fill*         0x0000715e        0x2 
+ .text._free_r  0x00007160       0x98 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-freer.o)
+                0x00007160                _free_r
  .text._malloc_r
-                0x00006d40       0xbc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
-                0x00006d40                _malloc_r
+                0x000071f8       0xbc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
+                0x000071f8                _malloc_r
  .text._realloc_r
-                0x00006dfc       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-reallocr.o)
-                0x00006dfc                _realloc_r
- .text._sbrk_r  0x00006e48       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sbrkr.o)
-                0x00006e48                _sbrk_r
+                0x000072b4       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-reallocr.o)
+                0x000072b4                _realloc_r
+ .text._sbrk_r  0x00007300       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sbrkr.o)
+                0x00007300                _sbrk_r
  .text.__malloc_lock
-                0x00006e68        0x2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mlock.o)
-                0x00006e68                __malloc_lock
+                0x00007320        0x2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mlock.o)
+                0x00007320                __malloc_lock
  .text.__malloc_unlock
-                0x00006e6a        0x2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mlock.o)
-                0x00006e6a                __malloc_unlock
+                0x00007322        0x2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mlock.o)
+                0x00007322                __malloc_unlock
  .text._malloc_usable_size_r
-                0x00006e6c       0x14 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-msizer.o)
-                0x00006e6c                _malloc_usable_size_r
+                0x00007324       0x14 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-msizer.o)
+                0x00007324                _malloc_usable_size_r
  *(.plt)
  *(.gnu.warning)
  *(.glue_7t)
- .glue_7t       0x00006e80        0x0 linker stubs
+ .glue_7t       0x00007338        0x0 linker stubs
  *(.glue_7)
- .glue_7        0x00006e80        0x0 linker stubs
+ .glue_7        0x00007338        0x0 linker stubs
  *(.vfp11_veneer)
- .vfp11_veneer  0x00006e80        0x0 linker stubs
+ .vfp11_veneer  0x00007338        0x0 linker stubs
  *(.bootloader)
  *(.ARM.extab* .gnu.linkonce.armextab.*)
  *(.gcc_except_table)
 
-.v4_bx          0x00006e80        0x0
- .v4_bx         0x00006e80        0x0 linker stubs
+.v4_bx          0x00007338        0x0
+ .v4_bx         0x00007338        0x0 linker stubs
 
-.iplt           0x00006e80        0x0
- .iplt          0x00006e80        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+.iplt           0x00007338        0x0
+ .iplt          0x00007338        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
 
-.eh_frame       0x00006e80        0x4
+.eh_frame       0x00007338        0x4
  *(.eh_frame)
- .eh_frame      0x00006e80        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
- .eh_frame      0x00006e80        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtend.o
+ .eh_frame      0x00007338        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+ .eh_frame      0x00007338        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtend.o
                 [!provide]                PROVIDE (__exidx_start, .)
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x00006e84                __exidx_end = .
+                0x0000733c                __exidx_end = .
 
-.rodata         0x00006e84      0x41c
+.rodata         0x0000733c      0x5cc
  *(.rodata .rodata.* .gnu.linkonce.r.*)
- .rodata        0x00006e84      0x332 .\ARM_GCC_541\Debug\main.o
- *fill*         0x000071b6        0x2 
- .rodata        0x000071b8       0x4a .\ARM_GCC_541\Debug\cyfitter_cfg.o
-                0x000071b8                AMux_1__addrTable
-                0x000071c8                AMux_1__maskTable
-                0x000071cc                ADC_DelSig_1_AMux__addrTable
-                0x000071d4                ADC_DelSig_1_AMux__maskTable
- *fill*         0x00007202        0x2 
+ .rodata        0x0000733c      0x4e5 .\ARM_GCC_541\Debug\main.o
+ *fill*         0x00007821        0x3 
+ .rodata        0x00007824       0x4a .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00007824                AMux_1__addrTable
+                0x00007834                AMux_1__maskTable
+                0x00007838                ADC_DelSig_1_AMux__addrTable
+                0x00007840                ADC_DelSig_1_AMux__maskTable
+ *fill*         0x0000786e        0x2 
  .rodata.str1.4
-                0x00007204        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_asin.o)
+                0x00007870        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_asin.o)
                                   0x9 (size before relaxing)
  .rodata.atanlo
-                0x00007210       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
+                0x0000787c       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
  .rodata.atanhi
-                0x00007220       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
+                0x0000788c       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
  .rodata.str1.1
-                0x00007230        0x2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+                0x0000789c        0x2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
  .rodata.str1.1
-                0x00007232       0x11 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
+                0x0000789e       0x11 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
  .rodata.str1.1
-                0x00007243       0x22 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
-                0x00007268                . = ALIGN (0x4)
- *fill*         0x00007265        0x3 
+                0x000078af       0x22 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x000078d4                . = ALIGN (0x4)
+ *fill*         0x000078d1        0x3 
  *(.init)
- .init          0x00007268        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crti.o
-                0x00007268                _init
- .init          0x0000726c        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtn.o
-                0x00007274                . = ALIGN (0x4)
-                0x00007274                __preinit_array_start = .
+ .init          0x000078d4        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crti.o
+                0x000078d4                _init
+ .init          0x000078d8        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtn.o
+                0x000078e0                . = ALIGN (0x4)
+                0x000078e0                __preinit_array_start = .
  *(.preinit_array)
-                0x00007274                __preinit_array_end = .
-                0x00007274                . = ALIGN (0x4)
-                0x00007274                __init_array_start = .
+                0x000078e0                __preinit_array_end = .
+                0x000078e0                . = ALIGN (0x4)
+                0x000078e0                __init_array_start = .
  *(SORT(.init_array.*))
  *(.init_array)
- .init_array    0x00007274        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
- .init_array    0x00007278        0x4 .\ARM_GCC_541\Debug\Cm3Start.o
-                0x0000727c                __init_array_end = .
-                0x0000727c                . = ALIGN (0x4)
+ .init_array    0x000078e0        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+ .init_array    0x000078e4        0x4 .\ARM_GCC_541\Debug\Cm3Start.o
+                0x000078e8                __init_array_end = .
+                0x000078e8                . = ALIGN (0x4)
  *(.fini)
- .fini          0x0000727c        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crti.o
-                0x0000727c                _fini
- .fini          0x00007280        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtn.o
-                0x00007288                . = ALIGN (0x4)
-                0x00007288                __fini_array_start = .
+ .fini          0x000078e8        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crti.o
+                0x000078e8                _fini
+ .fini          0x000078ec        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtn.o
+                0x000078f4                . = ALIGN (0x4)
+                0x000078f4                __fini_array_start = .
  *(.fini_array)
- .fini_array    0x00007288        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+ .fini_array    0x000078f4        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
  *(SORT(.fini_array.*))
-                0x0000728c                __fini_array_end = .
-                0x0000728c                . = ALIGN (0x4)
+                0x000078f8                __fini_array_end = .
+                0x000078f8                . = ALIGN (0x4)
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
-                0x0000728c                . = ALIGN (0x4)
+                0x000078f8                . = ALIGN (0x4)
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x0000728c                . = ALIGN (0x4)
-                0x0000728c                __cy_regions = .
-                0x0000728c        0x4 LONG 0x72a0 __cy_region_init_ram
-                0x00007290        0x4 LONG 0x1fff80c8 __cy_region_start_data
-                0x00007294        0x4 LONG 0xf8 __cy_region_init_size_ram
-                0x00007298        0x4 LONG 0x340 __cy_region_zero_size_ram
-                0x0000729c                __cy_regions_end = .
-                0x000072a0                . = ALIGN (0x8)
- *fill*         0x0000729c        0x4 
-                0x000072a0                _etext = .
+                0x000078f8                . = ALIGN (0x4)
+                0x000078f8                __cy_regions = .
+                0x000078f8        0x4 LONG 0x7908 __cy_region_init_ram
+                0x000078fc        0x4 LONG 0x1fff80c8 __cy_region_start_data
+                0x00007900        0x4 LONG 0xf8 __cy_region_init_size_ram
+                0x00007904        0x4 LONG 0x330 __cy_region_zero_size_ram
+                0x00007908                __cy_regions_end = .
+                0x00007908                . = ALIGN (0x8)
+                0x00007908                _etext = .
 
 .cy_checksum_exclude
-                0x000072a0        0x0
+                0x00007908        0x0
  *(.cy_checksum_exclude)
 
 .ramvectors     0x1fff8000       0xc0
@@ -1703,7 +1707,7 @@ END GROUP
  .noinit        0x1fff80c4        0x1 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
                 0x1fff80c4                CyResetStatus
 
-.data           0x1fff80c8       0xf8 load address 0x000072a0
+.data           0x1fff80c8       0xf8 load address 0x00007908
                 0x1fff80c8                __cy_region_start_data = .
  *(.jcr)
  .jcr           0x1fff80c8        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
@@ -1738,76 +1742,76 @@ END GROUP
  *(.ram)
                 0x1fff81c0                _edata = .
 
-.igot.plt       0x1fff81c0        0x0 load address 0x00007398
+.igot.plt       0x1fff81c0        0x0 load address 0x00007a00
  .igot.plt      0x1fff81c0        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
 
-.bss            0x1fff81c0      0x340 load address 0x00007398
+.bss            0x1fff81c0      0x330 load address 0x00007a00
                 0x1fff81c0                PROVIDE (__bss_start__, .)
  *(.shbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
  .bss           0x1fff81c0       0x1c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
- .bss           0x1fff81dc      0x178 .\ARM_GCC_541\Debug\main.o
-                0x1fff8340                g_tick_ms
-                0x1fff8344                last_diag_ms
- .bss           0x1fff8354        0x8 .\ARM_GCC_541\Debug\adc_balanced.o
- .bss           0x1fff835c       0x42 .\ARM_GCC_541\Debug\joystick.o
- *fill*         0x1fff839e        0x2 
- .bss           0x1fff83a0        0x8 .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x1fff83a0                QX_BuildHeader_Legacy
-                0x1fff83a4                QX_ParseHeader_Legacy
- .bss           0x1fff83a8        0xc .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
-                0x1fff83a8                ADC_DelSig_1_convDone
-                0x1fff83a9                ADC_DelSig_1_stopConversion
-                0x1fff83aa                ADC_DelSig_1_initVar
-                0x1fff83ab                ADC_DelSig_1_started
-                0x1fff83ac                ADC_DelSig_1_Offset
- .bss           0x1fff83b4        0x2 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
-                0x1fff83b4                UART_1_initVar
- .bss           0x1fff83b6        0x2 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
-                0x1fff83b6                UART_MOVI_initVar
- .bss           0x1fff83b8        0x1 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
-                0x1fff83b8                Looptimer_initVar
- *fill*         0x1fff83b9        0x3 
+ .bss           0x1fff81dc      0x168 .\ARM_GCC_541\Debug\main.o
+                0x1fff8338                g_tick_ms
+                0x1fff833c                last_diag_ms
+ .bss           0x1fff8344        0x8 .\ARM_GCC_541\Debug\adc_balanced.o
+ .bss           0x1fff834c       0x42 .\ARM_GCC_541\Debug\joystick.o
+ *fill*         0x1fff838e        0x2 
+ .bss           0x1fff8390        0x8 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x1fff8390                QX_BuildHeader_Legacy
+                0x1fff8394                QX_ParseHeader_Legacy
+ .bss           0x1fff8398        0xc .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x1fff8398                ADC_DelSig_1_convDone
+                0x1fff8399                ADC_DelSig_1_stopConversion
+                0x1fff839a                ADC_DelSig_1_initVar
+                0x1fff839b                ADC_DelSig_1_started
+                0x1fff839c                ADC_DelSig_1_Offset
+ .bss           0x1fff83a4        0x2 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+                0x1fff83a4                UART_1_initVar
+ .bss           0x1fff83a6        0x2 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+                0x1fff83a6                UART_MOVI_initVar
+ .bss           0x1fff83a8        0x1 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+                0x1fff83a8                Looptimer_initVar
+ *fill*         0x1fff83a9        0x3 
  .bss.__malloc_sbrk_start
-                0x1fff83bc        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
-                0x1fff83bc                __malloc_sbrk_start
+                0x1fff83ac        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
+                0x1fff83ac                __malloc_sbrk_start
  .bss.__malloc_free_list
-                0x1fff83c0        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
-                0x1fff83c0                __malloc_free_list
+                0x1fff83b0        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
+                0x1fff83b0                __malloc_free_list
  *(COMMON)
- COMMON         0x1fff83c4        0xc .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
-                0x1fff83c4                rw
-                0x1fff83c6                get_uint16_t
-                0x1fff83c8                rw_orig
-                0x1fff83cc                msgPtr
- COMMON         0x1fff83d0       0x9c .\ARM_GCC_541\Debug\QX_Protocol.o
-                0x1fff83d0                QX_Clients
-                0x1fff83d8                QX_CommsPorts
-                0x1fff8464                QX_Servers
- COMMON         0x1fff846c       0x88 .\ARM_GCC_541\Debug\simple_buffer.o
-                0x1fff846c                tail
-                0x1fff8470                head
-                0x1fff8474                Buf
- COMMON         0x1fff84f4        0x4 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
-                0x1fff84f4                ADC_DelSig_1_CountsPerVolt
- COMMON         0x1fff84f8        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
-                0x1fff84f8                errno
-                0x1fff8500                . = ALIGN (0x8)
- *fill*         0x1fff84fc        0x4 
+ COMMON         0x1fff83b4        0xc .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x1fff83b4                rw
+                0x1fff83b6                get_uint16_t
+                0x1fff83b8                rw_orig
+                0x1fff83bc                msgPtr
+ COMMON         0x1fff83c0       0x9c .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x1fff83c0                QX_Clients
+                0x1fff83c8                QX_CommsPorts
+                0x1fff8454                QX_Servers
+ COMMON         0x1fff845c       0x88 .\ARM_GCC_541\Debug\simple_buffer.o
+                0x1fff845c                tail
+                0x1fff8460                head
+                0x1fff8464                Buf
+ COMMON         0x1fff84e4        0x4 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x1fff84e4                ADC_DelSig_1_CountsPerVolt
+ COMMON         0x1fff84e8        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
+                0x1fff84e8                errno
+                0x1fff84f0                . = ALIGN (0x8)
+ *fill*         0x1fff84ec        0x4 
  *(.ram.b)
-                0x1fff8500                _end = .
-                0x1fff8500                __end = .
-                0x1fff8500                PROVIDE (end, .)
-                0x1fff8500                PROVIDE (__bss_end__, .)
-                0x000072a0                __cy_region_init_ram = LOADADDR (.data)
+                0x1fff84f0                _end = .
+                0x1fff84f0                __end = .
+                0x1fff84f0                PROVIDE (end, .)
+                0x1fff84f0                PROVIDE (__bss_end__, .)
+                0x00007908                __cy_region_init_ram = LOADADDR (.data)
                 0x000000f8                __cy_region_init_size_ram = (_edata - ADDR (.data))
-                0x00000340                __cy_region_zero_size_ram = (_end - _edata)
+                0x00000330                __cy_region_zero_size_ram = (_end - _edata)
 
-.heap           0x1fff8500       0x80 load address 0x00007398
-                0x1fff8500                . = _end
-                0x1fff8580                . = (. + 0x80)
- *fill*         0x1fff8500       0x80 
-                0x1fff8580                __cy_heap_limit = .
+.heap           0x1fff84f0       0x80 load address 0x00007a00
+                0x1fff84f0                . = _end
+                0x1fff8570                . = (. + 0x80)
+ *fill*         0x1fff84f0       0x80 
+                0x1fff8570                __cy_heap_limit = .
 
 .stack          0x20007800      0x800
                 0x20007800                __cy_stack_limit = .
@@ -1854,8 +1858,8 @@ END GROUP
  .cymeta        0x90500000        0xc .\ARM_GCC_541\Debug\cymetadata.o
                 0x90500000                cy_metadata
 
-.rel.dyn        0x00007398        0x0 load address 0x9050000c
- .rel.iplt      0x00007398        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+.rel.dyn        0x00007a00        0x0 load address 0x9050000c
+ .rel.iplt      0x00007a00        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
 
 .stab
  *(.stab)
@@ -1875,287 +1879,287 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000     0x10b8
+.debug_aranges  0x00000000     0x10d8
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x40 .\ARM_GCC_541\Debug\main.o
+                0x00000000       0x60 .\ARM_GCC_541\Debug\main.o
  .debug_aranges
-                0x00000040       0x50 .\ARM_GCC_541\Debug\adc_balanced.o
+                0x00000060       0x50 .\ARM_GCC_541\Debug\adc_balanced.o
  .debug_aranges
-                0x00000090       0x98 .\ARM_GCC_541\Debug\joystick.o
+                0x000000b0       0x98 .\ARM_GCC_541\Debug\joystick.o
  .debug_aranges
-                0x00000128       0x48 .\ARM_GCC_541\Debug\movi_rb.o
+                0x00000148       0x48 .\ARM_GCC_541\Debug\movi_rb.o
  .debug_aranges
-                0x00000170       0x90 .\ARM_GCC_541\Debug\movi_comm.o
+                0x00000190       0x90 .\ARM_GCC_541\Debug\movi_comm.o
  .debug_aranges
-                0x00000200      0x160 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+                0x00000220      0x160 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
  .debug_aranges
-                0x00000360       0xe0 .\ARM_GCC_541\Debug\QX_Protocol.o
+                0x00000380       0xe0 .\ARM_GCC_541\Debug\QX_Protocol.o
  .debug_aranges
-                0x00000440       0x48 .\ARM_GCC_541\Debug\QX_Protocol_App.o
+                0x00000460       0x48 .\ARM_GCC_541\Debug\QX_Protocol_App.o
  .debug_aranges
-                0x00000488       0x28 .\ARM_GCC_541\Debug\simple_buffer.o
+                0x000004a8       0x28 .\ARM_GCC_541\Debug\simple_buffer.o
  .debug_aranges
-                0x000004b0       0x80 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x000004d0       0x80 .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .debug_aranges
-                0x00000530       0x18 .\ARM_GCC_541\Debug\cymetadata.o
+                0x00000550       0x18 .\ARM_GCC_541\Debug\cymetadata.o
  .debug_aranges
-                0x00000548       0x48 .\ARM_GCC_541\Debug\Cm3Start.o
+                0x00000568       0x48 .\ARM_GCC_541\Debug\Cm3Start.o
  .debug_aranges
-                0x00000590       0xe8 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+                0x000005b0       0xe8 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
  .debug_aranges
-                0x00000678       0x38 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
+                0x00000698       0x38 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
  .debug_aranges
-                0x000006b0       0xf0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+                0x000006d0       0xf0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
  .debug_aranges
-                0x000007a0       0x30 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
+                0x000007c0       0x30 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
  .debug_aranges
-                0x000007d0       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x000007f0       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
  .debug_aranges
-                0x00000840       0x80 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
+                0x00000860       0x80 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
  .debug_aranges
-                0x000008c0       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
+                0x000008e0       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
  .debug_aranges
-                0x00000930      0x2a0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
+                0x00000950      0x2a0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
  .debug_aranges
-                0x00000bd0       0x98 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
+                0x00000bf0       0x98 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
  .debug_aranges
-                0x00000c68       0x30 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
+                0x00000c88       0x30 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
  .debug_aranges
-                0x00000c98       0x80 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+                0x00000cb8       0x80 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
  .debug_aranges
-                0x00000d18       0xf0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+                0x00000d38       0xf0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
  .debug_aranges
-                0x00000e08       0x80 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
+                0x00000e28       0x80 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
  .debug_aranges
-                0x00000e88       0x88 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+                0x00000ea8       0x88 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
  .debug_aranges
-                0x00000f10       0x80 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
+                0x00000f30       0x80 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
  .debug_aranges
-                0x00000f90       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyBootAsmGnu.o)
+                0x00000fb0       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyBootAsmGnu.o)
  .debug_aranges
-                0x00000fb0       0x88 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
+                0x00000fd0       0x88 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
  .debug_aranges
-                0x00001038       0x80 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
+                0x00001058       0x80 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x9130
+.debug_info     0x00000000     0x938d
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0x8d9 .\ARM_GCC_541\Debug\main.o
- .debug_info    0x000008d9      0x242 .\ARM_GCC_541\Debug\adc_balanced.o
- .debug_info    0x00000b1b      0x5ec .\ARM_GCC_541\Debug\joystick.o
- .debug_info    0x00001107      0x23c .\ARM_GCC_541\Debug\movi_rb.o
- .debug_info    0x00001343      0xc7c .\ARM_GCC_541\Debug\movi_comm.o
- .debug_info    0x00001fbf      0xf3e .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
- .debug_info    0x00002efd      0xd30 .\ARM_GCC_541\Debug\QX_Protocol.o
- .debug_info    0x00003c2d      0x8bb .\ARM_GCC_541\Debug\QX_Protocol_App.o
- .debug_info    0x000044e8      0x196 .\ARM_GCC_541\Debug\simple_buffer.o
- .debug_info    0x0000467e      0x4e2 .\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_info    0x00004b60      0x138 .\ARM_GCC_541\Debug\cymetadata.o
- .debug_info    0x00004c98      0x32b .\ARM_GCC_541\Debug\Cm3Start.o
- .debug_info    0x00004fc3      0x72c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
- .debug_info    0x000056ef       0xd3 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
- .debug_info    0x000057c2      0x50a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
- .debug_info    0x00005ccc      0x10a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
- .debug_info    0x00005dd6      0x25d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_info    0x00006033      0x299 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
- .debug_info    0x000062cc      0x25d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
- .debug_info    0x00006529      0xe51 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
- .debug_info    0x0000737a      0x57a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
- .debug_info    0x000078f4       0xf7 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
- .debug_info    0x000079eb      0x241 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
- .debug_info    0x00007c2c      0x50a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
- .debug_info    0x00008136      0x241 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
- .debug_info    0x00008377      0x245 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
- .debug_info    0x000085bc      0x241 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
- .debug_info    0x000087fd       0xba .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyBootAsmGnu.o)
- .debug_info    0x000088b7      0x3b9 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
- .debug_info    0x00008c70      0x4c0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
+ .debug_info    0x00000000      0xb36 .\ARM_GCC_541\Debug\main.o
+ .debug_info    0x00000b36      0x242 .\ARM_GCC_541\Debug\adc_balanced.o
+ .debug_info    0x00000d78      0x5ec .\ARM_GCC_541\Debug\joystick.o
+ .debug_info    0x00001364      0x23c .\ARM_GCC_541\Debug\movi_rb.o
+ .debug_info    0x000015a0      0xc7c .\ARM_GCC_541\Debug\movi_comm.o
+ .debug_info    0x0000221c      0xf3e .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+ .debug_info    0x0000315a      0xd30 .\ARM_GCC_541\Debug\QX_Protocol.o
+ .debug_info    0x00003e8a      0x8bb .\ARM_GCC_541\Debug\QX_Protocol_App.o
+ .debug_info    0x00004745      0x196 .\ARM_GCC_541\Debug\simple_buffer.o
+ .debug_info    0x000048db      0x4e2 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_info    0x00004dbd      0x138 .\ARM_GCC_541\Debug\cymetadata.o
+ .debug_info    0x00004ef5      0x32b .\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_info    0x00005220      0x72c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+ .debug_info    0x0000594c       0xd3 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
+ .debug_info    0x00005a1f      0x50a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+ .debug_info    0x00005f29      0x10a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
+ .debug_info    0x00006033      0x25d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_info    0x00006290      0x299 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
+ .debug_info    0x00006529      0x25d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
+ .debug_info    0x00006786      0xe51 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
+ .debug_info    0x000075d7      0x57a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
+ .debug_info    0x00007b51       0xf7 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
+ .debug_info    0x00007c48      0x241 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+ .debug_info    0x00007e89      0x50a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+ .debug_info    0x00008393      0x241 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
+ .debug_info    0x000085d4      0x245 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+ .debug_info    0x00008819      0x241 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
+ .debug_info    0x00008a5a       0xba .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyBootAsmGnu.o)
+ .debug_info    0x00008b14      0x3b9 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
+ .debug_info    0x00008ecd      0x4c0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
 
-.debug_abbrev   0x00000000     0x26a9
+.debug_abbrev   0x00000000     0x269b
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x212 .\ARM_GCC_541\Debug\main.o
- .debug_abbrev  0x00000212      0x143 .\ARM_GCC_541\Debug\adc_balanced.o
- .debug_abbrev  0x00000355      0x1df .\ARM_GCC_541\Debug\joystick.o
- .debug_abbrev  0x00000534      0x124 .\ARM_GCC_541\Debug\movi_rb.o
- .debug_abbrev  0x00000658      0x1cd .\ARM_GCC_541\Debug\movi_comm.o
- .debug_abbrev  0x00000825      0x1a7 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
- .debug_abbrev  0x000009cc      0x1d0 .\ARM_GCC_541\Debug\QX_Protocol.o
- .debug_abbrev  0x00000b9c      0x1d8 .\ARM_GCC_541\Debug\QX_Protocol_App.o
- .debug_abbrev  0x00000d74       0xc4 .\ARM_GCC_541\Debug\simple_buffer.o
- .debug_abbrev  0x00000e38      0x1b0 .\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_abbrev  0x00000fe8       0x77 .\ARM_GCC_541\Debug\cymetadata.o
- .debug_abbrev  0x0000105f      0x1d6 .\ARM_GCC_541\Debug\Cm3Start.o
- .debug_abbrev  0x00001235      0x19d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
- .debug_abbrev  0x000013d2       0x42 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
- .debug_abbrev  0x00001414      0x163 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
- .debug_abbrev  0x00001577       0x6f .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
- .debug_abbrev  0x000015e6      0x11d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_abbrev  0x00001703      0x11d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
- .debug_abbrev  0x00001820      0x11d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
- .debug_abbrev  0x0000193d      0x217 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
- .debug_abbrev  0x00001b54      0x161 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
- .debug_abbrev  0x00001cb5       0x87 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
- .debug_abbrev  0x00001d3c      0x172 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
- .debug_abbrev  0x00001eae      0x163 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
- .debug_abbrev  0x00002011      0x172 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
- .debug_abbrev  0x00002183       0xe9 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
- .debug_abbrev  0x0000226c      0x172 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
- .debug_abbrev  0x000023de       0x14 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyBootAsmGnu.o)
- .debug_abbrev  0x000023f2      0x14b .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
- .debug_abbrev  0x0000253d      0x16c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
+ .debug_abbrev  0x00000000      0x204 .\ARM_GCC_541\Debug\main.o
+ .debug_abbrev  0x00000204      0x143 .\ARM_GCC_541\Debug\adc_balanced.o
+ .debug_abbrev  0x00000347      0x1df .\ARM_GCC_541\Debug\joystick.o
+ .debug_abbrev  0x00000526      0x124 .\ARM_GCC_541\Debug\movi_rb.o
+ .debug_abbrev  0x0000064a      0x1cd .\ARM_GCC_541\Debug\movi_comm.o
+ .debug_abbrev  0x00000817      0x1a7 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+ .debug_abbrev  0x000009be      0x1d0 .\ARM_GCC_541\Debug\QX_Protocol.o
+ .debug_abbrev  0x00000b8e      0x1d8 .\ARM_GCC_541\Debug\QX_Protocol_App.o
+ .debug_abbrev  0x00000d66       0xc4 .\ARM_GCC_541\Debug\simple_buffer.o
+ .debug_abbrev  0x00000e2a      0x1b0 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_abbrev  0x00000fda       0x77 .\ARM_GCC_541\Debug\cymetadata.o
+ .debug_abbrev  0x00001051      0x1d6 .\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_abbrev  0x00001227      0x19d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+ .debug_abbrev  0x000013c4       0x42 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
+ .debug_abbrev  0x00001406      0x163 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+ .debug_abbrev  0x00001569       0x6f .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
+ .debug_abbrev  0x000015d8      0x11d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_abbrev  0x000016f5      0x11d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
+ .debug_abbrev  0x00001812      0x11d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
+ .debug_abbrev  0x0000192f      0x217 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
+ .debug_abbrev  0x00001b46      0x161 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
+ .debug_abbrev  0x00001ca7       0x87 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
+ .debug_abbrev  0x00001d2e      0x172 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+ .debug_abbrev  0x00001ea0      0x163 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+ .debug_abbrev  0x00002003      0x172 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
+ .debug_abbrev  0x00002175       0xe9 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+ .debug_abbrev  0x0000225e      0x172 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
+ .debug_abbrev  0x000023d0       0x14 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyBootAsmGnu.o)
+ .debug_abbrev  0x000023e4      0x14b .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
+ .debug_abbrev  0x0000252f      0x16c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
 
-.debug_line     0x00000000     0x4ce6
+.debug_line     0x00000000     0x4e66
  *(.debug_line)
- .debug_line    0x00000000      0x2ef .\ARM_GCC_541\Debug\main.o
- .debug_line    0x000002ef      0x224 .\ARM_GCC_541\Debug\adc_balanced.o
- .debug_line    0x00000513      0x3d2 .\ARM_GCC_541\Debug\joystick.o
- .debug_line    0x000008e5      0x1c8 .\ARM_GCC_541\Debug\movi_rb.o
- .debug_line    0x00000aad      0x364 .\ARM_GCC_541\Debug\movi_comm.o
- .debug_line    0x00000e11      0x815 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
- .debug_line    0x00001626      0x50c .\ARM_GCC_541\Debug\QX_Protocol.o
- .debug_line    0x00001b32      0x46b .\ARM_GCC_541\Debug\QX_Protocol_App.o
- .debug_line    0x00001f9d      0x15c .\ARM_GCC_541\Debug\simple_buffer.o
- .debug_line    0x000020f9      0x250 .\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_line    0x00002349      0x141 .\ARM_GCC_541\Debug\cymetadata.o
- .debug_line    0x0000248a      0x1dc .\ARM_GCC_541\Debug\Cm3Start.o
- .debug_line    0x00002666      0x365 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
- .debug_line    0x000029cb       0x95 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
- .debug_line    0x00002a60      0x2e4 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
- .debug_line    0x00002d44       0xa6 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
- .debug_line    0x00002dea      0x1b6 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_line    0x00002fa0      0x1d7 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
- .debug_line    0x00003177      0x1ae .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
- .debug_line    0x00003325      0x883 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
- .debug_line    0x00003ba8      0x38e .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
- .debug_line    0x00003f36       0x9b .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
- .debug_line    0x00003fd1      0x142 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
- .debug_line    0x00004113      0x2e7 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
- .debug_line    0x000043fa      0x156 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
- .debug_line    0x00004550      0x161 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
- .debug_line    0x000046b1      0x158 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
- .debug_line    0x00004809       0x7d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyBootAsmGnu.o)
- .debug_line    0x00004886      0x22f .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
- .debug_line    0x00004ab5      0x231 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
+ .debug_line    0x00000000      0x46f .\ARM_GCC_541\Debug\main.o
+ .debug_line    0x0000046f      0x224 .\ARM_GCC_541\Debug\adc_balanced.o
+ .debug_line    0x00000693      0x3d2 .\ARM_GCC_541\Debug\joystick.o
+ .debug_line    0x00000a65      0x1c8 .\ARM_GCC_541\Debug\movi_rb.o
+ .debug_line    0x00000c2d      0x364 .\ARM_GCC_541\Debug\movi_comm.o
+ .debug_line    0x00000f91      0x815 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+ .debug_line    0x000017a6      0x50c .\ARM_GCC_541\Debug\QX_Protocol.o
+ .debug_line    0x00001cb2      0x46b .\ARM_GCC_541\Debug\QX_Protocol_App.o
+ .debug_line    0x0000211d      0x15c .\ARM_GCC_541\Debug\simple_buffer.o
+ .debug_line    0x00002279      0x250 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_line    0x000024c9      0x141 .\ARM_GCC_541\Debug\cymetadata.o
+ .debug_line    0x0000260a      0x1dc .\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_line    0x000027e6      0x365 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+ .debug_line    0x00002b4b       0x95 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
+ .debug_line    0x00002be0      0x2e4 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+ .debug_line    0x00002ec4       0xa6 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
+ .debug_line    0x00002f6a      0x1b6 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_line    0x00003120      0x1d7 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
+ .debug_line    0x000032f7      0x1ae .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
+ .debug_line    0x000034a5      0x883 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
+ .debug_line    0x00003d28      0x38e .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
+ .debug_line    0x000040b6       0x9b .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
+ .debug_line    0x00004151      0x142 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+ .debug_line    0x00004293      0x2e7 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+ .debug_line    0x0000457a      0x156 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
+ .debug_line    0x000046d0      0x161 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+ .debug_line    0x00004831      0x158 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
+ .debug_line    0x00004989       0x7d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyBootAsmGnu.o)
+ .debug_line    0x00004a06      0x22f .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
+ .debug_line    0x00004c35      0x231 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
 
-.debug_frame    0x00000000     0x4a4c
+.debug_frame    0x00000000     0x4af8
  *(.debug_frame)
- .debug_frame   0x00000000       0xd0 .\ARM_GCC_541\Debug\main.o
- .debug_frame   0x000000d0      0x114 .\ARM_GCC_541\Debug\adc_balanced.o
- .debug_frame   0x000001e4      0x298 .\ARM_GCC_541\Debug\joystick.o
- .debug_frame   0x0000047c      0x100 .\ARM_GCC_541\Debug\movi_rb.o
- .debug_frame   0x0000057c      0x298 .\ARM_GCC_541\Debug\movi_comm.o
- .debug_frame   0x00000814      0x680 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
- .debug_frame   0x00000e94      0x448 .\ARM_GCC_541\Debug\QX_Protocol.o
- .debug_frame   0x000012dc       0xf0 .\ARM_GCC_541\Debug\QX_Protocol_App.o
- .debug_frame   0x000013cc       0x60 .\ARM_GCC_541\Debug\simple_buffer.o
- .debug_frame   0x0000142c      0x20c .\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_frame   0x00001638       0xd8 .\ARM_GCC_541\Debug\Cm3Start.o
- .debug_frame   0x00001710      0x40c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
- .debug_frame   0x00001b1c       0xa0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
- .debug_frame   0x00001bbc      0x42c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
- .debug_frame   0x00001fe8       0x88 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
- .debug_frame   0x00002070      0x1b4 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_frame   0x00002224      0x200 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
- .debug_frame   0x00002424      0x1b4 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
- .debug_frame   0x000025d8      0xc0c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
- .debug_frame   0x000031e4      0x234 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
- .debug_frame   0x00003418       0x7c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
- .debug_frame   0x00003494      0x1e8 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
- .debug_frame   0x0000367c      0x42c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
- .debug_frame   0x00003aa8      0x1e8 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
- .debug_frame   0x00003c90      0x208 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
- .debug_frame   0x00003e98      0x1e8 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
- .debug_frame   0x00004080      0x238 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
- .debug_frame   0x000042b8      0x228 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
- .debug_frame   0x000044e0       0x3c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_asin.o)
- .debug_frame   0x0000451c       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_atan2.o)
- .debug_frame   0x0000453c       0x34 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_asin.o)
- .debug_frame   0x00004570       0x3c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_atan2.o)
- .debug_frame   0x000045ac       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_sqrt.o)
- .debug_frame   0x000045d8       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_matherr.o)
- .debug_frame   0x000045f8       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_nan.o)
- .debug_frame   0x00004618       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
- .debug_frame   0x00004648       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_fabs.o)
- .debug_frame   0x00004668       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
- .debug_frame   0x00004688       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
- .debug_frame   0x000046b0       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
- .debug_frame   0x000046dc       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x00004704       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
- .debug_frame   0x00004724       0x70 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sprintf.o)
- .debug_frame   0x00004794       0x90 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
- .debug_frame   0x00004824       0x60 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
- .debug_frame   0x00004884       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memchr-stub.o)
- .debug_frame   0x000048ac       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memmove.o)
- .debug_frame   0x000048d4       0x38 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x0000490c       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x00004938       0x3c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-reallocr.o)
- .debug_frame   0x00004974       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sbrkr.o)
- .debug_frame   0x000049a0       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mlock.o)
- .debug_frame   0x000049d0       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-msizer.o)
- .debug_frame   0x000049f0       0x5c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
+ .debug_frame   0x00000000      0x17c .\ARM_GCC_541\Debug\main.o
+ .debug_frame   0x0000017c      0x114 .\ARM_GCC_541\Debug\adc_balanced.o
+ .debug_frame   0x00000290      0x298 .\ARM_GCC_541\Debug\joystick.o
+ .debug_frame   0x00000528      0x100 .\ARM_GCC_541\Debug\movi_rb.o
+ .debug_frame   0x00000628      0x298 .\ARM_GCC_541\Debug\movi_comm.o
+ .debug_frame   0x000008c0      0x680 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+ .debug_frame   0x00000f40      0x448 .\ARM_GCC_541\Debug\QX_Protocol.o
+ .debug_frame   0x00001388       0xf0 .\ARM_GCC_541\Debug\QX_Protocol_App.o
+ .debug_frame   0x00001478       0x60 .\ARM_GCC_541\Debug\simple_buffer.o
+ .debug_frame   0x000014d8      0x20c .\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_frame   0x000016e4       0xd8 .\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_frame   0x000017bc      0x40c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+ .debug_frame   0x00001bc8       0xa0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
+ .debug_frame   0x00001c68      0x42c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+ .debug_frame   0x00002094       0x88 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
+ .debug_frame   0x0000211c      0x1b4 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_frame   0x000022d0      0x200 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
+ .debug_frame   0x000024d0      0x1b4 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
+ .debug_frame   0x00002684      0xc0c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
+ .debug_frame   0x00003290      0x234 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
+ .debug_frame   0x000034c4       0x7c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
+ .debug_frame   0x00003540      0x1e8 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+ .debug_frame   0x00003728      0x42c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+ .debug_frame   0x00003b54      0x1e8 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
+ .debug_frame   0x00003d3c      0x208 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+ .debug_frame   0x00003f44      0x1e8 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
+ .debug_frame   0x0000412c      0x238 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
+ .debug_frame   0x00004364      0x228 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
+ .debug_frame   0x0000458c       0x3c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_asin.o)
+ .debug_frame   0x000045c8       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_atan2.o)
+ .debug_frame   0x000045e8       0x34 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_asin.o)
+ .debug_frame   0x0000461c       0x3c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_atan2.o)
+ .debug_frame   0x00004658       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_sqrt.o)
+ .debug_frame   0x00004684       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_matherr.o)
+ .debug_frame   0x000046a4       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_nan.o)
+ .debug_frame   0x000046c4       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
+ .debug_frame   0x000046f4       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_fabs.o)
+ .debug_frame   0x00004714       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+ .debug_frame   0x00004734       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
+ .debug_frame   0x0000475c       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+ .debug_frame   0x00004788       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x000047b0       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+ .debug_frame   0x000047d0       0x70 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sprintf.o)
+ .debug_frame   0x00004840       0x90 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
+ .debug_frame   0x000048d0       0x60 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+ .debug_frame   0x00004930       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memchr-stub.o)
+ .debug_frame   0x00004958       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memmove.o)
+ .debug_frame   0x00004980       0x38 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x000049b8       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x000049e4       0x3c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-reallocr.o)
+ .debug_frame   0x00004a20       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x00004a4c       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mlock.o)
+ .debug_frame   0x00004a7c       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-msizer.o)
+ .debug_frame   0x00004a9c       0x5c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
 
-.debug_str      0x00000000     0x42fd
+.debug_str      0x00000000     0x43d2
  *(.debug_str)
- .debug_str     0x00000000      0x55a .\ARM_GCC_541\Debug\main.o
-                                0x62a (size before relaxing)
- .debug_str     0x0000055a       0xeb .\ARM_GCC_541\Debug\adc_balanced.o
+ .debug_str     0x00000000      0x5fb .\ARM_GCC_541\Debug\main.o
+                                0x6c3 (size before relaxing)
+ .debug_str     0x000005fb       0xeb .\ARM_GCC_541\Debug\adc_balanced.o
                                 0x2c8 (size before relaxing)
- .debug_str     0x00000645      0x1c5 .\ARM_GCC_541\Debug\joystick.o
+ .debug_str     0x000006e6      0x1c5 .\ARM_GCC_541\Debug\joystick.o
                                 0x461 (size before relaxing)
- .debug_str     0x0000080a       0x54 .\ARM_GCC_541\Debug\movi_rb.o
+ .debug_str     0x000008ab       0x54 .\ARM_GCC_541\Debug\movi_rb.o
                                 0x220 (size before relaxing)
- .debug_str     0x0000085e      0x987 .\ARM_GCC_541\Debug\movi_comm.o
+ .debug_str     0x000008ff      0x9bb .\ARM_GCC_541\Debug\movi_comm.o
                                 0xd75 (size before relaxing)
- .debug_str     0x000011e5      0x4c4 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+ .debug_str     0x000012ba      0x4c4 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
                                 0x6d4 (size before relaxing)
- .debug_str     0x000016a9      0x42b .\ARM_GCC_541\Debug\QX_Protocol.o
+ .debug_str     0x0000177e      0x42b .\ARM_GCC_541\Debug\QX_Protocol.o
                                 0xaa1 (size before relaxing)
- .debug_str     0x00001ad4      0x11b .\ARM_GCC_541\Debug\QX_Protocol_App.o
+ .debug_str     0x00001ba9      0x11b .\ARM_GCC_541\Debug\QX_Protocol_App.o
                                 0xaf9 (size before relaxing)
- .debug_str     0x00001bef       0x33 .\ARM_GCC_541\Debug\simple_buffer.o
+ .debug_str     0x00001cc4       0x33 .\ARM_GCC_541\Debug\simple_buffer.o
                                 0x1fb (size before relaxing)
- .debug_str     0x00001c22      0x202 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_str     0x00001cf7      0x202 .\ARM_GCC_541\Debug\cyfitter_cfg.o
                                 0x3d9 (size before relaxing)
- .debug_str     0x00001e24       0x75 .\ARM_GCC_541\Debug\cymetadata.o
+ .debug_str     0x00001ef9       0x75 .\ARM_GCC_541\Debug\cymetadata.o
                                 0x20e (size before relaxing)
- .debug_str     0x00001e99      0x11e .\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_str     0x00001f6e      0x11e .\ARM_GCC_541\Debug\Cm3Start.o
                                 0x301 (size before relaxing)
- .debug_str     0x00001fb7      0x42f .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+ .debug_str     0x0000208c      0x42f .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
                                 0x64d (size before relaxing)
- .debug_str     0x000023e6       0x72 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
+ .debug_str     0x000024bb       0x72 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
                                 0x217 (size before relaxing)
- .debug_str     0x00002458      0x299 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+ .debug_str     0x0000252d      0x299 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
                                 0x485 (size before relaxing)
- .debug_str     0x000026f1       0x9c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
+ .debug_str     0x000027c6       0x9c .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
                                 0x23a (size before relaxing)
- .debug_str     0x0000278d      0x21a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_str     0x00002862      0x21a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
                                 0x3d8 (size before relaxing)
- .debug_str     0x000029a7      0x208 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
+ .debug_str     0x00002a7c      0x208 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
                                 0x409 (size before relaxing)
- .debug_str     0x00002baf      0x177 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
+ .debug_str     0x00002c84      0x177 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
                                 0x378 (size before relaxing)
- .debug_str     0x00002d26      0x7f6 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
+ .debug_str     0x00002dfb      0x7f6 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
                                 0xa14 (size before relaxing)
- .debug_str     0x0000351c      0x371 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
+ .debug_str     0x000035f1      0x371 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
                                 0x56d (size before relaxing)
- .debug_str     0x0000388d       0x67 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
+ .debug_str     0x00003962       0x67 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
                                 0x20a (size before relaxing)
- .debug_str     0x000038f4      0x102 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+ .debug_str     0x000039c9      0x102 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
                                 0x2ec (size before relaxing)
- .debug_str     0x000039f6      0x291 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+ .debug_str     0x00003acb      0x291 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
                                 0x4dc (size before relaxing)
- .debug_str     0x00003c87      0x13a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
+ .debug_str     0x00003d5c      0x13a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
                                 0x324 (size before relaxing)
- .debug_str     0x00003dc1      0x16a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+ .debug_str     0x00003e96      0x16a .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
                                 0x35f (size before relaxing)
- .debug_str     0x00003f2b      0x156 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
+ .debug_str     0x00004000      0x156 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
                                 0x340 (size before relaxing)
- .debug_str     0x00004081      0x14f .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
+ .debug_str     0x00004156      0x14f .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
                                 0x331 (size before relaxing)
- .debug_str     0x000041d0      0x12d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
+ .debug_str     0x000042a5      0x12d .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
                                 0x32b (size before relaxing)
 
 .debug_loc
@@ -2164,36 +2168,36 @@ END GROUP
 .debug_macinfo
  *(.debug_macinfo)
 
-.debug_ranges   0x00000000      0xec0
+.debug_ranges   0x00000000      0xee0
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x30 .\ARM_GCC_541\Debug\main.o
- .debug_ranges  0x00000030       0x40 .\ARM_GCC_541\Debug\adc_balanced.o
- .debug_ranges  0x00000070       0x88 .\ARM_GCC_541\Debug\joystick.o
- .debug_ranges  0x000000f8       0x38 .\ARM_GCC_541\Debug\movi_rb.o
- .debug_ranges  0x00000130       0x80 .\ARM_GCC_541\Debug\movi_comm.o
- .debug_ranges  0x000001b0      0x150 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
- .debug_ranges  0x00000300       0xd0 .\ARM_GCC_541\Debug\QX_Protocol.o
- .debug_ranges  0x000003d0       0x38 .\ARM_GCC_541\Debug\QX_Protocol_App.o
- .debug_ranges  0x00000408       0x18 .\ARM_GCC_541\Debug\simple_buffer.o
- .debug_ranges  0x00000420       0x70 .\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_ranges  0x00000490       0x38 .\ARM_GCC_541\Debug\Cm3Start.o
- .debug_ranges  0x000004c8       0xd8 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
- .debug_ranges  0x000005a0       0x28 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
- .debug_ranges  0x000005c8       0xe0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
- .debug_ranges  0x000006a8       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
- .debug_ranges  0x000006c8       0x60 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_ranges  0x00000728       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
- .debug_ranges  0x00000798       0x60 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
- .debug_ranges  0x000007f8      0x290 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
- .debug_ranges  0x00000a88       0x88 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
- .debug_ranges  0x00000b10       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
- .debug_ranges  0x00000b30       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
- .debug_ranges  0x00000ba0       0xe0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
- .debug_ranges  0x00000c80       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
- .debug_ranges  0x00000cf0       0x78 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
- .debug_ranges  0x00000d68       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
- .debug_ranges  0x00000dd8       0x78 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
- .debug_ranges  0x00000e50       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
+ .debug_ranges  0x00000000       0x50 .\ARM_GCC_541\Debug\main.o
+ .debug_ranges  0x00000050       0x40 .\ARM_GCC_541\Debug\adc_balanced.o
+ .debug_ranges  0x00000090       0x88 .\ARM_GCC_541\Debug\joystick.o
+ .debug_ranges  0x00000118       0x38 .\ARM_GCC_541\Debug\movi_rb.o
+ .debug_ranges  0x00000150       0x80 .\ARM_GCC_541\Debug\movi_comm.o
+ .debug_ranges  0x000001d0      0x150 .\ARM_GCC_541\Debug\QX_Parsing_Functions.o
+ .debug_ranges  0x00000320       0xd0 .\ARM_GCC_541\Debug\QX_Protocol.o
+ .debug_ranges  0x000003f0       0x38 .\ARM_GCC_541\Debug\QX_Protocol_App.o
+ .debug_ranges  0x00000428       0x18 .\ARM_GCC_541\Debug\simple_buffer.o
+ .debug_ranges  0x00000440       0x70 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_ranges  0x000004b0       0x38 .\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_ranges  0x000004e8       0xd8 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1.o)
+ .debug_ranges  0x000005c0       0x28 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_INT.o)
+ .debug_ranges  0x000005e8       0xe0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1.o)
+ .debug_ranges  0x000006c8       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_AMux.o)
+ .debug_ranges  0x000006e8       0x60 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_ranges  0x00000748       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(ADC_DelSig_1_theACLK.o)
+ .debug_ranges  0x000007b8       0x60 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_1_IntClock.o)
+ .debug_ranges  0x00000818      0x290 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyLib.o)
+ .debug_ranges  0x00000aa8       0x88 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(cyPm.o)
+ .debug_ranges  0x00000b30       0x20 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(AMux_1.o)
+ .debug_ranges  0x00000b50       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_adc.o)
+ .debug_ranges  0x00000bc0       0xe0 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(UART_MOVI.o)
+ .debug_ranges  0x00000ca0       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_rx_movi.o)
+ .debug_ranges  0x00000d10       0x78 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(Looptimer.o)
+ .debug_ranges  0x00000d88       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(isr_Looptimer.o)
+ .debug_ranges  0x00000df8       0x78 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CyFlash.o)
+ .debug_ranges  0x00000e70       0x70 .\ARM_GCC_541\Debug\Proj05_freefly_uart_control.a(CySpc.o)
 
 .comment        0x00000000       0x6e
  .comment       0x00000000       0x6e .\ARM_GCC_541\Debug\main.o

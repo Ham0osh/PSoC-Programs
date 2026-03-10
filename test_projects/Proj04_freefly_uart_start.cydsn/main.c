@@ -15,9 +15,6 @@
 #include "QX_Protocol.h"
 #include "QX_Protocol_App.h"
 
-// Constants
-#define LOOP_DELAY_MS 20  // 50 Hz loop
-
 // Handle writing the command for the API
 int ff_api_encode_control(uint8_t *out_buf, uint16_t *out_len)
 {
@@ -54,9 +51,6 @@ int ff_api_encode_control(uint8_t *out_buf, uint16_t *out_len)
     return 0; // success
 }
 
-// UART RX ISR prototype.
-// The UART componnent interrupts on Rx, this ISR then 
-// processes on this interrupt.
 CY_ISR(UART_MONITOR_RX_ISR)
 {
     uint8_t rxByte;
