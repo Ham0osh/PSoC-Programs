@@ -52,6 +52,14 @@ extern "C" {
 #define CMD_MAX (1.0f)  // Scaling of output range (+/-1 * CMD_MAX)
 #endif
 
+// Sensitivity state machine
+typedef enum {
+    SENSE_LOW = 0,
+    SENSE_MED,
+    SENSE_HIGH
+} joy_sensitivity_t;
+void joystick_set_sensitivity(joy_sensitivity_t level);
+
 // Calibration data
 typedef struct {
     int16 minv[N_CH];

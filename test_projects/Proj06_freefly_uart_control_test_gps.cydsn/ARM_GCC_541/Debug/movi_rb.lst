@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 1
 
 
    1              		.syntax unified
@@ -35,52 +35,58 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
    6:movi_rb.c     ****  *
    7:movi_rb.c     ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
    8:movi_rb.c     ****  * WHICH IS THE PROPERTY OF 
-   9:movi_rb.c     ****  * Quantum Internet Systems Lab,
+   9:movi_rb.c     ****  * Quantum Internet Systems Lab (QISL),
   10:movi_rb.c     ****  * Department of Physics, SFU, Canada.
   11:movi_rb.c     ****  *
-  12:movi_rb.c     ****  * ========================================
-  13:movi_rb.c     **** */
-  14:movi_rb.c     **** 
-  15:movi_rb.c     **** #include "movi_rb.h"
-  16:movi_rb.c     **** 
-  17:movi_rb.c     **** static inline uint16_t rb_next(uint16_t i)
-  18:movi_rb.c     **** {
-  27              		.loc 1 18 0
+  12:movi_rb.c     ****  * Author: Hamish Johnson (2026)
+  13:movi_rb.c     ****  *
+  14:movi_rb.c     ****  * ========================================
+  15:movi_rb.c     ****  *
+  16:movi_rb.c     ****  * This is a simple instance of a ring buffer
+  17:movi_rb.c     ****  * to hold received Movi status packets.
+  18:movi_rb.c     ****  *
+  19:movi_rb.c     **** */
+  20:movi_rb.c     **** 
+  21:movi_rb.c     **** #include "movi_rb.h"
+  22:movi_rb.c     **** 
+  23:movi_rb.c     **** static inline uint16_t rb_next(uint16_t i)
+  24:movi_rb.c     **** {
+  27              		.loc 1 24 0
   28              		.cfi_startproc
   29              		@ args = 0, pretend = 0, frame = 8
   30              		@ frame_needed = 1, uses_anonymous_args = 0
   31              		@ link register save eliminated.
   32 0000 80B4     		push	{r7}
   33              		.cfi_def_cfa_offset 4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 2
+
+
   34              		.cfi_offset 7, -4
   35 0002 83B0     		sub	sp, sp, #12
   36              		.cfi_def_cfa_offset 16
   37 0004 00AF     		add	r7, sp, #0
   38              		.cfi_def_cfa_register 7
   39 0006 0346     		mov	r3, r0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 2
-
-
   40 0008 FB80     		strh	r3, [r7, #6]	@ movhi
-  19:movi_rb.c     ****     i++;
-  41              		.loc 1 19 0
+  25:movi_rb.c     ****     i++;
+  41              		.loc 1 25 0
   42 000a FB88     		ldrh	r3, [r7, #6]
   43 000c 0133     		adds	r3, r3, #1
   44 000e FB80     		strh	r3, [r7, #6]	@ movhi
-  20:movi_rb.c     ****     if (i >= MOVI_RB_SIZE) i = 0u;
-  45              		.loc 1 20 0
+  26:movi_rb.c     ****     if (i >= MOVI_RB_SIZE) i = 0u;
+  45              		.loc 1 26 0
   46 0010 FB88     		ldrh	r3, [r7, #6]
   47 0012 FF2B     		cmp	r3, #255
   48 0014 01D9     		bls	.L2
-  49              		.loc 1 20 0 is_stmt 0 discriminator 1
+  49              		.loc 1 26 0 is_stmt 0 discriminator 1
   50 0016 0023     		movs	r3, #0
   51 0018 FB80     		strh	r3, [r7, #6]	@ movhi
   52              	.L2:
-  21:movi_rb.c     ****     return i;
-  53              		.loc 1 21 0 is_stmt 1
+  27:movi_rb.c     ****     return i;
+  53              		.loc 1 27 0 is_stmt 1
   54 001a FB88     		ldrh	r3, [r7, #6]
-  22:movi_rb.c     **** }
-  55              		.loc 1 22 0
+  28:movi_rb.c     **** }
+  55              		.loc 1 28 0
   56 001c 1846     		mov	r0, r3
   57 001e 0C37     		adds	r7, r7, #12
   58              		.cfi_def_cfa_offset 4
@@ -102,42 +108,42 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
   74              		.type	movi_rb_init, %function
   75              	movi_rb_init:
   76              	.LFB1:
-  23:movi_rb.c     **** 
-  24:movi_rb.c     **** void movi_rb_init(movi_rb_t* rb)
-  25:movi_rb.c     **** {
-  77              		.loc 1 25 0
+  29:movi_rb.c     **** 
+  30:movi_rb.c     **** void movi_rb_init(movi_rb_t* rb)
+  31:movi_rb.c     **** {
+  77              		.loc 1 31 0
   78              		.cfi_startproc
   79              		@ args = 0, pretend = 0, frame = 8
   80              		@ frame_needed = 1, uses_anonymous_args = 0
   81              		@ link register save eliminated.
   82 0000 80B4     		push	{r7}
   83              		.cfi_def_cfa_offset 4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 3
+
+
   84              		.cfi_offset 7, -4
   85 0002 83B0     		sub	sp, sp, #12
   86              		.cfi_def_cfa_offset 16
   87 0004 00AF     		add	r7, sp, #0
   88              		.cfi_def_cfa_register 7
   89 0006 7860     		str	r0, [r7, #4]
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 3
-
-
-  26:movi_rb.c     ****     rb->head = 0u;
-  90              		.loc 1 26 0
+  32:movi_rb.c     ****     rb->head = 0u;
+  90              		.loc 1 32 0
   91 0008 7B68     		ldr	r3, [r7, #4]
   92 000a 0022     		movs	r2, #0
   93 000c A3F80021 		strh	r2, [r3, #256]	@ movhi
-  27:movi_rb.c     ****     rb->tail = 0u;
-  94              		.loc 1 27 0
+  33:movi_rb.c     ****     rb->tail = 0u;
+  94              		.loc 1 33 0
   95 0010 7B68     		ldr	r3, [r7, #4]
   96 0012 0022     		movs	r2, #0
   97 0014 A3F80221 		strh	r2, [r3, #258]	@ movhi
-  28:movi_rb.c     ****     rb->drops = 0u;
-  98              		.loc 1 28 0
+  34:movi_rb.c     ****     rb->drops = 0u;
+  98              		.loc 1 34 0
   99 0018 7B68     		ldr	r3, [r7, #4]
  100 001a 0022     		movs	r2, #0
  101 001c A3F80421 		strh	r2, [r3, #260]	@ movhi
-  29:movi_rb.c     **** }
- 102              		.loc 1 29 0
+  35:movi_rb.c     **** }
+ 102              		.loc 1 35 0
  103 0020 00BF     		nop
  104 0022 0C37     		adds	r7, r7, #12
  105              		.cfi_def_cfa_offset 4
@@ -159,10 +165,10 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  121              		.type	movi_rb_clear, %function
  122              	movi_rb_clear:
  123              	.LFB2:
-  30:movi_rb.c     **** 
-  31:movi_rb.c     **** void movi_rb_clear(movi_rb_t* rb)
-  32:movi_rb.c     **** {
- 124              		.loc 1 32 0
+  36:movi_rb.c     **** 
+  37:movi_rb.c     **** void movi_rb_clear(movi_rb_t* rb)
+  38:movi_rb.c     **** {
+ 124              		.loc 1 38 0
  125              		.cfi_startproc
  126              		@ args = 0, pretend = 0, frame = 8
  127              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -172,24 +178,24 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  131              		.cfi_offset 7, -4
  132 0002 83B0     		sub	sp, sp, #12
  133              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 4
+
+
  134 0004 00AF     		add	r7, sp, #0
  135              		.cfi_def_cfa_register 7
  136 0006 7860     		str	r0, [r7, #4]
-  33:movi_rb.c     ****     rb->head = 0u;
- 137              		.loc 1 33 0
+  39:movi_rb.c     ****     rb->head = 0u;
+ 137              		.loc 1 39 0
  138 0008 7B68     		ldr	r3, [r7, #4]
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 4
-
-
  139 000a 0022     		movs	r2, #0
  140 000c A3F80021 		strh	r2, [r3, #256]	@ movhi
-  34:movi_rb.c     ****     rb->tail = 0u;
- 141              		.loc 1 34 0
+  40:movi_rb.c     ****     rb->tail = 0u;
+ 141              		.loc 1 40 0
  142 0010 7B68     		ldr	r3, [r7, #4]
  143 0012 0022     		movs	r2, #0
  144 0014 A3F80221 		strh	r2, [r3, #258]	@ movhi
-  35:movi_rb.c     **** }
- 145              		.loc 1 35 0
+  41:movi_rb.c     **** }
+ 145              		.loc 1 41 0
  146 0018 00BF     		nop
  147 001a 0C37     		adds	r7, r7, #12
  148              		.cfi_def_cfa_offset 4
@@ -211,10 +217,10 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  164              		.type	movi_rb_count, %function
  165              	movi_rb_count:
  166              	.LFB3:
-  36:movi_rb.c     **** 
-  37:movi_rb.c     **** uint16_t movi_rb_count(const movi_rb_t* rb)
-  38:movi_rb.c     **** {
- 167              		.loc 1 38 0
+  42:movi_rb.c     **** 
+  43:movi_rb.c     **** uint16_t movi_rb_count(const movi_rb_t* rb)
+  44:movi_rb.c     **** {
+ 167              		.loc 1 44 0
  168              		.cfi_startproc
  169              		@ args = 0, pretend = 0, frame = 16
  170              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -227,33 +233,33 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  177 0004 00AF     		add	r7, sp, #0
  178              		.cfi_def_cfa_register 7
  179 0006 7860     		str	r0, [r7, #4]
-  39:movi_rb.c     ****     uint16_t h = rb->head;
- 180              		.loc 1 39 0
+  45:movi_rb.c     ****     uint16_t h = rb->head;
+ 180              		.loc 1 45 0
  181 0008 7B68     		ldr	r3, [r7, #4]
  182 000a B3F80031 		ldrh	r3, [r3, #256]	@ movhi
  183 000e FB81     		strh	r3, [r7, #14]	@ movhi
-  40:movi_rb.c     ****     uint16_t t = rb->tail;
- 184              		.loc 1 40 0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 5
+
+
+  46:movi_rb.c     ****     uint16_t t = rb->tail;
+ 184              		.loc 1 46 0
  185 0010 7B68     		ldr	r3, [r7, #4]
  186 0012 B3F80231 		ldrh	r3, [r3, #258]	@ movhi
  187 0016 BB81     		strh	r3, [r7, #12]	@ movhi
-  41:movi_rb.c     ****     return (h >= t) ? (h - t) : (uint16_t)(MOVI_RB_SIZE - (t - h));
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 5
-
-
- 188              		.loc 1 41 0
+  47:movi_rb.c     ****     return (h >= t) ? (h - t) : (uint16_t)(MOVI_RB_SIZE - (t - h));
+ 188              		.loc 1 47 0
  189 0018 FA89     		ldrh	r2, [r7, #14]
  190 001a BB89     		ldrh	r3, [r7, #12]
  191 001c 9A42     		cmp	r2, r3
  192 001e 04D3     		bcc	.L7
- 193              		.loc 1 41 0 is_stmt 0 discriminator 1
+ 193              		.loc 1 47 0 is_stmt 0 discriminator 1
  194 0020 FA89     		ldrh	r2, [r7, #14]	@ movhi
  195 0022 BB89     		ldrh	r3, [r7, #12]	@ movhi
  196 0024 D31A     		subs	r3, r2, r3
  197 0026 9BB2     		uxth	r3, r3
  198 0028 06E0     		b	.L8
  199              	.L7:
- 200              		.loc 1 41 0 discriminator 2
+ 200              		.loc 1 47 0 discriminator 2
  201 002a FA89     		ldrh	r2, [r7, #14]	@ movhi
  202 002c BB89     		ldrh	r3, [r7, #12]	@ movhi
  203 002e D31A     		subs	r3, r2, r3
@@ -261,8 +267,8 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  205 0032 03F58073 		add	r3, r3, #256
  206 0036 9BB2     		uxth	r3, r3
  207              	.L8:
-  42:movi_rb.c     **** }
- 208              		.loc 1 42 0 is_stmt 1 discriminator 4
+  48:movi_rb.c     **** }
+ 208              		.loc 1 48 0 is_stmt 1 discriminator 4
  209 0038 1846     		mov	r0, r3
  210 003a 1437     		adds	r7, r7, #20
  211              		.cfi_def_cfa_offset 4
@@ -284,30 +290,30 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  227              		.type	movi_rb_push, %function
  228              	movi_rb_push:
  229              	.LFB4:
-  43:movi_rb.c     **** 
-  44:movi_rb.c     **** // ISR uses this to empty FIFO from UART
-  45:movi_rb.c     **** uint8_t movi_rb_push(movi_rb_t* rb, uint8_t b)
-  46:movi_rb.c     **** {
- 230              		.loc 1 46 0
+  49:movi_rb.c     **** 
+  50:movi_rb.c     **** // ISR uses this to empty FIFO from UART
+  51:movi_rb.c     **** uint8_t movi_rb_push(movi_rb_t* rb, uint8_t b)
+  52:movi_rb.c     **** {
+ 230              		.loc 1 52 0
  231              		.cfi_startproc
  232              		@ args = 0, pretend = 0, frame = 16
  233              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 6
+
+
  234 0000 80B5     		push	{r7, lr}
  235              		.cfi_def_cfa_offset 8
  236              		.cfi_offset 7, -8
  237              		.cfi_offset 14, -4
  238 0002 84B0     		sub	sp, sp, #16
  239              		.cfi_def_cfa_offset 24
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 6
-
-
  240 0004 00AF     		add	r7, sp, #0
  241              		.cfi_def_cfa_register 7
  242 0006 7860     		str	r0, [r7, #4]
  243 0008 0B46     		mov	r3, r1
  244 000a FB70     		strb	r3, [r7, #3]
-  47:movi_rb.c     ****     uint16_t next = rb_next(rb->head);
- 245              		.loc 1 47 0
+  53:movi_rb.c     ****     uint16_t next = rb_next(rb->head);
+ 245              		.loc 1 53 0
  246 000c 7B68     		ldr	r3, [r7, #4]
  247 000e B3F80031 		ldrh	r3, [r3, #256]	@ movhi
  248 0012 9BB2     		uxth	r3, r3
@@ -315,17 +321,17 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  250 0016 FFF7FEFF 		bl	rb_next
  251 001a 0346     		mov	r3, r0
  252 001c FB81     		strh	r3, [r7, #14]	@ movhi
-  48:movi_rb.c     ****     if (next == rb->tail)
- 253              		.loc 1 48 0
+  54:movi_rb.c     ****     if (next == rb->tail)
+ 253              		.loc 1 54 0
  254 001e 7B68     		ldr	r3, [r7, #4]
  255 0020 B3F80231 		ldrh	r3, [r3, #258]	@ movhi
  256 0024 9BB2     		uxth	r3, r3
  257 0026 FA89     		ldrh	r2, [r7, #14]
  258 0028 9A42     		cmp	r2, r3
  259 002a 0AD1     		bne	.L11
-  49:movi_rb.c     ****     {
-  50:movi_rb.c     ****         rb->drops++;
- 260              		.loc 1 50 0
+  55:movi_rb.c     ****     {
+  56:movi_rb.c     ****         rb->drops++;
+ 260              		.loc 1 56 0
  261 002c 7B68     		ldr	r3, [r7, #4]
  262 002e B3F80431 		ldrh	r3, [r3, #260]	@ movhi
  263 0032 9BB2     		uxth	r3, r3
@@ -333,14 +339,14 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  265 0036 9AB2     		uxth	r2, r3
  266 0038 7B68     		ldr	r3, [r7, #4]
  267 003a A3F80421 		strh	r2, [r3, #260]	@ movhi
-  51:movi_rb.c     ****         return 0u;  // FULL!
- 268              		.loc 1 51 0
+  57:movi_rb.c     ****         return 0u;  // FULL!
+ 268              		.loc 1 57 0
  269 003e 0023     		movs	r3, #0
  270 0040 0CE0     		b	.L12
  271              	.L11:
-  52:movi_rb.c     ****     }
-  53:movi_rb.c     ****     rb->buf[rb->head] = b;
- 272              		.loc 1 53 0
+  58:movi_rb.c     ****     }
+  59:movi_rb.c     ****     rb->buf[rb->head] = b;
+ 272              		.loc 1 59 0
  273 0042 7B68     		ldr	r3, [r7, #4]
  274 0044 B3F80031 		ldrh	r3, [r3, #256]	@ movhi
  275 0048 9BB2     		uxth	r3, r3
@@ -348,20 +354,20 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  277 004c 7B68     		ldr	r3, [r7, #4]
  278 004e FA78     		ldrb	r2, [r7, #3]
  279 0050 5A54     		strb	r2, [r3, r1]
-  54:movi_rb.c     ****     rb->head = next;
- 280              		.loc 1 54 0
+  60:movi_rb.c     ****     rb->head = next;
+ 280              		.loc 1 60 0
  281 0052 7B68     		ldr	r3, [r7, #4]
  282 0054 FA89     		ldrh	r2, [r7, #14]	@ movhi
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 7
+
+
  283 0056 A3F80021 		strh	r2, [r3, #256]	@ movhi
-  55:movi_rb.c     ****     return 1u;
- 284              		.loc 1 55 0
+  61:movi_rb.c     ****     return 1u;
+ 284              		.loc 1 61 0
  285 005a 0123     		movs	r3, #1
  286              	.L12:
-  56:movi_rb.c     **** }
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 7
-
-
- 287              		.loc 1 56 0
+  62:movi_rb.c     **** }
+ 287              		.loc 1 62 0
  288 005c 1846     		mov	r0, r3
  289 005e 1037     		adds	r7, r7, #16
  290              		.cfi_def_cfa_offset 8
@@ -380,11 +386,11 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  303              		.type	movi_rb_pop, %function
  304              	movi_rb_pop:
  305              	.LFB5:
-  57:movi_rb.c     **** 
-  58:movi_rb.c     **** // Control loop uses this to get Rx from Movi
-  59:movi_rb.c     **** uint8_t movi_rb_pop(movi_rb_t* rb, uint8_t* b)
-  60:movi_rb.c     **** {
- 306              		.loc 1 60 0
+  63:movi_rb.c     **** 
+  64:movi_rb.c     **** // Control loop uses this to get Rx from Movi
+  65:movi_rb.c     **** uint8_t movi_rb_pop(movi_rb_t* rb, uint8_t* b)
+  66:movi_rb.c     **** {
+ 306              		.loc 1 66 0
  307              		.cfi_startproc
  308              		@ args = 0, pretend = 0, frame = 8
  309              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -398,8 +404,8 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  317              		.cfi_def_cfa_register 7
  318 0006 7860     		str	r0, [r7, #4]
  319 0008 3960     		str	r1, [r7]
-  61:movi_rb.c     ****     if (rb->head == rb->tail) return 0u;
- 320              		.loc 1 61 0
+  67:movi_rb.c     ****     if (rb->head == rb->tail) return 0u;
+ 320              		.loc 1 67 0
  321 000a 7B68     		ldr	r3, [r7, #4]
  322 000c B3F80031 		ldrh	r3, [r3, #256]	@ movhi
  323 0010 9AB2     		uxth	r2, r3
@@ -408,27 +414,27 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  326 0018 9BB2     		uxth	r3, r3
  327 001a 9A42     		cmp	r2, r3
  328 001c 01D1     		bne	.L14
- 329              		.loc 1 61 0 is_stmt 0 discriminator 1
+ 329              		.loc 1 67 0 is_stmt 0 discriminator 1
  330 001e 0023     		movs	r3, #0
  331 0020 16E0     		b	.L15
  332              	.L14:
-  62:movi_rb.c     **** 
-  63:movi_rb.c     ****     *b = rb->buf[rb->tail];
- 333              		.loc 1 63 0 is_stmt 1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 8
+
+
+  68:movi_rb.c     **** 
+  69:movi_rb.c     ****     *b = rb->buf[rb->tail];
+ 333              		.loc 1 69 0 is_stmt 1
  334 0022 7B68     		ldr	r3, [r7, #4]
  335 0024 B3F80231 		ldrh	r3, [r3, #258]	@ movhi
  336 0028 9BB2     		uxth	r3, r3
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 8
-
-
  337 002a 1A46     		mov	r2, r3
  338 002c 7B68     		ldr	r3, [r7, #4]
  339 002e 9B5C     		ldrb	r3, [r3, r2]
  340 0030 DAB2     		uxtb	r2, r3
  341 0032 3B68     		ldr	r3, [r7]
  342 0034 1A70     		strb	r2, [r3]
-  64:movi_rb.c     ****     rb->tail = rb_next(rb->tail);
- 343              		.loc 1 64 0
+  70:movi_rb.c     ****     rb->tail = rb_next(rb->tail);
+ 343              		.loc 1 70 0
  344 0036 7B68     		ldr	r3, [r7, #4]
  345 0038 B3F80231 		ldrh	r3, [r3, #258]	@ movhi
  346 003c 9BB2     		uxth	r3, r3
@@ -438,12 +444,12 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  350 0046 1A46     		mov	r2, r3
  351 0048 7B68     		ldr	r3, [r7, #4]
  352 004a A3F80221 		strh	r2, [r3, #258]	@ movhi
-  65:movi_rb.c     ****     return 1u;
- 353              		.loc 1 65 0
+  71:movi_rb.c     ****     return 1u;
+ 353              		.loc 1 71 0
  354 004e 0123     		movs	r3, #1
  355              	.L15:
-  66:movi_rb.c     **** }
- 356              		.loc 1 66 0
+  72:movi_rb.c     **** }
+ 356              		.loc 1 72 0
  357 0050 1846     		mov	r0, r3
  358 0052 0837     		adds	r7, r7, #8
  359              		.cfi_def_cfa_offset 8
@@ -472,15 +478,15 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  382 0015 D6000000 		.4byte	.LASF26
  383 0019 00000000 		.4byte	.Ldebug_ranges0+0
  384 001d 00000000 		.4byte	0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 9
+
+
  385 0021 00000000 		.4byte	.Ldebug_line0
  386 0025 02       		.uleb128 0x2
  387 0026 01       		.byte	0x1
  388 0027 06       		.byte	0x6
  389 0028 F6010000 		.4byte	.LASF0
  390 002c 03       		.uleb128 0x3
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 9
-
-
  391 002d 00000000 		.4byte	.LASF3
  392 0031 02       		.byte	0x2
  393 0032 1D       		.byte	0x1d
@@ -532,40 +538,40 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  439 0087 18       		.byte	0x18
  440 0088 2C000000 		.4byte	0x2c
  441 008c 03       		.uleb128 0x3
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 10
+
+
  442 008d D1010000 		.4byte	.LASF12
  443 0091 03       		.byte	0x3
  444 0092 24       		.byte	0x24
  445 0093 45000000 		.4byte	0x45
  446 0097 05       		.uleb128 0x5
  447 0098 0601     		.2byte	0x106
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 10
-
-
  448 009a 04       		.byte	0x4
- 449 009b 17       		.byte	0x17
+ 449 009b 20       		.byte	0x20
  450 009c D4000000 		.4byte	0xd4
  451 00a0 06       		.uleb128 0x6
  452 00a1 62756600 		.ascii	"buf\000"
  453 00a5 04       		.byte	0x4
- 454 00a6 18       		.byte	0x18
+ 454 00a6 21       		.byte	0x21
  455 00a7 F0000000 		.4byte	0xf0
  456 00ab 00       		.byte	0
  457 00ac 07       		.uleb128 0x7
  458 00ad 58010000 		.4byte	.LASF13
  459 00b1 04       		.byte	0x4
- 460 00b2 19       		.byte	0x19
+ 460 00b2 22       		.byte	0x22
  461 00b3 F5000000 		.4byte	0xf5
  462 00b7 0001     		.2byte	0x100
  463 00b9 07       		.uleb128 0x7
  464 00ba DA010000 		.4byte	.LASF14
  465 00be 04       		.byte	0x4
- 466 00bf 1A       		.byte	0x1a
+ 466 00bf 23       		.byte	0x23
  467 00c0 F5000000 		.4byte	0xf5
  468 00c4 0201     		.2byte	0x102
  469 00c6 07       		.uleb128 0x7
  470 00c7 0F020000 		.4byte	.LASF15
  471 00cb 04       		.byte	0x4
- 472 00cc 1B       		.byte	0x1b
+ 472 00cc 24       		.byte	0x24
  473 00cd F5000000 		.4byte	0xf5
  474 00d1 0401     		.2byte	0x104
  475 00d3 00       		.byte	0
@@ -589,25 +595,25 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  493 00fa 03       		.uleb128 0x3
  494 00fb 15020000 		.4byte	.LASF17
  495 00ff 04       		.byte	0x4
- 496 0100 1C       		.byte	0x1c
+ 496 0100 25       		.byte	0x25
  497 0101 97000000 		.4byte	0x97
  498 0105 0B       		.uleb128 0xb
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 11
+
+
  499 0106 07020000 		.4byte	.LASF27
  500 010a 01       		.byte	0x1
- 501 010b 11       		.byte	0x11
+ 501 010b 17       		.byte	0x17
  502 010c 8C000000 		.4byte	0x8c
  503 0110 00000000 		.4byte	.LFB0
  504 0114 26000000 		.4byte	.LFE0-.LFB0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 11
-
-
  505 0118 01       		.uleb128 0x1
  506 0119 9C       		.byte	0x9c
  507 011a 2B010000 		.4byte	0x12b
  508 011e 0C       		.uleb128 0xc
  509 011f 6900     		.ascii	"i\000"
  510 0121 01       		.byte	0x1
- 511 0122 11       		.byte	0x11
+ 511 0122 17       		.byte	0x17
  512 0123 8C000000 		.4byte	0x8c
  513 0127 02       		.uleb128 0x2
  514 0128 91       		.byte	0x91
@@ -616,7 +622,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  517 012b 0D       		.uleb128 0xd
  518 012c 4B010000 		.4byte	.LASF18
  519 0130 01       		.byte	0x1
- 520 0131 18       		.byte	0x18
+ 520 0131 1E       		.byte	0x1e
  521 0132 00000000 		.4byte	.LFB1
  522 0136 2A000000 		.4byte	.LFE1-.LFB1
  523 013a 01       		.uleb128 0x1
@@ -625,7 +631,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  526 0140 0C       		.uleb128 0xc
  527 0141 726200   		.ascii	"rb\000"
  528 0144 01       		.byte	0x1
- 529 0145 18       		.byte	0x18
+ 529 0145 1E       		.byte	0x1e
  530 0146 4E010000 		.4byte	0x14e
  531 014a 02       		.uleb128 0x2
  532 014b 91       		.byte	0x91
@@ -637,7 +643,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  538 0154 0D       		.uleb128 0xd
  539 0155 E8010000 		.4byte	.LASF19
  540 0159 01       		.byte	0x1
- 541 015a 1F       		.byte	0x1f
+ 541 015a 25       		.byte	0x25
  542 015b 00000000 		.4byte	.LFB2
  543 015f 22000000 		.4byte	.LFE2-.LFB2
  544 0163 01       		.uleb128 0x1
@@ -646,21 +652,21 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  547 0169 0C       		.uleb128 0xc
  548 016a 726200   		.ascii	"rb\000"
  549 016d 01       		.byte	0x1
- 550 016e 1F       		.byte	0x1f
+ 550 016e 25       		.byte	0x25
  551 016f 4E010000 		.4byte	0x14e
  552 0173 02       		.uleb128 0x2
  553 0174 91       		.byte	0x91
  554 0175 74       		.sleb128 -12
  555 0176 00       		.byte	0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 12
+
+
  556 0177 0F       		.uleb128 0xf
  557 0178 9F010000 		.4byte	.LASF20
  558 017c 01       		.byte	0x1
- 559 017d 25       		.byte	0x25
+ 559 017d 2B       		.byte	0x2b
  560 017e 8C000000 		.4byte	0x8c
  561 0182 00000000 		.4byte	.LFB3
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 12
-
-
  562 0186 42000000 		.4byte	.LFE3-.LFB3
  563 018a 01       		.uleb128 0x1
  564 018b 9C       		.byte	0x9c
@@ -668,7 +674,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  566 0190 0C       		.uleb128 0xc
  567 0191 726200   		.ascii	"rb\000"
  568 0194 01       		.byte	0x1
- 569 0195 25       		.byte	0x25
+ 569 0195 2B       		.byte	0x2b
  570 0196 B6010000 		.4byte	0x1b6
  571 019a 02       		.uleb128 0x2
  572 019b 91       		.byte	0x91
@@ -676,7 +682,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  574 019d 10       		.uleb128 0x10
  575 019e 6800     		.ascii	"h\000"
  576 01a0 01       		.byte	0x1
- 577 01a1 27       		.byte	0x27
+ 577 01a1 2D       		.byte	0x2d
  578 01a2 8C000000 		.4byte	0x8c
  579 01a6 02       		.uleb128 0x2
  580 01a7 91       		.byte	0x91
@@ -684,7 +690,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  582 01a9 10       		.uleb128 0x10
  583 01aa 7400     		.ascii	"t\000"
  584 01ac 01       		.byte	0x1
- 585 01ad 28       		.byte	0x28
+ 585 01ad 2E       		.byte	0x2e
  586 01ae 8C000000 		.4byte	0x8c
  587 01b2 02       		.uleb128 0x2
  588 01b3 91       		.byte	0x91
@@ -698,7 +704,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  596 01c1 12       		.uleb128 0x12
  597 01c2 92010000 		.4byte	.LASF21
  598 01c6 01       		.byte	0x1
- 599 01c7 2D       		.byte	0x2d
+ 599 01c7 33       		.byte	0x33
  600 01c8 81000000 		.4byte	0x81
  601 01cc 00000000 		.4byte	.LFB4
  602 01d0 64000000 		.4byte	.LFE4-.LFB4
@@ -708,26 +714,26 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  606 01da 0C       		.uleb128 0xc
  607 01db 726200   		.ascii	"rb\000"
  608 01de 01       		.byte	0x1
- 609 01df 2D       		.byte	0x2d
+ 609 01df 33       		.byte	0x33
  610 01e0 4E010000 		.4byte	0x14e
  611 01e4 02       		.uleb128 0x2
  612 01e5 91       		.byte	0x91
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 13
+
+
  613 01e6 6C       		.sleb128 -20
  614 01e7 0C       		.uleb128 0xc
  615 01e8 6200     		.ascii	"b\000"
  616 01ea 01       		.byte	0x1
- 617 01eb 2D       		.byte	0x2d
+ 617 01eb 33       		.byte	0x33
  618 01ec 81000000 		.4byte	0x81
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 13
-
-
  619 01f0 02       		.uleb128 0x2
  620 01f1 91       		.byte	0x91
  621 01f2 6B       		.sleb128 -21
  622 01f3 13       		.uleb128 0x13
  623 01f4 02020000 		.4byte	.LASF22
  624 01f8 01       		.byte	0x1
- 625 01f9 2F       		.byte	0x2f
+ 625 01f9 35       		.byte	0x35
  626 01fa 8C000000 		.4byte	0x8c
  627 01fe 02       		.uleb128 0x2
  628 01ff 91       		.byte	0x91
@@ -736,7 +742,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  631 0202 12       		.uleb128 0x12
  632 0203 C5010000 		.4byte	.LASF23
  633 0207 01       		.byte	0x1
- 634 0208 3B       		.byte	0x3b
+ 634 0208 41       		.byte	0x41
  635 0209 81000000 		.4byte	0x81
  636 020d 00000000 		.4byte	.LFB5
  637 0211 58000000 		.4byte	.LFE5-.LFB5
@@ -746,7 +752,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  641 021b 0C       		.uleb128 0xc
  642 021c 726200   		.ascii	"rb\000"
  643 021f 01       		.byte	0x1
- 644 0220 3B       		.byte	0x3b
+ 644 0220 41       		.byte	0x41
  645 0221 4E010000 		.4byte	0x14e
  646 0225 02       		.uleb128 0x2
  647 0226 91       		.byte	0x91
@@ -754,7 +760,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  649 0228 0C       		.uleb128 0xc
  650 0229 6200     		.ascii	"b\000"
  651 022b 01       		.byte	0x1
- 652 022c 3B       		.byte	0x3b
+ 652 022c 41       		.byte	0x41
  653 022d 35020000 		.4byte	0x235
  654 0231 02       		.uleb128 0x2
  655 0232 91       		.byte	0x91
@@ -772,15 +778,15 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  667 0003 25       		.uleb128 0x25
  668 0004 0E       		.uleb128 0xe
  669 0005 13       		.uleb128 0x13
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 14
+
+
  670 0006 0B       		.uleb128 0xb
  671 0007 03       		.uleb128 0x3
  672 0008 0E       		.uleb128 0xe
  673 0009 1B       		.uleb128 0x1b
  674 000a 0E       		.uleb128 0xe
  675 000b 55       		.uleb128 0x55
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 14
-
-
  676 000c 17       		.uleb128 0x17
  677 000d 11       		.uleb128 0x11
  678 000e 01       		.uleb128 0x1
@@ -832,15 +838,15 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  724 003c 0B       		.uleb128 0xb
  725 003d 3B       		.uleb128 0x3b
  726 003e 0B       		.uleb128 0xb
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 15
+
+
  727 003f 01       		.uleb128 0x1
  728 0040 13       		.uleb128 0x13
  729 0041 00       		.byte	0
  730 0042 00       		.byte	0
  731 0043 06       		.uleb128 0x6
  732 0044 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 15
-
-
  733 0045 00       		.byte	0
  734 0046 03       		.uleb128 0x3
  735 0047 08       		.uleb128 0x8
@@ -892,15 +898,15 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  781 0075 00       		.byte	0
  782 0076 49       		.uleb128 0x49
  783 0077 13       		.uleb128 0x13
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 16
+
+
  784 0078 00       		.byte	0
  785 0079 00       		.byte	0
  786 007a 0B       		.uleb128 0xb
  787 007b 2E       		.uleb128 0x2e
  788 007c 01       		.byte	0x1
  789 007d 03       		.uleb128 0x3
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 16
-
-
  790 007e 0E       		.uleb128 0xe
  791 007f 3A       		.uleb128 0x3a
  792 0080 0B       		.uleb128 0xb
@@ -952,15 +958,15 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  838 00af 19       		.uleb128 0x19
  839 00b0 11       		.uleb128 0x11
  840 00b1 01       		.uleb128 0x1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 17
+
+
  841 00b2 12       		.uleb128 0x12
  842 00b3 06       		.uleb128 0x6
  843 00b4 40       		.uleb128 0x40
  844 00b5 18       		.uleb128 0x18
  845 00b6 9742     		.uleb128 0x2117
  846 00b8 19       		.uleb128 0x19
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 17
-
-
  847 00b9 01       		.uleb128 0x1
  848 00ba 13       		.uleb128 0x13
  849 00bb 00       		.byte	0
@@ -1012,15 +1018,15 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  895 00ea 0B       		.uleb128 0xb
  896 00eb 49       		.uleb128 0x49
  897 00ec 13       		.uleb128 0x13
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 18
+
+
  898 00ed 02       		.uleb128 0x2
  899 00ee 18       		.uleb128 0x18
  900 00ef 00       		.byte	0
  901 00f0 00       		.byte	0
  902 00f1 11       		.uleb128 0x11
  903 00f2 26       		.uleb128 0x26
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 18
-
-
  904 00f3 00       		.byte	0
  905 00f4 49       		.uleb128 0x49
  906 00f5 13       		.uleb128 0x13
@@ -1072,15 +1078,15 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  952              		.section	.debug_aranges,"",%progbits
  953 0000 44000000 		.4byte	0x44
  954 0004 0200     		.2byte	0x2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 19
+
+
  955 0006 00000000 		.4byte	.Ldebug_info0
  956 000a 04       		.byte	0x4
  957 000b 00       		.byte	0
  958 000c 0000     		.2byte	0
  959 000e 0000     		.2byte	0
  960 0010 00000000 		.4byte	.LFB0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 19
-
-
  961 0014 26000000 		.4byte	.LFE0-.LFB0
  962 0018 00000000 		.4byte	.LFB1
  963 001c 2A000000 		.4byte	.LFE1-.LFB1
@@ -1112,7 +1118,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  989 0034 00000000 		.4byte	0
  990              		.section	.debug_line,"",%progbits
  991              	.Ldebug_line0:
- 992 0000 C4010000 		.section	.debug_str,"MS",%progbits,1
+ 992 0000 C5010000 		.section	.debug_str,"MS",%progbits,1
  992      02002A01 
  992      00000201 
  992      FB0E0D00 
@@ -1132,15 +1138,15 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  997      6973696F 
  997      6E203233 
  997      37373135 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 20
+
+
  998 0070 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
  998      66756E63 
  998      74696F6E 
  998      2D736563 
  998      74696F6E 
  999              	.LASF1:
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 20
-
-
  1000 0098 756E7369 		.ascii	"unsigned char\000"
  1000      676E6564 
  1000      20636861 
@@ -1192,15 +1198,15 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  1016      00
  1017              	.LASF9:
  1018 016a 6C6F6E67 		.ascii	"long long unsigned int\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 21
+
+
  1018      206C6F6E 
  1018      6720756E 
  1018      7369676E 
  1018      65642069 
  1019              	.LASF11:
  1020 0181 75696E74 		.ascii	"uint8_t\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 21
-
-
  1020      385F7400 
  1021              	.LASF16:
  1022 0189 73697A65 		.ascii	"sizetype\000"
@@ -1252,15 +1258,15 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 1
  1043              	.LASF22:
  1044 0202 6E657874 		.ascii	"next\000"
  1044      00
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccs3z9CX.s 			page 22
+
+
  1045              	.LASF27:
  1046 0207 72625F6E 		.ascii	"rb_next\000"
  1046      65787400 
  1047              	.LASF15:
  1048 020f 64726F70 		.ascii	"drops\000"
  1048      7300
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccSIRC4D.s 			page 22
-
-
  1049              	.LASF17:
  1050 0215 6D6F7669 		.ascii	"movi_rb_t\000"
  1050      5F72625F 

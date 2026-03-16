@@ -1,6 +1,6 @@
 -- ======================================================================
 -- Proj06_freefly_uart_control_test_gps.ctl generated from Proj06_freefly_uart_control_test_gps
--- 03/10/2026 at 14:56
+-- 03/16/2026 at 16:14
 -- This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 -- ======================================================================
 

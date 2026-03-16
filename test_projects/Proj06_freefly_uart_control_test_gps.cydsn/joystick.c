@@ -33,6 +33,15 @@ static uint32 s_invert_mask = 0u;
 static int32  s_center_sum[N_CH];
 static uint16 s_center_n = 0u;
 
+static float s_sensitivity_multiplier = 1.0f;
+void joystick_set_sensitivity(joy_sensitivity_t level) {
+    switch(level) {
+        case SENSE_LOW:  s_sensitivity_multiplier = 0.1f; break;
+        case SENSE_MED:  s_sensitivity_multiplier = 0.5f; break;
+        case SENSE_HIGH: s_sensitivity_multiplier = 1.0f; break;
+    }
+}
+
 // Helper - Normalizes within +/-1
 static float normalize_axis(int16 c, int16 cmin, int16 ccenter, int16 cmax)
 {
@@ -283,7 +292,9 @@ void joystick_get_cmd(joy_cmd_t *out_cmd)
             u = -u;
 
         // Scale by global variable so user can tune output to different limits
-        u *= (float)CMD_MAX;
+        u *= s_sensitivity_multiplier;
+        if (u > (float)CMD_MAX) u = (float)CMD_MAX;
+        if (u < -(float)CMD_MAX) u = -(float)CMD_MAX;
         out_cmd->u[i] = u;
     }
 }
