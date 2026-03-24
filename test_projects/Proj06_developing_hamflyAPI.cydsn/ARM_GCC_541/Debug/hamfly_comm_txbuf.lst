@@ -1,0 +1,939 @@
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"hamfly_comm_txbuf.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.hamfly_txbuf_init,"ax",%progbits
+  20              		.align	2
+  21              		.global	hamfly_txbuf_init
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	hamfly_txbuf_init, %function
+  25              	hamfly_txbuf_init:
+  26              	.LFB0:
+  27              		.file 1 "HamflyAPI\\hamfly_comm_txbuf.c"
+   1:HamflyAPI/hamfly_comm_txbuf.c **** /* hamfly_txbuf.c
+   2:HamflyAPI/hamfly_comm_txbuf.c ****  * ============================================================
+   3:HamflyAPI/hamfly_comm_txbuf.c ****  * Copyright Hamish Johnson, 2026
+   4:HamflyAPI/hamfly_comm_txbuf.c ****  * Quantum Internet Systems Lab, SFU Physics
+   5:HamflyAPI/hamfly_comm_txbuf.c ****  * ============================================================
+   6:HamflyAPI/hamfly_comm_txbuf.c ****  *
+   7:HamflyAPI/hamfly_comm_txbuf.c ****  * Instance-based TX staging buffer.
+   8:HamflyAPI/hamfly_comm_txbuf.c ****  * Replaces the global simple_buffer singleton so each
+   9:HamflyAPI/hamfly_comm_txbuf.c ****  * hamfly_gimbal_t owns its own TX buffer.
+  10:HamflyAPI/hamfly_comm_txbuf.c ****  * Main-loop only -- not ISR-safe.
+  11:HamflyAPI/hamfly_comm_txbuf.c ****  */
+  12:HamflyAPI/hamfly_comm_txbuf.c **** 
+  13:HamflyAPI/hamfly_comm_txbuf.c **** #include "hamfly_comm_txbuf.h"
+  14:HamflyAPI/hamfly_comm_txbuf.c **** 
+  15:HamflyAPI/hamfly_comm_txbuf.c **** void hamfly_txbuf_init(hamfly_txbuf_t *tb)
+  16:HamflyAPI/hamfly_comm_txbuf.c **** {
+  28              		.loc 1 16 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 7, -4
+  36 0002 83B0     		sub	sp, sp, #12
+  37              		.cfi_def_cfa_offset 16
+  38 0004 00AF     		add	r7, sp, #0
+  39              		.cfi_def_cfa_register 7
+  40 0006 7860     		str	r0, [r7, #4]
+  17:HamflyAPI/hamfly_comm_txbuf.c ****     tb->head = 0u;
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 2
+
+
+  41              		.loc 1 17 0
+  42 0008 7B68     		ldr	r3, [r7, #4]
+  43 000a 0022     		movs	r2, #0
+  44 000c 83F84020 		strb	r2, [r3, #64]
+  18:HamflyAPI/hamfly_comm_txbuf.c ****     tb->tail = 0u;
+  45              		.loc 1 18 0
+  46 0010 7B68     		ldr	r3, [r7, #4]
+  47 0012 0022     		movs	r2, #0
+  48 0014 83F84120 		strb	r2, [r3, #65]
+  19:HamflyAPI/hamfly_comm_txbuf.c **** }
+  49              		.loc 1 19 0
+  50 0018 00BF     		nop
+  51 001a 0C37     		adds	r7, r7, #12
+  52              		.cfi_def_cfa_offset 4
+  53 001c BD46     		mov	sp, r7
+  54              		.cfi_def_cfa_register 13
+  55              		@ sp needed
+  56 001e 80BC     		pop	{r7}
+  57              		.cfi_restore 7
+  58              		.cfi_def_cfa_offset 0
+  59 0020 7047     		bx	lr
+  60              		.cfi_endproc
+  61              	.LFE0:
+  62              		.size	hamfly_txbuf_init, .-hamfly_txbuf_init
+  63 0022 00BF     		.section	.text.hamfly_txbuf_clear,"ax",%progbits
+  64              		.align	2
+  65              		.global	hamfly_txbuf_clear
+  66              		.thumb
+  67              		.thumb_func
+  68              		.type	hamfly_txbuf_clear, %function
+  69              	hamfly_txbuf_clear:
+  70              	.LFB1:
+  20:HamflyAPI/hamfly_comm_txbuf.c **** 
+  21:HamflyAPI/hamfly_comm_txbuf.c **** void hamfly_txbuf_clear(hamfly_txbuf_t *tb)
+  22:HamflyAPI/hamfly_comm_txbuf.c **** {
+  71              		.loc 1 22 0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 8
+  74              		@ frame_needed = 1, uses_anonymous_args = 0
+  75              		@ link register save eliminated.
+  76 0000 80B4     		push	{r7}
+  77              		.cfi_def_cfa_offset 4
+  78              		.cfi_offset 7, -4
+  79 0002 83B0     		sub	sp, sp, #12
+  80              		.cfi_def_cfa_offset 16
+  81 0004 00AF     		add	r7, sp, #0
+  82              		.cfi_def_cfa_register 7
+  83 0006 7860     		str	r0, [r7, #4]
+  23:HamflyAPI/hamfly_comm_txbuf.c ****     tb->head = 0u;
+  84              		.loc 1 23 0
+  85 0008 7B68     		ldr	r3, [r7, #4]
+  86 000a 0022     		movs	r2, #0
+  87 000c 83F84020 		strb	r2, [r3, #64]
+  24:HamflyAPI/hamfly_comm_txbuf.c ****     tb->tail = 0u;
+  88              		.loc 1 24 0
+  89 0010 7B68     		ldr	r3, [r7, #4]
+  90 0012 0022     		movs	r2, #0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 3
+
+
+  91 0014 83F84120 		strb	r2, [r3, #65]
+  25:HamflyAPI/hamfly_comm_txbuf.c **** }
+  92              		.loc 1 25 0
+  93 0018 00BF     		nop
+  94 001a 0C37     		adds	r7, r7, #12
+  95              		.cfi_def_cfa_offset 4
+  96 001c BD46     		mov	sp, r7
+  97              		.cfi_def_cfa_register 13
+  98              		@ sp needed
+  99 001e 80BC     		pop	{r7}
+ 100              		.cfi_restore 7
+ 101              		.cfi_def_cfa_offset 0
+ 102 0020 7047     		bx	lr
+ 103              		.cfi_endproc
+ 104              	.LFE1:
+ 105              		.size	hamfly_txbuf_clear, .-hamfly_txbuf_clear
+ 106 0022 00BF     		.section	.text.hamfly_txbuf_add,"ax",%progbits
+ 107              		.align	2
+ 108              		.global	hamfly_txbuf_add
+ 109              		.thumb
+ 110              		.thumb_func
+ 111              		.type	hamfly_txbuf_add, %function
+ 112              	hamfly_txbuf_add:
+ 113              	.LFB2:
+  26:HamflyAPI/hamfly_comm_txbuf.c **** 
+  27:HamflyAPI/hamfly_comm_txbuf.c **** int32_t hamfly_txbuf_add(hamfly_txbuf_t *tb, uint8_t b)
+  28:HamflyAPI/hamfly_comm_txbuf.c **** {
+ 114              		.loc 1 28 0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 16
+ 117              		@ frame_needed = 1, uses_anonymous_args = 0
+ 118              		@ link register save eliminated.
+ 119 0000 80B4     		push	{r7}
+ 120              		.cfi_def_cfa_offset 4
+ 121              		.cfi_offset 7, -4
+ 122 0002 85B0     		sub	sp, sp, #20
+ 123              		.cfi_def_cfa_offset 24
+ 124 0004 00AF     		add	r7, sp, #0
+ 125              		.cfi_def_cfa_register 7
+ 126 0006 7860     		str	r0, [r7, #4]
+ 127 0008 0B46     		mov	r3, r1
+ 128 000a FB70     		strb	r3, [r7, #3]
+  29:HamflyAPI/hamfly_comm_txbuf.c ****     uint8_t next = (uint8_t)((tb->head + 1u) % HAMFLY_TXBUF_SIZE);
+ 129              		.loc 1 29 0
+ 130 000c 7B68     		ldr	r3, [r7, #4]
+ 131 000e 93F84030 		ldrb	r3, [r3, #64]	@ zero_extendqisi2
+ 132 0012 0133     		adds	r3, r3, #1
+ 133 0014 DBB2     		uxtb	r3, r3
+ 134 0016 03F03F03 		and	r3, r3, #63
+ 135 001a FB73     		strb	r3, [r7, #15]
+  30:HamflyAPI/hamfly_comm_txbuf.c ****     if (next == tb->tail) return 0;   /* full */
+ 136              		.loc 1 30 0
+ 137 001c 7B68     		ldr	r3, [r7, #4]
+ 138 001e 93F84130 		ldrb	r3, [r3, #65]	@ zero_extendqisi2
+ 139 0022 FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 140 0024 9A42     		cmp	r2, r3
+ 141 0026 01D1     		bne	.L4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 4
+
+
+ 142              		.loc 1 30 0 is_stmt 0 discriminator 1
+ 143 0028 0023     		movs	r3, #0
+ 144 002a 0BE0     		b	.L5
+ 145              	.L4:
+  31:HamflyAPI/hamfly_comm_txbuf.c ****     tb->buf[tb->head] = b;
+ 146              		.loc 1 31 0 is_stmt 1
+ 147 002c 7B68     		ldr	r3, [r7, #4]
+ 148 002e 93F84030 		ldrb	r3, [r3, #64]	@ zero_extendqisi2
+ 149 0032 1946     		mov	r1, r3
+ 150 0034 7B68     		ldr	r3, [r7, #4]
+ 151 0036 FA78     		ldrb	r2, [r7, #3]
+ 152 0038 5A54     		strb	r2, [r3, r1]
+  32:HamflyAPI/hamfly_comm_txbuf.c ****     tb->head = next;
+ 153              		.loc 1 32 0
+ 154 003a 7B68     		ldr	r3, [r7, #4]
+ 155 003c FA7B     		ldrb	r2, [r7, #15]
+ 156 003e 83F84020 		strb	r2, [r3, #64]
+  33:HamflyAPI/hamfly_comm_txbuf.c ****     return 1;
+ 157              		.loc 1 33 0
+ 158 0042 0123     		movs	r3, #1
+ 159              	.L5:
+  34:HamflyAPI/hamfly_comm_txbuf.c **** }
+ 160              		.loc 1 34 0
+ 161 0044 1846     		mov	r0, r3
+ 162 0046 1437     		adds	r7, r7, #20
+ 163              		.cfi_def_cfa_offset 4
+ 164 0048 BD46     		mov	sp, r7
+ 165              		.cfi_def_cfa_register 13
+ 166              		@ sp needed
+ 167 004a 80BC     		pop	{r7}
+ 168              		.cfi_restore 7
+ 169              		.cfi_def_cfa_offset 0
+ 170 004c 7047     		bx	lr
+ 171              		.cfi_endproc
+ 172              	.LFE2:
+ 173              		.size	hamfly_txbuf_add, .-hamfly_txbuf_add
+ 174 004e 00BF     		.section	.text.hamfly_txbuf_remove,"ax",%progbits
+ 175              		.align	2
+ 176              		.global	hamfly_txbuf_remove
+ 177              		.thumb
+ 178              		.thumb_func
+ 179              		.type	hamfly_txbuf_remove, %function
+ 180              	hamfly_txbuf_remove:
+ 181              	.LFB3:
+  35:HamflyAPI/hamfly_comm_txbuf.c **** 
+  36:HamflyAPI/hamfly_comm_txbuf.c **** int32_t hamfly_txbuf_remove(hamfly_txbuf_t *tb, uint8_t *b)
+  37:HamflyAPI/hamfly_comm_txbuf.c **** {
+ 182              		.loc 1 37 0
+ 183              		.cfi_startproc
+ 184              		@ args = 0, pretend = 0, frame = 8
+ 185              		@ frame_needed = 1, uses_anonymous_args = 0
+ 186              		@ link register save eliminated.
+ 187 0000 80B4     		push	{r7}
+ 188              		.cfi_def_cfa_offset 4
+ 189              		.cfi_offset 7, -4
+ 190 0002 83B0     		sub	sp, sp, #12
+ 191              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 5
+
+
+ 192 0004 00AF     		add	r7, sp, #0
+ 193              		.cfi_def_cfa_register 7
+ 194 0006 7860     		str	r0, [r7, #4]
+ 195 0008 3960     		str	r1, [r7]
+  38:HamflyAPI/hamfly_comm_txbuf.c ****     if (tb->head == tb->tail) return 0;   /* empty */
+ 196              		.loc 1 38 0
+ 197 000a 7B68     		ldr	r3, [r7, #4]
+ 198 000c 93F84020 		ldrb	r2, [r3, #64]	@ zero_extendqisi2
+ 199 0010 7B68     		ldr	r3, [r7, #4]
+ 200 0012 93F84130 		ldrb	r3, [r3, #65]	@ zero_extendqisi2
+ 201 0016 9A42     		cmp	r2, r3
+ 202 0018 01D1     		bne	.L7
+ 203              		.loc 1 38 0 is_stmt 0 discriminator 1
+ 204 001a 0023     		movs	r3, #0
+ 205 001c 13E0     		b	.L8
+ 206              	.L7:
+  39:HamflyAPI/hamfly_comm_txbuf.c ****     *b       = tb->buf[tb->tail];
+ 207              		.loc 1 39 0 is_stmt 1
+ 208 001e 7B68     		ldr	r3, [r7, #4]
+ 209 0020 93F84130 		ldrb	r3, [r3, #65]	@ zero_extendqisi2
+ 210 0024 1A46     		mov	r2, r3
+ 211 0026 7B68     		ldr	r3, [r7, #4]
+ 212 0028 9A5C     		ldrb	r2, [r3, r2]	@ zero_extendqisi2
+ 213 002a 3B68     		ldr	r3, [r7]
+ 214 002c 1A70     		strb	r2, [r3]
+  40:HamflyAPI/hamfly_comm_txbuf.c ****     tb->tail = (uint8_t)((tb->tail + 1u) % HAMFLY_TXBUF_SIZE);
+ 215              		.loc 1 40 0
+ 216 002e 7B68     		ldr	r3, [r7, #4]
+ 217 0030 93F84130 		ldrb	r3, [r3, #65]	@ zero_extendqisi2
+ 218 0034 0133     		adds	r3, r3, #1
+ 219 0036 DBB2     		uxtb	r3, r3
+ 220 0038 03F03F03 		and	r3, r3, #63
+ 221 003c DAB2     		uxtb	r2, r3
+ 222 003e 7B68     		ldr	r3, [r7, #4]
+ 223 0040 83F84120 		strb	r2, [r3, #65]
+  41:HamflyAPI/hamfly_comm_txbuf.c ****     return 1;
+ 224              		.loc 1 41 0
+ 225 0044 0123     		movs	r3, #1
+ 226              	.L8:
+  42:HamflyAPI/hamfly_comm_txbuf.c **** }
+ 227              		.loc 1 42 0
+ 228 0046 1846     		mov	r0, r3
+ 229 0048 0C37     		adds	r7, r7, #12
+ 230              		.cfi_def_cfa_offset 4
+ 231 004a BD46     		mov	sp, r7
+ 232              		.cfi_def_cfa_register 13
+ 233              		@ sp needed
+ 234 004c 80BC     		pop	{r7}
+ 235              		.cfi_restore 7
+ 236              		.cfi_def_cfa_offset 0
+ 237 004e 7047     		bx	lr
+ 238              		.cfi_endproc
+ 239              	.LFE3:
+ 240              		.size	hamfly_txbuf_remove, .-hamfly_txbuf_remove
+ 241              		.text
+ 242              	.Letext0:
+ 243              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 6
+
+
+ 244              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 245              		.file 4 "HamflyAPI\\hamfly_comm_txbuf.h"
+ 246              		.section	.debug_info,"",%progbits
+ 247              	.Ldebug_info0:
+ 248 0000 A9010000 		.4byte	0x1a9
+ 249 0004 0400     		.2byte	0x4
+ 250 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 251 000a 04       		.byte	0x4
+ 252 000b 01       		.uleb128 0x1
+ 253 000c 0A000000 		.4byte	.LASF21
+ 254 0010 0C       		.byte	0xc
+ 255 0011 95010000 		.4byte	.LASF22
+ 256 0015 A2000000 		.4byte	.LASF23
+ 257 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 258 001d 00000000 		.4byte	0
+ 259 0021 00000000 		.4byte	.Ldebug_line0
+ 260 0025 02       		.uleb128 0x2
+ 261 0026 01       		.byte	0x1
+ 262 0027 06       		.byte	0x6
+ 263 0028 20020000 		.4byte	.LASF0
+ 264 002c 03       		.uleb128 0x3
+ 265 002d 00000000 		.4byte	.LASF4
+ 266 0031 02       		.byte	0x2
+ 267 0032 1D       		.byte	0x1d
+ 268 0033 37000000 		.4byte	0x37
+ 269 0037 02       		.uleb128 0x2
+ 270 0038 01       		.byte	0x1
+ 271 0039 08       		.byte	0x8
+ 272 003a 0E010000 		.4byte	.LASF1
+ 273 003e 02       		.uleb128 0x2
+ 274 003f 02       		.byte	0x2
+ 275 0040 05       		.byte	0x5
+ 276 0041 E4010000 		.4byte	.LASF2
+ 277 0045 02       		.uleb128 0x2
+ 278 0046 02       		.byte	0x2
+ 279 0047 07       		.byte	0x7
+ 280 0048 2E010000 		.4byte	.LASF3
+ 281 004c 03       		.uleb128 0x3
+ 282 004d 98000000 		.4byte	.LASF5
+ 283 0051 02       		.byte	0x2
+ 284 0052 3F       		.byte	0x3f
+ 285 0053 57000000 		.4byte	0x57
+ 286 0057 02       		.uleb128 0x2
+ 287 0058 04       		.byte	0x4
+ 288 0059 05       		.byte	0x5
+ 289 005a 06020000 		.4byte	.LASF6
+ 290 005e 02       		.uleb128 0x2
+ 291 005f 04       		.byte	0x4
+ 292 0060 07       		.byte	0x7
+ 293 0061 1C010000 		.4byte	.LASF7
+ 294 0065 02       		.uleb128 0x2
+ 295 0066 08       		.byte	0x8
+ 296 0067 05       		.byte	0x5
+ 297 0068 C4010000 		.4byte	.LASF8
+ 298 006c 02       		.uleb128 0x2
+ 299 006d 08       		.byte	0x8
+ 300 006e 07       		.byte	0x7
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 7
+
+
+ 301 006f 76010000 		.4byte	.LASF9
+ 302 0073 04       		.uleb128 0x4
+ 303 0074 04       		.byte	0x4
+ 304 0075 05       		.byte	0x5
+ 305 0076 696E7400 		.ascii	"int\000"
+ 306 007a 02       		.uleb128 0x2
+ 307 007b 04       		.byte	0x4
+ 308 007c 07       		.byte	0x7
+ 309 007d 69010000 		.4byte	.LASF10
+ 310 0081 03       		.uleb128 0x3
+ 311 0082 8D010000 		.4byte	.LASF11
+ 312 0086 03       		.byte	0x3
+ 313 0087 18       		.byte	0x18
+ 314 0088 2C000000 		.4byte	0x2c
+ 315 008c 03       		.uleb128 0x3
+ 316 008d B3010000 		.4byte	.LASF12
+ 317 0091 03       		.byte	0x3
+ 318 0092 2C       		.byte	0x2c
+ 319 0093 4C000000 		.4byte	0x4c
+ 320 0097 05       		.uleb128 0x5
+ 321 0098 42       		.byte	0x42
+ 322 0099 04       		.byte	0x4
+ 323 009a 16       		.byte	0x16
+ 324 009b C4000000 		.4byte	0xc4
+ 325 009f 06       		.uleb128 0x6
+ 326 00a0 62756600 		.ascii	"buf\000"
+ 327 00a4 04       		.byte	0x4
+ 328 00a5 17       		.byte	0x17
+ 329 00a6 C4000000 		.4byte	0xc4
+ 330 00aa 00       		.byte	0
+ 331 00ab 07       		.uleb128 0x7
+ 332 00ac 64010000 		.4byte	.LASF13
+ 333 00b0 04       		.byte	0x4
+ 334 00b1 18       		.byte	0x18
+ 335 00b2 81000000 		.4byte	0x81
+ 336 00b6 40       		.byte	0x40
+ 337 00b7 07       		.uleb128 0x7
+ 338 00b8 EE010000 		.4byte	.LASF14
+ 339 00bc 04       		.byte	0x4
+ 340 00bd 19       		.byte	0x19
+ 341 00be 81000000 		.4byte	0x81
+ 342 00c2 41       		.byte	0x41
+ 343 00c3 00       		.byte	0
+ 344 00c4 08       		.uleb128 0x8
+ 345 00c5 81000000 		.4byte	0x81
+ 346 00c9 D4000000 		.4byte	0xd4
+ 347 00cd 09       		.uleb128 0x9
+ 348 00ce D4000000 		.4byte	0xd4
+ 349 00d2 3F       		.byte	0x3f
+ 350 00d3 00       		.byte	0
+ 351 00d4 02       		.uleb128 0x2
+ 352 00d5 04       		.byte	0x4
+ 353 00d6 07       		.byte	0x7
+ 354 00d7 BB010000 		.4byte	.LASF15
+ 355 00db 03       		.uleb128 0x3
+ 356 00dc 55010000 		.4byte	.LASF16
+ 357 00e0 04       		.byte	0x4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 8
+
+
+ 358 00e1 1A       		.byte	0x1a
+ 359 00e2 97000000 		.4byte	0x97
+ 360 00e6 0A       		.uleb128 0xa
+ 361 00e7 D2010000 		.4byte	.LASF17
+ 362 00eb 01       		.byte	0x1
+ 363 00ec 0F       		.byte	0xf
+ 364 00ed 00000000 		.4byte	.LFB0
+ 365 00f1 22000000 		.4byte	.LFE0-.LFB0
+ 366 00f5 01       		.uleb128 0x1
+ 367 00f6 9C       		.byte	0x9c
+ 368 00f7 09010000 		.4byte	0x109
+ 369 00fb 0B       		.uleb128 0xb
+ 370 00fc 746200   		.ascii	"tb\000"
+ 371 00ff 01       		.byte	0x1
+ 372 0100 0F       		.byte	0xf
+ 373 0101 09010000 		.4byte	0x109
+ 374 0105 02       		.uleb128 0x2
+ 375 0106 91       		.byte	0x91
+ 376 0107 74       		.sleb128 -12
+ 377 0108 00       		.byte	0
+ 378 0109 0C       		.uleb128 0xc
+ 379 010a 04       		.byte	0x4
+ 380 010b DB000000 		.4byte	0xdb
+ 381 010f 0A       		.uleb128 0xa
+ 382 0110 F3010000 		.4byte	.LASF18
+ 383 0114 01       		.byte	0x1
+ 384 0115 15       		.byte	0x15
+ 385 0116 00000000 		.4byte	.LFB1
+ 386 011a 22000000 		.4byte	.LFE1-.LFB1
+ 387 011e 01       		.uleb128 0x1
+ 388 011f 9C       		.byte	0x9c
+ 389 0120 32010000 		.4byte	0x132
+ 390 0124 0B       		.uleb128 0xb
+ 391 0125 746200   		.ascii	"tb\000"
+ 392 0128 01       		.byte	0x1
+ 393 0129 15       		.byte	0x15
+ 394 012a 09010000 		.4byte	0x109
+ 395 012e 02       		.uleb128 0x2
+ 396 012f 91       		.byte	0x91
+ 397 0130 74       		.sleb128 -12
+ 398 0131 00       		.byte	0
+ 399 0132 0D       		.uleb128 0xd
+ 400 0133 0F020000 		.4byte	.LASF19
+ 401 0137 01       		.byte	0x1
+ 402 0138 1B       		.byte	0x1b
+ 403 0139 8C000000 		.4byte	0x8c
+ 404 013d 00000000 		.4byte	.LFB2
+ 405 0141 4E000000 		.4byte	.LFE2-.LFB2
+ 406 0145 01       		.uleb128 0x1
+ 407 0146 9C       		.byte	0x9c
+ 408 0147 73010000 		.4byte	0x173
+ 409 014b 0B       		.uleb128 0xb
+ 410 014c 746200   		.ascii	"tb\000"
+ 411 014f 01       		.byte	0x1
+ 412 0150 1B       		.byte	0x1b
+ 413 0151 09010000 		.4byte	0x109
+ 414 0155 02       		.uleb128 0x2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 9
+
+
+ 415 0156 91       		.byte	0x91
+ 416 0157 6C       		.sleb128 -20
+ 417 0158 0B       		.uleb128 0xb
+ 418 0159 6200     		.ascii	"b\000"
+ 419 015b 01       		.byte	0x1
+ 420 015c 1B       		.byte	0x1b
+ 421 015d 81000000 		.4byte	0x81
+ 422 0161 02       		.uleb128 0x2
+ 423 0162 91       		.byte	0x91
+ 424 0163 6B       		.sleb128 -21
+ 425 0164 0E       		.uleb128 0xe
+ 426 0165 2C020000 		.4byte	.LASF24
+ 427 0169 01       		.byte	0x1
+ 428 016a 1D       		.byte	0x1d
+ 429 016b 81000000 		.4byte	0x81
+ 430 016f 02       		.uleb128 0x2
+ 431 0170 91       		.byte	0x91
+ 432 0171 77       		.sleb128 -9
+ 433 0172 00       		.byte	0
+ 434 0173 0D       		.uleb128 0xd
+ 435 0174 41010000 		.4byte	.LASF20
+ 436 0178 01       		.byte	0x1
+ 437 0179 24       		.byte	0x24
+ 438 017a 8C000000 		.4byte	0x8c
+ 439 017e 00000000 		.4byte	.LFB3
+ 440 0182 50000000 		.4byte	.LFE3-.LFB3
+ 441 0186 01       		.uleb128 0x1
+ 442 0187 9C       		.byte	0x9c
+ 443 0188 A6010000 		.4byte	0x1a6
+ 444 018c 0B       		.uleb128 0xb
+ 445 018d 746200   		.ascii	"tb\000"
+ 446 0190 01       		.byte	0x1
+ 447 0191 24       		.byte	0x24
+ 448 0192 09010000 		.4byte	0x109
+ 449 0196 02       		.uleb128 0x2
+ 450 0197 91       		.byte	0x91
+ 451 0198 74       		.sleb128 -12
+ 452 0199 0B       		.uleb128 0xb
+ 453 019a 6200     		.ascii	"b\000"
+ 454 019c 01       		.byte	0x1
+ 455 019d 24       		.byte	0x24
+ 456 019e A6010000 		.4byte	0x1a6
+ 457 01a2 02       		.uleb128 0x2
+ 458 01a3 91       		.byte	0x91
+ 459 01a4 70       		.sleb128 -16
+ 460 01a5 00       		.byte	0
+ 461 01a6 0C       		.uleb128 0xc
+ 462 01a7 04       		.byte	0x4
+ 463 01a8 81000000 		.4byte	0x81
+ 464 01ac 00       		.byte	0
+ 465              		.section	.debug_abbrev,"",%progbits
+ 466              	.Ldebug_abbrev0:
+ 467 0000 01       		.uleb128 0x1
+ 468 0001 11       		.uleb128 0x11
+ 469 0002 01       		.byte	0x1
+ 470 0003 25       		.uleb128 0x25
+ 471 0004 0E       		.uleb128 0xe
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 10
+
+
+ 472 0005 13       		.uleb128 0x13
+ 473 0006 0B       		.uleb128 0xb
+ 474 0007 03       		.uleb128 0x3
+ 475 0008 0E       		.uleb128 0xe
+ 476 0009 1B       		.uleb128 0x1b
+ 477 000a 0E       		.uleb128 0xe
+ 478 000b 55       		.uleb128 0x55
+ 479 000c 17       		.uleb128 0x17
+ 480 000d 11       		.uleb128 0x11
+ 481 000e 01       		.uleb128 0x1
+ 482 000f 10       		.uleb128 0x10
+ 483 0010 17       		.uleb128 0x17
+ 484 0011 00       		.byte	0
+ 485 0012 00       		.byte	0
+ 486 0013 02       		.uleb128 0x2
+ 487 0014 24       		.uleb128 0x24
+ 488 0015 00       		.byte	0
+ 489 0016 0B       		.uleb128 0xb
+ 490 0017 0B       		.uleb128 0xb
+ 491 0018 3E       		.uleb128 0x3e
+ 492 0019 0B       		.uleb128 0xb
+ 493 001a 03       		.uleb128 0x3
+ 494 001b 0E       		.uleb128 0xe
+ 495 001c 00       		.byte	0
+ 496 001d 00       		.byte	0
+ 497 001e 03       		.uleb128 0x3
+ 498 001f 16       		.uleb128 0x16
+ 499 0020 00       		.byte	0
+ 500 0021 03       		.uleb128 0x3
+ 501 0022 0E       		.uleb128 0xe
+ 502 0023 3A       		.uleb128 0x3a
+ 503 0024 0B       		.uleb128 0xb
+ 504 0025 3B       		.uleb128 0x3b
+ 505 0026 0B       		.uleb128 0xb
+ 506 0027 49       		.uleb128 0x49
+ 507 0028 13       		.uleb128 0x13
+ 508 0029 00       		.byte	0
+ 509 002a 00       		.byte	0
+ 510 002b 04       		.uleb128 0x4
+ 511 002c 24       		.uleb128 0x24
+ 512 002d 00       		.byte	0
+ 513 002e 0B       		.uleb128 0xb
+ 514 002f 0B       		.uleb128 0xb
+ 515 0030 3E       		.uleb128 0x3e
+ 516 0031 0B       		.uleb128 0xb
+ 517 0032 03       		.uleb128 0x3
+ 518 0033 08       		.uleb128 0x8
+ 519 0034 00       		.byte	0
+ 520 0035 00       		.byte	0
+ 521 0036 05       		.uleb128 0x5
+ 522 0037 13       		.uleb128 0x13
+ 523 0038 01       		.byte	0x1
+ 524 0039 0B       		.uleb128 0xb
+ 525 003a 0B       		.uleb128 0xb
+ 526 003b 3A       		.uleb128 0x3a
+ 527 003c 0B       		.uleb128 0xb
+ 528 003d 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 11
+
+
+ 529 003e 0B       		.uleb128 0xb
+ 530 003f 01       		.uleb128 0x1
+ 531 0040 13       		.uleb128 0x13
+ 532 0041 00       		.byte	0
+ 533 0042 00       		.byte	0
+ 534 0043 06       		.uleb128 0x6
+ 535 0044 0D       		.uleb128 0xd
+ 536 0045 00       		.byte	0
+ 537 0046 03       		.uleb128 0x3
+ 538 0047 08       		.uleb128 0x8
+ 539 0048 3A       		.uleb128 0x3a
+ 540 0049 0B       		.uleb128 0xb
+ 541 004a 3B       		.uleb128 0x3b
+ 542 004b 0B       		.uleb128 0xb
+ 543 004c 49       		.uleb128 0x49
+ 544 004d 13       		.uleb128 0x13
+ 545 004e 38       		.uleb128 0x38
+ 546 004f 0B       		.uleb128 0xb
+ 547 0050 00       		.byte	0
+ 548 0051 00       		.byte	0
+ 549 0052 07       		.uleb128 0x7
+ 550 0053 0D       		.uleb128 0xd
+ 551 0054 00       		.byte	0
+ 552 0055 03       		.uleb128 0x3
+ 553 0056 0E       		.uleb128 0xe
+ 554 0057 3A       		.uleb128 0x3a
+ 555 0058 0B       		.uleb128 0xb
+ 556 0059 3B       		.uleb128 0x3b
+ 557 005a 0B       		.uleb128 0xb
+ 558 005b 49       		.uleb128 0x49
+ 559 005c 13       		.uleb128 0x13
+ 560 005d 38       		.uleb128 0x38
+ 561 005e 0B       		.uleb128 0xb
+ 562 005f 00       		.byte	0
+ 563 0060 00       		.byte	0
+ 564 0061 08       		.uleb128 0x8
+ 565 0062 01       		.uleb128 0x1
+ 566 0063 01       		.byte	0x1
+ 567 0064 49       		.uleb128 0x49
+ 568 0065 13       		.uleb128 0x13
+ 569 0066 01       		.uleb128 0x1
+ 570 0067 13       		.uleb128 0x13
+ 571 0068 00       		.byte	0
+ 572 0069 00       		.byte	0
+ 573 006a 09       		.uleb128 0x9
+ 574 006b 21       		.uleb128 0x21
+ 575 006c 00       		.byte	0
+ 576 006d 49       		.uleb128 0x49
+ 577 006e 13       		.uleb128 0x13
+ 578 006f 2F       		.uleb128 0x2f
+ 579 0070 0B       		.uleb128 0xb
+ 580 0071 00       		.byte	0
+ 581 0072 00       		.byte	0
+ 582 0073 0A       		.uleb128 0xa
+ 583 0074 2E       		.uleb128 0x2e
+ 584 0075 01       		.byte	0x1
+ 585 0076 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 12
+
+
+ 586 0077 19       		.uleb128 0x19
+ 587 0078 03       		.uleb128 0x3
+ 588 0079 0E       		.uleb128 0xe
+ 589 007a 3A       		.uleb128 0x3a
+ 590 007b 0B       		.uleb128 0xb
+ 591 007c 3B       		.uleb128 0x3b
+ 592 007d 0B       		.uleb128 0xb
+ 593 007e 27       		.uleb128 0x27
+ 594 007f 19       		.uleb128 0x19
+ 595 0080 11       		.uleb128 0x11
+ 596 0081 01       		.uleb128 0x1
+ 597 0082 12       		.uleb128 0x12
+ 598 0083 06       		.uleb128 0x6
+ 599 0084 40       		.uleb128 0x40
+ 600 0085 18       		.uleb128 0x18
+ 601 0086 9742     		.uleb128 0x2117
+ 602 0088 19       		.uleb128 0x19
+ 603 0089 01       		.uleb128 0x1
+ 604 008a 13       		.uleb128 0x13
+ 605 008b 00       		.byte	0
+ 606 008c 00       		.byte	0
+ 607 008d 0B       		.uleb128 0xb
+ 608 008e 05       		.uleb128 0x5
+ 609 008f 00       		.byte	0
+ 610 0090 03       		.uleb128 0x3
+ 611 0091 08       		.uleb128 0x8
+ 612 0092 3A       		.uleb128 0x3a
+ 613 0093 0B       		.uleb128 0xb
+ 614 0094 3B       		.uleb128 0x3b
+ 615 0095 0B       		.uleb128 0xb
+ 616 0096 49       		.uleb128 0x49
+ 617 0097 13       		.uleb128 0x13
+ 618 0098 02       		.uleb128 0x2
+ 619 0099 18       		.uleb128 0x18
+ 620 009a 00       		.byte	0
+ 621 009b 00       		.byte	0
+ 622 009c 0C       		.uleb128 0xc
+ 623 009d 0F       		.uleb128 0xf
+ 624 009e 00       		.byte	0
+ 625 009f 0B       		.uleb128 0xb
+ 626 00a0 0B       		.uleb128 0xb
+ 627 00a1 49       		.uleb128 0x49
+ 628 00a2 13       		.uleb128 0x13
+ 629 00a3 00       		.byte	0
+ 630 00a4 00       		.byte	0
+ 631 00a5 0D       		.uleb128 0xd
+ 632 00a6 2E       		.uleb128 0x2e
+ 633 00a7 01       		.byte	0x1
+ 634 00a8 3F       		.uleb128 0x3f
+ 635 00a9 19       		.uleb128 0x19
+ 636 00aa 03       		.uleb128 0x3
+ 637 00ab 0E       		.uleb128 0xe
+ 638 00ac 3A       		.uleb128 0x3a
+ 639 00ad 0B       		.uleb128 0xb
+ 640 00ae 3B       		.uleb128 0x3b
+ 641 00af 0B       		.uleb128 0xb
+ 642 00b0 27       		.uleb128 0x27
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 13
+
+
+ 643 00b1 19       		.uleb128 0x19
+ 644 00b2 49       		.uleb128 0x49
+ 645 00b3 13       		.uleb128 0x13
+ 646 00b4 11       		.uleb128 0x11
+ 647 00b5 01       		.uleb128 0x1
+ 648 00b6 12       		.uleb128 0x12
+ 649 00b7 06       		.uleb128 0x6
+ 650 00b8 40       		.uleb128 0x40
+ 651 00b9 18       		.uleb128 0x18
+ 652 00ba 9742     		.uleb128 0x2117
+ 653 00bc 19       		.uleb128 0x19
+ 654 00bd 01       		.uleb128 0x1
+ 655 00be 13       		.uleb128 0x13
+ 656 00bf 00       		.byte	0
+ 657 00c0 00       		.byte	0
+ 658 00c1 0E       		.uleb128 0xe
+ 659 00c2 34       		.uleb128 0x34
+ 660 00c3 00       		.byte	0
+ 661 00c4 03       		.uleb128 0x3
+ 662 00c5 0E       		.uleb128 0xe
+ 663 00c6 3A       		.uleb128 0x3a
+ 664 00c7 0B       		.uleb128 0xb
+ 665 00c8 3B       		.uleb128 0x3b
+ 666 00c9 0B       		.uleb128 0xb
+ 667 00ca 49       		.uleb128 0x49
+ 668 00cb 13       		.uleb128 0x13
+ 669 00cc 02       		.uleb128 0x2
+ 670 00cd 18       		.uleb128 0x18
+ 671 00ce 00       		.byte	0
+ 672 00cf 00       		.byte	0
+ 673 00d0 00       		.byte	0
+ 674              		.section	.debug_aranges,"",%progbits
+ 675 0000 34000000 		.4byte	0x34
+ 676 0004 0200     		.2byte	0x2
+ 677 0006 00000000 		.4byte	.Ldebug_info0
+ 678 000a 04       		.byte	0x4
+ 679 000b 00       		.byte	0
+ 680 000c 0000     		.2byte	0
+ 681 000e 0000     		.2byte	0
+ 682 0010 00000000 		.4byte	.LFB0
+ 683 0014 22000000 		.4byte	.LFE0-.LFB0
+ 684 0018 00000000 		.4byte	.LFB1
+ 685 001c 22000000 		.4byte	.LFE1-.LFB1
+ 686 0020 00000000 		.4byte	.LFB2
+ 687 0024 4E000000 		.4byte	.LFE2-.LFB2
+ 688 0028 00000000 		.4byte	.LFB3
+ 689 002c 50000000 		.4byte	.LFE3-.LFB3
+ 690 0030 00000000 		.4byte	0
+ 691 0034 00000000 		.4byte	0
+ 692              		.section	.debug_ranges,"",%progbits
+ 693              	.Ldebug_ranges0:
+ 694 0000 00000000 		.4byte	.LFB0
+ 695 0004 22000000 		.4byte	.LFE0
+ 696 0008 00000000 		.4byte	.LFB1
+ 697 000c 22000000 		.4byte	.LFE1
+ 698 0010 00000000 		.4byte	.LFB2
+ 699 0014 4E000000 		.4byte	.LFE2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 14
+
+
+ 700 0018 00000000 		.4byte	.LFB3
+ 701 001c 50000000 		.4byte	.LFE3
+ 702 0020 00000000 		.4byte	0
+ 703 0024 00000000 		.4byte	0
+ 704              		.section	.debug_line,"",%progbits
+ 705              	.Ldebug_line0:
+ 706 0000 A9010000 		.section	.debug_str,"MS",%progbits,1
+ 706      02004801 
+ 706      00000201 
+ 706      FB0E0D00 
+ 706      01010101 
+ 707              	.LASF4:
+ 708 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 708      6E74385F 
+ 708      7400
+ 709              	.LASF21:
+ 710 000a 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 710      43313120 
+ 710      352E342E 
+ 710      31203230 
+ 710      31363036 
+ 711 003d 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 711      20726576 
+ 711      6973696F 
+ 711      6E203233 
+ 711      37373135 
+ 712 0070 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 712      66756E63 
+ 712      74696F6E 
+ 712      2D736563 
+ 712      74696F6E 
+ 713              	.LASF5:
+ 714 0098 5F5F696E 		.ascii	"__int32_t\000"
+ 714      7433325F 
+ 714      7400
+ 715              	.LASF23:
+ 716 00a2 433A5C55 		.ascii	"C:\\Users\\Jennewein\\Documents\\hamish-workspace\\"
+ 716      73657273 
+ 716      5C4A656E 
+ 716      6E657765 
+ 716      696E5C44 
+ 717 00d0 50536F43 		.ascii	"PSoC-Programs\\test_projects\\Proj06_developing_ham"
+ 717      2D50726F 
+ 717      6772616D 
+ 717      735C7465 
+ 717      73745F70 
+ 718 0101 666C7941 		.ascii	"flyAPI.cydsn\000"
+ 718      50492E63 
+ 718      7964736E 
+ 718      00
+ 719              	.LASF1:
+ 720 010e 756E7369 		.ascii	"unsigned char\000"
+ 720      676E6564 
+ 720      20636861 
+ 720      7200
+ 721              	.LASF7:
+ 722 011c 6C6F6E67 		.ascii	"long unsigned int\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 15
+
+
+ 722      20756E73 
+ 722      69676E65 
+ 722      6420696E 
+ 722      7400
+ 723              	.LASF3:
+ 724 012e 73686F72 		.ascii	"short unsigned int\000"
+ 724      7420756E 
+ 724      7369676E 
+ 724      65642069 
+ 724      6E7400
+ 725              	.LASF20:
+ 726 0141 68616D66 		.ascii	"hamfly_txbuf_remove\000"
+ 726      6C795F74 
+ 726      78627566 
+ 726      5F72656D 
+ 726      6F766500 
+ 727              	.LASF16:
+ 728 0155 68616D66 		.ascii	"hamfly_txbuf_t\000"
+ 728      6C795F74 
+ 728      78627566 
+ 728      5F7400
+ 729              	.LASF13:
+ 730 0164 68656164 		.ascii	"head\000"
+ 730      00
+ 731              	.LASF10:
+ 732 0169 756E7369 		.ascii	"unsigned int\000"
+ 732      676E6564 
+ 732      20696E74 
+ 732      00
+ 733              	.LASF9:
+ 734 0176 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 734      206C6F6E 
+ 734      6720756E 
+ 734      7369676E 
+ 734      65642069 
+ 735              	.LASF11:
+ 736 018d 75696E74 		.ascii	"uint8_t\000"
+ 736      385F7400 
+ 737              	.LASF22:
+ 738 0195 48616D66 		.ascii	"HamflyAPI\\hamfly_comm_txbuf.c\000"
+ 738      6C794150 
+ 738      495C6861 
+ 738      6D666C79 
+ 738      5F636F6D 
+ 739              	.LASF12:
+ 740 01b3 696E7433 		.ascii	"int32_t\000"
+ 740      325F7400 
+ 741              	.LASF15:
+ 742 01bb 73697A65 		.ascii	"sizetype\000"
+ 742      74797065 
+ 742      00
+ 743              	.LASF8:
+ 744 01c4 6C6F6E67 		.ascii	"long long int\000"
+ 744      206C6F6E 
+ 744      6720696E 
+ 744      7400
+ 745              	.LASF17:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccGeqOtT.s 			page 16
+
+
+ 746 01d2 68616D66 		.ascii	"hamfly_txbuf_init\000"
+ 746      6C795F74 
+ 746      78627566 
+ 746      5F696E69 
+ 746      7400
+ 747              	.LASF2:
+ 748 01e4 73686F72 		.ascii	"short int\000"
+ 748      7420696E 
+ 748      7400
+ 749              	.LASF14:
+ 750 01ee 7461696C 		.ascii	"tail\000"
+ 750      00
+ 751              	.LASF18:
+ 752 01f3 68616D66 		.ascii	"hamfly_txbuf_clear\000"
+ 752      6C795F74 
+ 752      78627566 
+ 752      5F636C65 
+ 752      617200
+ 753              	.LASF6:
+ 754 0206 6C6F6E67 		.ascii	"long int\000"
+ 754      20696E74 
+ 754      00
+ 755              	.LASF19:
+ 756 020f 68616D66 		.ascii	"hamfly_txbuf_add\000"
+ 756      6C795F74 
+ 756      78627566 
+ 756      5F616464 
+ 756      00
+ 757              	.LASF0:
+ 758 0220 7369676E 		.ascii	"signed char\000"
+ 758      65642063 
+ 758      68617200 
+ 759              	.LASF24:
+ 760 022c 6E657874 		.ascii	"next\000"
+ 760      00
+ 761              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
