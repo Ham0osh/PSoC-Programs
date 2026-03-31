@@ -1,0 +1,4447 @@
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"hamfly_core_telemetry.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.rd_be32,"ax",%progbits
+  20              		.align	2
+  21              		.thumb
+  22              		.thumb_func
+  23              		.type	rd_be32, %function
+  24              	rd_be32:
+  25              	.LFB0:
+  26              		.file 1 "..\\..\\..\\HamFlyAPI\\src\\hamfly_core_telemetry.c"
+   1:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** /* SPDX-License-Identifier: Apache-2.0
+   2:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  *
+   3:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  * Copyright 2026 Hamish Johnson
+   4:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  * Quantum Information Systems Lab, SFU Physics
+   5:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  *
+   6:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  * Licensed under the Apache License, Version 2.0 (the "License");
+   7:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  * you may not use this file except in compliance with the License.
+   8:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  * You may obtain a copy of the License at
+   9:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  *
+  10:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  *     http://www.apache.org/licenses/LICENSE-2.0
+  11:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  *
+  12:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  * Unless required by applicable law or agreed to in writing, software
+  13:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  * distributed under the License is distributed on an "AS IS" BASIS,
+  14:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+  15:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  * implied. See the License for the specific language governing
+  16:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  * permissions and limitations under the License.
+  17:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****  */
+  18:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+  19:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** #include "hamfly_core_telemetry.h"
+  20:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** #include "hamfly_qx_protocol.h"
+  21:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** #include <string.h>
+  22:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** #include <stdint.h>
+  23:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+  24:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+  25:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Helpers: Big and Little Endian readers.
+  26:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Used for attr 1, 4, 287 which are big-endian with no sub-index byte.
+  27:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Attr 22 is little-endian with a 0x00 sub-index at offset 0, so use rd_le16.
+  28:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+  29:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+  30:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Read big-endian int32 from buffer.
+  31:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** static int32_t rd_be32(const uint8_t *p)
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 2
+
+
+  32:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** {
+  27              		.loc 1 32 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 1, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32 0000 80B4     		push	{r7}
+  33              		.cfi_def_cfa_offset 4
+  34              		.cfi_offset 7, -4
+  35 0002 83B0     		sub	sp, sp, #12
+  36              		.cfi_def_cfa_offset 16
+  37 0004 00AF     		add	r7, sp, #0
+  38              		.cfi_def_cfa_register 7
+  39 0006 7860     		str	r0, [r7, #4]
+  33:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     return (int32_t)(  ((uint32_t)p[0] << 24)
+  40              		.loc 1 33 0
+  41 0008 7B68     		ldr	r3, [r7, #4]
+  42 000a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  43 000c 1A06     		lsls	r2, r3, #24
+  34:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****                      | ((uint32_t)p[1] << 16)
+  44              		.loc 1 34 0
+  45 000e 7B68     		ldr	r3, [r7, #4]
+  46 0010 0133     		adds	r3, r3, #1
+  47 0012 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  48 0014 1B04     		lsls	r3, r3, #16
+  49 0016 1A43     		orrs	r2, r2, r3
+  35:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****                      | ((uint32_t)p[2] <<  8)
+  50              		.loc 1 35 0
+  51 0018 7B68     		ldr	r3, [r7, #4]
+  52 001a 0233     		adds	r3, r3, #2
+  53 001c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  54 001e 1B02     		lsls	r3, r3, #8
+  55 0020 1343     		orrs	r3, r3, r2
+  36:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****                      |  (uint32_t)p[3]);
+  56              		.loc 1 36 0
+  57 0022 7A68     		ldr	r2, [r7, #4]
+  58 0024 0332     		adds	r2, r2, #3
+  59 0026 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+  60 0028 1343     		orrs	r3, r3, r2
+  37:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** }
+  61              		.loc 1 37 0
+  62 002a 1846     		mov	r0, r3
+  63 002c 0C37     		adds	r7, r7, #12
+  64              		.cfi_def_cfa_offset 4
+  65 002e BD46     		mov	sp, r7
+  66              		.cfi_def_cfa_register 13
+  67              		@ sp needed
+  68 0030 80BC     		pop	{r7}
+  69              		.cfi_restore 7
+  70              		.cfi_def_cfa_offset 0
+  71 0032 7047     		bx	lr
+  72              		.cfi_endproc
+  73              	.LFE0:
+  74              		.size	rd_be32, .-rd_be32
+  75              		.section	.text.rd_be16,"ax",%progbits
+  76              		.align	2
+  77              		.thumb
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 3
+
+
+  78              		.thumb_func
+  79              		.type	rd_be16, %function
+  80              	rd_be16:
+  81              	.LFB1:
+  38:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+  39:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Read big-endian int16 from buffer.
+  40:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** static int16_t rd_be16(const uint8_t *p)
+  41:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** {
+  82              		.loc 1 41 0
+  83              		.cfi_startproc
+  84              		@ args = 0, pretend = 0, frame = 8
+  85              		@ frame_needed = 1, uses_anonymous_args = 0
+  86              		@ link register save eliminated.
+  87 0000 80B4     		push	{r7}
+  88              		.cfi_def_cfa_offset 4
+  89              		.cfi_offset 7, -4
+  90 0002 83B0     		sub	sp, sp, #12
+  91              		.cfi_def_cfa_offset 16
+  92 0004 00AF     		add	r7, sp, #0
+  93              		.cfi_def_cfa_register 7
+  94 0006 7860     		str	r0, [r7, #4]
+  42:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     return (int16_t)(((uint16_t)p[0] << 8) | (uint16_t)p[1]);
+  95              		.loc 1 42 0
+  96 0008 7B68     		ldr	r3, [r7, #4]
+  97 000a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  98 000c 1B02     		lsls	r3, r3, #8
+  99 000e 1AB2     		sxth	r2, r3
+ 100 0010 7B68     		ldr	r3, [r7, #4]
+ 101 0012 0133     		adds	r3, r3, #1
+ 102 0014 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 103 0016 1BB2     		sxth	r3, r3
+ 104 0018 1343     		orrs	r3, r3, r2
+ 105 001a 1BB2     		sxth	r3, r3
+  43:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** }
+ 106              		.loc 1 43 0
+ 107 001c 1846     		mov	r0, r3
+ 108 001e 0C37     		adds	r7, r7, #12
+ 109              		.cfi_def_cfa_offset 4
+ 110 0020 BD46     		mov	sp, r7
+ 111              		.cfi_def_cfa_register 13
+ 112              		@ sp needed
+ 113 0022 80BC     		pop	{r7}
+ 114              		.cfi_restore 7
+ 115              		.cfi_def_cfa_offset 0
+ 116 0024 7047     		bx	lr
+ 117              		.cfi_endproc
+ 118              	.LFE1:
+ 119              		.size	rd_be16, .-rd_be16
+ 120 0026 00BF     		.section	.text.rd_be_u16,"ax",%progbits
+ 121              		.align	2
+ 122              		.thumb
+ 123              		.thumb_func
+ 124              		.type	rd_be_u16, %function
+ 125              	rd_be_u16:
+ 126              	.LFB2:
+  44:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+  45:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Read big-endian uint16 from buffer (for unsigned fields).
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 4
+
+
+  46:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** static uint16_t rd_be_u16(const uint8_t *p)
+  47:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** {
+ 127              		.loc 1 47 0
+ 128              		.cfi_startproc
+ 129              		@ args = 0, pretend = 0, frame = 8
+ 130              		@ frame_needed = 1, uses_anonymous_args = 0
+ 131              		@ link register save eliminated.
+ 132 0000 80B4     		push	{r7}
+ 133              		.cfi_def_cfa_offset 4
+ 134              		.cfi_offset 7, -4
+ 135 0002 83B0     		sub	sp, sp, #12
+ 136              		.cfi_def_cfa_offset 16
+ 137 0004 00AF     		add	r7, sp, #0
+ 138              		.cfi_def_cfa_register 7
+ 139 0006 7860     		str	r0, [r7, #4]
+  48:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     return ((uint16_t)p[0] << 8) | (uint16_t)p[1];
+ 140              		.loc 1 48 0
+ 141 0008 7B68     		ldr	r3, [r7, #4]
+ 142 000a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 143 000c 1B02     		lsls	r3, r3, #8
+ 144 000e 1AB2     		sxth	r2, r3
+ 145 0010 7B68     		ldr	r3, [r7, #4]
+ 146 0012 0133     		adds	r3, r3, #1
+ 147 0014 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 148 0016 1BB2     		sxth	r3, r3
+ 149 0018 1343     		orrs	r3, r3, r2
+ 150 001a 1BB2     		sxth	r3, r3
+ 151 001c 9BB2     		uxth	r3, r3
+  49:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** }
+ 152              		.loc 1 49 0
+ 153 001e 1846     		mov	r0, r3
+ 154 0020 0C37     		adds	r7, r7, #12
+ 155              		.cfi_def_cfa_offset 4
+ 156 0022 BD46     		mov	sp, r7
+ 157              		.cfi_def_cfa_register 13
+ 158              		@ sp needed
+ 159 0024 80BC     		pop	{r7}
+ 160              		.cfi_restore 7
+ 161              		.cfi_def_cfa_offset 0
+ 162 0026 7047     		bx	lr
+ 163              		.cfi_endproc
+ 164              	.LFE2:
+ 165              		.size	rd_be_u16, .-rd_be_u16
+ 166              		.section	.text.rd_le16,"ax",%progbits
+ 167              		.align	2
+ 168              		.thumb
+ 169              		.thumb_func
+ 170              		.type	rd_le16, %function
+ 171              	rd_le16:
+ 172              	.LFB3:
+  50:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+  51:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Read little-endian int16 from buffer.
+  52:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** static int16_t rd_le16(const uint8_t *p)
+  53:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** {
+ 173              		.loc 1 53 0
+ 174              		.cfi_startproc
+ 175              		@ args = 0, pretend = 0, frame = 16
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 5
+
+
+ 176              		@ frame_needed = 1, uses_anonymous_args = 0
+ 177 0000 80B5     		push	{r7, lr}
+ 178              		.cfi_def_cfa_offset 8
+ 179              		.cfi_offset 7, -8
+ 180              		.cfi_offset 14, -4
+ 181 0002 84B0     		sub	sp, sp, #16
+ 182              		.cfi_def_cfa_offset 24
+ 183 0004 00AF     		add	r7, sp, #0
+ 184              		.cfi_def_cfa_register 7
+ 185 0006 7860     		str	r0, [r7, #4]
+  54:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     int16_t v;
+  55:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     memcpy(&v, p, 2);
+ 186              		.loc 1 55 0
+ 187 0008 07F10E03 		add	r3, r7, #14
+ 188 000c 0222     		movs	r2, #2
+ 189 000e 7968     		ldr	r1, [r7, #4]
+ 190 0010 1846     		mov	r0, r3
+ 191 0012 FFF7FEFF 		bl	memcpy
+  56:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     return v;
+ 192              		.loc 1 56 0
+ 193 0016 B7F90E30 		ldrsh	r3, [r7, #14]
+  57:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** }
+ 194              		.loc 1 57 0
+ 195 001a 1846     		mov	r0, r3
+ 196 001c 1037     		adds	r7, r7, #16
+ 197              		.cfi_def_cfa_offset 8
+ 198 001e BD46     		mov	sp, r7
+ 199              		.cfi_def_cfa_register 13
+ 200              		@ sp needed
+ 201 0020 80BD     		pop	{r7, pc}
+ 202              		.cfi_endproc
+ 203              	.LFE3:
+ 204              		.size	rd_le16, .-rd_le16
+ 205 0022 00BF     		.section	.text.hamfly_decode_qx287,"ax",%progbits
+ 206              		.align	2
+ 207              		.global	hamfly_decode_qx287
+ 208              		.thumb
+ 209              		.thumb_func
+ 210              		.type	hamfly_decode_qx287, %function
+ 211              	hamfly_decode_qx287:
+ 212              	.LFB4:
+  58:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+  59:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+  60:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Hamfly Decode QX287
+  61:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+  62:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Main telemetry parsing function. Reads from FreeFlyAPI.status which is
+  63:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // populated by the QX parser callback. Wrapping FreeflyAPI directly.
+  64:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** void hamfly_decode_qx287(const uint8_t *p, uint16_t plen,
+  65:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****                           hamfly_telemetry_t *dst)
+  66:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** {
+ 213              		.loc 1 66 0
+ 214              		.cfi_startproc
+ 215              		@ args = 0, pretend = 0, frame = 16
+ 216              		@ frame_needed = 1, uses_anonymous_args = 0
+ 217              		@ link register save eliminated.
+ 218 0000 80B4     		push	{r7}
+ 219              		.cfi_def_cfa_offset 4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 6
+
+
+ 220              		.cfi_offset 7, -4
+ 221 0002 85B0     		sub	sp, sp, #20
+ 222              		.cfi_def_cfa_offset 24
+ 223 0004 00AF     		add	r7, sp, #0
+ 224              		.cfi_def_cfa_register 7
+ 225 0006 F860     		str	r0, [r7, #12]
+ 226 0008 0B46     		mov	r3, r1
+ 227 000a 7A60     		str	r2, [r7, #4]
+ 228 000c 7B81     		strh	r3, [r7, #10]	@ movhi
+  67:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     (void)p; (void)plen;
+  68:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+  69:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     // Copy fields into the telemetry struct.
+  70:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->battery_left_v   = FreeflyAPI.status.battery_v_left;
+ 229              		.loc 1 70 0
+ 230 000e 154B     		ldr	r3, .L10
+ 231 0010 9A6C     		ldr	r2, [r3, #72]	@ float
+ 232 0012 7B68     		ldr	r3, [r7, #4]
+ 233 0014 5A60     		str	r2, [r3, #4]	@ float
+  71:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->battery_right_v  = FreeflyAPI.status.battery_v_right;
+ 234              		.loc 1 71 0
+ 235 0016 134B     		ldr	r3, .L10
+ 236 0018 DA6C     		ldr	r2, [r3, #76]	@ float
+ 237 001a 7B68     		ldr	r3, [r7, #4]
+ 238 001c 9A60     		str	r2, [r3, #8]	@ float
+  72:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gimbal_r         = FreeflyAPI.status.gimbal_r;
+ 239              		.loc 1 72 0
+ 240 001e 114B     		ldr	r3, .L10
+ 241 0020 1A6E     		ldr	r2, [r3, #96]	@ float
+ 242 0022 7B68     		ldr	r3, [r7, #4]
+ 243 0024 DA60     		str	r2, [r3, #12]	@ float
+  73:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gimbal_i         = FreeflyAPI.status.gimbal_i;
+ 244              		.loc 1 73 0
+ 245 0026 0F4B     		ldr	r3, .L10
+ 246 0028 5A6D     		ldr	r2, [r3, #84]	@ float
+ 247 002a 7B68     		ldr	r3, [r7, #4]
+ 248 002c 1A61     		str	r2, [r3, #16]	@ float
+  74:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gimbal_j         = FreeflyAPI.status.gimbal_j;
+ 249              		.loc 1 74 0
+ 250 002e 0D4B     		ldr	r3, .L10
+ 251 0030 9A6D     		ldr	r2, [r3, #88]	@ float
+ 252 0032 7B68     		ldr	r3, [r7, #4]
+ 253 0034 5A61     		str	r2, [r3, #20]	@ float
+  75:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gimbal_k         = FreeflyAPI.status.gimbal_k;
+ 254              		.loc 1 75 0
+ 255 0036 0B4B     		ldr	r3, .L10
+ 256 0038 DA6D     		ldr	r2, [r3, #92]	@ float
+ 257 003a 7B68     		ldr	r3, [r7, #4]
+ 258 003c 9A61     		str	r2, [r3, #24]	@ float
+  76:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gimbal_status1   = FreeflyAPI.status.gimbal_Status1;
+ 259              		.loc 1 76 0
+ 260 003e 094B     		ldr	r3, .L10
+ 261 0040 93F85020 		ldrb	r2, [r3, #80]	@ zero_extendqisi2
+ 262 0044 7B68     		ldr	r3, [r7, #4]
+ 263 0046 1A77     		strb	r2, [r3, #28]
+  77:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gimbal_status2   = FreeflyAPI.status.gimbal_Status2;
+ 264              		.loc 1 77 0
+ 265 0048 064B     		ldr	r3, .L10
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 7
+
+
+ 266 004a 93F85120 		ldrb	r2, [r3, #81]	@ zero_extendqisi2
+ 267 004e 7B68     		ldr	r3, [r7, #4]
+ 268 0050 5A77     		strb	r2, [r3, #29]
+  78:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->valid            = true;
+ 269              		.loc 1 78 0
+ 270 0052 7B68     		ldr	r3, [r7, #4]
+ 271 0054 0122     		movs	r2, #1
+ 272 0056 1A70     		strb	r2, [r3]
+  79:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** }
+ 273              		.loc 1 79 0
+ 274 0058 00BF     		nop
+ 275 005a 1437     		adds	r7, r7, #20
+ 276              		.cfi_def_cfa_offset 4
+ 277 005c BD46     		mov	sp, r7
+ 278              		.cfi_def_cfa_register 13
+ 279              		@ sp needed
+ 280 005e 80BC     		pop	{r7}
+ 281              		.cfi_restore 7
+ 282              		.cfi_def_cfa_offset 0
+ 283 0060 7047     		bx	lr
+ 284              	.L11:
+ 285 0062 00BF     		.align	2
+ 286              	.L10:
+ 287 0064 00000000 		.word	FreeflyAPI
+ 288              		.cfi_endproc
+ 289              	.LFE4:
+ 290              		.size	hamfly_decode_qx287, .-hamfly_decode_qx287
+ 291              		.global	__aeabi_i2f
+ 292              		.global	__aeabi_fdiv
+ 293              		.global	__aeabi_ui2f
+ 294              		.section	.text.hamfly_decode_gps,"ax",%progbits
+ 295              		.align	2
+ 296              		.global	hamfly_decode_gps
+ 297              		.thumb
+ 298              		.thumb_func
+ 299              		.type	hamfly_decode_gps, %function
+ 300              	hamfly_decode_gps:
+ 301              	.LFB5:
+  80:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+  81:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+  82:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Hamfly Decode GPS [Hamfly Specific] -- attr 4
+  83:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+  84:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Reads the raw bytes of the GPS payload and into telemetry struct fields:
+  85:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // 
+  86:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Big-endian, no sub-index byte, 22 byte payload.
+  87:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off  0-3  BE int32:  longitude    /1e7  deg
+  88:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off  4-7  BE int32:  latitude     /1e7  deg
+  89:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off  8-11 BE int32:  altitude     /1000 mm (WGS-84 ellipsoid)
+  90:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 12-13 BE int16:  ground speed /100  m/s
+  91:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 14-15 BE int16:  heading      /100  deg (confirmed, was /10)
+  92:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 16-17 BE uint16: HACC         /100  m
+  93:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 18-19 BE uint16: VACC         /100  m
+  94:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 20-21 BE uint16: SACC         /100  m/s
+  95:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+  96:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** void hamfly_decode_gps(const uint8_t *p, uint16_t plen,
+  97:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****                         hamfly_telemetry_t *dst)
+  98:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** {
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 8
+
+
+ 302              		.loc 1 98 0
+ 303              		.cfi_startproc
+ 304              		@ args = 0, pretend = 0, frame = 40
+ 305              		@ frame_needed = 1, uses_anonymous_args = 0
+ 306 0000 80B5     		push	{r7, lr}
+ 307              		.cfi_def_cfa_offset 8
+ 308              		.cfi_offset 7, -8
+ 309              		.cfi_offset 14, -4
+ 310 0002 8AB0     		sub	sp, sp, #40
+ 311              		.cfi_def_cfa_offset 48
+ 312 0004 00AF     		add	r7, sp, #0
+ 313              		.cfi_def_cfa_register 7
+ 314 0006 F860     		str	r0, [r7, #12]
+ 315 0008 0B46     		mov	r3, r1
+ 316 000a 7A60     		str	r2, [r7, #4]
+ 317 000c 7B81     		strh	r3, [r7, #10]	@ movhi
+  99:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     if (plen < 22u) return;
+ 318              		.loc 1 99 0
+ 319 000e 7B89     		ldrh	r3, [r7, #10]
+ 320 0010 152B     		cmp	r3, #21
+ 321 0012 40F2BB80 		bls	.L15
+ 100:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     // Decode to int.
+ 101:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     int32_t  lon_raw  = rd_be32  (p +  0);
+ 322              		.loc 1 101 0
+ 323 0016 F868     		ldr	r0, [r7, #12]
+ 324 0018 FFF7FEFF 		bl	rd_be32
+ 325 001c 7862     		str	r0, [r7, #36]
+ 102:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     int32_t  lat_raw  = rd_be32  (p +  4);
+ 326              		.loc 1 102 0
+ 327 001e FB68     		ldr	r3, [r7, #12]
+ 328 0020 0433     		adds	r3, r3, #4
+ 329 0022 1846     		mov	r0, r3
+ 330 0024 FFF7FEFF 		bl	rd_be32
+ 331 0028 3862     		str	r0, [r7, #32]
+ 103:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     int32_t  alt_raw  = rd_be32  (p +  8);
+ 332              		.loc 1 103 0
+ 333 002a FB68     		ldr	r3, [r7, #12]
+ 334 002c 0833     		adds	r3, r3, #8
+ 335 002e 1846     		mov	r0, r3
+ 336 0030 FFF7FEFF 		bl	rd_be32
+ 337 0034 F861     		str	r0, [r7, #28]
+ 104:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     int16_t  spd_raw  = rd_be16  (p + 12);
+ 338              		.loc 1 104 0
+ 339 0036 FB68     		ldr	r3, [r7, #12]
+ 340 0038 0C33     		adds	r3, r3, #12
+ 341 003a 1846     		mov	r0, r3
+ 342 003c FFF7FEFF 		bl	rd_be16
+ 343 0040 0346     		mov	r3, r0
+ 344 0042 7B83     		strh	r3, [r7, #26]	@ movhi
+ 105:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     int16_t  hdg_raw  = rd_be16  (p + 14);
+ 345              		.loc 1 105 0
+ 346 0044 FB68     		ldr	r3, [r7, #12]
+ 347 0046 0E33     		adds	r3, r3, #14
+ 348 0048 1846     		mov	r0, r3
+ 349 004a FFF7FEFF 		bl	rd_be16
+ 350 004e 0346     		mov	r3, r0
+ 351 0050 3B83     		strh	r3, [r7, #24]	@ movhi
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 9
+
+
+ 106:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     uint16_t hacc_raw = rd_be_u16(p + 16);
+ 352              		.loc 1 106 0
+ 353 0052 FB68     		ldr	r3, [r7, #12]
+ 354 0054 1033     		adds	r3, r3, #16
+ 355 0056 1846     		mov	r0, r3
+ 356 0058 FFF7FEFF 		bl	rd_be_u16
+ 357 005c 0346     		mov	r3, r0
+ 358 005e FB82     		strh	r3, [r7, #22]	@ movhi
+ 107:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     uint16_t vacc_raw = rd_be_u16(p + 18);
+ 359              		.loc 1 107 0
+ 360 0060 FB68     		ldr	r3, [r7, #12]
+ 361 0062 1233     		adds	r3, r3, #18
+ 362 0064 1846     		mov	r0, r3
+ 363 0066 FFF7FEFF 		bl	rd_be_u16
+ 364 006a 0346     		mov	r3, r0
+ 365 006c BB82     		strh	r3, [r7, #20]	@ movhi
+ 108:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     uint16_t sacc_raw = rd_be_u16(p + 20);
+ 366              		.loc 1 108 0
+ 367 006e FB68     		ldr	r3, [r7, #12]
+ 368 0070 1433     		adds	r3, r3, #20
+ 369 0072 1846     		mov	r0, r3
+ 370 0074 FFF7FEFF 		bl	rd_be_u16
+ 371 0078 0346     		mov	r3, r0
+ 372 007a 7B82     		strh	r3, [r7, #18]	@ movhi
+ 109:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     // Save raw for debug and pointing math.
+ 110:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_raw_lon  = lon_raw;
+ 373              		.loc 1 110 0
+ 374 007c 7B68     		ldr	r3, [r7, #4]
+ 375 007e 7A6A     		ldr	r2, [r7, #36]
+ 376 0080 5A64     		str	r2, [r3, #68]
+ 111:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_raw_lat  = lat_raw;
+ 377              		.loc 1 111 0
+ 378 0082 7B68     		ldr	r3, [r7, #4]
+ 379 0084 3A6A     		ldr	r2, [r7, #32]
+ 380 0086 1A64     		str	r2, [r3, #64]
+ 112:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_raw_alt  = alt_raw;
+ 381              		.loc 1 112 0
+ 382 0088 7B68     		ldr	r3, [r7, #4]
+ 383 008a FA69     		ldr	r2, [r7, #28]
+ 384 008c 9A64     		str	r2, [r3, #72]
+ 113:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_raw_spd  = spd_raw;
+ 385              		.loc 1 113 0
+ 386 008e 7B68     		ldr	r3, [r7, #4]
+ 387 0090 7A8B     		ldrh	r2, [r7, #26]	@ movhi
+ 388 0092 A3F84C20 		strh	r2, [r3, #76]	@ movhi
+ 114:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_raw_hdg  = hdg_raw;
+ 389              		.loc 1 114 0
+ 390 0096 7B68     		ldr	r3, [r7, #4]
+ 391 0098 3A8B     		ldrh	r2, [r7, #24]	@ movhi
+ 392 009a A3F84E20 		strh	r2, [r3, #78]	@ movhi
+ 115:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_raw_hacc = hacc_raw;
+ 393              		.loc 1 115 0
+ 394 009e 7B68     		ldr	r3, [r7, #4]
+ 395 00a0 FA8A     		ldrh	r2, [r7, #22]	@ movhi
+ 396 00a2 A3F85020 		strh	r2, [r3, #80]	@ movhi
+ 116:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_raw_vacc = vacc_raw;
+ 397              		.loc 1 116 0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 10
+
+
+ 398 00a6 7B68     		ldr	r3, [r7, #4]
+ 399 00a8 BA8A     		ldrh	r2, [r7, #20]	@ movhi
+ 400 00aa A3F85220 		strh	r2, [r3, #82]	@ movhi
+ 117:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_raw_sacc = sacc_raw;
+ 401              		.loc 1 117 0
+ 402 00ae 7B68     		ldr	r3, [r7, #4]
+ 403 00b0 7A8A     		ldrh	r2, [r7, #18]	@ movhi
+ 404 00b2 A3F85420 		strh	r2, [r3, #84]	@ movhi
+ 118:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     // Decode float versions for display/logging only.
+ 119:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_lon_deg       = (float)lon_raw  / 1e7f;
+ 405              		.loc 1 119 0
+ 406 00b6 786A     		ldr	r0, [r7, #36]
+ 407 00b8 FFF7FEFF 		bl	__aeabi_i2f
+ 408 00bc 0346     		mov	r3, r0
+ 409 00be 3549     		ldr	r1, .L16
+ 410 00c0 1846     		mov	r0, r3
+ 411 00c2 FFF7FEFF 		bl	__aeabi_fdiv
+ 412 00c6 0346     		mov	r3, r0
+ 413 00c8 1A46     		mov	r2, r3
+ 414 00ca 7B68     		ldr	r3, [r7, #4]
+ 415 00cc 5A62     		str	r2, [r3, #36]	@ float
+ 120:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_lat_deg       = (float)lat_raw  / 1e7f;
+ 416              		.loc 1 120 0
+ 417 00ce 386A     		ldr	r0, [r7, #32]
+ 418 00d0 FFF7FEFF 		bl	__aeabi_i2f
+ 419 00d4 0346     		mov	r3, r0
+ 420 00d6 2F49     		ldr	r1, .L16
+ 421 00d8 1846     		mov	r0, r3
+ 422 00da FFF7FEFF 		bl	__aeabi_fdiv
+ 423 00de 0346     		mov	r3, r0
+ 424 00e0 1A46     		mov	r2, r3
+ 425 00e2 7B68     		ldr	r3, [r7, #4]
+ 426 00e4 1A62     		str	r2, [r3, #32]	@ float
+ 121:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_alt_m         = (float)alt_raw  / 1000.0f;
+ 427              		.loc 1 121 0
+ 428 00e6 F869     		ldr	r0, [r7, #28]
+ 429 00e8 FFF7FEFF 		bl	__aeabi_i2f
+ 430 00ec 0346     		mov	r3, r0
+ 431 00ee 2A49     		ldr	r1, .L16+4
+ 432 00f0 1846     		mov	r0, r3
+ 433 00f2 FFF7FEFF 		bl	__aeabi_fdiv
+ 434 00f6 0346     		mov	r3, r0
+ 435 00f8 1A46     		mov	r2, r3
+ 436 00fa 7B68     		ldr	r3, [r7, #4]
+ 437 00fc 9A62     		str	r2, [r3, #40]	@ float
+ 122:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_ground_spd_ms = (float)spd_raw  / 100.0f;
+ 438              		.loc 1 122 0
+ 439 00fe B7F91A30 		ldrsh	r3, [r7, #26]
+ 440 0102 1846     		mov	r0, r3
+ 441 0104 FFF7FEFF 		bl	__aeabi_i2f
+ 442 0108 0346     		mov	r3, r0
+ 443 010a 2449     		ldr	r1, .L16+8
+ 444 010c 1846     		mov	r0, r3
+ 445 010e FFF7FEFF 		bl	__aeabi_fdiv
+ 446 0112 0346     		mov	r3, r0
+ 447 0114 1A46     		mov	r2, r3
+ 448 0116 7B68     		ldr	r3, [r7, #4]
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 11
+
+
+ 449 0118 DA62     		str	r2, [r3, #44]	@ float
+ 123:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_heading_deg   = (float)hdg_raw  / 100.0f;  /* was /10 */
+ 450              		.loc 1 123 0
+ 451 011a B7F91830 		ldrsh	r3, [r7, #24]
+ 452 011e 1846     		mov	r0, r3
+ 453 0120 FFF7FEFF 		bl	__aeabi_i2f
+ 454 0124 0346     		mov	r3, r0
+ 455 0126 1D49     		ldr	r1, .L16+8
+ 456 0128 1846     		mov	r0, r3
+ 457 012a FFF7FEFF 		bl	__aeabi_fdiv
+ 458 012e 0346     		mov	r3, r0
+ 459 0130 1A46     		mov	r2, r3
+ 460 0132 7B68     		ldr	r3, [r7, #4]
+ 461 0134 1A63     		str	r2, [r3, #48]	@ float
+ 124:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_hacc_m        = (float)hacc_raw / 100.0f;
+ 462              		.loc 1 124 0
+ 463 0136 FB8A     		ldrh	r3, [r7, #22]
+ 464 0138 1846     		mov	r0, r3
+ 465 013a FFF7FEFF 		bl	__aeabi_ui2f
+ 466 013e 0346     		mov	r3, r0
+ 467 0140 1649     		ldr	r1, .L16+8
+ 468 0142 1846     		mov	r0, r3
+ 469 0144 FFF7FEFF 		bl	__aeabi_fdiv
+ 470 0148 0346     		mov	r3, r0
+ 471 014a 1A46     		mov	r2, r3
+ 472 014c 7B68     		ldr	r3, [r7, #4]
+ 473 014e 5A63     		str	r2, [r3, #52]	@ float
+ 125:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_vacc_m        = (float)vacc_raw / 100.0f;
+ 474              		.loc 1 125 0
+ 475 0150 BB8A     		ldrh	r3, [r7, #20]
+ 476 0152 1846     		mov	r0, r3
+ 477 0154 FFF7FEFF 		bl	__aeabi_ui2f
+ 478 0158 0346     		mov	r3, r0
+ 479 015a 1049     		ldr	r1, .L16+8
+ 480 015c 1846     		mov	r0, r3
+ 481 015e FFF7FEFF 		bl	__aeabi_fdiv
+ 482 0162 0346     		mov	r3, r0
+ 483 0164 1A46     		mov	r2, r3
+ 484 0166 7B68     		ldr	r3, [r7, #4]
+ 485 0168 9A63     		str	r2, [r3, #56]	@ float
+ 126:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_sacc_ms       = (float)sacc_raw / 100.0f;
+ 486              		.loc 1 126 0
+ 487 016a 7B8A     		ldrh	r3, [r7, #18]
+ 488 016c 1846     		mov	r0, r3
+ 489 016e FFF7FEFF 		bl	__aeabi_ui2f
+ 490 0172 0346     		mov	r3, r0
+ 491 0174 0949     		ldr	r1, .L16+8
+ 492 0176 1846     		mov	r0, r3
+ 493 0178 FFF7FEFF 		bl	__aeabi_fdiv
+ 494 017c 0346     		mov	r3, r0
+ 495 017e 1A46     		mov	r2, r3
+ 496 0180 7B68     		ldr	r3, [r7, #4]
+ 497 0182 DA63     		str	r2, [r3, #60]	@ float
+ 127:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_valid         = true;
+ 498              		.loc 1 127 0
+ 499 0184 7B68     		ldr	r3, [r7, #4]
+ 500 0186 0122     		movs	r2, #1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 12
+
+
+ 501 0188 9A77     		strb	r2, [r3, #30]
+ 502 018a 00E0     		b	.L12
+ 503              	.L15:
+  99:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     // Decode to int.
+ 504              		.loc 1 99 0
+ 505 018c 00BF     		nop
+ 506              	.L12:
+ 128:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** }
+ 507              		.loc 1 128 0
+ 508 018e 2837     		adds	r7, r7, #40
+ 509              		.cfi_def_cfa_offset 8
+ 510 0190 BD46     		mov	sp, r7
+ 511              		.cfi_def_cfa_register 13
+ 512              		@ sp needed
+ 513 0192 80BD     		pop	{r7, pc}
+ 514              	.L17:
+ 515              		.align	2
+ 516              	.L16:
+ 517 0194 8096184B 		.word	1259902592
+ 518 0198 00007A44 		.word	1148846080
+ 519 019c 0000C842 		.word	1120403456
+ 520              		.cfi_endproc
+ 521              	.LFE5:
+ 522              		.size	hamfly_decode_gps, .-hamfly_decode_gps
+ 523              		.section	.text.hamfly_decode_baro,"ax",%progbits
+ 524              		.align	2
+ 525              		.global	hamfly_decode_baro
+ 526              		.thumb
+ 527              		.thumb_func
+ 528              		.type	hamfly_decode_baro, %function
+ 529              	hamfly_decode_baro:
+ 530              	.LFB6:
+ 129:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 130:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 131:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Hamfly Decode Barometer [Hamfly Specific] -- attr 3
+ 132:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 133:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Reads the raw bytes of the Barometer payload and into telemetry fields:
+ 134:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // 
+ 135:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Little-endian, sub-index byte at off 0 (ignored), 5 byte payload.
+ 136:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 1-2  LE int16: altitude      /10  m
+ 137:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 3-4  LE int16: rate of climb /100 m/s
+ 138:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 139:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** void hamfly_decode_baro(const uint8_t *p, uint16_t plen,
+ 140:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****                          hamfly_telemetry_t *dst)
+ 141:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** {
+ 531              		.loc 1 141 0
+ 532              		.cfi_startproc
+ 533              		@ args = 0, pretend = 0, frame = 16
+ 534              		@ frame_needed = 1, uses_anonymous_args = 0
+ 535 0000 80B5     		push	{r7, lr}
+ 536              		.cfi_def_cfa_offset 8
+ 537              		.cfi_offset 7, -8
+ 538              		.cfi_offset 14, -4
+ 539 0002 84B0     		sub	sp, sp, #16
+ 540              		.cfi_def_cfa_offset 24
+ 541 0004 00AF     		add	r7, sp, #0
+ 542              		.cfi_def_cfa_register 7
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 13
+
+
+ 543 0006 F860     		str	r0, [r7, #12]
+ 544 0008 0B46     		mov	r3, r1
+ 545 000a 7A60     		str	r2, [r7, #4]
+ 546 000c 7B81     		strh	r3, [r7, #10]	@ movhi
+ 142:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     if (plen < 5u) return;
+ 547              		.loc 1 142 0
+ 548 000e 7B89     		ldrh	r3, [r7, #10]
+ 549 0010 042B     		cmp	r3, #4
+ 550 0012 28D9     		bls	.L21
+ 143:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 144:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     // Decode and populate.
+ 145:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->baro_alt_m  = (float)rd_le16(p + 1) / 10.0f;
+ 551              		.loc 1 145 0
+ 552 0014 FB68     		ldr	r3, [r7, #12]
+ 553 0016 0133     		adds	r3, r3, #1
+ 554 0018 1846     		mov	r0, r3
+ 555 001a FFF7FEFF 		bl	rd_le16
+ 556 001e 0346     		mov	r3, r0
+ 557 0020 1846     		mov	r0, r3
+ 558 0022 FFF7FEFF 		bl	__aeabi_i2f
+ 559 0026 0346     		mov	r3, r0
+ 560 0028 1149     		ldr	r1, .L22
+ 561 002a 1846     		mov	r0, r3
+ 562 002c FFF7FEFF 		bl	__aeabi_fdiv
+ 563 0030 0346     		mov	r3, r0
+ 564 0032 1A46     		mov	r2, r3
+ 565 0034 7B68     		ldr	r3, [r7, #4]
+ 566 0036 9A65     		str	r2, [r3, #88]	@ float
+ 146:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     /* Scale changed /100 -> /1000. Previous gave -33 m/s at rest
+ 147:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****      * (implausible). Corrected gives -3.3 m/s. Awaiting lift test. */
+ 148:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->baro_roc_ms = (float)rd_le16(p + 3) / 1000.0f;
+ 567              		.loc 1 148 0
+ 568 0038 FB68     		ldr	r3, [r7, #12]
+ 569 003a 0333     		adds	r3, r3, #3
+ 570 003c 1846     		mov	r0, r3
+ 571 003e FFF7FEFF 		bl	rd_le16
+ 572 0042 0346     		mov	r3, r0
+ 573 0044 1846     		mov	r0, r3
+ 574 0046 FFF7FEFF 		bl	__aeabi_i2f
+ 575 004a 0346     		mov	r3, r0
+ 576 004c 0949     		ldr	r1, .L22+4
+ 577 004e 1846     		mov	r0, r3
+ 578 0050 FFF7FEFF 		bl	__aeabi_fdiv
+ 579 0054 0346     		mov	r3, r0
+ 580 0056 1A46     		mov	r2, r3
+ 581 0058 7B68     		ldr	r3, [r7, #4]
+ 582 005a DA65     		str	r2, [r3, #92]	@ float
+ 149:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->baro_valid  = true;
+ 583              		.loc 1 149 0
+ 584 005c 7B68     		ldr	r3, [r7, #4]
+ 585 005e 0122     		movs	r2, #1
+ 586 0060 83F85620 		strb	r2, [r3, #86]
+ 587 0064 00E0     		b	.L18
+ 588              	.L21:
+ 142:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 589              		.loc 1 142 0
+ 590 0066 00BF     		nop
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 14
+
+
+ 591              	.L18:
+ 150:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** }
+ 592              		.loc 1 150 0
+ 593 0068 1037     		adds	r7, r7, #16
+ 594              		.cfi_def_cfa_offset 8
+ 595 006a BD46     		mov	sp, r7
+ 596              		.cfi_def_cfa_register 13
+ 597              		@ sp needed
+ 598 006c 80BD     		pop	{r7, pc}
+ 599              	.L23:
+ 600 006e 00BF     		.align	2
+ 601              	.L22:
+ 602 0070 00002041 		.word	1092616192
+ 603 0074 00007A44 		.word	1148846080
+ 604              		.cfi_endproc
+ 605              	.LFE6:
+ 606              		.size	hamfly_decode_baro, .-hamfly_decode_baro
+ 607              		.section	.text.hamfly_decode_attitude,"ax",%progbits
+ 608              		.align	2
+ 609              		.global	hamfly_decode_attitude
+ 610              		.thumb
+ 611              		.thumb_func
+ 612              		.type	hamfly_decode_attitude, %function
+ 613              	hamfly_decode_attitude:
+ 614              	.LFB7:
+ 151:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 152:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 153:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Hamfly Decode Attitude [Hamfly Specific] -- attr 22
+ 154:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 155:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Reads the raw bytes of the Attitude payload and into telemetry fields:
+ 156:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // 
+ 157:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Little-endian. off 0: state byte (0x00/0xFF) — ignored.
+ 158:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 1-2  LE int16: Pitch /100 deg — confirmed vs iOS
+ 159:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 3-4  LE int16: Yaw   /100 deg — confirmed vs iOS
+ 160:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 5-6  LE int16: Roll  /100 deg — confirmed vs iOS
+ 161:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 7-8  LE int16: unknown (was roll_err /10; unconfirmed)
+ 162:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 9-14  LE int16 x3: rates /100 dps — updated per iOS layout
+ 163:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** //   TODO: verify rate values against iOS Charts screen.
+ 164:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** //   Previous decode placed rates at off 13-18 at /10.
+ 165:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 166:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** void hamfly_decode_attitude(const uint8_t *p, uint16_t plen,
+ 167:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****                               hamfly_telemetry_t *dst)
+ 168:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** {
+ 615              		.loc 1 168 0
+ 616              		.cfi_startproc
+ 617              		@ args = 0, pretend = 0, frame = 16
+ 618              		@ frame_needed = 1, uses_anonymous_args = 0
+ 619 0000 80B5     		push	{r7, lr}
+ 620              		.cfi_def_cfa_offset 8
+ 621              		.cfi_offset 7, -8
+ 622              		.cfi_offset 14, -4
+ 623 0002 84B0     		sub	sp, sp, #16
+ 624              		.cfi_def_cfa_offset 24
+ 625 0004 00AF     		add	r7, sp, #0
+ 626              		.cfi_def_cfa_register 7
+ 627 0006 F860     		str	r0, [r7, #12]
+ 628 0008 0B46     		mov	r3, r1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 15
+
+
+ 629 000a 7A60     		str	r2, [r7, #4]
+ 630 000c 7B81     		strh	r3, [r7, #10]	@ movhi
+ 169:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     if (plen < 15u) return;
+ 631              		.loc 1 169 0
+ 632 000e 7B89     		ldrh	r3, [r7, #10]
+ 633 0010 0E2B     		cmp	r3, #14
+ 634 0012 40F28E80 		bls	.L27
+ 170:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 171:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     /* Angles — confirmed against iOS app. */
+ 172:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->att_pitch_deg  = (float)rd_le16(p +  1) / 100.0f;
+ 635              		.loc 1 172 0
+ 636 0016 FB68     		ldr	r3, [r7, #12]
+ 637 0018 0133     		adds	r3, r3, #1
+ 638 001a 1846     		mov	r0, r3
+ 639 001c FFF7FEFF 		bl	rd_le16
+ 640 0020 0346     		mov	r3, r0
+ 641 0022 1846     		mov	r0, r3
+ 642 0024 FFF7FEFF 		bl	__aeabi_i2f
+ 643 0028 0346     		mov	r3, r0
+ 644 002a 4449     		ldr	r1, .L28
+ 645 002c 1846     		mov	r0, r3
+ 646 002e FFF7FEFF 		bl	__aeabi_fdiv
+ 647 0032 0346     		mov	r3, r0
+ 648 0034 1A46     		mov	r2, r3
+ 649 0036 7B68     		ldr	r3, [r7, #4]
+ 650 0038 9A66     		str	r2, [r3, #104]	@ float
+ 173:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->att_yaw_deg    = (float)rd_le16(p +  3) / 100.0f;
+ 651              		.loc 1 173 0
+ 652 003a FB68     		ldr	r3, [r7, #12]
+ 653 003c 0333     		adds	r3, r3, #3
+ 654 003e 1846     		mov	r0, r3
+ 655 0040 FFF7FEFF 		bl	rd_le16
+ 656 0044 0346     		mov	r3, r0
+ 657 0046 1846     		mov	r0, r3
+ 658 0048 FFF7FEFF 		bl	__aeabi_i2f
+ 659 004c 0346     		mov	r3, r0
+ 660 004e 3B49     		ldr	r1, .L28
+ 661 0050 1846     		mov	r0, r3
+ 662 0052 FFF7FEFF 		bl	__aeabi_fdiv
+ 663 0056 0346     		mov	r3, r0
+ 664 0058 1A46     		mov	r2, r3
+ 665 005a 7B68     		ldr	r3, [r7, #4]
+ 666 005c DA66     		str	r2, [r3, #108]	@ float
+ 174:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->att_roll_deg   = (float)rd_le16(p +  5) / 100.0f;
+ 667              		.loc 1 174 0
+ 668 005e FB68     		ldr	r3, [r7, #12]
+ 669 0060 0533     		adds	r3, r3, #5
+ 670 0062 1846     		mov	r0, r3
+ 671 0064 FFF7FEFF 		bl	rd_le16
+ 672 0068 0346     		mov	r3, r0
+ 673 006a 1846     		mov	r0, r3
+ 674 006c FFF7FEFF 		bl	__aeabi_i2f
+ 675 0070 0346     		mov	r3, r0
+ 676 0072 3249     		ldr	r1, .L28
+ 677 0074 1846     		mov	r0, r3
+ 678 0076 FFF7FEFF 		bl	__aeabi_fdiv
+ 679 007a 0346     		mov	r3, r0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 16
+
+
+ 680 007c 1A46     		mov	r2, r3
+ 681 007e 7B68     		ldr	r3, [r7, #4]
+ 682 0080 1A67     		str	r2, [r3, #112]	@ float
+ 175:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 176:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     /* off 7-8: purpose unconfirmed. Keep decoding as roll_err
+ 177:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****      * until next capture session resolves it. */
+ 178:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->att_roll_err_deg = (float)rd_le16(p + 7) / 10.0f;
+ 683              		.loc 1 178 0
+ 684 0082 FB68     		ldr	r3, [r7, #12]
+ 685 0084 0733     		adds	r3, r3, #7
+ 686 0086 1846     		mov	r0, r3
+ 687 0088 FFF7FEFF 		bl	rd_le16
+ 688 008c 0346     		mov	r3, r0
+ 689 008e 1846     		mov	r0, r3
+ 690 0090 FFF7FEFF 		bl	__aeabi_i2f
+ 691 0094 0346     		mov	r3, r0
+ 692 0096 2A49     		ldr	r1, .L28+4
+ 693 0098 1846     		mov	r0, r3
+ 694 009a FFF7FEFF 		bl	__aeabi_fdiv
+ 695 009e 0346     		mov	r3, r0
+ 696 00a0 1A46     		mov	r2, r3
+ 697 00a2 7B68     		ldr	r3, [r7, #4]
+ 698 00a4 C3F88020 		str	r2, [r3, #128]	@ float
+ 179:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 180:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     /* Rates: updated to off 9-14 /100 per confirmed iOS layout.
+ 181:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****      * TODO: verify values against iOS Charts screen. */
+ 182:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->att_pitch_rate_dps = (float)rd_le16(p +  9) / 100.0f;
+ 699              		.loc 1 182 0
+ 700 00a8 FB68     		ldr	r3, [r7, #12]
+ 701 00aa 0933     		adds	r3, r3, #9
+ 702 00ac 1846     		mov	r0, r3
+ 703 00ae FFF7FEFF 		bl	rd_le16
+ 704 00b2 0346     		mov	r3, r0
+ 705 00b4 1846     		mov	r0, r3
+ 706 00b6 FFF7FEFF 		bl	__aeabi_i2f
+ 707 00ba 0346     		mov	r3, r0
+ 708 00bc 1F49     		ldr	r1, .L28
+ 709 00be 1846     		mov	r0, r3
+ 710 00c0 FFF7FEFF 		bl	__aeabi_fdiv
+ 711 00c4 0346     		mov	r3, r0
+ 712 00c6 1A46     		mov	r2, r3
+ 713 00c8 7B68     		ldr	r3, [r7, #4]
+ 714 00ca 5A67     		str	r2, [r3, #116]	@ float
+ 183:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->att_yaw_rate_dps   = (float)rd_le16(p + 11) / 100.0f;
+ 715              		.loc 1 183 0
+ 716 00cc FB68     		ldr	r3, [r7, #12]
+ 717 00ce 0B33     		adds	r3, r3, #11
+ 718 00d0 1846     		mov	r0, r3
+ 719 00d2 FFF7FEFF 		bl	rd_le16
+ 720 00d6 0346     		mov	r3, r0
+ 721 00d8 1846     		mov	r0, r3
+ 722 00da FFF7FEFF 		bl	__aeabi_i2f
+ 723 00de 0346     		mov	r3, r0
+ 724 00e0 1649     		ldr	r1, .L28
+ 725 00e2 1846     		mov	r0, r3
+ 726 00e4 FFF7FEFF 		bl	__aeabi_fdiv
+ 727 00e8 0346     		mov	r3, r0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 17
+
+
+ 728 00ea 1A46     		mov	r2, r3
+ 729 00ec 7B68     		ldr	r3, [r7, #4]
+ 730 00ee 9A67     		str	r2, [r3, #120]	@ float
+ 184:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->att_roll_rate_dps  = (float)rd_le16(p + 13) / 100.0f;
+ 731              		.loc 1 184 0
+ 732 00f0 FB68     		ldr	r3, [r7, #12]
+ 733 00f2 0D33     		adds	r3, r3, #13
+ 734 00f4 1846     		mov	r0, r3
+ 735 00f6 FFF7FEFF 		bl	rd_le16
+ 736 00fa 0346     		mov	r3, r0
+ 737 00fc 1846     		mov	r0, r3
+ 738 00fe FFF7FEFF 		bl	__aeabi_i2f
+ 739 0102 0346     		mov	r3, r0
+ 740 0104 0D49     		ldr	r1, .L28
+ 741 0106 1846     		mov	r0, r3
+ 742 0108 FFF7FEFF 		bl	__aeabi_fdiv
+ 743 010c 0346     		mov	r3, r0
+ 744 010e 1A46     		mov	r2, r3
+ 745 0110 7B68     		ldr	r3, [r7, #4]
+ 746 0112 DA67     		str	r2, [r3, #124]	@ float
+ 185:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 186:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     /* pitch_err/yaw_err previously at off 9/11; now occupied by
+ 187:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****      * rates. Zeroed until layout is fully confirmed. */
+ 188:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->att_pitch_err_deg = 0.0f;
+ 747              		.loc 1 188 0
+ 748 0114 7B68     		ldr	r3, [r7, #4]
+ 749 0116 4FF00002 		mov	r2, #0
+ 750 011a C3F88420 		str	r2, [r3, #132]	@ float
+ 189:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->att_yaw_err_deg   = 0.0f;
+ 751              		.loc 1 189 0
+ 752 011e 7B68     		ldr	r3, [r7, #4]
+ 753 0120 4FF00002 		mov	r2, #0
+ 754 0124 C3F88820 		str	r2, [r3, #136]	@ float
+ 190:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 191:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->att_valid = true;
+ 755              		.loc 1 191 0
+ 756 0128 7B68     		ldr	r3, [r7, #4]
+ 757 012a 0122     		movs	r2, #1
+ 758 012c 83F86020 		strb	r2, [r3, #96]
+ 759 0130 00E0     		b	.L24
+ 760              	.L27:
+ 169:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 761              		.loc 1 169 0
+ 762 0132 00BF     		nop
+ 763              	.L24:
+ 192:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** }
+ 764              		.loc 1 192 0
+ 765 0134 1037     		adds	r7, r7, #16
+ 766              		.cfi_def_cfa_offset 8
+ 767 0136 BD46     		mov	sp, r7
+ 768              		.cfi_def_cfa_register 13
+ 769              		@ sp needed
+ 770 0138 80BD     		pop	{r7, pc}
+ 771              	.L29:
+ 772 013a 00BF     		.align	2
+ 773              	.L28:
+ 774 013c 0000C842 		.word	1120403456
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 18
+
+
+ 775 0140 00002041 		.word	1092616192
+ 776              		.cfi_endproc
+ 777              	.LFE7:
+ 778              		.size	hamfly_decode_attitude, .-hamfly_decode_attitude
+ 779              		.section	.text.hamfly_decode_sysstat,"ax",%progbits
+ 780              		.align	2
+ 781              		.global	hamfly_decode_sysstat
+ 782              		.thumb
+ 783              		.thumb_func
+ 784              		.type	hamfly_decode_sysstat, %function
+ 785              	hamfly_decode_sysstat:
+ 786              	.LFB8:
+ 193:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 194:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 195:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Hamfly Decode System Status [Hamfly Specific] -- attr 1
+ 196:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 197:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Reads the raw bytes of the System Status payload and into telemetry fields:
+ 198:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // 
+ 199:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Big-endian, no sub-index byte, 22 byte payload.
+ 200:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 0-1   BE int16:  battery voltage /100 V
+ 201:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 2     uint8:     GPS satellites
+ 202:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 3     uint8:     temperature     /3   C
+ 203:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 4     uint8:     CPU         %        %
+ 204:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 5-6   BE int16:  status flags
+ 205:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 7-8   BE int16:  time                 s
+ 206:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 9-10  BE int16:  pressure        /10  mb
+ 207:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 11-12 BE int16:  IMU rate
+ 208:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 13-14 BE int16:  camera status
+ 209:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 15    uint8:     reserved
+ 210:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 16-17 BE int16:  IMU latency          us
+ 211:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 18-19 BE int16:  battery current /100 A
+ 212:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 20-21 BE int16:  charge used          mAh
+ 213:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 214:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** void hamfly_decode_sysstat(const uint8_t *p, uint16_t plen,
+ 215:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****                              hamfly_telemetry_t *dst)
+ 216:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** {
+ 787              		.loc 1 216 0
+ 788              		.cfi_startproc
+ 789              		@ args = 0, pretend = 0, frame = 16
+ 790              		@ frame_needed = 1, uses_anonymous_args = 0
+ 791 0000 80B5     		push	{r7, lr}
+ 792              		.cfi_def_cfa_offset 8
+ 793              		.cfi_offset 7, -8
+ 794              		.cfi_offset 14, -4
+ 795 0002 84B0     		sub	sp, sp, #16
+ 796              		.cfi_def_cfa_offset 24
+ 797 0004 00AF     		add	r7, sp, #0
+ 798              		.cfi_def_cfa_register 7
+ 799 0006 F860     		str	r0, [r7, #12]
+ 800 0008 0B46     		mov	r3, r1
+ 801 000a 7A60     		str	r2, [r7, #4]
+ 802 000c 7B81     		strh	r3, [r7, #10]	@ movhi
+ 217:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     if (plen < 22u) return;
+ 803              		.loc 1 217 0
+ 804 000e 7B89     		ldrh	r3, [r7, #10]
+ 805 0010 152B     		cmp	r3, #21
+ 806 0012 40F2CF80 		bls	.L33
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 19
+
+
+ 218:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 219:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     // Decode and populate.
+ 220:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_batt_v       = (float)rd_be16(p +  0) / 100.0f;
+ 807              		.loc 1 220 0
+ 808 0016 F868     		ldr	r0, [r7, #12]
+ 809 0018 FFF7FEFF 		bl	rd_be16
+ 810 001c 0346     		mov	r3, r0
+ 811 001e 1846     		mov	r0, r3
+ 812 0020 FFF7FEFF 		bl	__aeabi_i2f
+ 813 0024 0346     		mov	r3, r0
+ 814 0026 6549     		ldr	r1, .L34
+ 815 0028 1846     		mov	r0, r3
+ 816 002a FFF7FEFF 		bl	__aeabi_fdiv
+ 817 002e 0346     		mov	r3, r0
+ 818 0030 1A46     		mov	r2, r3
+ 819 0032 7B68     		ldr	r3, [r7, #4]
+ 820 0034 C3F89420 		str	r2, [r3, #148]	@ float
+ 221:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_gps_sats     = p[2];
+ 821              		.loc 1 221 0
+ 822 0038 FB68     		ldr	r3, [r7, #12]
+ 823 003a 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 824 003c 7B68     		ldr	r3, [r7, #4]
+ 825 003e 83F89820 		strb	r2, [r3, #152]
+ 222:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_temp_c       = (float)p[3] / 3.0f;
+ 826              		.loc 1 222 0
+ 827 0042 FB68     		ldr	r3, [r7, #12]
+ 828 0044 0333     		adds	r3, r3, #3
+ 829 0046 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 830 0048 1846     		mov	r0, r3
+ 831 004a FFF7FEFF 		bl	__aeabi_ui2f
+ 832 004e 0346     		mov	r3, r0
+ 833 0050 5B49     		ldr	r1, .L34+4
+ 834 0052 1846     		mov	r0, r3
+ 835 0054 FFF7FEFF 		bl	__aeabi_fdiv
+ 836 0058 0346     		mov	r3, r0
+ 837 005a 1A46     		mov	r2, r3
+ 838 005c 7B68     		ldr	r3, [r7, #4]
+ 839 005e C3F89C20 		str	r2, [r3, #156]	@ float
+ 223:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_cpu_pct      = p[4];
+ 840              		.loc 1 223 0
+ 841 0062 FB68     		ldr	r3, [r7, #12]
+ 842 0064 1A79     		ldrb	r2, [r3, #4]	@ zero_extendqisi2
+ 843 0066 7B68     		ldr	r3, [r7, #4]
+ 844 0068 83F8A020 		strb	r2, [r3, #160]
+ 224:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_status_flags = rd_be16(p +  5);
+ 845              		.loc 1 224 0
+ 846 006c FB68     		ldr	r3, [r7, #12]
+ 847 006e 0533     		adds	r3, r3, #5
+ 848 0070 1846     		mov	r0, r3
+ 849 0072 FFF7FEFF 		bl	rd_be16
+ 850 0076 0346     		mov	r3, r0
+ 851 0078 1A46     		mov	r2, r3
+ 852 007a 7B68     		ldr	r3, [r7, #4]
+ 853 007c A3F8A220 		strh	r2, [r3, #162]	@ movhi
+ 225:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_time_s       = rd_be16(p +  7);
+ 854              		.loc 1 225 0
+ 855 0080 FB68     		ldr	r3, [r7, #12]
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 20
+
+
+ 856 0082 0733     		adds	r3, r3, #7
+ 857 0084 1846     		mov	r0, r3
+ 858 0086 FFF7FEFF 		bl	rd_be16
+ 859 008a 0346     		mov	r3, r0
+ 860 008c 1A46     		mov	r2, r3
+ 861 008e 7B68     		ldr	r3, [r7, #4]
+ 862 0090 A3F8A420 		strh	r2, [r3, #164]	@ movhi
+ 226:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_pressure_mb  = (float)rd_be16(p +  9) / 10.0f;
+ 863              		.loc 1 226 0
+ 864 0094 FB68     		ldr	r3, [r7, #12]
+ 865 0096 0933     		adds	r3, r3, #9
+ 866 0098 1846     		mov	r0, r3
+ 867 009a FFF7FEFF 		bl	rd_be16
+ 868 009e 0346     		mov	r3, r0
+ 869 00a0 1846     		mov	r0, r3
+ 870 00a2 FFF7FEFF 		bl	__aeabi_i2f
+ 871 00a6 0346     		mov	r3, r0
+ 872 00a8 4649     		ldr	r1, .L34+8
+ 873 00aa 1846     		mov	r0, r3
+ 874 00ac FFF7FEFF 		bl	__aeabi_fdiv
+ 875 00b0 0346     		mov	r3, r0
+ 876 00b2 1A46     		mov	r2, r3
+ 877 00b4 7B68     		ldr	r3, [r7, #4]
+ 878 00b6 C3F8A820 		str	r2, [r3, #168]	@ float
+ 227:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_imu_rate     = rd_be16(p + 11);
+ 879              		.loc 1 227 0
+ 880 00ba FB68     		ldr	r3, [r7, #12]
+ 881 00bc 0B33     		adds	r3, r3, #11
+ 882 00be 1846     		mov	r0, r3
+ 883 00c0 FFF7FEFF 		bl	rd_be16
+ 884 00c4 0346     		mov	r3, r0
+ 885 00c6 1A46     		mov	r2, r3
+ 886 00c8 7B68     		ldr	r3, [r7, #4]
+ 887 00ca A3F8AC20 		strh	r2, [r3, #172]	@ movhi
+ 228:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_cam_status   = rd_be16(p + 13);
+ 888              		.loc 1 228 0
+ 889 00ce FB68     		ldr	r3, [r7, #12]
+ 890 00d0 0D33     		adds	r3, r3, #13
+ 891 00d2 1846     		mov	r0, r3
+ 892 00d4 FFF7FEFF 		bl	rd_be16
+ 893 00d8 0346     		mov	r3, r0
+ 894 00da 1A46     		mov	r2, r3
+ 895 00dc 7B68     		ldr	r3, [r7, #4]
+ 896 00de A3F8AE20 		strh	r2, [r3, #174]	@ movhi
+ 229:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     /* off 15: reserved, skip */
+ 230:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_imu_latency  = rd_be16(p + 16);
+ 897              		.loc 1 230 0
+ 898 00e2 FB68     		ldr	r3, [r7, #12]
+ 899 00e4 1033     		adds	r3, r3, #16
+ 900 00e6 1846     		mov	r0, r3
+ 901 00e8 FFF7FEFF 		bl	rd_be16
+ 902 00ec 0346     		mov	r3, r0
+ 903 00ee 1A46     		mov	r2, r3
+ 904 00f0 7B68     		ldr	r3, [r7, #4]
+ 905 00f2 A3F8B020 		strh	r2, [r3, #176]	@ movhi
+ 231:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_batt_a       = (float)rd_be16(p + 18) / 100.0f;
+ 906              		.loc 1 231 0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 21
+
+
+ 907 00f6 FB68     		ldr	r3, [r7, #12]
+ 908 00f8 1233     		adds	r3, r3, #18
+ 909 00fa 1846     		mov	r0, r3
+ 910 00fc FFF7FEFF 		bl	rd_be16
+ 911 0100 0346     		mov	r3, r0
+ 912 0102 1846     		mov	r0, r3
+ 913 0104 FFF7FEFF 		bl	__aeabi_i2f
+ 914 0108 0346     		mov	r3, r0
+ 915 010a 2C49     		ldr	r1, .L34
+ 916 010c 1846     		mov	r0, r3
+ 917 010e FFF7FEFF 		bl	__aeabi_fdiv
+ 918 0112 0346     		mov	r3, r0
+ 919 0114 1A46     		mov	r2, r3
+ 920 0116 7B68     		ldr	r3, [r7, #4]
+ 921 0118 C3F8B420 		str	r2, [r3, #180]	@ float
+ 232:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_charge_mah   = rd_be16(p + 20);
+ 922              		.loc 1 232 0
+ 923 011c FB68     		ldr	r3, [r7, #12]
+ 924 011e 1433     		adds	r3, r3, #20
+ 925 0120 1846     		mov	r0, r3
+ 926 0122 FFF7FEFF 		bl	rd_be16
+ 927 0126 0346     		mov	r3, r0
+ 928 0128 1A46     		mov	r2, r3
+ 929 012a 7B68     		ldr	r3, [r7, #4]
+ 930 012c A3F8B820 		strh	r2, [r3, #184]	@ movhi
+ 233:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysstat_valid        = true;
+ 931              		.loc 1 233 0
+ 932 0130 7B68     		ldr	r3, [r7, #4]
+ 933 0132 0122     		movs	r2, #1
+ 934 0134 83F88C20 		strb	r2, [r3, #140]
+ 234:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     /* Decode status flag booleans. Bit positions confirmed:
+ 235:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****      *   indoor  0x0065 — bit 3 clear (no GPS lock)
+ 236:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****      *   outdoor 0x006C — bit 3 set   (GPS locked)            */
+ 237:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->flag_compass_error = (dst->sysstat_status_flags & 0x01) != 0;
+ 935              		.loc 1 237 0
+ 936 0138 7B68     		ldr	r3, [r7, #4]
+ 937 013a B3F9A230 		ldrsh	r3, [r3, #162]
+ 938 013e 9BB2     		uxth	r3, r3
+ 939 0140 03F00103 		and	r3, r3, #1
+ 940 0144 002B     		cmp	r3, #0
+ 941 0146 14BF     		ite	ne
+ 942 0148 0123     		movne	r3, #1
+ 943 014a 0023     		moveq	r3, #0
+ 944 014c DAB2     		uxtb	r2, r3
+ 945 014e 7B68     		ldr	r3, [r7, #4]
+ 946 0150 83F88D20 		strb	r2, [r3, #141]
+ 238:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->flag_gps_los       = (dst->sysstat_status_flags & 0x02) != 0;
+ 947              		.loc 1 238 0
+ 948 0154 7B68     		ldr	r3, [r7, #4]
+ 949 0156 B3F9A230 		ldrsh	r3, [r3, #162]
+ 950 015a 9BB2     		uxth	r3, r3
+ 951 015c 03F00203 		and	r3, r3, #2
+ 952 0160 002B     		cmp	r3, #0
+ 953 0162 14BF     		ite	ne
+ 954 0164 0123     		movne	r3, #1
+ 955 0166 0023     		moveq	r3, #0
+ 956 0168 DAB2     		uxtb	r2, r3
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 22
+
+
+ 957 016a 7B68     		ldr	r3, [r7, #4]
+ 958 016c 83F88E20 		strb	r2, [r3, #142]
+ 239:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->flag_radio_los     = (dst->sysstat_status_flags & 0x04) != 0;
+ 959              		.loc 1 239 0
+ 960 0170 7B68     		ldr	r3, [r7, #4]
+ 961 0172 B3F9A230 		ldrsh	r3, [r3, #162]
+ 962 0176 9BB2     		uxth	r3, r3
+ 963 0178 03F00403 		and	r3, r3, #4
+ 964 017c 002B     		cmp	r3, #0
+ 965 017e 14BF     		ite	ne
+ 966 0180 0123     		movne	r3, #1
+ 967 0182 0023     		moveq	r3, #0
+ 968 0184 DAB2     		uxtb	r2, r3
+ 969 0186 7B68     		ldr	r3, [r7, #4]
+ 970 0188 83F88F20 		strb	r2, [r3, #143]
+ 240:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->flag_gps_locked    = (dst->sysstat_status_flags & 0x08) != 0;
+ 971              		.loc 1 240 0
+ 972 018c 7B68     		ldr	r3, [r7, #4]
+ 973 018e B3F9A230 		ldrsh	r3, [r3, #162]
+ 974 0192 9BB2     		uxth	r3, r3
+ 975 0194 03F00803 		and	r3, r3, #8
+ 976 0198 002B     		cmp	r3, #0
+ 977 019a 14BF     		ite	ne
+ 978 019c 0123     		movne	r3, #1
+ 979 019e 0023     		moveq	r3, #0
+ 980 01a0 DAB2     		uxtb	r2, r3
+ 981 01a2 7B68     		ldr	r3, [r7, #4]
+ 982 01a4 83F89020 		strb	r2, [r3, #144]
+ 241:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     /* Propagate to GPS section for convenience. */
+ 242:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->gps_locked = dst->flag_gps_locked;
+ 983              		.loc 1 242 0
+ 984 01a8 7B68     		ldr	r3, [r7, #4]
+ 985 01aa 93F89020 		ldrb	r2, [r3, #144]	@ zero_extendqisi2
+ 986 01ae 7B68     		ldr	r3, [r7, #4]
+ 987 01b0 DA77     		strb	r2, [r3, #31]
+ 988 01b2 00E0     		b	.L30
+ 989              	.L33:
+ 217:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 990              		.loc 1 217 0
+ 991 01b4 00BF     		nop
+ 992              	.L30:
+ 243:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** }
+ 993              		.loc 1 243 0
+ 994 01b6 1037     		adds	r7, r7, #16
+ 995              		.cfi_def_cfa_offset 8
+ 996 01b8 BD46     		mov	sp, r7
+ 997              		.cfi_def_cfa_register 13
+ 998              		@ sp needed
+ 999 01ba 80BD     		pop	{r7, pc}
+ 1000              	.L35:
+ 1001              		.align	2
+ 1002              	.L34:
+ 1003 01bc 0000C842 		.word	1120403456
+ 1004 01c0 00004040 		.word	1077936128
+ 1005 01c4 00002041 		.word	1092616192
+ 1006              		.cfi_endproc
+ 1007              	.LFE8:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 23
+
+
+ 1008              		.size	hamfly_decode_sysstat, .-hamfly_decode_sysstat
+ 1009              		.section	.text.hamfly_decode_mag,"ax",%progbits
+ 1010              		.align	2
+ 1011              		.global	hamfly_decode_mag
+ 1012              		.thumb
+ 1013              		.thumb_func
+ 1014              		.type	hamfly_decode_mag, %function
+ 1015              	hamfly_decode_mag:
+ 1016              	.LFB9:
+ 244:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 245:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 246:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Hamfly Decode Magnetometer [Hamfly Specific] -- attr 12
+ 247:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 248:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Reads the raw bytes of the Magnetometer payload and into telemetry fields:
+ 249:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // 
+ 250:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Little-endian, sub-index byte at off 0 (ignored), 19 byte payload.
+ 251:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 1-2   LE int16:  X           /1000
+ 252:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 3-4   LE int16:  Y           /1000
+ 253:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 5-6   LE int16:  Z           /1000
+ 254:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 7-8   LE int16:  magnitude   /100
+ 255:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 9-10  LE int16:  frequency   /100
+ 256:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 11-12 LE int16:  offset X    /1000
+ 257:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 13-14 LE int16:  offset Y    /1000
+ 258:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 15-16 LE int16:  offset Z    /1000
+ 259:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 17-18 LE int16:  declination /10
+ 260:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 261:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** void hamfly_decode_mag(const uint8_t *p, uint16_t plen,
+ 262:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****                         hamfly_telemetry_t *dst)
+ 263:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** {
+ 1017              		.loc 1 263 0
+ 1018              		.cfi_startproc
+ 1019              		@ args = 0, pretend = 0, frame = 16
+ 1020              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1021 0000 80B5     		push	{r7, lr}
+ 1022              		.cfi_def_cfa_offset 8
+ 1023              		.cfi_offset 7, -8
+ 1024              		.cfi_offset 14, -4
+ 1025 0002 84B0     		sub	sp, sp, #16
+ 1026              		.cfi_def_cfa_offset 24
+ 1027 0004 00AF     		add	r7, sp, #0
+ 1028              		.cfi_def_cfa_register 7
+ 1029 0006 F860     		str	r0, [r7, #12]
+ 1030 0008 0B46     		mov	r3, r1
+ 1031 000a 7A60     		str	r2, [r7, #4]
+ 1032 000c 7B81     		strh	r3, [r7, #10]	@ movhi
+ 264:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     if (plen < 19u) return;
+ 1033              		.loc 1 264 0
+ 1034 000e 7B89     		ldrh	r3, [r7, #10]
+ 1035 0010 122B     		cmp	r3, #18
+ 1036 0012 40F2B080 		bls	.L39
+ 265:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 266:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     // Decode and populate.
+ 267:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->mag_x           = (float)rd_le16(p +  1) / 1000.0f;
+ 1037              		.loc 1 267 0
+ 1038 0016 FB68     		ldr	r3, [r7, #12]
+ 1039 0018 0133     		adds	r3, r3, #1
+ 1040 001a 1846     		mov	r0, r3
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 24
+
+
+ 1041 001c FFF7FEFF 		bl	rd_le16
+ 1042 0020 0346     		mov	r3, r0
+ 1043 0022 1846     		mov	r0, r3
+ 1044 0024 FFF7FEFF 		bl	__aeabi_i2f
+ 1045 0028 0346     		mov	r3, r0
+ 1046 002a 5549     		ldr	r1, .L40
+ 1047 002c 1846     		mov	r0, r3
+ 1048 002e FFF7FEFF 		bl	__aeabi_fdiv
+ 1049 0032 0346     		mov	r3, r0
+ 1050 0034 1A46     		mov	r2, r3
+ 1051 0036 7B68     		ldr	r3, [r7, #4]
+ 1052 0038 C3F8BC20 		str	r2, [r3, #188]	@ float
+ 268:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->mag_y           = (float)rd_le16(p +  3) / 1000.0f;
+ 1053              		.loc 1 268 0
+ 1054 003c FB68     		ldr	r3, [r7, #12]
+ 1055 003e 0333     		adds	r3, r3, #3
+ 1056 0040 1846     		mov	r0, r3
+ 1057 0042 FFF7FEFF 		bl	rd_le16
+ 1058 0046 0346     		mov	r3, r0
+ 1059 0048 1846     		mov	r0, r3
+ 1060 004a FFF7FEFF 		bl	__aeabi_i2f
+ 1061 004e 0346     		mov	r3, r0
+ 1062 0050 4B49     		ldr	r1, .L40
+ 1063 0052 1846     		mov	r0, r3
+ 1064 0054 FFF7FEFF 		bl	__aeabi_fdiv
+ 1065 0058 0346     		mov	r3, r0
+ 1066 005a 1A46     		mov	r2, r3
+ 1067 005c 7B68     		ldr	r3, [r7, #4]
+ 1068 005e C3F8C020 		str	r2, [r3, #192]	@ float
+ 269:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->mag_z           = (float)rd_le16(p +  5) / 1000.0f;
+ 1069              		.loc 1 269 0
+ 1070 0062 FB68     		ldr	r3, [r7, #12]
+ 1071 0064 0533     		adds	r3, r3, #5
+ 1072 0066 1846     		mov	r0, r3
+ 1073 0068 FFF7FEFF 		bl	rd_le16
+ 1074 006c 0346     		mov	r3, r0
+ 1075 006e 1846     		mov	r0, r3
+ 1076 0070 FFF7FEFF 		bl	__aeabi_i2f
+ 1077 0074 0346     		mov	r3, r0
+ 1078 0076 4249     		ldr	r1, .L40
+ 1079 0078 1846     		mov	r0, r3
+ 1080 007a FFF7FEFF 		bl	__aeabi_fdiv
+ 1081 007e 0346     		mov	r3, r0
+ 1082 0080 1A46     		mov	r2, r3
+ 1083 0082 7B68     		ldr	r3, [r7, #4]
+ 1084 0084 C3F8C420 		str	r2, [r3, #196]	@ float
+ 270:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->mag_magnitude   = (float)rd_le16(p +  7) / 100.0f;
+ 1085              		.loc 1 270 0
+ 1086 0088 FB68     		ldr	r3, [r7, #12]
+ 1087 008a 0733     		adds	r3, r3, #7
+ 1088 008c 1846     		mov	r0, r3
+ 1089 008e FFF7FEFF 		bl	rd_le16
+ 1090 0092 0346     		mov	r3, r0
+ 1091 0094 1846     		mov	r0, r3
+ 1092 0096 FFF7FEFF 		bl	__aeabi_i2f
+ 1093 009a 0346     		mov	r3, r0
+ 1094 009c 3949     		ldr	r1, .L40+4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 25
+
+
+ 1095 009e 1846     		mov	r0, r3
+ 1096 00a0 FFF7FEFF 		bl	__aeabi_fdiv
+ 1097 00a4 0346     		mov	r3, r0
+ 1098 00a6 1A46     		mov	r2, r3
+ 1099 00a8 7B68     		ldr	r3, [r7, #4]
+ 1100 00aa C3F8C820 		str	r2, [r3, #200]	@ float
+ 271:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->mag_freq        = (float)rd_le16(p +  9) / 100.0f;
+ 1101              		.loc 1 271 0
+ 1102 00ae FB68     		ldr	r3, [r7, #12]
+ 1103 00b0 0933     		adds	r3, r3, #9
+ 1104 00b2 1846     		mov	r0, r3
+ 1105 00b4 FFF7FEFF 		bl	rd_le16
+ 1106 00b8 0346     		mov	r3, r0
+ 1107 00ba 1846     		mov	r0, r3
+ 1108 00bc FFF7FEFF 		bl	__aeabi_i2f
+ 1109 00c0 0346     		mov	r3, r0
+ 1110 00c2 3049     		ldr	r1, .L40+4
+ 1111 00c4 1846     		mov	r0, r3
+ 1112 00c6 FFF7FEFF 		bl	__aeabi_fdiv
+ 1113 00ca 0346     		mov	r3, r0
+ 1114 00cc 1A46     		mov	r2, r3
+ 1115 00ce 7B68     		ldr	r3, [r7, #4]
+ 1116 00d0 C3F8CC20 		str	r2, [r3, #204]	@ float
+ 272:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->mag_off_x       = (float)rd_le16(p + 11) / 1000.0f;
+ 1117              		.loc 1 272 0
+ 1118 00d4 FB68     		ldr	r3, [r7, #12]
+ 1119 00d6 0B33     		adds	r3, r3, #11
+ 1120 00d8 1846     		mov	r0, r3
+ 1121 00da FFF7FEFF 		bl	rd_le16
+ 1122 00de 0346     		mov	r3, r0
+ 1123 00e0 1846     		mov	r0, r3
+ 1124 00e2 FFF7FEFF 		bl	__aeabi_i2f
+ 1125 00e6 0346     		mov	r3, r0
+ 1126 00e8 2549     		ldr	r1, .L40
+ 1127 00ea 1846     		mov	r0, r3
+ 1128 00ec FFF7FEFF 		bl	__aeabi_fdiv
+ 1129 00f0 0346     		mov	r3, r0
+ 1130 00f2 1A46     		mov	r2, r3
+ 1131 00f4 7B68     		ldr	r3, [r7, #4]
+ 1132 00f6 C3F8D020 		str	r2, [r3, #208]	@ float
+ 273:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->mag_off_y       = (float)rd_le16(p + 13) / 1000.0f;
+ 1133              		.loc 1 273 0
+ 1134 00fa FB68     		ldr	r3, [r7, #12]
+ 1135 00fc 0D33     		adds	r3, r3, #13
+ 1136 00fe 1846     		mov	r0, r3
+ 1137 0100 FFF7FEFF 		bl	rd_le16
+ 1138 0104 0346     		mov	r3, r0
+ 1139 0106 1846     		mov	r0, r3
+ 1140 0108 FFF7FEFF 		bl	__aeabi_i2f
+ 1141 010c 0346     		mov	r3, r0
+ 1142 010e 1C49     		ldr	r1, .L40
+ 1143 0110 1846     		mov	r0, r3
+ 1144 0112 FFF7FEFF 		bl	__aeabi_fdiv
+ 1145 0116 0346     		mov	r3, r0
+ 1146 0118 1A46     		mov	r2, r3
+ 1147 011a 7B68     		ldr	r3, [r7, #4]
+ 1148 011c C3F8D420 		str	r2, [r3, #212]	@ float
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 26
+
+
+ 274:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->mag_off_z       = (float)rd_le16(p + 15) / 1000.0f;
+ 1149              		.loc 1 274 0
+ 1150 0120 FB68     		ldr	r3, [r7, #12]
+ 1151 0122 0F33     		adds	r3, r3, #15
+ 1152 0124 1846     		mov	r0, r3
+ 1153 0126 FFF7FEFF 		bl	rd_le16
+ 1154 012a 0346     		mov	r3, r0
+ 1155 012c 1846     		mov	r0, r3
+ 1156 012e FFF7FEFF 		bl	__aeabi_i2f
+ 1157 0132 0346     		mov	r3, r0
+ 1158 0134 1249     		ldr	r1, .L40
+ 1159 0136 1846     		mov	r0, r3
+ 1160 0138 FFF7FEFF 		bl	__aeabi_fdiv
+ 1161 013c 0346     		mov	r3, r0
+ 1162 013e 1A46     		mov	r2, r3
+ 1163 0140 7B68     		ldr	r3, [r7, #4]
+ 1164 0142 C3F8D820 		str	r2, [r3, #216]	@ float
+ 275:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->mag_declination = (float)rd_le16(p + 17) / 10.0f;
+ 1165              		.loc 1 275 0
+ 1166 0146 FB68     		ldr	r3, [r7, #12]
+ 1167 0148 1133     		adds	r3, r3, #17
+ 1168 014a 1846     		mov	r0, r3
+ 1169 014c FFF7FEFF 		bl	rd_le16
+ 1170 0150 0346     		mov	r3, r0
+ 1171 0152 1846     		mov	r0, r3
+ 1172 0154 FFF7FEFF 		bl	__aeabi_i2f
+ 1173 0158 0346     		mov	r3, r0
+ 1174 015a 0B49     		ldr	r1, .L40+8
+ 1175 015c 1846     		mov	r0, r3
+ 1176 015e FFF7FEFF 		bl	__aeabi_fdiv
+ 1177 0162 0346     		mov	r3, r0
+ 1178 0164 1A46     		mov	r2, r3
+ 1179 0166 7B68     		ldr	r3, [r7, #4]
+ 1180 0168 C3F8DC20 		str	r2, [r3, #220]	@ float
+ 276:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->mag_valid       = true;
+ 1181              		.loc 1 276 0
+ 1182 016c 7B68     		ldr	r3, [r7, #4]
+ 1183 016e 0122     		movs	r2, #1
+ 1184 0170 83F8BA20 		strb	r2, [r3, #186]
+ 1185 0174 00E0     		b	.L36
+ 1186              	.L39:
+ 264:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 1187              		.loc 1 264 0
+ 1188 0176 00BF     		nop
+ 1189              	.L36:
+ 277:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** }
+ 1190              		.loc 1 277 0
+ 1191 0178 1037     		adds	r7, r7, #16
+ 1192              		.cfi_def_cfa_offset 8
+ 1193 017a BD46     		mov	sp, r7
+ 1194              		.cfi_def_cfa_register 13
+ 1195              		@ sp needed
+ 1196 017c 80BD     		pop	{r7, pc}
+ 1197              	.L41:
+ 1198 017e 00BF     		.align	2
+ 1199              	.L40:
+ 1200 0180 00007A44 		.word	1148846080
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 27
+
+
+ 1201 0184 0000C842 		.word	1120403456
+ 1202 0188 00002041 		.word	1092616192
+ 1203              		.cfi_endproc
+ 1204              	.LFE9:
+ 1205              		.size	hamfly_decode_mag, .-hamfly_decode_mag
+ 1206              		.section	.text.hamfly_decode_sysecho,"ax",%progbits
+ 1207              		.align	2
+ 1208              		.global	hamfly_decode_sysecho
+ 1209              		.thumb
+ 1210              		.thumb_func
+ 1211              		.type	hamfly_decode_sysecho, %function
+ 1212              	hamfly_decode_sysecho:
+ 1213              	.LFB10:
+ 278:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** 
+ 279:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 280:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Hamfly Decode System Echo [Hamfly Specific] -- attr 48
+ 281:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 282:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Composite read-only status block. Mirrors several attr 1 and attr 4 fields.
+ 283:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // Single round trip gives GPS lock state, rough position, pressure, IMU rate.
+ 284:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** //
+ 285:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 0-7   GPS position bytes (mirrors attr 4 lon/lat when GPS locked).
+ 286:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 8     status byte: 0x09 = GPS locked, 0xCB = no lock.
+ 287:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 9-10  BE int16: pressure /10 mb (mirrors attr 1 off 9-10).
+ 288:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 11-12 BE int16: IMU rate (mirrors attr 1 off 11-12).
+ 289:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // off 13    always 0x00.
+ 290:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** // ============================================================================
+ 291:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** void hamfly_decode_sysecho(const uint8_t *p, uint16_t plen,
+ 292:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****                             hamfly_telemetry_t *dst)
+ 293:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** {
+ 1214              		.loc 1 293 0
+ 1215              		.cfi_startproc
+ 1216              		@ args = 0, pretend = 0, frame = 16
+ 1217              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1218 0000 80B5     		push	{r7, lr}
+ 1219              		.cfi_def_cfa_offset 8
+ 1220              		.cfi_offset 7, -8
+ 1221              		.cfi_offset 14, -4
+ 1222 0002 84B0     		sub	sp, sp, #16
+ 1223              		.cfi_def_cfa_offset 24
+ 1224 0004 00AF     		add	r7, sp, #0
+ 1225              		.cfi_def_cfa_register 7
+ 1226 0006 F860     		str	r0, [r7, #12]
+ 1227 0008 0B46     		mov	r3, r1
+ 1228 000a 7A60     		str	r2, [r7, #4]
+ 1229 000c 7B81     		strh	r3, [r7, #10]	@ movhi
+ 294:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     if (plen < 13u) return;
+ 1230              		.loc 1 294 0
+ 1231 000e 7B89     		ldrh	r3, [r7, #10]
+ 1232 0010 0C2B     		cmp	r3, #12
+ 1233 0012 2CD9     		bls	.L45
+ 295:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysecho_gps_locked  = (p[8] == 0x09u);
+ 1234              		.loc 1 295 0
+ 1235 0014 FB68     		ldr	r3, [r7, #12]
+ 1236 0016 0833     		adds	r3, r3, #8
+ 1237 0018 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1238 001a 092B     		cmp	r3, #9
+ 1239 001c 0CBF     		ite	eq
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 28
+
+
+ 1240 001e 0123     		moveq	r3, #1
+ 1241 0020 0023     		movne	r3, #0
+ 1242 0022 DAB2     		uxtb	r2, r3
+ 1243 0024 7B68     		ldr	r3, [r7, #4]
+ 1244 0026 83F8E120 		strb	r2, [r3, #225]
+ 296:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysecho_pressure_mb = (float)rd_be16(p +  9) / 10.0f;
+ 1245              		.loc 1 296 0
+ 1246 002a FB68     		ldr	r3, [r7, #12]
+ 1247 002c 0933     		adds	r3, r3, #9
+ 1248 002e 1846     		mov	r0, r3
+ 1249 0030 FFF7FEFF 		bl	rd_be16
+ 1250 0034 0346     		mov	r3, r0
+ 1251 0036 1846     		mov	r0, r3
+ 1252 0038 FFF7FEFF 		bl	__aeabi_i2f
+ 1253 003c 0346     		mov	r3, r0
+ 1254 003e 0E49     		ldr	r1, .L46
+ 1255 0040 1846     		mov	r0, r3
+ 1256 0042 FFF7FEFF 		bl	__aeabi_fdiv
+ 1257 0046 0346     		mov	r3, r0
+ 1258 0048 1A46     		mov	r2, r3
+ 1259 004a 7B68     		ldr	r3, [r7, #4]
+ 1260 004c C3F8E420 		str	r2, [r3, #228]	@ float
+ 297:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysecho_imu_rate    = rd_be16(p + 11);
+ 1261              		.loc 1 297 0
+ 1262 0050 FB68     		ldr	r3, [r7, #12]
+ 1263 0052 0B33     		adds	r3, r3, #11
+ 1264 0054 1846     		mov	r0, r3
+ 1265 0056 FFF7FEFF 		bl	rd_be16
+ 1266 005a 0346     		mov	r3, r0
+ 1267 005c 1A46     		mov	r2, r3
+ 1268 005e 7B68     		ldr	r3, [r7, #4]
+ 1269 0060 A3F8E820 		strh	r2, [r3, #232]	@ movhi
+ 298:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysecho_valid       = true;
+ 1270              		.loc 1 298 0
+ 1271 0064 7B68     		ldr	r3, [r7, #4]
+ 1272 0066 0122     		movs	r2, #1
+ 1273 0068 83F8E020 		strb	r2, [r3, #224]
+ 1274 006c 00E0     		b	.L42
+ 1275              	.L45:
+ 294:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c ****     dst->sysecho_gps_locked  = (p[8] == 0x09u);
+ 1276              		.loc 1 294 0
+ 1277 006e 00BF     		nop
+ 1278              	.L42:
+ 299:..\..\..\HamFlyAPI\src/hamfly_core_telemetry.c **** }
+ 1279              		.loc 1 299 0
+ 1280 0070 1037     		adds	r7, r7, #16
+ 1281              		.cfi_def_cfa_offset 8
+ 1282 0072 BD46     		mov	sp, r7
+ 1283              		.cfi_def_cfa_register 13
+ 1284              		@ sp needed
+ 1285 0074 80BD     		pop	{r7, pc}
+ 1286              	.L47:
+ 1287 0076 00BF     		.align	2
+ 1288              	.L46:
+ 1289 0078 00002041 		.word	1092616192
+ 1290              		.cfi_endproc
+ 1291              	.LFE10:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 29
+
+
+ 1292              		.size	hamfly_decode_sysecho, .-hamfly_decode_sysecho
+ 1293              		.text
+ 1294              	.Letext0:
+ 1295              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1296              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1297              		.file 4 "..\\..\\..\\HamFlyAPI\\src\\hamfly_core_telemetry.h"
+ 1298              		.file 5 "..\\..\\..\\HamFlyAPI\\src\\hamfly_qx_app.h"
+ 1299              		.section	.debug_info,"",%progbits
+ 1300              	.Ldebug_info0:
+ 1301 0000 1E0A0000 		.4byte	0xa1e
+ 1302 0004 0400     		.2byte	0x4
+ 1303 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1304 000a 04       		.byte	0x4
+ 1305 000b 01       		.uleb128 0x1
+ 1306 000c D8000000 		.4byte	.LASF173
+ 1307 0010 0C       		.byte	0xc
+ 1308 0011 25070000 		.4byte	.LASF174
+ 1309 0015 4E040000 		.4byte	.LASF175
+ 1310 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1311 001d 00000000 		.4byte	0
+ 1312 0021 00000000 		.4byte	.Ldebug_line0
+ 1313 0025 02       		.uleb128 0x2
+ 1314 0026 01       		.byte	0x1
+ 1315 0027 06       		.byte	0x6
+ 1316 0028 CA090000 		.4byte	.LASF0
+ 1317 002c 03       		.uleb128 0x3
+ 1318 002d CF070000 		.4byte	.LASF2
+ 1319 0031 02       		.byte	0x2
+ 1320 0032 1D       		.byte	0x1d
+ 1321 0033 37000000 		.4byte	0x37
+ 1322 0037 02       		.uleb128 0x2
+ 1323 0038 01       		.byte	0x1
+ 1324 0039 08       		.byte	0x8
+ 1325 003a EB080000 		.4byte	.LASF1
+ 1326 003e 03       		.uleb128 0x3
+ 1327 003f 39060000 		.4byte	.LASF3
+ 1328 0043 02       		.byte	0x2
+ 1329 0044 29       		.byte	0x29
+ 1330 0045 49000000 		.4byte	0x49
+ 1331 0049 02       		.uleb128 0x2
+ 1332 004a 02       		.byte	0x2
+ 1333 004b 05       		.byte	0x5
+ 1334 004c 67070000 		.4byte	.LASF4
+ 1335 0050 03       		.uleb128 0x3
+ 1336 0051 11030000 		.4byte	.LASF5
+ 1337 0055 02       		.byte	0x2
+ 1338 0056 2B       		.byte	0x2b
+ 1339 0057 5B000000 		.4byte	0x5b
+ 1340 005b 02       		.uleb128 0x2
+ 1341 005c 02       		.byte	0x2
+ 1342 005d 07       		.byte	0x7
+ 1343 005e E3090000 		.4byte	.LASF6
+ 1344 0062 03       		.uleb128 0x3
+ 1345 0063 9B000000 		.4byte	.LASF7
+ 1346 0067 02       		.byte	0x2
+ 1347 0068 3F       		.byte	0x3f
+ 1348 0069 6D000000 		.4byte	0x6d
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 30
+
+
+ 1349 006d 02       		.uleb128 0x2
+ 1350 006e 04       		.byte	0x4
+ 1351 006f 05       		.byte	0x5
+ 1352 0070 71070000 		.4byte	.LASF8
+ 1353 0074 03       		.uleb128 0x3
+ 1354 0075 F9080000 		.4byte	.LASF9
+ 1355 0079 02       		.byte	0x2
+ 1356 007a 41       		.byte	0x41
+ 1357 007b 7F000000 		.4byte	0x7f
+ 1358 007f 02       		.uleb128 0x2
+ 1359 0080 04       		.byte	0x4
+ 1360 0081 07       		.byte	0x7
+ 1361 0082 59080000 		.4byte	.LASF10
+ 1362 0086 02       		.uleb128 0x2
+ 1363 0087 08       		.byte	0x8
+ 1364 0088 05       		.byte	0x5
+ 1365 0089 92050000 		.4byte	.LASF11
+ 1366 008d 02       		.uleb128 0x2
+ 1367 008e 08       		.byte	0x8
+ 1368 008f 07       		.byte	0x7
+ 1369 0090 90020000 		.4byte	.LASF12
+ 1370 0094 04       		.uleb128 0x4
+ 1371 0095 04       		.byte	0x4
+ 1372 0096 05       		.byte	0x5
+ 1373 0097 696E7400 		.ascii	"int\000"
+ 1374 009b 02       		.uleb128 0x2
+ 1375 009c 04       		.byte	0x4
+ 1376 009d 07       		.byte	0x7
+ 1377 009e 8E000000 		.4byte	.LASF13
+ 1378 00a2 03       		.uleb128 0x3
+ 1379 00a3 22050000 		.4byte	.LASF14
+ 1380 00a7 03       		.byte	0x3
+ 1381 00a8 18       		.byte	0x18
+ 1382 00a9 2C000000 		.4byte	0x2c
+ 1383 00ad 03       		.uleb128 0x3
+ 1384 00ae 6A020000 		.4byte	.LASF15
+ 1385 00b2 03       		.byte	0x3
+ 1386 00b3 20       		.byte	0x20
+ 1387 00b4 3E000000 		.4byte	0x3e
+ 1388 00b8 03       		.uleb128 0x3
+ 1389 00b9 EE060000 		.4byte	.LASF16
+ 1390 00bd 03       		.byte	0x3
+ 1391 00be 24       		.byte	0x24
+ 1392 00bf 50000000 		.4byte	0x50
+ 1393 00c3 03       		.uleb128 0x3
+ 1394 00c4 93080000 		.4byte	.LASF17
+ 1395 00c8 03       		.byte	0x3
+ 1396 00c9 2C       		.byte	0x2c
+ 1397 00ca 62000000 		.4byte	0x62
+ 1398 00ce 03       		.uleb128 0x3
+ 1399 00cf 44020000 		.4byte	.LASF18
+ 1400 00d3 03       		.byte	0x3
+ 1401 00d4 30       		.byte	0x30
+ 1402 00d5 74000000 		.4byte	0x74
+ 1403 00d9 05       		.uleb128 0x5
+ 1404 00da EC       		.byte	0xec
+ 1405 00db 04       		.byte	0x4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 31
+
+
+ 1406 00dc 1F       		.byte	0x1f
+ 1407 00dd 42040000 		.4byte	0x442
+ 1408 00e1 06       		.uleb128 0x6
+ 1409 00e2 CB050000 		.4byte	.LASF19
+ 1410 00e6 04       		.byte	0x4
+ 1411 00e7 21       		.byte	0x21
+ 1412 00e8 42040000 		.4byte	0x442
+ 1413 00ec 00       		.byte	0
+ 1414 00ed 06       		.uleb128 0x6
+ 1415 00ee D6010000 		.4byte	.LASF20
+ 1416 00f2 04       		.byte	0x4
+ 1417 00f3 22       		.byte	0x22
+ 1418 00f4 49040000 		.4byte	0x449
+ 1419 00f8 04       		.byte	0x4
+ 1420 00f9 06       		.uleb128 0x6
+ 1421 00fa FC070000 		.4byte	.LASF21
+ 1422 00fe 04       		.byte	0x4
+ 1423 00ff 23       		.byte	0x23
+ 1424 0100 49040000 		.4byte	0x449
+ 1425 0104 08       		.byte	0x8
+ 1426 0105 06       		.uleb128 0x6
+ 1427 0106 14050000 		.4byte	.LASF22
+ 1428 010a 04       		.byte	0x4
+ 1429 010b 24       		.byte	0x24
+ 1430 010c 49040000 		.4byte	0x449
+ 1431 0110 0C       		.byte	0xc
+ 1432 0111 06       		.uleb128 0x6
+ 1433 0112 F3040000 		.4byte	.LASF23
+ 1434 0116 04       		.byte	0x4
+ 1435 0117 25       		.byte	0x25
+ 1436 0118 49040000 		.4byte	0x449
+ 1437 011c 10       		.byte	0x10
+ 1438 011d 06       		.uleb128 0x6
+ 1439 011e FC040000 		.4byte	.LASF24
+ 1440 0122 04       		.byte	0x4
+ 1441 0123 26       		.byte	0x26
+ 1442 0124 49040000 		.4byte	0x449
+ 1443 0128 14       		.byte	0x14
+ 1444 0129 06       		.uleb128 0x6
+ 1445 012a 05050000 		.4byte	.LASF25
+ 1446 012e 04       		.byte	0x4
+ 1447 012f 27       		.byte	0x27
+ 1448 0130 49040000 		.4byte	0x449
+ 1449 0134 18       		.byte	0x18
+ 1450 0135 06       		.uleb128 0x6
+ 1451 0136 07070000 		.4byte	.LASF26
+ 1452 013a 04       		.byte	0x4
+ 1453 013b 28       		.byte	0x28
+ 1454 013c A2000000 		.4byte	0xa2
+ 1455 0140 1C       		.byte	0x1c
+ 1456 0141 06       		.uleb128 0x6
+ 1457 0142 16070000 		.4byte	.LASF27
+ 1458 0146 04       		.byte	0x4
+ 1459 0147 29       		.byte	0x29
+ 1460 0148 A2000000 		.4byte	0xa2
+ 1461 014c 1D       		.byte	0x1d
+ 1462 014d 06       		.uleb128 0x6
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 32
+
+
+ 1463 014e 43060000 		.4byte	.LASF28
+ 1464 0152 04       		.byte	0x4
+ 1465 0153 2C       		.byte	0x2c
+ 1466 0154 42040000 		.4byte	0x442
+ 1467 0158 1E       		.byte	0x1e
+ 1468 0159 06       		.uleb128 0x6
+ 1469 015a A0050000 		.4byte	.LASF29
+ 1470 015e 04       		.byte	0x4
+ 1471 015f 2E       		.byte	0x2e
+ 1472 0160 42040000 		.4byte	0x442
+ 1473 0164 1F       		.byte	0x1f
+ 1474 0165 06       		.uleb128 0x6
+ 1475 0166 C3070000 		.4byte	.LASF30
+ 1476 016a 04       		.byte	0x4
+ 1477 016b 31       		.byte	0x31
+ 1478 016c 49040000 		.4byte	0x449
+ 1479 0170 20       		.byte	0x20
+ 1480 0171 06       		.uleb128 0x6
+ 1481 0172 FD030000 		.4byte	.LASF31
+ 1482 0176 04       		.byte	0x4
+ 1483 0177 32       		.byte	0x32
+ 1484 0178 49040000 		.4byte	0x449
+ 1485 017c 24       		.byte	0x24
+ 1486 017d 06       		.uleb128 0x6
+ 1487 017e B9070000 		.4byte	.LASF32
+ 1488 0182 04       		.byte	0x4
+ 1489 0183 33       		.byte	0x33
+ 1490 0184 49040000 		.4byte	0x449
+ 1491 0188 28       		.byte	0x28
+ 1492 0189 06       		.uleb128 0x6
+ 1493 018a 4D020000 		.4byte	.LASF33
+ 1494 018e 04       		.byte	0x4
+ 1495 018f 34       		.byte	0x34
+ 1496 0190 49040000 		.4byte	0x449
+ 1497 0194 2C       		.byte	0x2c
+ 1498 0195 06       		.uleb128 0x6
+ 1499 0196 D2060000 		.4byte	.LASF34
+ 1500 019a 04       		.byte	0x4
+ 1501 019b 36       		.byte	0x36
+ 1502 019c 49040000 		.4byte	0x449
+ 1503 01a0 30       		.byte	0x30
+ 1504 01a1 06       		.uleb128 0x6
+ 1505 01a2 2A040000 		.4byte	.LASF35
+ 1506 01a6 04       		.byte	0x4
+ 1507 01a7 37       		.byte	0x37
+ 1508 01a8 49040000 		.4byte	0x449
+ 1509 01ac 34       		.byte	0x34
+ 1510 01ad 06       		.uleb128 0x6
+ 1511 01ae 66090000 		.4byte	.LASF36
+ 1512 01b2 04       		.byte	0x4
+ 1513 01b3 38       		.byte	0x38
+ 1514 01b4 49040000 		.4byte	0x449
+ 1515 01b8 38       		.byte	0x38
+ 1516 01b9 06       		.uleb128 0x6
+ 1517 01ba 86050000 		.4byte	.LASF37
+ 1518 01be 04       		.byte	0x4
+ 1519 01bf 39       		.byte	0x39
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 33
+
+
+ 1520 01c0 49040000 		.4byte	0x449
+ 1521 01c4 3C       		.byte	0x3c
+ 1522 01c5 06       		.uleb128 0x6
+ 1523 01c6 13000000 		.4byte	.LASF38
+ 1524 01ca 04       		.byte	0x4
+ 1525 01cb 3B       		.byte	0x3b
+ 1526 01cc C3000000 		.4byte	0xc3
+ 1527 01d0 40       		.byte	0x40
+ 1528 01d1 06       		.uleb128 0x6
+ 1529 01d2 FC090000 		.4byte	.LASF39
+ 1530 01d6 04       		.byte	0x4
+ 1531 01d7 3C       		.byte	0x3c
+ 1532 01d8 C3000000 		.4byte	0xc3
+ 1533 01dc 44       		.byte	0x44
+ 1534 01dd 06       		.uleb128 0x6
+ 1535 01de 1E040000 		.4byte	.LASF40
+ 1536 01e2 04       		.byte	0x4
+ 1537 01e3 41       		.byte	0x41
+ 1538 01e4 C3000000 		.4byte	0xc3
+ 1539 01e8 48       		.byte	0x48
+ 1540 01e9 06       		.uleb128 0x6
+ 1541 01ea AD070000 		.4byte	.LASF41
+ 1542 01ee 04       		.byte	0x4
+ 1543 01ef 42       		.byte	0x42
+ 1544 01f0 AD000000 		.4byte	0xad
+ 1545 01f4 4C       		.byte	0x4c
+ 1546 01f5 06       		.uleb128 0x6
+ 1547 01f6 BB060000 		.4byte	.LASF42
+ 1548 01fa 04       		.byte	0x4
+ 1549 01fb 44       		.byte	0x44
+ 1550 01fc AD000000 		.4byte	0xad
+ 1551 0200 4E       		.byte	0x4e
+ 1552 0201 06       		.uleb128 0x6
+ 1553 0202 D6090000 		.4byte	.LASF43
+ 1554 0206 04       		.byte	0x4
+ 1555 0207 45       		.byte	0x45
+ 1556 0208 B8000000 		.4byte	0xb8
+ 1557 020c 50       		.byte	0x50
+ 1558 020d 06       		.uleb128 0x6
+ 1559 020e F70A0000 		.4byte	.LASF44
+ 1560 0212 04       		.byte	0x4
+ 1561 0213 46       		.byte	0x46
+ 1562 0214 B8000000 		.4byte	0xb8
+ 1563 0218 52       		.byte	0x52
+ 1564 0219 06       		.uleb128 0x6
+ 1565 021a D2020000 		.4byte	.LASF45
+ 1566 021e 04       		.byte	0x4
+ 1567 021f 47       		.byte	0x47
+ 1568 0220 B8000000 		.4byte	0xb8
+ 1569 0224 54       		.byte	0x54
+ 1570 0225 06       		.uleb128 0x6
+ 1571 0226 4E080000 		.4byte	.LASF46
+ 1572 022a 04       		.byte	0x4
+ 1573 022b 4A       		.byte	0x4a
+ 1574 022c 42040000 		.4byte	0x442
+ 1575 0230 56       		.byte	0x56
+ 1576 0231 06       		.uleb128 0x6
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 34
+
+
+ 1577 0232 A40A0000 		.4byte	.LASF47
+ 1578 0236 04       		.byte	0x4
+ 1579 0237 4E       		.byte	0x4e
+ 1580 0238 49040000 		.4byte	0x449
+ 1581 023c 58       		.byte	0x58
+ 1582 023d 06       		.uleb128 0x6
+ 1583 023e C6020000 		.4byte	.LASF48
+ 1584 0242 04       		.byte	0x4
+ 1585 0243 52       		.byte	0x52
+ 1586 0244 49040000 		.4byte	0x449
+ 1587 0248 5C       		.byte	0x5c
+ 1588 0249 06       		.uleb128 0x6
+ 1589 024a 46090000 		.4byte	.LASF49
+ 1590 024e 04       		.byte	0x4
+ 1591 024f 57       		.byte	0x57
+ 1592 0250 42040000 		.4byte	0x442
+ 1593 0254 60       		.byte	0x60
+ 1594 0255 06       		.uleb128 0x6
+ 1595 0256 47030000 		.4byte	.LASF50
+ 1596 025a 04       		.byte	0x4
+ 1597 025b 58       		.byte	0x58
+ 1598 025c CE000000 		.4byte	0xce
+ 1599 0260 64       		.byte	0x64
+ 1600 0261 06       		.uleb128 0x6
+ 1601 0262 CD030000 		.4byte	.LASF51
+ 1602 0266 04       		.byte	0x4
+ 1603 0267 59       		.byte	0x59
+ 1604 0268 49040000 		.4byte	0x449
+ 1605 026c 68       		.byte	0x68
+ 1606 026d 06       		.uleb128 0x6
+ 1607 026e 22020000 		.4byte	.LASF52
+ 1608 0272 04       		.byte	0x4
+ 1609 0273 5A       		.byte	0x5a
+ 1610 0274 49040000 		.4byte	0x449
+ 1611 0278 6C       		.byte	0x6c
+ 1612 0279 06       		.uleb128 0x6
+ 1613 027a 71090000 		.4byte	.LASF53
+ 1614 027e 04       		.byte	0x4
+ 1615 027f 5B       		.byte	0x5b
+ 1616 0280 49040000 		.4byte	0x449
+ 1617 0284 70       		.byte	0x70
+ 1618 0285 06       		.uleb128 0x6
+ 1619 0286 CA080000 		.4byte	.LASF54
+ 1620 028a 04       		.byte	0x4
+ 1621 028b 5F       		.byte	0x5f
+ 1622 028c 49040000 		.4byte	0x449
+ 1623 0290 74       		.byte	0x74
+ 1624 0291 06       		.uleb128 0x6
+ 1625 0292 B9080000 		.4byte	.LASF55
+ 1626 0296 04       		.byte	0x4
+ 1627 0297 60       		.byte	0x60
+ 1628 0298 49040000 		.4byte	0x449
+ 1629 029c 78       		.byte	0x78
+ 1630 029d 06       		.uleb128 0x6
+ 1631 029e D70A0000 		.4byte	.LASF56
+ 1632 02a2 04       		.byte	0x4
+ 1633 02a3 61       		.byte	0x61
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 35
+
+
+ 1634 02a4 49040000 		.4byte	0x449
+ 1635 02a8 7C       		.byte	0x7c
+ 1636 02a9 06       		.uleb128 0x6
+ 1637 02aa 170A0000 		.4byte	.LASF57
+ 1638 02ae 04       		.byte	0x4
+ 1639 02af 65       		.byte	0x65
+ 1640 02b0 49040000 		.4byte	0x449
+ 1641 02b4 80       		.byte	0x80
+ 1642 02b5 06       		.uleb128 0x6
+ 1643 02b6 04090000 		.4byte	.LASF58
+ 1644 02ba 04       		.byte	0x4
+ 1645 02bb 66       		.byte	0x66
+ 1646 02bc 49040000 		.4byte	0x449
+ 1647 02c0 84       		.byte	0x84
+ 1648 02c1 06       		.uleb128 0x6
+ 1649 02c2 09040000 		.4byte	.LASF59
+ 1650 02c6 04       		.byte	0x4
+ 1651 02c7 67       		.byte	0x67
+ 1652 02c8 49040000 		.4byte	0x449
+ 1653 02cc 88       		.byte	0x88
+ 1654 02cd 06       		.uleb128 0x6
+ 1655 02ce 2A030000 		.4byte	.LASF60
+ 1656 02d2 04       		.byte	0x4
+ 1657 02d3 6A       		.byte	0x6a
+ 1658 02d4 42040000 		.4byte	0x442
+ 1659 02d8 8C       		.byte	0x8c
+ 1660 02d9 06       		.uleb128 0x6
+ 1661 02da E5010000 		.4byte	.LASF61
+ 1662 02de 04       		.byte	0x4
+ 1663 02df 6E       		.byte	0x6e
+ 1664 02e0 42040000 		.4byte	0x442
+ 1665 02e4 8D       		.byte	0x8d
+ 1666 02e5 06       		.uleb128 0x6
+ 1667 02e6 8C060000 		.4byte	.LASF62
+ 1668 02ea 04       		.byte	0x4
+ 1669 02eb 6F       		.byte	0x6f
+ 1670 02ec 42040000 		.4byte	0x442
+ 1671 02f0 8E       		.byte	0x8e
+ 1672 02f1 06       		.uleb128 0x6
+ 1673 02f2 38030000 		.4byte	.LASF63
+ 1674 02f6 04       		.byte	0x4
+ 1675 02f7 70       		.byte	0x70
+ 1676 02f8 42040000 		.4byte	0x442
+ 1677 02fc 8F       		.byte	0x8f
+ 1678 02fd 06       		.uleb128 0x6
+ 1679 02fe 7C0A0000 		.4byte	.LASF64
+ 1680 0302 04       		.byte	0x4
+ 1681 0303 71       		.byte	0x71
+ 1682 0304 42040000 		.4byte	0x442
+ 1683 0308 90       		.byte	0x90
+ 1684 0309 06       		.uleb128 0x6
+ 1685 030a 2B080000 		.4byte	.LASF65
+ 1686 030e 04       		.byte	0x4
+ 1687 030f 72       		.byte	0x72
+ 1688 0310 49040000 		.4byte	0x449
+ 1689 0314 94       		.byte	0x94
+ 1690 0315 06       		.uleb128 0x6
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 36
+
+
+ 1691 0316 C7000000 		.4byte	.LASF66
+ 1692 031a 04       		.byte	0x4
+ 1693 031b 73       		.byte	0x73
+ 1694 031c A2000000 		.4byte	0xa2
+ 1695 0320 98       		.byte	0x98
+ 1696 0321 06       		.uleb128 0x6
+ 1697 0322 A4060000 		.4byte	.LASF67
+ 1698 0326 04       		.byte	0x4
+ 1699 0327 74       		.byte	0x74
+ 1700 0328 49040000 		.4byte	0x449
+ 1701 032c 9C       		.byte	0x9c
+ 1702 032d 06       		.uleb128 0x6
+ 1703 032e 41000000 		.4byte	.LASF68
+ 1704 0332 04       		.byte	0x4
+ 1705 0333 75       		.byte	0x75
+ 1706 0334 A2000000 		.4byte	0xa2
+ 1707 0338 A0       		.byte	0xa0
+ 1708 0339 06       		.uleb128 0x6
+ 1709 033a 8B030000 		.4byte	.LASF69
+ 1710 033e 04       		.byte	0x4
+ 1711 033f 76       		.byte	0x76
+ 1712 0340 AD000000 		.4byte	0xad
+ 1713 0344 A2       		.byte	0xa2
+ 1714 0345 06       		.uleb128 0x6
+ 1715 0346 16090000 		.4byte	.LASF70
+ 1716 034a 04       		.byte	0x4
+ 1717 034b 77       		.byte	0x77
+ 1718 034c AD000000 		.4byte	0xad
+ 1719 0350 A4       		.byte	0xa4
+ 1720 0351 06       		.uleb128 0x6
+ 1721 0352 AF0A0000 		.4byte	.LASF71
+ 1722 0356 04       		.byte	0x4
+ 1723 0357 78       		.byte	0x78
+ 1724 0358 49040000 		.4byte	0x449
+ 1725 035c A8       		.byte	0xa8
+ 1726 035d 06       		.uleb128 0x6
+ 1727 035e E2040000 		.4byte	.LASF72
+ 1728 0362 04       		.byte	0x4
+ 1729 0363 79       		.byte	0x79
+ 1730 0364 AD000000 		.4byte	0xad
+ 1731 0368 AC       		.byte	0xac
+ 1732 0369 06       		.uleb128 0x6
+ 1733 036a 67030000 		.4byte	.LASF73
+ 1734 036e 04       		.byte	0x4
+ 1735 036f 7A       		.byte	0x7a
+ 1736 0370 AD000000 		.4byte	0xad
+ 1737 0374 AE       		.byte	0xae
+ 1738 0375 06       		.uleb128 0x6
+ 1739 0376 C30A0000 		.4byte	.LASF74
+ 1740 037a 04       		.byte	0x4
+ 1741 037b 7B       		.byte	0x7b
+ 1742 037c AD000000 		.4byte	0xad
+ 1743 0380 B0       		.byte	0xb0
+ 1744 0381 06       		.uleb128 0x6
+ 1745 0382 D9070000 		.4byte	.LASF75
+ 1746 0386 04       		.byte	0x4
+ 1747 0387 7C       		.byte	0x7c
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 37
+
+
+ 1748 0388 49040000 		.4byte	0x449
+ 1749 038c B4       		.byte	0xb4
+ 1750 038d 06       		.uleb128 0x6
+ 1751 038e DF020000 		.4byte	.LASF76
+ 1752 0392 04       		.byte	0x4
+ 1753 0393 7D       		.byte	0x7d
+ 1754 0394 AD000000 		.4byte	0xad
+ 1755 0398 B8       		.byte	0xb8
+ 1756 0399 06       		.uleb128 0x6
+ 1757 039a 18020000 		.4byte	.LASF77
+ 1758 039e 04       		.byte	0x4
+ 1759 039f 80       		.byte	0x80
+ 1760 03a0 42040000 		.4byte	0x442
+ 1761 03a4 BA       		.byte	0xba
+ 1762 03a5 06       		.uleb128 0x6
+ 1763 03a6 C4010000 		.4byte	.LASF78
+ 1764 03aa 04       		.byte	0x4
+ 1765 03ab 81       		.byte	0x81
+ 1766 03ac 49040000 		.4byte	0x449
+ 1767 03b0 BC       		.byte	0xbc
+ 1768 03b1 06       		.uleb128 0x6
+ 1769 03b2 CA010000 		.4byte	.LASF79
+ 1770 03b6 04       		.byte	0x4
+ 1771 03b7 82       		.byte	0x82
+ 1772 03b8 49040000 		.4byte	0x449
+ 1773 03bc C0       		.byte	0xc0
+ 1774 03bd 06       		.uleb128 0x6
+ 1775 03be D0010000 		.4byte	.LASF80
+ 1776 03c2 04       		.byte	0x4
+ 1777 03c3 83       		.byte	0x83
+ 1778 03c4 49040000 		.4byte	0x449
+ 1779 03c8 C4       		.byte	0xc4
+ 1780 03c9 06       		.uleb128 0x6
+ 1781 03ca 98090000 		.4byte	.LASF81
+ 1782 03ce 04       		.byte	0x4
+ 1783 03cf 84       		.byte	0x84
+ 1784 03d0 49040000 		.4byte	0x449
+ 1785 03d4 C8       		.byte	0xc8
+ 1786 03d5 06       		.uleb128 0x6
+ 1787 03d6 F8010000 		.4byte	.LASF82
+ 1788 03da 04       		.byte	0x4
+ 1789 03db 85       		.byte	0x85
+ 1790 03dc 49040000 		.4byte	0x449
+ 1791 03e0 CC       		.byte	0xcc
+ 1792 03e1 06       		.uleb128 0x6
+ 1793 03e2 68050000 		.4byte	.LASF83
+ 1794 03e6 04       		.byte	0x4
+ 1795 03e7 86       		.byte	0x86
+ 1796 03e8 49040000 		.4byte	0x449
+ 1797 03ec D0       		.byte	0xd0
+ 1798 03ed 06       		.uleb128 0x6
+ 1799 03ee 72050000 		.4byte	.LASF84
+ 1800 03f2 04       		.byte	0x4
+ 1801 03f3 87       		.byte	0x87
+ 1802 03f4 49040000 		.4byte	0x449
+ 1803 03f8 D4       		.byte	0xd4
+ 1804 03f9 06       		.uleb128 0x6
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 38
+
+
+ 1805 03fa 7C050000 		.4byte	.LASF85
+ 1806 03fe 04       		.byte	0x4
+ 1807 03ff 88       		.byte	0x88
+ 1808 0400 49040000 		.4byte	0x449
+ 1809 0404 D8       		.byte	0xd8
+ 1810 0405 06       		.uleb128 0x6
+ 1811 0406 F7060000 		.4byte	.LASF86
+ 1812 040a 04       		.byte	0x4
+ 1813 040b 89       		.byte	0x89
+ 1814 040c 49040000 		.4byte	0x449
+ 1815 0410 DC       		.byte	0xdc
+ 1816 0411 06       		.uleb128 0x6
+ 1817 0412 A0030000 		.4byte	.LASF87
+ 1818 0416 04       		.byte	0x4
+ 1819 0417 94       		.byte	0x94
+ 1820 0418 42040000 		.4byte	0x442
+ 1821 041c E0       		.byte	0xe0
+ 1822 041d 06       		.uleb128 0x6
+ 1823 041e 4D060000 		.4byte	.LASF88
+ 1824 0422 04       		.byte	0x4
+ 1825 0423 95       		.byte	0x95
+ 1826 0424 42040000 		.4byte	0x442
+ 1827 0428 E1       		.byte	0xe1
+ 1828 0429 06       		.uleb128 0x6
+ 1829 042a B6090000 		.4byte	.LASF89
+ 1830 042e 04       		.byte	0x4
+ 1831 042f 96       		.byte	0x96
+ 1832 0430 49040000 		.4byte	0x449
+ 1833 0434 E4       		.byte	0xe4
+ 1834 0435 06       		.uleb128 0x6
+ 1835 0436 2E020000 		.4byte	.LASF90
+ 1836 043a 04       		.byte	0x4
+ 1837 043b 97       		.byte	0x97
+ 1838 043c AD000000 		.4byte	0xad
+ 1839 0440 E8       		.byte	0xe8
+ 1840 0441 00       		.byte	0
+ 1841 0442 02       		.uleb128 0x2
+ 1842 0443 01       		.byte	0x1
+ 1843 0444 02       		.byte	0x2
+ 1844 0445 F7030000 		.4byte	.LASF91
+ 1845 0449 02       		.uleb128 0x2
+ 1846 044a 04       		.byte	0x4
+ 1847 044b 04       		.byte	0x4
+ 1848 044c 5F020000 		.4byte	.LASF92
+ 1849 0450 03       		.uleb128 0x3
+ 1850 0451 00000000 		.4byte	.LASF93
+ 1851 0455 04       		.byte	0x4
+ 1852 0456 99       		.byte	0x99
+ 1853 0457 D9000000 		.4byte	0xd9
+ 1854 045b 02       		.uleb128 0x2
+ 1855 045c 08       		.byte	0x8
+ 1856 045d 04       		.byte	0x4
+ 1857 045e E2060000 		.4byte	.LASF94
+ 1858 0462 02       		.uleb128 0x2
+ 1859 0463 04       		.byte	0x4
+ 1860 0464 07       		.byte	0x7
+ 1861 0465 45080000 		.4byte	.LASF95
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 39
+
+
+ 1862 0469 02       		.uleb128 0x2
+ 1863 046a 01       		.byte	0x1
+ 1864 046b 08       		.byte	0x8
+ 1865 046c CB040000 		.4byte	.LASF96
+ 1866 0470 07       		.uleb128 0x7
+ 1867 0471 04       		.byte	0x4
+ 1868 0472 76040000 		.4byte	0x476
+ 1869 0476 08       		.uleb128 0x8
+ 1870 0477 09       		.uleb128 0x9
+ 1871 0478 01       		.byte	0x1
+ 1872 0479 37000000 		.4byte	0x37
+ 1873 047d 05       		.byte	0x5
+ 1874 047e 32       		.byte	0x32
+ 1875 047f 96040000 		.4byte	0x496
+ 1876 0483 0A       		.uleb128 0xa
+ 1877 0484 0E050000 		.4byte	.LASF97
+ 1878 0488 00       		.byte	0
+ 1879 0489 0A       		.uleb128 0xa
+ 1880 048a 72020000 		.4byte	.LASF98
+ 1881 048e 01       		.byte	0x1
+ 1882 048f 0A       		.uleb128 0xa
+ 1883 0490 6B080000 		.4byte	.LASF99
+ 1884 0494 02       		.byte	0x2
+ 1885 0495 00       		.byte	0
+ 1886 0496 03       		.uleb128 0x3
+ 1887 0497 13060000 		.4byte	.LASF100
+ 1888 049b 05       		.byte	0x5
+ 1889 049c 36       		.byte	0x36
+ 1890 049d 77040000 		.4byte	0x477
+ 1891 04a1 05       		.uleb128 0x5
+ 1892 04a2 08       		.byte	0x8
+ 1893 04a3 05       		.byte	0x5
+ 1894 04a4 59       		.byte	0x59
+ 1895 04a5 C2040000 		.4byte	0x4c2
+ 1896 04a9 06       		.uleb128 0x6
+ 1897 04aa 61030000 		.4byte	.LASF101
+ 1898 04ae 05       		.byte	0x5
+ 1899 04af 5A       		.byte	0x5a
+ 1900 04b0 49040000 		.4byte	0x449
+ 1901 04b4 00       		.byte	0
+ 1902 04b5 06       		.uleb128 0x6
+ 1903 04b6 E6080000 		.4byte	.LASF102
+ 1904 04ba 05       		.byte	0x5
+ 1905 04bb 5B       		.byte	0x5b
+ 1906 04bc 96040000 		.4byte	0x496
+ 1907 04c0 04       		.byte	0x4
+ 1908 04c1 00       		.byte	0
+ 1909 04c2 03       		.uleb128 0x3
+ 1910 04c3 420A0000 		.4byte	.LASF103
+ 1911 04c7 05       		.byte	0x5
+ 1912 04c8 5C       		.byte	0x5c
+ 1913 04c9 A1040000 		.4byte	0x4a1
+ 1914 04cd 09       		.uleb128 0x9
+ 1915 04ce 01       		.byte	0x1
+ 1916 04cf 37000000 		.4byte	0x37
+ 1917 04d3 05       		.byte	0x5
+ 1918 04d4 5E       		.byte	0x5e
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 40
+
+
+ 1919 04d5 1C050000 		.4byte	0x51c
+ 1920 04d9 0A       		.uleb128 0xa
+ 1921 04da 8C0A0000 		.4byte	.LASF104
+ 1922 04de 00       		.byte	0
+ 1923 04df 0A       		.uleb128 0xa
+ 1924 04e0 60060000 		.4byte	.LASF105
+ 1925 04e4 01       		.byte	0x1
+ 1926 04e5 0A       		.uleb128 0xa
+ 1927 04e6 75060000 		.4byte	.LASF106
+ 1928 04ea 02       		.byte	0x2
+ 1929 04eb 0A       		.uleb128 0xa
+ 1930 04ec F4050000 		.4byte	.LASF107
+ 1931 04f0 03       		.byte	0x3
+ 1932 04f1 0A       		.uleb128 0xa
+ 1933 04f2 7E090000 		.4byte	.LASF108
+ 1934 04f6 04       		.byte	0x4
+ 1935 04f7 0A       		.uleb128 0xa
+ 1936 04f8 DB030000 		.4byte	.LASF109
+ 1937 04fc 05       		.byte	0x5
+ 1938 04fd 0A       		.uleb128 0xa
+ 1939 04fe 74080000 		.4byte	.LASF110
+ 1940 0502 06       		.byte	0x6
+ 1941 0503 0A       		.uleb128 0xa
+ 1942 0504 AE030000 		.4byte	.LASF111
+ 1943 0508 07       		.byte	0x7
+ 1944 0509 0A       		.uleb128 0xa
+ 1945 050a 76010000 		.4byte	.LASF112
+ 1946 050e 08       		.byte	0x8
+ 1947 050f 0A       		.uleb128 0xa
+ 1948 0510 5C0A0000 		.4byte	.LASF113
+ 1949 0514 09       		.byte	0x9
+ 1950 0515 0A       		.uleb128 0xa
+ 1951 0516 48050000 		.4byte	.LASF114
+ 1952 051a 0A       		.byte	0xa
+ 1953 051b 00       		.byte	0
+ 1954 051c 03       		.uleb128 0x3
+ 1955 051d B1050000 		.4byte	.LASF115
+ 1956 0521 05       		.byte	0x5
+ 1957 0522 6A       		.byte	0x6a
+ 1958 0523 CD040000 		.4byte	0x4cd
+ 1959 0527 05       		.uleb128 0x5
+ 1960 0528 3C       		.byte	0x3c
+ 1961 0529 05       		.byte	0x5
+ 1962 052a 6C       		.byte	0x6c
+ 1963 052b D8050000 		.4byte	0x5d8
+ 1964 052f 06       		.uleb128 0x6
+ 1965 0530 E8050000 		.4byte	.LASF116
+ 1966 0534 05       		.byte	0x5
+ 1967 0535 6D       		.byte	0x6d
+ 1968 0536 A2000000 		.4byte	0xa2
+ 1969 053a 00       		.byte	0
+ 1970 053b 06       		.uleb128 0x6
+ 1971 053c 25090000 		.4byte	.LASF117
+ 1972 0540 05       		.byte	0x5
+ 1973 0541 6E       		.byte	0x6e
+ 1974 0542 A2000000 		.4byte	0xa2
+ 1975 0546 01       		.byte	0x1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 41
+
+
+ 1976 0547 0B       		.uleb128 0xb
+ 1977 0548 70616E00 		.ascii	"pan\000"
+ 1978 054c 05       		.byte	0x5
+ 1979 054d 6F       		.byte	0x6f
+ 1980 054e C2040000 		.4byte	0x4c2
+ 1981 0552 04       		.byte	0x4
+ 1982 0553 06       		.uleb128 0x6
+ 1983 0554 65020000 		.4byte	.LASF118
+ 1984 0558 05       		.byte	0x5
+ 1985 0559 70       		.byte	0x70
+ 1986 055a C2040000 		.4byte	0x4c2
+ 1987 055e 0C       		.byte	0xc
+ 1988 055f 06       		.uleb128 0x6
+ 1989 0560 1D050000 		.4byte	.LASF119
+ 1990 0564 05       		.byte	0x5
+ 1991 0565 71       		.byte	0x71
+ 1992 0566 C2040000 		.4byte	0x4c2
+ 1993 056a 14       		.byte	0x14
+ 1994 056b 06       		.uleb128 0x6
+ 1995 056c AB050000 		.4byte	.LASF120
+ 1996 0570 05       		.byte	0x5
+ 1997 0571 72       		.byte	0x72
+ 1998 0572 C2040000 		.4byte	0x4c2
+ 1999 0576 1C       		.byte	0x1c
+ 2000 0577 06       		.uleb128 0x6
+ 2001 0578 19040000 		.4byte	.LASF121
+ 2002 057c 05       		.byte	0x5
+ 2003 057d 73       		.byte	0x73
+ 2004 057e C2040000 		.4byte	0x4c2
+ 2005 0582 24       		.byte	0x24
+ 2006 0583 06       		.uleb128 0x6
+ 2007 0584 0C030000 		.4byte	.LASF122
+ 2008 0588 05       		.byte	0x5
+ 2009 0589 74       		.byte	0x74
+ 2010 058a C2040000 		.4byte	0x4c2
+ 2011 058e 2C       		.byte	0x2c
+ 2012 058f 06       		.uleb128 0x6
+ 2013 0590 5D000000 		.4byte	.LASF123
+ 2014 0594 05       		.byte	0x5
+ 2015 0595 75       		.byte	0x75
+ 2016 0596 A2000000 		.4byte	0xa2
+ 2017 059a 34       		.byte	0x34
+ 2018 059b 06       		.uleb128 0x6
+ 2019 059c AD000000 		.4byte	.LASF124
+ 2020 05a0 05       		.byte	0x5
+ 2021 05a1 76       		.byte	0x76
+ 2022 05a2 A2000000 		.4byte	0xa2
+ 2023 05a6 35       		.byte	0x35
+ 2024 05a7 06       		.uleb128 0x6
+ 2025 05a8 31050000 		.4byte	.LASF125
+ 2026 05ac 05       		.byte	0x5
+ 2027 05ad 77       		.byte	0x77
+ 2028 05ae A2000000 		.4byte	0xa2
+ 2029 05b2 36       		.byte	0x36
+ 2030 05b3 06       		.uleb128 0x6
+ 2031 05b4 9C010000 		.4byte	.LASF126
+ 2032 05b8 05       		.byte	0x5
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 42
+
+
+ 2033 05b9 78       		.byte	0x78
+ 2034 05ba A2000000 		.4byte	0xa2
+ 2035 05be 37       		.byte	0x37
+ 2036 05bf 06       		.uleb128 0x6
+ 2037 05c0 280A0000 		.4byte	.LASF127
+ 2038 05c4 05       		.byte	0x5
+ 2039 05c5 79       		.byte	0x79
+ 2040 05c6 A2000000 		.4byte	0xa2
+ 2041 05ca 38       		.byte	0x38
+ 2042 05cb 06       		.uleb128 0x6
+ 2043 05cc F2020000 		.4byte	.LASF128
+ 2044 05d0 05       		.byte	0x5
+ 2045 05d1 7A       		.byte	0x7a
+ 2046 05d2 A2000000 		.4byte	0xa2
+ 2047 05d6 39       		.byte	0x39
+ 2048 05d7 00       		.byte	0
+ 2049 05d8 03       		.uleb128 0x3
+ 2050 05d9 8D070000 		.4byte	.LASF129
+ 2051 05dd 05       		.byte	0x5
+ 2052 05de 7B       		.byte	0x7b
+ 2053 05df 27050000 		.4byte	0x527
+ 2054 05e3 05       		.uleb128 0x5
+ 2055 05e4 2C       		.byte	0x2c
+ 2056 05e5 05       		.byte	0x5
+ 2057 05e6 7D       		.byte	0x7d
+ 2058 05e7 DC060000 		.4byte	0x6dc
+ 2059 05eb 06       		.uleb128 0x6
+ 2060 05ec 01020000 		.4byte	.LASF130
+ 2061 05f0 05       		.byte	0x5
+ 2062 05f1 7E       		.byte	0x7e
+ 2063 05f2 49040000 		.4byte	0x449
+ 2064 05f6 00       		.byte	0
+ 2065 05f7 06       		.uleb128 0x6
+ 2066 05f8 66010000 		.4byte	.LASF131
+ 2067 05fc 05       		.byte	0x5
+ 2068 05fd 7F       		.byte	0x7f
+ 2069 05fe 49040000 		.4byte	0x449
+ 2070 0602 04       		.byte	0x4
+ 2071 0603 06       		.uleb128 0x6
+ 2072 0604 9B080000 		.4byte	.LASF132
+ 2073 0608 05       		.byte	0x5
+ 2074 0609 80       		.byte	0x80
+ 2075 060a A2000000 		.4byte	0xa2
+ 2076 060e 08       		.byte	0x8
+ 2077 060f 06       		.uleb128 0x6
+ 2078 0610 AA080000 		.4byte	.LASF133
+ 2079 0614 05       		.byte	0x5
+ 2080 0615 81       		.byte	0x81
+ 2081 0616 A2000000 		.4byte	0xa2
+ 2082 061a 09       		.byte	0x9
+ 2083 061b 06       		.uleb128 0x6
+ 2084 061c F3040000 		.4byte	.LASF23
+ 2085 0620 05       		.byte	0x5
+ 2086 0621 82       		.byte	0x82
+ 2087 0622 49040000 		.4byte	0x449
+ 2088 0626 0C       		.byte	0xc
+ 2089 0627 06       		.uleb128 0x6
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 43
+
+
+ 2090 0628 FC040000 		.4byte	.LASF24
+ 2091 062c 05       		.byte	0x5
+ 2092 062d 83       		.byte	0x83
+ 2093 062e 49040000 		.4byte	0x449
+ 2094 0632 10       		.byte	0x10
+ 2095 0633 06       		.uleb128 0x6
+ 2096 0634 05050000 		.4byte	.LASF25
+ 2097 0638 05       		.byte	0x5
+ 2098 0639 84       		.byte	0x84
+ 2099 063a 49040000 		.4byte	0x449
+ 2100 063e 14       		.byte	0x14
+ 2101 063f 06       		.uleb128 0x6
+ 2102 0640 14050000 		.4byte	.LASF22
+ 2103 0644 05       		.byte	0x5
+ 2104 0645 85       		.byte	0x85
+ 2105 0646 49040000 		.4byte	0x449
+ 2106 064a 18       		.byte	0x18
+ 2107 064b 06       		.uleb128 0x6
+ 2108 064c 080A0000 		.4byte	.LASF134
+ 2109 0650 05       		.byte	0x5
+ 2110 0651 86       		.byte	0x86
+ 2111 0652 B8000000 		.4byte	0xb8
+ 2112 0656 1C       		.byte	0x1c
+ 2113 0657 06       		.uleb128 0x6
+ 2114 0658 B6010000 		.4byte	.LASF135
+ 2115 065c 05       		.byte	0x5
+ 2116 065d 87       		.byte	0x87
+ 2117 065e B8000000 		.4byte	0xb8
+ 2118 0662 1E       		.byte	0x1e
+ 2119 0663 06       		.uleb128 0x6
+ 2120 0664 E90A0000 		.4byte	.LASF136
+ 2121 0668 05       		.byte	0x5
+ 2122 0669 88       		.byte	0x88
+ 2123 066a B8000000 		.4byte	0xb8
+ 2124 066e 20       		.byte	0x20
+ 2125 066f 06       		.uleb128 0x6
+ 2126 0670 51000000 		.4byte	.LASF137
+ 2127 0674 05       		.byte	0x5
+ 2128 0675 89       		.byte	0x89
+ 2129 0676 1C050000 		.4byte	0x51c
+ 2130 067a 22       		.byte	0x22
+ 2131 067b 06       		.uleb128 0x6
+ 2132 067c C7060000 		.4byte	.LASF138
+ 2133 0680 05       		.byte	0x5
+ 2134 0681 8A       		.byte	0x8a
+ 2135 0682 1C050000 		.4byte	0x51c
+ 2136 0686 23       		.byte	0x23
+ 2137 0687 06       		.uleb128 0x6
+ 2138 0688 99060000 		.4byte	.LASF139
+ 2139 068c 05       		.byte	0x5
+ 2140 068d 8B       		.byte	0x8b
+ 2141 068e 1C050000 		.4byte	0x51c
+ 2142 0692 24       		.byte	0x24
+ 2143 0693 06       		.uleb128 0x6
+ 2144 0694 3A080000 		.4byte	.LASF140
+ 2145 0698 05       		.byte	0x5
+ 2146 0699 8C       		.byte	0x8c
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 44
+
+
+ 2147 069a A2000000 		.4byte	0xa2
+ 2148 069e 25       		.byte	0x25
+ 2149 069f 06       		.uleb128 0x6
+ 2150 06a0 11080000 		.4byte	.LASF141
+ 2151 06a4 05       		.byte	0x5
+ 2152 06a5 8D       		.byte	0x8d
+ 2153 06a6 A2000000 		.4byte	0xa2
+ 2154 06aa 26       		.byte	0x26
+ 2155 06ab 06       		.uleb128 0x6
+ 2156 06ac 77020000 		.4byte	.LASF142
+ 2157 06b0 05       		.byte	0x5
+ 2158 06b1 8E       		.byte	0x8e
+ 2159 06b2 A2000000 		.4byte	0xa2
+ 2160 06b6 27       		.byte	0x27
+ 2161 06b7 06       		.uleb128 0x6
+ 2162 06b8 35040000 		.4byte	.LASF143
+ 2163 06bc 05       		.byte	0x5
+ 2164 06bd 8F       		.byte	0x8f
+ 2165 06be A2000000 		.4byte	0xa2
+ 2166 06c2 28       		.byte	0x28
+ 2167 06c3 06       		.uleb128 0x6
+ 2168 06c4 1C030000 		.4byte	.LASF144
+ 2169 06c8 05       		.byte	0x5
+ 2170 06c9 90       		.byte	0x90
+ 2171 06ca A2000000 		.4byte	0xa2
+ 2172 06ce 29       		.byte	0x29
+ 2173 06cf 06       		.uleb128 0x6
+ 2174 06d0 7A030000 		.4byte	.LASF145
+ 2175 06d4 05       		.byte	0x5
+ 2176 06d5 91       		.byte	0x91
+ 2177 06d6 A2000000 		.4byte	0xa2
+ 2178 06da 2A       		.byte	0x2a
+ 2179 06db 00       		.byte	0
+ 2180 06dc 03       		.uleb128 0x3
+ 2181 06dd 76000000 		.4byte	.LASF146
+ 2182 06e1 05       		.byte	0x5
+ 2183 06e2 92       		.byte	0x92
+ 2184 06e3 E3050000 		.4byte	0x5e3
+ 2185 06e7 05       		.uleb128 0x5
+ 2186 06e8 74       		.byte	0x74
+ 2187 06e9 05       		.byte	0x5
+ 2188 06ea 94       		.byte	0x94
+ 2189 06eb 2C070000 		.4byte	0x72c
+ 2190 06ef 06       		.uleb128 0x6
+ 2191 06f0 F6090000 		.4byte	.LASF147
+ 2192 06f4 05       		.byte	0x5
+ 2193 06f5 95       		.byte	0x95
+ 2194 06f6 70040000 		.4byte	0x470
+ 2195 06fa 00       		.byte	0
+ 2196 06fb 06       		.uleb128 0x6
+ 2197 06fc 3F020000 		.4byte	.LASF148
+ 2198 0700 05       		.byte	0x5
+ 2199 0701 96       		.byte	0x96
+ 2200 0702 70040000 		.4byte	0x470
+ 2201 0706 04       		.byte	0x4
+ 2202 0707 06       		.uleb128 0x6
+ 2203 0708 A6090000 		.4byte	.LASF149
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 45
+
+
+ 2204 070c 05       		.byte	0x5
+ 2205 070d 97       		.byte	0x97
+ 2206 070e 70040000 		.4byte	0x470
+ 2207 0712 08       		.byte	0x8
+ 2208 0713 06       		.uleb128 0x6
+ 2209 0714 86000000 		.4byte	.LASF150
+ 2210 0718 05       		.byte	0x5
+ 2211 0719 98       		.byte	0x98
+ 2212 071a D8050000 		.4byte	0x5d8
+ 2213 071e 0C       		.byte	0xc
+ 2214 071f 06       		.uleb128 0x6
+ 2215 0720 2A050000 		.4byte	.LASF151
+ 2216 0724 05       		.byte	0x5
+ 2217 0725 99       		.byte	0x99
+ 2218 0726 DC060000 		.4byte	0x6dc
+ 2219 072a 48       		.byte	0x48
+ 2220 072b 00       		.byte	0
+ 2221 072c 03       		.uleb128 0x3
+ 2222 072d 5E070000 		.4byte	.LASF152
+ 2223 0731 05       		.byte	0x5
+ 2224 0732 9A       		.byte	0x9a
+ 2225 0733 E7060000 		.4byte	0x6e7
+ 2226 0737 0C       		.uleb128 0xc
+ 2227 0738 31060000 		.4byte	.LASF153
+ 2228 073c 01       		.byte	0x1
+ 2229 073d 1F       		.byte	0x1f
+ 2230 073e C3000000 		.4byte	0xc3
+ 2231 0742 00000000 		.4byte	.LFB0
+ 2232 0746 34000000 		.4byte	.LFE0-.LFB0
+ 2233 074a 01       		.uleb128 0x1
+ 2234 074b 9C       		.byte	0x9c
+ 2235 074c 5D070000 		.4byte	0x75d
+ 2236 0750 0D       		.uleb128 0xd
+ 2237 0751 7000     		.ascii	"p\000"
+ 2238 0753 01       		.byte	0x1
+ 2239 0754 1F       		.byte	0x1f
+ 2240 0755 5D070000 		.4byte	0x75d
+ 2241 0759 02       		.uleb128 0x2
+ 2242 075a 91       		.byte	0x91
+ 2243 075b 74       		.sleb128 -12
+ 2244 075c 00       		.byte	0
+ 2245 075d 07       		.uleb128 0x7
+ 2246 075e 04       		.byte	0x4
+ 2247 075f 63070000 		.4byte	0x763
+ 2248 0763 0E       		.uleb128 0xe
+ 2249 0764 A2000000 		.4byte	0xa2
+ 2250 0768 0C       		.uleb128 0xc
+ 2251 0769 C3040000 		.4byte	.LASF154
+ 2252 076d 01       		.byte	0x1
+ 2253 076e 28       		.byte	0x28
+ 2254 076f AD000000 		.4byte	0xad
+ 2255 0773 00000000 		.4byte	.LFB1
+ 2256 0777 26000000 		.4byte	.LFE1-.LFB1
+ 2257 077b 01       		.uleb128 0x1
+ 2258 077c 9C       		.byte	0x9c
+ 2259 077d 8E070000 		.4byte	0x78e
+ 2260 0781 0D       		.uleb128 0xd
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 46
+
+
+ 2261 0782 7000     		.ascii	"p\000"
+ 2262 0784 01       		.byte	0x1
+ 2263 0785 28       		.byte	0x28
+ 2264 0786 5D070000 		.4byte	0x75d
+ 2265 078a 02       		.uleb128 0x2
+ 2266 078b 91       		.byte	0x91
+ 2267 078c 74       		.sleb128 -12
+ 2268 078d 00       		.byte	0
+ 2269 078e 0C       		.uleb128 0xc
+ 2270 078f 54070000 		.4byte	.LASF155
+ 2271 0793 01       		.byte	0x1
+ 2272 0794 2E       		.byte	0x2e
+ 2273 0795 B8000000 		.4byte	0xb8
+ 2274 0799 00000000 		.4byte	.LFB2
+ 2275 079d 28000000 		.4byte	.LFE2-.LFB2
+ 2276 07a1 01       		.uleb128 0x1
+ 2277 07a2 9C       		.byte	0x9c
+ 2278 07a3 B4070000 		.4byte	0x7b4
+ 2279 07a7 0D       		.uleb128 0xd
+ 2280 07a8 7000     		.ascii	"p\000"
+ 2281 07aa 01       		.byte	0x1
+ 2282 07ab 2E       		.byte	0x2e
+ 2283 07ac 5D070000 		.4byte	0x75d
+ 2284 07b0 02       		.uleb128 0x2
+ 2285 07b1 91       		.byte	0x91
+ 2286 07b2 74       		.sleb128 -12
+ 2287 07b3 00       		.byte	0
+ 2288 07b4 0F       		.uleb128 0xf
+ 2289 07b5 10020000 		.4byte	.LASF156
+ 2290 07b9 01       		.byte	0x1
+ 2291 07ba 34       		.byte	0x34
+ 2292 07bb AD000000 		.4byte	0xad
+ 2293 07bf 00000000 		.4byte	.LFB3
+ 2294 07c3 22000000 		.4byte	.LFE3-.LFB3
+ 2295 07c7 01       		.uleb128 0x1
+ 2296 07c8 9C       		.byte	0x9c
+ 2297 07c9 E6070000 		.4byte	0x7e6
+ 2298 07cd 0D       		.uleb128 0xd
+ 2299 07ce 7000     		.ascii	"p\000"
+ 2300 07d0 01       		.byte	0x1
+ 2301 07d1 34       		.byte	0x34
+ 2302 07d2 5D070000 		.4byte	0x75d
+ 2303 07d6 02       		.uleb128 0x2
+ 2304 07d7 91       		.byte	0x91
+ 2305 07d8 6C       		.sleb128 -20
+ 2306 07d9 10       		.uleb128 0x10
+ 2307 07da 7600     		.ascii	"v\000"
+ 2308 07dc 01       		.byte	0x1
+ 2309 07dd 36       		.byte	0x36
+ 2310 07de AD000000 		.4byte	0xad
+ 2311 07e2 02       		.uleb128 0x2
+ 2312 07e3 91       		.byte	0x91
+ 2313 07e4 76       		.sleb128 -10
+ 2314 07e5 00       		.byte	0
+ 2315 07e6 11       		.uleb128 0x11
+ 2316 07e7 E8070000 		.4byte	.LASF158
+ 2317 07eb 01       		.byte	0x1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 47
+
+
+ 2318 07ec 40       		.byte	0x40
+ 2319 07ed 00000000 		.4byte	.LFB4
+ 2320 07f1 68000000 		.4byte	.LFE4-.LFB4
+ 2321 07f5 01       		.uleb128 0x1
+ 2322 07f6 9C       		.byte	0x9c
+ 2323 07f7 24080000 		.4byte	0x824
+ 2324 07fb 0D       		.uleb128 0xd
+ 2325 07fc 7000     		.ascii	"p\000"
+ 2326 07fe 01       		.byte	0x1
+ 2327 07ff 40       		.byte	0x40
+ 2328 0800 5D070000 		.4byte	0x75d
+ 2329 0804 02       		.uleb128 0x2
+ 2330 0805 91       		.byte	0x91
+ 2331 0806 74       		.sleb128 -12
+ 2332 0807 12       		.uleb128 0x12
+ 2333 0808 0C080000 		.4byte	.LASF157
+ 2334 080c 01       		.byte	0x1
+ 2335 080d 40       		.byte	0x40
+ 2336 080e B8000000 		.4byte	0xb8
+ 2337 0812 02       		.uleb128 0x2
+ 2338 0813 91       		.byte	0x91
+ 2339 0814 72       		.sleb128 -14
+ 2340 0815 0D       		.uleb128 0xd
+ 2341 0816 64737400 		.ascii	"dst\000"
+ 2342 081a 01       		.byte	0x1
+ 2343 081b 41       		.byte	0x41
+ 2344 081c 24080000 		.4byte	0x824
+ 2345 0820 02       		.uleb128 0x2
+ 2346 0821 91       		.byte	0x91
+ 2347 0822 6C       		.sleb128 -20
+ 2348 0823 00       		.byte	0
+ 2349 0824 07       		.uleb128 0x7
+ 2350 0825 04       		.byte	0x4
+ 2351 0826 50040000 		.4byte	0x450
+ 2352 082a 13       		.uleb128 0x13
+ 2353 082b 2F000000 		.4byte	.LASF159
+ 2354 082f 01       		.byte	0x1
+ 2355 0830 60       		.byte	0x60
+ 2356 0831 00000000 		.4byte	.LFB5
+ 2357 0835 A0010000 		.4byte	.LFE5-.LFB5
+ 2358 0839 01       		.uleb128 0x1
+ 2359 083a 9C       		.byte	0x9c
+ 2360 083b D8080000 		.4byte	0x8d8
+ 2361 083f 0D       		.uleb128 0xd
+ 2362 0840 7000     		.ascii	"p\000"
+ 2363 0842 01       		.byte	0x1
+ 2364 0843 60       		.byte	0x60
+ 2365 0844 5D070000 		.4byte	0x75d
+ 2366 0848 02       		.uleb128 0x2
+ 2367 0849 91       		.byte	0x91
+ 2368 084a 5C       		.sleb128 -36
+ 2369 084b 12       		.uleb128 0x12
+ 2370 084c 0C080000 		.4byte	.LASF157
+ 2371 0850 01       		.byte	0x1
+ 2372 0851 60       		.byte	0x60
+ 2373 0852 B8000000 		.4byte	0xb8
+ 2374 0856 02       		.uleb128 0x2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 48
+
+
+ 2375 0857 91       		.byte	0x91
+ 2376 0858 5A       		.sleb128 -38
+ 2377 0859 0D       		.uleb128 0xd
+ 2378 085a 64737400 		.ascii	"dst\000"
+ 2379 085e 01       		.byte	0x1
+ 2380 085f 61       		.byte	0x61
+ 2381 0860 24080000 		.4byte	0x824
+ 2382 0864 02       		.uleb128 0x2
+ 2383 0865 91       		.byte	0x91
+ 2384 0866 54       		.sleb128 -44
+ 2385 0867 14       		.uleb128 0x14
+ 2386 0868 27000000 		.4byte	.LASF160
+ 2387 086c 01       		.byte	0x1
+ 2388 086d 65       		.byte	0x65
+ 2389 086e C3000000 		.4byte	0xc3
+ 2390 0872 02       		.uleb128 0x2
+ 2391 0873 91       		.byte	0x91
+ 2392 0874 74       		.sleb128 -12
+ 2393 0875 14       		.uleb128 0x14
+ 2394 0876 29060000 		.4byte	.LASF161
+ 2395 087a 01       		.byte	0x1
+ 2396 087b 66       		.byte	0x66
+ 2397 087c C3000000 		.4byte	0xc3
+ 2398 0880 02       		.uleb128 0x2
+ 2399 0881 91       		.byte	0x91
+ 2400 0882 70       		.sleb128 -16
+ 2401 0883 14       		.uleb128 0x14
+ 2402 0884 1F000000 		.4byte	.LASF162
+ 2403 0888 01       		.byte	0x1
+ 2404 0889 67       		.byte	0x67
+ 2405 088a C3000000 		.4byte	0xc3
+ 2406 088e 02       		.uleb128 0x2
+ 2407 088f 91       		.byte	0x91
+ 2408 0890 6C       		.sleb128 -20
+ 2409 0891 14       		.uleb128 0x14
+ 2410 0892 A5000000 		.4byte	.LASF163
+ 2411 0896 01       		.byte	0x1
+ 2412 0897 68       		.byte	0x68
+ 2413 0898 AD000000 		.4byte	0xad
+ 2414 089c 02       		.uleb128 0x2
+ 2415 089d 91       		.byte	0x91
+ 2416 089e 6A       		.sleb128 -22
+ 2417 089f 14       		.uleb128 0x14
+ 2418 08a0 B3060000 		.4byte	.LASF164
+ 2419 08a4 01       		.byte	0x1
+ 2420 08a5 69       		.byte	0x69
+ 2421 08a6 AD000000 		.4byte	0xad
+ 2422 08aa 02       		.uleb128 0x2
+ 2423 08ab 91       		.byte	0x91
+ 2424 08ac 68       		.sleb128 -24
+ 2425 08ad 14       		.uleb128 0x14
+ 2426 08ae BD020000 		.4byte	.LASF165
+ 2427 08b2 01       		.byte	0x1
+ 2428 08b3 6A       		.byte	0x6a
+ 2429 08b4 B8000000 		.4byte	0xb8
+ 2430 08b8 02       		.uleb128 0x2
+ 2431 08b9 91       		.byte	0x91
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 49
+
+
+ 2432 08ba 66       		.sleb128 -26
+ 2433 08bb 14       		.uleb128 0x14
+ 2434 08bc 58030000 		.4byte	.LASF166
+ 2435 08c0 01       		.byte	0x1
+ 2436 08c1 6B       		.byte	0x6b
+ 2437 08c2 B8000000 		.4byte	0xb8
+ 2438 08c6 02       		.uleb128 0x2
+ 2439 08c7 91       		.byte	0x91
+ 2440 08c8 64       		.sleb128 -28
+ 2441 08c9 14       		.uleb128 0x14
+ 2442 08ca DD080000 		.4byte	.LASF167
+ 2443 08ce 01       		.byte	0x1
+ 2444 08cf 6C       		.byte	0x6c
+ 2445 08d0 B8000000 		.4byte	0xb8
+ 2446 08d4 02       		.uleb128 0x2
+ 2447 08d5 91       		.byte	0x91
+ 2448 08d6 62       		.sleb128 -30
+ 2449 08d7 00       		.byte	0
+ 2450 08d8 13       		.uleb128 0x13
+ 2451 08d9 7A070000 		.4byte	.LASF168
+ 2452 08dd 01       		.byte	0x1
+ 2453 08de 8B       		.byte	0x8b
+ 2454 08df 00000000 		.4byte	.LFB6
+ 2455 08e3 78000000 		.4byte	.LFE6-.LFB6
+ 2456 08e7 01       		.uleb128 0x1
+ 2457 08e8 9C       		.byte	0x9c
+ 2458 08e9 16090000 		.4byte	0x916
+ 2459 08ed 0D       		.uleb128 0xd
+ 2460 08ee 7000     		.ascii	"p\000"
+ 2461 08f0 01       		.byte	0x1
+ 2462 08f1 8B       		.byte	0x8b
+ 2463 08f2 5D070000 		.4byte	0x75d
+ 2464 08f6 02       		.uleb128 0x2
+ 2465 08f7 91       		.byte	0x91
+ 2466 08f8 74       		.sleb128 -12
+ 2467 08f9 12       		.uleb128 0x12
+ 2468 08fa 0C080000 		.4byte	.LASF157
+ 2469 08fe 01       		.byte	0x1
+ 2470 08ff 8B       		.byte	0x8b
+ 2471 0900 B8000000 		.4byte	0xb8
+ 2472 0904 02       		.uleb128 0x2
+ 2473 0905 91       		.byte	0x91
+ 2474 0906 72       		.sleb128 -14
+ 2475 0907 0D       		.uleb128 0xd
+ 2476 0908 64737400 		.ascii	"dst\000"
+ 2477 090c 01       		.byte	0x1
+ 2478 090d 8C       		.byte	0x8c
+ 2479 090e 24080000 		.4byte	0x824
+ 2480 0912 02       		.uleb128 0x2
+ 2481 0913 91       		.byte	0x91
+ 2482 0914 6C       		.sleb128 -20
+ 2483 0915 00       		.byte	0
+ 2484 0916 13       		.uleb128 0x13
+ 2485 0917 D1050000 		.4byte	.LASF169
+ 2486 091b 01       		.byte	0x1
+ 2487 091c A6       		.byte	0xa6
+ 2488 091d 00000000 		.4byte	.LFB7
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 50
+
+
+ 2489 0921 44010000 		.4byte	.LFE7-.LFB7
+ 2490 0925 01       		.uleb128 0x1
+ 2491 0926 9C       		.byte	0x9c
+ 2492 0927 54090000 		.4byte	0x954
+ 2493 092b 0D       		.uleb128 0xd
+ 2494 092c 7000     		.ascii	"p\000"
+ 2495 092e 01       		.byte	0x1
+ 2496 092f A6       		.byte	0xa6
+ 2497 0930 5D070000 		.4byte	0x75d
+ 2498 0934 02       		.uleb128 0x2
+ 2499 0935 91       		.byte	0x91
+ 2500 0936 74       		.sleb128 -12
+ 2501 0937 12       		.uleb128 0x12
+ 2502 0938 0C080000 		.4byte	.LASF157
+ 2503 093c 01       		.byte	0x1
+ 2504 093d A6       		.byte	0xa6
+ 2505 093e B8000000 		.4byte	0xb8
+ 2506 0942 02       		.uleb128 0x2
+ 2507 0943 91       		.byte	0x91
+ 2508 0944 72       		.sleb128 -14
+ 2509 0945 0D       		.uleb128 0xd
+ 2510 0946 64737400 		.ascii	"dst\000"
+ 2511 094a 01       		.byte	0x1
+ 2512 094b A7       		.byte	0xa7
+ 2513 094c 24080000 		.4byte	0x824
+ 2514 0950 02       		.uleb128 0x2
+ 2515 0951 91       		.byte	0x91
+ 2516 0952 6C       		.sleb128 -20
+ 2517 0953 00       		.byte	0
+ 2518 0954 13       		.uleb128 0x13
+ 2519 0955 A7020000 		.4byte	.LASF170
+ 2520 0959 01       		.byte	0x1
+ 2521 095a D6       		.byte	0xd6
+ 2522 095b 00000000 		.4byte	.LFB8
+ 2523 095f C8010000 		.4byte	.LFE8-.LFB8
+ 2524 0963 01       		.uleb128 0x1
+ 2525 0964 9C       		.byte	0x9c
+ 2526 0965 92090000 		.4byte	0x992
+ 2527 0969 0D       		.uleb128 0xd
+ 2528 096a 7000     		.ascii	"p\000"
+ 2529 096c 01       		.byte	0x1
+ 2530 096d D6       		.byte	0xd6
+ 2531 096e 5D070000 		.4byte	0x75d
+ 2532 0972 02       		.uleb128 0x2
+ 2533 0973 91       		.byte	0x91
+ 2534 0974 74       		.sleb128 -12
+ 2535 0975 12       		.uleb128 0x12
+ 2536 0976 0C080000 		.4byte	.LASF157
+ 2537 097a 01       		.byte	0x1
+ 2538 097b D6       		.byte	0xd6
+ 2539 097c B8000000 		.4byte	0xb8
+ 2540 0980 02       		.uleb128 0x2
+ 2541 0981 91       		.byte	0x91
+ 2542 0982 72       		.sleb128 -14
+ 2543 0983 0D       		.uleb128 0xd
+ 2544 0984 64737400 		.ascii	"dst\000"
+ 2545 0988 01       		.byte	0x1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 51
+
+
+ 2546 0989 D7       		.byte	0xd7
+ 2547 098a 24080000 		.4byte	0x824
+ 2548 098e 02       		.uleb128 0x2
+ 2549 098f 91       		.byte	0x91
+ 2550 0990 6C       		.sleb128 -20
+ 2551 0991 00       		.byte	0
+ 2552 0992 15       		.uleb128 0x15
+ 2553 0993 D0040000 		.4byte	.LASF171
+ 2554 0997 01       		.byte	0x1
+ 2555 0998 0501     		.2byte	0x105
+ 2556 099a 00000000 		.4byte	.LFB9
+ 2557 099e 8C010000 		.4byte	.LFE9-.LFB9
+ 2558 09a2 01       		.uleb128 0x1
+ 2559 09a3 9C       		.byte	0x9c
+ 2560 09a4 D4090000 		.4byte	0x9d4
+ 2561 09a8 16       		.uleb128 0x16
+ 2562 09a9 7000     		.ascii	"p\000"
+ 2563 09ab 01       		.byte	0x1
+ 2564 09ac 0501     		.2byte	0x105
+ 2565 09ae 5D070000 		.4byte	0x75d
+ 2566 09b2 02       		.uleb128 0x2
+ 2567 09b3 91       		.byte	0x91
+ 2568 09b4 74       		.sleb128 -12
+ 2569 09b5 17       		.uleb128 0x17
+ 2570 09b6 0C080000 		.4byte	.LASF157
+ 2571 09ba 01       		.byte	0x1
+ 2572 09bb 0501     		.2byte	0x105
+ 2573 09bd B8000000 		.4byte	0xb8
+ 2574 09c1 02       		.uleb128 0x2
+ 2575 09c2 91       		.byte	0x91
+ 2576 09c3 72       		.sleb128 -14
+ 2577 09c4 16       		.uleb128 0x16
+ 2578 09c5 64737400 		.ascii	"dst\000"
+ 2579 09c9 01       		.byte	0x1
+ 2580 09ca 0601     		.2byte	0x106
+ 2581 09cc 24080000 		.4byte	0x824
+ 2582 09d0 02       		.uleb128 0x2
+ 2583 09d1 91       		.byte	0x91
+ 2584 09d2 6C       		.sleb128 -20
+ 2585 09d3 00       		.byte	0
+ 2586 09d4 15       		.uleb128 0x15
+ 2587 09d5 50090000 		.4byte	.LASF172
+ 2588 09d9 01       		.byte	0x1
+ 2589 09da 2301     		.2byte	0x123
+ 2590 09dc 00000000 		.4byte	.LFB10
+ 2591 09e0 7C000000 		.4byte	.LFE10-.LFB10
+ 2592 09e4 01       		.uleb128 0x1
+ 2593 09e5 9C       		.byte	0x9c
+ 2594 09e6 160A0000 		.4byte	0xa16
+ 2595 09ea 16       		.uleb128 0x16
+ 2596 09eb 7000     		.ascii	"p\000"
+ 2597 09ed 01       		.byte	0x1
+ 2598 09ee 2301     		.2byte	0x123
+ 2599 09f0 5D070000 		.4byte	0x75d
+ 2600 09f4 02       		.uleb128 0x2
+ 2601 09f5 91       		.byte	0x91
+ 2602 09f6 74       		.sleb128 -12
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 52
+
+
+ 2603 09f7 17       		.uleb128 0x17
+ 2604 09f8 0C080000 		.4byte	.LASF157
+ 2605 09fc 01       		.byte	0x1
+ 2606 09fd 2301     		.2byte	0x123
+ 2607 09ff B8000000 		.4byte	0xb8
+ 2608 0a03 02       		.uleb128 0x2
+ 2609 0a04 91       		.byte	0x91
+ 2610 0a05 72       		.sleb128 -14
+ 2611 0a06 16       		.uleb128 0x16
+ 2612 0a07 64737400 		.ascii	"dst\000"
+ 2613 0a0b 01       		.byte	0x1
+ 2614 0a0c 2401     		.2byte	0x124
+ 2615 0a0e 24080000 		.4byte	0x824
+ 2616 0a12 02       		.uleb128 0x2
+ 2617 0a13 91       		.byte	0x91
+ 2618 0a14 6C       		.sleb128 -20
+ 2619 0a15 00       		.byte	0
+ 2620 0a16 18       		.uleb128 0x18
+ 2621 0a17 AB090000 		.4byte	.LASF176
+ 2622 0a1b 05       		.byte	0x5
+ 2623 0a1c 9F       		.byte	0x9f
+ 2624 0a1d 2C070000 		.4byte	0x72c
+ 2625 0a21 00       		.byte	0
+ 2626              		.section	.debug_abbrev,"",%progbits
+ 2627              	.Ldebug_abbrev0:
+ 2628 0000 01       		.uleb128 0x1
+ 2629 0001 11       		.uleb128 0x11
+ 2630 0002 01       		.byte	0x1
+ 2631 0003 25       		.uleb128 0x25
+ 2632 0004 0E       		.uleb128 0xe
+ 2633 0005 13       		.uleb128 0x13
+ 2634 0006 0B       		.uleb128 0xb
+ 2635 0007 03       		.uleb128 0x3
+ 2636 0008 0E       		.uleb128 0xe
+ 2637 0009 1B       		.uleb128 0x1b
+ 2638 000a 0E       		.uleb128 0xe
+ 2639 000b 55       		.uleb128 0x55
+ 2640 000c 17       		.uleb128 0x17
+ 2641 000d 11       		.uleb128 0x11
+ 2642 000e 01       		.uleb128 0x1
+ 2643 000f 10       		.uleb128 0x10
+ 2644 0010 17       		.uleb128 0x17
+ 2645 0011 00       		.byte	0
+ 2646 0012 00       		.byte	0
+ 2647 0013 02       		.uleb128 0x2
+ 2648 0014 24       		.uleb128 0x24
+ 2649 0015 00       		.byte	0
+ 2650 0016 0B       		.uleb128 0xb
+ 2651 0017 0B       		.uleb128 0xb
+ 2652 0018 3E       		.uleb128 0x3e
+ 2653 0019 0B       		.uleb128 0xb
+ 2654 001a 03       		.uleb128 0x3
+ 2655 001b 0E       		.uleb128 0xe
+ 2656 001c 00       		.byte	0
+ 2657 001d 00       		.byte	0
+ 2658 001e 03       		.uleb128 0x3
+ 2659 001f 16       		.uleb128 0x16
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 53
+
+
+ 2660 0020 00       		.byte	0
+ 2661 0021 03       		.uleb128 0x3
+ 2662 0022 0E       		.uleb128 0xe
+ 2663 0023 3A       		.uleb128 0x3a
+ 2664 0024 0B       		.uleb128 0xb
+ 2665 0025 3B       		.uleb128 0x3b
+ 2666 0026 0B       		.uleb128 0xb
+ 2667 0027 49       		.uleb128 0x49
+ 2668 0028 13       		.uleb128 0x13
+ 2669 0029 00       		.byte	0
+ 2670 002a 00       		.byte	0
+ 2671 002b 04       		.uleb128 0x4
+ 2672 002c 24       		.uleb128 0x24
+ 2673 002d 00       		.byte	0
+ 2674 002e 0B       		.uleb128 0xb
+ 2675 002f 0B       		.uleb128 0xb
+ 2676 0030 3E       		.uleb128 0x3e
+ 2677 0031 0B       		.uleb128 0xb
+ 2678 0032 03       		.uleb128 0x3
+ 2679 0033 08       		.uleb128 0x8
+ 2680 0034 00       		.byte	0
+ 2681 0035 00       		.byte	0
+ 2682 0036 05       		.uleb128 0x5
+ 2683 0037 13       		.uleb128 0x13
+ 2684 0038 01       		.byte	0x1
+ 2685 0039 0B       		.uleb128 0xb
+ 2686 003a 0B       		.uleb128 0xb
+ 2687 003b 3A       		.uleb128 0x3a
+ 2688 003c 0B       		.uleb128 0xb
+ 2689 003d 3B       		.uleb128 0x3b
+ 2690 003e 0B       		.uleb128 0xb
+ 2691 003f 01       		.uleb128 0x1
+ 2692 0040 13       		.uleb128 0x13
+ 2693 0041 00       		.byte	0
+ 2694 0042 00       		.byte	0
+ 2695 0043 06       		.uleb128 0x6
+ 2696 0044 0D       		.uleb128 0xd
+ 2697 0045 00       		.byte	0
+ 2698 0046 03       		.uleb128 0x3
+ 2699 0047 0E       		.uleb128 0xe
+ 2700 0048 3A       		.uleb128 0x3a
+ 2701 0049 0B       		.uleb128 0xb
+ 2702 004a 3B       		.uleb128 0x3b
+ 2703 004b 0B       		.uleb128 0xb
+ 2704 004c 49       		.uleb128 0x49
+ 2705 004d 13       		.uleb128 0x13
+ 2706 004e 38       		.uleb128 0x38
+ 2707 004f 0B       		.uleb128 0xb
+ 2708 0050 00       		.byte	0
+ 2709 0051 00       		.byte	0
+ 2710 0052 07       		.uleb128 0x7
+ 2711 0053 0F       		.uleb128 0xf
+ 2712 0054 00       		.byte	0
+ 2713 0055 0B       		.uleb128 0xb
+ 2714 0056 0B       		.uleb128 0xb
+ 2715 0057 49       		.uleb128 0x49
+ 2716 0058 13       		.uleb128 0x13
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 54
+
+
+ 2717 0059 00       		.byte	0
+ 2718 005a 00       		.byte	0
+ 2719 005b 08       		.uleb128 0x8
+ 2720 005c 15       		.uleb128 0x15
+ 2721 005d 00       		.byte	0
+ 2722 005e 27       		.uleb128 0x27
+ 2723 005f 19       		.uleb128 0x19
+ 2724 0060 00       		.byte	0
+ 2725 0061 00       		.byte	0
+ 2726 0062 09       		.uleb128 0x9
+ 2727 0063 04       		.uleb128 0x4
+ 2728 0064 01       		.byte	0x1
+ 2729 0065 0B       		.uleb128 0xb
+ 2730 0066 0B       		.uleb128 0xb
+ 2731 0067 49       		.uleb128 0x49
+ 2732 0068 13       		.uleb128 0x13
+ 2733 0069 3A       		.uleb128 0x3a
+ 2734 006a 0B       		.uleb128 0xb
+ 2735 006b 3B       		.uleb128 0x3b
+ 2736 006c 0B       		.uleb128 0xb
+ 2737 006d 01       		.uleb128 0x1
+ 2738 006e 13       		.uleb128 0x13
+ 2739 006f 00       		.byte	0
+ 2740 0070 00       		.byte	0
+ 2741 0071 0A       		.uleb128 0xa
+ 2742 0072 28       		.uleb128 0x28
+ 2743 0073 00       		.byte	0
+ 2744 0074 03       		.uleb128 0x3
+ 2745 0075 0E       		.uleb128 0xe
+ 2746 0076 1C       		.uleb128 0x1c
+ 2747 0077 0B       		.uleb128 0xb
+ 2748 0078 00       		.byte	0
+ 2749 0079 00       		.byte	0
+ 2750 007a 0B       		.uleb128 0xb
+ 2751 007b 0D       		.uleb128 0xd
+ 2752 007c 00       		.byte	0
+ 2753 007d 03       		.uleb128 0x3
+ 2754 007e 08       		.uleb128 0x8
+ 2755 007f 3A       		.uleb128 0x3a
+ 2756 0080 0B       		.uleb128 0xb
+ 2757 0081 3B       		.uleb128 0x3b
+ 2758 0082 0B       		.uleb128 0xb
+ 2759 0083 49       		.uleb128 0x49
+ 2760 0084 13       		.uleb128 0x13
+ 2761 0085 38       		.uleb128 0x38
+ 2762 0086 0B       		.uleb128 0xb
+ 2763 0087 00       		.byte	0
+ 2764 0088 00       		.byte	0
+ 2765 0089 0C       		.uleb128 0xc
+ 2766 008a 2E       		.uleb128 0x2e
+ 2767 008b 01       		.byte	0x1
+ 2768 008c 03       		.uleb128 0x3
+ 2769 008d 0E       		.uleb128 0xe
+ 2770 008e 3A       		.uleb128 0x3a
+ 2771 008f 0B       		.uleb128 0xb
+ 2772 0090 3B       		.uleb128 0x3b
+ 2773 0091 0B       		.uleb128 0xb
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 55
+
+
+ 2774 0092 27       		.uleb128 0x27
+ 2775 0093 19       		.uleb128 0x19
+ 2776 0094 49       		.uleb128 0x49
+ 2777 0095 13       		.uleb128 0x13
+ 2778 0096 11       		.uleb128 0x11
+ 2779 0097 01       		.uleb128 0x1
+ 2780 0098 12       		.uleb128 0x12
+ 2781 0099 06       		.uleb128 0x6
+ 2782 009a 40       		.uleb128 0x40
+ 2783 009b 18       		.uleb128 0x18
+ 2784 009c 9742     		.uleb128 0x2117
+ 2785 009e 19       		.uleb128 0x19
+ 2786 009f 01       		.uleb128 0x1
+ 2787 00a0 13       		.uleb128 0x13
+ 2788 00a1 00       		.byte	0
+ 2789 00a2 00       		.byte	0
+ 2790 00a3 0D       		.uleb128 0xd
+ 2791 00a4 05       		.uleb128 0x5
+ 2792 00a5 00       		.byte	0
+ 2793 00a6 03       		.uleb128 0x3
+ 2794 00a7 08       		.uleb128 0x8
+ 2795 00a8 3A       		.uleb128 0x3a
+ 2796 00a9 0B       		.uleb128 0xb
+ 2797 00aa 3B       		.uleb128 0x3b
+ 2798 00ab 0B       		.uleb128 0xb
+ 2799 00ac 49       		.uleb128 0x49
+ 2800 00ad 13       		.uleb128 0x13
+ 2801 00ae 02       		.uleb128 0x2
+ 2802 00af 18       		.uleb128 0x18
+ 2803 00b0 00       		.byte	0
+ 2804 00b1 00       		.byte	0
+ 2805 00b2 0E       		.uleb128 0xe
+ 2806 00b3 26       		.uleb128 0x26
+ 2807 00b4 00       		.byte	0
+ 2808 00b5 49       		.uleb128 0x49
+ 2809 00b6 13       		.uleb128 0x13
+ 2810 00b7 00       		.byte	0
+ 2811 00b8 00       		.byte	0
+ 2812 00b9 0F       		.uleb128 0xf
+ 2813 00ba 2E       		.uleb128 0x2e
+ 2814 00bb 01       		.byte	0x1
+ 2815 00bc 03       		.uleb128 0x3
+ 2816 00bd 0E       		.uleb128 0xe
+ 2817 00be 3A       		.uleb128 0x3a
+ 2818 00bf 0B       		.uleb128 0xb
+ 2819 00c0 3B       		.uleb128 0x3b
+ 2820 00c1 0B       		.uleb128 0xb
+ 2821 00c2 27       		.uleb128 0x27
+ 2822 00c3 19       		.uleb128 0x19
+ 2823 00c4 49       		.uleb128 0x49
+ 2824 00c5 13       		.uleb128 0x13
+ 2825 00c6 11       		.uleb128 0x11
+ 2826 00c7 01       		.uleb128 0x1
+ 2827 00c8 12       		.uleb128 0x12
+ 2828 00c9 06       		.uleb128 0x6
+ 2829 00ca 40       		.uleb128 0x40
+ 2830 00cb 18       		.uleb128 0x18
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 56
+
+
+ 2831 00cc 9642     		.uleb128 0x2116
+ 2832 00ce 19       		.uleb128 0x19
+ 2833 00cf 01       		.uleb128 0x1
+ 2834 00d0 13       		.uleb128 0x13
+ 2835 00d1 00       		.byte	0
+ 2836 00d2 00       		.byte	0
+ 2837 00d3 10       		.uleb128 0x10
+ 2838 00d4 34       		.uleb128 0x34
+ 2839 00d5 00       		.byte	0
+ 2840 00d6 03       		.uleb128 0x3
+ 2841 00d7 08       		.uleb128 0x8
+ 2842 00d8 3A       		.uleb128 0x3a
+ 2843 00d9 0B       		.uleb128 0xb
+ 2844 00da 3B       		.uleb128 0x3b
+ 2845 00db 0B       		.uleb128 0xb
+ 2846 00dc 49       		.uleb128 0x49
+ 2847 00dd 13       		.uleb128 0x13
+ 2848 00de 02       		.uleb128 0x2
+ 2849 00df 18       		.uleb128 0x18
+ 2850 00e0 00       		.byte	0
+ 2851 00e1 00       		.byte	0
+ 2852 00e2 11       		.uleb128 0x11
+ 2853 00e3 2E       		.uleb128 0x2e
+ 2854 00e4 01       		.byte	0x1
+ 2855 00e5 3F       		.uleb128 0x3f
+ 2856 00e6 19       		.uleb128 0x19
+ 2857 00e7 03       		.uleb128 0x3
+ 2858 00e8 0E       		.uleb128 0xe
+ 2859 00e9 3A       		.uleb128 0x3a
+ 2860 00ea 0B       		.uleb128 0xb
+ 2861 00eb 3B       		.uleb128 0x3b
+ 2862 00ec 0B       		.uleb128 0xb
+ 2863 00ed 27       		.uleb128 0x27
+ 2864 00ee 19       		.uleb128 0x19
+ 2865 00ef 11       		.uleb128 0x11
+ 2866 00f0 01       		.uleb128 0x1
+ 2867 00f1 12       		.uleb128 0x12
+ 2868 00f2 06       		.uleb128 0x6
+ 2869 00f3 40       		.uleb128 0x40
+ 2870 00f4 18       		.uleb128 0x18
+ 2871 00f5 9742     		.uleb128 0x2117
+ 2872 00f7 19       		.uleb128 0x19
+ 2873 00f8 01       		.uleb128 0x1
+ 2874 00f9 13       		.uleb128 0x13
+ 2875 00fa 00       		.byte	0
+ 2876 00fb 00       		.byte	0
+ 2877 00fc 12       		.uleb128 0x12
+ 2878 00fd 05       		.uleb128 0x5
+ 2879 00fe 00       		.byte	0
+ 2880 00ff 03       		.uleb128 0x3
+ 2881 0100 0E       		.uleb128 0xe
+ 2882 0101 3A       		.uleb128 0x3a
+ 2883 0102 0B       		.uleb128 0xb
+ 2884 0103 3B       		.uleb128 0x3b
+ 2885 0104 0B       		.uleb128 0xb
+ 2886 0105 49       		.uleb128 0x49
+ 2887 0106 13       		.uleb128 0x13
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 57
+
+
+ 2888 0107 02       		.uleb128 0x2
+ 2889 0108 18       		.uleb128 0x18
+ 2890 0109 00       		.byte	0
+ 2891 010a 00       		.byte	0
+ 2892 010b 13       		.uleb128 0x13
+ 2893 010c 2E       		.uleb128 0x2e
+ 2894 010d 01       		.byte	0x1
+ 2895 010e 3F       		.uleb128 0x3f
+ 2896 010f 19       		.uleb128 0x19
+ 2897 0110 03       		.uleb128 0x3
+ 2898 0111 0E       		.uleb128 0xe
+ 2899 0112 3A       		.uleb128 0x3a
+ 2900 0113 0B       		.uleb128 0xb
+ 2901 0114 3B       		.uleb128 0x3b
+ 2902 0115 0B       		.uleb128 0xb
+ 2903 0116 27       		.uleb128 0x27
+ 2904 0117 19       		.uleb128 0x19
+ 2905 0118 11       		.uleb128 0x11
+ 2906 0119 01       		.uleb128 0x1
+ 2907 011a 12       		.uleb128 0x12
+ 2908 011b 06       		.uleb128 0x6
+ 2909 011c 40       		.uleb128 0x40
+ 2910 011d 18       		.uleb128 0x18
+ 2911 011e 9642     		.uleb128 0x2116
+ 2912 0120 19       		.uleb128 0x19
+ 2913 0121 01       		.uleb128 0x1
+ 2914 0122 13       		.uleb128 0x13
+ 2915 0123 00       		.byte	0
+ 2916 0124 00       		.byte	0
+ 2917 0125 14       		.uleb128 0x14
+ 2918 0126 34       		.uleb128 0x34
+ 2919 0127 00       		.byte	0
+ 2920 0128 03       		.uleb128 0x3
+ 2921 0129 0E       		.uleb128 0xe
+ 2922 012a 3A       		.uleb128 0x3a
+ 2923 012b 0B       		.uleb128 0xb
+ 2924 012c 3B       		.uleb128 0x3b
+ 2925 012d 0B       		.uleb128 0xb
+ 2926 012e 49       		.uleb128 0x49
+ 2927 012f 13       		.uleb128 0x13
+ 2928 0130 02       		.uleb128 0x2
+ 2929 0131 18       		.uleb128 0x18
+ 2930 0132 00       		.byte	0
+ 2931 0133 00       		.byte	0
+ 2932 0134 15       		.uleb128 0x15
+ 2933 0135 2E       		.uleb128 0x2e
+ 2934 0136 01       		.byte	0x1
+ 2935 0137 3F       		.uleb128 0x3f
+ 2936 0138 19       		.uleb128 0x19
+ 2937 0139 03       		.uleb128 0x3
+ 2938 013a 0E       		.uleb128 0xe
+ 2939 013b 3A       		.uleb128 0x3a
+ 2940 013c 0B       		.uleb128 0xb
+ 2941 013d 3B       		.uleb128 0x3b
+ 2942 013e 05       		.uleb128 0x5
+ 2943 013f 27       		.uleb128 0x27
+ 2944 0140 19       		.uleb128 0x19
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 58
+
+
+ 2945 0141 11       		.uleb128 0x11
+ 2946 0142 01       		.uleb128 0x1
+ 2947 0143 12       		.uleb128 0x12
+ 2948 0144 06       		.uleb128 0x6
+ 2949 0145 40       		.uleb128 0x40
+ 2950 0146 18       		.uleb128 0x18
+ 2951 0147 9642     		.uleb128 0x2116
+ 2952 0149 19       		.uleb128 0x19
+ 2953 014a 01       		.uleb128 0x1
+ 2954 014b 13       		.uleb128 0x13
+ 2955 014c 00       		.byte	0
+ 2956 014d 00       		.byte	0
+ 2957 014e 16       		.uleb128 0x16
+ 2958 014f 05       		.uleb128 0x5
+ 2959 0150 00       		.byte	0
+ 2960 0151 03       		.uleb128 0x3
+ 2961 0152 08       		.uleb128 0x8
+ 2962 0153 3A       		.uleb128 0x3a
+ 2963 0154 0B       		.uleb128 0xb
+ 2964 0155 3B       		.uleb128 0x3b
+ 2965 0156 05       		.uleb128 0x5
+ 2966 0157 49       		.uleb128 0x49
+ 2967 0158 13       		.uleb128 0x13
+ 2968 0159 02       		.uleb128 0x2
+ 2969 015a 18       		.uleb128 0x18
+ 2970 015b 00       		.byte	0
+ 2971 015c 00       		.byte	0
+ 2972 015d 17       		.uleb128 0x17
+ 2973 015e 05       		.uleb128 0x5
+ 2974 015f 00       		.byte	0
+ 2975 0160 03       		.uleb128 0x3
+ 2976 0161 0E       		.uleb128 0xe
+ 2977 0162 3A       		.uleb128 0x3a
+ 2978 0163 0B       		.uleb128 0xb
+ 2979 0164 3B       		.uleb128 0x3b
+ 2980 0165 05       		.uleb128 0x5
+ 2981 0166 49       		.uleb128 0x49
+ 2982 0167 13       		.uleb128 0x13
+ 2983 0168 02       		.uleb128 0x2
+ 2984 0169 18       		.uleb128 0x18
+ 2985 016a 00       		.byte	0
+ 2986 016b 00       		.byte	0
+ 2987 016c 18       		.uleb128 0x18
+ 2988 016d 34       		.uleb128 0x34
+ 2989 016e 00       		.byte	0
+ 2990 016f 03       		.uleb128 0x3
+ 2991 0170 0E       		.uleb128 0xe
+ 2992 0171 3A       		.uleb128 0x3a
+ 2993 0172 0B       		.uleb128 0xb
+ 2994 0173 3B       		.uleb128 0x3b
+ 2995 0174 0B       		.uleb128 0xb
+ 2996 0175 49       		.uleb128 0x49
+ 2997 0176 13       		.uleb128 0x13
+ 2998 0177 3F       		.uleb128 0x3f
+ 2999 0178 19       		.uleb128 0x19
+ 3000 0179 3C       		.uleb128 0x3c
+ 3001 017a 19       		.uleb128 0x19
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 59
+
+
+ 3002 017b 00       		.byte	0
+ 3003 017c 00       		.byte	0
+ 3004 017d 00       		.byte	0
+ 3005              		.section	.debug_aranges,"",%progbits
+ 3006 0000 6C000000 		.4byte	0x6c
+ 3007 0004 0200     		.2byte	0x2
+ 3008 0006 00000000 		.4byte	.Ldebug_info0
+ 3009 000a 04       		.byte	0x4
+ 3010 000b 00       		.byte	0
+ 3011 000c 0000     		.2byte	0
+ 3012 000e 0000     		.2byte	0
+ 3013 0010 00000000 		.4byte	.LFB0
+ 3014 0014 34000000 		.4byte	.LFE0-.LFB0
+ 3015 0018 00000000 		.4byte	.LFB1
+ 3016 001c 26000000 		.4byte	.LFE1-.LFB1
+ 3017 0020 00000000 		.4byte	.LFB2
+ 3018 0024 28000000 		.4byte	.LFE2-.LFB2
+ 3019 0028 00000000 		.4byte	.LFB3
+ 3020 002c 22000000 		.4byte	.LFE3-.LFB3
+ 3021 0030 00000000 		.4byte	.LFB4
+ 3022 0034 68000000 		.4byte	.LFE4-.LFB4
+ 3023 0038 00000000 		.4byte	.LFB5
+ 3024 003c A0010000 		.4byte	.LFE5-.LFB5
+ 3025 0040 00000000 		.4byte	.LFB6
+ 3026 0044 78000000 		.4byte	.LFE6-.LFB6
+ 3027 0048 00000000 		.4byte	.LFB7
+ 3028 004c 44010000 		.4byte	.LFE7-.LFB7
+ 3029 0050 00000000 		.4byte	.LFB8
+ 3030 0054 C8010000 		.4byte	.LFE8-.LFB8
+ 3031 0058 00000000 		.4byte	.LFB9
+ 3032 005c 8C010000 		.4byte	.LFE9-.LFB9
+ 3033 0060 00000000 		.4byte	.LFB10
+ 3034 0064 7C000000 		.4byte	.LFE10-.LFB10
+ 3035 0068 00000000 		.4byte	0
+ 3036 006c 00000000 		.4byte	0
+ 3037              		.section	.debug_ranges,"",%progbits
+ 3038              	.Ldebug_ranges0:
+ 3039 0000 00000000 		.4byte	.LFB0
+ 3040 0004 34000000 		.4byte	.LFE0
+ 3041 0008 00000000 		.4byte	.LFB1
+ 3042 000c 26000000 		.4byte	.LFE1
+ 3043 0010 00000000 		.4byte	.LFB2
+ 3044 0014 28000000 		.4byte	.LFE2
+ 3045 0018 00000000 		.4byte	.LFB3
+ 3046 001c 22000000 		.4byte	.LFE3
+ 3047 0020 00000000 		.4byte	.LFB4
+ 3048 0024 68000000 		.4byte	.LFE4
+ 3049 0028 00000000 		.4byte	.LFB5
+ 3050 002c A0010000 		.4byte	.LFE5
+ 3051 0030 00000000 		.4byte	.LFB6
+ 3052 0034 78000000 		.4byte	.LFE6
+ 3053 0038 00000000 		.4byte	.LFB7
+ 3054 003c 44010000 		.4byte	.LFE7
+ 3055 0040 00000000 		.4byte	.LFB8
+ 3056 0044 C8010000 		.4byte	.LFE8
+ 3057 0048 00000000 		.4byte	.LFB9
+ 3058 004c 8C010000 		.4byte	.LFE9
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 60
+
+
+ 3059 0050 00000000 		.4byte	.LFB10
+ 3060 0054 7C000000 		.4byte	.LFE10
+ 3061 0058 00000000 		.4byte	0
+ 3062 005c 00000000 		.4byte	0
+ 3063              		.section	.debug_line,"",%progbits
+ 3064              	.Ldebug_line0:
+ 3065 0000 B8020000 		.section	.debug_str,"MS",%progbits,1
+ 3065      02007001 
+ 3065      00000201 
+ 3065      FB0E0D00 
+ 3065      01010101 
+ 3066              	.LASF93:
+ 3067 0000 68616D66 		.ascii	"hamfly_telemetry_t\000"
+ 3067      6C795F74 
+ 3067      656C656D 
+ 3067      65747279 
+ 3067      5F7400
+ 3068              	.LASF38:
+ 3069 0013 6770735F 		.ascii	"gps_raw_lat\000"
+ 3069      7261775F 
+ 3069      6C617400 
+ 3070              	.LASF162:
+ 3071 001f 616C745F 		.ascii	"alt_raw\000"
+ 3071      72617700 
+ 3072              	.LASF160:
+ 3073 0027 6C6F6E5F 		.ascii	"lon_raw\000"
+ 3073      72617700 
+ 3074              	.LASF159:
+ 3075 002f 68616D66 		.ascii	"hamfly_decode_gps\000"
+ 3075      6C795F64 
+ 3075      65636F64 
+ 3075      655F6770 
+ 3075      7300
+ 3076              	.LASF68:
+ 3077 0041 73797373 		.ascii	"sysstat_cpu_pct\000"
+ 3077      7461745F 
+ 3077      6370755F 
+ 3077      70637400 
+ 3078              	.LASF137:
+ 3079 0051 666F6375 		.ascii	"focus_state\000"
+ 3079      735F7374 
+ 3079      61746500 
+ 3080              	.LASF123:
+ 3081 005d 66697A5F 		.ascii	"fiz_clearFaults_all_flag\000"
+ 3081      636C6561 
+ 3081      72466175 
+ 3081      6C74735F 
+ 3081      616C6C5F 
+ 3082              	.LASF146:
+ 3083 0076 66665F61 		.ascii	"ff_api_status_t\000"
+ 3083      70695F73 
+ 3083      74617475 
+ 3083      735F7400 
+ 3084              	.LASF150:
+ 3085 0086 636F6E74 		.ascii	"control\000"
+ 3085      726F6C00 
+ 3086              	.LASF13:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 61
+
+
+ 3087 008e 756E7369 		.ascii	"unsigned int\000"
+ 3087      676E6564 
+ 3087      20696E74 
+ 3087      00
+ 3088              	.LASF7:
+ 3089 009b 5F5F696E 		.ascii	"__int32_t\000"
+ 3089      7433325F 
+ 3089      7400
+ 3090              	.LASF163:
+ 3091 00a5 7370645F 		.ascii	"spd_raw\000"
+ 3091      72617700 
+ 3092              	.LASF124:
+ 3093 00ad 66697A5F 		.ascii	"fiz_autoCalStart_all_flag\000"
+ 3093      6175746F 
+ 3093      43616C53 
+ 3093      74617274 
+ 3093      5F616C6C 
+ 3094              	.LASF66:
+ 3095 00c7 73797373 		.ascii	"sysstat_gps_sats\000"
+ 3095      7461745F 
+ 3095      6770735F 
+ 3095      73617473 
+ 3095      00
+ 3096              	.LASF173:
+ 3097 00d8 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3097      43313120 
+ 3097      352E342E 
+ 3097      31203230 
+ 3097      31363036 
+ 3098 010b 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 3098      20726576 
+ 3098      6973696F 
+ 3098      6E203233 
+ 3098      37373135 
+ 3099 013e 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 3099      66756E63 
+ 3099      74696F6E 
+ 3099      2D736563 
+ 3099      74696F6E 
+ 3100              	.LASF131:
+ 3101 0166 62617474 		.ascii	"battery_v_right\000"
+ 3101      6572795F 
+ 3101      765F7269 
+ 3101      67687400 
+ 3102              	.LASF112:
+ 3103 0176 4C656E73 		.ascii	"Lens_AxisState_Auto_Cal_SensingTorque\000"
+ 3103      5F417869 
+ 3103      73537461 
+ 3103      74655F41 
+ 3103      75746F5F 
+ 3104              	.LASF126:
+ 3105 019c 66697A5F 		.ascii	"fiz_setSubRangeLim_F_flag\000"
+ 3105      73657453 
+ 3105      75625261 
+ 3105      6E67654C 
+ 3105      696D5F46 
+ 3106              	.LASF135:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 62
+
+
+ 3107 01b6 69726973 		.ascii	"iris_position\000"
+ 3107      5F706F73 
+ 3107      6974696F 
+ 3107      6E00
+ 3108              	.LASF78:
+ 3109 01c4 6D61675F 		.ascii	"mag_x\000"
+ 3109      7800
+ 3110              	.LASF79:
+ 3111 01ca 6D61675F 		.ascii	"mag_y\000"
+ 3111      7900
+ 3112              	.LASF80:
+ 3113 01d0 6D61675F 		.ascii	"mag_z\000"
+ 3113      7A00
+ 3114              	.LASF20:
+ 3115 01d6 62617474 		.ascii	"battery_left_v\000"
+ 3115      6572795F 
+ 3115      6C656674 
+ 3115      5F7600
+ 3116              	.LASF61:
+ 3117 01e5 666C6167 		.ascii	"flag_compass_error\000"
+ 3117      5F636F6D 
+ 3117      70617373 
+ 3117      5F657272 
+ 3117      6F7200
+ 3118              	.LASF82:
+ 3119 01f8 6D61675F 		.ascii	"mag_freq\000"
+ 3119      66726571 
+ 3119      00
+ 3120              	.LASF130:
+ 3121 0201 62617474 		.ascii	"battery_v_left\000"
+ 3121      6572795F 
+ 3121      765F6C65 
+ 3121      667400
+ 3122              	.LASF156:
+ 3123 0210 72645F6C 		.ascii	"rd_le16\000"
+ 3123      65313600 
+ 3124              	.LASF77:
+ 3125 0218 6D61675F 		.ascii	"mag_valid\000"
+ 3125      76616C69 
+ 3125      6400
+ 3126              	.LASF52:
+ 3127 0222 6174745F 		.ascii	"att_yaw_deg\000"
+ 3127      7961775F 
+ 3127      64656700 
+ 3128              	.LASF90:
+ 3129 022e 73797365 		.ascii	"sysecho_imu_rate\000"
+ 3129      63686F5F 
+ 3129      696D755F 
+ 3129      72617465 
+ 3129      00
+ 3130              	.LASF148:
+ 3131 023f 73656E64 		.ascii	"send\000"
+ 3131      00
+ 3132              	.LASF18:
+ 3133 0244 75696E74 		.ascii	"uint32_t\000"
+ 3133      33325F74 
+ 3133      00
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 63
+
+
+ 3134              	.LASF33:
+ 3135 024d 6770735F 		.ascii	"gps_ground_spd_ms\000"
+ 3135      67726F75 
+ 3135      6E645F73 
+ 3135      70645F6D 
+ 3135      7300
+ 3136              	.LASF92:
+ 3137 025f 666C6F61 		.ascii	"float\000"
+ 3137      7400
+ 3138              	.LASF118:
+ 3139 0265 74696C74 		.ascii	"tilt\000"
+ 3139      00
+ 3140              	.LASF15:
+ 3141 026a 696E7431 		.ascii	"int16_t\000"
+ 3141      365F7400 
+ 3142              	.LASF98:
+ 3143 0272 52415445 		.ascii	"RATE\000"
+ 3143      00
+ 3144              	.LASF142:
+ 3145 0277 69726973 		.ascii	"iris_range_limits_active\000"
+ 3145      5F72616E 
+ 3145      67655F6C 
+ 3145      696D6974 
+ 3145      735F6163 
+ 3146              	.LASF12:
+ 3147 0290 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3147      206C6F6E 
+ 3147      6720756E 
+ 3147      7369676E 
+ 3147      65642069 
+ 3148              	.LASF170:
+ 3149 02a7 68616D66 		.ascii	"hamfly_decode_sysstat\000"
+ 3149      6C795F64 
+ 3149      65636F64 
+ 3149      655F7379 
+ 3149      73737461 
+ 3150              	.LASF165:
+ 3151 02bd 68616363 		.ascii	"hacc_raw\000"
+ 3151      5F726177 
+ 3151      00
+ 3152              	.LASF48:
+ 3153 02c6 6261726F 		.ascii	"baro_roc_ms\000"
+ 3153      5F726F63 
+ 3153      5F6D7300 
+ 3154              	.LASF45:
+ 3155 02d2 6770735F 		.ascii	"gps_raw_sacc\000"
+ 3155      7261775F 
+ 3155      73616363 
+ 3155      00
+ 3156              	.LASF76:
+ 3157 02df 73797373 		.ascii	"sysstat_charge_mah\000"
+ 3157      7461745F 
+ 3157      63686172 
+ 3157      67655F6D 
+ 3157      616800
+ 3158              	.LASF128:
+ 3159 02f2 66697A5F 		.ascii	"fiz_setSubRangeLim_Z_flag\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 64
+
+
+ 3159      73657453 
+ 3159      75625261 
+ 3159      6E67654C 
+ 3159      696D5F5A 
+ 3160              	.LASF122:
+ 3161 030c 7A6F6F6D 		.ascii	"zoom\000"
+ 3161      00
+ 3162              	.LASF5:
+ 3163 0311 5F5F7569 		.ascii	"__uint16_t\000"
+ 3163      6E743136 
+ 3163      5F7400
+ 3164              	.LASF144:
+ 3165 031c 63616D65 		.ascii	"camera_status\000"
+ 3165      72615F73 
+ 3165      74617475 
+ 3165      7300
+ 3166              	.LASF60:
+ 3167 032a 73797373 		.ascii	"sysstat_valid\000"
+ 3167      7461745F 
+ 3167      76616C69 
+ 3167      6400
+ 3168              	.LASF63:
+ 3169 0338 666C6167 		.ascii	"flag_radio_los\000"
+ 3169      5F726164 
+ 3169      696F5F6C 
+ 3169      6F7300
+ 3170              	.LASF50:
+ 3171 0347 6174745F 		.ascii	"att_timestamp_ms\000"
+ 3171      74696D65 
+ 3171      7374616D 
+ 3171      705F6D73 
+ 3171      00
+ 3172              	.LASF166:
+ 3173 0358 76616363 		.ascii	"vacc_raw\000"
+ 3173      5F726177 
+ 3173      00
+ 3174              	.LASF101:
+ 3175 0361 76616C75 		.ascii	"value\000"
+ 3175      6500
+ 3176              	.LASF73:
+ 3177 0367 73797373 		.ascii	"sysstat_cam_status\000"
+ 3177      7461745F 
+ 3177      63616D5F 
+ 3177      73746174 
+ 3177      757300
+ 3178              	.LASF145:
+ 3179 037a 63616D65 		.ascii	"camera_recording\000"
+ 3179      72615F72 
+ 3179      65636F72 
+ 3179      64696E67 
+ 3179      00
+ 3180              	.LASF69:
+ 3181 038b 73797373 		.ascii	"sysstat_status_flags\000"
+ 3181      7461745F 
+ 3181      73746174 
+ 3181      75735F66 
+ 3181      6C616773 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 65
+
+
+ 3182              	.LASF87:
+ 3183 03a0 73797365 		.ascii	"sysecho_valid\000"
+ 3183      63686F5F 
+ 3183      76616C69 
+ 3183      6400
+ 3184              	.LASF111:
+ 3185 03ae 4C656E73 		.ascii	"Lens_AxisState_Man_Cal_Set_Min\000"
+ 3185      5F417869 
+ 3185      73537461 
+ 3185      74655F4D 
+ 3185      616E5F43 
+ 3186              	.LASF51:
+ 3187 03cd 6174745F 		.ascii	"att_pitch_deg\000"
+ 3187      70697463 
+ 3187      685F6465 
+ 3187      6700
+ 3188              	.LASF109:
+ 3189 03db 4C656E73 		.ascii	"Lens_AxisState_Uncalibrated\000"
+ 3189      5F417869 
+ 3189      73537461 
+ 3189      74655F55 
+ 3189      6E63616C 
+ 3190              	.LASF91:
+ 3191 03f7 5F426F6F 		.ascii	"_Bool\000"
+ 3191      6C00
+ 3192              	.LASF31:
+ 3193 03fd 6770735F 		.ascii	"gps_lon_deg\000"
+ 3193      6C6F6E5F 
+ 3193      64656700 
+ 3194              	.LASF59:
+ 3195 0409 6174745F 		.ascii	"att_yaw_err_deg\000"
+ 3195      7961775F 
+ 3195      6572725F 
+ 3195      64656700 
+ 3196              	.LASF121:
+ 3197 0419 69726973 		.ascii	"iris\000"
+ 3197      00
+ 3198              	.LASF40:
+ 3199 041e 6770735F 		.ascii	"gps_raw_alt\000"
+ 3199      7261775F 
+ 3199      616C7400 
+ 3200              	.LASF35:
+ 3201 042a 6770735F 		.ascii	"gps_hacc_m\000"
+ 3201      68616363 
+ 3201      5F6D00
+ 3202              	.LASF143:
+ 3203 0435 7A6F6F6D 		.ascii	"zoom_range_limits_active\000"
+ 3203      5F72616E 
+ 3203      67655F6C 
+ 3203      696D6974 
+ 3203      735F6163 
+ 3204              	.LASF175:
+ 3205 044e 433A5C55 		.ascii	"C:\\Users\\Jennewein\\Documents\\hamish-workspace\\"
+ 3205      73657273 
+ 3205      5C4A656E 
+ 3205      6E657765 
+ 3205      696E5C44 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 66
+
+
+ 3206 047c 50536F43 		.ascii	"PSoC-Programs\\test_projects\\Proj06_freefly_hamfly"
+ 3206      2D50726F 
+ 3206      6772616D 
+ 3206      735C7465 
+ 3206      73745F70 
+ 3207 04ad 4150495F 		.ascii	"API_integration.cydsn\000"
+ 3207      696E7465 
+ 3207      67726174 
+ 3207      696F6E2E 
+ 3207      63796473 
+ 3208              	.LASF154:
+ 3209 04c3 72645F62 		.ascii	"rd_be16\000"
+ 3209      65313600 
+ 3210              	.LASF96:
+ 3211 04cb 63686172 		.ascii	"char\000"
+ 3211      00
+ 3212              	.LASF171:
+ 3213 04d0 68616D66 		.ascii	"hamfly_decode_mag\000"
+ 3213      6C795F64 
+ 3213      65636F64 
+ 3213      655F6D61 
+ 3213      6700
+ 3214              	.LASF72:
+ 3215 04e2 73797373 		.ascii	"sysstat_imu_rate\000"
+ 3215      7461745F 
+ 3215      696D755F 
+ 3215      72617465 
+ 3215      00
+ 3216              	.LASF23:
+ 3217 04f3 67696D62 		.ascii	"gimbal_i\000"
+ 3217      616C5F69 
+ 3217      00
+ 3218              	.LASF24:
+ 3219 04fc 67696D62 		.ascii	"gimbal_j\000"
+ 3219      616C5F6A 
+ 3219      00
+ 3220              	.LASF25:
+ 3221 0505 67696D62 		.ascii	"gimbal_k\000"
+ 3221      616C5F6B 
+ 3221      00
+ 3222              	.LASF97:
+ 3223 050e 44454645 		.ascii	"DEFER\000"
+ 3223      5200
+ 3224              	.LASF22:
+ 3225 0514 67696D62 		.ascii	"gimbal_r\000"
+ 3225      616C5F72 
+ 3225      00
+ 3226              	.LASF119:
+ 3227 051d 726F6C6C 		.ascii	"roll\000"
+ 3227      00
+ 3228              	.LASF14:
+ 3229 0522 75696E74 		.ascii	"uint8_t\000"
+ 3229      385F7400 
+ 3230              	.LASF151:
+ 3231 052a 73746174 		.ascii	"status\000"
+ 3231      757300
+ 3232              	.LASF125:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 67
+
+
+ 3233 0531 66697A5F 		.ascii	"fiz_record_button_flag\000"
+ 3233      7265636F 
+ 3233      72645F62 
+ 3233      7574746F 
+ 3233      6E5F666C 
+ 3234              	.LASF114:
+ 3235 0548 4C656E73 		.ascii	"Lens_AxisState_Auto_Cal_Set_Min\000"
+ 3235      5F417869 
+ 3235      73537461 
+ 3235      74655F41 
+ 3235      75746F5F 
+ 3236              	.LASF83:
+ 3237 0568 6D61675F 		.ascii	"mag_off_x\000"
+ 3237      6F66665F 
+ 3237      7800
+ 3238              	.LASF84:
+ 3239 0572 6D61675F 		.ascii	"mag_off_y\000"
+ 3239      6F66665F 
+ 3239      7900
+ 3240              	.LASF85:
+ 3241 057c 6D61675F 		.ascii	"mag_off_z\000"
+ 3241      6F66665F 
+ 3241      7A00
+ 3242              	.LASF37:
+ 3243 0586 6770735F 		.ascii	"gps_sacc_ms\000"
+ 3243      73616363 
+ 3243      5F6D7300 
+ 3244              	.LASF11:
+ 3245 0592 6C6F6E67 		.ascii	"long long int\000"
+ 3245      206C6F6E 
+ 3245      6720696E 
+ 3245      7400
+ 3246              	.LASF29:
+ 3247 05a0 6770735F 		.ascii	"gps_locked\000"
+ 3247      6C6F636B 
+ 3247      656400
+ 3248              	.LASF120:
+ 3249 05ab 666F6375 		.ascii	"focus\000"
+ 3249      7300
+ 3250              	.LASF115:
+ 3251 05b1 4C656E73 		.ascii	"Lens_Axis_State_General_e\000"
+ 3251      5F417869 
+ 3251      735F5374 
+ 3251      6174655F 
+ 3251      47656E65 
+ 3252              	.LASF19:
+ 3253 05cb 76616C69 		.ascii	"valid\000"
+ 3253      6400
+ 3254              	.LASF169:
+ 3255 05d1 68616D66 		.ascii	"hamfly_decode_attitude\000"
+ 3255      6C795F64 
+ 3255      65636F64 
+ 3255      655F6174 
+ 3255      74697475 
+ 3256              	.LASF116:
+ 3257 05e8 67696D62 		.ascii	"gimbal_kill\000"
+ 3257      616C5F6B 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 68
+
+
+ 3257      696C6C00 
+ 3258              	.LASF107:
+ 3259 05f4 4C656E73 		.ascii	"Lens_AxisState_Move_to_Command\000"
+ 3259      5F417869 
+ 3259      73537461 
+ 3259      74655F4D 
+ 3259      6F76655F 
+ 3260              	.LASF100:
+ 3261 0613 66665F61 		.ascii	"ff_api_control_type_e\000"
+ 3261      70695F63 
+ 3261      6F6E7472 
+ 3261      6F6C5F74 
+ 3261      7970655F 
+ 3262              	.LASF161:
+ 3263 0629 6C61745F 		.ascii	"lat_raw\000"
+ 3263      72617700 
+ 3264              	.LASF153:
+ 3265 0631 72645F62 		.ascii	"rd_be32\000"
+ 3265      65333200 
+ 3266              	.LASF3:
+ 3267 0639 5F5F696E 		.ascii	"__int16_t\000"
+ 3267      7431365F 
+ 3267      7400
+ 3268              	.LASF28:
+ 3269 0643 6770735F 		.ascii	"gps_valid\000"
+ 3269      76616C69 
+ 3269      6400
+ 3270              	.LASF88:
+ 3271 064d 73797365 		.ascii	"sysecho_gps_locked\000"
+ 3271      63686F5F 
+ 3271      6770735F 
+ 3271      6C6F636B 
+ 3271      656400
+ 3272              	.LASF105:
+ 3273 0660 4C656E73 		.ascii	"Lens_AxisState_Reset\000"
+ 3273      5F417869 
+ 3273      73537461 
+ 3273      74655F52 
+ 3273      65736574 
+ 3274              	.LASF106:
+ 3275 0675 4C656E73 		.ascii	"Lens_AxisState_Faulted\000"
+ 3275      5F417869 
+ 3275      73537461 
+ 3275      74655F46 
+ 3275      61756C74 
+ 3276              	.LASF62:
+ 3277 068c 666C6167 		.ascii	"flag_gps_los\000"
+ 3277      5F677073 
+ 3277      5F6C6F73 
+ 3277      00
+ 3278              	.LASF139:
+ 3279 0699 7A6F6F6D 		.ascii	"zoom_state\000"
+ 3279      5F737461 
+ 3279      746500
+ 3280              	.LASF67:
+ 3281 06a4 73797373 		.ascii	"sysstat_temp_c\000"
+ 3281      7461745F 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 69
+
+
+ 3281      74656D70 
+ 3281      5F6300
+ 3282              	.LASF164:
+ 3283 06b3 6864675F 		.ascii	"hdg_raw\000"
+ 3283      72617700 
+ 3284              	.LASF42:
+ 3285 06bb 6770735F 		.ascii	"gps_raw_hdg\000"
+ 3285      7261775F 
+ 3285      68646700 
+ 3286              	.LASF138:
+ 3287 06c7 69726973 		.ascii	"iris_state\000"
+ 3287      5F737461 
+ 3287      746500
+ 3288              	.LASF34:
+ 3289 06d2 6770735F 		.ascii	"gps_heading_deg\000"
+ 3289      68656164 
+ 3289      696E675F 
+ 3289      64656700 
+ 3290              	.LASF94:
+ 3291 06e2 6C6F6E67 		.ascii	"long double\000"
+ 3291      20646F75 
+ 3291      626C6500 
+ 3292              	.LASF16:
+ 3293 06ee 75696E74 		.ascii	"uint16_t\000"
+ 3293      31365F74 
+ 3293      00
+ 3294              	.LASF86:
+ 3295 06f7 6D61675F 		.ascii	"mag_declination\000"
+ 3295      6465636C 
+ 3295      696E6174 
+ 3295      696F6E00 
+ 3296              	.LASF26:
+ 3297 0707 67696D62 		.ascii	"gimbal_status1\000"
+ 3297      616C5F73 
+ 3297      74617475 
+ 3297      733100
+ 3298              	.LASF27:
+ 3299 0716 67696D62 		.ascii	"gimbal_status2\000"
+ 3299      616C5F73 
+ 3299      74617475 
+ 3299      733200
+ 3300              	.LASF174:
+ 3301 0725 2E2E5C2E 		.ascii	"..\\..\\..\\HamFlyAPI\\src\\hamfly_core_telemetry.c"
+ 3301      2E5C2E2E 
+ 3301      5C48616D 
+ 3301      466C7941 
+ 3301      50495C73 
+ 3302 0753 00       		.ascii	"\000"
+ 3303              	.LASF155:
+ 3304 0754 72645F62 		.ascii	"rd_be_u16\000"
+ 3304      655F7531 
+ 3304      3600
+ 3305              	.LASF152:
+ 3306 075e 66665F61 		.ascii	"ff_api_t\000"
+ 3306      70695F74 
+ 3306      00
+ 3307              	.LASF4:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 70
+
+
+ 3308 0767 73686F72 		.ascii	"short int\000"
+ 3308      7420696E 
+ 3308      7400
+ 3309              	.LASF8:
+ 3310 0771 6C6F6E67 		.ascii	"long int\000"
+ 3310      20696E74 
+ 3310      00
+ 3311              	.LASF168:
+ 3312 077a 68616D66 		.ascii	"hamfly_decode_baro\000"
+ 3312      6C795F64 
+ 3312      65636F64 
+ 3312      655F6261 
+ 3312      726F00
+ 3313              	.LASF129:
+ 3314 078d 66665F61 		.ascii	"ff_api_gimbal_and_fiz_control_t\000"
+ 3314      70695F67 
+ 3314      696D6261 
+ 3314      6C5F616E 
+ 3314      645F6669 
+ 3315              	.LASF41:
+ 3316 07ad 6770735F 		.ascii	"gps_raw_spd\000"
+ 3316      7261775F 
+ 3316      73706400 
+ 3317              	.LASF32:
+ 3318 07b9 6770735F 		.ascii	"gps_alt_m\000"
+ 3318      616C745F 
+ 3318      6D00
+ 3319              	.LASF30:
+ 3320 07c3 6770735F 		.ascii	"gps_lat_deg\000"
+ 3320      6C61745F 
+ 3320      64656700 
+ 3321              	.LASF2:
+ 3322 07cf 5F5F7569 		.ascii	"__uint8_t\000"
+ 3322      6E74385F 
+ 3322      7400
+ 3323              	.LASF75:
+ 3324 07d9 73797373 		.ascii	"sysstat_batt_a\000"
+ 3324      7461745F 
+ 3324      62617474 
+ 3324      5F6100
+ 3325              	.LASF158:
+ 3326 07e8 68616D66 		.ascii	"hamfly_decode_qx287\000"
+ 3326      6C795F64 
+ 3326      65636F64 
+ 3326      655F7178 
+ 3326      32383700 
+ 3327              	.LASF21:
+ 3328 07fc 62617474 		.ascii	"battery_right_v\000"
+ 3328      6572795F 
+ 3328      72696768 
+ 3328      745F7600 
+ 3329              	.LASF157:
+ 3330 080c 706C656E 		.ascii	"plen\000"
+ 3330      00
+ 3331              	.LASF141:
+ 3332 0811 666F6375 		.ascii	"focus_range_limits_active\000"
+ 3332      735F7261 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 71
+
+
+ 3332      6E67655F 
+ 3332      6C696D69 
+ 3332      74735F61 
+ 3333              	.LASF65:
+ 3334 082b 73797373 		.ascii	"sysstat_batt_v\000"
+ 3334      7461745F 
+ 3334      62617474 
+ 3334      5F7600
+ 3335              	.LASF140:
+ 3336 083a 66697A5F 		.ascii	"fiz_status\000"
+ 3336      73746174 
+ 3336      757300
+ 3337              	.LASF95:
+ 3338 0845 73697A65 		.ascii	"sizetype\000"
+ 3338      74797065 
+ 3338      00
+ 3339              	.LASF46:
+ 3340 084e 6261726F 		.ascii	"baro_valid\000"
+ 3340      5F76616C 
+ 3340      696400
+ 3341              	.LASF10:
+ 3342 0859 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3342      20756E73 
+ 3342      69676E65 
+ 3342      6420696E 
+ 3342      7400
+ 3343              	.LASF99:
+ 3344 086b 4142534F 		.ascii	"ABSOLUTE\000"
+ 3344      4C555445 
+ 3344      00
+ 3345              	.LASF110:
+ 3346 0874 4C656E73 		.ascii	"Lens_AxisState_Man_Cal_Set_Max\000"
+ 3346      5F417869 
+ 3346      73537461 
+ 3346      74655F4D 
+ 3346      616E5F43 
+ 3347              	.LASF17:
+ 3348 0893 696E7433 		.ascii	"int32_t\000"
+ 3348      325F7400 
+ 3349              	.LASF132:
+ 3350 089b 67696D62 		.ascii	"gimbal_Status1\000"
+ 3350      616C5F53 
+ 3350      74617475 
+ 3350      733100
+ 3351              	.LASF133:
+ 3352 08aa 67696D62 		.ascii	"gimbal_Status2\000"
+ 3352      616C5F53 
+ 3352      74617475 
+ 3352      733200
+ 3353              	.LASF55:
+ 3354 08b9 6174745F 		.ascii	"att_yaw_rate_dps\000"
+ 3354      7961775F 
+ 3354      72617465 
+ 3354      5F647073 
+ 3354      00
+ 3355              	.LASF54:
+ 3356 08ca 6174745F 		.ascii	"att_pitch_rate_dps\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 72
+
+
+ 3356      70697463 
+ 3356      685F7261 
+ 3356      74655F64 
+ 3356      707300
+ 3357              	.LASF167:
+ 3358 08dd 73616363 		.ascii	"sacc_raw\000"
+ 3358      5F726177 
+ 3358      00
+ 3359              	.LASF102:
+ 3360 08e6 74797065 		.ascii	"type\000"
+ 3360      00
+ 3361              	.LASF1:
+ 3362 08eb 756E7369 		.ascii	"unsigned char\000"
+ 3362      676E6564 
+ 3362      20636861 
+ 3362      7200
+ 3363              	.LASF9:
+ 3364 08f9 5F5F7569 		.ascii	"__uint32_t\000"
+ 3364      6E743332 
+ 3364      5F7400
+ 3365              	.LASF58:
+ 3366 0904 6174745F 		.ascii	"att_pitch_err_deg\000"
+ 3366      70697463 
+ 3366      685F6572 
+ 3366      725F6465 
+ 3366      6700
+ 3367              	.LASF70:
+ 3368 0916 73797373 		.ascii	"sysstat_time_s\000"
+ 3368      7461745F 
+ 3368      74696D65 
+ 3368      5F7300
+ 3369              	.LASF117:
+ 3370 0925 67696D62 		.ascii	"gimbal_position_type_quaternions\000"
+ 3370      616C5F70 
+ 3370      6F736974 
+ 3370      696F6E5F 
+ 3370      74797065 
+ 3371              	.LASF49:
+ 3372 0946 6174745F 		.ascii	"att_valid\000"
+ 3372      76616C69 
+ 3372      6400
+ 3373              	.LASF172:
+ 3374 0950 68616D66 		.ascii	"hamfly_decode_sysecho\000"
+ 3374      6C795F64 
+ 3374      65636F64 
+ 3374      655F7379 
+ 3374      73656368 
+ 3375              	.LASF36:
+ 3376 0966 6770735F 		.ascii	"gps_vacc_m\000"
+ 3376      76616363 
+ 3376      5F6D00
+ 3377              	.LASF53:
+ 3378 0971 6174745F 		.ascii	"att_roll_deg\000"
+ 3378      726F6C6C 
+ 3378      5F646567 
+ 3378      00
+ 3379              	.LASF108:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 73
+
+
+ 3380 097e 4C656E73 		.ascii	"Lens_AxisState_Calibrated\000"
+ 3380      5F417869 
+ 3380      73537461 
+ 3380      74655F43 
+ 3380      616C6962 
+ 3381              	.LASF81:
+ 3382 0998 6D61675F 		.ascii	"mag_magnitude\000"
+ 3382      6D61676E 
+ 3382      69747564 
+ 3382      6500
+ 3383              	.LASF149:
+ 3384 09a6 72656376 		.ascii	"recv\000"
+ 3384      00
+ 3385              	.LASF176:
+ 3386 09ab 46726565 		.ascii	"FreeflyAPI\000"
+ 3386      666C7941 
+ 3386      504900
+ 3387              	.LASF89:
+ 3388 09b6 73797365 		.ascii	"sysecho_pressure_mb\000"
+ 3388      63686F5F 
+ 3388      70726573 
+ 3388      73757265 
+ 3388      5F6D6200 
+ 3389              	.LASF0:
+ 3390 09ca 7369676E 		.ascii	"signed char\000"
+ 3390      65642063 
+ 3390      68617200 
+ 3391              	.LASF43:
+ 3392 09d6 6770735F 		.ascii	"gps_raw_hacc\000"
+ 3392      7261775F 
+ 3392      68616363 
+ 3392      00
+ 3393              	.LASF6:
+ 3394 09e3 73686F72 		.ascii	"short unsigned int\000"
+ 3394      7420756E 
+ 3394      7369676E 
+ 3394      65642069 
+ 3394      6E7400
+ 3395              	.LASF147:
+ 3396 09f6 62656769 		.ascii	"begin\000"
+ 3396      6E00
+ 3397              	.LASF39:
+ 3398 09fc 6770735F 		.ascii	"gps_raw_lon\000"
+ 3398      7261775F 
+ 3398      6C6F6E00 
+ 3399              	.LASF134:
+ 3400 0a08 666F6375 		.ascii	"focus_position\000"
+ 3400      735F706F 
+ 3400      73697469 
+ 3400      6F6E00
+ 3401              	.LASF57:
+ 3402 0a17 6174745F 		.ascii	"att_roll_err_deg\000"
+ 3402      726F6C6C 
+ 3402      5F657272 
+ 3402      5F646567 
+ 3402      00
+ 3403              	.LASF127:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 74
+
+
+ 3404 0a28 66697A5F 		.ascii	"fiz_setSubRangeLim_I_flag\000"
+ 3404      73657453 
+ 3404      75625261 
+ 3404      6E67654C 
+ 3404      696D5F49 
+ 3405              	.LASF103:
+ 3406 0a42 66665F61 		.ascii	"ff_api_realtime_control_t\000"
+ 3406      70695F72 
+ 3406      65616C74 
+ 3406      696D655F 
+ 3406      636F6E74 
+ 3407              	.LASF113:
+ 3408 0a5c 4C656E73 		.ascii	"Lens_AxisState_Auto_Cal_Set_Max\000"
+ 3408      5F417869 
+ 3408      73537461 
+ 3408      74655F41 
+ 3408      75746F5F 
+ 3409              	.LASF64:
+ 3410 0a7c 666C6167 		.ascii	"flag_gps_locked\000"
+ 3410      5F677073 
+ 3410      5F6C6F63 
+ 3410      6B656400 
+ 3411              	.LASF104:
+ 3412 0a8c 4C656E73 		.ascii	"Lens_AxisState_Disabled\000"
+ 3412      5F417869 
+ 3412      73537461 
+ 3412      74655F44 
+ 3412      69736162 
+ 3413              	.LASF47:
+ 3414 0aa4 6261726F 		.ascii	"baro_alt_m\000"
+ 3414      5F616C74 
+ 3414      5F6D00
+ 3415              	.LASF71:
+ 3416 0aaf 73797373 		.ascii	"sysstat_pressure_mb\000"
+ 3416      7461745F 
+ 3416      70726573 
+ 3416      73757265 
+ 3416      5F6D6200 
+ 3417              	.LASF74:
+ 3418 0ac3 73797373 		.ascii	"sysstat_imu_latency\000"
+ 3418      7461745F 
+ 3418      696D755F 
+ 3418      6C617465 
+ 3418      6E637900 
+ 3419              	.LASF56:
+ 3420 0ad7 6174745F 		.ascii	"att_roll_rate_dps\000"
+ 3420      726F6C6C 
+ 3420      5F726174 
+ 3420      655F6470 
+ 3420      7300
+ 3421              	.LASF136:
+ 3422 0ae9 7A6F6F6D 		.ascii	"zoom_position\000"
+ 3422      5F706F73 
+ 3422      6974696F 
+ 3422      6E00
+ 3423              	.LASF44:
+ 3424 0af7 6770735F 		.ascii	"gps_raw_vacc\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccWiX0IG.s 			page 75
+
+
+ 3424      7261775F 
+ 3424      76616363 
+ 3424      00
+ 3425              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
