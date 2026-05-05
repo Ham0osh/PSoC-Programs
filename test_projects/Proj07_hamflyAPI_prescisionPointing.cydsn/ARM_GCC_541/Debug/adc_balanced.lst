@@ -1,0 +1,1289 @@
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"adc_balanced.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.bss
+  20              	s_eoc_flag:
+  21 0000 00       		.space	1
+  22              	s_frame_ready:
+  23 0001 00       		.space	1
+  24              	s_ch_idx:
+  25 0002 00       		.space	1
+  26 0003 00       		.align	2
+  27              	s_counts:
+  28 0004 00000000 		.space	4
+  29              		.section	.text.isr_adc_Handler,"ax",%progbits
+  30              		.align	2
+  31              		.global	isr_adc_Handler
+  32              		.thumb
+  33              		.thumb_func
+  34              		.type	isr_adc_Handler, %function
+  35              	isr_adc_Handler:
+  36              	.LFB63:
+  37              		.file 1 "adc_balanced.c"
+   1:adc_balanced.c **** /* adc_balanced.c
+   2:adc_balanced.c ****  * ========================================
+   3:adc_balanced.c ****  *
+   4:adc_balanced.c ****  * Copyright Hamish Johnson, 2026
+   5:adc_balanced.c ****  * All Rights Reserved
+   6:adc_balanced.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   7:adc_balanced.c ****  *
+   8:adc_balanced.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   9:adc_balanced.c ****  * WHICH IS THE PROPERTY OF 
+  10:adc_balanced.c ****  * Quantum Internet Systems Lab (QISL),
+  11:adc_balanced.c ****  * Department of Physics, SFU, Canada.
+  12:adc_balanced.c ****  *
+  13:adc_balanced.c ****  * Author: Hamish Johnson (2026)
+  14:adc_balanced.c ****  *
+  15:adc_balanced.c ****  * ========================================
+  16:adc_balanced.c ****  *
+  17:adc_balanced.c ****  * This code helps collect data from a
+  18:adc_balanced.c ****  * multiplexed ADC Del Sig.
+  19:adc_balanced.c **** */
+  20:adc_balanced.c **** 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 2
+
+
+  21:adc_balanced.c **** #include "adc_balanced.h"
+  22:adc_balanced.c **** 
+  23:adc_balanced.c **** // ADC state
+  24:adc_balanced.c **** static volatile uint8 s_eoc_flag = 0;     // set by ISR on EOC
+  25:adc_balanced.c **** static volatile uint8 s_frame_ready = 0;  // set when we finish channel N_CH-1
+  26:adc_balanced.c **** static volatile uint8 s_ch_idx = 0;       // current mux channel index
+  27:adc_balanced.c **** static volatile int16 s_counts[N_CH];     // latest counts per channel
+  28:adc_balanced.c **** 
+  29:adc_balanced.c **** // ISR prototype, PSoC generates
+  30:adc_balanced.c **** CY_ISR_PROTO(isr_adc_Handler);
+  31:adc_balanced.c **** 
+  32:adc_balanced.c **** // ISR - Fires after ADC conversion finishes
+  33:adc_balanced.c **** CY_ISR(isr_adc_Handler)
+  34:adc_balanced.c **** {
+  38              		.loc 1 34 0
+  39              		.cfi_startproc
+  40              		@ args = 0, pretend = 0, frame = 0
+  41              		@ frame_needed = 1, uses_anonymous_args = 0
+  42 0000 80B5     		push	{r7, lr}
+  43              		.cfi_def_cfa_offset 8
+  44              		.cfi_offset 7, -8
+  45              		.cfi_offset 14, -4
+  46 0002 00AF     		add	r7, sp, #0
+  47              		.cfi_def_cfa_register 7
+  35:adc_balanced.c ****     // Clear pending IRQ and set received flag
+  36:adc_balanced.c ****     isr_adc_ClearPending();
+  48              		.loc 1 36 0
+  49 0004 FFF7FEFF 		bl	isr_adc_ClearPending
+  37:adc_balanced.c ****     s_eoc_flag = 1u;
+  50              		.loc 1 37 0
+  51 0008 024B     		ldr	r3, .L2
+  52 000a 0122     		movs	r2, #1
+  53 000c 1A70     		strb	r2, [r3]
+  38:adc_balanced.c **** }
+  54              		.loc 1 38 0
+  55 000e 00BF     		nop
+  56 0010 80BD     		pop	{r7, pc}
+  57              	.L3:
+  58 0012 00BF     		.align	2
+  59              	.L2:
+  60 0014 00000000 		.word	s_eoc_flag
+  61              		.cfi_endproc
+  62              	.LFE63:
+  63              		.size	isr_adc_Handler, .-isr_adc_Handler
+  64              		.section	.text.adc_balanced_init,"ax",%progbits
+  65              		.align	2
+  66              		.global	adc_balanced_init
+  67              		.thumb
+  68              		.thumb_func
+  69              		.type	adc_balanced_init, %function
+  70              	adc_balanced_init:
+  71              	.LFB64:
+  39:adc_balanced.c **** 
+  40:adc_balanced.c **** // Initialzie the ADC and MUX
+  41:adc_balanced.c **** void adc_balanced_init(void)
+  42:adc_balanced.c **** {
+  72              		.loc 1 42 0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 3
+
+
+  73              		.cfi_startproc
+  74              		@ args = 0, pretend = 0, frame = 8
+  75              		@ frame_needed = 1, uses_anonymous_args = 0
+  76 0000 80B5     		push	{r7, lr}
+  77              		.cfi_def_cfa_offset 8
+  78              		.cfi_offset 7, -8
+  79              		.cfi_offset 14, -4
+  80 0002 82B0     		sub	sp, sp, #8
+  81              		.cfi_def_cfa_offset 16
+  82 0004 00AF     		add	r7, sp, #0
+  83              		.cfi_def_cfa_register 7
+  43:adc_balanced.c ****     CyGlobalIntEnable;
+  84              		.loc 1 43 0
+  85              		.syntax unified
+  86              	@ 43 "adc_balanced.c" 1
+  87 0006 62B6     		CPSIE   i
+  88              	@ 0 "" 2
+  44:adc_balanced.c **** 
+  45:adc_balanced.c ****     // Start UDBs - USER EDIT THESE, MUST MATCH TopDesign.cysch
+  46:adc_balanced.c ****     ADC_DelSig_1_Start();
+  89              		.loc 1 46 0
+  90              		.thumb
+  91              		.syntax unified
+  92 0008 FFF7FEFF 		bl	ADC_DelSig_1_Start
+  47:adc_balanced.c ****     AMux_1_Start();
+  93              		.loc 1 47 0
+  94 000c FFF7FEFF 		bl	AMux_1_Start
+  48:adc_balanced.c **** 
+  49:adc_balanced.c ****     // Start ISR handler
+  50:adc_balanced.c ****     isr_adc_StartEx(isr_adc_Handler);
+  95              		.loc 1 50 0
+  96 0010 1148     		ldr	r0, .L7
+  97 0012 FFF7FEFF 		bl	isr_adc_StartEx
+  51:adc_balanced.c **** 
+  52:adc_balanced.c ****     // Initialize state variables
+  53:adc_balanced.c ****     s_ch_idx = 0u;
+  98              		.loc 1 53 0
+  99 0016 114B     		ldr	r3, .L7+4
+ 100 0018 0022     		movs	r2, #0
+ 101 001a 1A70     		strb	r2, [r3]
+  54:adc_balanced.c ****     s_eoc_flag = 0u;
+ 102              		.loc 1 54 0
+ 103 001c 104B     		ldr	r3, .L7+8
+ 104 001e 0022     		movs	r2, #0
+ 105 0020 1A70     		strb	r2, [r3]
+  55:adc_balanced.c ****     s_frame_ready = 0u;
+ 106              		.loc 1 55 0
+ 107 0022 104B     		ldr	r3, .L7+12
+ 108 0024 0022     		movs	r2, #0
+ 109 0026 1A70     		strb	r2, [r3]
+ 110              	.LBB2:
+  56:adc_balanced.c **** 
+  57:adc_balanced.c ****     // zero our buffer
+  58:adc_balanced.c ****     for (uint8 i = 0u; i < (uint8)N_CH; i++)
+ 111              		.loc 1 58 0
+ 112 0028 0023     		movs	r3, #0
+ 113 002a FB71     		strb	r3, [r7, #7]
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 4
+
+
+ 114 002c 07E0     		b	.L5
+ 115              	.L6:
+  59:adc_balanced.c ****         s_counts[i] = 0;
+ 116              		.loc 1 59 0 discriminator 3
+ 117 002e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 118 0030 0D4A     		ldr	r2, .L7+16
+ 119 0032 0021     		movs	r1, #0
+ 120 0034 22F81310 		strh	r1, [r2, r3, lsl #1]	@ movhi
+  58:adc_balanced.c ****         s_counts[i] = 0;
+ 121              		.loc 1 58 0 discriminator 3
+ 122 0038 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 123 003a 0133     		adds	r3, r3, #1
+ 124 003c FB71     		strb	r3, [r7, #7]
+ 125              	.L5:
+  58:adc_balanced.c ****         s_counts[i] = 0;
+ 126              		.loc 1 58 0 is_stmt 0 discriminator 1
+ 127 003e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 128 0040 012B     		cmp	r3, #1
+ 129 0042 F4D9     		bls	.L6
+ 130              	.LBE2:
+  60:adc_balanced.c **** 
+  61:adc_balanced.c ****     // Select first channel
+  62:adc_balanced.c ****     AMux_1_Select(0u);
+ 131              		.loc 1 62 0 is_stmt 1
+ 132 0044 0020     		movs	r0, #0
+ 133 0046 FFF7FEFF 		bl	AMux_1_FastSelect
+  63:adc_balanced.c **** 
+  64:adc_balanced.c ****     // Start ADC converting!
+  65:adc_balanced.c ****     ADC_DelSig_1_StartConvert();
+ 134              		.loc 1 65 0
+ 135 004a FFF7FEFF 		bl	ADC_DelSig_1_StartConvert
+  66:adc_balanced.c **** }
+ 136              		.loc 1 66 0
+ 137 004e 00BF     		nop
+ 138 0050 0837     		adds	r7, r7, #8
+ 139              		.cfi_def_cfa_offset 8
+ 140 0052 BD46     		mov	sp, r7
+ 141              		.cfi_def_cfa_register 13
+ 142              		@ sp needed
+ 143 0054 80BD     		pop	{r7, pc}
+ 144              	.L8:
+ 145 0056 00BF     		.align	2
+ 146              	.L7:
+ 147 0058 00000000 		.word	isr_adc_Handler
+ 148 005c 02000000 		.word	s_ch_idx
+ 149 0060 00000000 		.word	s_eoc_flag
+ 150 0064 01000000 		.word	s_frame_ready
+ 151 0068 04000000 		.word	s_counts
+ 152              		.cfi_endproc
+ 153              	.LFE64:
+ 154              		.size	adc_balanced_init, .-adc_balanced_init
+ 155              		.section	.text.adc_balanced_advance_on_eoc,"ax",%progbits
+ 156              		.align	2
+ 157              		.thumb
+ 158              		.thumb_func
+ 159              		.type	adc_balanced_advance_on_eoc, %function
+ 160              	adc_balanced_advance_on_eoc:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 5
+
+
+ 161              	.LFB65:
+  67:adc_balanced.c **** 
+  68:adc_balanced.c **** // Function that advances on each "End of Conversion"
+  69:adc_balanced.c **** static void adc_balanced_advance_on_eoc(void)
+  70:adc_balanced.c **** {
+ 162              		.loc 1 70 0
+ 163              		.cfi_startproc
+ 164              		@ args = 0, pretend = 0, frame = 0
+ 165              		@ frame_needed = 1, uses_anonymous_args = 0
+ 166 0000 98B5     		push	{r3, r4, r7, lr}
+ 167              		.cfi_def_cfa_offset 16
+ 168              		.cfi_offset 3, -16
+ 169              		.cfi_offset 4, -12
+ 170              		.cfi_offset 7, -8
+ 171              		.cfi_offset 14, -4
+ 172 0002 00AF     		add	r7, sp, #0
+ 173              		.cfi_def_cfa_register 7
+  71:adc_balanced.c ****     // Ensure conversion stopped before advancing
+  72:adc_balanced.c ****     ADC_DelSig_1_StopConvert();
+ 174              		.loc 1 72 0
+ 175 0004 FFF7FEFF 		bl	ADC_DelSig_1_StopConvert
+  73:adc_balanced.c **** 
+  74:adc_balanced.c ****     // Read last ADC result
+  75:adc_balanced.c ****     s_counts[s_ch_idx] = ADC_DelSig_1_GetResult16();
+ 176              		.loc 1 75 0
+ 177 0008 134B     		ldr	r3, .L12
+ 178 000a 1B78     		ldrb	r3, [r3]
+ 179 000c DBB2     		uxtb	r3, r3
+ 180 000e 1C46     		mov	r4, r3
+ 181 0010 FFF7FEFF 		bl	ADC_DelSig_1_GetResult16
+ 182 0014 0346     		mov	r3, r0
+ 183 0016 1A46     		mov	r2, r3
+ 184 0018 104B     		ldr	r3, .L12+4
+ 185 001a 23F81420 		strh	r2, [r3, r4, lsl #1]	@ movhi
+  76:adc_balanced.c **** 
+  77:adc_balanced.c ****     // Mark state variable that we have received a frame
+  78:adc_balanced.c ****     if (s_ch_idx == (uint8)(N_CH - 1u))
+ 186              		.loc 1 78 0
+ 187 001e 0E4B     		ldr	r3, .L12
+ 188 0020 1B78     		ldrb	r3, [r3]
+ 189 0022 DBB2     		uxtb	r3, r3
+ 190 0024 012B     		cmp	r3, #1
+ 191 0026 06D1     		bne	.L10
+  79:adc_balanced.c ****     {
+  80:adc_balanced.c ****         s_frame_ready = 1u;
+ 192              		.loc 1 80 0
+ 193 0028 0D4B     		ldr	r3, .L12+8
+ 194 002a 0122     		movs	r2, #1
+ 195 002c 1A70     		strb	r2, [r3]
+  81:adc_balanced.c ****         s_ch_idx = 0u;
+ 196              		.loc 1 81 0
+ 197 002e 0A4B     		ldr	r3, .L12
+ 198 0030 0022     		movs	r2, #0
+ 199 0032 1A70     		strb	r2, [r3]
+ 200 0034 06E0     		b	.L11
+ 201              	.L10:
+  82:adc_balanced.c ****     }
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 6
+
+
+  83:adc_balanced.c ****     else
+  84:adc_balanced.c ****     {
+  85:adc_balanced.c ****         s_ch_idx++;
+ 202              		.loc 1 85 0
+ 203 0036 084B     		ldr	r3, .L12
+ 204 0038 1B78     		ldrb	r3, [r3]
+ 205 003a DBB2     		uxtb	r3, r3
+ 206 003c 0133     		adds	r3, r3, #1
+ 207 003e DAB2     		uxtb	r2, r3
+ 208 0040 054B     		ldr	r3, .L12
+ 209 0042 1A70     		strb	r2, [r3]
+ 210              	.L11:
+  86:adc_balanced.c ****     }
+  87:adc_balanced.c **** 
+  88:adc_balanced.c ****     // Switch to next channel
+  89:adc_balanced.c ****     AMux_1_Select(s_ch_idx);
+ 211              		.loc 1 89 0
+ 212 0044 044B     		ldr	r3, .L12
+ 213 0046 1B78     		ldrb	r3, [r3]
+ 214 0048 DBB2     		uxtb	r3, r3
+ 215 004a 1846     		mov	r0, r3
+ 216 004c FFF7FEFF 		bl	AMux_1_FastSelect
+  90:adc_balanced.c **** 
+  91:adc_balanced.c ****     // Advance done, continue converting!
+  92:adc_balanced.c ****     ADC_DelSig_1_StartConvert();
+ 217              		.loc 1 92 0
+ 218 0050 FFF7FEFF 		bl	ADC_DelSig_1_StartConvert
+  93:adc_balanced.c **** }
+ 219              		.loc 1 93 0
+ 220 0054 00BF     		nop
+ 221 0056 98BD     		pop	{r3, r4, r7, pc}
+ 222              	.L13:
+ 223              		.align	2
+ 224              	.L12:
+ 225 0058 02000000 		.word	s_ch_idx
+ 226 005c 04000000 		.word	s_counts
+ 227 0060 01000000 		.word	s_frame_ready
+ 228              		.cfi_endproc
+ 229              	.LFE65:
+ 230              		.size	adc_balanced_advance_on_eoc, .-adc_balanced_advance_on_eoc
+ 231              		.section	.text.adc_balanced_poll_frame,"ax",%progbits
+ 232              		.align	2
+ 233              		.global	adc_balanced_poll_frame
+ 234              		.thumb
+ 235              		.thumb_func
+ 236              		.type	adc_balanced_poll_frame, %function
+ 237              	adc_balanced_poll_frame:
+ 238              	.LFB66:
+  94:adc_balanced.c **** 
+  95:adc_balanced.c **** // Consume "End of Conversion" events
+  96:adc_balanced.c **** uint8 adc_balanced_poll_frame(int16 out_counts[N_CH])
+  97:adc_balanced.c **** {
+ 239              		.loc 1 97 0
+ 240              		.cfi_startproc
+ 241              		@ args = 0, pretend = 0, frame = 16
+ 242              		@ frame_needed = 1, uses_anonymous_args = 0
+ 243 0000 80B5     		push	{r7, lr}
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 7
+
+
+ 244              		.cfi_def_cfa_offset 8
+ 245              		.cfi_offset 7, -8
+ 246              		.cfi_offset 14, -4
+ 247 0002 84B0     		sub	sp, sp, #16
+ 248              		.cfi_def_cfa_offset 24
+ 249 0004 00AF     		add	r7, sp, #0
+ 250              		.cfi_def_cfa_register 7
+ 251 0006 7860     		str	r0, [r7, #4]
+  98:adc_balanced.c ****     if (s_eoc_flag)  // If EoC triggered from interrupt
+ 252              		.loc 1 98 0
+ 253 0008 154B     		ldr	r3, .L20
+ 254 000a 1B78     		ldrb	r3, [r3]
+ 255 000c DBB2     		uxtb	r3, r3
+ 256 000e 002B     		cmp	r3, #0
+ 257 0010 04D0     		beq	.L15
+  99:adc_balanced.c ****     {
+ 100:adc_balanced.c ****         s_eoc_flag = 0u;                // Reset flag
+ 258              		.loc 1 100 0
+ 259 0012 134B     		ldr	r3, .L20
+ 260 0014 0022     		movs	r2, #0
+ 261 0016 1A70     		strb	r2, [r3]
+ 101:adc_balanced.c ****         adc_balanced_advance_on_eoc();  // Advance MUX
+ 262              		.loc 1 101 0
+ 263 0018 FFF7FEFF 		bl	adc_balanced_advance_on_eoc
+ 264              	.L15:
+ 102:adc_balanced.c ****     }
+ 103:adc_balanced.c **** 
+ 104:adc_balanced.c ****     if (s_frame_ready)  // If frame received from "adc_balanced_advance_on_eoc"
+ 265              		.loc 1 104 0
+ 266 001c 114B     		ldr	r3, .L20+4
+ 267 001e 1B78     		ldrb	r3, [r3]
+ 268 0020 DBB2     		uxtb	r3, r3
+ 269 0022 002B     		cmp	r3, #0
+ 270 0024 17D0     		beq	.L16
+ 105:adc_balanced.c ****     {
+ 106:adc_balanced.c ****         s_frame_ready = 0u;  // Reset flag
+ 271              		.loc 1 106 0
+ 272 0026 0F4B     		ldr	r3, .L20+4
+ 273 0028 0022     		movs	r2, #0
+ 274 002a 1A70     		strb	r2, [r3]
+ 275              	.LBB3:
+ 107:adc_balanced.c ****         
+ 108:adc_balanced.c ****         // Copy results into out_counts
+ 109:adc_balanced.c ****         for (uint8 i = 0u; i < (uint8)N_CH; i++)
+ 276              		.loc 1 109 0
+ 277 002c 0023     		movs	r3, #0
+ 278 002e FB73     		strb	r3, [r7, #15]
+ 279 0030 0CE0     		b	.L17
+ 280              	.L18:
+ 110:adc_balanced.c ****             out_counts[i] = s_counts[i];
+ 281              		.loc 1 110 0 discriminator 3
+ 282 0032 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 283 0034 5B00     		lsls	r3, r3, #1
+ 284 0036 7A68     		ldr	r2, [r7, #4]
+ 285 0038 1344     		add	r3, r3, r2
+ 286 003a FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 287 003c 0A49     		ldr	r1, .L20+8
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 8
+
+
+ 288 003e 31F81220 		ldrh	r2, [r1, r2, lsl #1]	@ movhi
+ 289 0042 12B2     		sxth	r2, r2
+ 290 0044 1A80     		strh	r2, [r3]	@ movhi
+ 109:adc_balanced.c ****             out_counts[i] = s_counts[i];
+ 291              		.loc 1 109 0 discriminator 3
+ 292 0046 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 293 0048 0133     		adds	r3, r3, #1
+ 294 004a FB73     		strb	r3, [r7, #15]
+ 295              	.L17:
+ 109:adc_balanced.c ****             out_counts[i] = s_counts[i];
+ 296              		.loc 1 109 0 is_stmt 0 discriminator 1
+ 297 004c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 298 004e 012B     		cmp	r3, #1
+ 299 0050 EFD9     		bls	.L18
+ 300              	.LBE3:
+ 111:adc_balanced.c **** 
+ 112:adc_balanced.c ****         return 1u;  // Return true that frame is available to poll
+ 301              		.loc 1 112 0 is_stmt 1
+ 302 0052 0123     		movs	r3, #1
+ 303 0054 00E0     		b	.L19
+ 304              	.L16:
+ 113:adc_balanced.c ****     }
+ 114:adc_balanced.c **** 
+ 115:adc_balanced.c ****     return 0u;  // Frame not ready to poll
+ 305              		.loc 1 115 0
+ 306 0056 0023     		movs	r3, #0
+ 307              	.L19:
+ 116:adc_balanced.c **** }
+ 308              		.loc 1 116 0
+ 309 0058 1846     		mov	r0, r3
+ 310 005a 1037     		adds	r7, r7, #16
+ 311              		.cfi_def_cfa_offset 8
+ 312 005c BD46     		mov	sp, r7
+ 313              		.cfi_def_cfa_register 13
+ 314              		@ sp needed
+ 315 005e 80BD     		pop	{r7, pc}
+ 316              	.L21:
+ 317              		.align	2
+ 318              	.L20:
+ 319 0060 00000000 		.word	s_eoc_flag
+ 320 0064 01000000 		.word	s_frame_ready
+ 321 0068 04000000 		.word	s_counts
+ 322              		.cfi_endproc
+ 323              	.LFE66:
+ 324              		.size	adc_balanced_poll_frame, .-adc_balanced_poll_frame
+ 325              		.section	.text.adc_balanced_counts_to_mv,"ax",%progbits
+ 326              		.align	2
+ 327              		.global	adc_balanced_counts_to_mv
+ 328              		.thumb
+ 329              		.thumb_func
+ 330              		.type	adc_balanced_counts_to_mv, %function
+ 331              	adc_balanced_counts_to_mv:
+ 332              	.LFB67:
+ 117:adc_balanced.c **** 
+ 118:adc_balanced.c **** // Convert counts to mV using PSoC API
+ 119:adc_balanced.c **** int32 adc_balanced_counts_to_mv(int16 counts)
+ 120:adc_balanced.c **** {
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 9
+
+
+ 333              		.loc 1 120 0
+ 334              		.cfi_startproc
+ 335              		@ args = 0, pretend = 0, frame = 8
+ 336              		@ frame_needed = 1, uses_anonymous_args = 0
+ 337 0000 80B5     		push	{r7, lr}
+ 338              		.cfi_def_cfa_offset 8
+ 339              		.cfi_offset 7, -8
+ 340              		.cfi_offset 14, -4
+ 341 0002 82B0     		sub	sp, sp, #8
+ 342              		.cfi_def_cfa_offset 16
+ 343 0004 00AF     		add	r7, sp, #0
+ 344              		.cfi_def_cfa_register 7
+ 345 0006 0346     		mov	r3, r0
+ 346 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 121:adc_balanced.c ****     return (int32)ADC_DelSig_1_CountsTo_mVolts(counts);
+ 347              		.loc 1 121 0
+ 348 000a B7F90630 		ldrsh	r3, [r7, #6]
+ 349 000e 1846     		mov	r0, r3
+ 350 0010 FFF7FEFF 		bl	ADC_DelSig_1_CountsTo_mVolts
+ 351 0014 0346     		mov	r3, r0
+ 122:adc_balanced.c **** }
+ 352              		.loc 1 122 0
+ 353 0016 1846     		mov	r0, r3
+ 354 0018 0837     		adds	r7, r7, #8
+ 355              		.cfi_def_cfa_offset 8
+ 356 001a BD46     		mov	sp, r7
+ 357              		.cfi_def_cfa_register 13
+ 358              		@ sp needed
+ 359 001c 80BD     		pop	{r7, pc}
+ 360              		.cfi_endproc
+ 361              	.LFE67:
+ 362              		.size	adc_balanced_counts_to_mv, .-adc_balanced_counts_to_mv
+ 363 001e 00BF     		.text
+ 364              	.Letext0:
+ 365              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 366              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 367              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 368              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 369              		.section	.debug_info,"",%progbits
+ 370              	.Ldebug_info0:
+ 371 0000 F3010000 		.4byte	0x1f3
+ 372 0004 0400     		.2byte	0x4
+ 373 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 374 000a 04       		.byte	0x4
+ 375 000b 01       		.uleb128 0x1
+ 376 000c 00000000 		.4byte	.LASF27
+ 377 0010 0C       		.byte	0xc
+ 378 0011 A2010000 		.4byte	.LASF28
+ 379 0015 B2000000 		.4byte	.LASF29
+ 380 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 381 001d 00000000 		.4byte	0
+ 382 0021 00000000 		.4byte	.Ldebug_line0
+ 383 0025 02       		.uleb128 0x2
+ 384 0026 01       		.byte	0x1
+ 385 0027 06       		.byte	0x6
+ 386 0028 63020000 		.4byte	.LASF0
+ 387 002c 02       		.uleb128 0x2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 10
+
+
+ 388 002d 01       		.byte	0x1
+ 389 002e 08       		.byte	0x8
+ 390 002f 52010000 		.4byte	.LASF1
+ 391 0033 02       		.uleb128 0x2
+ 392 0034 02       		.byte	0x2
+ 393 0035 05       		.byte	0x5
+ 394 0036 29020000 		.4byte	.LASF2
+ 395 003a 02       		.uleb128 0x2
+ 396 003b 02       		.byte	0x2
+ 397 003c 07       		.byte	0x7
+ 398 003d 6F020000 		.4byte	.LASF3
+ 399 0041 03       		.uleb128 0x3
+ 400 0042 A8000000 		.4byte	.LASF9
+ 401 0046 02       		.byte	0x2
+ 402 0047 3F       		.byte	0x3f
+ 403 0048 4C000000 		.4byte	0x4c
+ 404 004c 02       		.uleb128 0x2
+ 405 004d 04       		.byte	0x4
+ 406 004e 05       		.byte	0x5
+ 407 004f 4E020000 		.4byte	.LASF4
+ 408 0053 02       		.uleb128 0x2
+ 409 0054 04       		.byte	0x4
+ 410 0055 07       		.byte	0x7
+ 411 0056 66010000 		.4byte	.LASF5
+ 412 005a 02       		.uleb128 0x2
+ 413 005b 08       		.byte	0x8
+ 414 005c 05       		.byte	0x5
+ 415 005d 16020000 		.4byte	.LASF6
+ 416 0061 02       		.uleb128 0x2
+ 417 0062 08       		.byte	0x8
+ 418 0063 07       		.byte	0x7
+ 419 0064 E5010000 		.4byte	.LASF7
+ 420 0068 04       		.uleb128 0x4
+ 421 0069 04       		.byte	0x4
+ 422 006a 05       		.byte	0x5
+ 423 006b 696E7400 		.ascii	"int\000"
+ 424 006f 02       		.uleb128 0x2
+ 425 0070 04       		.byte	0x4
+ 426 0071 07       		.byte	0x7
+ 427 0072 B1010000 		.4byte	.LASF8
+ 428 0076 03       		.uleb128 0x3
+ 429 0077 05020000 		.4byte	.LASF10
+ 430 007b 03       		.byte	0x3
+ 431 007c 2C       		.byte	0x2c
+ 432 007d 41000000 		.4byte	0x41
+ 433 0081 05       		.uleb128 0x5
+ 434 0082 3A020000 		.4byte	.LASF11
+ 435 0086 04       		.byte	0x4
+ 436 0087 E901     		.2byte	0x1e9
+ 437 0089 2C000000 		.4byte	0x2c
+ 438 008d 05       		.uleb128 0x5
+ 439 008e 60010000 		.4byte	.LASF12
+ 440 0092 04       		.byte	0x4
+ 441 0093 ED01     		.2byte	0x1ed
+ 442 0095 33000000 		.4byte	0x33
+ 443 0099 05       		.uleb128 0x5
+ 444 009a 78010000 		.4byte	.LASF13
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 11
+
+
+ 445 009e 04       		.byte	0x4
+ 446 009f EE01     		.2byte	0x1ee
+ 447 00a1 4C000000 		.4byte	0x4c
+ 448 00a5 02       		.uleb128 0x2
+ 449 00a6 04       		.byte	0x4
+ 450 00a7 04       		.byte	0x4
+ 451 00a8 4C010000 		.4byte	.LASF14
+ 452 00ac 02       		.uleb128 0x2
+ 453 00ad 08       		.byte	0x8
+ 454 00ae 04       		.byte	0x4
+ 455 00af 8E010000 		.4byte	.LASF15
+ 456 00b3 02       		.uleb128 0x2
+ 457 00b4 01       		.byte	0x1
+ 458 00b5 08       		.byte	0x8
+ 459 00b6 24020000 		.4byte	.LASF16
+ 460 00ba 06       		.uleb128 0x6
+ 461 00bb 81000000 		.4byte	0x81
+ 462 00bf 02       		.uleb128 0x2
+ 463 00c0 08       		.byte	0x8
+ 464 00c1 04       		.byte	0x4
+ 465 00c2 57020000 		.4byte	.LASF17
+ 466 00c6 02       		.uleb128 0x2
+ 467 00c7 04       		.byte	0x4
+ 468 00c8 07       		.byte	0x7
+ 469 00c9 0D020000 		.4byte	.LASF18
+ 470 00cd 07       		.uleb128 0x7
+ 471 00ce 7E010000 		.4byte	.LASF30
+ 472 00d2 01       		.byte	0x1
+ 473 00d3 21       		.byte	0x21
+ 474 00d4 00000000 		.4byte	.LFB63
+ 475 00d8 18000000 		.4byte	.LFE63-.LFB63
+ 476 00dc 01       		.uleb128 0x1
+ 477 00dd 9C       		.byte	0x9c
+ 478 00de 08       		.uleb128 0x8
+ 479 00df 2F010000 		.4byte	.LASF31
+ 480 00e3 01       		.byte	0x1
+ 481 00e4 29       		.byte	0x29
+ 482 00e5 00000000 		.4byte	.LFB64
+ 483 00e9 6C000000 		.4byte	.LFE64-.LFB64
+ 484 00ed 01       		.uleb128 0x1
+ 485 00ee 9C       		.byte	0x9c
+ 486 00ef 0A010000 		.4byte	0x10a
+ 487 00f3 09       		.uleb128 0x9
+ 488 00f4 28000000 		.4byte	.LBB2
+ 489 00f8 1C000000 		.4byte	.LBE2-.LBB2
+ 490 00fc 0A       		.uleb128 0xa
+ 491 00fd 6900     		.ascii	"i\000"
+ 492 00ff 01       		.byte	0x1
+ 493 0100 3A       		.byte	0x3a
+ 494 0101 81000000 		.4byte	0x81
+ 495 0105 02       		.uleb128 0x2
+ 496 0106 91       		.byte	0x91
+ 497 0107 77       		.sleb128 -9
+ 498 0108 00       		.byte	0
+ 499 0109 00       		.byte	0
+ 500 010a 0B       		.uleb128 0xb
+ 501 010b C9010000 		.4byte	.LASF32
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 12
+
+
+ 502 010f 01       		.byte	0x1
+ 503 0110 45       		.byte	0x45
+ 504 0111 00000000 		.4byte	.LFB65
+ 505 0115 64000000 		.4byte	.LFE65-.LFB65
+ 506 0119 01       		.uleb128 0x1
+ 507 011a 9C       		.byte	0x9c
+ 508 011b 0C       		.uleb128 0xc
+ 509 011c 82020000 		.4byte	.LASF19
+ 510 0120 01       		.byte	0x1
+ 511 0121 60       		.byte	0x60
+ 512 0122 81000000 		.4byte	0x81
+ 513 0126 00000000 		.4byte	.LFB66
+ 514 012a 6C000000 		.4byte	.LFE66-.LFB66
+ 515 012e 01       		.uleb128 0x1
+ 516 012f 9C       		.byte	0x9c
+ 517 0130 59010000 		.4byte	0x159
+ 518 0134 0D       		.uleb128 0xd
+ 519 0135 41010000 		.4byte	.LASF21
+ 520 0139 01       		.byte	0x1
+ 521 013a 60       		.byte	0x60
+ 522 013b 59010000 		.4byte	0x159
+ 523 013f 02       		.uleb128 0x2
+ 524 0140 91       		.byte	0x91
+ 525 0141 6C       		.sleb128 -20
+ 526 0142 09       		.uleb128 0x9
+ 527 0143 2C000000 		.4byte	.LBB3
+ 528 0147 26000000 		.4byte	.LBE3-.LBB3
+ 529 014b 0A       		.uleb128 0xa
+ 530 014c 6900     		.ascii	"i\000"
+ 531 014e 01       		.byte	0x1
+ 532 014f 6D       		.byte	0x6d
+ 533 0150 81000000 		.4byte	0x81
+ 534 0154 02       		.uleb128 0x2
+ 535 0155 91       		.byte	0x91
+ 536 0156 77       		.sleb128 -9
+ 537 0157 00       		.byte	0
+ 538 0158 00       		.byte	0
+ 539 0159 0E       		.uleb128 0xe
+ 540 015a 04       		.byte	0x4
+ 541 015b 8D000000 		.4byte	0x8d
+ 542 015f 0C       		.uleb128 0xc
+ 543 0160 8E000000 		.4byte	.LASF20
+ 544 0164 01       		.byte	0x1
+ 545 0165 77       		.byte	0x77
+ 546 0166 99000000 		.4byte	0x99
+ 547 016a 00000000 		.4byte	.LFB67
+ 548 016e 1E000000 		.4byte	.LFE67-.LFB67
+ 549 0172 01       		.uleb128 0x1
+ 550 0173 9C       		.byte	0x9c
+ 551 0174 87010000 		.4byte	0x187
+ 552 0178 0D       		.uleb128 0xd
+ 553 0179 33020000 		.4byte	.LASF22
+ 554 017d 01       		.byte	0x1
+ 555 017e 77       		.byte	0x77
+ 556 017f 8D000000 		.4byte	0x8d
+ 557 0183 02       		.uleb128 0x2
+ 558 0184 91       		.byte	0x91
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 13
+
+
+ 559 0185 76       		.sleb128 -10
+ 560 0186 00       		.byte	0
+ 561 0187 0F       		.uleb128 0xf
+ 562 0188 BE010000 		.4byte	.LASF23
+ 563 018c 01       		.byte	0x1
+ 564 018d 18       		.byte	0x18
+ 565 018e BA000000 		.4byte	0xba
+ 566 0192 05       		.uleb128 0x5
+ 567 0193 03       		.byte	0x3
+ 568 0194 00000000 		.4byte	s_eoc_flag
+ 569 0198 0F       		.uleb128 0xf
+ 570 0199 40020000 		.4byte	.LASF24
+ 571 019d 01       		.byte	0x1
+ 572 019e 19       		.byte	0x19
+ 573 019f BA000000 		.4byte	0xba
+ 574 01a3 05       		.uleb128 0x5
+ 575 01a4 03       		.byte	0x3
+ 576 01a5 01000000 		.4byte	s_frame_ready
+ 577 01a9 0F       		.uleb128 0xf
+ 578 01aa 26010000 		.4byte	.LASF25
+ 579 01ae 01       		.byte	0x1
+ 580 01af 1A       		.byte	0x1a
+ 581 01b0 BA000000 		.4byte	0xba
+ 582 01b4 05       		.uleb128 0x5
+ 583 01b5 03       		.byte	0x3
+ 584 01b6 02000000 		.4byte	s_ch_idx
+ 585 01ba 10       		.uleb128 0x10
+ 586 01bb CA010000 		.4byte	0x1ca
+ 587 01bf CA010000 		.4byte	0x1ca
+ 588 01c3 11       		.uleb128 0x11
+ 589 01c4 C6000000 		.4byte	0xc6
+ 590 01c8 01       		.byte	0x1
+ 591 01c9 00       		.byte	0
+ 592 01ca 06       		.uleb128 0x6
+ 593 01cb 8D000000 		.4byte	0x8d
+ 594 01cf 0F       		.uleb128 0xf
+ 595 01d0 FC010000 		.4byte	.LASF26
+ 596 01d4 01       		.byte	0x1
+ 597 01d5 1B       		.byte	0x1b
+ 598 01d6 E0010000 		.4byte	0x1e0
+ 599 01da 05       		.uleb128 0x5
+ 600 01db 03       		.byte	0x3
+ 601 01dc 04000000 		.4byte	s_counts
+ 602 01e0 06       		.uleb128 0x6
+ 603 01e1 BA010000 		.4byte	0x1ba
+ 604 01e5 12       		.uleb128 0x12
+ 605 01e6 95010000 		.4byte	.LASF33
+ 606 01ea 05       		.byte	0x5
+ 607 01eb 1207     		.2byte	0x712
+ 608 01ed F1010000 		.4byte	0x1f1
+ 609 01f1 06       		.uleb128 0x6
+ 610 01f2 76000000 		.4byte	0x76
+ 611 01f6 00       		.byte	0
+ 612              		.section	.debug_abbrev,"",%progbits
+ 613              	.Ldebug_abbrev0:
+ 614 0000 01       		.uleb128 0x1
+ 615 0001 11       		.uleb128 0x11
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 14
+
+
+ 616 0002 01       		.byte	0x1
+ 617 0003 25       		.uleb128 0x25
+ 618 0004 0E       		.uleb128 0xe
+ 619 0005 13       		.uleb128 0x13
+ 620 0006 0B       		.uleb128 0xb
+ 621 0007 03       		.uleb128 0x3
+ 622 0008 0E       		.uleb128 0xe
+ 623 0009 1B       		.uleb128 0x1b
+ 624 000a 0E       		.uleb128 0xe
+ 625 000b 55       		.uleb128 0x55
+ 626 000c 17       		.uleb128 0x17
+ 627 000d 11       		.uleb128 0x11
+ 628 000e 01       		.uleb128 0x1
+ 629 000f 10       		.uleb128 0x10
+ 630 0010 17       		.uleb128 0x17
+ 631 0011 00       		.byte	0
+ 632 0012 00       		.byte	0
+ 633 0013 02       		.uleb128 0x2
+ 634 0014 24       		.uleb128 0x24
+ 635 0015 00       		.byte	0
+ 636 0016 0B       		.uleb128 0xb
+ 637 0017 0B       		.uleb128 0xb
+ 638 0018 3E       		.uleb128 0x3e
+ 639 0019 0B       		.uleb128 0xb
+ 640 001a 03       		.uleb128 0x3
+ 641 001b 0E       		.uleb128 0xe
+ 642 001c 00       		.byte	0
+ 643 001d 00       		.byte	0
+ 644 001e 03       		.uleb128 0x3
+ 645 001f 16       		.uleb128 0x16
+ 646 0020 00       		.byte	0
+ 647 0021 03       		.uleb128 0x3
+ 648 0022 0E       		.uleb128 0xe
+ 649 0023 3A       		.uleb128 0x3a
+ 650 0024 0B       		.uleb128 0xb
+ 651 0025 3B       		.uleb128 0x3b
+ 652 0026 0B       		.uleb128 0xb
+ 653 0027 49       		.uleb128 0x49
+ 654 0028 13       		.uleb128 0x13
+ 655 0029 00       		.byte	0
+ 656 002a 00       		.byte	0
+ 657 002b 04       		.uleb128 0x4
+ 658 002c 24       		.uleb128 0x24
+ 659 002d 00       		.byte	0
+ 660 002e 0B       		.uleb128 0xb
+ 661 002f 0B       		.uleb128 0xb
+ 662 0030 3E       		.uleb128 0x3e
+ 663 0031 0B       		.uleb128 0xb
+ 664 0032 03       		.uleb128 0x3
+ 665 0033 08       		.uleb128 0x8
+ 666 0034 00       		.byte	0
+ 667 0035 00       		.byte	0
+ 668 0036 05       		.uleb128 0x5
+ 669 0037 16       		.uleb128 0x16
+ 670 0038 00       		.byte	0
+ 671 0039 03       		.uleb128 0x3
+ 672 003a 0E       		.uleb128 0xe
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 15
+
+
+ 673 003b 3A       		.uleb128 0x3a
+ 674 003c 0B       		.uleb128 0xb
+ 675 003d 3B       		.uleb128 0x3b
+ 676 003e 05       		.uleb128 0x5
+ 677 003f 49       		.uleb128 0x49
+ 678 0040 13       		.uleb128 0x13
+ 679 0041 00       		.byte	0
+ 680 0042 00       		.byte	0
+ 681 0043 06       		.uleb128 0x6
+ 682 0044 35       		.uleb128 0x35
+ 683 0045 00       		.byte	0
+ 684 0046 49       		.uleb128 0x49
+ 685 0047 13       		.uleb128 0x13
+ 686 0048 00       		.byte	0
+ 687 0049 00       		.byte	0
+ 688 004a 07       		.uleb128 0x7
+ 689 004b 2E       		.uleb128 0x2e
+ 690 004c 00       		.byte	0
+ 691 004d 3F       		.uleb128 0x3f
+ 692 004e 19       		.uleb128 0x19
+ 693 004f 03       		.uleb128 0x3
+ 694 0050 0E       		.uleb128 0xe
+ 695 0051 3A       		.uleb128 0x3a
+ 696 0052 0B       		.uleb128 0xb
+ 697 0053 3B       		.uleb128 0x3b
+ 698 0054 0B       		.uleb128 0xb
+ 699 0055 27       		.uleb128 0x27
+ 700 0056 19       		.uleb128 0x19
+ 701 0057 11       		.uleb128 0x11
+ 702 0058 01       		.uleb128 0x1
+ 703 0059 12       		.uleb128 0x12
+ 704 005a 06       		.uleb128 0x6
+ 705 005b 40       		.uleb128 0x40
+ 706 005c 18       		.uleb128 0x18
+ 707 005d 9642     		.uleb128 0x2116
+ 708 005f 19       		.uleb128 0x19
+ 709 0060 00       		.byte	0
+ 710 0061 00       		.byte	0
+ 711 0062 08       		.uleb128 0x8
+ 712 0063 2E       		.uleb128 0x2e
+ 713 0064 01       		.byte	0x1
+ 714 0065 3F       		.uleb128 0x3f
+ 715 0066 19       		.uleb128 0x19
+ 716 0067 03       		.uleb128 0x3
+ 717 0068 0E       		.uleb128 0xe
+ 718 0069 3A       		.uleb128 0x3a
+ 719 006a 0B       		.uleb128 0xb
+ 720 006b 3B       		.uleb128 0x3b
+ 721 006c 0B       		.uleb128 0xb
+ 722 006d 27       		.uleb128 0x27
+ 723 006e 19       		.uleb128 0x19
+ 724 006f 11       		.uleb128 0x11
+ 725 0070 01       		.uleb128 0x1
+ 726 0071 12       		.uleb128 0x12
+ 727 0072 06       		.uleb128 0x6
+ 728 0073 40       		.uleb128 0x40
+ 729 0074 18       		.uleb128 0x18
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 16
+
+
+ 730 0075 9642     		.uleb128 0x2116
+ 731 0077 19       		.uleb128 0x19
+ 732 0078 01       		.uleb128 0x1
+ 733 0079 13       		.uleb128 0x13
+ 734 007a 00       		.byte	0
+ 735 007b 00       		.byte	0
+ 736 007c 09       		.uleb128 0x9
+ 737 007d 0B       		.uleb128 0xb
+ 738 007e 01       		.byte	0x1
+ 739 007f 11       		.uleb128 0x11
+ 740 0080 01       		.uleb128 0x1
+ 741 0081 12       		.uleb128 0x12
+ 742 0082 06       		.uleb128 0x6
+ 743 0083 00       		.byte	0
+ 744 0084 00       		.byte	0
+ 745 0085 0A       		.uleb128 0xa
+ 746 0086 34       		.uleb128 0x34
+ 747 0087 00       		.byte	0
+ 748 0088 03       		.uleb128 0x3
+ 749 0089 08       		.uleb128 0x8
+ 750 008a 3A       		.uleb128 0x3a
+ 751 008b 0B       		.uleb128 0xb
+ 752 008c 3B       		.uleb128 0x3b
+ 753 008d 0B       		.uleb128 0xb
+ 754 008e 49       		.uleb128 0x49
+ 755 008f 13       		.uleb128 0x13
+ 756 0090 02       		.uleb128 0x2
+ 757 0091 18       		.uleb128 0x18
+ 758 0092 00       		.byte	0
+ 759 0093 00       		.byte	0
+ 760 0094 0B       		.uleb128 0xb
+ 761 0095 2E       		.uleb128 0x2e
+ 762 0096 00       		.byte	0
+ 763 0097 03       		.uleb128 0x3
+ 764 0098 0E       		.uleb128 0xe
+ 765 0099 3A       		.uleb128 0x3a
+ 766 009a 0B       		.uleb128 0xb
+ 767 009b 3B       		.uleb128 0x3b
+ 768 009c 0B       		.uleb128 0xb
+ 769 009d 27       		.uleb128 0x27
+ 770 009e 19       		.uleb128 0x19
+ 771 009f 11       		.uleb128 0x11
+ 772 00a0 01       		.uleb128 0x1
+ 773 00a1 12       		.uleb128 0x12
+ 774 00a2 06       		.uleb128 0x6
+ 775 00a3 40       		.uleb128 0x40
+ 776 00a4 18       		.uleb128 0x18
+ 777 00a5 9642     		.uleb128 0x2116
+ 778 00a7 19       		.uleb128 0x19
+ 779 00a8 00       		.byte	0
+ 780 00a9 00       		.byte	0
+ 781 00aa 0C       		.uleb128 0xc
+ 782 00ab 2E       		.uleb128 0x2e
+ 783 00ac 01       		.byte	0x1
+ 784 00ad 3F       		.uleb128 0x3f
+ 785 00ae 19       		.uleb128 0x19
+ 786 00af 03       		.uleb128 0x3
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 17
+
+
+ 787 00b0 0E       		.uleb128 0xe
+ 788 00b1 3A       		.uleb128 0x3a
+ 789 00b2 0B       		.uleb128 0xb
+ 790 00b3 3B       		.uleb128 0x3b
+ 791 00b4 0B       		.uleb128 0xb
+ 792 00b5 27       		.uleb128 0x27
+ 793 00b6 19       		.uleb128 0x19
+ 794 00b7 49       		.uleb128 0x49
+ 795 00b8 13       		.uleb128 0x13
+ 796 00b9 11       		.uleb128 0x11
+ 797 00ba 01       		.uleb128 0x1
+ 798 00bb 12       		.uleb128 0x12
+ 799 00bc 06       		.uleb128 0x6
+ 800 00bd 40       		.uleb128 0x40
+ 801 00be 18       		.uleb128 0x18
+ 802 00bf 9642     		.uleb128 0x2116
+ 803 00c1 19       		.uleb128 0x19
+ 804 00c2 01       		.uleb128 0x1
+ 805 00c3 13       		.uleb128 0x13
+ 806 00c4 00       		.byte	0
+ 807 00c5 00       		.byte	0
+ 808 00c6 0D       		.uleb128 0xd
+ 809 00c7 05       		.uleb128 0x5
+ 810 00c8 00       		.byte	0
+ 811 00c9 03       		.uleb128 0x3
+ 812 00ca 0E       		.uleb128 0xe
+ 813 00cb 3A       		.uleb128 0x3a
+ 814 00cc 0B       		.uleb128 0xb
+ 815 00cd 3B       		.uleb128 0x3b
+ 816 00ce 0B       		.uleb128 0xb
+ 817 00cf 49       		.uleb128 0x49
+ 818 00d0 13       		.uleb128 0x13
+ 819 00d1 02       		.uleb128 0x2
+ 820 00d2 18       		.uleb128 0x18
+ 821 00d3 00       		.byte	0
+ 822 00d4 00       		.byte	0
+ 823 00d5 0E       		.uleb128 0xe
+ 824 00d6 0F       		.uleb128 0xf
+ 825 00d7 00       		.byte	0
+ 826 00d8 0B       		.uleb128 0xb
+ 827 00d9 0B       		.uleb128 0xb
+ 828 00da 49       		.uleb128 0x49
+ 829 00db 13       		.uleb128 0x13
+ 830 00dc 00       		.byte	0
+ 831 00dd 00       		.byte	0
+ 832 00de 0F       		.uleb128 0xf
+ 833 00df 34       		.uleb128 0x34
+ 834 00e0 00       		.byte	0
+ 835 00e1 03       		.uleb128 0x3
+ 836 00e2 0E       		.uleb128 0xe
+ 837 00e3 3A       		.uleb128 0x3a
+ 838 00e4 0B       		.uleb128 0xb
+ 839 00e5 3B       		.uleb128 0x3b
+ 840 00e6 0B       		.uleb128 0xb
+ 841 00e7 49       		.uleb128 0x49
+ 842 00e8 13       		.uleb128 0x13
+ 843 00e9 02       		.uleb128 0x2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 18
+
+
+ 844 00ea 18       		.uleb128 0x18
+ 845 00eb 00       		.byte	0
+ 846 00ec 00       		.byte	0
+ 847 00ed 10       		.uleb128 0x10
+ 848 00ee 01       		.uleb128 0x1
+ 849 00ef 01       		.byte	0x1
+ 850 00f0 49       		.uleb128 0x49
+ 851 00f1 13       		.uleb128 0x13
+ 852 00f2 01       		.uleb128 0x1
+ 853 00f3 13       		.uleb128 0x13
+ 854 00f4 00       		.byte	0
+ 855 00f5 00       		.byte	0
+ 856 00f6 11       		.uleb128 0x11
+ 857 00f7 21       		.uleb128 0x21
+ 858 00f8 00       		.byte	0
+ 859 00f9 49       		.uleb128 0x49
+ 860 00fa 13       		.uleb128 0x13
+ 861 00fb 2F       		.uleb128 0x2f
+ 862 00fc 0B       		.uleb128 0xb
+ 863 00fd 00       		.byte	0
+ 864 00fe 00       		.byte	0
+ 865 00ff 12       		.uleb128 0x12
+ 866 0100 34       		.uleb128 0x34
+ 867 0101 00       		.byte	0
+ 868 0102 03       		.uleb128 0x3
+ 869 0103 0E       		.uleb128 0xe
+ 870 0104 3A       		.uleb128 0x3a
+ 871 0105 0B       		.uleb128 0xb
+ 872 0106 3B       		.uleb128 0x3b
+ 873 0107 05       		.uleb128 0x5
+ 874 0108 49       		.uleb128 0x49
+ 875 0109 13       		.uleb128 0x13
+ 876 010a 3F       		.uleb128 0x3f
+ 877 010b 19       		.uleb128 0x19
+ 878 010c 3C       		.uleb128 0x3c
+ 879 010d 19       		.uleb128 0x19
+ 880 010e 00       		.byte	0
+ 881 010f 00       		.byte	0
+ 882 0110 00       		.byte	0
+ 883              		.section	.debug_aranges,"",%progbits
+ 884 0000 3C000000 		.4byte	0x3c
+ 885 0004 0200     		.2byte	0x2
+ 886 0006 00000000 		.4byte	.Ldebug_info0
+ 887 000a 04       		.byte	0x4
+ 888 000b 00       		.byte	0
+ 889 000c 0000     		.2byte	0
+ 890 000e 0000     		.2byte	0
+ 891 0010 00000000 		.4byte	.LFB63
+ 892 0014 18000000 		.4byte	.LFE63-.LFB63
+ 893 0018 00000000 		.4byte	.LFB64
+ 894 001c 6C000000 		.4byte	.LFE64-.LFB64
+ 895 0020 00000000 		.4byte	.LFB65
+ 896 0024 64000000 		.4byte	.LFE65-.LFB65
+ 897 0028 00000000 		.4byte	.LFB66
+ 898 002c 6C000000 		.4byte	.LFE66-.LFB66
+ 899 0030 00000000 		.4byte	.LFB67
+ 900 0034 1E000000 		.4byte	.LFE67-.LFB67
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 19
+
+
+ 901 0038 00000000 		.4byte	0
+ 902 003c 00000000 		.4byte	0
+ 903              		.section	.debug_ranges,"",%progbits
+ 904              	.Ldebug_ranges0:
+ 905 0000 00000000 		.4byte	.LFB63
+ 906 0004 18000000 		.4byte	.LFE63
+ 907 0008 00000000 		.4byte	.LFB64
+ 908 000c 6C000000 		.4byte	.LFE64
+ 909 0010 00000000 		.4byte	.LFB65
+ 910 0014 64000000 		.4byte	.LFE65
+ 911 0018 00000000 		.4byte	.LFB66
+ 912 001c 6C000000 		.4byte	.LFE66
+ 913 0020 00000000 		.4byte	.LFB67
+ 914 0024 1E000000 		.4byte	.LFE67
+ 915 0028 00000000 		.4byte	0
+ 916 002c 00000000 		.4byte	0
+ 917              		.section	.debug_line,"",%progbits
+ 918              	.Ldebug_line0:
+ 919 0000 EC010000 		.section	.debug_str,"MS",%progbits,1
+ 919      02005401 
+ 919      00000201 
+ 919      FB0E0D00 
+ 919      01010101 
+ 920              	.LASF27:
+ 921 0000 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 921      43313120 
+ 921      352E342E 
+ 921      31203230 
+ 921      31363036 
+ 922 0033 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 922      20726576 
+ 922      6973696F 
+ 922      6E203233 
+ 922      37373135 
+ 923 0066 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 923      66756E63 
+ 923      74696F6E 
+ 923      2D736563 
+ 923      74696F6E 
+ 924              	.LASF20:
+ 925 008e 6164635F 		.ascii	"adc_balanced_counts_to_mv\000"
+ 925      62616C61 
+ 925      6E636564 
+ 925      5F636F75 
+ 925      6E74735F 
+ 926              	.LASF9:
+ 927 00a8 5F5F696E 		.ascii	"__int32_t\000"
+ 927      7433325F 
+ 927      7400
+ 928              	.LASF29:
+ 929 00b2 433A5C55 		.ascii	"C:\\Users\\Jennewein\\Documents\\hamish-workspace\\"
+ 929      73657273 
+ 929      5C4A656E 
+ 929      6E657765 
+ 929      696E5C44 
+ 930 00e0 50536F43 		.ascii	"PSoC-Programs\\test_projects\\Proj07_hamflyAPI_pres"
+ 930      2D50726F 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 20
+
+
+ 930      6772616D 
+ 930      735C7465 
+ 930      73745F70 
+ 931 0111 63697369 		.ascii	"cisionPointing.cydsn\000"
+ 931      6F6E506F 
+ 931      696E7469 
+ 931      6E672E63 
+ 931      7964736E 
+ 932              	.LASF25:
+ 933 0126 735F6368 		.ascii	"s_ch_idx\000"
+ 933      5F696478 
+ 933      00
+ 934              	.LASF31:
+ 935 012f 6164635F 		.ascii	"adc_balanced_init\000"
+ 935      62616C61 
+ 935      6E636564 
+ 935      5F696E69 
+ 935      7400
+ 936              	.LASF21:
+ 937 0141 6F75745F 		.ascii	"out_counts\000"
+ 937      636F756E 
+ 937      747300
+ 938              	.LASF14:
+ 939 014c 666C6F61 		.ascii	"float\000"
+ 939      7400
+ 940              	.LASF1:
+ 941 0152 756E7369 		.ascii	"unsigned char\000"
+ 941      676E6564 
+ 941      20636861 
+ 941      7200
+ 942              	.LASF12:
+ 943 0160 696E7431 		.ascii	"int16\000"
+ 943      3600
+ 944              	.LASF5:
+ 945 0166 6C6F6E67 		.ascii	"long unsigned int\000"
+ 945      20756E73 
+ 945      69676E65 
+ 945      6420696E 
+ 945      7400
+ 946              	.LASF13:
+ 947 0178 696E7433 		.ascii	"int32\000"
+ 947      3200
+ 948              	.LASF30:
+ 949 017e 6973725F 		.ascii	"isr_adc_Handler\000"
+ 949      6164635F 
+ 949      48616E64 
+ 949      6C657200 
+ 950              	.LASF15:
+ 951 018e 646F7562 		.ascii	"double\000"
+ 951      6C6500
+ 952              	.LASF33:
+ 953 0195 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 953      52784275 
+ 953      66666572 
+ 953      00
+ 954              	.LASF28:
+ 955 01a2 6164635F 		.ascii	"adc_balanced.c\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 21
+
+
+ 955      62616C61 
+ 955      6E636564 
+ 955      2E6300
+ 956              	.LASF8:
+ 957 01b1 756E7369 		.ascii	"unsigned int\000"
+ 957      676E6564 
+ 957      20696E74 
+ 957      00
+ 958              	.LASF23:
+ 959 01be 735F656F 		.ascii	"s_eoc_flag\000"
+ 959      635F666C 
+ 959      616700
+ 960              	.LASF32:
+ 961 01c9 6164635F 		.ascii	"adc_balanced_advance_on_eoc\000"
+ 961      62616C61 
+ 961      6E636564 
+ 961      5F616476 
+ 961      616E6365 
+ 962              	.LASF7:
+ 963 01e5 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 963      206C6F6E 
+ 963      6720756E 
+ 963      7369676E 
+ 963      65642069 
+ 964              	.LASF26:
+ 965 01fc 735F636F 		.ascii	"s_counts\000"
+ 965      756E7473 
+ 965      00
+ 966              	.LASF10:
+ 967 0205 696E7433 		.ascii	"int32_t\000"
+ 967      325F7400 
+ 968              	.LASF18:
+ 969 020d 73697A65 		.ascii	"sizetype\000"
+ 969      74797065 
+ 969      00
+ 970              	.LASF6:
+ 971 0216 6C6F6E67 		.ascii	"long long int\000"
+ 971      206C6F6E 
+ 971      6720696E 
+ 971      7400
+ 972              	.LASF16:
+ 973 0224 63686172 		.ascii	"char\000"
+ 973      00
+ 974              	.LASF2:
+ 975 0229 73686F72 		.ascii	"short int\000"
+ 975      7420696E 
+ 975      7400
+ 976              	.LASF22:
+ 977 0233 636F756E 		.ascii	"counts\000"
+ 977      747300
+ 978              	.LASF11:
+ 979 023a 75696E74 		.ascii	"uint8\000"
+ 979      3800
+ 980              	.LASF24:
+ 981 0240 735F6672 		.ascii	"s_frame_ready\000"
+ 981      616D655F 
+ 981      72656164 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccYLVmNk.s 			page 22
+
+
+ 981      7900
+ 982              	.LASF4:
+ 983 024e 6C6F6E67 		.ascii	"long int\000"
+ 983      20696E74 
+ 983      00
+ 984              	.LASF17:
+ 985 0257 6C6F6E67 		.ascii	"long double\000"
+ 985      20646F75 
+ 985      626C6500 
+ 986              	.LASF0:
+ 987 0263 7369676E 		.ascii	"signed char\000"
+ 987      65642063 
+ 987      68617200 
+ 988              	.LASF3:
+ 989 026f 73686F72 		.ascii	"short unsigned int\000"
+ 989      7420756E 
+ 989      7369676E 
+ 989      65642069 
+ 989      6E7400
+ 990              	.LASF19:
+ 991 0282 6164635F 		.ascii	"adc_balanced_poll_frame\000"
+ 991      62616C61 
+ 991      6E636564 
+ 991      5F706F6C 
+ 991      6C5F6672 
+ 992              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
