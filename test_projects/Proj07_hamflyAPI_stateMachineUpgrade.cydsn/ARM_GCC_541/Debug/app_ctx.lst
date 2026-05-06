@@ -1,0 +1,1129 @@
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"app_ctx.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.app_ctx_init,"ax",%progbits
+  20              		.align	2
+  21              		.global	app_ctx_init
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	app_ctx_init, %function
+  25              	app_ctx_init:
+  26              	.LFB63:
+  27              		.file 1 "app_ctx.c"
+   1:app_ctx.c     **** /* ========================================
+   2:app_ctx.c     ****  *
+   3:app_ctx.c     ****  * Copyright Hamish Johnson, 2026
+   4:app_ctx.c     ****  * All Rights Reserved
+   5:app_ctx.c     ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:app_ctx.c     ****  *
+   7:app_ctx.c     ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:app_ctx.c     ****  * WHICH IS THE PROPERTY OF 
+   9:app_ctx.c     ****  * Quantum Internet Systems Lab (QISL),
+  10:app_ctx.c     ****  * Department of Physics, SFU, Canada.
+  11:app_ctx.c     ****  *
+  12:app_ctx.c     ****  * Author: Hamish Johnson (2026)
+  13:app_ctx.c     ****  *
+  14:app_ctx.c     ****  * ========================================
+  15:app_ctx.c     ****  *
+  16:app_ctx.c     ****  * Shared context for state machine.
+  17:app_ctx.c     **** */
+  18:app_ctx.c     **** 
+  19:app_ctx.c     **** #include "app_ctx.h"
+  20:app_ctx.c     **** #include <string.h>
+  21:app_ctx.c     **** 
+  22:app_ctx.c     **** // Initializes the shared state
+  23:app_ctx.c     **** void app_ctx_init(app_ctx_t *ctx)
+  24:app_ctx.c     **** {
+  28              		.loc 1 24 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32 0000 80B5     		push	{r7, lr}
+  33              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 2
+
+
+  34              		.cfi_offset 7, -8
+  35              		.cfi_offset 14, -4
+  36 0002 82B0     		sub	sp, sp, #8
+  37              		.cfi_def_cfa_offset 16
+  38 0004 00AF     		add	r7, sp, #0
+  39              		.cfi_def_cfa_register 7
+  40 0006 7860     		str	r0, [r7, #4]
+  25:app_ctx.c     ****     memset(ctx, 0, sizeof *ctx);
+  41              		.loc 1 25 0
+  42 0008 4C22     		movs	r2, #76
+  43 000a 0021     		movs	r1, #0
+  44 000c 7868     		ldr	r0, [r7, #4]
+  45 000e FFF7FEFF 		bl	memset
+  26:app_ctx.c     ****     ctx->mode        = STANDBY;
+  46              		.loc 1 26 0
+  47 0012 7B68     		ldr	r3, [r7, #4]
+  48 0014 0022     		movs	r2, #0
+  49 0016 1A70     		strb	r2, [r3]
+  27:app_ctx.c     ****     ctx->ctrl_mode   = HAMFLY_DEFER;
+  50              		.loc 1 27 0
+  51 0018 7B68     		ldr	r3, [r7, #4]
+  52 001a 0022     		movs	r2, #0
+  53 001c 5A70     		strb	r2, [r3, #1]
+  28:app_ctx.c     ****     ctx->sense       = SENSE_MED;
+  54              		.loc 1 28 0
+  55 001e 7B68     		ldr	r3, [r7, #4]
+  56 0020 0122     		movs	r2, #1
+  57 0022 83F84020 		strb	r2, [r3, #64]
+  29:app_ctx.c     ****     ctx->invert_mask = (1u << CH_X);
+  58              		.loc 1 29 0
+  59 0026 7B68     		ldr	r3, [r7, #4]
+  60 0028 0122     		movs	r2, #1
+  61 002a 5A64     		str	r2, [r3, #68]
+  30:app_ctx.c     ****     ctx->last_button = 1u;
+  62              		.loc 1 30 0
+  63 002c 7B68     		ldr	r3, [r7, #4]
+  64 002e 0122     		movs	r2, #1
+  65 0030 83F84820 		strb	r2, [r3, #72]
+  31:app_ctx.c     ****     ctx->cmd.u[0]    = 0.0f;
+  66              		.loc 1 31 0
+  67 0034 7B68     		ldr	r3, [r7, #4]
+  68 0036 4FF00002 		mov	r2, #0
+  69 003a 9A63     		str	r2, [r3, #56]	@ float
+  32:app_ctx.c     ****     ctx->cmd.u[1]    = 0.0f;
+  70              		.loc 1 32 0
+  71 003c 7B68     		ldr	r3, [r7, #4]
+  72 003e 4FF00002 		mov	r2, #0
+  73 0042 DA63     		str	r2, [r3, #60]	@ float
+  33:app_ctx.c     ****     ctx->nudge_pan_rate   = 0.2f;
+  74              		.loc 1 33 0
+  75 0044 7B68     		ldr	r3, [r7, #4]
+  76 0046 074A     		ldr	r2, .L2
+  77 0048 5A61     		str	r2, [r3, #20]	@ float
+  34:app_ctx.c     ****     ctx->nudge_tilt_rate  = 0.2f;
+  78              		.loc 1 34 0
+  79 004a 7B68     		ldr	r3, [r7, #4]
+  80 004c 054A     		ldr	r2, .L2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 3
+
+
+  81 004e 9A61     		str	r2, [r3, #24]	@ float
+  35:app_ctx.c     ****     ctx->nudge_time_short = 50u;
+  82              		.loc 1 35 0
+  83 0050 7B68     		ldr	r3, [r7, #4]
+  84 0052 3222     		movs	r2, #50
+  85 0054 1A77     		strb	r2, [r3, #28]
+  36:app_ctx.c     ****     ctx->nudge_time_long  =250u;
+  86              		.loc 1 36 0
+  87 0056 7B68     		ldr	r3, [r7, #4]
+  88 0058 FA22     		movs	r2, #250
+  89 005a 5A77     		strb	r2, [r3, #29]
+  37:app_ctx.c     **** }
+  90              		.loc 1 37 0
+  91 005c 00BF     		nop
+  92 005e 0837     		adds	r7, r7, #8
+  93              		.cfi_def_cfa_offset 8
+  94 0060 BD46     		mov	sp, r7
+  95              		.cfi_def_cfa_register 13
+  96              		@ sp needed
+  97 0062 80BD     		pop	{r7, pc}
+  98              	.L3:
+  99              		.align	2
+ 100              	.L2:
+ 101 0064 CDCC4C3E 		.word	1045220557
+ 102              		.cfi_endproc
+ 103              	.LFE63:
+ 104              		.size	app_ctx_init, .-app_ctx_init
+ 105              		.text
+ 106              	.Letext0:
+ 107              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 108              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 109              		.file 4 "..\\..\\..\\HamFlyAPI\\src/hamfly_core_control.h"
+ 110              		.file 5 "joystick.h"
+ 111              		.file 6 "app_ctx.h"
+ 112              		.file 7 "Generated_Source\\PSoC5/core_cm3.h"
+ 113              		.section	.debug_info,"",%progbits
+ 114              	.Ldebug_info0:
+ 115 0000 ED020000 		.4byte	0x2ed
+ 116 0004 0400     		.2byte	0x4
+ 117 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 118 000a 04       		.byte	0x4
+ 119 000b 01       		.uleb128 0x1
+ 120 000c 5B000000 		.4byte	.LASF58
+ 121 0010 0C       		.byte	0xc
+ 122 0011 13020000 		.4byte	.LASF59
+ 123 0015 03010000 		.4byte	.LASF60
+ 124 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 125 001d 00000000 		.4byte	0
+ 126 0021 00000000 		.4byte	.Ldebug_line0
+ 127 0025 02       		.uleb128 0x2
+ 128 0026 01       		.byte	0x1
+ 129 0027 06       		.byte	0x6
+ 130 0028 59020000 		.4byte	.LASF0
+ 131 002c 03       		.uleb128 0x3
+ 132 002d FD010000 		.4byte	.LASF4
+ 133 0031 02       		.byte	0x2
+ 134 0032 1D       		.byte	0x1d
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 4
+
+
+ 135 0033 37000000 		.4byte	0x37
+ 136 0037 02       		.uleb128 0x2
+ 137 0038 01       		.byte	0x1
+ 138 0039 08       		.byte	0x8
+ 139 003a 39020000 		.4byte	.LASF1
+ 140 003e 02       		.uleb128 0x2
+ 141 003f 02       		.byte	0x2
+ 142 0040 05       		.byte	0x5
+ 143 0041 22000000 		.4byte	.LASF2
+ 144 0045 02       		.uleb128 0x2
+ 145 0046 02       		.byte	0x2
+ 146 0047 07       		.byte	0x7
+ 147 0048 27030000 		.4byte	.LASF3
+ 148 004c 03       		.uleb128 0x3
+ 149 004d 59030000 		.4byte	.LASF5
+ 150 0051 02       		.byte	0x2
+ 151 0052 3F       		.byte	0x3f
+ 152 0053 57000000 		.4byte	0x57
+ 153 0057 02       		.uleb128 0x2
+ 154 0058 04       		.byte	0x4
+ 155 0059 05       		.byte	0x5
+ 156 005a F4010000 		.4byte	.LASF6
+ 157 005e 03       		.uleb128 0x3
+ 158 005f F3000000 		.4byte	.LASF7
+ 159 0063 02       		.byte	0x2
+ 160 0064 41       		.byte	0x41
+ 161 0065 69000000 		.4byte	0x69
+ 162 0069 02       		.uleb128 0x2
+ 163 006a 04       		.byte	0x4
+ 164 006b 07       		.byte	0x7
+ 165 006c 3A030000 		.4byte	.LASF8
+ 166 0070 02       		.uleb128 0x2
+ 167 0071 08       		.byte	0x8
+ 168 0072 05       		.byte	0x5
+ 169 0073 C8010000 		.4byte	.LASF9
+ 170 0077 02       		.uleb128 0x2
+ 171 0078 08       		.byte	0x8
+ 172 0079 07       		.byte	0x7
+ 173 007a 65020000 		.4byte	.LASF10
+ 174 007e 04       		.uleb128 0x4
+ 175 007f 04       		.byte	0x4
+ 176 0080 05       		.byte	0x5
+ 177 0081 696E7400 		.ascii	"int\000"
+ 178 0085 02       		.uleb128 0x2
+ 179 0086 04       		.byte	0x4
+ 180 0087 07       		.byte	0x7
+ 181 0088 85020000 		.4byte	.LASF11
+ 182 008c 03       		.uleb128 0x3
+ 183 008d 78010000 		.4byte	.LASF12
+ 184 0091 03       		.byte	0x3
+ 185 0092 18       		.byte	0x18
+ 186 0093 2C000000 		.4byte	0x2c
+ 187 0097 03       		.uleb128 0x3
+ 188 0098 E9020000 		.4byte	.LASF13
+ 189 009c 03       		.byte	0x3
+ 190 009d 2C       		.byte	0x2c
+ 191 009e 4C000000 		.4byte	0x4c
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 5
+
+
+ 192 00a2 03       		.uleb128 0x3
+ 193 00a3 7C020000 		.4byte	.LASF14
+ 194 00a7 03       		.byte	0x3
+ 195 00a8 30       		.byte	0x30
+ 196 00a9 5E000000 		.4byte	0x5e
+ 197 00ad 02       		.uleb128 0x2
+ 198 00ae 04       		.byte	0x4
+ 199 00af 04       		.byte	0x4
+ 200 00b0 C2010000 		.4byte	.LASF15
+ 201 00b4 02       		.uleb128 0x2
+ 202 00b5 08       		.byte	0x8
+ 203 00b6 04       		.byte	0x4
+ 204 00b7 4C030000 		.4byte	.LASF16
+ 205 00bb 02       		.uleb128 0x2
+ 206 00bc 01       		.byte	0x1
+ 207 00bd 08       		.byte	0x8
+ 208 00be E4020000 		.4byte	.LASF17
+ 209 00c2 02       		.uleb128 0x2
+ 210 00c3 08       		.byte	0x8
+ 211 00c4 04       		.byte	0x4
+ 212 00c5 2D020000 		.4byte	.LASF18
+ 213 00c9 02       		.uleb128 0x2
+ 214 00ca 04       		.byte	0x4
+ 215 00cb 07       		.byte	0x7
+ 216 00cc 94030000 		.4byte	.LASF19
+ 217 00d0 05       		.uleb128 0x5
+ 218 00d1 04       		.byte	0x4
+ 219 00d2 D6000000 		.4byte	0xd6
+ 220 00d6 06       		.uleb128 0x6
+ 221 00d7 BB000000 		.4byte	0xbb
+ 222 00db 07       		.uleb128 0x7
+ 223 00dc 01       		.byte	0x1
+ 224 00dd 37000000 		.4byte	0x37
+ 225 00e1 04       		.byte	0x4
+ 226 00e2 1E       		.byte	0x1e
+ 227 00e3 FA000000 		.4byte	0xfa
+ 228 00e7 08       		.uleb128 0x8
+ 229 00e8 E7010000 		.4byte	.LASF20
+ 230 00ec 00       		.byte	0
+ 231 00ed 08       		.uleb128 0x8
+ 232 00ee DB030000 		.4byte	.LASF21
+ 233 00f2 01       		.byte	0x1
+ 234 00f3 08       		.uleb128 0x8
+ 235 00f4 92020000 		.4byte	.LASF22
+ 236 00f8 02       		.byte	0x2
+ 237 00f9 00       		.byte	0
+ 238 00fa 03       		.uleb128 0x3
+ 239 00fb 39000000 		.4byte	.LASF23
+ 240 00ff 04       		.byte	0x4
+ 241 0100 22       		.byte	0x22
+ 242 0101 DB000000 		.4byte	0xdb
+ 243 0105 07       		.uleb128 0x7
+ 244 0106 01       		.byte	0x1
+ 245 0107 37000000 		.4byte	0x37
+ 246 010b 05       		.byte	0x5
+ 247 010c 3F       		.byte	0x3f
+ 248 010d 24010000 		.4byte	0x124
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 6
+
+
+ 249 0111 08       		.uleb128 0x8
+ 250 0112 00000000 		.4byte	.LASF24
+ 251 0116 00       		.byte	0
+ 252 0117 08       		.uleb128 0x8
+ 253 0118 E9000000 		.4byte	.LASF25
+ 254 011c 01       		.byte	0x1
+ 255 011d 08       		.uleb128 0x8
+ 256 011e 01030000 		.4byte	.LASF26
+ 257 0122 02       		.byte	0x2
+ 258 0123 00       		.byte	0
+ 259 0124 03       		.uleb128 0x3
+ 260 0125 47020000 		.4byte	.LASF27
+ 261 0129 05       		.byte	0x5
+ 262 012a 43       		.byte	0x43
+ 263 012b 05010000 		.4byte	0x105
+ 264 012f 09       		.uleb128 0x9
+ 265 0130 08       		.byte	0x8
+ 266 0131 05       		.byte	0x5
+ 267 0132 57       		.byte	0x57
+ 268 0133 42010000 		.4byte	0x142
+ 269 0137 0A       		.uleb128 0xa
+ 270 0138 7500     		.ascii	"u\000"
+ 271 013a 05       		.byte	0x5
+ 272 013b 58       		.byte	0x58
+ 273 013c 42010000 		.4byte	0x142
+ 274 0140 00       		.byte	0
+ 275 0141 00       		.byte	0
+ 276 0142 0B       		.uleb128 0xb
+ 277 0143 AD000000 		.4byte	0xad
+ 278 0147 52010000 		.4byte	0x152
+ 279 014b 0C       		.uleb128 0xc
+ 280 014c C9000000 		.4byte	0xc9
+ 281 0150 01       		.byte	0x1
+ 282 0151 00       		.byte	0
+ 283 0152 03       		.uleb128 0x3
+ 284 0153 B8010000 		.4byte	.LASF28
+ 285 0157 05       		.byte	0x5
+ 286 0158 59       		.byte	0x59
+ 287 0159 2F010000 		.4byte	0x12f
+ 288 015d 07       		.uleb128 0x7
+ 289 015e 01       		.byte	0x1
+ 290 015f 37000000 		.4byte	0x37
+ 291 0163 06       		.byte	0x6
+ 292 0164 1A       		.byte	0x1a
+ 293 0165 8E010000 		.4byte	0x18e
+ 294 0169 08       		.uleb128 0x8
+ 295 016a 1A000000 		.4byte	.LASF29
+ 296 016e 00       		.byte	0
+ 297 016f 08       		.uleb128 0x8
+ 298 0170 8C030000 		.4byte	.LASF30
+ 299 0174 01       		.byte	0x1
+ 300 0175 08       		.uleb128 0x8
+ 301 0176 53030000 		.4byte	.LASF31
+ 302 017a 02       		.byte	0x2
+ 303 017b 08       		.uleb128 0x8
+ 304 017c 07020000 		.4byte	.LASF32
+ 305 0180 03       		.byte	0x3
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 7
+
+
+ 306 0181 08       		.uleb128 0x8
+ 307 0182 8B010000 		.4byte	.LASF33
+ 308 0186 04       		.byte	0x4
+ 309 0187 08       		.uleb128 0x8
+ 310 0188 1C030000 		.4byte	.LASF34
+ 311 018c 05       		.byte	0x5
+ 312 018d 00       		.byte	0
+ 313 018e 03       		.uleb128 0x3
+ 314 018f D9020000 		.4byte	.LASF35
+ 315 0193 06       		.byte	0x6
+ 316 0194 21       		.byte	0x21
+ 317 0195 5D010000 		.4byte	0x15d
+ 318 0199 09       		.uleb128 0x9
+ 319 019a 4C       		.byte	0x4c
+ 320 019b 06       		.byte	0x6
+ 321 019c 23       		.byte	0x23
+ 322 019d AA020000 		.4byte	0x2aa
+ 323 01a1 0D       		.uleb128 0xd
+ 324 01a2 FE000000 		.4byte	.LASF36
+ 325 01a6 06       		.byte	0x6
+ 326 01a7 25       		.byte	0x25
+ 327 01a8 8E010000 		.4byte	0x18e
+ 328 01ac 00       		.byte	0
+ 329 01ad 0D       		.uleb128 0xd
+ 330 01ae C6030000 		.4byte	.LASF37
+ 331 01b2 06       		.byte	0x6
+ 332 01b3 26       		.byte	0x26
+ 333 01b4 FA000000 		.4byte	0xfa
+ 334 01b8 01       		.byte	0x1
+ 335 01b9 0D       		.uleb128 0xd
+ 336 01ba B1020000 		.4byte	.LASF38
+ 337 01be 06       		.byte	0x6
+ 338 01bf 27       		.byte	0x27
+ 339 01c0 D0000000 		.4byte	0xd0
+ 340 01c4 04       		.byte	0x4
+ 341 01c5 0D       		.uleb128 0xd
+ 342 01c6 0A000000 		.4byte	.LASF39
+ 343 01ca 06       		.byte	0x6
+ 344 01cb 29       		.byte	0x29
+ 345 01cc 8C000000 		.4byte	0x8c
+ 346 01d0 08       		.byte	0x8
+ 347 01d1 0D       		.uleb128 0xd
+ 348 01d2 B7030000 		.4byte	.LASF40
+ 349 01d6 06       		.byte	0x6
+ 350 01d7 2B       		.byte	0x2b
+ 351 01d8 AD000000 		.4byte	0xad
+ 352 01dc 0C       		.byte	0xc
+ 353 01dd 0D       		.uleb128 0xd
+ 354 01de 0C030000 		.4byte	.LASF41
+ 355 01e2 06       		.byte	0x6
+ 356 01e3 2C       		.byte	0x2c
+ 357 01e4 AD000000 		.4byte	0xad
+ 358 01e8 10       		.byte	0x10
+ 359 01e9 0D       		.uleb128 0xd
+ 360 01ea A2020000 		.4byte	.LASF42
+ 361 01ee 06       		.byte	0x6
+ 362 01ef 2E       		.byte	0x2e
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 8
+
+
+ 363 01f0 AD000000 		.4byte	0xad
+ 364 01f4 14       		.byte	0x14
+ 365 01f5 0D       		.uleb128 0xd
+ 366 01f6 1D020000 		.4byte	.LASF43
+ 367 01fa 06       		.byte	0x6
+ 368 01fb 2F       		.byte	0x2f
+ 369 01fc AD000000 		.4byte	0xad
+ 370 0200 18       		.byte	0x18
+ 371 0201 0D       		.uleb128 0xd
+ 372 0202 D6010000 		.4byte	.LASF44
+ 373 0206 06       		.byte	0x6
+ 374 0207 30       		.byte	0x30
+ 375 0208 8C000000 		.4byte	0x8c
+ 376 020c 1C       		.byte	0x1c
+ 377 020d 0D       		.uleb128 0xd
+ 378 020e 63030000 		.4byte	.LASF45
+ 379 0212 06       		.byte	0x6
+ 380 0213 31       		.byte	0x31
+ 381 0214 8C000000 		.4byte	0x8c
+ 382 0218 1D       		.byte	0x1d
+ 383 0219 0D       		.uleb128 0xd
+ 384 021a 7D030000 		.4byte	.LASF46
+ 385 021e 06       		.byte	0x6
+ 386 021f 33       		.byte	0x33
+ 387 0220 AD000000 		.4byte	0xad
+ 388 0224 20       		.byte	0x20
+ 389 0225 0D       		.uleb128 0xd
+ 390 0226 F1020000 		.4byte	.LASF47
+ 391 022a 06       		.byte	0x6
+ 392 022b 34       		.byte	0x34
+ 393 022c AD000000 		.4byte	0xad
+ 394 0230 24       		.byte	0x24
+ 395 0231 0D       		.uleb128 0xd
+ 396 0232 D0030000 		.4byte	.LASF48
+ 397 0236 06       		.byte	0x6
+ 398 0237 35       		.byte	0x35
+ 399 0238 8C000000 		.4byte	0x8c
+ 400 023c 28       		.byte	0x28
+ 401 023d 0D       		.uleb128 0xd
+ 402 023e 80010000 		.4byte	.LASF49
+ 403 0242 06       		.byte	0x6
+ 404 0243 38       		.byte	0x38
+ 405 0244 A2000000 		.4byte	0xa2
+ 406 0248 2C       		.byte	0x2c
+ 407 0249 0D       		.uleb128 0xd
+ 408 024a 9D030000 		.4byte	.LASF50
+ 409 024e 06       		.byte	0x6
+ 410 024f 39       		.byte	0x39
+ 411 0250 A2000000 		.4byte	0xa2
+ 412 0254 30       		.byte	0x30
+ 413 0255 0D       		.uleb128 0xd
+ 414 0256 CD020000 		.4byte	.LASF51
+ 415 025a 06       		.byte	0x6
+ 416 025b 3A       		.byte	0x3a
+ 417 025c 8C000000 		.4byte	0x8c
+ 418 0260 34       		.byte	0x34
+ 419 0261 0D       		.uleb128 0xd
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 9
+
+
+ 420 0262 BB020000 		.4byte	.LASF52
+ 421 0266 06       		.byte	0x6
+ 422 0267 3B       		.byte	0x3b
+ 423 0268 8C000000 		.4byte	0x8c
+ 424 026c 35       		.byte	0x35
+ 425 026d 0D       		.uleb128 0xd
+ 426 026e 9A010000 		.4byte	.LASF53
+ 427 0272 06       		.byte	0x6
+ 428 0273 3C       		.byte	0x3c
+ 429 0274 8C000000 		.4byte	0x8c
+ 430 0278 36       		.byte	0x36
+ 431 0279 0A       		.uleb128 0xa
+ 432 027a 636D6400 		.ascii	"cmd\000"
+ 433 027e 06       		.byte	0x6
+ 434 027f 3F       		.byte	0x3f
+ 435 0280 52010000 		.4byte	0x152
+ 436 0284 38       		.byte	0x38
+ 437 0285 0D       		.uleb128 0xd
+ 438 0286 0D020000 		.4byte	.LASF54
+ 439 028a 06       		.byte	0x6
+ 440 028b 40       		.byte	0x40
+ 441 028c 24010000 		.4byte	0x124
+ 442 0290 40       		.byte	0x40
+ 443 0291 0D       		.uleb128 0xd
+ 444 0292 4F000000 		.4byte	.LASF55
+ 445 0296 06       		.byte	0x6
+ 446 0297 41       		.byte	0x41
+ 447 0298 A2000000 		.4byte	0xa2
+ 448 029c 44       		.byte	0x44
+ 449 029d 0D       		.uleb128 0xd
+ 450 029e AC010000 		.4byte	.LASF56
+ 451 02a2 06       		.byte	0x6
+ 452 02a3 42       		.byte	0x42
+ 453 02a4 8C000000 		.4byte	0x8c
+ 454 02a8 48       		.byte	0x48
+ 455 02a9 00       		.byte	0
+ 456 02aa 03       		.uleb128 0x3
+ 457 02ab 73030000 		.4byte	.LASF57
+ 458 02af 06       		.byte	0x6
+ 459 02b0 49       		.byte	0x49
+ 460 02b1 99010000 		.4byte	0x199
+ 461 02b5 0E       		.uleb128 0xe
+ 462 02b6 2C000000 		.4byte	.LASF61
+ 463 02ba 01       		.byte	0x1
+ 464 02bb 17       		.byte	0x17
+ 465 02bc 00000000 		.4byte	.LFB63
+ 466 02c0 68000000 		.4byte	.LFE63-.LFB63
+ 467 02c4 01       		.uleb128 0x1
+ 468 02c5 9C       		.byte	0x9c
+ 469 02c6 D9020000 		.4byte	0x2d9
+ 470 02ca 0F       		.uleb128 0xf
+ 471 02cb 63747800 		.ascii	"ctx\000"
+ 472 02cf 01       		.byte	0x1
+ 473 02d0 17       		.byte	0x17
+ 474 02d1 D9020000 		.4byte	0x2d9
+ 475 02d5 02       		.uleb128 0x2
+ 476 02d6 91       		.byte	0x91
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 10
+
+
+ 477 02d7 74       		.sleb128 -12
+ 478 02d8 00       		.byte	0
+ 479 02d9 05       		.uleb128 0x5
+ 480 02da 04       		.byte	0x4
+ 481 02db AA020000 		.4byte	0x2aa
+ 482 02df 10       		.uleb128 0x10
+ 483 02e0 AA030000 		.4byte	.LASF62
+ 484 02e4 07       		.byte	0x7
+ 485 02e5 1207     		.2byte	0x712
+ 486 02e7 EB020000 		.4byte	0x2eb
+ 487 02eb 11       		.uleb128 0x11
+ 488 02ec 97000000 		.4byte	0x97
+ 489 02f0 00       		.byte	0
+ 490              		.section	.debug_abbrev,"",%progbits
+ 491              	.Ldebug_abbrev0:
+ 492 0000 01       		.uleb128 0x1
+ 493 0001 11       		.uleb128 0x11
+ 494 0002 01       		.byte	0x1
+ 495 0003 25       		.uleb128 0x25
+ 496 0004 0E       		.uleb128 0xe
+ 497 0005 13       		.uleb128 0x13
+ 498 0006 0B       		.uleb128 0xb
+ 499 0007 03       		.uleb128 0x3
+ 500 0008 0E       		.uleb128 0xe
+ 501 0009 1B       		.uleb128 0x1b
+ 502 000a 0E       		.uleb128 0xe
+ 503 000b 55       		.uleb128 0x55
+ 504 000c 17       		.uleb128 0x17
+ 505 000d 11       		.uleb128 0x11
+ 506 000e 01       		.uleb128 0x1
+ 507 000f 10       		.uleb128 0x10
+ 508 0010 17       		.uleb128 0x17
+ 509 0011 00       		.byte	0
+ 510 0012 00       		.byte	0
+ 511 0013 02       		.uleb128 0x2
+ 512 0014 24       		.uleb128 0x24
+ 513 0015 00       		.byte	0
+ 514 0016 0B       		.uleb128 0xb
+ 515 0017 0B       		.uleb128 0xb
+ 516 0018 3E       		.uleb128 0x3e
+ 517 0019 0B       		.uleb128 0xb
+ 518 001a 03       		.uleb128 0x3
+ 519 001b 0E       		.uleb128 0xe
+ 520 001c 00       		.byte	0
+ 521 001d 00       		.byte	0
+ 522 001e 03       		.uleb128 0x3
+ 523 001f 16       		.uleb128 0x16
+ 524 0020 00       		.byte	0
+ 525 0021 03       		.uleb128 0x3
+ 526 0022 0E       		.uleb128 0xe
+ 527 0023 3A       		.uleb128 0x3a
+ 528 0024 0B       		.uleb128 0xb
+ 529 0025 3B       		.uleb128 0x3b
+ 530 0026 0B       		.uleb128 0xb
+ 531 0027 49       		.uleb128 0x49
+ 532 0028 13       		.uleb128 0x13
+ 533 0029 00       		.byte	0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 11
+
+
+ 534 002a 00       		.byte	0
+ 535 002b 04       		.uleb128 0x4
+ 536 002c 24       		.uleb128 0x24
+ 537 002d 00       		.byte	0
+ 538 002e 0B       		.uleb128 0xb
+ 539 002f 0B       		.uleb128 0xb
+ 540 0030 3E       		.uleb128 0x3e
+ 541 0031 0B       		.uleb128 0xb
+ 542 0032 03       		.uleb128 0x3
+ 543 0033 08       		.uleb128 0x8
+ 544 0034 00       		.byte	0
+ 545 0035 00       		.byte	0
+ 546 0036 05       		.uleb128 0x5
+ 547 0037 0F       		.uleb128 0xf
+ 548 0038 00       		.byte	0
+ 549 0039 0B       		.uleb128 0xb
+ 550 003a 0B       		.uleb128 0xb
+ 551 003b 49       		.uleb128 0x49
+ 552 003c 13       		.uleb128 0x13
+ 553 003d 00       		.byte	0
+ 554 003e 00       		.byte	0
+ 555 003f 06       		.uleb128 0x6
+ 556 0040 26       		.uleb128 0x26
+ 557 0041 00       		.byte	0
+ 558 0042 49       		.uleb128 0x49
+ 559 0043 13       		.uleb128 0x13
+ 560 0044 00       		.byte	0
+ 561 0045 00       		.byte	0
+ 562 0046 07       		.uleb128 0x7
+ 563 0047 04       		.uleb128 0x4
+ 564 0048 01       		.byte	0x1
+ 565 0049 0B       		.uleb128 0xb
+ 566 004a 0B       		.uleb128 0xb
+ 567 004b 49       		.uleb128 0x49
+ 568 004c 13       		.uleb128 0x13
+ 569 004d 3A       		.uleb128 0x3a
+ 570 004e 0B       		.uleb128 0xb
+ 571 004f 3B       		.uleb128 0x3b
+ 572 0050 0B       		.uleb128 0xb
+ 573 0051 01       		.uleb128 0x1
+ 574 0052 13       		.uleb128 0x13
+ 575 0053 00       		.byte	0
+ 576 0054 00       		.byte	0
+ 577 0055 08       		.uleb128 0x8
+ 578 0056 28       		.uleb128 0x28
+ 579 0057 00       		.byte	0
+ 580 0058 03       		.uleb128 0x3
+ 581 0059 0E       		.uleb128 0xe
+ 582 005a 1C       		.uleb128 0x1c
+ 583 005b 0B       		.uleb128 0xb
+ 584 005c 00       		.byte	0
+ 585 005d 00       		.byte	0
+ 586 005e 09       		.uleb128 0x9
+ 587 005f 13       		.uleb128 0x13
+ 588 0060 01       		.byte	0x1
+ 589 0061 0B       		.uleb128 0xb
+ 590 0062 0B       		.uleb128 0xb
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 12
+
+
+ 591 0063 3A       		.uleb128 0x3a
+ 592 0064 0B       		.uleb128 0xb
+ 593 0065 3B       		.uleb128 0x3b
+ 594 0066 0B       		.uleb128 0xb
+ 595 0067 01       		.uleb128 0x1
+ 596 0068 13       		.uleb128 0x13
+ 597 0069 00       		.byte	0
+ 598 006a 00       		.byte	0
+ 599 006b 0A       		.uleb128 0xa
+ 600 006c 0D       		.uleb128 0xd
+ 601 006d 00       		.byte	0
+ 602 006e 03       		.uleb128 0x3
+ 603 006f 08       		.uleb128 0x8
+ 604 0070 3A       		.uleb128 0x3a
+ 605 0071 0B       		.uleb128 0xb
+ 606 0072 3B       		.uleb128 0x3b
+ 607 0073 0B       		.uleb128 0xb
+ 608 0074 49       		.uleb128 0x49
+ 609 0075 13       		.uleb128 0x13
+ 610 0076 38       		.uleb128 0x38
+ 611 0077 0B       		.uleb128 0xb
+ 612 0078 00       		.byte	0
+ 613 0079 00       		.byte	0
+ 614 007a 0B       		.uleb128 0xb
+ 615 007b 01       		.uleb128 0x1
+ 616 007c 01       		.byte	0x1
+ 617 007d 49       		.uleb128 0x49
+ 618 007e 13       		.uleb128 0x13
+ 619 007f 01       		.uleb128 0x1
+ 620 0080 13       		.uleb128 0x13
+ 621 0081 00       		.byte	0
+ 622 0082 00       		.byte	0
+ 623 0083 0C       		.uleb128 0xc
+ 624 0084 21       		.uleb128 0x21
+ 625 0085 00       		.byte	0
+ 626 0086 49       		.uleb128 0x49
+ 627 0087 13       		.uleb128 0x13
+ 628 0088 2F       		.uleb128 0x2f
+ 629 0089 0B       		.uleb128 0xb
+ 630 008a 00       		.byte	0
+ 631 008b 00       		.byte	0
+ 632 008c 0D       		.uleb128 0xd
+ 633 008d 0D       		.uleb128 0xd
+ 634 008e 00       		.byte	0
+ 635 008f 03       		.uleb128 0x3
+ 636 0090 0E       		.uleb128 0xe
+ 637 0091 3A       		.uleb128 0x3a
+ 638 0092 0B       		.uleb128 0xb
+ 639 0093 3B       		.uleb128 0x3b
+ 640 0094 0B       		.uleb128 0xb
+ 641 0095 49       		.uleb128 0x49
+ 642 0096 13       		.uleb128 0x13
+ 643 0097 38       		.uleb128 0x38
+ 644 0098 0B       		.uleb128 0xb
+ 645 0099 00       		.byte	0
+ 646 009a 00       		.byte	0
+ 647 009b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 13
+
+
+ 648 009c 2E       		.uleb128 0x2e
+ 649 009d 01       		.byte	0x1
+ 650 009e 3F       		.uleb128 0x3f
+ 651 009f 19       		.uleb128 0x19
+ 652 00a0 03       		.uleb128 0x3
+ 653 00a1 0E       		.uleb128 0xe
+ 654 00a2 3A       		.uleb128 0x3a
+ 655 00a3 0B       		.uleb128 0xb
+ 656 00a4 3B       		.uleb128 0x3b
+ 657 00a5 0B       		.uleb128 0xb
+ 658 00a6 27       		.uleb128 0x27
+ 659 00a7 19       		.uleb128 0x19
+ 660 00a8 11       		.uleb128 0x11
+ 661 00a9 01       		.uleb128 0x1
+ 662 00aa 12       		.uleb128 0x12
+ 663 00ab 06       		.uleb128 0x6
+ 664 00ac 40       		.uleb128 0x40
+ 665 00ad 18       		.uleb128 0x18
+ 666 00ae 9642     		.uleb128 0x2116
+ 667 00b0 19       		.uleb128 0x19
+ 668 00b1 01       		.uleb128 0x1
+ 669 00b2 13       		.uleb128 0x13
+ 670 00b3 00       		.byte	0
+ 671 00b4 00       		.byte	0
+ 672 00b5 0F       		.uleb128 0xf
+ 673 00b6 05       		.uleb128 0x5
+ 674 00b7 00       		.byte	0
+ 675 00b8 03       		.uleb128 0x3
+ 676 00b9 08       		.uleb128 0x8
+ 677 00ba 3A       		.uleb128 0x3a
+ 678 00bb 0B       		.uleb128 0xb
+ 679 00bc 3B       		.uleb128 0x3b
+ 680 00bd 0B       		.uleb128 0xb
+ 681 00be 49       		.uleb128 0x49
+ 682 00bf 13       		.uleb128 0x13
+ 683 00c0 02       		.uleb128 0x2
+ 684 00c1 18       		.uleb128 0x18
+ 685 00c2 00       		.byte	0
+ 686 00c3 00       		.byte	0
+ 687 00c4 10       		.uleb128 0x10
+ 688 00c5 34       		.uleb128 0x34
+ 689 00c6 00       		.byte	0
+ 690 00c7 03       		.uleb128 0x3
+ 691 00c8 0E       		.uleb128 0xe
+ 692 00c9 3A       		.uleb128 0x3a
+ 693 00ca 0B       		.uleb128 0xb
+ 694 00cb 3B       		.uleb128 0x3b
+ 695 00cc 05       		.uleb128 0x5
+ 696 00cd 49       		.uleb128 0x49
+ 697 00ce 13       		.uleb128 0x13
+ 698 00cf 3F       		.uleb128 0x3f
+ 699 00d0 19       		.uleb128 0x19
+ 700 00d1 3C       		.uleb128 0x3c
+ 701 00d2 19       		.uleb128 0x19
+ 702 00d3 00       		.byte	0
+ 703 00d4 00       		.byte	0
+ 704 00d5 11       		.uleb128 0x11
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 14
+
+
+ 705 00d6 35       		.uleb128 0x35
+ 706 00d7 00       		.byte	0
+ 707 00d8 49       		.uleb128 0x49
+ 708 00d9 13       		.uleb128 0x13
+ 709 00da 00       		.byte	0
+ 710 00db 00       		.byte	0
+ 711 00dc 00       		.byte	0
+ 712              		.section	.debug_aranges,"",%progbits
+ 713 0000 1C000000 		.4byte	0x1c
+ 714 0004 0200     		.2byte	0x2
+ 715 0006 00000000 		.4byte	.Ldebug_info0
+ 716 000a 04       		.byte	0x4
+ 717 000b 00       		.byte	0
+ 718 000c 0000     		.2byte	0
+ 719 000e 0000     		.2byte	0
+ 720 0010 00000000 		.4byte	.LFB63
+ 721 0014 68000000 		.4byte	.LFE63-.LFB63
+ 722 0018 00000000 		.4byte	0
+ 723 001c 00000000 		.4byte	0
+ 724              		.section	.debug_ranges,"",%progbits
+ 725              	.Ldebug_ranges0:
+ 726 0000 00000000 		.4byte	.LFB63
+ 727 0004 68000000 		.4byte	.LFE63
+ 728 0008 00000000 		.4byte	0
+ 729 000c 00000000 		.4byte	0
+ 730              		.section	.debug_line,"",%progbits
+ 731              	.Ldebug_line0:
+ 732 0000 AF010000 		.section	.debug_str,"MS",%progbits,1
+ 732      02008D01 
+ 732      00000201 
+ 732      FB0E0D00 
+ 732      01010101 
+ 733              	.LASF24:
+ 734 0000 53454E53 		.ascii	"SENSE_LOW\000"
+ 734      455F4C4F 
+ 734      5700
+ 735              	.LASF39:
+ 736 000a 6A6F7973 		.ascii	"joystick_active\000"
+ 736      7469636B 
+ 736      5F616374 
+ 736      69766500 
+ 737              	.LASF29:
+ 738 001a 5354414E 		.ascii	"STANDBY\000"
+ 738      44425900 
+ 739              	.LASF2:
+ 740 0022 73686F72 		.ascii	"short int\000"
+ 740      7420696E 
+ 740      7400
+ 741              	.LASF61:
+ 742 002c 6170705F 		.ascii	"app_ctx_init\000"
+ 742      6374785F 
+ 742      696E6974 
+ 742      00
+ 743              	.LASF23:
+ 744 0039 68616D66 		.ascii	"hamfly_control_mode_t\000"
+ 744      6C795F63 
+ 744      6F6E7472 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 15
+
+
+ 744      6F6C5F6D 
+ 744      6F64655F 
+ 745              	.LASF55:
+ 746 004f 696E7665 		.ascii	"invert_mask\000"
+ 746      72745F6D 
+ 746      61736B00 
+ 747              	.LASF58:
+ 748 005b 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 748      43313120 
+ 748      352E342E 
+ 748      31203230 
+ 748      31363036 
+ 749 008e 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 749      20726576 
+ 749      6973696F 
+ 749      6E203233 
+ 749      37373135 
+ 750 00c1 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 750      66756E63 
+ 750      74696F6E 
+ 750      2D736563 
+ 750      74696F6E 
+ 751              	.LASF25:
+ 752 00e9 53454E53 		.ascii	"SENSE_MED\000"
+ 752      455F4D45 
+ 752      4400
+ 753              	.LASF7:
+ 754 00f3 5F5F7569 		.ascii	"__uint32_t\000"
+ 754      6E743332 
+ 754      5F7400
+ 755              	.LASF36:
+ 756 00fe 6D6F6465 		.ascii	"mode\000"
+ 756      00
+ 757              	.LASF60:
+ 758 0103 433A5C55 		.ascii	"C:\\Users\\Jennewein\\Documents\\hamish-workspace\\"
+ 758      73657273 
+ 758      5C4A656E 
+ 758      6E657765 
+ 758      696E5C44 
+ 759 0131 50536F43 		.ascii	"PSoC-Programs\\test_projects\\Proj07_hamflyAPI_stat"
+ 759      2D50726F 
+ 759      6772616D 
+ 759      735C7465 
+ 759      73745F70 
+ 760 0162 654D6163 		.ascii	"eMachineUpgrade.cydsn\000"
+ 760      68696E65 
+ 760      55706772 
+ 760      6164652E 
+ 760      63796473 
+ 761              	.LASF12:
+ 762 0178 75696E74 		.ascii	"uint8_t\000"
+ 762      385F7400 
+ 763              	.LASF49:
+ 764 0180 6C617374 		.ascii	"last_tx_ms\000"
+ 764      5F74785F 
+ 764      6D7300
+ 765              	.LASF33:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 16
+
+
+ 766 018b 50495F53 		.ascii	"PI_SERIAL_TEST\000"
+ 766      45524941 
+ 766      4C5F5445 
+ 766      535400
+ 767              	.LASF53:
+ 768 019a 6374726C 		.ascii	"ctrl_attr_pending\000"
+ 768      5F617474 
+ 768      725F7065 
+ 768      6E64696E 
+ 768      6700
+ 769              	.LASF56:
+ 770 01ac 6C617374 		.ascii	"last_button\000"
+ 770      5F627574 
+ 770      746F6E00 
+ 771              	.LASF28:
+ 772 01b8 6A6F795F 		.ascii	"joy_cmd_t\000"
+ 772      636D645F 
+ 772      7400
+ 773              	.LASF15:
+ 774 01c2 666C6F61 		.ascii	"float\000"
+ 774      7400
+ 775              	.LASF9:
+ 776 01c8 6C6F6E67 		.ascii	"long long int\000"
+ 776      206C6F6E 
+ 776      6720696E 
+ 776      7400
+ 777              	.LASF44:
+ 778 01d6 6E756467 		.ascii	"nudge_time_short\000"
+ 778      655F7469 
+ 778      6D655F73 
+ 778      686F7274 
+ 778      00
+ 779              	.LASF20:
+ 780 01e7 48414D46 		.ascii	"HAMFLY_DEFER\000"
+ 780      4C595F44 
+ 780      45464552 
+ 780      00
+ 781              	.LASF6:
+ 782 01f4 6C6F6E67 		.ascii	"long int\000"
+ 782      20696E74 
+ 782      00
+ 783              	.LASF4:
+ 784 01fd 5F5F7569 		.ascii	"__uint8_t\000"
+ 784      6E74385F 
+ 784      7400
+ 785              	.LASF32:
+ 786 0207 4552524F 		.ascii	"ERROR\000"
+ 786      5200
+ 787              	.LASF54:
+ 788 020d 73656E73 		.ascii	"sense\000"
+ 788      6500
+ 789              	.LASF59:
+ 790 0213 6170705F 		.ascii	"app_ctx.c\000"
+ 790      6374782E 
+ 790      6300
+ 791              	.LASF43:
+ 792 021d 6E756467 		.ascii	"nudge_tilt_rate\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 17
+
+
+ 792      655F7469 
+ 792      6C745F72 
+ 792      61746500 
+ 793              	.LASF18:
+ 794 022d 6C6F6E67 		.ascii	"long double\000"
+ 794      20646F75 
+ 794      626C6500 
+ 795              	.LASF1:
+ 796 0239 756E7369 		.ascii	"unsigned char\000"
+ 796      676E6564 
+ 796      20636861 
+ 796      7200
+ 797              	.LASF27:
+ 798 0247 6A6F795F 		.ascii	"joy_sensitivity_t\000"
+ 798      73656E73 
+ 798      69746976 
+ 798      6974795F 
+ 798      7400
+ 799              	.LASF0:
+ 800 0259 7369676E 		.ascii	"signed char\000"
+ 800      65642063 
+ 800      68617200 
+ 801              	.LASF10:
+ 802 0265 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 802      206C6F6E 
+ 802      6720756E 
+ 802      7369676E 
+ 802      65642069 
+ 803              	.LASF14:
+ 804 027c 75696E74 		.ascii	"uint32_t\000"
+ 804      33325F74 
+ 804      00
+ 805              	.LASF11:
+ 806 0285 756E7369 		.ascii	"unsigned int\000"
+ 806      676E6564 
+ 806      20696E74 
+ 806      00
+ 807              	.LASF22:
+ 808 0292 48414D46 		.ascii	"HAMFLY_ABSOLUTE\000"
+ 808      4C595F41 
+ 808      42534F4C 
+ 808      55544500 
+ 809              	.LASF42:
+ 810 02a2 6E756467 		.ascii	"nudge_pan_rate\000"
+ 810      655F7061 
+ 810      6E5F7261 
+ 810      746500
+ 811              	.LASF38:
+ 812 02b1 6572726F 		.ascii	"error_msg\000"
+ 812      725F6D73 
+ 812      6700
+ 813              	.LASF52:
+ 814 02bb 73686F77 		.ascii	"show_platform_yaw\000"
+ 814      5F706C61 
+ 814      74666F72 
+ 814      6D5F7961 
+ 814      7700
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 18
+
+
+ 815              	.LASF51:
+ 816 02cd 64696167 		.ascii	"diag_active\000"
+ 816      5F616374 
+ 816      69766500 
+ 817              	.LASF35:
+ 818 02d9 6170705F 		.ascii	"app_mode_t\000"
+ 818      6D6F6465 
+ 818      5F7400
+ 819              	.LASF17:
+ 820 02e4 63686172 		.ascii	"char\000"
+ 820      00
+ 821              	.LASF13:
+ 822 02e9 696E7433 		.ascii	"int32_t\000"
+ 822      325F7400 
+ 823              	.LASF47:
+ 824 02f1 6F726967 		.ascii	"origin_tilt_deg\000"
+ 824      696E5F74 
+ 824      696C745F 
+ 824      64656700 
+ 825              	.LASF26:
+ 826 0301 53454E53 		.ascii	"SENSE_HIGH\000"
+ 826      455F4849 
+ 826      474800
+ 827              	.LASF41:
+ 828 030c 6162735F 		.ascii	"abs_tilt_target\000"
+ 828      74696C74 
+ 828      5F746172 
+ 828      67657400 
+ 829              	.LASF34:
+ 830 031c 4E554447 		.ascii	"NUDGE_HOME\000"
+ 830      455F484F 
+ 830      4D4500
+ 831              	.LASF3:
+ 832 0327 73686F72 		.ascii	"short unsigned int\000"
+ 832      7420756E 
+ 832      7369676E 
+ 832      65642069 
+ 832      6E7400
+ 833              	.LASF8:
+ 834 033a 6C6F6E67 		.ascii	"long unsigned int\000"
+ 834      20756E73 
+ 834      69676E65 
+ 834      6420696E 
+ 834      7400
+ 835              	.LASF16:
+ 836 034c 646F7562 		.ascii	"double\000"
+ 836      6C6500
+ 837              	.LASF31:
+ 838 0353 4E554447 		.ascii	"NUDGE\000"
+ 838      4500
+ 839              	.LASF5:
+ 840 0359 5F5F696E 		.ascii	"__int32_t\000"
+ 840      7433325F 
+ 840      7400
+ 841              	.LASF45:
+ 842 0363 6E756467 		.ascii	"nudge_time_long\000"
+ 842      655F7469 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccjQJdk5.s 			page 19
+
+
+ 842      6D655F6C 
+ 842      6F6E6700 
+ 843              	.LASF57:
+ 844 0373 6170705F 		.ascii	"app_ctx_t\000"
+ 844      6374785F 
+ 844      7400
+ 845              	.LASF46:
+ 846 037d 6F726967 		.ascii	"origin_pan_deg\000"
+ 846      696E5F70 
+ 846      616E5F64 
+ 846      656700
+ 847              	.LASF30:
+ 848 038c 434F4E54 		.ascii	"CONTROL\000"
+ 848      524F4C00 
+ 849              	.LASF19:
+ 850 0394 73697A65 		.ascii	"sizetype\000"
+ 850      74797065 
+ 850      00
+ 851              	.LASF50:
+ 852 039d 6C617374 		.ascii	"last_diag_ms\000"
+ 852      5F646961 
+ 852      675F6D73 
+ 852      00
+ 853              	.LASF62:
+ 854 03aa 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 854      52784275 
+ 854      66666572 
+ 854      00
+ 855              	.LASF40:
+ 856 03b7 6162735F 		.ascii	"abs_pan_target\000"
+ 856      70616E5F 
+ 856      74617267 
+ 856      657400
+ 857              	.LASF37:
+ 858 03c6 6374726C 		.ascii	"ctrl_mode\000"
+ 858      5F6D6F64 
+ 858      6500
+ 859              	.LASF48:
+ 860 03d0 6F726967 		.ascii	"origin_set\000"
+ 860      696E5F73 
+ 860      657400
+ 861              	.LASF21:
+ 862 03db 48414D46 		.ascii	"HAMFLY_RATE\000"
+ 862      4C595F52 
+ 862      41544500 
+ 863              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
