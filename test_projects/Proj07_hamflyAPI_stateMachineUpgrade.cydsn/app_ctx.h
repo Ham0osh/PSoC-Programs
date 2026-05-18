@@ -49,7 +49,7 @@ typedef struct {
     float    nudge_tilt_rate;
     uint8_t  nudge_time_short;
     uint8_t  nudge_time_long;
-    uint8_t  home_entry_ms;  // Timer for homing
+    uint32_t home_entry_ms;  // Timer for homing
  
     float    origin_pan_deg;
     float    origin_tilt_deg;

@@ -274,10 +274,12 @@ int main(void)
         switch (ctx.mode) {
             case STANDBY: state_standby(&ctx, ch, now); break;
             case CONTROL: state_control(&ctx, ch, now); break;
+            case NUDGE_HOME: state_nudge_home(&ctx, ch, now); break;
             case NUDGE:   state_nudge(&ctx, ch, now);   break;
             case ERROR:   state_error(&ctx, ch, now);   break;
             case PI_SERIAL_TEST:
-                state_error(&ctx, ch, now);      break;
+                /* not implemented; bounce to error */
+                set_error(&ctx, "PI_SERIAL_TEST not implemented"); break;
             default:      
                 set_error(&ctx, "unknown mode"); break;
         }
@@ -301,21 +303,16 @@ int main(void)
                 ctl.tilt      = -ctx.cmd.u[CH_Y];
             }
             else if (ctx.mode == NUDGE_HOME) {
-                // In nudge mode, get rate from nudge pule
-                hamfly_control_t home;  // Home packet at 0,0
-                memset(&home, 0, sizeof home);
-                home.enable    = 1u;
-                home.kill      = 0u;
-                home.pan_mode  = HAMFLY_ABSOLUTE;
-                home.tilt_mode = HAMFLY_ABSOLUTE;
-                home.roll_mode = HAMFLY_DEFER;
+                // Drive gimbal back to origin in absolute mode
+                ctl.pan_mode  = HAMFLY_ABSOLUTE;
+                ctl.tilt_mode = HAMFLY_ABSOLUTE;
                 if (ctx.origin_set) {
-                    home.pan = DEG_TO_UNIT(ctx.origin_pan_deg);
-                    home.tilt = DEG_TO_UNIT(ctx.origin_tilt_deg);
+                    ctl.pan  = DEG_TO_UNIT(ctx.origin_pan_deg);
+                    ctl.tilt = DEG_TO_UNIT(ctx.origin_tilt_deg);
+                } else {
+                    ctl.pan  = 0.0f;
+                    ctl.tilt = 0.0f;
                 }
-                else {home.pan = 0.0f; home.tilt = 0.0f;}
-                home.roll      = 0.0f;
-                
             }
             else if (ctx.mode == NUDGE) {
                 // In nudge mode, get rate from nudge pule
