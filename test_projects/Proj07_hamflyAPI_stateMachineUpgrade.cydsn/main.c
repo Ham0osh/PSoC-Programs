@@ -55,8 +55,8 @@
 
 // Nudge config
 #define NUDGE_RATE              0.5f
-#define NUDTE_TIME_SMALL        50u   // ms
-#define NUDTE_TIME_LARGE        200u  // ms
+#define NUDGE_TIME_SMALL        50u   // ms
+#define NUDGE_TIME_LARGE        200u  // ms
 
 // Utilities
 #define DEG_TO_UNIT(d)   ((float)(d) / 180.0f)
@@ -147,11 +147,13 @@ static void cal_prompt(joy_cal_state_t prev, joy_cal_state_t now)
         if (joystick_save())
             UART_1_PutString("[CAL] Saved to EEPROM\r\n");
         else
+        {
             UART_1_PutString("[CAL] EEPROM save FAILED\r\n");
             char dbuf[64];
             sprintf(dbuf, "[CAL] sizeof(joy_cal_t)=%u\r\n",
                     (unsigned)sizeof(joy_cal_t));
             UART_1_PutString(dbuf);
+        }
     }
     else if (now == JOY_CAL_OFF && prev != JOY_CAL_OFF)
         UART_1_PutString("[CAL] Cancelled\r\n");
