@@ -13,7 +13,7 @@
  *
  * ========================================
  *
- * Shared context for state machine.
+ * Shared context + state enums for the HFSM.
 */
 
 #ifndef APP_CTX_H
@@ -23,59 +23,77 @@
 #include "hamfly_core_control.h"   /* for hamfly_control_mode_t */
 #include "joystick.h"              /* for joy_cmd_t, joy_sensitivity_t */
 
-    
-    
+// HFSM states %==============================================================%
+// ROOT is a sentinel; STBY/MANU/AUTO/ERROR are parents (never set directly).
+// All other entries are leaves and ARE the only legal values of ctx.state.
 typedef enum {
-    STANDBY = 0,
-    CONTROL,
-    NUDGE_HOME,
-    NUDGE,
-    ERROR,
-    PI_SERIAL_TEST
-} app_mode_t;
+    ROOT = 0,
+    // Parents
+    STBY, MANU, AUTO, ERROR,
+    // STBY leaves
+    STBY_DEFER, STBY_HOLD,
+    // MANU leaves
+    MANU_JOYSTICK, MANU_NUDGE,
+    // AUTO leaves
+    AUTO_HOME, AUTO_ACQ_GPS, AUTO_ACQ_SPIRAL,
+    AUTO_TRACKING, AUTO_LOSS, AUTO_NO_LOCK,
+    // ERROR leaf (one leaf, severity carried on ctx)
+    ERROR_ACTIVE,
+    STATE_COUNT
+} state_t;
 
+// Error severity %===========================================================%
+// USER  : invalid input; print and reject, no state change.
+// WARN  : transient issue; ERROR_ACTIVE, ack -> STBY_HOLD.
+// SOFTWARE: internal bug / bad assumption; ERROR_ACTIVE, ack -> STBY_HOLD.
+// FATAL : hardware/protocol break; ERROR_ACTIVE, ctl.kill latched, 
+//         only Ctrl+R / power cycle clears.
+typedef enum {
+    SEV_USER = 0,
+    SEV_WARN,
+    SEV_SOFTWARE,
+    SEV_FATAL
+} err_sev_t;
+
+// Shared context %===========================================================%
 typedef struct {
-    // State machine
-    app_mode_t            mode;
-    hamfly_control_mode_t ctrl_mode;  // DEFER, RATE, ABSOLUTE
-    const char           *error_msg;  // Message shown on ERROR state
+    // HFSM
+    state_t   state;  // current leaf (never a parent)
+    state_t   prev_leaf;  // for return-to-last-state ergonomics
     
-    uint8_t  joystick_active;
-    // Used for GPS slew after calculated
-    float    abs_pan_target;          // Units [-1, +1
+    // Error
+    err_sev_t err_sev;
+    const char *err_msg;  // string literal; lifetime = program
+    uint8_t    fatal_latched;  // 1 once FATAL fires, cleared only by ctrl+R
+    
+    // Joystick control mode toggle inside MANU_JOYSTICK (kept for ABS A/B)
+    hamfly_control_mode_t ctrl_mode;   // DEFER, RATE, ABSOLUTE
+    
+    // Absolute target (used by AUTO_HOME, future tracking integrators)
+    float    abs_pan_target;  // units [-1, +1]
     float    abs_tilt_target;
- 
-    float    nudge_pan_rate;
-    float    nudge_tilt_rate;
-    uint8_t  nudge_time_short;
-    uint8_t  nudge_time_long;
-    uint32_t home_entry_ms;  // Timer for homing
- 
+    
+    // Origin (set by '[')
     float    origin_pan_deg;
     float    origin_tilt_deg;
     uint8_t  origin_set;
- 
-    // Telemetry context
+    
+    // Telemetry / loop bookkeeping
     uint32_t last_tx_ms;
     uint32_t last_diag_ms;
+    uint32_t state_entry_ms;  // wall clock at last transition; per-state timers
     uint8_t  diag_active;
-    uint8_t  show_platform_yaw;
-    uint8_t  ctrl_attr_pending;
- 
+    
     // Joystick context
     joy_cmd_t         cmd;
     joy_sensitivity_t sense;
     uint32_t          invert_mask;
-    uint8_t           last_button;
- 
-    /* TBD Closed loop tracking
-     * uint8_t tracking_on;
-     * float   track_pan_rate;   // computed by tracker each loop
-     * float   track_tilt_rate;
-     */
-} app_ctx_t;  // Shared context between states
+
+    // TODO: Closed loop tracking vars.
+} app_ctx_t;
 
 void app_ctx_init(app_ctx_t *ctx);
 
 #endif /* APP_CTX_H */
+
 /* [] END OF FILE */
