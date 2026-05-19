@@ -20,8 +20,9 @@
 #define APP_CTX_H
 
 #include <project.h>
-#include "hamfly_core_control.h"   /* for hamfly_control_mode_t */
-#include "joystick.h"              /* for joy_cmd_t, joy_sensitivity_t */
+#include "hamfly_core_control.h"    // for hamfly_control_mode_t
+#include "hamfly_core_gimbal.h"     // For hamfly_gimbal_t 
+#include "joystick.h"               // for joy_cmd_t, joy_sensitivity_t
 
 // Channels for joystick ADC multiplexing.
 #define CH_X   0u

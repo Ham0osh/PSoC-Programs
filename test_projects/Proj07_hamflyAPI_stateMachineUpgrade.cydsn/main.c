@@ -218,8 +218,9 @@ int main(void)
     UART_MOVI_ClearRxBuffer();
     UART_MOVI_ClearTxBuffer();
     
-    // Initialize movi object
+    // Initialize movi object and give to context
     hamfly_init(&g_movi, &MOVI_HAL);
+    ctx.gimbal = &g_movi;
     isr_rx_movi_StartEx(isr_rx_movi_Handler);  // Rx handler
     UART_1_PutString("[Init] Gimbal UART ready\r\n");
     

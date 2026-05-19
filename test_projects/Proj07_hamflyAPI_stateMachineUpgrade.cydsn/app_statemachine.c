@@ -17,7 +17,9 @@
 */
 
 #include "app_statemachine.h"
+#include "hamfly.h"
 #include <project.h>  // For UART
+#include <math.h>
 
 // For timing, PSoC incremented with looptimer ISR.
 extern volatile uint32_t g_tick_ms;
@@ -249,59 +251,96 @@ static void entry_error_active(app_ctx_t *ctx)
 // %==========================================================================%
 #define KEY_CTRL_R 0x12  // Reset ASCII code.
 
-// Handles global key commands over serial monitor.
-// Returns 1 if consumed, 0 for leaf-specific handlers.
+/* Capture current gimbal attitude as the origin (global '['). */
+static void set_origin(app_ctx_t *ctx)
+{
+    if (!ctx->gimbal) { app_raise_error(ctx, SEV_USER, "no gimbal handle"); return; }
+
+    hamfly_telemetry_t st;
+    hamfly_get_telemetry(ctx->gimbal, &st);
+    if (!st.valid) { app_raise_error(ctx, SEV_USER, "no telemetry - origin not set"); return; }
+
+    /* quaternion -> pan/tilt degrees (same math as main.c get_euler_deg) */
+    float r = st.gimbal_r, ii = st.gimbal_i, j = st.gimbal_j, kk = st.gimbal_k;
+    float sinp = 2.0f * (r*j - kk*ii);
+    ctx->origin_tilt_deg = (sinp >=  1.0f) ?  90.0f :
+                           (sinp <= -1.0f) ? -90.0f :
+                           asinf(sinp) * 57.2958f;
+    float siny = 2.0f * (r*kk + ii*j), cosy = 1.0f - 2.0f*(j*j + kk*kk);
+    ctx->origin_pan_deg = atan2f(siny, cosy) * 57.2958f;
+    ctx->origin_set = 1u;
+    UART_PutString("\r\n[ORIGIN] captured\r\n");
+}
+
+static void print_help(const app_ctx_t *ctx)
+{
+    (void)ctx;
+    UART_PutString(
+        "\r\n--- keys ---\r\n"
+        " 1 hold   2 manual   3 auto\r\n"
+        " k kill   [ set-origin   ? help\r\n"
+        " (in MANU) r rate  a abs  e exit  ] home\r\n");
+}
+
+/* ---- always-global keys (honored in every non-FATAL leaf) ------------- */
 static uint8_t handle_global_key(app_ctx_t *ctx, char k)
 {
-    if (k == KEY_CTRL_R) {  // Reset fatal state.
-        if (ctx->fatal_latched) {
-            ctx->fatal_latched = 0u;
-            ctx->err_sev       = SEV_USER;
-            ctx->err_msg       = NULL;
-            UART_PutString("\r\nFATAL cleared.\r\n");
+    switch (k) {
+        case KEY_CTRL_R:                       /* clear FATAL latch */
+            if (ctx->fatal_latched) {
+                ctx->fatal_latched = 0u;
+                ctx->err_sev = SEV_USER;
+                ctx->err_msg = NULL;
+                UART_PutString("\r\nFATAL cleared.\r\n");
+                transition(ctx, STBY_HOLD);
+            }
+            return 1;                          /* reserved key, always consumed */
+        case 'k':                              /* soft kill */
+            if (ctx->gimbal) hamfly_kill(ctx->gimbal);
             transition(ctx, STBY_HOLD);
-        }
-        return 1;
+            return 1;
+        case '[': set_origin(ctx);  return 1;
+        case '?': print_help(ctx);  return 1;
+        default:  return 0;
     }
-    if (ctx->fatal_latched) return 0;
-    
-    // State switch statement for global keys.
+}
+
+/* ---- navigation keys (suppressed in trapping leaves) ------------------ */
+static uint8_t leaf_traps_nav(state_t s) { return (s == MANU_JOYSTICK); }
+
+static uint8_t handle_nav_key(app_ctx_t *ctx, char k)
+{
     switch (k) {
         case '1': transition(ctx, STBY_HOLD);     return 1;
         case '2': transition(ctx, MANU_JOYSTICK); return 1;
         case '3': app_raise_error(ctx, SEV_USER, "AUTO not yet implemented"); return 1;
-        case '?': /* print_help(); */             return 1;  // TODO.
         default:  return 0;
     }
 }
 
+/* ---- leaf-specific keys ----------------------------------------------- */
 typedef uint8_t (*key_fn_t)(app_ctx_t *, char);
 
-// Manual controls during joystick mode.
 static uint8_t key_manu_joystick(app_ctx_t *ctx, char k)
 {
     switch (k) {
-        case 'r': ctx->ctrl_mode = HAMFLY_RATE;     return 1;
-        case 'a': ctx->ctrl_mode = HAMFLY_ABSOLUTE; return 1;
-        case '[': /* TODO read encoders into ctx->origin_pan_deg/tilt_deg */
-                  ctx->origin_set = 1u;             return 1;
-        case ']': transition(ctx, AUTO_HOME);       return 1;
+        case 'r': ctx->ctrl_mode = HAMFLY_RATE;     UART_PutString("\r\n[MANU] RATE\r\n");     return 1;
+        case 'a': ctx->ctrl_mode = HAMFLY_ABSOLUTE; UART_PutString("\r\n[MANU] ABSOLUTE\r\n"); return 1;
+        case 'e': transition(ctx, STBY_HOLD);       return 1;   /* explicit exit */
+        case ']': app_raise_error(ctx, SEV_USER, "AUTO_HOME not yet implemented"); return 1;
         default:  return 0;
     }
 }
 
-// Acknowledges error and returns to STBY_HOLD.
-// Does nothing if FATAL.
 static uint8_t key_error_active(app_ctx_t *ctx, char k)
 {
     (void)k;
-    if (ctx->err_sev != SEV_FATAL)
-    {
-        // Clear error and return to HOLD for safety.
-        transition(ctx, STBY_HOLD);
+    if (ctx->err_sev != SEV_FATAL) {            /* WARN/SOFTWARE ack */
+        state_t back = (ctx->prev_leaf == ERROR_ACTIVE) ? STBY_HOLD : ctx->prev_leaf;
+        transition(ctx, back);
         return 1;
     }
-    return 0;  // Do nothing on ack if FATAL.
+    return 0;                                   /* FATAL: only Ctrl+R (handled in lockout) */
 }
 
 static const key_fn_t on_key[STATE_COUNT] = {
@@ -309,11 +348,23 @@ static const key_fn_t on_key[STATE_COUNT] = {
     [ERROR_ACTIVE]  = key_error_active,
 };
 
-uint8_t app_dispatch_key(app_ctx_t *ctx, char k)
+/* ---- public entry point ----------------------------------------------- */
+uint8_t app_dispatch_key(app_ctx_t *ctx, char key)
 {
-    if (handle_global_key(ctx, k)) return 1;
+    if (ctx->state >= STATE_COUNT) return 0;          /* Patch 12 guard */
+
+    if (ctx->fatal_latched)                            /* FATAL lockout */
+        return (key == KEY_CTRL_R) ? handle_global_key(ctx, key) : 0;
+
+    if (handle_global_key(ctx, key)) return 1;         /* k, [, ?, Ctrl+R */
+
     key_fn_t f = on_key[ctx->state];
-    return f ? f(ctx, k) : 0;
+    if (f && f(ctx, key)) return 1;                    /* leaf keys */
+
+    if (!leaf_traps_nav(ctx->state))                   /* nav, unless trapped */
+        return handle_nav_key(ctx, key);
+
+    return 0;
 }
 
 // %==========================================================================%
@@ -355,7 +406,7 @@ static void build_manu_joystick(const app_ctx_t *ctx, hamfly_control_t *out)
 {
     out->mode = ctx->ctrl_mode;
     if (ctx->ctrl_mode == HAMFLY_RATE) {
-        out->pan_rate  = ctx->cmd.pan;           /* TODO confirm field names */
+        out->pan_rate  = ctx->cmd.pan;  // TODO confirm field names
         out->tilt_rate = ctx->cmd.tilt;
     } else if (ctx->ctrl_mode == HAMFLY_ABSOLUTE) {
         out->pan_abs   = ctx->cmd.pan;
