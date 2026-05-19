@@ -64,8 +64,6 @@
 #define CLAMP(v,lo,hi)   ((v)<(lo)?(lo):((v)>(hi)?(hi):(v)))
 #define FALSE  0u
 #define TRUE   1u
-#define CH_X   0u
-#define CH_Y   1u
 
 // State machine states %=====================================================%
 

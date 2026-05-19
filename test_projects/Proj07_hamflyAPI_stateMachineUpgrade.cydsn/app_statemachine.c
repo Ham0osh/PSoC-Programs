@@ -17,8 +17,10 @@
 */
 
 #include "app_statemachine.h"
-#include "app_clock.h"  // TODO: Placehlder for PSoC timer.
 #include <project.h>  // For UART
+
+// For timing, PSoC incremented with looptimer ISR.
+extern volatile uint32_t g_tick_ms;
 
 // Hierarchy %================================================================%
 // Heirarchy allows shared entry/exit behaviour.
@@ -67,7 +69,7 @@ static const state_fn_t on_exit[STATE_COUNT] = {
     [MANU_JOYSTICK] = exit_manu_joystick,
 };
 
-// Lowest common ancestor walk %==============================================%
+// Lowest common ancestor (LCA) walk %========================================%
 // For a given state, walk up its parents to ROOT, then walk down to incoming
 // state. Allows for heirarchical and shared entry/exit behaviour.
 static uint8_t depth_of(state_t s)
@@ -207,13 +209,11 @@ static void entry_stby_hold(app_ctx_t *ctx)
 // On Enter: Enable joystick, print message.
 static void entry_manu_joystick(app_ctx_t *ctx)
 {
-    joystick_enable(&ctx->cmd);                  /* TODO confirm API name */
     UART_PutString("\r\n[MANU_JOYSTICK] r=rate a=abs [=origin ]=home\r\n> ");
 }
 // On Exit: Disable joystick, zero control mode.
 static void exit_manu_joystick(app_ctx_t *ctx)
 {
-    joystick_disable();                          /* TODO confirm API name */
     ctx->ctrl_mode = HAMFLY_DEFER;
 }
 
@@ -236,10 +236,12 @@ static void entry_error_active(app_ctx_t *ctx)
     UART_PutString(sev_str(ctx->err_sev));
     UART_PutString("] ");
     UART_PutString(ctx->err_msg ? ctx->err_msg : "(no msg)");
-    if (ctx->err_sev == SEV_FATAL)
+    if (ctx->err_sev == SEV_FATAL && ctx->gimbal)
+    {
+        hamfly_kill(ctx->gimbal);
         UART_PutString("\r\nFATAL latched. Power cycle or Ctrl+R to clear.\r\n");
-    else
-        UART_PutString("\r\nAny key to acknowledge.\r\n");
+    }
+    else    UART_PutString("\r\nAny key to acknowledge.\r\n");
 }
 
 // %==========================================================================%
@@ -267,7 +269,7 @@ static uint8_t handle_global_key(app_ctx_t *ctx, char k)
     switch (k) {
         case '1': transition(ctx, STBY_HOLD);     return 1;
         case '2': transition(ctx, MANU_JOYSTICK); return 1;
-        case '3': transition(ctx, AUTO_HOME);     return 1;
+        case '3': app_raise_error(ctx, SEV_USER, "AUTO not yet implemented"); return 1;
         case '?': /* print_help(); */             return 1;  // TODO.
         default:  return 0;
     }
@@ -327,11 +329,28 @@ static void build_zero(const app_ctx_t *ctx, hamfly_control_t *out)
     memset(out, 0, sizeof *out);
 }
 // Build packet for STBY states: zero rates, defer mode.
-static void build_stby(const app_ctx_t *ctx, hamfly_control_t *out)
-{
-    build_zero(ctx, out);
-    out->mode = HAMFLY_DEFER;                    /* TODO confirm field */
+static void build_stby(const app_ctx_t *ctx, hamfly_control_t *out) {
+    build_zero(ctx, out);  // DEFERed, and disabled.
 }
+
+// Build packet from joystick inputs.
+static void build_manu_joystick(const app_ctx_t *ctx, hamfly_control_t *out) {
+    out->enable    = 1u;
+    out->pan_mode  = ctx->ctrl_mode;
+    out->tilt_mode = ctx->ctrl_mode;
+    out->roll_mode = HAMFLY_DEFER;
+    out->pan       =  ctx->cmd.u[CH_X];
+    out->tilt      = -ctx->cmd.u[CH_Y];  // Invert Y based on breadboarding.
+    out->roll      = 0.0f;
+    out->kill      = 0u;
+}
+
+// Build packet for when in ERROR state
+static void build_error(const app_ctx_t *ctx, hamfly_control_t *out) {
+    build_zero(ctx, out);
+    if (ctx->err_sev == SEV_FATAL) out->kill = 1u;
+}
+
 static void build_manu_joystick(const app_ctx_t *ctx, hamfly_control_t *out)
 {
     out->mode = ctx->ctrl_mode;
@@ -344,12 +363,9 @@ static void build_manu_joystick(const app_ctx_t *ctx, hamfly_control_t *out)
     }
     out->kill = 0u;
 }
-static void build_error(const app_ctx_t *ctx, hamfly_control_t *out)
-{
-    build_zero(ctx, out);
-    if (ctx->err_sev == SEV_FATAL) out->kill = 1u;
-}
 
+
+// Selector for the correct packet building function.
 static const build_fn_t on_build[STATE_COUNT] = {
     [STBY_DEFER]    = build_stby,
     [STBY_HOLD]     = build_stby,
@@ -357,9 +373,10 @@ static const build_fn_t on_build[STATE_COUNT] = {
     [ERROR_ACTIVE]  = build_error,
 };
 
+// Do build. For states without a build function returns zeroed packet.
 void app_build_control(const app_ctx_t *ctx, hamfly_control_t *out)
 {
     build_fn_t f = on_build[ctx->state];
-    if (f) f(ctx, out);
-    else   build_zero(ctx, out);                 /* safe default for AUTO_* */
+    if (f)  f(ctx, out);
+    else    build_zero(ctx, out);  // Safe default.
 }

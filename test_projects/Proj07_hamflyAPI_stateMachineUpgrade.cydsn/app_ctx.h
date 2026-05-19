@@ -23,6 +23,10 @@
 #include "hamfly_core_control.h"   /* for hamfly_control_mode_t */
 #include "joystick.h"              /* for joy_cmd_t, joy_sensitivity_t */
 
+// Channels for joystick ADC multiplexing.
+#define CH_X   0u
+#define CH_Y   1u
+
 // HFSM states %==============================================================%
 // ROOT is a sentinel; STBY/MANU/AUTO/ERROR are parents (never set directly).
 // All other entries are leaves and ARE the only legal values of ctx.state.
@@ -35,8 +39,10 @@ typedef enum {
     // MANU leaves
     MANU_JOYSTICK, MANU_NUDGE,
     // AUTO leaves
-    AUTO_HOME, AUTO_ACQ_GPS, AUTO_ACQ_SPIRAL,
-    AUTO_TRACKING, AUTO_LOSS, AUTO_NO_LOCK,
+    AUTO_HOME,                      // Go to software origin
+    AUTO_ACQ_GPS, AUTO_ACQ_SPIRAL,  // TODO: Open loop acquisition patterns
+    AUTO_TRACKING,                  // TODO: Closed loop tracking
+    AUTO_LOSS, AUTO_NO_LOCK,        // No lock states.
     // ERROR leaf (one leaf, severity carried on ctx)
     ERROR_ACTIVE,
     STATE_COUNT
@@ -57,6 +63,9 @@ typedef enum {
 
 // Shared context %===========================================================%
 typedef struct {
+    // Shared gimbal context for HamflyAPI. Initialized in main, never changes.
+    hamfly_gimbal_t *gimbal;
+
     // HFSM
     state_t   state;  // current leaf (never a parent)
     state_t   prev_leaf;  // for return-to-last-state ergonomics
@@ -66,7 +75,7 @@ typedef struct {
     const char *err_msg;  // string literal; lifetime = program
     uint8_t    fatal_latched;  // 1 once FATAL fires, cleared only by ctrl+R
     
-    // Joystick control mode toggle inside MANU_JOYSTICK (kept for ABS A/B)
+    // Control mode toggle, used for joystick.
     hamfly_control_mode_t ctrl_mode;   // DEFER, RATE, ABSOLUTE
     
     // Absolute target (used by AUTO_HOME, future tracking integrators)
