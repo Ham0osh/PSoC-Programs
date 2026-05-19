@@ -14,6 +14,30 @@
  * ========================================
  *
  * HFSM engine: parent table, LCA walk, transition driver, error raiser.
+ *
+ *   ROOT
+ *   ├─ STBY ── STBY_DEFER (boot)   STBY_HOLD
+ *   ├─ MANU ── MANU_JOYSTICK       MANU_NUDGE*
+ *   ├─ AUTO ── AUTO_HOME*  ACQ_GPS*  ACQ_SPIRAL*
+ *   │          TRACKING*   LOSS*     NO_LOCK*
+ *   └─ ERROR ─ ERROR_ACTIVE
+ * 
+ *      * = declared, not yet implemented
+ *
+ * KEYMAP (keep in sync with the key_* handlers in section 5):
+ *   GLOBAL (any non-FATAL leaf):
+ *     k       soft kill -> STBY_HOLD
+ *     [       capture origin from telemetry
+ *     ?       help
+ *     Ctrl+R  clear FATAL latch -> STBY_HOLD
+ *   NAV (suppressed where leaf_traps_nav()==1):
+ *     1/2/3   STBY_HOLD / MANU_JOYSTICK / AUTO
+ *   MANU_JOYSTICK leaf:
+ *     r/a     RATE / ABSOLUTE      e  exit -> STBY_HOLD
+ *     ]       -> AUTO_HOME
+ *
+ * DISPATCH PRECEDENCE (app_dispatch_key):
+ *     FATAL-lockout  >  global  >  leaf  >  nav
 */
 
 #include "app_statemachine.h"
@@ -62,13 +86,67 @@ static void entry_error_active (app_ctx_t *);
 // AUTO_* and MANU_NUDGE: NULL until implemented
 
 static const state_fn_t on_entry[STATE_COUNT] = {
-    [STBY_DEFER]    = entry_stby_defer,
-    [STBY_HOLD]     = entry_stby_hold,
-    [MANU_JOYSTICK] = entry_manu_joystick,
-    [ERROR_ACTIVE]  = entry_error_active,
+    [STBY]            = NULL,   /* parent: shared STBY entry, if ever needed */
+    [MANU]            = NULL,   /* parent */
+    [AUTO]            = NULL,   /* parent */
+    [ERROR]           = NULL,   /* parent */
+    [STBY_DEFER]      = entry_stby_defer,
+    [STBY_HOLD]       = entry_stby_hold,
+    [MANU_JOYSTICK]   = entry_manu_joystick,
+    [MANU_NUDGE]      = NULL,   /* TODO */
+    [AUTO_HOME]       = NULL,   /* TODO */
+    [AUTO_ACQ_GPS]    = NULL,   /* TODO */
+    [AUTO_ACQ_SPIRAL] = NULL,   /* TODO */
+    [AUTO_TRACKING]   = NULL,   /* TODO */
+    [AUTO_LOSS]       = NULL,   /* TODO */
+    [AUTO_NO_LOCK]    = NULL,   /* TODO */
+    [ERROR_ACTIVE]    = entry_error_active,
 };
+
 static const state_fn_t on_exit[STATE_COUNT] = {
-    [MANU_JOYSTICK] = exit_manu_joystick,
+    [STBY]            = NULL,   /* parent */
+    [MANU]            = NULL,   /* parent: e.g. zero rates on any MANU->non-MANU */
+    [AUTO]            = NULL,   /* parent */
+    [ERROR]           = NULL,   /* parent */
+    [STBY_DEFER]      = NULL,
+    [STBY_HOLD]       = NULL,
+    [MANU_JOYSTICK]   = exit_manu_joystick,
+    [MANU_NUDGE]      = NULL,   /* TODO */
+    [AUTO_HOME]       = NULL,   /* TODO */
+    [AUTO_ACQ_GPS]    = NULL,   /* TODO */
+    [AUTO_ACQ_SPIRAL] = NULL,   /* TODO */
+    [AUTO_TRACKING]   = NULL,   /* TODO */
+    [AUTO_LOSS]       = NULL,   /* TODO */
+    [AUTO_NO_LOCK]    = NULL,   /* TODO */
+    [ERROR_ACTIVE]    = NULL,
+};
+
+static const key_fn_t on_key[STATE_COUNT] = {
+    [STBY_DEFER]      = NULL,
+    [STBY_HOLD]       = NULL,
+    [MANU_JOYSTICK]   = key_manu_joystick,
+    [MANU_NUDGE]      = NULL,   /* TODO */
+    [AUTO_HOME]       = NULL,   /* TODO */
+    [AUTO_ACQ_GPS]    = NULL,   /* TODO */
+    [AUTO_ACQ_SPIRAL] = NULL,   /* TODO */
+    [AUTO_TRACKING]   = NULL,   /* TODO */
+    [AUTO_LOSS]       = NULL,   /* TODO */
+    [AUTO_NO_LOCK]    = NULL,   /* TODO */
+    [ERROR_ACTIVE]    = key_error_active,
+};
+
+static const build_fn_t on_build[STATE_COUNT] = {
+    [STBY_DEFER]      = build_stby,
+    [STBY_HOLD]       = build_stby,
+    [MANU_JOYSTICK]   = build_manu_joystick,
+    [MANU_NUDGE]      = NULL,   /* TODO */
+    [AUTO_HOME]       = NULL,   /* TODO */
+    [AUTO_ACQ_GPS]    = NULL,   /* TODO */
+    [AUTO_ACQ_SPIRAL] = NULL,   /* TODO */
+    [AUTO_TRACKING]   = NULL,   /* TODO */
+    [AUTO_LOSS]       = NULL,   /* TODO */
+    [AUTO_NO_LOCK]    = NULL,   /* TODO */
+    [ERROR_ACTIVE]    = build_error,
 };
 
 // Lowest common ancestor (LCA) walk %========================================%
@@ -126,7 +204,7 @@ static void transition(app_ctx_t *ctx, state_t target)
     
     // Store new state.
     ctx->state          = target;
-    ctx->state_entry_ms = app_millis();  // TODO: Wire to PSoC timer.
+    ctx->state_entry_ms = g_tick_ms;
 }
 
 // On boot.
@@ -299,7 +377,7 @@ static uint8_t handle_global_key(app_ctx_t *ctx, char k)
             if (ctx->gimbal) hamfly_kill(ctx->gimbal);
             transition(ctx, STBY_HOLD);
             return 1;
-        case '[': set_origin(ctx);  return 1;
+    case '[': set_origin(ctx);  return 1;
         case '?': print_help(ctx);  return 1;
         default:  return 0;
     }
@@ -342,11 +420,6 @@ static uint8_t key_error_active(app_ctx_t *ctx, char k)
     }
     return 0;                                   /* FATAL: only Ctrl+R (handled in lockout) */
 }
-
-static const key_fn_t on_key[STATE_COUNT] = {
-    [MANU_JOYSTICK] = key_manu_joystick,
-    [ERROR_ACTIVE]  = key_error_active,
-};
 
 /* ---- public entry point ----------------------------------------------- */
 uint8_t app_dispatch_key(app_ctx_t *ctx, char key)
@@ -402,27 +475,6 @@ static void build_error(const app_ctx_t *ctx, hamfly_control_t *out) {
     if (ctx->err_sev == SEV_FATAL) out->kill = 1u;
 }
 
-static void build_manu_joystick(const app_ctx_t *ctx, hamfly_control_t *out)
-{
-    out->mode = ctx->ctrl_mode;
-    if (ctx->ctrl_mode == HAMFLY_RATE) {
-        out->pan_rate  = ctx->cmd.pan;  // TODO confirm field names
-        out->tilt_rate = ctx->cmd.tilt;
-    } else if (ctx->ctrl_mode == HAMFLY_ABSOLUTE) {
-        out->pan_abs   = ctx->cmd.pan;
-        out->tilt_abs  = ctx->cmd.tilt;
-    }
-    out->kill = 0u;
-}
-
-
-// Selector for the correct packet building function.
-static const build_fn_t on_build[STATE_COUNT] = {
-    [STBY_DEFER]    = build_stby,
-    [STBY_HOLD]     = build_stby,
-    [MANU_JOYSTICK] = build_manu_joystick,
-    [ERROR_ACTIVE]  = build_error,
-};
 
 // Do build. For states without a build function returns zeroed packet.
 void app_build_control(const app_ctx_t *ctx, hamfly_control_t *out)

@@ -242,105 +242,54 @@ int main(void)
     isr_Looptimer_StartEx(isr_Looptimer_Handler);
     UART_1_PutString("[Init] Ready  Mode: STANDBY.\r\n");
 
+    // Fire state machine "on entry" function
+    app_start(&ctx);
+    
     // %======================================================================%
     // Main Loop %============================================================%
     // %======================================================================%
     for (;;)
     {
+        uint32_t  now = g_tick_ms;
         // Get serial monitor input.
         uint8_t ch = (uint8_t)UART_1_GetChar();
-        uint32_t  now = g_tick_ms;
-        
-        // Handle x, k, z, [, ]
-        // If common key, go to next loop, else switch statement
-        if (handle_common_keys(&ctx, (char)ch, now)) {
-            ch = 0;  /* don't double-process in the state handler */
+        // Handle joystick and common keys
+        // 'app_dispatch_key' handles the state machine input logic
+        if (ch) {
+            if (joystick_cal_state() != JOY_CAL_OFF)
+                joystick_on_key(ch);
+            else
+                app_dispatch_key(&ctx, ch);
         }
         
-        // Always pump gimbal rx
+        // Always pump gimbal Rx
         hamfly_pump(&g_movi);
         
         // Always read joystick
-        {
         int16_t counts[N_CH];
-        if (adc_balanced_poll_frame(counts)) {
+        if (adc_balanced_poll_frame(counts))
+        {
             joystick_on_sample(counts);
             joystick_get_cmd(&ctx.cmd);
         }
-        }
         
-        // Switch statement to handle mode parsing.
-        switch (ctx.mode) {
-            case STANDBY: state_standby(&ctx, ch, now); break;
-            case CONTROL: state_control(&ctx, ch, now); break;
-            case NUDGE_HOME: state_nudge_home(&ctx, ch, now); break;
-            case NUDGE:   state_nudge(&ctx, ch, now);   break;
-            case ERROR:   state_error(&ctx, ch, now);   break;
-            case PI_SERIAL_TEST:
-                /* not implemented; bounce to error */
-                set_error(&ctx, "PI_SERIAL_TEST not implemented"); break;
-            default:      
-                set_error(&ctx, "unknown mode"); break;
-        }
-        
-        // Build control packet and send
+        // At 'CONTROL_PERIOD_MS' build and send control packet
+        // app_build_control handles the state of the state machine
         if ((now - ctx.last_tx_ms) >= CONTROL_PERIOD_MS) {
             ctx.last_tx_ms = now;
-
-            memset(&ctl, 0, sizeof ctl);  // Wipe control packet
-            ctl.enable    = 1u;           // Enable ctrl
-            ctl.roll_mode = HAMFLY_DEFER; // Init to defer
-
-            if (ctx.mode == CONTROL && 
-                ctx.joystick_active &&
-                joystick_cal_state() == JOY_CAL_OFF)
-            {
-                // In control state, pass joystick to ctl
-                ctl.pan_mode  = ctx.ctrl_mode;
-                ctl.tilt_mode = ctx.ctrl_mode;
-                ctl.pan       =  ctx.cmd.u[CH_X];
-                ctl.tilt      = -ctx.cmd.u[CH_Y];
-            }
-            else if (ctx.mode == NUDGE_HOME) {
-                // Drive gimbal back to origin in absolute mode
-                ctl.pan_mode  = HAMFLY_ABSOLUTE;
-                ctl.tilt_mode = HAMFLY_ABSOLUTE;
-                if (ctx.origin_set) {
-                    ctl.pan  = DEG_TO_UNIT(ctx.origin_pan_deg);
-                    ctl.tilt = DEG_TO_UNIT(ctx.origin_tilt_deg);
-                } else {
-                    ctl.pan  = 0.0f;
-                    ctl.tilt = 0.0f;
-                }
-            }
-            else if (ctx.mode == NUDGE) {
-                // In nudge mode, get rate from nudge pule
-                /* RATE control; nudge handler will fill 
-                 * rates when it has pulse logic.
-                 * For now: zero rate = hold. */
-                ctl.pan_mode  = HAMFLY_RATE;
-                ctl.tilt_mode = HAMFLY_RATE;
-                ctl.pan = ctl.tilt = 0.0f;
-            }
-            else {
-                // Standby, error, and idle states
-                ctl.pan_mode  = HAMFLY_DEFER;
-                ctl.tilt_mode = HAMFLY_DEFER;
-                ctl.pan = ctl.tilt = 0.0f;
-            }
-
+            app_build_control(&ctx, &ctl);
             hamfly_send_control(&g_movi, &ctl);
         }
         
-        // Print diagnostics
+        // At 'DIAG_PERIOD_MS' share telemetry to monitor
         if (ctx.diag_active && (now - ctx.last_diag_ms) >= DIAG_PERIOD_MS) {
             ctx.last_diag_ms = now;
             snprintf(tx, sizeof tx,
-                     "[%lu] mode=%d ctrl=%d pan=%+.2f tilt=%+.2f\r\n",
-                     (unsigned long)now, 
-                     (int)ctx.mode, 
+                     "[%lu] state=%s ctrl=%s pan=%+.2f tilt=%+.2f\r\n",
+                     (unsigned long)now,
+                     app_state_name(ctx.state),
                      mode_str(ctx.ctrl_mode),
-                     (double)ctx.cmd.u[CH_X], 
+                     (double)ctx.cmd.u[CH_X],
                      (double)ctx.cmd.u[CH_Y]);
             UART_1_PutString(tx);
         }
