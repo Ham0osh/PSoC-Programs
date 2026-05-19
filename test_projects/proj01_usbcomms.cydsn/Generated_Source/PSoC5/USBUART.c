@@ -1824,7 +1824,7 @@ uint16 USBUART_ReadOutEP(uint8 epNumber, uint8 pData[], uint16 length)
 }
 
 
-#if (USBUART_16BITS_EP_ACCESS_ENABLE)
+#if (USBUART_DEBUG6BITS_EP_ACCESS_ENABLE)
 /*******************************************************************************
 * Function Name: USBUART_LoadInEP16
 ****************************************************************************//**
@@ -2252,7 +2252,7 @@ uint16 USBUART_ReadOutEP16(uint8 epNumber, uint8 pData[], uint16 length)
 
     return (length);
 }
-#endif /* (USBUART_16BITS_EP_ACCESS_ENABLE) */
+#endif /* (USBUART_DEBUG6BITS_EP_ACCESS_ENABLE) */
 
 
 /*******************************************************************************

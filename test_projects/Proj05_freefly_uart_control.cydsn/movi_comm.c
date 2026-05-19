@@ -129,11 +129,11 @@ void movi_comm_pump(movi_comm_t* m)
         int got_packet = QX_StreamRxCharSM(MOVI_QX_PORT, (unsigned char)b);
         // Print if a valid QX packet was parsed
         if (got_packet) {
-            // UART_1_PutString(" [QX OK]\r\n");
+            // UART_DEBUG_PutString(" [QX OK]\r\n");
             m->statistics.rx_packets++;
             copy_status_from_freefly(&m->status);
         } else {
-            // UART_1_PutString("\r\n");
+            // UART_DEBUG_PutString("\r\n");
         }
     }
 

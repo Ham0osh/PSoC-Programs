@@ -100,7 +100,7 @@ net \UART_MOVI:BUART:rx_postpoll\
 	switch ":udb@[UDB=(0,5)]:dp_wrapper:input_permute.route_si==>:udb@[UDB=(0,5)]:dp_wrapper:datapath.route_si"
 	term   ":udb@[UDB=(0,5)]:dp_wrapper:datapath.route_si"
 end \UART_MOVI:BUART:rx_postpoll\
-net \UART_1:BUART:rx_postpoll\
+net \UART_DEBUG:BUART:rx_postpoll\
 	term   ":udb@[UDB=(0,1)]:pld0:mc1.q"
 	switch ":udb@[UDB=(0,1)]:pld0:mc1.q==>:udb@[UDB=(0,1)]:pld0:output_permute0.q_1"
 	switch ":udb@[UDB=(0,1)]:pld0:output_permute0.output_0==>Stub-:udbswitch@[UDB=(0,1)][side=top]:v24"
@@ -111,7 +111,7 @@ net \UART_1:BUART:rx_postpoll\
 	switch "Stub-:udbswitch@[UDB=(0,1)][side=top]:v70==>:udb@[UDB=(0,1)]:dp_wrapper:input_permute.ina_3"
 	switch ":udb@[UDB=(0,1)]:dp_wrapper:input_permute.route_si==>:udb@[UDB=(0,1)]:dp_wrapper:datapath.route_si"
 	term   ":udb@[UDB=(0,1)]:dp_wrapper:datapath.route_si"
-end \UART_1:BUART:rx_postpoll\
+end \UART_DEBUG:BUART:rx_postpoll\
 net Net_25
 	term   ":ioport12:pin6.fb"
 	switch ":ioport12:pin6.fb==>Stub-:dsiswitch_top@[DSI=(0,0)][side=top]:dsihc_top:v16+:dsiswitch_top@[DSI=(0,0)][side=top]:dsihc_top:v18"
@@ -146,7 +146,7 @@ net Net_25
 	switch ":udb@[UDB=(0,0)]:pld0:input_permute.mc0_main_5==>:udb@[UDB=(0,0)]:pld0:mc0.main_5"
 	term   ":udb@[UDB=(0,0)]:pld0:mc0.main_5"
 end Net_25
-net \UART_1:BUART:tx_state_1\
+net \UART_DEBUG:BUART:tx_state_1\
 	term   ":udb@[UDB=(0,1)]:pld1:mc2.q"
 	switch ":udb@[UDB=(0,1)]:pld1:mc2.q==>:udb@[UDB=(0,1)]:pld1:output_permute3.q_2"
 	switch ":udb@[UDB=(0,1)]:pld1:output_permute3.output_3==>Stub-:udbswitch@[UDB=(0,1)][side=top]:v32"
@@ -184,8 +184,8 @@ net \UART_1:BUART:tx_state_1\
 	term   ":udb@[UDB=(0,1)]:pld1:mc2.main_0"
 	switch ":udb@[UDB=(0,1)]:pld1:input_permute.mc0_main_0==>:udb@[UDB=(0,1)]:pld1:mc0.main_0"
 	term   ":udb@[UDB=(0,1)]:pld1:mc0.main_0"
-end \UART_1:BUART:tx_state_1\
-net \UART_1:BUART:counter_load_not\
+end \UART_DEBUG:BUART:tx_state_1\
+net \UART_DEBUG:BUART:counter_load_not\
 	term   ":udb@[UDB=(0,2)]:pld0:mc2.q"
 	switch ":udb@[UDB=(0,2)]:pld0:mc2.q==>:udb@[UDB=(0,2)]:pld0:output_permute2.q_2"
 	switch ":udb@[UDB=(0,2)]:pld0:output_permute2.output_2==>Stub-:udbswitch@[UDB=(0,2)][side=top]:v28"
@@ -198,8 +198,8 @@ net \UART_1:BUART:counter_load_not\
 	switch "Stub-:udbswitch@[UDB=(0,0)][side=top]:v74==>:udb@[UDB=(0,0)]:dp_wrapper:input_permute.ina_5"
 	switch ":udb@[UDB=(0,0)]:dp_wrapper:input_permute.cs_addr_0==>:udb@[UDB=(0,0)]:dp_wrapper:datapath.cs_addr_0"
 	term   ":udb@[UDB=(0,0)]:dp_wrapper:datapath.cs_addr_0"
-end \UART_1:BUART:counter_load_not\
-net \UART_1:BUART:tx_bitclk_enable_pre\
+end \UART_DEBUG:BUART:counter_load_not\
+net \UART_DEBUG:BUART:tx_bitclk_enable_pre\
 	term   ":udb@[UDB=(0,0)]:dp_wrapper:datapath.ce0_reg"
 	switch ":udb@[UDB=(0,0)]:dp_wrapper:datapath.ce0_reg==>:udb@[UDB=(0,0)]:dp_wrapper:output_permute.ce0_reg"
 	switch ":udb@[UDB=(0,0)]:dp_wrapper:output_permute.outs_0==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v76"
@@ -236,8 +236,8 @@ net \UART_1:BUART:tx_bitclk_enable_pre\
 	term   ":udb@[UDB=(0,1)]:pld1:mc2.main_2"
 	switch ":udb@[UDB=(0,1)]:pld1:input_permute.mc0_main_2==>:udb@[UDB=(0,1)]:pld1:mc0.main_2"
 	term   ":udb@[UDB=(0,1)]:pld1:mc0.main_2"
-end \UART_1:BUART:tx_bitclk_enable_pre\
-net \UART_1:BUART:tx_state_2\
+end \UART_DEBUG:BUART:tx_bitclk_enable_pre\
+net \UART_DEBUG:BUART:tx_state_2\
 	term   ":udb@[UDB=(0,1)]:pld1:mc0.q"
 	switch ":udb@[UDB=(0,1)]:pld1:mc0.q==>:udb@[UDB=(0,1)]:pld1:output_permute0.q_0"
 	switch ":udb@[UDB=(0,1)]:pld1:output_permute0.output_0==>Stub-:udbswitch@[UDB=(0,1)][side=top]:v38"
@@ -269,7 +269,7 @@ net \UART_1:BUART:tx_state_2\
 	term   ":udb@[UDB=(0,1)]:pld1:mc2.main_3"
 	switch ":udb@[UDB=(0,1)]:pld1:input_permute.mc0_main_3==>:udb@[UDB=(0,1)]:pld1:mc0.main_3"
 	term   ":udb@[UDB=(0,1)]:pld1:mc0.main_3"
-end \UART_1:BUART:tx_state_2\
+end \UART_DEBUG:BUART:tx_state_2\
 net \UART_MOVI:BUART:tx_state_1\
 	term   ":udb@[UDB=(1,0)]:pld0:mc1.q"
 	switch ":udb@[UDB=(1,0)]:pld0:mc1.q==>:udb@[UDB=(1,0)]:pld0:output_permute1.q_1"
@@ -327,7 +327,7 @@ net \UART_MOVI:BUART:counter_load_not\
 	switch ":udb@[UDB=(1,0)]:dp_wrapper:input_permute.cs_addr_0==>:udb@[UDB=(1,0)]:dp_wrapper:datapath.cs_addr_0"
 	term   ":udb@[UDB=(1,0)]:dp_wrapper:datapath.cs_addr_0"
 end \UART_MOVI:BUART:counter_load_not\
-net \UART_1:BUART:tx_state_0\
+net \UART_DEBUG:BUART:tx_state_0\
 	term   ":udb@[UDB=(0,2)]:pld0:mc0.q"
 	switch ":udb@[UDB=(0,2)]:pld0:mc0.q==>:udb@[UDB=(0,2)]:pld0:output_permute3.q_0"
 	switch ":udb@[UDB=(0,2)]:pld0:output_permute3.output_3==>Stub-:udbswitch@[UDB=(0,2)][side=top]:v30"
@@ -363,7 +363,7 @@ net \UART_1:BUART:tx_state_0\
 	term   ":udb@[UDB=(0,2)]:pld1:mc1.main_1"
 	switch ":udb@[UDB=(0,2)]:pld0:input_permute.mc0_main_1==>:udb@[UDB=(0,2)]:pld0:mc0.main_1"
 	term   ":udb@[UDB=(0,2)]:pld0:mc0.main_1"
-end \UART_1:BUART:tx_state_0\
+end \UART_DEBUG:BUART:tx_state_0\
 net \UART_PI:BUART:tx_ctrl_mark_last\
 	term   ":udb@[UDB=(0,3)]:pld0:mc2.q"
 	switch ":udb@[UDB=(0,3)]:pld0:mc2.q==>:udb@[UDB=(0,3)]:pld0:output_permute0.q_2"
@@ -711,7 +711,7 @@ net \UART_PI:BUART:tx_bitclk_enable_pre\
 	switch ":udb@[UDB=(0,3)]:pld1:input_permute.mc1_main_2==>:udb@[UDB=(0,3)]:pld1:mc1.main_2"
 	term   ":udb@[UDB=(0,3)]:pld1:mc1.main_2"
 end \UART_PI:BUART:tx_bitclk_enable_pre\
-net \UART_1:BUART:tx_status_0\
+net \UART_DEBUG:BUART:tx_status_0\
 	term   ":udb@[UDB=(0,2)]:pld1:mc2.q"
 	switch ":udb@[UDB=(0,2)]:pld1:mc2.q==>:udb@[UDB=(0,2)]:pld1:output_permute1.q_2"
 	switch ":udb@[UDB=(0,2)]:pld1:output_permute1.output_1==>Stub-:udbswitch@[UDB=(0,2)][side=top]:v36"
@@ -723,7 +723,7 @@ net \UART_1:BUART:tx_status_0\
 	switch "IStub-:udbswitch@[UDB=(0,2)][side=top]:v88"
 	switch "Stub-:udbswitch@[UDB=(0,2)][side=top]:v88==>:udb@[UDB=(0,2)]:statusicell.status_0"
 	term   ":udb@[UDB=(0,2)]:statusicell.status_0"
-end \UART_1:BUART:tx_status_0\
+end \UART_DEBUG:BUART:tx_status_0\
 net \UART_PI:BUART:tx_fifo_empty\
 	term   ":udb@[UDB=(0,3)]:dp_wrapper:datapath.f0_blk_stat_comb"
 	switch ":udb@[UDB=(0,3)]:dp_wrapper:datapath.f0_blk_stat_comb==>:udb@[UDB=(0,3)]:dp_wrapper:output_permute.f0_blk_stat_comb"
@@ -757,7 +757,7 @@ net \UART_PI:BUART:tx_status_0\
 	switch "Stub-:udbswitch@[UDB=(0,3)][side=top]:v88==>:udb@[UDB=(0,3)]:statusicell.status_0"
 	term   ":udb@[UDB=(0,3)]:statusicell.status_0"
 end \UART_PI:BUART:tx_status_0\
-net \UART_1:BUART:tx_fifo_empty\
+net \UART_DEBUG:BUART:tx_fifo_empty\
 	term   ":udb@[UDB=(0,2)]:dp_wrapper:datapath.f0_blk_stat_comb"
 	switch ":udb@[UDB=(0,2)]:dp_wrapper:datapath.f0_blk_stat_comb==>:udb@[UDB=(0,2)]:dp_wrapper:output_permute.f0_blk_stat_comb"
 	switch ":udb@[UDB=(0,2)]:dp_wrapper:output_permute.outs_4==>Stub-:udbswitch@[UDB=(0,2)][side=top]:v84"
@@ -779,7 +779,7 @@ net \UART_1:BUART:tx_fifo_empty\
 	switch "IStub-:udbswitch@[UDB=(0,2)][side=top]:v90"
 	switch "Stub-:udbswitch@[UDB=(0,2)][side=top]:v90==>:udb@[UDB=(0,2)]:statusicell.status_1"
 	term   ":udb@[UDB=(0,2)]:statusicell.status_1"
-end \UART_1:BUART:tx_fifo_empty\
+end \UART_DEBUG:BUART:tx_fifo_empty\
 net \UART_PI:BUART:rx_state_0\
 	term   ":udb@[UDB=(1,4)]:pld0:mc0.q"
 	switch ":udb@[UDB=(1,4)]:pld0:mc0.q==>:udb@[UDB=(1,4)]:pld0:output_permute2.q_0"
@@ -814,7 +814,7 @@ net \UART_PI:BUART:rx_state_0\
 	switch ":udb@[UDB=(1,4)]:pld0:input_permute.mc2_main_1==>:udb@[UDB=(1,4)]:pld0:mc2.main_1"
 	term   ":udb@[UDB=(1,4)]:pld0:mc2.main_1"
 end \UART_PI:BUART:rx_state_0\
-net \UART_1:BUART:rx_state_2\
+net \UART_DEBUG:BUART:rx_state_2\
 	term   ":udb@[UDB=(0,0)]:pld1:mc0.q"
 	switch ":udb@[UDB=(0,0)]:pld1:mc0.q==>:udb@[UDB=(0,0)]:pld1:output_permute1.q_0"
 	switch ":udb@[UDB=(0,0)]:pld1:output_permute1.output_1==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v36"
@@ -841,8 +841,8 @@ net \UART_1:BUART:rx_state_2\
 	term   ":udb@[UDB=(0,0)]:pld1:mc3.main_3"
 	switch ":udb@[UDB=(0,0)]:pld1:input_permute.mc2_main_4==>:udb@[UDB=(0,0)]:pld1:mc2.main_4"
 	term   ":udb@[UDB=(0,0)]:pld1:mc2.main_4"
-end \UART_1:BUART:rx_state_2\
-net \UART_1:BUART:rx_counter_load\
+end \UART_DEBUG:BUART:rx_state_2\
+net \UART_DEBUG:BUART:rx_counter_load\
 	term   ":udb@[UDB=(0,0)]:pld0:mc1.q"
 	switch ":udb@[UDB=(0,0)]:pld0:mc1.q==>:udb@[UDB=(0,0)]:pld0:output_permute3.q_1"
 	switch ":udb@[UDB=(0,0)]:pld0:output_permute3.output_3==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v30"
@@ -853,7 +853,7 @@ net \UART_1:BUART:rx_counter_load\
 	switch "Stub-:udbswitch@[UDB=(0,0)][side=top]:v94==>:udb@[UDB=(0,0)]:c7_ld_mux.in_3"
 	switch ":udb@[UDB=(0,0)]:c7_ld_mux.c7_ld==>:udb@[UDB=(0,0)]:count7cell.load"
 	term   ":udb@[UDB=(0,0)]:count7cell.load"
-end \UART_1:BUART:rx_counter_load\
+end \UART_DEBUG:BUART:rx_counter_load\
 net \UART_MOVI:BUART:tx_fifo_empty\
 	term   ":udb@[UDB=(1,1)]:dp_wrapper:datapath.f0_blk_stat_comb"
 	switch ":udb@[UDB=(1,1)]:dp_wrapper:datapath.f0_blk_stat_comb==>:udb@[UDB=(1,1)]:dp_wrapper:output_permute.f0_blk_stat_comb"
@@ -925,7 +925,7 @@ net \UART_PI:BUART:pollcount_0\
 	switch ":udb@[UDB=(1,5)]:pld1:input_permute.mc0_main_3==>:udb@[UDB=(1,5)]:pld1:mc0.main_3"
 	term   ":udb@[UDB=(1,5)]:pld1:mc0.main_3"
 end \UART_PI:BUART:pollcount_0\
-net \UART_1:BUART:rx_state_3\
+net \UART_DEBUG:BUART:rx_state_3\
 	term   ":udb@[UDB=(0,0)]:pld0:mc2.q"
 	switch ":udb@[UDB=(0,0)]:pld0:mc2.q==>:udb@[UDB=(0,0)]:pld0:output_permute1.q_2"
 	switch ":udb@[UDB=(0,0)]:pld0:output_permute1.output_1==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v26"
@@ -952,8 +952,8 @@ net \UART_1:BUART:rx_state_3\
 	term   ":udb@[UDB=(0,0)]:pld0:mc3.main_3"
 	switch ":udb@[UDB=(0,0)]:pld0:input_permute.mc2_main_3==>:udb@[UDB=(0,0)]:pld0:mc2.main_3"
 	term   ":udb@[UDB=(0,0)]:pld0:mc2.main_3"
-end \UART_1:BUART:rx_state_3\
-net \UART_1:BUART:tx_ctrl_mark_last\
+end \UART_DEBUG:BUART:rx_state_3\
+net \UART_DEBUG:BUART:tx_ctrl_mark_last\
 	term   ":udb@[UDB=(0,0)]:pld1:mc1.q"
 	switch ":udb@[UDB=(0,0)]:pld1:mc1.q==>:udb@[UDB=(0,0)]:pld1:output_permute3.q_1"
 	switch ":udb@[UDB=(0,0)]:pld1:output_permute3.output_3==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v32"
@@ -986,7 +986,7 @@ net \UART_1:BUART:tx_ctrl_mark_last\
 	term   ":udb@[UDB=(0,0)]:pld0:mc3.main_0"
 	switch ":udb@[UDB=(0,0)]:pld0:input_permute.mc2_main_0==>:udb@[UDB=(0,0)]:pld0:mc2.main_0"
 	term   ":udb@[UDB=(0,0)]:pld0:mc2.main_0"
-end \UART_1:BUART:tx_ctrl_mark_last\
+end \UART_DEBUG:BUART:tx_ctrl_mark_last\
 net \UART_PI:BUART:rx_state_3\
 	term   ":udb@[UDB=(1,4)]:pld0:mc2.q"
 	switch ":udb@[UDB=(1,4)]:pld0:mc2.q==>:udb@[UDB=(1,4)]:pld0:output_permute0.q_2"
@@ -1119,7 +1119,7 @@ net \UART_MOVI:BUART:rx_state_0\
 	switch ":udb@[UDB=(0,5)]:pld0:input_permute.mc2_main_1==>:udb@[UDB=(0,5)]:pld0:mc2.main_1"
 	term   ":udb@[UDB=(0,5)]:pld0:mc2.main_1"
 end \UART_MOVI:BUART:rx_state_0\
-net \UART_1:BUART:rx_state_0\
+net \UART_DEBUG:BUART:rx_state_0\
 	term   ":udb@[UDB=(0,0)]:pld0:mc0.q"
 	switch ":udb@[UDB=(0,0)]:pld0:mc0.q==>:udb@[UDB=(0,0)]:pld0:output_permute2.q_0"
 	switch ":udb@[UDB=(0,0)]:pld0:output_permute2.output_2==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v28"
@@ -1151,7 +1151,7 @@ net \UART_1:BUART:rx_state_0\
 	term   ":udb@[UDB=(0,0)]:pld0:mc3.main_1"
 	switch ":udb@[UDB=(0,0)]:pld0:input_permute.mc2_main_1==>:udb@[UDB=(0,0)]:pld0:mc2.main_1"
 	term   ":udb@[UDB=(0,0)]:pld0:mc2.main_1"
-end \UART_1:BUART:rx_state_0\
+end \UART_DEBUG:BUART:rx_state_0\
 net \UART_MOVI:BUART:rx_state_3\
 	term   ":udb@[UDB=(0,5)]:pld1:mc2.q"
 	switch ":udb@[UDB=(0,5)]:pld1:mc2.q==>:udb@[UDB=(0,5)]:pld1:output_permute0.q_2"
@@ -1234,7 +1234,7 @@ net \UART_MOVI:BUART:rx_state_2\
 	switch ":udb@[UDB=(0,5)]:pld1:input_permute.mc0_main_4==>:udb@[UDB=(0,5)]:pld1:mc0.main_4"
 	term   ":udb@[UDB=(0,5)]:pld1:mc0.main_4"
 end \UART_MOVI:BUART:rx_state_2\
-net \UART_1:BUART:rx_fifofull\
+net \UART_DEBUG:BUART:rx_fifofull\
 	term   ":udb@[UDB=(0,1)]:dp_wrapper:datapath.f0_blk_stat_comb"
 	switch ":udb@[UDB=(0,1)]:dp_wrapper:datapath.f0_blk_stat_comb==>:udb@[UDB=(0,1)]:dp_wrapper:output_permute.f0_blk_stat_comb"
 	switch ":udb@[UDB=(0,1)]:dp_wrapper:output_permute.outs_2==>Stub-:udbswitch@[UDB=(0,1)][side=top]:v80"
@@ -1245,8 +1245,8 @@ net \UART_1:BUART:rx_fifofull\
 	switch "Stub-:udbswitch@[UDB=(0,1)][side=top]:v23==>:udb@[UDB=(1,1)]:pld0:input_permute.input_11"
 	switch ":udb@[UDB=(1,1)]:pld0:input_permute.mc2_main_1==>:udb@[UDB=(1,1)]:pld0:mc2.main_1"
 	term   ":udb@[UDB=(1,1)]:pld0:mc2.main_1"
-end \UART_1:BUART:rx_fifofull\
-net \UART_1:BUART:rx_status_4\
+end \UART_DEBUG:BUART:rx_fifofull\
+net \UART_DEBUG:BUART:rx_status_4\
 	term   ":udb@[UDB=(1,1)]:pld0:mc2.q"
 	switch ":udb@[UDB=(1,1)]:pld0:mc2.q==>:udb@[UDB=(1,1)]:pld0:output_permute3.q_2"
 	switch ":udb@[UDB=(1,1)]:pld0:output_permute3.output_3==>Stub-:udbswitch@[UDB=(0,1)][side=top]:v31"
@@ -1259,7 +1259,7 @@ net \UART_1:BUART:rx_status_4\
 	switch "IStub-:udbswitch@[UDB=(0,4)][side=top]:v96"
 	switch "Stub-:udbswitch@[UDB=(0,4)][side=top]:v96==>:udb@[UDB=(0,4)]:statusicell.status_4"
 	term   ":udb@[UDB=(0,4)]:statusicell.status_4"
-end \UART_1:BUART:rx_status_4\
+end \UART_DEBUG:BUART:rx_status_4\
 net MODIN1_0
 	term   ":udb@[UDB=(0,1)]:pld0:mc0.q"
 	switch ":udb@[UDB=(0,1)]:pld0:mc0.q==>:udb@[UDB=(0,1)]:pld0:output_permute2.q_0"
@@ -1291,7 +1291,7 @@ net MODIN1_0
 	switch ":udb@[UDB=(0,1)]:pld0:input_permute.mc0_main_3==>:udb@[UDB=(0,1)]:pld0:mc0.main_3"
 	term   ":udb@[UDB=(0,1)]:pld0:mc0.main_3"
 end MODIN1_0
-net \UART_1:BUART:rx_load_fifo\
+net \UART_DEBUG:BUART:rx_load_fifo\
 	term   ":udb@[UDB=(0,0)]:pld0:mc3.q"
 	switch ":udb@[UDB=(0,0)]:pld0:mc3.q==>:udb@[UDB=(0,0)]:pld0:output_permute0.q_3"
 	switch ":udb@[UDB=(0,0)]:pld0:output_permute0.output_0==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v24"
@@ -1310,7 +1310,7 @@ net \UART_1:BUART:rx_load_fifo\
 	switch "Stub-:udbswitch@[UDB=(0,1)][side=top]:v74==>:udb@[UDB=(0,1)]:dp_wrapper:input_permute.ina_5"
 	switch ":udb@[UDB=(0,1)]:dp_wrapper:input_permute.f0_load==>:udb@[UDB=(0,1)]:dp_wrapper:datapath.f0_load"
 	term   ":udb@[UDB=(0,1)]:dp_wrapper:datapath.f0_load"
-end \UART_1:BUART:rx_load_fifo\
+end \UART_DEBUG:BUART:rx_load_fifo\
 net MODIN5_0
 	term   ":udb@[UDB=(0,4)]:pld1:mc2.q"
 	switch ":udb@[UDB=(0,4)]:pld1:mc2.q==>:udb@[UDB=(0,4)]:pld1:output_permute2.q_2"
@@ -1488,7 +1488,7 @@ net \UART_MOVI:BUART:rx_load_fifo\
 	switch ":udb@[UDB=(0,5)]:dp_wrapper:input_permute.f0_load==>:udb@[UDB=(0,5)]:dp_wrapper:datapath.f0_load"
 	term   ":udb@[UDB=(0,5)]:dp_wrapper:datapath.f0_load"
 end \UART_MOVI:BUART:rx_load_fifo\
-net \UART_1:BUART:rx_count_0\
+net \UART_DEBUG:BUART:rx_count_0\
 	term   ":udb@[UDB=(0,0)]:count7cell.count_0"
 	switch ":udb@[UDB=(0,0)]:count7cell.count_0==>:udb@[UDB=(0,0)]:controlcell_control_0_permute.in_1"
 	switch ":udb@[UDB=(0,0)]:controlcell_control_0_permute.controlcell_control_0==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v104"
@@ -1502,8 +1502,8 @@ net \UART_1:BUART:rx_count_0\
 	switch "Stub-:udbswitch@[UDB=(0,1)][side=top]:v52==>:udb@[UDB=(0,1)]:pld1:input_permute.input_5"
 	switch ":udb@[UDB=(0,1)]:pld1:input_permute.mc1_main_2==>:udb@[UDB=(0,1)]:pld1:mc1.main_2"
 	term   ":udb@[UDB=(0,1)]:pld1:mc1.main_2"
-end \UART_1:BUART:rx_count_0\
-net \UART_1:BUART:rx_bitclk_enable\
+end \UART_DEBUG:BUART:rx_count_0\
+net \UART_DEBUG:BUART:rx_bitclk_enable\
 	term   ":udb@[UDB=(0,1)]:pld1:mc1.q"
 	switch ":udb@[UDB=(0,1)]:pld1:mc1.q==>:udb@[UDB=(0,1)]:pld1:output_permute1.q_1"
 	switch ":udb@[UDB=(0,1)]:pld1:output_permute1.output_1==>Stub-:udbswitch@[UDB=(0,1)][side=top]:v36"
@@ -1532,8 +1532,8 @@ net \UART_1:BUART:rx_bitclk_enable\
 	term   ":udb@[UDB=(0,0)]:pld1:mc0.main_2"
 	switch ":udb@[UDB=(0,0)]:pld1:input_permute.mc2_main_2==>:udb@[UDB=(0,0)]:pld1:mc2.main_2"
 	term   ":udb@[UDB=(0,0)]:pld1:mc2.main_2"
-end \UART_1:BUART:rx_bitclk_enable\
-net \UART_1:BUART:rx_status_3\
+end \UART_DEBUG:BUART:rx_bitclk_enable\
+net \UART_DEBUG:BUART:rx_status_3\
 	term   ":udb@[UDB=(0,0)]:pld1:mc2.q"
 	switch ":udb@[UDB=(0,0)]:pld1:mc2.q==>:udb@[UDB=(0,0)]:pld1:output_permute2.q_2"
 	switch ":udb@[UDB=(0,0)]:pld1:output_permute2.output_2==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v34"
@@ -1549,8 +1549,8 @@ net \UART_1:BUART:rx_status_3\
 	switch "IStub-:udbswitch@[UDB=(0,4)][side=top]:v94"
 	switch "Stub-:udbswitch@[UDB=(0,4)][side=top]:v94==>:udb@[UDB=(0,4)]:statusicell.status_3"
 	term   ":udb@[UDB=(0,4)]:statusicell.status_3"
-end \UART_1:BUART:rx_status_3\
-net \UART_1:BUART:tx_shift_out\
+end \UART_DEBUG:BUART:rx_status_3\
+net \UART_DEBUG:BUART:tx_shift_out\
 	term   ":udb@[UDB=(0,2)]:dp_wrapper:datapath.so_comb"
 	switch ":udb@[UDB=(0,2)]:dp_wrapper:datapath.so_comb==>:udb@[UDB=(0,2)]:dp_wrapper:output_permute.so_comb"
 	switch ":udb@[UDB=(0,2)]:dp_wrapper:output_permute.outs_3==>Stub-:udbswitch@[UDB=(0,2)][side=top]:v82"
@@ -1561,8 +1561,8 @@ net \UART_1:BUART:tx_shift_out\
 	switch "Stub-:udbswitch@[UDB=(0,2)][side=top]:v58==>:udb@[UDB=(0,2)]:pld1:input_permute.input_2"
 	switch ":udb@[UDB=(0,2)]:pld1:input_permute.mc0_main_3==>:udb@[UDB=(0,2)]:pld1:mc0.main_3"
 	term   ":udb@[UDB=(0,2)]:pld1:mc0.main_3"
-end \UART_1:BUART:tx_shift_out\
-net \UART_1:BUART:rx_count_2\
+end \UART_DEBUG:BUART:tx_shift_out\
+net \UART_DEBUG:BUART:rx_count_2\
 	term   ":udb@[UDB=(0,0)]:count7cell.count_2"
 	switch ":udb@[UDB=(0,0)]:count7cell.count_2==>:udb@[UDB=(0,0)]:controlcell_control_2_permute.in_1"
 	switch ":udb@[UDB=(0,0)]:controlcell_control_2_permute.controlcell_control_2==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v108"
@@ -1582,7 +1582,7 @@ net \UART_1:BUART:rx_count_2\
 	term   ":udb@[UDB=(0,1)]:pld0:mc2.main_0"
 	switch ":udb@[UDB=(0,1)]:pld0:input_permute.mc0_main_0==>:udb@[UDB=(0,1)]:pld0:mc0.main_0"
 	term   ":udb@[UDB=(0,1)]:pld0:mc0.main_0"
-end \UART_1:BUART:rx_count_2\
+end \UART_DEBUG:BUART:rx_count_2\
 net \UART_MOVI:BUART:tx_shift_out\
 	term   ":udb@[UDB=(1,1)]:dp_wrapper:datapath.so_comb"
 	switch ":udb@[UDB=(1,1)]:dp_wrapper:datapath.so_comb==>:udb@[UDB=(1,1)]:dp_wrapper:output_permute.so_comb"
@@ -1698,7 +1698,7 @@ net \UART_PI:BUART:tx_bitclk\
 	switch ":udb@[UDB=(0,3)]:pld1:input_permute.mc0_main_5==>:udb@[UDB=(0,3)]:pld1:mc0.main_5"
 	term   ":udb@[UDB=(0,3)]:pld1:mc0.main_5"
 end \UART_PI:BUART:tx_bitclk\
-net \UART_1:BUART:rx_count_1\
+net \UART_DEBUG:BUART:rx_count_1\
 	term   ":udb@[UDB=(0,0)]:count7cell.count_1"
 	switch ":udb@[UDB=(0,0)]:count7cell.count_1==>:udb@[UDB=(0,0)]:controlcell_control_1_permute.in_1"
 	switch ":udb@[UDB=(0,0)]:controlcell_control_1_permute.controlcell_control_1==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v106"
@@ -1717,7 +1717,7 @@ net \UART_1:BUART:rx_count_1\
 	term   ":udb@[UDB=(0,1)]:pld0:mc2.main_1"
 	switch ":udb@[UDB=(0,1)]:pld0:input_permute.mc0_main_1==>:udb@[UDB=(0,1)]:pld0:mc0.main_1"
 	term   ":udb@[UDB=(0,1)]:pld0:mc0.main_1"
-end \UART_1:BUART:rx_count_1\
+end \UART_DEBUG:BUART:rx_count_1\
 net \UART_PI:BUART:rx_count_1\
 	term   ":udb@[UDB=(1,4)]:count7cell.count_1"
 	switch ":udb@[UDB=(1,4)]:count7cell.count_1==>:udb@[UDB=(1,4)]:controlcell_control_1_permute.in_1"
@@ -1752,7 +1752,7 @@ net \UART_PI:BUART:rx_count_0\
 	switch ":udb@[UDB=(1,3)]:pld1:input_permute.mc3_main_2==>:udb@[UDB=(1,3)]:pld1:mc3.main_2"
 	term   ":udb@[UDB=(1,3)]:pld1:mc3.main_2"
 end \UART_PI:BUART:rx_count_0\
-net \UART_1:BUART:tx_bitclk\
+net \UART_DEBUG:BUART:tx_bitclk\
 	term   ":udb@[UDB=(0,2)]:pld1:mc1.q"
 	switch ":udb@[UDB=(0,2)]:pld1:mc1.q==>:udb@[UDB=(0,2)]:pld1:output_permute3.q_1"
 	switch ":udb@[UDB=(0,2)]:pld1:output_permute3.output_3==>Stub-:udbswitch@[UDB=(0,2)][side=top]:v32"
@@ -1776,7 +1776,7 @@ net \UART_1:BUART:tx_bitclk\
 	switch "Stub-:udbswitch@[UDB=(0,2)][side=top]:v48==>:udb@[UDB=(0,2)]:pld1:input_permute.input_7"
 	switch ":udb@[UDB=(0,2)]:pld1:input_permute.mc0_main_6==>:udb@[UDB=(0,2)]:pld1:mc0.main_6"
 	term   ":udb@[UDB=(0,2)]:pld1:mc0.main_6"
-end \UART_1:BUART:tx_bitclk\
+end \UART_DEBUG:BUART:tx_bitclk\
 net \UART_PI:BUART:rx_count_4\
 	term   ":udb@[UDB=(1,4)]:count7cell.count_4"
 	switch ":udb@[UDB=(1,4)]:count7cell.count_4==>:udb@[UDB=(1,4)]:controlcell_control_4_permute.in_1"
@@ -2043,7 +2043,7 @@ net MODIN8_6
 	switch ":udb@[UDB=(0,5)]:pld1:input_permute.mc0_main_7==>:udb@[UDB=(0,5)]:pld1:mc0.main_7"
 	term   ":udb@[UDB=(0,5)]:pld1:mc0.main_7"
 end MODIN8_6
-net \UART_1:BUART:txn\
+net \UART_DEBUG:BUART:txn\
 	term   ":udb@[UDB=(0,2)]:pld1:mc0.q"
 	switch ":udb@[UDB=(0,2)]:pld1:mc0.q==>:udb@[UDB=(0,2)]:pld1:output_permute0.q_0"
 	switch ":udb@[UDB=(0,2)]:pld1:output_permute0.output_0==>Stub-:udbswitch@[UDB=(0,2)][side=top]:v38"
@@ -2062,7 +2062,7 @@ net \UART_1:BUART:txn\
 	switch "Stub-:udbswitch@[UDB=(0,0)][side=top]:v63==>:udb@[UDB=(1,0)]:pld1:input_permute.input_0"
 	switch ":udb@[UDB=(1,0)]:pld1:input_permute.mc2_main_0==>:udb@[UDB=(1,0)]:pld1:mc2.main_0"
 	term   ":udb@[UDB=(1,0)]:pld1:mc2.main_0"
-end \UART_1:BUART:txn\
+end \UART_DEBUG:BUART:txn\
 net \UART_PI:BUART:rx_last\
 	term   ":udb@[UDB=(1,3)]:pld1:mc2.q"
 	switch ":udb@[UDB=(1,3)]:pld1:mc2.q==>:udb@[UDB=(1,3)]:pld1:output_permute3.q_2"
@@ -2076,7 +2076,7 @@ net \UART_PI:BUART:rx_last\
 	switch ":udb@[UDB=(1,4)]:pld1:input_permute.mc0_main_9==>:udb@[UDB=(1,4)]:pld1:mc0.main_9"
 	term   ":udb@[UDB=(1,4)]:pld1:mc0.main_9"
 end \UART_PI:BUART:rx_last\
-net \UART_1:BUART:rx_last\
+net \UART_DEBUG:BUART:rx_last\
 	term   ":udb@[UDB=(0,1)]:pld0:mc3.q"
 	switch ":udb@[UDB=(0,1)]:pld0:mc3.q==>:udb@[UDB=(0,1)]:pld0:output_permute3.q_3"
 	switch ":udb@[UDB=(0,1)]:pld0:output_permute3.output_3==>Stub-:udbswitch@[UDB=(0,1)][side=top]:v30"
@@ -2088,8 +2088,8 @@ net \UART_1:BUART:rx_last\
 	switch "Stub-:udbswitch@[UDB=(0,0)][side=top]:v40==>:udb@[UDB=(0,0)]:pld1:input_permute.input_11"
 	switch ":udb@[UDB=(0,0)]:pld1:input_permute.mc0_main_6==>:udb@[UDB=(0,0)]:pld1:mc0.main_6"
 	term   ":udb@[UDB=(0,0)]:pld1:mc0.main_6"
-end \UART_1:BUART:rx_last\
-net \UART_1:BUART:tx_counter_dp\
+end \UART_DEBUG:BUART:rx_last\
+net \UART_DEBUG:BUART:tx_counter_dp\
 	term   ":udb@[UDB=(0,0)]:dp_wrapper:datapath.ce1_reg"
 	switch ":udb@[UDB=(0,0)]:dp_wrapper:datapath.ce1_reg==>:udb@[UDB=(0,0)]:dp_wrapper:output_permute.ce1_reg"
 	switch ":udb@[UDB=(0,0)]:dp_wrapper:output_permute.outs_4==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v84"
@@ -2109,7 +2109,7 @@ net \UART_1:BUART:tx_counter_dp\
 	term   ":udb@[UDB=(0,1)]:pld1:mc2.main_4"
 	switch ":udb@[UDB=(0,1)]:pld1:input_permute.mc0_main_4==>:udb@[UDB=(0,1)]:pld1:mc0.main_4"
 	term   ":udb@[UDB=(0,1)]:pld1:mc0.main_4"
-end \UART_1:BUART:tx_counter_dp\
+end \UART_DEBUG:BUART:tx_counter_dp\
 net \UART_PI:BUART:txn\
 	term   ":udb@[UDB=(1,2)]:pld1:mc0.q"
 	switch ":udb@[UDB=(1,2)]:pld1:mc0.q==>:udb@[UDB=(1,2)]:pld1:output_permute0.q_0"
@@ -2256,7 +2256,7 @@ net Net_123
 	switch ":udb@[UDB=(0,5)]:clockreset:clk_pld0_mux.pld0_clk==>:udb@[UDB=(0,5)]:pld0:mc1.clock_0"
 	term   ":udb@[UDB=(0,5)]:pld0:mc1.clock_0"
 end Net_123
-net \UART_1:Net_9\
+net \UART_DEBUG:Net_9\
 	term   ":clockblockcell.dclk_glb_1"
 	switch ":clockblockcell.dclk_glb_1==>:udb@[UDB=(0,2)]:clockreset:clk_dp_mux.in_1"
 	switch ":udb@[UDB=(0,2)]:clockreset:clk_dp_mux.dp_clk==>:udb@[UDB=(0,2)]:dp_wrapper:datapath.clock"
@@ -2314,7 +2314,7 @@ net \UART_1:Net_9\
 	term   ":udb@[UDB=(0,0)]:pld1:mc2.clock_0"
 	switch ":udb@[UDB=(0,1)]:clockreset:clk_pld0_mux.pld0_clk==>:udb@[UDB=(0,1)]:pld0:mc3.clock_0"
 	term   ":udb@[UDB=(0,1)]:pld0:mc3.clock_0"
-end \UART_1:Net_9\
+end \UART_DEBUG:Net_9\
 net \UART_PI:Net_9\
 	term   ":clockblockcell.dclk_glb_2"
 	switch ":clockblockcell.dclk_glb_2==>:udb@[UDB=(0,3)]:clockreset:clk_dp_mux.in_2"
@@ -2424,7 +2424,7 @@ net Net_45
 	switch ":interrupt_idmux_0.interrupt_idmux_0__out==>:interrupt_0.interrupt"
 	term   ":interrupt_0.interrupt"
 end Net_45
-net \UART_1:BUART:tx_fifo_notfull\
+net \UART_DEBUG:BUART:tx_fifo_notfull\
 	term   ":udb@[UDB=(0,2)]:dp_wrapper:datapath.f0_bus_stat_comb"
 	switch ":udb@[UDB=(0,2)]:dp_wrapper:datapath.f0_bus_stat_comb==>:udb@[UDB=(0,2)]:dp_wrapper:output_permute.f0_bus_stat_comb"
 	switch ":udb@[UDB=(0,2)]:dp_wrapper:output_permute.outs_0==>Stub-:udbswitch@[UDB=(0,2)][side=top]:v76"
@@ -2441,7 +2441,7 @@ net \UART_1:BUART:tx_fifo_notfull\
 	switch "IStub-:udbswitch@[UDB=(0,2)][side=top]:v94"
 	switch "Stub-:udbswitch@[UDB=(0,2)][side=top]:v94==>:udb@[UDB=(0,2)]:statusicell.status_3"
 	term   ":udb@[UDB=(0,2)]:statusicell.status_3"
-end \UART_1:BUART:tx_fifo_notfull\
+end \UART_DEBUG:BUART:tx_fifo_notfull\
 net \UART_MOVI:BUART:tx_fifo_notfull\
 	term   ":udb@[UDB=(1,1)]:dp_wrapper:datapath.f0_bus_stat_comb"
 	switch ":udb@[UDB=(1,1)]:dp_wrapper:datapath.f0_bus_stat_comb==>:udb@[UDB=(1,1)]:dp_wrapper:output_permute.f0_bus_stat_comb"
@@ -2590,7 +2590,7 @@ net \ADC_DelSig_1:Net_93_local\
 	switch "Stub-:dsiswitch_top@[DSI=(0,3)][side=top]:dsihc_top:v69+:dsiswitch_top@[DSI=(0,3)][side=top]:dsihc_top:v71==>:dsmodcell.extclk_cp_udb"
 	term   ":dsmodcell.extclk_cp_udb"
 end \ADC_DelSig_1:Net_93_local\
-net \UART_1:BUART:rx_fifonotempty\
+net \UART_DEBUG:BUART:rx_fifonotempty\
 	term   ":udb@[UDB=(0,1)]:dp_wrapper:datapath.f0_bus_stat_comb"
 	switch ":udb@[UDB=(0,1)]:dp_wrapper:datapath.f0_bus_stat_comb==>:udb@[UDB=(0,1)]:dp_wrapper:output_permute.f0_bus_stat_comb"
 	switch ":udb@[UDB=(0,1)]:dp_wrapper:output_permute.outs_0==>Stub-:udbswitch@[UDB=(0,1)][side=top]:v76"
@@ -2601,8 +2601,8 @@ net \UART_1:BUART:rx_fifonotempty\
 	switch "Stub-:udbswitch@[UDB=(0,1)][side=top]:v44==>:udb@[UDB=(0,1)]:pld1:input_permute.input_9"
 	switch ":udb@[UDB=(0,1)]:pld1:input_permute.mc3_main_0==>:udb@[UDB=(0,1)]:pld1:mc3.main_0"
 	term   ":udb@[UDB=(0,1)]:pld1:mc3.main_0"
-end \UART_1:BUART:rx_fifonotempty\
-net \UART_1:BUART:rx_state_stop1_reg\
+end \UART_DEBUG:BUART:rx_fifonotempty\
+net \UART_DEBUG:BUART:rx_state_stop1_reg\
 	term   ":udb@[UDB=(0,0)]:pld1:mc3.q"
 	switch ":udb@[UDB=(0,0)]:pld1:mc3.q==>:udb@[UDB=(0,0)]:pld1:output_permute0.q_3"
 	switch ":udb@[UDB=(0,0)]:pld1:output_permute0.output_0==>Stub-:udbswitch@[UDB=(0,0)][side=top]:v38"
@@ -2614,8 +2614,8 @@ net \UART_1:BUART:rx_state_stop1_reg\
 	switch "Stub-:udbswitch@[UDB=(0,1)][side=top]:v62==>:udb@[UDB=(0,1)]:pld1:input_permute.input_0"
 	switch ":udb@[UDB=(0,1)]:pld1:input_permute.mc3_main_1==>:udb@[UDB=(0,1)]:pld1:mc3.main_1"
 	term   ":udb@[UDB=(0,1)]:pld1:mc3.main_1"
-end \UART_1:BUART:rx_state_stop1_reg\
-net \UART_1:BUART:rx_status_5\
+end \UART_DEBUG:BUART:rx_state_stop1_reg\
+net \UART_DEBUG:BUART:rx_status_5\
 	term   ":udb@[UDB=(0,1)]:pld1:mc3.q"
 	switch ":udb@[UDB=(0,1)]:pld1:mc3.q==>:udb@[UDB=(0,1)]:pld1:output_permute2.q_3"
 	switch ":udb@[UDB=(0,1)]:pld1:output_permute2.output_2==>Stub-:udbswitch@[UDB=(0,1)][side=top]:v34"
@@ -2628,8 +2628,8 @@ net \UART_1:BUART:rx_status_5\
 	switch "IStub-:udbswitch@[UDB=(0,4)][side=top]:v98"
 	switch "Stub-:udbswitch@[UDB=(0,4)][side=top]:v98==>:udb@[UDB=(0,4)]:statusicell.status_5"
 	term   ":udb@[UDB=(0,4)]:statusicell.status_5"
-end \UART_1:BUART:rx_status_5\
-net \UART_1:BUART:tx_status_2\
+end \UART_DEBUG:BUART:rx_status_5\
+net \UART_DEBUG:BUART:tx_status_2\
 	term   ":udb@[UDB=(0,2)]:pld0:mc1.q"
 	switch ":udb@[UDB=(0,2)]:pld0:mc1.q==>:udb@[UDB=(0,2)]:pld0:output_permute0.q_1"
 	switch ":udb@[UDB=(0,2)]:pld0:output_permute0.output_0==>Stub-:udbswitch@[UDB=(0,2)][side=top]:v24"
@@ -2641,7 +2641,7 @@ net \UART_1:BUART:tx_status_2\
 	switch "IStub-:udbswitch@[UDB=(0,2)][side=top]:v92"
 	switch "Stub-:udbswitch@[UDB=(0,2)][side=top]:v92==>:udb@[UDB=(0,2)]:statusicell.status_2"
 	term   ":udb@[UDB=(0,2)]:statusicell.status_2"
-end \UART_1:BUART:tx_status_2\
+end \UART_DEBUG:BUART:tx_status_2\
 net \UART_MOVI:BUART:rx_fifonotempty\
 	term   ":udb@[UDB=(0,5)]:dp_wrapper:datapath.f0_bus_stat_comb"
 	switch ":udb@[UDB=(0,5)]:dp_wrapper:datapath.f0_bus_stat_comb==>:udb@[UDB=(0,5)]:dp_wrapper:output_permute.f0_bus_stat_comb"

@@ -103,14 +103,14 @@ static void print_cal_prompt_on_state_change(joy_cal_state_t prev,
     if (prev == now) return;
 
     if (now == JOY_CAL_RANGE_CAPTURE) {
-        UART_1_PutString("\r\n[CAL] Step 1: Move joystick through FULL range, then release to center.\r\n");
-        UART_1_PutString("[CAL] Press 'c' to proceed to center capture, 'x' to cancel.\r\n");
+        UART_DEBUG_PutString("\r\n[CAL] Step 1: Move joystick through FULL range, then release to center.\r\n");
+        UART_DEBUG_PutString("[CAL] Press 'c' to proceed to center capture, 'x' to cancel.\r\n");
     } else if (now == JOY_CAL_CENTER_CAPTURE) {
-        UART_1_PutString("\r\n[CAL] Step 2: Hold center — averaging...\r\n");
+        UART_DEBUG_PutString("\r\n[CAL] Step 2: Hold center — averaging...\r\n");
     } else if (now == JOY_CAL_CONFIRM_SAVE) {
-        UART_1_PutString("\r\n[CAL] Step 3: Center captured. Press 'c' to SAVE, 'x' to cancel.\r\n");
+        UART_DEBUG_PutString("\r\n[CAL] Step 3: Center captured. Press 'c' to SAVE, 'x' to cancel.\r\n");
     } else if (now == JOY_CAL_OFF && prev != JOY_CAL_OFF) {
-        UART_1_PutString("[CAL] Exited.\r\n");
+        UART_DEBUG_PutString("[CAL] Exited.\r\n");
     }
 }
 
@@ -193,7 +193,7 @@ static void do_kill(movi_comm_t* movi,
 {
     if (*movi_active) {
         movi_comm_kill(movi);
-        UART_1_PutString("[CLI] Kill packet sent\r\n");
+        UART_DEBUG_PutString("[CLI] Kill packet sent\r\n");
     }
     // Set flags to false after kill
     *joystick_active = FALSE;
@@ -201,7 +201,7 @@ static void do_kill(movi_comm_t* movi,
     *streaming_adc   = FALSE;
     *mode            = DEFER;
     joystick_on_key('x');
-    UART_1_PutString("[CLI] All stopped  Mode: DEFR\r\n");
+    UART_DEBUG_PutString("[CLI] All stopped  Mode: DEFR\r\n");
 }
 
 /* =========================================================================
@@ -254,13 +254,13 @@ int main(void)
     /* ------------------------------------------------------------------ */
     CyGlobalIntEnable;
 
-    UART_1_Start();
-    UART_1_PutString("\r\n========================================\r\n");
-    UART_1_PutString("  MoVI Pro Controller  PSoC 5LP\r\n");
-    UART_1_PutString("========================================\r\n");
-    UART_1_PutString("  j=joystick  m=movi  l=mode  s=adc\r\n");
-    UART_1_PutString("  c=cal  k=kill  x=kill+quiet\r\n");
-    UART_1_PutString("========================================\r\n");
+    UART_DEBUG_Start();
+    UART_DEBUG_PutString("\r\n========================================\r\n");
+    UART_DEBUG_PutString("  MoVI Pro Controller  PSoC 5LP\r\n");
+    UART_DEBUG_PutString("========================================\r\n");
+    UART_DEBUG_PutString("  j=joystick  m=movi  l=mode  s=adc\r\n");
+    UART_DEBUG_PutString("  c=cal  k=kill  x=kill+quiet\r\n");
+    UART_DEBUG_PutString("========================================\r\n");
 
     UART_MOVI_Start();
     UART_MOVI_ClearRxBuffer();
@@ -268,15 +268,15 @@ int main(void)
 
     movi_comm_init(&g_movi, &MOVI_HAL);
     isr_rx_movi_StartEx(isr_rx_movi_Handler);
-    UART_1_PutString("[Init] MoVI UART ready\r\n");
+    UART_DEBUG_PutString("[Init] MoVI UART ready\r\n");
 
     joystick_init(&defaults, invert_mask);
     adc_balanced_init();
-    UART_1_PutString("[Init] ADC + Joystick ready\r\n");
+    UART_DEBUG_PutString("[Init] ADC + Joystick ready\r\n");
 
     Looptimer_Start();
     isr_Looptimer_StartEx(isr_Looptimer_Handler);
-    UART_1_PutString("[Init] Loop timer ready\r\n");
+    UART_DEBUG_PutString("[Init] Loop timer ready\r\n");
 
     /* ------------------------------------------------------------------
      * Main loop
@@ -284,13 +284,13 @@ int main(void)
     for (;;)
     {
         // STEP 1 - CLI User Input
-        ch = (uint8)UART_1_GetChar();
+        ch = (uint8)UART_DEBUG_GetChar();
 
         if (ch == 'j' || ch == 'J')  // Toggle Joystick reading
         {
             joystick_active = !joystick_active;
             if (joystick_active) diag_active = TRUE;
-            UART_1_PutString(joystick_active
+            UART_DEBUG_PutString(joystick_active
                 ? "[CLI] Joystick ON\r\n"  // If true
                 : "[CLI] Joystick OFF\r\n");  // If false
         }
@@ -298,7 +298,7 @@ int main(void)
         {
             movi_active = !movi_active;
             if (movi_active) diag_active = TRUE;
-            UART_1_PutString(movi_active
+            UART_DEBUG_PutString(movi_active
                 ? "[CLI] MoVI comms ON\r\n"  // If true
                 : "[CLI] MoVI comms OFF\r\n");  // If false
         }
@@ -310,7 +310,7 @@ int main(void)
             else {ctrl_mode = DEFER;}
 
             sprintf(tx, "[CLI] Mode: %s\r\n", mode_to_str(ctrl_mode));
-            UART_1_PutString(tx);
+            UART_DEBUG_PutString(tx);
         }
         else if (ch == 'k' || ch == 'K')  // Kill but keep printing
         {
@@ -322,12 +322,12 @@ int main(void)
             do_kill(&g_movi, &joystick_active, &movi_active,
                     &streaming_adc, &ctrl_mode);
             diag_active = FALSE;
-            UART_1_PutString("[CLI] Output paused. Press j or m to resume.\r\n");
+            UART_DEBUG_PutString("[CLI] Output paused. Press j or m to resume.\r\n");
         }
         else if (ch == 's' || ch == 'S')  // Test stream ADC values and calibration
         {
             streaming_adc = !streaming_adc;
-            UART_1_PutString(streaming_adc
+            UART_DEBUG_PutString(streaming_adc
                 ? "[CLI] ADC stream ON\r\n"  // If true
                 : "[CLI] ADC stream OFF\r\n");  // If false
         }
@@ -359,7 +359,7 @@ int main(void)
                 sprintf(tx,
                     "X:%ld mV Y:%ld mV  pan:%d/1000  tilt:%d/1000\r\n",
                     (long)x_mv, (long)y_mv, pan_milli, tilt_milli);
-                UART_1_PutString(tx);
+                UART_DEBUG_PutString(tx);
             }
 
             // Capture centered zero during calibration.
@@ -370,7 +370,7 @@ int main(void)
                 {
                     sprintf(tx, "[CAL] Center samples: %u/%u\r\n",
                             (unsigned)n, (unsigned)CAL_CENTER_SAMPLES);
-                    UART_1_PutString(tx);
+                    UART_DEBUG_PutString(tx);
                 }
             }
         }
@@ -426,7 +426,7 @@ int main(void)
                     (unsigned long)hr_part,
                     (unsigned long)min_part,
                     (unsigned long)sec_part);
-            UART_1_PutString(tx);
+            UART_DEBUG_PutString(tx);
 
             // Serial comms stats
             movi_statistics_t s;
@@ -440,7 +440,7 @@ int main(void)
                 (unsigned)s.uart_err_flags,
                 movi_active     ? "ON " : "OFF",
                 joystick_active ? "ON " : "OFF");
-            UART_1_PutString(tx);
+            UART_DEBUG_PutString(tx);
 
             // Gimble Status Packet
             movi_status_t st;
@@ -473,11 +473,11 @@ int main(void)
                     (int)vl_i, (int)vl_f,
                     (int)vr_i, (int)vr_f,
                     (int)imu_err, (int)drv_err, (int)gbl_err);
-                UART_1_PutString(tx);
+                UART_DEBUG_PutString(tx);
             }
             else
             {
-                UART_1_PutString("[Status]    No valid frame yet\r\n");
+                UART_DEBUG_PutString("[Status]    No valid frame yet\r\n");
             }
 
             // Joystick Current Values
@@ -490,7 +490,7 @@ int main(void)
                 "[Joystick]  L/R=%c%d.%02d (%s)  U/D=%c%d.%02d (%s)\r\n",
                 lr_s, (int)lr_i, (int)lr_f, mode_to_str(ctrl_mode),
                 ud_s, (int)ud_i, (int)ud_f, mode_to_str(ctrl_mode));
-            UART_1_PutString(tx);
+            UART_DEBUG_PutString(tx);
 
             // Clear error flags for next loop
             g_movi.statistics.uart_err_flags = 0u;

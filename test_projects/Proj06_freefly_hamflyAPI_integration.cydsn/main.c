@@ -185,7 +185,7 @@ static void print_hex_dump(const uint8_t *p, uint8_t plen)
         for (col = 0u; col < 8u && (row+col) < plen; col++)
             bp += sprintf(bp, " %02X", (unsigned)p[row+col]);
         bp += sprintf(bp, "\r\n");
-        UART_1_PutString(buf);
+        UART_DEBUG_PutString(buf);
     }
 }
 
@@ -212,20 +212,20 @@ static void print_att(const uint8_t *p, uint8_t plen, uint32_t dt)
     char buf[TX_BUF_SIZE];
     sprintf(buf, "\r\n[TEST][Att] dt=%lums snaplen=%u\r\n",
             (unsigned long)dt, plen);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
     print_hex_dump(p, plen);
-    if (plen < 6u) { UART_1_PutString("  short\r\n"); return; }
+    if (plen < 6u) { UART_DEBUG_PutString("  short\r\n"); return; }
     char s; int16_t vi, vf;
     int16_t r1=SNAP16(p,plen,1), r3=SNAP16(p,plen,3), r5=SNAP16(p,plen,5);
     decomp((float)r1/100.0f, &vi, &vf, &s);
     sprintf(buf,"  off1 /100 %6d => %c%d.%02d [PITCH]\r\n",(int)r1,s,vi,vf);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
     decomp((float)r3/100.0f, &vi, &vf, &s);
     sprintf(buf,"  off3 /100 %6d => %c%d.%02d [YAW]\r\n",(int)r3,s,vi,vf);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
     decomp((float)r5/100.0f, &vi, &vf, &s);
     sprintf(buf,"  off5 /100 %6d => %c%d.%02d [ROLL]\r\n",(int)r5,s,vi,vf);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
 }
 
 static void print_gps(const uint8_t *p, uint8_t plen, uint32_t dt)
@@ -233,15 +233,15 @@ static void print_gps(const uint8_t *p, uint8_t plen, uint32_t dt)
     char buf[TX_BUF_SIZE];
     sprintf(buf, "\r\n[TEST][GPS] dt=%lums snaplen=%u\r\n",
             (unsigned long)dt, plen);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
     print_hex_dump(p, plen);
-    if (plen < 12u) { UART_1_PutString("  short\r\n"); return; }
+    if (plen < 12u) { UART_DEBUG_PutString("  short\r\n"); return; }
     int32_t lon=SNAP32BE(p,plen,0), lat=SNAP32BE(p,plen,4);
     int32_t alt=SNAP32BE(p,plen,8);
     sprintf(buf,"  Lat=%ld.%07ld Lon=%ld.%07ld Alt=%ld mm\r\n",
             (long)(lat/10000000L),(long)(lat%10000000L),
             (long)(lon/10000000L),(long)(lon%10000000L),(long)alt);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
 }
 
 static void print_baro(const uint8_t *p, uint8_t plen, uint32_t dt)
@@ -249,15 +249,15 @@ static void print_baro(const uint8_t *p, uint8_t plen, uint32_t dt)
     char buf[TX_BUF_SIZE];
     sprintf(buf, "\r\n[TEST][Baro] dt=%lums snaplen=%u\r\n",
             (unsigned long)dt, plen);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
     print_hex_dump(p, plen);
-    if (plen < 5u) { UART_1_PutString("  short\r\n"); return; }
+    if (plen < 5u) { UART_DEBUG_PutString("  short\r\n"); return; }
     char s; int16_t vi, vf;
     int16_t alt=SNAP16(p,plen,1), roc=SNAP16(p,plen,3);
     decomp((float)alt/10.0f, &vi, &vf, &s);
-    sprintf(buf,"  Alt=%c%d.%02d m  ", s, vi, vf); UART_1_PutString(buf);
+    sprintf(buf,"  Alt=%c%d.%02d m  ", s, vi, vf); UART_DEBUG_PutString(buf);
     decomp((float)roc/100.0f, &vi, &vf, &s);
-    sprintf(buf,"ROC=%c%d.%02d m/s\r\n", s, vi, vf); UART_1_PutString(buf);
+    sprintf(buf,"ROC=%c%d.%02d m/s\r\n", s, vi, vf); UART_DEBUG_PutString(buf);
 }
 
 static void print_sysstat(const uint8_t *p, uint8_t plen, uint32_t dt)
@@ -265,20 +265,20 @@ static void print_sysstat(const uint8_t *p, uint8_t plen, uint32_t dt)
     char buf[TX_BUF_SIZE];
     sprintf(buf, "\r\n[TEST][Stat] dt=%lums snaplen=%u\r\n",
             (unsigned long)dt, plen);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
     print_hex_dump(p, plen);
-    if (plen < 4u) { UART_1_PutString("  short\r\n"); return; }
+    if (plen < 4u) { UART_DEBUG_PutString("  short\r\n"); return; }
     char s; int16_t vi, vf;
     int16_t bv = SNAP16BE(p,plen,0);
     decomp((float)bv/100.0f, &vi, &vf, &s);
     sprintf(buf,"  Batt=%c%d.%02d V  Sats=%u  Temp=%d C\r\n",
             s, vi, vf, p[2], p[3]/3u);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
     if (plen >= 11u) {
         int16_t pres = SNAP16BE(p,plen,9);
         decomp((float)pres/10.0f, &vi, &vf, &s);
         sprintf(buf,"  Pres=%c%d.%02d mb\r\n", s, vi, vf);
-        UART_1_PutString(buf);
+        UART_DEBUG_PutString(buf);
     }
 }
 
@@ -287,9 +287,9 @@ static void print_mag(const uint8_t *p, uint8_t plen, uint32_t dt)
     char buf[TX_BUF_SIZE];
     sprintf(buf, "\r\n[TEST][Mag] dt=%lums snaplen=%u\r\n",
             (unsigned long)dt, plen);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
     print_hex_dump(p, plen);
-    if (plen < 6u) { UART_1_PutString("  short\r\n"); return; }
+    if (plen < 6u) { UART_DEBUG_PutString("  short\r\n"); return; }
     int16_t x=SNAP16BE(p,plen,0), y=SNAP16BE(p,plen,2), z=SNAP16BE(p,plen,4);
     float hdg = atan2f((float)y,(float)x)*57.2958f;
     if (hdg < 0.0f) hdg += 360.0f;
@@ -297,7 +297,7 @@ static void print_mag(const uint8_t *p, uint8_t plen, uint32_t dt)
     decomp(hdg, &hi, &hf, &s);
     sprintf(buf,"  X=%d Y=%d Z=%d  hdg~=%d.%02d deg\r\n",
             (int)x,(int)y,(int)z,(int)hi,(int)hf);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
 }
 
 static void print_platform(const uint8_t *p, uint8_t plen, uint32_t dt)
@@ -305,20 +305,20 @@ static void print_platform(const uint8_t *p, uint8_t plen, uint32_t dt)
     char buf[TX_BUF_SIZE];
     sprintf(buf, "\r\n[TEST][Plat] dt=%lums snaplen=%u\r\n",
             (unsigned long)dt, plen);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
     print_hex_dump(p, plen);
-    if (plen < 7u) { UART_1_PutString("  short\r\n"); return; }
+    if (plen < 7u) { UART_DEBUG_PutString("  short\r\n"); return; }
     char s; int16_t vi, vf;
     int16_t roll =SNAP16BE(p,plen,1);
     int16_t pitch=SNAP16BE(p,plen,3);
     int16_t yaw  =SNAP16BE(p,plen,5);
     decomp((float)roll /100.0f,&vi,&vf,&s);
-    sprintf(buf,"  Roll =%c%d.%02d  ",s,vi,vf); UART_1_PutString(buf);
+    sprintf(buf,"  Roll =%c%d.%02d  ",s,vi,vf); UART_DEBUG_PutString(buf);
     decomp((float)pitch/100.0f,&vi,&vf,&s);
-    sprintf(buf,"Pitch=%c%d.%02d  ",s,vi,vf); UART_1_PutString(buf);
+    sprintf(buf,"Pitch=%c%d.%02d  ",s,vi,vf); UART_DEBUG_PutString(buf);
     decomp((float)yaw  /100.0f,&vi,&vf,&s);
-    sprintf(buf,"Yaw=%c%d.%02d deg\r\n",s,vi,vf); UART_1_PutString(buf);
-    UART_1_PutString("  (GCU box, not camera)\r\n");
+    sprintf(buf,"Yaw=%c%d.%02d deg\r\n",s,vi,vf); UART_DEBUG_PutString(buf);
+    UART_DEBUG_PutString("  (GCU box, not camera)\r\n");
 }
 
 static void print_motor(const uint8_t *p, uint8_t plen, uint32_t dt)
@@ -326,18 +326,18 @@ static void print_motor(const uint8_t *p, uint8_t plen, uint32_t dt)
     char buf[TX_BUF_SIZE];
     sprintf(buf, "\r\n[TEST][Drv] dt=%lums snaplen=%u\r\n",
             (unsigned long)dt, plen);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
     print_hex_dump(p, plen);
-    if (plen < 9u) { UART_1_PutString("  short\r\n"); return; }
+    if (plen < 9u) { UART_DEBUG_PutString("  short\r\n"); return; }
     sprintf(buf,"  off8=0x%02X (device flag)\r\n",(unsigned)p[8]);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
     if (plen >= 14u) {
         uint8_t any = 0u, i;
         for (i=9u;i<=13u;i++) if(p[i]) { any=1u; break; }
         sprintf(buf,"  off9-13: %02X %02X %02X %02X %02X  %s\r\n",
                 p[9],p[10],p[11],p[12],p[13],
                 any ? "non-zero: active" : "all zero: idle");
-        UART_1_PutString(buf);
+        UART_DEBUG_PutString(buf);
     }
 }
 
@@ -357,7 +357,7 @@ static void print_test_response(uint32_t dt)
         default: {
             char buf[64];
             sprintf(buf, "[TEST] attr=%u -- no printer\r\n", (unsigned)attr);
-            UART_1_PutString(buf);
+            UART_DEBUG_PutString(buf);
         }
     }
 }
@@ -375,7 +375,7 @@ static void print_sensor_response(void)
 
     switch (attr) {
         case 12u: {
-            if (plen < 6u) { UART_1_PutString("[MAG] short\r\n"); break; }
+            if (plen < 6u) { UART_DEBUG_PutString("[MAG] short\r\n"); break; }
             int16_t x=SNAP16BE(p,plen,0);
             int16_t y=SNAP16BE(p,plen,2);
             int16_t z=SNAP16BE(p,plen,4);
@@ -384,35 +384,35 @@ static void print_sensor_response(void)
             decomp(hdg,&vi,&vf,&s);
             sprintf(buf,"[MAG] X=%6d Y=%6d Z=%6d hdg~=%d.%02d deg\r\n",
                     (int)x,(int)y,(int)z,(int)vi,(int)vf);
-            UART_1_PutString(buf);
+            UART_DEBUG_PutString(buf);
             break;
         }
         case 3u: {
-            if (plen < 5u) { UART_1_PutString("[BARO] short\r\n"); break; }
+            if (plen < 5u) { UART_DEBUG_PutString("[BARO] short\r\n"); break; }
             int16_t alt=SNAP16(p,plen,1), roc=SNAP16(p,plen,3);
             decomp((float)alt/10.0f,&vi,&vf,&s);
             sprintf(buf,"[BARO] alt=%c%d.%02d m  ",s,vi,vf);
-            UART_1_PutString(buf);
+            UART_DEBUG_PutString(buf);
             decomp((float)roc/100.0f,&vi,&vf,&s);
             sprintf(buf,"roc=%c%d.%02d m/s\r\n",s,vi,vf);
-            UART_1_PutString(buf);
+            UART_DEBUG_PutString(buf);
             break;
         }
         case 1u: {
-            if (plen < 4u) { UART_1_PutString("[STAT] short\r\n"); break; }
+            if (plen < 4u) { UART_DEBUG_PutString("[STAT] short\r\n"); break; }
             int16_t bv=SNAP16BE(p,plen,0);
             decomp((float)bv/100.0f,&vi,&vf,&s);
             sprintf(buf,"[STAT] batt=%c%d.%02d V  sats=%u  temp=%d C\r\n",
                     s,vi,vf,p[2],p[3]/3u);
-            UART_1_PutString(buf);
+            UART_DEBUG_PutString(buf);
             break;
         }
         case 2u: {
-            if (plen < 7u) { UART_1_PutString("[PLAT] short\r\n"); break; }
+            if (plen < 7u) { UART_DEBUG_PutString("[PLAT] short\r\n"); break; }
             int16_t yaw=SNAP16BE(p,plen,5);
             decomp((float)yaw/100.0f,&vi,&vf,&s);
             sprintf(buf,"[PLAT] yaw=%c%d.%02d deg\r\n",s,vi,vf);
-            UART_1_PutString(buf);
+            UART_DEBUG_PutString(buf);
             break;
         }
         default: break;
@@ -427,14 +427,14 @@ static void do_kill(app_mode_t *mode, uint8_t *joy_active,
 {
     if (*mode == APP_MODE_CONTROL) {
         hamfly_kill(&g_movi);
-        UART_1_PutString("[CLI] Kill sent\r\n");
+        UART_DEBUG_PutString("[CLI] Kill sent\r\n");
     }
     *joy_active = FALSE;
     *mode       = APP_MODE_STANDBY;
     *streaming  = FALSE;
     *ctrl_mode  = HAMFLY_DEFER;
     joystick_on_key('x');
-    UART_1_PutString("[CLI] Stopped -> STANDBY\r\n");
+    UART_DEBUG_PutString("[CLI] Stopped -> STANDBY\r\n");
 }
 
 /* =========================================================================
@@ -446,9 +446,9 @@ static void print_quat_crosscheck(void)
     hamfly_telemetry_t st;
     hamfly_get_telemetry(&g_movi, &st);
 
-    UART_1_PutString("\r\n[TEST3] Quat vs Euler crosscheck\r\n");
+    UART_DEBUG_PutString("\r\n[TEST3] Quat vs Euler crosscheck\r\n");
     if (!st.valid) {
-        UART_1_PutString("[TEST3] No valid 287 yet -- enter CONTROL first\r\n");
+        UART_DEBUG_PutString("[TEST3] No valid 287 yet -- enter CONTROL first\r\n");
         return;
     }
     char ps, ts, rs;
@@ -456,11 +456,11 @@ static void print_quat_crosscheck(void)
     compute_euler(&st, &ps,&pi,&pf, &ts,&ti,&tf, &rs,&ri,&rf);
     sprintf(buf,"  Q->Euler: Pan=%c%d.%02d Tilt=%c%d.%02d Roll=%c%d.%02d\r\n",
             ps,pi,pf, ts,ti,tf, rs,ri,rf);
-    UART_1_PutString(buf);
+    UART_DEBUG_PutString(buf);
     sprintf(buf,"  Raw: R=%.4f I=%.4f J=%.4f K=%.4f\r\n",
             st.gimbal_r, st.gimbal_i, st.gimbal_j, st.gimbal_k);
-    UART_1_PutString(buf);
-    UART_1_PutString("[TEST3] Requesting attr 22 for direct Euler...\r\n");
+    UART_DEBUG_PutString(buf);
+    UART_DEBUG_PutString("[TEST3] Requesting attr 22 for direct Euler...\r\n");
     hamfly_request_attr(&g_movi, 22u);
     g_movi.pending_sent_ms = g_tick_ms;
 }
@@ -472,23 +472,23 @@ static void cal_prompt(joy_cal_state_t prev, joy_cal_state_t now)
 {
     if (prev == now) return;
     if (now == JOY_CAL_RANGE_CAPTURE)
-        UART_1_PutString("\r\n[CAL] Move joystick full range then press 'c'\r\n");
+        UART_DEBUG_PutString("\r\n[CAL] Move joystick full range then press 'c'\r\n");
     else if (now == JOY_CAL_CENTER_CAPTURE)
-        UART_1_PutString("\r\n[CAL] Hold center...\r\n");
+        UART_DEBUG_PutString("\r\n[CAL] Hold center...\r\n");
     else if (now == JOY_CAL_CONFIRM_SAVE)
-        UART_1_PutString("\r\n[CAL] Press 'c' to save, 'x' to cancel\r\n");
+        UART_DEBUG_PutString("\r\n[CAL] Press 'c' to save, 'x' to cancel\r\n");
     else if (now == JOY_CAL_OFF && prev == JOY_CAL_CONFIRM_SAVE) {
         if (joystick_save())
-            UART_1_PutString("[CAL] Saved to EEPROM\r\n");
+            UART_DEBUG_PutString("[CAL] Saved to EEPROM\r\n");
         else
-            UART_1_PutString("[CAL] EEPROM save FAILED\r\n");
+            UART_DEBUG_PutString("[CAL] EEPROM save FAILED\r\n");
             char dbuf[64];
             sprintf(dbuf, "[CAL] sizeof(joy_cal_t)=%u\r\n",
                     (unsigned)sizeof(joy_cal_t));
-            UART_1_PutString(dbuf);
+            UART_DEBUG_PutString(dbuf);
     }
     else if (now == JOY_CAL_OFF && prev != JOY_CAL_OFF)
-        UART_1_PutString("[CAL] Cancelled\r\n");
+        UART_DEBUG_PutString("[CAL] Cancelled\r\n");
 }
 
 /* =========================================================================
@@ -560,13 +560,13 @@ int main(void)
      * ------------------------------------------------------------------ */
     CyGlobalIntEnable;
 
-    UART_1_Start();
-    UART_1_PutString("\r\n=== HamflyAPI  PSoC 5LP ===\r\n");
-    UART_1_PutString("STANDBY: m=ctrl t=test w=scan r=reset v=sensor\r\n");
-    UART_1_PutString("         j=joy l=mode s=adc c=cal k=kill x=quiet\r\n");
-    UART_1_PutString("CONTROL: f=attr48 p=plat-yaw 0-5=presets\r\n");
-    UART_1_PutString("TEST:    a=att g=GPS b=baro s=stat n=mag\r\n");
-    UART_1_PutString("         2=plat 4=motor q=quat t=exit\r\n");
+    UART_DEBUG_Start();
+    UART_DEBUG_PutString("\r\n=== HamflyAPI  PSoC 5LP ===\r\n");
+    UART_DEBUG_PutString("STANDBY: m=ctrl t=test w=scan r=reset v=sensor\r\n");
+    UART_DEBUG_PutString("         j=joy l=mode s=adc c=cal k=kill x=quiet\r\n");
+    UART_DEBUG_PutString("CONTROL: f=attr48 p=plat-yaw 0-5=presets\r\n");
+    UART_DEBUG_PutString("TEST:    a=att g=GPS b=baro s=stat n=mag\r\n");
+    UART_DEBUG_PutString("         2=plat 4=motor q=quat t=exit\r\n");
 
     UART_MOVI_Start();
     UART_MOVI_ClearRxBuffer();
@@ -574,20 +574,20 @@ int main(void)
 
     hamfly_init(&g_movi, &MOVI_HAL);
     isr_rx_movi_StartEx(isr_rx_movi_Handler);
-    UART_1_PutString("[Init] Gimbal UART ready\r\n");
+    UART_DEBUG_PutString("[Init] Gimbal UART ready\r\n");
     psoc_eeprom_init();
     if (!joystick_load(invert_mask)) {
-        UART_1_PutString("[Init] No saved cal -- using defaults\r\n");
+        UART_DEBUG_PutString("[Init] No saved cal -- using defaults\r\n");
         joystick_init(&defaults, invert_mask);
     } else {
-        UART_1_PutString("[Init] Loaded cal from EEPROM\r\n");
+        UART_DEBUG_PutString("[Init] Loaded cal from EEPROM\r\n");
     }
     adc_balanced_init();
-    UART_1_PutString("[Init] ADC + Joystick ready\r\n");
+    UART_DEBUG_PutString("[Init] ADC + Joystick ready\r\n");
 
     Looptimer_Start();
     isr_Looptimer_StartEx(isr_Looptimer_Handler);
-    UART_1_PutString("[Init] Ready  Mode: STANDBY\r\n");
+    UART_DEBUG_PutString("[Init] Ready  Mode: STANDBY\r\n");
 
     /* ------------------------------------------------------------------
      * Main loop
@@ -597,7 +597,7 @@ int main(void)
         /* ----------------------------------------------------------------
          * CLI
          * ---------------------------------------------------------------- */
-        uint8_t ch = (uint8_t)UART_1_GetChar();
+        uint8_t ch = (uint8_t)UART_DEBUG_GetChar();
 
         /* --- STANDBY / CONTROL shared keys --- */
         if (app_mode == APP_MODE_STANDBY ||
@@ -608,15 +608,15 @@ int main(void)
                     app_mode = APP_MODE_CONTROL;
                     diag_active = TRUE;
                     abs_preset_active = FALSE;
-                    UART_1_PutString("[CLI] -> CONTROL\r\n");
+                    UART_DEBUG_PutString("[CLI] -> CONTROL\r\n");
                 } else {
                     app_mode = APP_MODE_STANDBY;
-                    UART_1_PutString("[CLI] -> STANDBY\r\n");
+                    UART_DEBUG_PutString("[CLI] -> STANDBY\r\n");
                 }
             }
             else if ((ch=='t'||ch=='T') && app_mode==APP_MODE_STANDBY) {
                 app_mode = APP_MODE_TEST;
-                UART_1_PutString("[CLI] -> TEST\r\n");
+                UART_DEBUG_PutString("[CLI] -> TEST\r\n");
             }
             else if ((ch=='r'||ch=='R') && app_mode==APP_MODE_STANDBY) {
                 app_mode       = APP_MODE_RESET;
@@ -624,7 +624,7 @@ int main(void)
                 reset_saw_01   = FALSE;
                 reset_start_ms = g_tick_ms;
                 reset_poll_ms  = g_tick_ms;
-                UART_1_PutString("[RESET] Writing attr 382=0x01\r\n");
+                UART_DEBUG_PutString("[RESET] Writing attr 382=0x01\r\n");
                 hamfly_write_attr_u8(&g_movi, 382u, 0x01u);
                 hamfly_request_attr(&g_movi, 382u);
                 g_movi.pending_sent_ms = g_tick_ms;
@@ -632,19 +632,19 @@ int main(void)
             else if ((ch=='v'||ch=='V') && app_mode==APP_MODE_STANDBY) {
                 app_mode = APP_MODE_SENSOR;
                 sensor_idx = 0u; sensor_tx_pending = FALSE;
-                UART_1_PutString("[SENSOR] MAG BARO STAT PLAT -- any key exits\r\n");
+                UART_DEBUG_PutString("[SENSOR] MAG BARO STAT PLAT -- any key exits\r\n");
             }
             else if ((ch=='w'||ch=='W') && app_mode==APP_MODE_STANDBY) {
                 app_mode = APP_MODE_SCAN;
                 scan_next_attr = SCAN_ATTR_MIN;
                 scan_batch_start = SCAN_ATTR_MIN;
                 scan_waiting = FALSE; scan_tx_pending = FALSE;
-                UART_1_PutString("[SCAN] attr,dt_ms,TX,RX -- any key=next batch\r\n");
+                UART_DEBUG_PutString("[SCAN] attr,dt_ms,TX,RX -- any key=next batch\r\n");
             }
             else if (ch=='j'||ch=='J') {
                 joystick_active = !joystick_active;
                 if (joystick_active) { diag_active=TRUE; abs_preset_active=FALSE; }
-                UART_1_PutString(joystick_active
+                UART_DEBUG_PutString(joystick_active
                     ? "[CLI] Joystick ON\r\n" : "[CLI] Joystick OFF\r\n");
             }
             else if (ch=='l'||ch=='L') {
@@ -653,7 +653,7 @@ int main(void)
                 else                                  ctrl_mode=HAMFLY_DEFER;
                 abs_preset_active = FALSE;
                 sprintf(tx,"[CLI] Mode: %s\r\n",mode_str(ctrl_mode));
-                UART_1_PutString(tx);
+                UART_DEBUG_PutString(tx);
             }
             else if (ch=='k'||ch=='K') {
                 abs_preset_active = FALSE;
@@ -665,11 +665,11 @@ int main(void)
                 do_kill(&app_mode, &joystick_active,
                         &streaming_adc, &ctrl_mode);
                 diag_active = FALSE;
-                UART_1_PutString("[CLI] Quiet. m or j to resume.\r\n");
+                UART_DEBUG_PutString("[CLI] Quiet. m or j to resume.\r\n");
             }
             else if (ch=='s'||ch=='S') {
                 streaming_adc = !streaming_adc;
-                UART_1_PutString(streaming_adc
+                UART_DEBUG_PutString(streaming_adc
                     ? "[CLI] ADC stream ON\r\n":"[CLI] ADC stream OFF\r\n");
             }
             else if (ch=='c'||ch=='C') {
@@ -682,42 +682,42 @@ int main(void)
                     hamfly_request_attr(&g_movi, 48u);
                     g_movi.pending_sent_ms = g_tick_ms;
                     ctrl_attr_pending = 48u;
-                    UART_1_PutString("[CTRL] Attr 48 requested\r\n");
+                    UART_DEBUG_PutString("[CTRL] Attr 48 requested\r\n");
                 }
                 else if (ch=='p'||ch=='P') {
                     show_platform_yaw = !show_platform_yaw;
-                    UART_1_PutString(show_platform_yaw
+                    UART_DEBUG_PutString(show_platform_yaw
                         ? "[CTRL] Platform yaw ON\r\n"
                         : "[CTRL] Platform yaw OFF\r\n");
                 }
                 else if (ch>='0' && ch<='5') {
                     if (ctrl_mode != HAMFLY_ABSOLUTE) {
-                        UART_1_PutString("[CTRL] Need ABS mode (l)\r\n");
+                        UART_DEBUG_PutString("[CTRL] Need ABS mode (l)\r\n");
                     } else {
                         switch (ch) {
                             case '0':
                                 abs_pan_target=0.0f; abs_tilt_target=0.0f;
-                                UART_1_PutString("[CTRL] HOME\r\n"); break;
+                                UART_DEBUG_PutString("[CTRL] HOME\r\n"); break;
                             case '1':
                                 abs_pan_target=DEG_TO_UNIT(45.0f);
                                 abs_tilt_target=0.0f;
-                                UART_1_PutString("[CTRL] Pan+45\r\n"); break;
+                                UART_DEBUG_PutString("[CTRL] Pan+45\r\n"); break;
                             case '2':
                                 abs_pan_target=DEG_TO_UNIT(-45.0f);
                                 abs_tilt_target=0.0f;
-                                UART_1_PutString("[CTRL] Pan-45\r\n"); break;
+                                UART_DEBUG_PutString("[CTRL] Pan-45\r\n"); break;
                             case '3':
                                 abs_pan_target=0.0f;
                                 abs_tilt_target=DEG_TO_UNIT(30.0f);
-                                UART_1_PutString("[CTRL] Tilt+30\r\n"); break;
+                                UART_DEBUG_PutString("[CTRL] Tilt+30\r\n"); break;
                             case '4':
                                 abs_pan_target=0.0f;
                                 abs_tilt_target=DEG_TO_UNIT(-30.0f);
-                                UART_1_PutString("[CTRL] Tilt-30\r\n"); break;
+                                UART_DEBUG_PutString("[CTRL] Tilt-30\r\n"); break;
                             case '5':
                                 abs_pan_target=DEG_TO_UNIT(90.0f);
                                 abs_tilt_target=0.0f;
-                                UART_1_PutString("[CTRL] Pan+90\r\n"); break;
+                                UART_DEBUG_PutString("[CTRL] Pan+90\r\n"); break;
                             default: break;
                         }
                         abs_preset_active = TRUE;
@@ -735,7 +735,7 @@ int main(void)
                     g_movi.pending_attr  = 0u;
                     g_movi.pending_ready = false;
                     app_mode = APP_MODE_STANDBY;
-                    UART_1_PutString("[SCAN] Aborted\r\n");
+                    UART_DEBUG_PutString("[SCAN] Aborted\r\n");
                 } else if (scan_waiting) {
                     scan_waiting = FALSE;
                 }
@@ -748,7 +748,7 @@ int main(void)
                 g_movi.pending_attr  = 0u;
                 g_movi.pending_ready = false;
                 app_mode = APP_MODE_STANDBY;
-                UART_1_PutString("[TEST] -> STANDBY\r\n");
+                UART_DEBUG_PutString("[TEST] -> STANDBY\r\n");
             }
             else if (ch=='k'||ch=='K'||ch=='x'||ch=='X') {
                 g_movi.pending_attr  = 0u;
@@ -757,13 +757,13 @@ int main(void)
             }
             else {
                 uint16_t req = 0u;
-                if      (ch=='a'||ch=='A') { req=22u; UART_1_PutString("[TEST] attr 22\r\n"); }
-                else if (ch=='g'||ch=='G') { req=4u;  UART_1_PutString("[TEST] attr 4\r\n"); }
-                else if (ch=='b'||ch=='B') { req=3u;  UART_1_PutString("[TEST] attr 3\r\n"); }
-                else if (ch=='s'||ch=='S') { req=1u;  UART_1_PutString("[TEST] attr 1\r\n"); }
-                else if (ch=='n'||ch=='N') { req=12u; UART_1_PutString("[TEST] attr 12\r\n");}
-                else if (ch=='2')          { req=2u;  UART_1_PutString("[TEST] attr 2\r\n"); }
-                else if (ch=='4')          { req=48u; UART_1_PutString("[TEST] attr 48\r\n");}
+                if      (ch=='a'||ch=='A') { req=22u; UART_DEBUG_PutString("[TEST] attr 22\r\n"); }
+                else if (ch=='g'||ch=='G') { req=4u;  UART_DEBUG_PutString("[TEST] attr 4\r\n"); }
+                else if (ch=='b'||ch=='B') { req=3u;  UART_DEBUG_PutString("[TEST] attr 3\r\n"); }
+                else if (ch=='s'||ch=='S') { req=1u;  UART_DEBUG_PutString("[TEST] attr 1\r\n"); }
+                else if (ch=='n'||ch=='N') { req=12u; UART_DEBUG_PutString("[TEST] attr 12\r\n");}
+                else if (ch=='2')          { req=2u;  UART_DEBUG_PutString("[TEST] attr 2\r\n"); }
+                else if (ch=='4')          { req=48u; UART_DEBUG_PutString("[TEST] attr 48\r\n");}
                 else if (ch=='q'||ch=='Q') { print_quat_crosscheck(); }
                 if (req != 0u && g_movi.pending_attr == 0u) {
                     hamfly_request_attr(&g_movi, req);
@@ -779,7 +779,7 @@ int main(void)
                 g_movi.pending_ready = false;
                 reset_state = RESET_IDLE;
                 app_mode    = APP_MODE_STANDBY;
-                UART_1_PutString("[RESET] Aborted\r\n");
+                UART_DEBUG_PutString("[RESET] Aborted\r\n");
             }
         }
 
@@ -790,7 +790,7 @@ int main(void)
                 g_movi.pending_ready = false;
                 sensor_tx_pending = FALSE;
                 app_mode = APP_MODE_STANDBY;
-                UART_1_PutString("[SENSOR] -> STANDBY\r\n");
+                UART_DEBUG_PutString("[SENSOR] -> STANDBY\r\n");
             }
         }
 
@@ -818,7 +818,7 @@ int main(void)
                      (g_tick_ms - g_movi.pending_sent_ms) >= TEST_TIMEOUT_MS) {
                 sprintf(tx,"[TEST] TIMEOUT attr=%u\r\n",
                         (unsigned)g_movi.pending_attr);
-                UART_1_PutString(tx);
+                UART_DEBUG_PutString(tx);
                 g_movi.pending_attr = 0u;
             }
         }
@@ -840,21 +840,21 @@ int main(void)
                     for (i=0u; i<g_movi.pending_payload_len; i++)
                         bp += sprintf(bp,"%02X",(unsigned)g_movi.pending_payload[i]);
                     bp += sprintf(bp,"\r\n");
-                    UART_1_PutString(tx);
+                    UART_DEBUG_PutString(tx);
                     g_movi.pending_ready = false;
                     g_movi.pending_attr  = 0u;
                     scan_tx_pending = FALSE;
                     scan_next_attr++;
                     if (scan_next_attr==scan_batch_start+SCAN_BATCH_SIZE
                         || scan_next_attr>SCAN_ATTR_MAX) {
-                        UART_1_PutString("=========\r\n");
+                        UART_DEBUG_PutString("=========\r\n");
                         if (scan_next_attr > SCAN_ATTR_MAX) {
-                            UART_1_PutString("[SCAN] Complete\r\n");
+                            UART_DEBUG_PutString("[SCAN] Complete\r\n");
                             app_mode = APP_MODE_STANDBY;
                         } else {
                             scan_batch_start = scan_next_attr;
                             scan_waiting = TRUE;
-                            UART_1_PutString("[SCAN] any key for next batch\r\n");
+                            UART_DEBUG_PutString("[SCAN] any key for next batch\r\n");
                         }
                     }
                 }
@@ -866,20 +866,20 @@ int main(void)
                     for (i=0u; i<scan_tx_len; i++)
                         bp += sprintf(bp,"%02X",(unsigned)scan_tx_buf[i]);
                     bp += sprintf(bp,",\r\n");
-                    UART_1_PutString(tx);
+                    UART_DEBUG_PutString(tx);
                     g_movi.pending_attr = 0u;
                     scan_tx_pending = FALSE;
                     scan_next_attr++;
                     if (scan_next_attr==scan_batch_start+SCAN_BATCH_SIZE
                         || scan_next_attr>SCAN_ATTR_MAX) {
-                        UART_1_PutString("=========\r\n");
+                        UART_DEBUG_PutString("=========\r\n");
                         if (scan_next_attr > SCAN_ATTR_MAX) {
-                            UART_1_PutString("[SCAN] Complete\r\n");
+                            UART_DEBUG_PutString("[SCAN] Complete\r\n");
                             app_mode = APP_MODE_STANDBY;
                         } else {
                             scan_batch_start = scan_next_attr;
                             scan_waiting = TRUE;
-                            UART_1_PutString("[SCAN] any key for next batch\r\n");
+                            UART_DEBUG_PutString("[SCAN] any key for next batch\r\n");
                         }
                     }
                 }
@@ -906,14 +906,14 @@ int main(void)
                 g_movi.pending_attr  = 0u;
                 if (echo == 0x01u) {
                     reset_saw_01 = TRUE;
-                    UART_1_PutString("[RESET] 0x01 -- resetting...\r\n");
+                    UART_DEBUG_PutString("[RESET] 0x01 -- resetting...\r\n");
                     reset_state = RESET_ACTIVE;
                 } else if (echo==0x00u && reset_saw_01) {
-                    UART_1_PutString("[RESET] COMPLETE -- heading set\r\n");
+                    UART_DEBUG_PutString("[RESET] COMPLETE -- heading set\r\n");
                     reset_state = RESET_DONE;
                     app_mode    = APP_MODE_STANDBY;
                 } else {
-                    UART_1_PutString("[RESET] Waiting for 0x01...\r\n");
+                    UART_DEBUG_PutString("[RESET] Waiting for 0x01...\r\n");
                 }
             }
             if (reset_state != RESET_DONE &&
@@ -924,7 +924,7 @@ int main(void)
                 g_movi.pending_sent_ms = g_tick_ms;
             }
             if ((g_tick_ms-reset_start_ms) >= RESET_TIMEOUT_MS) {
-                UART_1_PutString("[RESET] TIMEOUT\r\n");
+                UART_DEBUG_PutString("[RESET] TIMEOUT\r\n");
                 g_movi.pending_attr  = 0u;
                 g_movi.pending_ready = false;
                 reset_state = RESET_IDLE;
@@ -947,7 +947,7 @@ int main(void)
                      (g_tick_ms-sensor_sent_ms) >= SENSOR_TIMEOUT_MS) {
                 sprintf(tx,"[SENSOR] timeout attr=%u\r\n",
                         (unsigned)sensor_attrs[sensor_idx]);
-                UART_1_PutString(tx);
+                UART_DEBUG_PutString(tx);
                 g_movi.pending_attr = 0u;
                 sensor_tx_pending   = FALSE;
                 sensor_idx = (uint8_t)((sensor_idx+1u) % SENSOR_N_ATTRS);
@@ -977,7 +977,7 @@ int main(void)
                      (g_tick_ms-g_movi.pending_sent_ms) >= TEST_TIMEOUT_MS) {
                 sprintf(tx,"[CTRL] attr %u timeout\r\n",
                         (unsigned)ctrl_attr_pending);
-                UART_1_PutString(tx);
+                UART_DEBUG_PutString(tx);
                 g_movi.pending_attr = 0u;
                 ctrl_attr_pending   = 0u;
             }
@@ -992,7 +992,7 @@ int main(void)
             if (Pin_Sensitivity_Read()==0u) {
                 current_sense=(joy_sensitivity_t)((current_sense+1)%3);
                 joystick_set_sensitivity(current_sense);
-                UART_1_PutString("Sensitivity changed\r\n");
+                UART_DEBUG_PutString("Sensitivity changed\r\n");
                 while (Pin_Sensitivity_Read()==0u);
             }
         }
@@ -1008,14 +1008,14 @@ int main(void)
                 int32_t ymv = adc_balanced_counts_to_mv(counts[CH_Y]);
                 sprintf(tx,"X:%ld mV Y:%ld mV  pan:%d tilt:%d /1000\r\n",
                         (long)xmv,(long)ymv,(int)pm,(int)tm);
-                UART_1_PutString(tx);
+                UART_DEBUG_PutString(tx);
             }
             if (joystick_cal_state()==JOY_CAL_CENTER_CAPTURE) {
                 uint16_t n = joystick_center_samples_collected();
                 if ((n%8u)==0u) {
                     sprintf(tx,"[CAL] %u/%u\r\n",(unsigned)n,
                             (unsigned)CAL_CENTER_SAMPLES);
-                    UART_1_PutString(tx);
+                    UART_DEBUG_PutString(tx);
                 }
             }
         }
@@ -1064,7 +1064,7 @@ int main(void)
                     (unsigned long)(ms/3600000u),
                     (unsigned long)((ms/60000u)%60u),
                     (unsigned long)((ms/1000u)%60u));
-            UART_1_PutString(tx);
+            UART_DEBUG_PutString(tx);
 
             hamfly_statistics_t s;
             hamfly_get_statistics(&g_movi, &s);
@@ -1073,7 +1073,7 @@ int main(void)
                     (unsigned long)s.rx_packets,
                     (unsigned long)s.rx_bad_checksum,
                     (unsigned)s.uart_err_flags);
-            UART_1_PutString(tx);
+            UART_DEBUG_PutString(tx);
 
             hamfly_telemetry_t st;
             hamfly_get_telemetry(&g_movi, &st);
@@ -1094,7 +1094,7 @@ int main(void)
                     decomp(abs_tilt_target*180.0f,&ati,&atf,&ats);
                     sprintf(tx,"[Target] Pan=%c%d.%02d Tilt=%c%d.%02d\r\n",
                             aps,api,apf,ats,ati,atf);
-                    UART_1_PutString(tx);
+                    UART_DEBUG_PutString(tx);
                 }
                 sprintf(tx,
                     "[Gimbal] Pan=%c%d.%02d Tilt=%c%d.%02d Roll=%c%d.%02d"
@@ -1102,9 +1102,9 @@ int main(void)
                     ps,pi,pf, ts,ti,tf, rs,ri,rf,
                     vli,vlf, vri,vrf,
                     imu_err, drv_err, gbl_err);
-                UART_1_PutString(tx);
+                UART_DEBUG_PutString(tx);
             } else {
-                UART_1_PutString("[Gimbal] No valid frame\r\n");
+                UART_DEBUG_PutString("[Gimbal] No valid frame\r\n");
             }
 
             if (show_platform_yaw && ctrl_attr_pending==0u) {
@@ -1118,7 +1118,7 @@ int main(void)
             decomp(cmd.u[CH_Y],&udi,&udf,&uds);
             sprintf(tx,"[Joy] L/R=%c%d.%02d U/D=%c%d.%02d (%s)\r\n",
                     lrs,lri,lrf, uds,udi,udf, mode_str(ctrl_mode));
-            UART_1_PutString(tx);
+            UART_DEBUG_PutString(tx);
 
             s.uart_err_flags = 0u;
         }

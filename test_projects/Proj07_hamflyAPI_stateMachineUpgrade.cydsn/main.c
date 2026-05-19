@@ -136,25 +136,25 @@ static void cal_prompt(joy_cal_state_t prev, joy_cal_state_t now)
 {
     if (prev == now) return;
     if (now == JOY_CAL_RANGE_CAPTURE)
-        UART_1_PutString("\r\n[CAL] Move joystick full range then press 'c'\r\n");
+        UART_DEBUG_PutString("\r\n[CAL] Move joystick full range then press 'c'\r\n");
     else if (now == JOY_CAL_CENTER_CAPTURE)
-        UART_1_PutString("\r\n[CAL] Hold center...\r\n");
+        UART_DEBUG_PutString("\r\n[CAL] Hold center...\r\n");
     else if (now == JOY_CAL_CONFIRM_SAVE)
-        UART_1_PutString("\r\n[CAL] Press 'c' to save, 'x' to cancel\r\n");
+        UART_DEBUG_PutString("\r\n[CAL] Press 'c' to save, 'x' to cancel\r\n");
     else if (now == JOY_CAL_OFF && prev == JOY_CAL_CONFIRM_SAVE) {
         if (joystick_save())
-            UART_1_PutString("[CAL] Saved to EEPROM\r\n");
+            UART_DEBUG_PutString("[CAL] Saved to EEPROM\r\n");
         else
         {
-            UART_1_PutString("[CAL] EEPROM save FAILED\r\n");
+            UART_DEBUG_PutString("[CAL] EEPROM save FAILED\r\n");
             char dbuf[64];
             sprintf(dbuf, "[CAL] sizeof(joy_cal_t)=%u\r\n",
                     (unsigned)sizeof(joy_cal_t));
-            UART_1_PutString(dbuf);
+            UART_DEBUG_PutString(dbuf);
         }
     }
     else if (now == JOY_CAL_OFF && prev != JOY_CAL_OFF)
-        UART_1_PutString("[CAL] Cancelled\r\n");
+        UART_DEBUG_PutString("[CAL] Cancelled\r\n");
 }
 
  
@@ -178,7 +178,7 @@ static void print_hex_dump(const uint8_t *p, uint8_t plen)
         for (col = 0u; col < 8u && (row+col) < plen; col++)
             bp += sprintf(bp, " %02X", (unsigned)p[row+col]);
         bp += sprintf(bp, "\r\n");
-        UART_1_PutString(buf);
+        UART_DEBUG_PutString(buf);
     }
 }
 
@@ -210,8 +210,8 @@ int main(void)
     CyGlobalIntEnable;  // PSoC API enable.
     
     // Start serial monitor comms.
-    UART_1_Start();
-    UART_1_PutString("\r\n=== Gimbal Control  PSoC 5LP ===\r\n");
+    UART_DEBUG_Start();
+    UART_DEBUG_PutString("\r\n=== Gimbal Control  PSoC 5LP ===\r\n");
     
     // Start Movi comms
     UART_MOVI_Start();
@@ -222,25 +222,25 @@ int main(void)
     hamfly_init(&g_movi, &MOVI_HAL);
     ctx.gimbal = &g_movi;
     isr_rx_movi_StartEx(isr_rx_movi_Handler);  // Rx handler
-    UART_1_PutString("[Init] Gimbal UART ready\r\n");
+    UART_DEBUG_PutString("[Init] Gimbal UART ready\r\n");
     
     // Load joystick calibration from eeprom
     psoc_eeprom_init();
     if (!joystick_load(ctx.invert_mask)) {
-        UART_1_PutString("[Init] No saved cal, using defaults.\r\n");
+        UART_DEBUG_PutString("[Init] No saved cal, using defaults.\r\n");
         joystick_init(&defaults, ctx.invert_mask);
     } else {
-        UART_1_PutString("[Init] Loaded cal from EEPROM.\r\n");
+        UART_DEBUG_PutString("[Init] Loaded cal from EEPROM.\r\n");
     }
     
     // Initialize joystick ADC
     adc_balanced_init();
-    UART_1_PutString("[Init] ADC + Joystick ready!\r\n");
+    UART_DEBUG_PutString("[Init] ADC + Joystick ready!\r\n");
 
     // Initialize looptimer
     Looptimer_Start();
     isr_Looptimer_StartEx(isr_Looptimer_Handler);
-    UART_1_PutString("[Init] Ready  Mode: STANDBY.\r\n");
+    UART_DEBUG_PutString("[Init] Ready  Mode: STANDBY.\r\n");
 
     // Fire state machine "on entry" function
     app_start(&ctx);
@@ -252,7 +252,7 @@ int main(void)
     {
         uint32_t  now = g_tick_ms;
         // Get serial monitor input.
-        uint8_t ch = (uint8_t)UART_1_GetChar();
+        uint8_t ch = (uint8_t)UART_DEBUG_GetChar();
         // Handle joystick and common keys
         // 'app_dispatch_key' handles the state machine input logic
         if (ch) {
@@ -291,7 +291,7 @@ int main(void)
                      mode_str(ctx.ctrl_mode),
                      (double)ctx.cmd.u[CH_X],
                      (double)ctx.cmd.u[CH_Y]);
-            UART_1_PutString(tx);
+            UART_DEBUG_PutString(tx);
         }
     }
 }

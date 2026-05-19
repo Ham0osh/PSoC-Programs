@@ -75,15 +75,30 @@ static const state_t parent_of[STATE_COUNT] = {
 };
 
 // Per-state hook tables %====================================================%
-// on_entry and on_exit are independent; a state may have none, one, or both.
-typedef void (*state_fn_t)(app_ctx_t *);
+// Forward declaration of state handlers.
+typedef void    (*state_fn_t)(app_ctx_t *);  // Entry and Exit handlers
+typedef uint8_t (*key_fn_t)  (app_ctx_t *, char);  // Input handlers
+typedef void    (*build_fn_t)(const app_ctx_t *, hamfly_control_t *); //Packet
 
+// Entry handlers
 static void entry_stby_defer   (app_ctx_t *);
 static void entry_stby_hold    (app_ctx_t *);
 static void entry_manu_joystick(app_ctx_t *);
-static void exit_manu_joystick (app_ctx_t *);
 static void entry_error_active (app_ctx_t *);
-// AUTO_* and MANU_NUDGE: NULL until implemented
+
+// Exit handlers
+static void exit_manu_joystick (app_ctx_t *);
+
+// Key handlers
+static uint8_t key_manu_joystick(app_ctx_t *, char);
+static uint8_t key_error_active (app_ctx_t *, char);
+
+// Packet building handlers
+static void build_zero         (const app_ctx_t *, hamfly_control_t *);
+static void build_stby         (const app_ctx_t *, hamfly_control_t *);
+static void build_manu_joystick(const app_ctx_t *, hamfly_control_t *);
+static void build_error        (const app_ctx_t *, hamfly_control_t *);
+// AUTO_* and MANU_NUDGE: NULL in the tables until implemented
 
 static const state_fn_t on_entry[STATE_COUNT] = {
     [STBY]            = NULL,   /* parent: shared STBY entry, if ever needed */
@@ -105,7 +120,7 @@ static const state_fn_t on_entry[STATE_COUNT] = {
 
 static const state_fn_t on_exit[STATE_COUNT] = {
     [STBY]            = NULL,   /* parent */
-    [MANU]            = NULL,   /* parent: e.g. zero rates on any MANU->non-MANU */
+    [MANU]            = NULL,   /* parent */
     [AUTO]            = NULL,   /* parent */
     [ERROR]           = NULL,   /* parent */
     [STBY_DEFER]      = NULL,
@@ -221,9 +236,9 @@ void app_raise_error(app_ctx_t *ctx, err_sev_t sev, const char *msg)
 {
     // User error: Invalid request, do not change and notify user.
     if (sev == SEV_USER) {
-        UART_PutString("[USER] ");
-        UART_PutString(msg);
-        UART_PutString("\r\n");
+        UART_DEBUG_PutString("[USER] ");
+        UART_DEBUG_PutString(msg);
+        UART_DEBUG_PutString("\r\n");
         return;
     }
     
@@ -266,7 +281,7 @@ const char *app_state_name(state_t s) { return state_names[s]; }
 static void entry_stby_defer(app_ctx_t *ctx)
 {
     (void)ctx;
-    UART_PutString("\r\n[STBY_DEFER] boot — '1' hold, '2' manual, '3' auto, '?' help\r\n> ");
+    UART_DEBUG_PutString("\r\n[STBY_DEFER] boot — '1' hold, '2' manual, '3' auto, '?' help\r\n> ");
 }
 // On Exit: None
 
@@ -276,7 +291,7 @@ static void entry_stby_defer(app_ctx_t *ctx)
 static void entry_stby_hold(app_ctx_t *ctx)
 {
     (void)ctx;
-    UART_PutString("\r\n[STBY_HOLD] rates zeroed\r\n> ");
+    UART_DEBUG_PutString("\r\n[STBY_HOLD] rates zeroed\r\n> ");
 }
 // On Exit: None
 
@@ -289,7 +304,7 @@ static void entry_stby_hold(app_ctx_t *ctx)
 // On Enter: Enable joystick, print message.
 static void entry_manu_joystick(app_ctx_t *ctx)
 {
-    UART_PutString("\r\n[MANU_JOYSTICK] r=rate a=abs [=origin ]=home\r\n> ");
+    UART_DEBUG_PutString("\r\n[MANU_JOYSTICK] r=rate a=abs [=origin ]=home\r\n> ");
 }
 // On Exit: Disable joystick, zero control mode.
 static void exit_manu_joystick(app_ctx_t *ctx)
@@ -312,16 +327,16 @@ static const char *sev_str(err_sev_t s)
 }
 static void entry_error_active(app_ctx_t *ctx)
 {
-    UART_PutString("\r\n[ERROR:");
-    UART_PutString(sev_str(ctx->err_sev));
-    UART_PutString("] ");
-    UART_PutString(ctx->err_msg ? ctx->err_msg : "(no msg)");
+    UART_DEBUG_PutString("\r\n[ERROR:");
+    UART_DEBUG_PutString(sev_str(ctx->err_sev));
+    UART_DEBUG_PutString("] ");
+    UART_DEBUG_PutString(ctx->err_msg ? ctx->err_msg : "(no msg)");
     if (ctx->err_sev == SEV_FATAL && ctx->gimbal)
     {
         hamfly_kill(ctx->gimbal);
-        UART_PutString("\r\nFATAL latched. Power cycle or Ctrl+R to clear.\r\n");
+        UART_DEBUG_PutString("\r\nFATAL latched. Power cycle or Ctrl+R to clear.\r\n");
     }
-    else    UART_PutString("\r\nAny key to acknowledge.\r\n");
+    else    UART_DEBUG_PutString("\r\nAny key to acknowledge.\r\n");
 }
 
 // %==========================================================================%
@@ -347,13 +362,13 @@ static void set_origin(app_ctx_t *ctx)
     float siny = 2.0f * (r*kk + ii*j), cosy = 1.0f - 2.0f*(j*j + kk*kk);
     ctx->origin_pan_deg = atan2f(siny, cosy) * 57.2958f;
     ctx->origin_set = 1u;
-    UART_PutString("\r\n[ORIGIN] captured\r\n");
+    UART_DEBUG_PutString("\r\n[ORIGIN] captured\r\n");
 }
 
 static void print_help(const app_ctx_t *ctx)
 {
     (void)ctx;
-    UART_PutString(
+    UART_DEBUG_PutString(
         "\r\n--- keys ---\r\n"
         " 1 hold   2 manual   3 auto\r\n"
         " k kill   [ set-origin   ? help\r\n"
@@ -369,7 +384,7 @@ static uint8_t handle_global_key(app_ctx_t *ctx, char k)
                 ctx->fatal_latched = 0u;
                 ctx->err_sev = SEV_USER;
                 ctx->err_msg = NULL;
-                UART_PutString("\r\nFATAL cleared.\r\n");
+                UART_DEBUG_PutString("\r\nFATAL cleared.\r\n");
                 transition(ctx, STBY_HOLD);
             }
             return 1;                          /* reserved key, always consumed */
@@ -377,9 +392,9 @@ static uint8_t handle_global_key(app_ctx_t *ctx, char k)
             if (ctx->gimbal) hamfly_kill(ctx->gimbal);
             transition(ctx, STBY_HOLD);
             return 1;
-    case '[': set_origin(ctx);  return 1;
-        case '?': print_help(ctx);  return 1;
-        default:  return 0;
+        case '[': set_origin(ctx);  return 1;
+            case '?': print_help(ctx);  return 1;
+            default:  return 0;
     }
 }
 
@@ -397,13 +412,11 @@ static uint8_t handle_nav_key(app_ctx_t *ctx, char k)
 }
 
 /* ---- leaf-specific keys ----------------------------------------------- */
-typedef uint8_t (*key_fn_t)(app_ctx_t *, char);
-
 static uint8_t key_manu_joystick(app_ctx_t *ctx, char k)
 {
     switch (k) {
-        case 'r': ctx->ctrl_mode = HAMFLY_RATE;     UART_PutString("\r\n[MANU] RATE\r\n");     return 1;
-        case 'a': ctx->ctrl_mode = HAMFLY_ABSOLUTE; UART_PutString("\r\n[MANU] ABSOLUTE\r\n"); return 1;
+        case 'r': ctx->ctrl_mode = HAMFLY_RATE;     UART_DEBUG_PutString("\r\n[MANU] RATE\r\n");     return 1;
+        case 'a': ctx->ctrl_mode = HAMFLY_ABSOLUTE; UART_DEBUG_PutString("\r\n[MANU] ABSOLUTE\r\n"); return 1;
         case 'e': transition(ctx, STBY_HOLD);       return 1;   /* explicit exit */
         case ']': app_raise_error(ctx, SEV_USER, "AUTO_HOME not yet implemented"); return 1;
         default:  return 0;
@@ -443,9 +456,6 @@ uint8_t app_dispatch_key(app_ctx_t *ctx, char key)
 // %==========================================================================%
 // %                       Gimbal Control Packet                              %
 // %==========================================================================%
-// TODO: Compare with Proj06 and HamflyAPI to refactor and unify cleanly.
-typedef void (*build_fn_t)(const app_ctx_t *, hamfly_control_t *);
-
 // Initialize empty packet.
 static void build_zero(const app_ctx_t *ctx, hamfly_control_t *out)
 {

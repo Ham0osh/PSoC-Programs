@@ -823,8 +823,8 @@ uint32 USBUART_GetDTERate(void)
 *  Returns the number of stop bits.
 *  Return               |Value Description
 *  ---------------------|-------------------
-*  USBUART_1_STOPBIT    | 1 stop bit
-*  USBUART_1_5_STOPBITS | 1,5 stop bits
+*  USBUART_DEBUG_STOPBIT    | 1 stop bit
+*  USBUART_DEBUG_5_STOPBITS | 1,5 stop bits
 *  USBUART_2_STOPBITS   | 2 stop bits
 *
 *

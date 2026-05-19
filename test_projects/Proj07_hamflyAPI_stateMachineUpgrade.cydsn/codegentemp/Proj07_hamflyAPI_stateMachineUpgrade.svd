@@ -4473,7 +4473,7 @@
       </registers>
     </peripheral>
     <peripheral>
-      <name>UART_1</name>
+      <name>UART_DEBUG</name>
       <description>UART</description>
       <baseAddress>0x0</baseAddress>
       <addressBlock>
@@ -4483,7 +4483,7 @@
       </addressBlock>
       <registers>
         <register>
-          <name>TX_UART_1_TX_DATA</name>
+          <name>TX_UART_DEBUG_TX_DATA</name>
           <description>TX Data Register</description>
           <addressOffset>0x40006449</addressOffset>
           <size>8</size>
@@ -4492,7 +4492,7 @@
           <resetMask>0</resetMask>
         </register>
         <register>
-          <name>TX_UART_1_TX_STATUS</name>
+          <name>TX_UART_DEBUG_TX_STATUS</name>
           <description>TX status register</description>
           <addressOffset>0x40006469</addressOffset>
           <size>8</size>
@@ -4501,28 +4501,28 @@
           <resetMask>0</resetMask>
           <fields>
             <field>
-              <name>UART_1_TX_STS_COMPLETE</name>
+              <name>UART_DEBUG_TX_STS_COMPLETE</name>
               <description>No description available</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <access>read-only</access>
             </field>
             <field>
-              <name>UART_1_TX_STS_FIFO_EMPTY</name>
+              <name>UART_DEBUG_TX_STS_FIFO_EMPTY</name>
               <description>No description available</description>
               <lsb>1</lsb>
               <msb>1</msb>
               <access>read-only</access>
             </field>
             <field>
-              <name>UART_1_TX_STS_FIFO_FULL</name>
+              <name>UART_DEBUG_TX_STS_FIFO_FULL</name>
               <description>No description available</description>
               <lsb>2</lsb>
               <msb>2</msb>
               <access>read-only</access>
             </field>
             <field>
-              <name>UART_1_TX_STS_FIFO_NOT_FULL</name>
+              <name>UART_DEBUG_TX_STS_FIFO_NOT_FULL</name>
               <description>No description available</description>
               <lsb>3</lsb>
               <msb>3</msb>
@@ -4531,7 +4531,7 @@
           </fields>
         </register>
         <register>
-          <name>RX_UART_1_RX_STATUS</name>
+          <name>RX_UART_DEBUG_RX_STATUS</name>
           <description>RX status register</description>
           <addressOffset>0x4000646D</addressOffset>
           <size>8</size>
@@ -4540,49 +4540,49 @@
           <resetMask>0</resetMask>
           <fields>
             <field>
-              <name>UART_1_RX_STS_MRKSPC</name>
+              <name>UART_DEBUG_RX_STS_MRKSPC</name>
               <description>No description available</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <access>read-only</access>
             </field>
             <field>
-              <name>UART_1_RX_STS_BREAK</name>
+              <name>UART_DEBUG_RX_STS_BREAK</name>
               <description>No description available</description>
               <lsb>1</lsb>
               <msb>1</msb>
               <access>read-only</access>
             </field>
             <field>
-              <name>UART_1_RX_STS_PAR_ERROR</name>
+              <name>UART_DEBUG_RX_STS_PAR_ERROR</name>
               <description>No description available</description>
               <lsb>2</lsb>
               <msb>2</msb>
               <access>read-only</access>
             </field>
             <field>
-              <name>UART_1_RX_STS_STOP_ERROR</name>
+              <name>UART_DEBUG_RX_STS_STOP_ERROR</name>
               <description>No description available</description>
               <lsb>3</lsb>
               <msb>3</msb>
               <access>read-only</access>
             </field>
             <field>
-              <name>UART_1_RX_STS_OVERRUN</name>
+              <name>UART_DEBUG_RX_STS_OVERRUN</name>
               <description>No description available</description>
               <lsb>4</lsb>
               <msb>4</msb>
               <access>read-only</access>
             </field>
             <field>
-              <name>UART_1_RX_STS_FIFO_NOTEMPTY</name>
+              <name>UART_DEBUG_RX_STS_FIFO_NOTEMPTY</name>
               <description>No description available</description>
               <lsb>5</lsb>
               <msb>5</msb>
               <access>read-only</access>
             </field>
             <field>
-              <name>UART_1_RX_STS_ADDR_MATCH</name>
+              <name>UART_DEBUG_RX_STS_ADDR_MATCH</name>
               <description>No description available</description>
               <lsb>6</lsb>
               <msb>6</msb>
@@ -4591,7 +4591,7 @@
           </fields>
         </register>
         <register>
-          <name>RX_UART_1_RX_ADDRESS1</name>
+          <name>RX_UART_DEBUG_RX_ADDRESS1</name>
           <description>RX Address1 Register</description>
           <addressOffset>0x40006529</addressOffset>
           <size>8</size>
@@ -4600,7 +4600,7 @@
           <resetMask>0</resetMask>
         </register>
         <register>
-          <name>RX_UART_1_RX_ADDRESS2</name>
+          <name>RX_UART_DEBUG_RX_ADDRESS2</name>
           <description>RX Address2 Register</description>
           <addressOffset>0x40006539</addressOffset>
           <size>8</size>
@@ -4609,7 +4609,7 @@
           <resetMask>0</resetMask>
         </register>
         <register>
-          <name>RX_UART_1_RX_DATA</name>
+          <name>RX_UART_DEBUG_RX_DATA</name>
           <description>RX Data Register</description>
           <addressOffset>0x40006549</addressOffset>
           <size>8</size>

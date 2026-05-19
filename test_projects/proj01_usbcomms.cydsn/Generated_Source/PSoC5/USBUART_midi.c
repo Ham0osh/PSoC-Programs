@@ -618,7 +618,7 @@ void USBUART_MIDI_Init(void)
             }
             else if (srcBuffZero == USBUART_MIDI_TUNEREQ)
             {
-                USBUART_midiInBuffer[USBUART_midiInPointer] = USBUART_1BYTE_COMMON | cable;
+                USBUART_midiInBuffer[USBUART_midiInPointer] = USBUART_DEBUGBYTE_COMMON | cable;
                 USBUART_midiInPointer++;
             }
             else if ((srcBuffZero == USBUART_MIDI_QFM) || (srcBuffZero == USBUART_MIDI_SONGSEL))

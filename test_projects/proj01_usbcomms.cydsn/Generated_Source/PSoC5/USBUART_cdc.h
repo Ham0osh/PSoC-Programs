@@ -72,8 +72,8 @@
 #define USBUART_LINE_CODING_CHANGED        (0x01u)
 #define USBUART_LINE_CONTROL_CHANGED       (0x02u)
 
-#define USBUART_1_STOPBIT                  (0x00u)
-#define USBUART_1_5_STOPBITS               (0x01u)
+#define USBUART_DEBUG_STOPBIT                  (0x00u)
+#define USBUART_DEBUG_5_STOPBITS               (0x01u)
 #define USBUART_2_STOPBITS                 (0x02u)
 
 #define USBUART_PARITY_NONE                (0x00u)
