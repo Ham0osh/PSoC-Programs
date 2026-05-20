@@ -309,7 +309,7 @@ static void entry_manu_joystick(app_ctx_t *ctx)
 {
     // Rate default
     ctx->ctrl_mode = HAMFLY_RATE;
-    UART_DEBUG_PutString("\r\n[MANU_JOYSTICK] r=rate a=abs [=origin ]=home\r\n> ");
+     UART_DEBUG_PutString("\r\n[MANU] joystick=rate  nudge: numpad=fine  ijkl=0.5  wasd=1  e=exit\r\n> ");
 }
 // On Exit: Disable joystick, zero control mode.
 static void exit_manu_joystick(app_ctx_t *ctx)
@@ -377,7 +377,8 @@ static void print_help(const app_ctx_t *ctx)
         "\r\n--- keys ---\r\n"
         " 1 hold   2 manual       3 auto\r\n"
         " x kill   [ set-origin   ? help\r\n"
-        " (in MANU) r rate  a abs  e exit  ] home\r\n");
+        " (in MANU) numpad/ijkl/wasd nudge\r\n"
+        " e exit   ] home\r\n");
 }
 
 /* ---- always-global keys (honored in every non-FATAL leaf) ------------- */
@@ -417,17 +418,6 @@ static uint8_t handle_nav_key(app_ctx_t *ctx, char k)
 }
 
 /* ---- leaf-specific keys ----------------------------------------------- */
-static uint8_t key_manu_joystick(app_ctx_t *ctx, char k)
-{
-    switch (k) {
-        case 'r': ctx->ctrl_mode = HAMFLY_RATE;     UART_DEBUG_PutString("\r\n[MANU] RATE\r\n");     return 1;
-        case 'a': ctx->ctrl_mode = HAMFLY_ABSOLUTE; UART_DEBUG_PutString("\r\n[MANU] ABSOLUTE\r\n"); return 1;
-        case 'e': transition(ctx, STBY_HOLD);       return 1;   /* explicit exit */
-        case ']': app_raise_error(ctx, SEV_USER, "AUTO_HOME not yet implemented"); return 1;
-        default:  return 0;
-    }
-}
-
 static uint8_t key_error_active(app_ctx_t *ctx, char k)
 {
     (void)k;
@@ -516,12 +506,13 @@ void app_build_control(const app_ctx_t *ctx, hamfly_control_t *out)
 // TEMP: Nudge handler
 static void nudge_apply(app_ctx_t *ctx, float dpan_deg, float dtilt_deg)
 {
-    if (!ctx->nudge_hold) {                       /* episode start: capture baseline */
+    if (!ctx->nudge_hold) {// Capture nudge baseline
         float p, t;
         if (!get_euler_deg(&p, &t)) {
             app_raise_error(ctx, SEV_USER, "no telemetry - nudge ignored");
             return;
         }
+        UART_DEBUG_PutString("Nudging!\r\n");  // TODO: Verbose nudge print
         ctx->nudge_base_pan_deg  = p;
         ctx->nudge_base_tilt_deg = t;
         ctx->tgt_pan_deg  = p;
@@ -550,9 +541,9 @@ static uint8_t key_manu_joystick(app_ctx_t *ctx, char k)
         case 'l': nudge_apply(ctx, +NUDGE_FINE_DEG,   0);                return 1;
         case 'w': nudge_apply(ctx, 0,                +NUDGE_COARSE_DEG); return 1;
         case 's': nudge_apply(ctx, 0,                -NUDGE_COARSE_DEG); return 1;
-        case 'a': nudge_apply(ctx, -NUDGE_COARSE_DEG, 0);               return 1;
-        case 'd': nudge_apply(ctx, +NUDGE_COARSE_DEG, 0);               return 1;
-        case 'e': transition(ctx, STBY_HOLD);                          return 1;
+        case 'a': nudge_apply(ctx, -NUDGE_COARSE_DEG, 0);                return 1;
+        case 'd': nudge_apply(ctx, +NUDGE_COARSE_DEG, 0);                return 1;
+        case 'e': transition(ctx, STBY_HOLD);                            return 1;
         default:  return 0;
     }
 }
