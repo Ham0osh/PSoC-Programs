@@ -31,6 +31,8 @@ uint8_t     app_dispatch_key(app_ctx_t *ctx, char key);
 void        app_build_control(const app_ctx_t *ctx, hamfly_control_t *out);
 void        app_raise_error(app_ctx_t *ctx, err_sev_t sev, const char *msg);
 const char *app_state_name(state_t s);
+// TEMP: Ticker for manual nudge.
+void        app_manual_tick(app_ctx_t *ctx);
 
 #endif /* APP_STATEMACHINE_H */
 /* [] END OF FILE */

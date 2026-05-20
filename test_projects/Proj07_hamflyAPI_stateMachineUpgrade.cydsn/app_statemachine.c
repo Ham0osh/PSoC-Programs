@@ -48,6 +48,8 @@
 
 // For timing, PSoC incremented with looptimer ISR.
 extern volatile uint32_t g_tick_ms;
+extern uint8_t get_euler_deg(float *pan_deg_out, float *tilt_deg_out);
+
 
 // Hierarchy %================================================================%
 // Heirarchy allows shared entry/exit behaviour.
@@ -373,8 +375,8 @@ static void print_help(const app_ctx_t *ctx)
     (void)ctx;
     UART_DEBUG_PutString(
         "\r\n--- keys ---\r\n"
-        " 1 hold   2 manual   3 auto\r\n"
-        " k kill   [ set-origin   ? help\r\n"
+        " 1 hold   2 manual       3 auto\r\n"
+        " x kill   [ set-origin   ? help\r\n"
         " (in MANU) r rate  a abs  e exit  ] home\r\n");
 }
 
@@ -391,7 +393,7 @@ static uint8_t handle_global_key(app_ctx_t *ctx, char k)
                 transition(ctx, STBY_HOLD);
             }
             return 1;                          /* reserved key, always consumed */
-        case 'k':                              /* soft kill */
+        case 'x':                              /* soft kill */
             if (ctx->gimbal) hamfly_kill(ctx->gimbal);
             transition(ctx, STBY_HOLD);
             return 1;
@@ -473,13 +475,20 @@ static void build_stby(const app_ctx_t *ctx, hamfly_control_t *out) {
 // Build packet from joystick inputs.
 static void build_manu_joystick(const app_ctx_t *ctx, hamfly_control_t *out) {
     out->enable    = 1u;
-    out->pan_mode  = ctx->ctrl_mode;
-    out->tilt_mode = ctx->ctrl_mode;
     out->roll_mode = HAMFLY_DEFER;
-    out->pan       =  ctx->cmd.u[CH_X];
-    out->tilt      = -ctx->cmd.u[CH_Y];  // Invert Y based on breadboarding.
     out->roll      = 0.0f;
     out->kill      = 0u;
+    // Nudge vs joystick control mode
+    if (ctx->nudge_hold) {
+        out->pan_mode = out->tilt_mode = HAMFLY_ABSOLUTE;
+        out->pan  = DEG_TO_UNIT(ctx->tgt_pan_deg - ctx->nudge_base_pan_deg); /* pan rebased -> relative delta */
+        out->tilt = DEG_TO_UNIT(ctx->tgt_tilt_deg);                          /* tilt true-absolute */
+    } else {
+        out->pan_mode = out->tilt_mode = HAMFLY_RATE;
+        out->pan  =  ctx->cmd.u[CH_X];
+        out->tilt = -ctx->cmd.u[CH_Y];
+    }
+
 }
 
 // Build packet for when in ERROR state
@@ -495,4 +504,70 @@ void app_build_control(const app_ctx_t *ctx, hamfly_control_t *out)
     build_fn_t f = on_build[ctx->state];
     if (f)  f(ctx, out);
     else    build_zero(ctx, out);  // Safe default.
+}
+
+// TEMP: Nudge constants
+#define NUDGE_LSB_DEG     (180.0f/32767.0f)  /* ~0.00549°, one on-wire LSB */
+#define NUDGE_FINE_DEG    0.5f
+#define NUDGE_COARSE_DEG  1.0f
+#define NUDGE_SETTLE_DEG  0.05f   /* "arrived" tolerance */
+#define NUDGE_MIN_DWELL_MS 150u   /* hold long enough for the step to land */
+#define NUDGE_TIMEOUT_MS  2000u   /* give up if it never settles */
+// TEMP: Nudge handler
+static void nudge_apply(app_ctx_t *ctx, float dpan_deg, float dtilt_deg)
+{
+    if (!ctx->nudge_hold) {                       /* episode start: capture baseline */
+        float p, t;
+        if (!get_euler_deg(&p, &t)) {
+            app_raise_error(ctx, SEV_USER, "no telemetry - nudge ignored");
+            return;
+        }
+        ctx->nudge_base_pan_deg  = p;
+        ctx->nudge_base_tilt_deg = t;
+        ctx->tgt_pan_deg  = p;
+        ctx->tgt_tilt_deg = t;
+        ctx->nudge_hold = 1u;
+    }
+    ctx->tgt_pan_deg  = CLAMP(ctx->tgt_pan_deg  + dpan_deg,
+                              ctx->origin_pan_deg  + LIMIT_PAN_MIN_DEG,
+                              ctx->origin_pan_deg  + LIMIT_PAN_MAX_DEG);
+    ctx->tgt_tilt_deg = CLAMP(ctx->tgt_tilt_deg + dtilt_deg,
+                              ctx->origin_tilt_deg + LIMIT_TILT_MIN_DEG,
+                              ctx->origin_tilt_deg + LIMIT_TILT_MAX_DEG);
+    ctx->nudge_start_ms = g_tick_ms;              /* restart dwell on every (accumulating) press */
+}
+
+static uint8_t key_manu_joystick(app_ctx_t *ctx, char k)
+{
+    switch (k) {
+        case '8': nudge_apply(ctx, 0,                +NUDGE_LSB_DEG);    return 1;
+        case '2': nudge_apply(ctx, 0,                -NUDGE_LSB_DEG);    return 1;
+        case '4': nudge_apply(ctx, -NUDGE_LSB_DEG,    0);                return 1;
+        case '6': nudge_apply(ctx, +NUDGE_LSB_DEG,    0);                return 1;
+        case 'i': nudge_apply(ctx, 0,                +NUDGE_FINE_DEG);   return 1;
+        case 'k': nudge_apply(ctx, 0,                -NUDGE_FINE_DEG);   return 1;
+        case 'j': nudge_apply(ctx, -NUDGE_FINE_DEG,   0);                return 1;
+        case 'l': nudge_apply(ctx, +NUDGE_FINE_DEG,   0);                return 1;
+        case 'w': nudge_apply(ctx, 0,                +NUDGE_COARSE_DEG); return 1;
+        case 's': nudge_apply(ctx, 0,                -NUDGE_COARSE_DEG); return 1;
+        case 'a': nudge_apply(ctx, -NUDGE_COARSE_DEG, 0);               return 1;
+        case 'd': nudge_apply(ctx, +NUDGE_COARSE_DEG, 0);               return 1;
+        case 'e': transition(ctx, STBY_HOLD);                          return 1;
+        default:  return 0;
+    }
+}
+
+// TEMP: Manual tick for nudge
+void app_manual_tick(app_ctx_t *ctx)
+{
+    if (ctx->state != MANU_JOYSTICK || !ctx->nudge_hold) return;
+    uint32_t elapsed = g_tick_ms - ctx->nudge_start_ms;
+    if (elapsed < NUDGE_MIN_DWELL_MS) return;       /* let the step physically land */
+
+    float p, t; uint8_t arrived = 0u;
+    if (get_euler_deg(&p, &t))
+        arrived = (fabsf(p - ctx->tgt_pan_deg)  < NUDGE_SETTLE_DEG) &&
+                  (fabsf(t - ctx->tgt_tilt_deg) < NUDGE_SETTLE_DEG);
+    if (arrived || elapsed >= NUDGE_TIMEOUT_MS)
+        ctx->nudge_hold = 0u;                        /* rate=0 holds the new attitude */
 }
