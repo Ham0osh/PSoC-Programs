@@ -44,6 +44,7 @@
 #include "hamfly.h"
 #include <project.h>  // For UART
 #include <math.h>
+#include <string.h>
 
 // For timing, PSoC incremented with looptimer ISR.
 extern volatile uint32_t g_tick_ms;
@@ -304,6 +305,8 @@ static void entry_stby_hold(app_ctx_t *ctx)
 // On Enter: Enable joystick, print message.
 static void entry_manu_joystick(app_ctx_t *ctx)
 {
+    // Rate default
+    ctx->ctrl_mode = HAMFLY_RATE;
     UART_DEBUG_PutString("\r\n[MANU_JOYSTICK] r=rate a=abs [=origin ]=home\r\n> ");
 }
 // On Exit: Disable joystick, zero control mode.

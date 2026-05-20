@@ -229,6 +229,7 @@ int main(void)
     if (!joystick_load(ctx.invert_mask)) {
         UART_DEBUG_PutString("[Init] No saved cal, using defaults.\r\n");
         joystick_init(&defaults, ctx.invert_mask);
+        joystick_set_sensitivity(ctx.sense);
     } else {
         UART_DEBUG_PutString("[Init] Loaded cal from EEPROM.\r\n");
     }

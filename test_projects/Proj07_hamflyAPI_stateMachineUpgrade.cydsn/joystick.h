@@ -27,13 +27,6 @@
 #define N_CH (2u)
 #endif
 
-#ifndef CH_X
-#define CH_X   0u
-#endif
-#ifndef CH_Y
-#define CH_Y   1u
-#endif
-
 #if (N_CH < 1u)
 #error "N_CH must be >= 1" // Cant have zero channels ofc
 #endif
