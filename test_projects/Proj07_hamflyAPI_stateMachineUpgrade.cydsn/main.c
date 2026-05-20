@@ -48,20 +48,12 @@
 
 // Soft limits relative to origin (degrees)
 // Origin set by pressing '[' in any mode
-#define LIMIT_PAN_MAX_DEG      30.0f
-#define LIMIT_PAN_MIN_DEG     -30.0f
-#define LIMIT_TILT_MAX_DEG     20.0f
-#define LIMIT_TILT_MIN_DEG    -20.0f
-
 // Nudge config
 #define NUDGE_RATE              0.5f
 #define NUDGE_TIME_SMALL        50u   // ms
 #define NUDGE_TIME_LARGE        200u  // ms
 
 // Utilities
-#define DEG_TO_UNIT(d)   ((float)(d) / 180.0f)
-#define UNIT_TO_DEG(u)   ((float)(u) * 180.0f)
-#define CLAMP(v,lo,hi)   ((v)<(lo)?(lo):((v)>(hi)?(hi):(v)))
 #define FALSE  0u
 #define TRUE   1u
 
@@ -273,6 +265,8 @@ int main(void)
             joystick_get_cmd(&ctx.cmd);
         }
         
+        app_manual_tick(&ctx);
+
         // At 'CONTROL_PERIOD_MS' build and send control packet
         // app_build_control handles the state of the state machine
         if ((now - ctx.last_tx_ms) >= CONTROL_PERIOD_MS) {

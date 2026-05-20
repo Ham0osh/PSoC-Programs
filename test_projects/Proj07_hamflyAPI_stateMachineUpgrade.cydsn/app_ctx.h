@@ -99,10 +99,28 @@ typedef struct {
     joy_sensitivity_t sense;
     uint32_t          invert_mask;
 
+    // TEMP: Manual control vars
+    uint8_t nudge_hold;          /* 1 = streaming absolute target; 0 = joystick rate */
+    uint32_t nudge_start_ms;     /* episode start, for the release timeout */
+    float   nudge_base_pan_deg;  /* attitude captured at episode start */
+    float   nudge_base_tilt_deg;
+    float   tgt_pan_deg;         /* accumulated targets, MoVI frame degrees */
+    float   tgt_tilt_deg;
+
     // TODO: Closed loop tracking vars.
 } app_ctx_t;
 
 void app_ctx_init(app_ctx_t *ctx);
+
+// Manual control macros
+#define DEG_TO_UNIT(d)   ((float)(d) / 180.0f)
+#define UNIT_TO_DEG(u)   ((float)(u) * 180.0f)
+#define CLAMP(v,lo,hi)   ((v)<(lo)?(lo):((v)>(hi)?(hi):(v)))
+#define LIMIT_PAN_MAX_DEG   30.0f
+#define LIMIT_PAN_MIN_DEG  -30.0f
+#define LIMIT_TILT_MAX_DEG  20.0f
+#define LIMIT_TILT_MIN_DEG -20.0f
+
 
 #endif /* APP_CTX_H */
 
