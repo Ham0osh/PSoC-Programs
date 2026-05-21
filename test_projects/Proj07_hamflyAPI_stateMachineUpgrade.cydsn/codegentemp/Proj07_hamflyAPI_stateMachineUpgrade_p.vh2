@@ -1,5 +1,5 @@
 -- Project:   Proj07_hamflyAPI_stateMachineUpgrade
--- Generated: 05/20/2026 14:18:33
+-- Generated: 05/20/2026 17:24:33
 -- PSoC Creator  4.4
 
 ENTITY Proj07_hamflyAPI_stateMachineUpgrade IS
@@ -61,6 +61,7 @@ ARCHITECTURE __DEFAULT__ OF Proj07_hamflyAPI_stateMachineUpgrade IS
     SIGNAL Net_320 : bit;
     SIGNAL Net_338 : bit;
     SIGNAL Net_342 : bit;
+    SIGNAL Net_353 : bit;
     SIGNAL Net_45 : bit;
     SIGNAL Pin_LED(0)__PA : bit;
     SIGNAL Pin_Sensitivity(0)__PA : bit;
@@ -2569,7 +2570,16 @@ BEGIN
             status_3 => \UART_PI:BUART:rx_status_3\,
             status_2 => open,
             status_1 => open,
-            status_0 => open);
+            status_0 => open,
+            interrupt => Net_353);
+
+    isr_rx_pi:interrupt
+        GENERIC MAP(
+            int_type => "10",
+            is_nmi => 0)
+        PORT MAP(
+            interrupt => Net_353,
+            clock => ClockBlock_BUS_CLK);
 
     \UART_DEBUG:BUART:txn\:macrocell
         GENERIC MAP(

@@ -40,6 +40,9 @@
 #include "app_ctx.h"
 #include "app_statemachine.h"
 
+// Rasp Pi communications stuff
+#include "pi_comms.h"
+
 // Timing constants
 #define TX_BUF_SIZE           160u
 #define CONTROL_PERIOD_MS     100u   // 10 Hz control TX
@@ -94,6 +97,22 @@ CY_ISR(isr_Looptimer_Handler)
 {
     g_tick_ms++;
     Looptimer_ReadStatusRegister();
+}
+
+// For Raspberry Pi communications
+CY_ISR(isr_rx_pi_Handler)
+{
+    uint8_t st;
+    do {
+        st = UART_PI_RXSTATUS_REG;
+        if (st & (UART_PI_RX_STS_BREAK     |
+                  UART_PI_RX_STS_PAR_ERROR |
+                  UART_PI_RX_STS_STOP_ERROR|
+                  UART_PI_RX_STS_OVERRUN))
+            pi_on_uart_err_flags(st);
+        if (st & UART_PI_RX_STS_FIFO_NOTEMPTY)
+            pi_on_rx_byte(UART_PI_RXDATA_REG);
+    } while (st & UART_PI_RX_STS_FIFO_NOTEMPTY);
 }
 
 // Helper Functions  %========================================================%
@@ -205,6 +224,14 @@ int main(void)
     UART_DEBUG_Start();
     UART_DEBUG_PutString("\r\n=== Gimbal Control  PSoC 5LP ===\r\n");
     
+    // Start Raspberry Pi comms.
+    UART_PI_Start();
+    UART_PI_ClearRxBuffer();
+    UART_PI_ClearTxBuffer();
+    pi_init();
+    isr_rx_pi_StartEx(isr_rx_pi_Handler);
+    UART_DEBUG_PutString("[Init] Pi comms ready\r\n");
+    
     // Start Movi comms
     UART_MOVI_Start();
     UART_MOVI_ClearRxBuffer();
@@ -266,8 +293,10 @@ int main(void)
             joystick_get_cmd(&ctx.cmd);
         }
         
+        // Always run on tick definition
         app_manual_tick(&ctx);
-
+        app_auto_tick(&ctx);
+        
         // At 'CONTROL_PERIOD_MS' build and send control packet
         // app_build_control handles the state of the state machine
         if ((now - ctx.last_tx_ms) >= CONTROL_PERIOD_MS) {
@@ -279,13 +308,13 @@ int main(void)
         // At 'DIAG_PERIOD_MS' share telemetry to monitor
         if (ctx.diag_active && (now - ctx.last_diag_ms) >= DIAG_PERIOD_MS) {
             ctx.last_diag_ms = now;
+            int16_t pi, pf, ti, tf; char ps, ts;
+            decomp(ctx.cmd.u[CH_X], &pi, &pf, &ps);
+            decomp(ctx.cmd.u[CH_Y], &ti, &tf, &ts);
             snprintf(tx, sizeof tx,
-                     "[%lu] state=%s ctrl=%s pan=%+.2f tilt=%+.2f\r\n",
-                     (unsigned long)now,
-                     app_state_name(ctx.state),
-                     mode_str(ctx.ctrl_mode),
-                     (double)ctx.cmd.u[CH_X],
-                     (double)ctx.cmd.u[CH_Y]);
+                     "[%lu] state=%s ctrl=%s pan=%c%d.%02d tilt=%c%d.%02d\r\n",
+                     (unsigned long)now, app_state_name(ctx.state), mode_str(ctx.ctrl_mode),
+                     ps, pi, pf, ts, ti, tf);
             UART_DEBUG_PutString(tx);
         }
     }

@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\app_statemachine.c">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\main.c">
 <ExpandedNodeIds>
 <v>test_projects</v>
 <v>test_projects\Ex_UART_Full_Duplex01\TopDesign</v>
@@ -234,6 +234,7 @@
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Header Files\app_statemachine.h</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Header Files\cyapicallbacks.h</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Header Files\joystick.h</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Header Files\pi_comms.h</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Header Files\psoc_eeprom.h</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\adc_balanced.c</v>
@@ -241,14 +242,13 @@
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\app_statemachine.c</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\joystick.c</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\main.c</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\pi_comms.c</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\psoc_eeprom.c</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Generated_Source\PSoC5</v>
 <v>test_projects\UDB_Library\Header Files</v>
 <v>test_projects\UDB_Library\Source Files</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
-<v>test_projects\proj00_custom_blinker</v>
-<v>test_projects\proj01_usbcomms</v>
 <v>test_projects\Proj04_freefly_uart_start</v>
 <v>test_projects\Proj05_freefly_uart_control</v>
 <v>test_projects\Proj06_freefly_hamflyAPI_integration</v>
@@ -272,6 +272,7 @@
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Header Files\app_statemachine.h</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Header Files\cyapicallbacks.h</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Header Files\joystick.h</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Header Files\pi_comms.h</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Header Files\psoc_eeprom.h</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\adc_balanced.c</v>
@@ -279,6 +280,7 @@
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\app_statemachine.c</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\joystick.c</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\main.c</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\pi_comms.c</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\psoc_eeprom.c</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Generated_Source</v>
 <v>test_projects\UDB_Library</v>
@@ -738,11 +740,13 @@
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_adc.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_Looptimer.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_rx_movi.lst</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_rx_pi.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\joystick.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Looptimer.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Looptimer_PM.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\ModeSwitch.lst</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\pi_comms.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_LED.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_Sensitivity.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\psoc_eeprom.lst</v>
@@ -813,7 +817,7 @@
 <v>Datasheet</v>
 </TreeKeysV2>
 <TreeStatesV2>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="test_projects">
 <ExpandedNodeIds>
 <v>test_projects</v>
 <v>test_projects\Ex_UART_Full_Duplex01</v>

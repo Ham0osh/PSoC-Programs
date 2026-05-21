@@ -11,61 +11,192 @@
 <CyGuid_f44455c5-3770-4452-b988-0a7a7ff46256 type_name="CyDesigner.Common.ProjMgmt.Model.CyConfigDependencies" version="1">
 <dependency_info name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3" xml_contents_version="2">
 <CyGuid_1173175f-1b9b-4ad4-a065-754a48a27021 type_name="CyDesigner.Common.Base.CyFileDeps" version="1">
-<file name=".\ARM_GCC_541\Debug\hamfly_comm_rb.o">
-<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.c" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.h" />
-</file>
-<file name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.c" />
-<file name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.h" />
-<file name=".\ARM_GCC_541\Debug\hamfly_comm_txbuf.o">
-<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_txbuf.c" />
-</file>
-<file name="..\..\..\HamFlyAPI\src\hamfly_comm_txbuf.c" />
-<file name=".\ARM_GCC_541\Debug\hamfly_core_gimbal.o">
+<file name=".\ARM_GCC_541\Debug\main.o">
+<dep name="..\..\..\HamFlyAPI\platform\hamfly_platform_psoc5.h" />
 <dep name="..\..\..\HamFlyAPI\src\hamfly.h" />
 <dep name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.h" />
 <dep name="..\..\..\HamFlyAPI\src\hamfly_core_control.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.c" />
 <dep name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.h" />
 <dep name="..\..\..\HamFlyAPI\src\hamfly_core_hal.h" />
 <dep name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_app.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.h" />
+<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1.h" />
+<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_AMux.h" />
+<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_Ext_CP_Clk.h" />
+<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_IRQ.h" />
+<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_theACLK.h" />
+<dep name=".\Generated_Source\PSoC5\AMux_1.h" />
+<dep name=".\Generated_Source\PSoC5\Clock_Movi.h" />
+<dep name=".\Generated_Source\PSoC5\CyDmac.h" />
+<dep name=".\Generated_Source\PSoC5\CyFlash.h" />
+<dep name=".\Generated_Source\PSoC5\CyLib.h" />
+<dep name=".\Generated_Source\PSoC5\CySpc.h" />
+<dep name=".\Generated_Source\PSoC5\EEPROM_CONFIG.h" />
+<dep name=".\Generated_Source\PSoC5\Looptimer.h" />
+<dep name=".\Generated_Source\PSoC5\ModeSwitch.h" />
+<dep name=".\Generated_Source\PSoC5\ModeSwitch_aliases.h" />
+<dep name=".\Generated_Source\PSoC5\Pin_LED.h" />
+<dep name=".\Generated_Source\PSoC5\Pin_LED_aliases.h" />
+<dep name=".\Generated_Source\PSoC5\Pin_Sensitivity.h" />
+<dep name=".\Generated_Source\PSoC5\Pin_Sensitivity_aliases.h" />
+<dep name=".\Generated_Source\PSoC5\UART_DEBUG.h" />
+<dep name=".\Generated_Source\PSoC5\UART_DEBUG_IntClock.h" />
+<dep name=".\Generated_Source\PSoC5\UART_MOVI.h" />
+<dep name=".\Generated_Source\PSoC5\UART_PI.h" />
+<dep name=".\Generated_Source\PSoC5\UART_PI_IntClock.h" />
+<dep name=".\Generated_Source\PSoC5\VRx.h" />
+<dep name=".\Generated_Source\PSoC5\VRx_aliases.h" />
+<dep name=".\Generated_Source\PSoC5\VRy.h" />
+<dep name=".\Generated_Source\PSoC5\VRy_aliases.h" />
+<dep name=".\Generated_Source\PSoC5\cmsis_armcc.h" />
+<dep name=".\Generated_Source\PSoC5\cmsis_compiler.h" />
+<dep name=".\Generated_Source\PSoC5\cmsis_gcc.h" />
+<dep name=".\Generated_Source\PSoC5\core_cm3.h" />
+<dep name=".\Generated_Source\PSoC5\core_cm3_psoc5.h" />
+<dep name=".\Generated_Source\PSoC5\cyPm.h" />
+<dep name=".\Generated_Source\PSoC5\cy_em_eeprom.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC5\cydisabledsheets.h" />
+<dep name=".\Generated_Source\PSoC5\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC5\cyfitter_cfg.h" />
+<dep name=".\Generated_Source\PSoC5\cypins.h" />
+<dep name=".\Generated_Source\PSoC5\cytypes.h" />
+<dep name=".\Generated_Source\PSoC5\isr_Looptimer.h" />
+<dep name=".\Generated_Source\PSoC5\isr_adc.h" />
+<dep name=".\Generated_Source\PSoC5\isr_rx_movi.h" />
+<dep name=".\Generated_Source\PSoC5\isr_rx_pi.h" />
+<dep name=".\Generated_Source\PSoC5\project.h" />
+<dep name=".\adc_balanced.h" />
+<dep name=".\app_ctx.h" />
+<dep name=".\app_statemachine.h" />
+<dep name=".\joystick.h" />
+<dep name=".\main.c" />
+<dep name=".\pi_comms.h" />
+<dep name=".\psoc_eeprom.h" />
 </file>
+<file name="..\..\..\HamFlyAPI\platform\hamfly_platform_psoc5.h" />
 <file name="..\..\..\HamFlyAPI\src\hamfly.h" />
+<file name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.h" />
 <file name="..\..\..\HamFlyAPI\src\hamfly_core_control.h" />
-<file name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.c" />
 <file name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.h" />
 <file name="..\..\..\HamFlyAPI\src\hamfly_core_hal.h" />
 <file name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.h" />
-<file name="..\..\..\HamFlyAPI\src\hamfly_qx_app.h" />
-<file name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.h" />
-<file name=".\ARM_GCC_541\Debug\hamfly_core_telemetry.o">
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.c" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_app.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.h" />
-</file>
-<file name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.c" />
-<file name=".\ARM_GCC_541\Debug\hamfly_qx_app.o">
+<file name=".\Generated_Source\PSoC5\ADC_DelSig_1.h" />
+<file name=".\Generated_Source\PSoC5\ADC_DelSig_1_AMux.h" />
+<file name=".\Generated_Source\PSoC5\ADC_DelSig_1_Ext_CP_Clk.h" />
+<file name=".\Generated_Source\PSoC5\ADC_DelSig_1_IRQ.h" />
+<file name=".\Generated_Source\PSoC5\ADC_DelSig_1_theACLK.h" />
+<file name=".\Generated_Source\PSoC5\AMux_1.h" />
+<file name=".\Generated_Source\PSoC5\Clock_Movi.h" />
+<file name=".\Generated_Source\PSoC5\CyDmac.h" />
+<file name=".\Generated_Source\PSoC5\CyFlash.h" />
+<file name=".\Generated_Source\PSoC5\CyLib.h" />
+<file name=".\Generated_Source\PSoC5\CySpc.h" />
+<file name=".\Generated_Source\PSoC5\EEPROM_CONFIG.h" />
+<file name=".\Generated_Source\PSoC5\Looptimer.h" />
+<file name=".\Generated_Source\PSoC5\ModeSwitch.h" />
+<file name=".\Generated_Source\PSoC5\ModeSwitch_aliases.h" />
+<file name=".\Generated_Source\PSoC5\Pin_LED.h" />
+<file name=".\Generated_Source\PSoC5\Pin_LED_aliases.h" />
+<file name=".\Generated_Source\PSoC5\Pin_Sensitivity.h" />
+<file name=".\Generated_Source\PSoC5\Pin_Sensitivity_aliases.h" />
+<file name=".\Generated_Source\PSoC5\UART_DEBUG.h" />
+<file name=".\Generated_Source\PSoC5\UART_DEBUG_IntClock.h" />
+<file name=".\Generated_Source\PSoC5\UART_MOVI.h" />
+<file name=".\Generated_Source\PSoC5\UART_PI.h" />
+<file name=".\Generated_Source\PSoC5\UART_PI_IntClock.h" />
+<file name=".\Generated_Source\PSoC5\VRx.h" />
+<file name=".\Generated_Source\PSoC5\VRx_aliases.h" />
+<file name=".\Generated_Source\PSoC5\VRy.h" />
+<file name=".\Generated_Source\PSoC5\VRy_aliases.h" />
+<file name=".\Generated_Source\PSoC5\cmsis_armcc.h" />
+<file name=".\Generated_Source\PSoC5\cmsis_compiler.h" />
+<file name=".\Generated_Source\PSoC5\cmsis_gcc.h" />
+<file name=".\Generated_Source\PSoC5\core_cm3.h" />
+<file name=".\Generated_Source\PSoC5\core_cm3_psoc5.h" />
+<file name=".\Generated_Source\PSoC5\cyPm.h" />
+<file name=".\Generated_Source\PSoC5\cy_em_eeprom.h" />
+<file name=".\Generated_Source\PSoC5\cydevice.h" />
+<file name=".\Generated_Source\PSoC5\cydevice_trm.h" />
+<file name=".\Generated_Source\PSoC5\cydisabledsheets.h" />
+<file name=".\Generated_Source\PSoC5\cyfitter.h" />
+<file name=".\Generated_Source\PSoC5\cyfitter_cfg.h" />
+<file name=".\Generated_Source\PSoC5\cypins.h" />
+<file name=".\Generated_Source\PSoC5\cytypes.h" />
+<file name=".\Generated_Source\PSoC5\isr_Looptimer.h" />
+<file name=".\Generated_Source\PSoC5\isr_adc.h" />
+<file name=".\Generated_Source\PSoC5\isr_rx_movi.h" />
+<file name=".\Generated_Source\PSoC5\isr_rx_pi.h" />
+<file name=".\Generated_Source\PSoC5\project.h" />
+<file name=".\adc_balanced.h" />
+<file name=".\app_ctx.h" />
+<file name=".\app_statemachine.h" />
+<file name=".\joystick.h" />
+<file name=".\main.c" />
+<file name=".\pi_comms.h" />
+<file name=".\psoc_eeprom.h" />
+<file name=".\ARM_GCC_541\Debug\app_statemachine.o">
+<dep name="..\..\..\HamFlyAPI\src\hamfly.h" />
 <dep name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_txbuf.h" />
 <dep name="..\..\..\HamFlyAPI\src\hamfly_core_control.h" />
 <dep name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.h" />
 <dep name="..\..\..\HamFlyAPI\src\hamfly_core_hal.h" />
 <dep name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_app.c" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_app.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.h" />
+<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1.h" />
+<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_AMux.h" />
+<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_Ext_CP_Clk.h" />
+<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_IRQ.h" />
+<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_theACLK.h" />
+<dep name=".\Generated_Source\PSoC5\AMux_1.h" />
+<dep name=".\Generated_Source\PSoC5\Clock_Movi.h" />
+<dep name=".\Generated_Source\PSoC5\CyDmac.h" />
+<dep name=".\Generated_Source\PSoC5\CyFlash.h" />
+<dep name=".\Generated_Source\PSoC5\CyLib.h" />
+<dep name=".\Generated_Source\PSoC5\CySpc.h" />
+<dep name=".\Generated_Source\PSoC5\EEPROM_CONFIG.h" />
+<dep name=".\Generated_Source\PSoC5\Looptimer.h" />
+<dep name=".\Generated_Source\PSoC5\ModeSwitch.h" />
+<dep name=".\Generated_Source\PSoC5\ModeSwitch_aliases.h" />
+<dep name=".\Generated_Source\PSoC5\Pin_LED.h" />
+<dep name=".\Generated_Source\PSoC5\Pin_LED_aliases.h" />
+<dep name=".\Generated_Source\PSoC5\Pin_Sensitivity.h" />
+<dep name=".\Generated_Source\PSoC5\Pin_Sensitivity_aliases.h" />
+<dep name=".\Generated_Source\PSoC5\UART_DEBUG.h" />
+<dep name=".\Generated_Source\PSoC5\UART_DEBUG_IntClock.h" />
+<dep name=".\Generated_Source\PSoC5\UART_MOVI.h" />
+<dep name=".\Generated_Source\PSoC5\UART_PI.h" />
+<dep name=".\Generated_Source\PSoC5\UART_PI_IntClock.h" />
+<dep name=".\Generated_Source\PSoC5\VRx.h" />
+<dep name=".\Generated_Source\PSoC5\VRx_aliases.h" />
+<dep name=".\Generated_Source\PSoC5\VRy.h" />
+<dep name=".\Generated_Source\PSoC5\VRy_aliases.h" />
+<dep name=".\Generated_Source\PSoC5\cmsis_armcc.h" />
+<dep name=".\Generated_Source\PSoC5\cmsis_compiler.h" />
+<dep name=".\Generated_Source\PSoC5\cmsis_gcc.h" />
+<dep name=".\Generated_Source\PSoC5\core_cm3.h" />
+<dep name=".\Generated_Source\PSoC5\core_cm3_psoc5.h" />
+<dep name=".\Generated_Source\PSoC5\cyPm.h" />
+<dep name=".\Generated_Source\PSoC5\cy_em_eeprom.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC5\cydisabledsheets.h" />
+<dep name=".\Generated_Source\PSoC5\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC5\cyfitter_cfg.h" />
+<dep name=".\Generated_Source\PSoC5\cypins.h" />
+<dep name=".\Generated_Source\PSoC5\cytypes.h" />
+<dep name=".\Generated_Source\PSoC5\isr_Looptimer.h" />
+<dep name=".\Generated_Source\PSoC5\isr_adc.h" />
+<dep name=".\Generated_Source\PSoC5\isr_rx_movi.h" />
+<dep name=".\Generated_Source\PSoC5\isr_rx_pi.h" />
+<dep name=".\Generated_Source\PSoC5\project.h" />
+<dep name=".\app_ctx.h" />
+<dep name=".\app_statemachine.c" />
+<dep name=".\app_statemachine.h" />
+<dep name=".\joystick.h" />
+<dep name=".\pi_comms.h" />
+<dep name=".\psoc_eeprom.h" />
 </file>
-<file name="..\..\..\HamFlyAPI\src\hamfly_comm_txbuf.h" />
-<file name="..\..\..\HamFlyAPI\src\hamfly_qx_app.c" />
-<file name=".\ARM_GCC_541\Debug\hamfly_qx_protocol.o">
-<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_app.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.c" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.h" />
-</file>
-<file name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.c" />
+<file name=".\app_statemachine.c" />
 <file name=".\ARM_GCC_541\Debug\ADC_DelSig_1.o">
 <dep name=".\Generated_Source\PSoC5\ADC_DelSig_1.c" />
 <dep name=".\Generated_Source\PSoC5\ADC_DelSig_1.h" />
@@ -83,19 +214,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\ADC_DelSig_1.c" />
-<file name=".\Generated_Source\PSoC5\ADC_DelSig_1.h" />
-<file name=".\Generated_Source\PSoC5\ADC_DelSig_1_AMux.h" />
-<file name=".\Generated_Source\PSoC5\ADC_DelSig_1_Ext_CP_Clk.h" />
-<file name=".\Generated_Source\PSoC5\ADC_DelSig_1_theACLK.h" />
-<file name=".\Generated_Source\PSoC5\CyFlash.h" />
-<file name=".\Generated_Source\PSoC5\CyLib.h" />
-<file name=".\Generated_Source\PSoC5\CySpc.h" />
-<file name=".\Generated_Source\PSoC5\cyPm.h" />
-<file name=".\Generated_Source\PSoC5\cydevice.h" />
-<file name=".\Generated_Source\PSoC5\cydevice_trm.h" />
-<file name=".\Generated_Source\PSoC5\cyfitter.h" />
-<file name=".\Generated_Source\PSoC5\cyfitter_cfg.h" />
-<file name=".\Generated_Source\PSoC5\cytypes.h" />
 <file name=".\ARM_GCC_541\Debug\ADC_DelSig_1_AMux.o">
 <dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_AMux.c" />
 <dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_AMux.h" />
@@ -144,7 +262,6 @@
 <dep name=".\cyapicallbacks.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\ADC_DelSig_1_IRQ.c" />
-<file name=".\Generated_Source\PSoC5\ADC_DelSig_1_IRQ.h" />
 <file name=".\ARM_GCC_541\Debug\ADC_DelSig_1_PM.o">
 <dep name=".\Generated_Source\PSoC5\ADC_DelSig_1.h" />
 <dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_PM.c" />
@@ -177,7 +294,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\AMux_1.c" />
-<file name=".\Generated_Source\PSoC5\AMux_1.h" />
 <file name=".\ARM_GCC_541\Debug\Clock_Movi.o">
 <dep name=".\Generated_Source\PSoC5\Clock_Movi.c" />
 <dep name=".\Generated_Source\PSoC5\Clock_Movi.h" />
@@ -187,7 +303,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\Clock_Movi.c" />
-<file name=".\Generated_Source\PSoC5\Clock_Movi.h" />
 <file name=".\ARM_GCC_541\Debug\Cm3Start.o">
 <dep name=".\Generated_Source\PSoC5\Cm3Start.c" />
 <dep name=".\Generated_Source\PSoC5\CyDmac.h" />
@@ -203,7 +318,6 @@
 <dep name=".\cyapicallbacks.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\Cm3Start.c" />
-<file name=".\Generated_Source\PSoC5\CyDmac.h" />
 <file name=".\ARM_GCC_541\Debug\CyDmac.o">
 <dep name=".\Generated_Source\PSoC5\CyDmac.c" />
 <dep name=".\Generated_Source\PSoC5\CyDmac.h" />
@@ -266,7 +380,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\EEPROM_CONFIG.c" />
-<file name=".\Generated_Source\PSoC5\EEPROM_CONFIG.h" />
 <file name=".\ARM_GCC_541\Debug\Looptimer.o">
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -280,7 +393,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\Looptimer.c" />
-<file name=".\Generated_Source\PSoC5\Looptimer.h" />
 <file name=".\ARM_GCC_541\Debug\Looptimer_PM.o">
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -305,9 +417,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\ModeSwitch.c" />
-<file name=".\Generated_Source\PSoC5\ModeSwitch.h" />
-<file name=".\Generated_Source\PSoC5\ModeSwitch_aliases.h" />
-<file name=".\Generated_Source\PSoC5\cypins.h" />
 <file name=".\ARM_GCC_541\Debug\Pin_LED.o">
 <dep name=".\Generated_Source\PSoC5\Pin_LED.c" />
 <dep name=".\Generated_Source\PSoC5\Pin_LED.h" />
@@ -319,8 +428,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\Pin_LED.c" />
-<file name=".\Generated_Source\PSoC5\Pin_LED.h" />
-<file name=".\Generated_Source\PSoC5\Pin_LED_aliases.h" />
 <file name=".\ARM_GCC_541\Debug\Pin_Sensitivity.o">
 <dep name=".\Generated_Source\PSoC5\Pin_Sensitivity.c" />
 <dep name=".\Generated_Source\PSoC5\Pin_Sensitivity.h" />
@@ -332,8 +439,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\Pin_Sensitivity.c" />
-<file name=".\Generated_Source\PSoC5\Pin_Sensitivity.h" />
-<file name=".\Generated_Source\PSoC5\Pin_Sensitivity_aliases.h" />
 <file name=".\ARM_GCC_541\Debug\UART_DEBUG.o">
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -348,8 +453,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\UART_DEBUG.c" />
-<file name=".\Generated_Source\PSoC5\UART_DEBUG.h" />
-<file name=".\Generated_Source\PSoC5\UART_DEBUG_IntClock.h" />
 <file name=".\ARM_GCC_541\Debug\UART_DEBUG_BOOT.o">
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -412,7 +515,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\UART_MOVI.c" />
-<file name=".\Generated_Source\PSoC5\UART_MOVI.h" />
 <file name=".\ARM_GCC_541\Debug\UART_MOVI_BOOT.o">
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -467,8 +569,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\UART_PI.c" />
-<file name=".\Generated_Source\PSoC5\UART_PI.h" />
-<file name=".\Generated_Source\PSoC5\UART_PI_IntClock.h" />
 <file name=".\ARM_GCC_541\Debug\UART_PI_BOOT.o">
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -529,8 +629,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\VRx.c" />
-<file name=".\Generated_Source\PSoC5\VRx.h" />
-<file name=".\Generated_Source\PSoC5\VRx_aliases.h" />
 <file name=".\ARM_GCC_541\Debug\VRy.o">
 <dep name=".\Generated_Source\PSoC5\VRy.c" />
 <dep name=".\Generated_Source\PSoC5\VRy.h" />
@@ -542,8 +640,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\VRy.c" />
-<file name=".\Generated_Source\PSoC5\VRy.h" />
-<file name=".\Generated_Source\PSoC5\VRy_aliases.h" />
 <file name=".\ARM_GCC_541\Debug\cyPm.o">
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -570,7 +666,6 @@
 <dep name=".\Generated_Source\PSoC5\cytypes.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\cy_em_eeprom.c" />
-<file name=".\Generated_Source\PSoC5\cy_em_eeprom.h" />
 <file name=".\ARM_GCC_541\Debug\cyfitter_cfg.o">
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -611,7 +706,6 @@
 <dep name=".\cyapicallbacks.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\isr_Looptimer.c" />
-<file name=".\Generated_Source\PSoC5\isr_Looptimer.h" />
 <file name=".\ARM_GCC_541\Debug\isr_adc.o">
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -626,7 +720,6 @@
 <dep name=".\cyapicallbacks.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\isr_adc.c" />
-<file name=".\Generated_Source\PSoC5\isr_adc.h" />
 <file name=".\ARM_GCC_541\Debug\isr_rx_movi.o">
 <dep name=".\Generated_Source\PSoC5\CyFlash.h" />
 <dep name=".\Generated_Source\PSoC5\CyLib.h" />
@@ -641,7 +734,20 @@
 <dep name=".\cyapicallbacks.h" />
 </file>
 <file name=".\Generated_Source\PSoC5\isr_rx_movi.c" />
-<file name=".\Generated_Source\PSoC5\isr_rx_movi.h" />
+<file name=".\ARM_GCC_541\Debug\isr_rx_pi.o">
+<dep name=".\Generated_Source\PSoC5\CyFlash.h" />
+<dep name=".\Generated_Source\PSoC5\CyLib.h" />
+<dep name=".\Generated_Source\PSoC5\CySpc.h" />
+<dep name=".\Generated_Source\PSoC5\cyPm.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice.h" />
+<dep name=".\Generated_Source\PSoC5\cydevice_trm.h" />
+<dep name=".\Generated_Source\PSoC5\cyfitter.h" />
+<dep name=".\Generated_Source\PSoC5\cytypes.h" />
+<dep name=".\Generated_Source\PSoC5\isr_rx_pi.c" />
+<dep name=".\Generated_Source\PSoC5\isr_rx_pi.h" />
+<dep name=".\cyapicallbacks.h" />
+</file>
+<file name=".\Generated_Source\PSoC5\isr_rx_pi.c" />
 <file name=".\ARM_GCC_541\Debug\adc_balanced.o">
 <dep name=".\Generated_Source\PSoC5\cmsis_armcc.h" />
 <dep name=".\Generated_Source\PSoC5\cmsis_compiler.h" />
@@ -689,19 +795,17 @@
 <dep name=".\Generated_Source\PSoC5\isr_Looptimer.h" />
 <dep name=".\Generated_Source\PSoC5\isr_adc.h" />
 <dep name=".\Generated_Source\PSoC5\isr_rx_movi.h" />
+<dep name=".\Generated_Source\PSoC5\isr_rx_pi.h" />
 <dep name=".\adc_balanced.c" />
 <dep name=".\adc_balanced.h" />
 </file>
-<file name=".\Generated_Source\PSoC5\cmsis_armcc.h" />
-<file name=".\Generated_Source\PSoC5\cmsis_compiler.h" />
-<file name=".\Generated_Source\PSoC5\cmsis_gcc.h" />
-<file name=".\Generated_Source\PSoC5\core_cm3.h" />
-<file name=".\Generated_Source\PSoC5\core_cm3_psoc5.h" />
-<file name=".\Generated_Source\PSoC5\cydisabledsheets.h" />
-<file name=".\Generated_Source\PSoC5\project.h" />
 <file name=".\adc_balanced.c" />
-<file name=".\adc_balanced.h" />
 <file name=".\ARM_GCC_541\Debug\app_ctx.o">
+<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_control.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_hal.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.h" />
 <dep name=".\Generated_Source\PSoC5\cmsis_armcc.h" />
 <dep name=".\Generated_Source\PSoC5\cmsis_compiler.h" />
 <dep name=".\Generated_Source\PSoC5\cmsis_gcc.h" />
@@ -709,11 +813,6 @@
 <dep name=".\Generated_Source\PSoC5\core_cm3_psoc5.h" />
 <dep name=".\Generated_Source\PSoC5\cydisabledsheets.h" />
 <dep name=".\Generated_Source\PSoC5\project.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_control.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_hal.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.h" />
 <dep name=".\Generated_Source\PSoC5\ADC_DelSig_1.h" />
 <dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_AMux.h" />
 <dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_Ext_CP_Clk.h" />
@@ -753,76 +852,13 @@
 <dep name=".\Generated_Source\PSoC5\isr_Looptimer.h" />
 <dep name=".\Generated_Source\PSoC5\isr_adc.h" />
 <dep name=".\Generated_Source\PSoC5\isr_rx_movi.h" />
+<dep name=".\Generated_Source\PSoC5\isr_rx_pi.h" />
 <dep name=".\app_ctx.c" />
 <dep name=".\app_ctx.h" />
 <dep name=".\joystick.h" />
 <dep name=".\psoc_eeprom.h" />
 </file>
 <file name=".\app_ctx.c" />
-<file name=".\app_ctx.h" />
-<file name=".\joystick.h" />
-<file name=".\psoc_eeprom.h" />
-<file name=".\ARM_GCC_541\Debug\app_statemachine.o">
-<dep name=".\Generated_Source\PSoC5\cmsis_armcc.h" />
-<dep name=".\Generated_Source\PSoC5\cmsis_compiler.h" />
-<dep name=".\Generated_Source\PSoC5\cmsis_gcc.h" />
-<dep name=".\Generated_Source\PSoC5\core_cm3.h" />
-<dep name=".\Generated_Source\PSoC5\core_cm3_psoc5.h" />
-<dep name=".\Generated_Source\PSoC5\cydisabledsheets.h" />
-<dep name=".\Generated_Source\PSoC5\project.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_control.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_hal.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.h" />
-<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1.h" />
-<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_AMux.h" />
-<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_Ext_CP_Clk.h" />
-<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_IRQ.h" />
-<dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_theACLK.h" />
-<dep name=".\Generated_Source\PSoC5\AMux_1.h" />
-<dep name=".\Generated_Source\PSoC5\Clock_Movi.h" />
-<dep name=".\Generated_Source\PSoC5\CyDmac.h" />
-<dep name=".\Generated_Source\PSoC5\CyFlash.h" />
-<dep name=".\Generated_Source\PSoC5\CyLib.h" />
-<dep name=".\Generated_Source\PSoC5\CySpc.h" />
-<dep name=".\Generated_Source\PSoC5\EEPROM_CONFIG.h" />
-<dep name=".\Generated_Source\PSoC5\Looptimer.h" />
-<dep name=".\Generated_Source\PSoC5\ModeSwitch.h" />
-<dep name=".\Generated_Source\PSoC5\ModeSwitch_aliases.h" />
-<dep name=".\Generated_Source\PSoC5\Pin_LED.h" />
-<dep name=".\Generated_Source\PSoC5\Pin_LED_aliases.h" />
-<dep name=".\Generated_Source\PSoC5\Pin_Sensitivity.h" />
-<dep name=".\Generated_Source\PSoC5\Pin_Sensitivity_aliases.h" />
-<dep name=".\Generated_Source\PSoC5\UART_DEBUG.h" />
-<dep name=".\Generated_Source\PSoC5\UART_DEBUG_IntClock.h" />
-<dep name=".\Generated_Source\PSoC5\UART_MOVI.h" />
-<dep name=".\Generated_Source\PSoC5\UART_PI.h" />
-<dep name=".\Generated_Source\PSoC5\UART_PI_IntClock.h" />
-<dep name=".\Generated_Source\PSoC5\VRx.h" />
-<dep name=".\Generated_Source\PSoC5\VRx_aliases.h" />
-<dep name=".\Generated_Source\PSoC5\VRy.h" />
-<dep name=".\Generated_Source\PSoC5\VRy_aliases.h" />
-<dep name=".\Generated_Source\PSoC5\cyPm.h" />
-<dep name=".\Generated_Source\PSoC5\cy_em_eeprom.h" />
-<dep name=".\Generated_Source\PSoC5\cydevice.h" />
-<dep name=".\Generated_Source\PSoC5\cydevice_trm.h" />
-<dep name=".\Generated_Source\PSoC5\cyfitter.h" />
-<dep name=".\Generated_Source\PSoC5\cyfitter_cfg.h" />
-<dep name=".\Generated_Source\PSoC5\cypins.h" />
-<dep name=".\Generated_Source\PSoC5\cytypes.h" />
-<dep name=".\Generated_Source\PSoC5\isr_Looptimer.h" />
-<dep name=".\Generated_Source\PSoC5\isr_adc.h" />
-<dep name=".\Generated_Source\PSoC5\isr_rx_movi.h" />
-<dep name=".\app_ctx.h" />
-<dep name=".\app_statemachine.c" />
-<dep name=".\app_statemachine.h" />
-<dep name=".\joystick.h" />
-<dep name=".\psoc_eeprom.h" />
-</file>
-<file name=".\app_statemachine.c" />
-<file name=".\app_statemachine.h" />
 <file name=".\ARM_GCC_541\Debug\joystick.o">
 <dep name=".\Generated_Source\PSoC5\cmsis_armcc.h" />
 <dep name=".\Generated_Source\PSoC5\cmsis_compiler.h" />
@@ -870,13 +906,13 @@
 <dep name=".\Generated_Source\PSoC5\isr_Looptimer.h" />
 <dep name=".\Generated_Source\PSoC5\isr_adc.h" />
 <dep name=".\Generated_Source\PSoC5\isr_rx_movi.h" />
+<dep name=".\Generated_Source\PSoC5\isr_rx_pi.h" />
 <dep name=".\joystick.c" />
 <dep name=".\joystick.h" />
 <dep name=".\psoc_eeprom.h" />
 </file>
 <file name=".\joystick.c" />
-<file name=".\ARM_GCC_541\Debug\main.o">
-<dep name="..\..\..\HamFlyAPI\platform\hamfly_platform_psoc5.h" />
+<file name=".\ARM_GCC_541\Debug\pi_comms.o">
 <dep name=".\Generated_Source\PSoC5\cmsis_armcc.h" />
 <dep name=".\Generated_Source\PSoC5\cmsis_compiler.h" />
 <dep name=".\Generated_Source\PSoC5\cmsis_gcc.h" />
@@ -884,12 +920,6 @@
 <dep name=".\Generated_Source\PSoC5\core_cm3_psoc5.h" />
 <dep name=".\Generated_Source\PSoC5\cydisabledsheets.h" />
 <dep name=".\Generated_Source\PSoC5\project.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_control.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_hal.h" />
-<dep name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.h" />
 <dep name=".\Generated_Source\PSoC5\ADC_DelSig_1.h" />
 <dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_AMux.h" />
 <dep name=".\Generated_Source\PSoC5\ADC_DelSig_1_Ext_CP_Clk.h" />
@@ -929,15 +959,11 @@
 <dep name=".\Generated_Source\PSoC5\isr_Looptimer.h" />
 <dep name=".\Generated_Source\PSoC5\isr_adc.h" />
 <dep name=".\Generated_Source\PSoC5\isr_rx_movi.h" />
-<dep name=".\adc_balanced.h" />
-<dep name=".\app_ctx.h" />
-<dep name=".\app_statemachine.h" />
-<dep name=".\joystick.h" />
-<dep name=".\main.c" />
-<dep name=".\psoc_eeprom.h" />
+<dep name=".\Generated_Source\PSoC5\isr_rx_pi.h" />
+<dep name=".\pi_comms.c" />
+<dep name=".\pi_comms.h" />
 </file>
-<file name="..\..\..\HamFlyAPI\platform\hamfly_platform_psoc5.h" />
-<file name=".\main.c" />
+<file name=".\pi_comms.c" />
 <file name=".\ARM_GCC_541\Debug\psoc_eeprom.o">
 <dep name=".\Generated_Source\PSoC5\cmsis_armcc.h" />
 <dep name=".\Generated_Source\PSoC5\cmsis_compiler.h" />
@@ -985,6 +1011,7 @@
 <dep name=".\Generated_Source\PSoC5\isr_Looptimer.h" />
 <dep name=".\Generated_Source\PSoC5\isr_adc.h" />
 <dep name=".\Generated_Source\PSoC5\isr_rx_movi.h" />
+<dep name=".\Generated_Source\PSoC5\isr_rx_pi.h" />
 <dep name=".\psoc_eeprom.c" />
 <dep name=".\psoc_eeprom.h" />
 </file>
@@ -999,6 +1026,55 @@
 <file name=".\Generated_Source\PSoC5\cydevicegnu.inc" />
 <file name=".\Generated_Source\PSoC5\cydevicegnu_trm.inc" />
 <file name=".\Generated_Source\PSoC5\cyfittergnu.inc" />
+<file name=".\ARM_GCC_541\Debug\hamfly_comm_rb.o">
+<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.c" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.h" />
+</file>
+<file name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.c" />
+<file name=".\ARM_GCC_541\Debug\hamfly_comm_txbuf.o">
+<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_txbuf.c" />
+</file>
+<file name="..\..\..\HamFlyAPI\src\hamfly_comm_txbuf.c" />
+<file name=".\ARM_GCC_541\Debug\hamfly_core_gimbal.o">
+<dep name="..\..\..\HamFlyAPI\src\hamfly.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_control.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.c" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_hal.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_app.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.h" />
+</file>
+<file name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.c" />
+<file name="..\..\..\HamFlyAPI\src\hamfly_qx_app.h" />
+<file name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.h" />
+<file name=".\ARM_GCC_541\Debug\hamfly_core_telemetry.o">
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.c" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_app.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.h" />
+</file>
+<file name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.c" />
+<file name=".\ARM_GCC_541\Debug\hamfly_qx_app.o">
+<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_rb.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_comm_txbuf.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_control.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_gimbal.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_hal.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_core_telemetry.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_app.c" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_app.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.h" />
+</file>
+<file name="..\..\..\HamFlyAPI\src\hamfly_comm_txbuf.h" />
+<file name="..\..\..\HamFlyAPI\src\hamfly_qx_app.c" />
+<file name=".\ARM_GCC_541\Debug\hamfly_qx_protocol.o">
+<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_app.h" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.c" />
+<dep name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.h" />
+</file>
+<file name="..\..\..\HamFlyAPI\src\hamfly_qx_protocol.c" />
 <file name=".\Generated_Source\PSoC5\UART_1.h" />
 <file name=".\Generated_Source\PSoC5\UART_1_IntClock.h" />
 <file name=".\ARM_GCC_541\Debug\UART_1.o">
@@ -1079,6 +1155,7 @@
 <dep name=".\ARM_GCC_541\Debug\psoc_eeprom.o" />
 <dep name=".\ARM_GCC_541\Debug\app_ctx.o" />
 <dep name=".\ARM_GCC_541\Debug\app_statemachine.o" />
+<dep name=".\ARM_GCC_541\Debug\pi_comms.o" />
 <dep name=".\ARM_GCC_541\Debug\hamfly_comm_rb.o" />
 <dep name=".\ARM_GCC_541\Debug\hamfly_comm_txbuf.o" />
 <dep name=".\ARM_GCC_541\Debug\hamfly_core_gimbal.o" />
@@ -1130,6 +1207,7 @@
 <dep name=".\ARM_GCC_541\Debug\UART_DEBUG_INT.o" />
 <dep name=".\ARM_GCC_541\Debug\UART_DEBUG_BOOT.o" />
 <dep name=".\ARM_GCC_541\Debug\UART_DEBUG_IntClock.o" />
+<dep name=".\ARM_GCC_541\Debug\isr_rx_pi.o" />
 <dep name=".\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a" />
 <dep name="${CyRoot}\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_541\Debug\CyComponentLibrary.a" />
 </file>
@@ -1206,6 +1284,8 @@
 <name_val_pair name="Generated_Source\PSoC5\UART_DEBUG_INT.c" v="-mcpu=cortex-m3 -mthumb -I..\..\..\HamFlyAPI\src -I..\..\..\HamFlyAPI\platform -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -ffunction-sections -ffat-lto-objects -O0" />
 <name_val_pair name="Generated_Source\PSoC5\UART_DEBUG_BOOT.c" v="-mcpu=cortex-m3 -mthumb -I..\..\..\HamFlyAPI\src -I..\..\..\HamFlyAPI\platform -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -ffunction-sections -ffat-lto-objects -O0" />
 <name_val_pair name="Generated_Source\PSoC5\UART_DEBUG_IntClock.c" v="-mcpu=cortex-m3 -mthumb -I..\..\..\HamFlyAPI\src -I..\..\..\HamFlyAPI\platform -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -ffunction-sections -ffat-lto-objects -O0" />
+<name_val_pair name="pi_comms.c" v="-mcpu=cortex-m3 -mthumb -I..\..\..\HamFlyAPI\src -I..\..\..\HamFlyAPI\platform -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -ffunction-sections -ffat-lto-objects -O0" />
+<name_val_pair name="Generated_Source\PSoC5\isr_rx_pi.c" v="-mcpu=cortex-m3 -mthumb -I..\..\..\HamFlyAPI\src -I..\..\..\HamFlyAPI\platform -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -ffunction-sections -ffat-lto-objects -O0" />
 </name>
 </genericCmdLineData>
 <codeGenCmdLineTag v="-.appdatapath &quot;C:\Users\Jennewein\AppData\Local\Cypress Semiconductor\PSoC Creator\4.4&quot; -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p C:\Users\Jennewein\Documents\hamish-workspace\PSoC-Programs\test_projects\Proj07_hamflyAPI_stateMachineUpgrade.cydsn\Proj07_hamflyAPI_stateMachineUpgrade.cyprj -d CY8C5888LTI-LP097 -s C:\Users\Jennewein\Documents\hamish-workspace\PSoC-Programs\test_projects\Proj07_hamflyAPI_stateMachineUpgrade.cydsn\Generated_Source\PSoC5 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE" />
@@ -1565,6 +1645,8 @@
 <v>Generated_Source\PSoC5\UART_DEBUG_BOOT.c</v>
 <v>Generated_Source\PSoC5\UART_DEBUG_IntClock.c</v>
 <v>Generated_Source\PSoC5\UART_DEBUG_IntClock.h</v>
+<v>Generated_Source\PSoC5\isr_rx_pi.c</v>
+<v>Generated_Source\PSoC5\isr_rx_pi.h</v>
 </gen_list>
 <warp_dep>
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\ieee\work\stdlogic.vif</v>
@@ -1574,7 +1656,7 @@
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif</v>
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\cy_psoc3.vif</v>
 </warp_dep>
-<deps_time v="134237855187461266" />
+<deps_time v="134237966781143063" />
 <top_block v="TopDesign" />
 <last_generation v="7" />
 <pdl_path v="" />
@@ -1584,7 +1666,7 @@
 <dataGuid v="769d31ea-68b1-4f0c-b90a-7c10a43ee563">
 <CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563 type_name="CyDesigner.Common.ProjMgmt.Model.CyLinkCustomData" version="1">
 <link_deps_times>
-<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3" v="134237855251722324" />
+<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3" v="134237973591359134" />
 </link_deps_times>
 </CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563>
 </dataGuid>
@@ -1600,36 +1682,72 @@
 <v>Off-Chip</v>
 </tree_states_tab_names>
 <tree_states>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Cypress Component Catalog">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Cypress Component Catalog\Analog">
 <ExpandedNodeIds>
 <v>Cypress Component Catalog</v>
+<v>Cypress Component Catalog\Analog</v>
+<v>Cypress Component Catalog\Digital</v>
+<v>Cypress Component Catalog\Digital\Functions</v>
+<v>Cypress Component Catalog\Digital\Utility</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>Cypress Component Catalog</v>
 <v>Cypress Component Catalog\Analog</v>
+<v>Cypress Component Catalog\Analog\ADC</v>
+<v>Cypress Component Catalog\Analog\Amplifiers</v>
+<v>Cypress Component Catalog\Analog\Analog MUX</v>
+<v>Cypress Component Catalog\Analog\Comparators</v>
+<v>Cypress Component Catalog\Analog\DAC</v>
+<v>Cypress Component Catalog\Analog\Manual Routing</v>
+<v>Cypress Component Catalog\Analog\Mixer [v2.0]</v>
+<v>Cypress Component Catalog\Analog\Sample/Track and Hold [v1.40]</v>
+<v>Cypress Component Catalog\Analog\VRef [v1.70]</v>
 <v>Cypress Component Catalog\CapSense</v>
 <v>Cypress Component Catalog\Communications</v>
 <v>Cypress Component Catalog\Digital</v>
-<v>Cypress Component Catalog\Display</v>
-<v>Cypress Component Catalog\Filters</v>
-<v>Cypress Component Catalog\Ports and Pins</v>
-<v>Cypress Component Catalog\Power Supervision</v>
-<v>Cypress Component Catalog\System</v>
-<v>Cypress Component Catalog\Thermal Management</v>
+<v>Cypress Component Catalog\Digital\Functions</v>
+<v>Cypress Component Catalog\Digital\Functions\Counter [v3.0]</v>
+<v>Cypress Component Catalog\Digital\Functions\CRC [v2.50]</v>
+<v>Cypress Component Catalog\Digital\Functions\PrISM [v2.20]</v>
+<v>Cypress Component Catalog\Digital\Functions\PRS [v2.40]</v>
+<v>Cypress Component Catalog\Digital\Functions\PWM [v3.30]</v>
+<v>Cypress Component Catalog\Digital\Functions\Quadrature Decoder [v3.0]</v>
+<v>Cypress Component Catalog\Digital\Functions\Shift Register [v2.30]</v>
+<v>Cypress Component Catalog\Digital\Functions\Timer [v2.80]</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Off-Chip Component Catalog\Sensors\Microphone [v1.0]">
 <ExpandedNodeIds>
 <v>Off-Chip Component Catalog</v>
-</ExpandedNodeIds>
-<VisibleNodeIds>
-<v>Off-Chip Component Catalog</v>
-<v>Off-Chip Component Catalog\Active</v>
 <v>Off-Chip Component Catalog\Diodes</v>
 <v>Off-Chip Component Catalog\Electro-Mechanical</v>
 <v>Off-Chip Component Catalog\Passive</v>
 <v>Off-Chip Component Catalog\Power</v>
 <v>Off-Chip Component Catalog\Sensors</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>Off-Chip Component Catalog\Electro-Mechanical\Speaker [v1.0]</v>
+<v>Off-Chip Component Catalog\Electro-Mechanical\Switch (SPDT- DPDT) [v1.0]</v>
+<v>Off-Chip Component Catalog\Electro-Mechanical\Switch (SPST) [v1.0]</v>
+<v>Off-Chip Component Catalog\Electro-Mechanical\Test Point [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive</v>
+<v>Off-Chip Component Catalog\Passive\Capacitor [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive\Crystal [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive\Fuse [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive\Inductor [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive\Potentiometer [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive\Resistor [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive\Transformer [v1.0]</v>
+<v>Off-Chip Component Catalog\Power</v>
+<v>Off-Chip Component Catalog\Power\Battery [v1.0]</v>
+<v>Off-Chip Component Catalog\Power\Ground [v1.0]</v>
+<v>Off-Chip Component Catalog\Power\Power [v1.0]</v>
+<v>Off-Chip Component Catalog\Sensors</v>
+<v>Off-Chip Component Catalog\Sensors\Microphone [v1.0]</v>
+<v>Off-Chip Component Catalog\Sensors\Photo Resistor [v1.0]</v>
+<v>Off-Chip Component Catalog\Sensors\Strain Gauge [v1.0]</v>
+<v>Off-Chip Component Catalog\Sensors\Thermistor [v1.0]</v>
+<v>Off-Chip Component Catalog\Sensors\Thermocouple [v1.0]</v>
 <v>Off-Chip Component Catalog\Transistors</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
@@ -1653,6 +1771,11 @@
 <CyGuid_50eb6c77-9735-4e57-8808-b714f60fbc0d type_name="CyDesigner.Device.FitterPSoC.Common.DesignWideResources.DeviceEditor.CyItemState" version="1" Name="\ADC_DelSig_1:Net_34\" Color="-16755457" />
 </ComponentStates>
 </CyGuid_d442b0b8-dd66-4eee-b5be-1cb213792b31>
+</dataGuid>
+<dataGuid v="2a4578c1-6f5e-41bc-81e4-e5d0befc4490">
+<CyGuid_2a4578c1-6f5e-41bc-81e4-e5d0befc4490 type_name="CyDesigner.Gde.Schematic.CyComponentCatalog+CyCompCatalogData" version="1" display_mode="LATEST">
+<NOOP />
+</CyGuid_2a4578c1-6f5e-41bc-81e4-e5d0befc4490>
 </dataGuid>
 </userData>
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>

@@ -40,6 +40,7 @@
 #include "Pin_Sensitivity.h"
 #include "EEPROM_CONFIG.h"
 #include "UART_PI.h"
+#include "isr_rx_pi.h"
 #include "ADC_DelSig_1_AMux.h"
 #include "ADC_DelSig_1_Ext_CP_Clk.h"
 #include "ADC_DelSig_1_IRQ.h"

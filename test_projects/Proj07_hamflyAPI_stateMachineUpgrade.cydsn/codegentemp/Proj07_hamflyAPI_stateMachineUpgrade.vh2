@@ -2,7 +2,7 @@
 --	Conversion of Proj07_hamflyAPI_stateMachineUpgrade.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Wed May 20 14:18:33 2026
+--	Wed May 20 17:24:32 2026
 --
 
 USE cypress.cypress.all;
@@ -3239,7 +3239,7 @@ Pin_Sensitivity:cy_psoc3_pins_v1_10
 		clock=>\UART_PI:BUART:clock_op\,
 		status=>(zero, \UART_PI:BUART:rx_status_5\, \UART_PI:BUART:rx_status_4\, \UART_PI:BUART:rx_status_3\,
 			\UART_PI:BUART:rx_status_2\, zero, zero),
-		interrupt=>\UART_PI:BUART:rx_interrupt_out\);
+		interrupt=>Net_353);
 Rx_3:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"76286fae-8e70-4a13-8fce-3a253e81f4b7",
 		drive_mode=>"001",
@@ -3380,6 +3380,10 @@ Tx_3:cy_psoc3_pins_v1_10
 		out_clock_en=>tmpOE__VRx_net_0,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__Tx_3_net_0);
+isr_rx_pi:cy_isr_v1_0
+	GENERIC MAP(int_type=>"10",
+		is_nmi=>'0')
+	PORT MAP(int_signal=>Net_353);
 \UART_DEBUG:BUART:reset_reg\:cy_dff
 	PORT MAP(d=>zero,
 		clk=>\UART_DEBUG:BUART:clock_op\,

@@ -42,14 +42,14 @@
 
 #include "app_statemachine.h"
 #include "hamfly.h"
+#include "pi_comms.h"
 #include <project.h>  // For UART
 #include <math.h>
 #include <string.h>
+#include <stdio.h>
 
 // For timing, PSoC incremented with looptimer ISR.
 extern volatile uint32_t g_tick_ms;
-extern uint8_t get_euler_deg(float *pan_deg_out, float *tilt_deg_out);
-
 
 // Hierarchy %================================================================%
 // Heirarchy allows shared entry/exit behaviour.
@@ -89,6 +89,8 @@ static void entry_stby_hold    (app_ctx_t *);
 static void entry_manu_joystick(app_ctx_t *);
 static void entry_error_active (app_ctx_t *);
 
+static void entry_auto_test(app_ctx_t *ctx);
+
 // Exit handlers
 static void exit_manu_joystick (app_ctx_t *);
 
@@ -115,7 +117,7 @@ static const state_fn_t on_entry[STATE_COUNT] = {
     [AUTO_HOME]       = NULL,   /* TODO */
     [AUTO_ACQ_GPS]    = NULL,   /* TODO */
     [AUTO_ACQ_SPIRAL] = NULL,   /* TODO */
-    [AUTO_TRACKING]   = NULL,   /* TODO */
+    [AUTO_TRACKING]   = entry_auto_test,  // Temp for testing
     [AUTO_LOSS]       = NULL,   /* TODO */
     [AUTO_NO_LOCK]    = NULL,   /* TODO */
     [ERROR_ACTIVE]    = entry_error_active,
@@ -133,7 +135,7 @@ static const state_fn_t on_exit[STATE_COUNT] = {
     [AUTO_HOME]       = NULL,   /* TODO */
     [AUTO_ACQ_GPS]    = NULL,   /* TODO */
     [AUTO_ACQ_SPIRAL] = NULL,   /* TODO */
-    [AUTO_TRACKING]   = NULL,   /* TODO */
+    [AUTO_TRACKING]   = NULL ,  
     [AUTO_LOSS]       = NULL,   /* TODO */
     [AUTO_NO_LOCK]    = NULL,   /* TODO */
     [ERROR_ACTIVE]    = NULL,
@@ -161,7 +163,7 @@ static const build_fn_t on_build[STATE_COUNT] = {
     [AUTO_HOME]       = NULL,   /* TODO */
     [AUTO_ACQ_GPS]    = NULL,   /* TODO */
     [AUTO_ACQ_SPIRAL] = NULL,   /* TODO */
-    [AUTO_TRACKING]   = NULL,   /* TODO */
+    [AUTO_TRACKING]   = build_zero,  // Temp for testing.
     [AUTO_LOSS]       = NULL,   /* TODO */
     [AUTO_NO_LOCK]    = NULL,   /* TODO */
     [ERROR_ACTIVE]    = build_error,
@@ -284,7 +286,7 @@ const char *app_state_name(state_t s) { return state_names[s]; }
 static void entry_stby_defer(app_ctx_t *ctx)
 {
     (void)ctx;
-    UART_DEBUG_PutString("\r\n[STBY_DEFER] boot — '1' hold, '2' manual, '3' auto, '?' help\r\n> ");
+    UART_DEBUG_PutString("\r\n[STBY_DEFER] '1' hold, '2' manual, '3' auto, '?' help\r\n> ");
 }
 // On Exit: None
 
@@ -317,6 +319,44 @@ static void exit_manu_joystick(app_ctx_t *ctx)
     ctx->ctrl_mode = HAMFLY_DEFER;
 }
 
+// %==========================================================================%
+// %                                 Auto                                     %
+// %==========================================================================%
+// TEMP: for initial inter-device comms testing
+static void entry_auto_test(app_ctx_t *ctx)
+{
+    (void)ctx;
+    UART_DEBUG_PutString("\r\n[AUTO] link loopback test: TX centroid @1Hz, echo on RX\r\n");
+}
+
+void app_auto_tick(app_ctx_t *ctx)
+{
+    if (ctx->state != AUTO_TRACKING) return;
+
+    pi_centroid_t c;
+    if (pi_get_centroid(&c)) {
+        char b[96];
+        snprintf(b, sizeof b, "[PI] cx=%d cy=%d ex=%u ey=%u ts=%lu crcErr=%u uartErr=%u\r\n",
+                 c.cx, c.cy, c.ex, c.ey,
+                 (unsigned long)(c.pi_time_us & 0xFFFFFFFFUL),
+                 pi_crc_errors(), pi_uart_errors());
+        UART_DEBUG_PutString(b);
+    }
+
+    // TEMP: build a fake centroid here and loop it back via the public framer
+    static uint32_t last = 0u;
+    if (g_tick_ms - last >= 1000u) {
+        last = g_tick_ms;
+        uint8_t pl[16];
+        int16_t  cx = 1234, cy = -567;
+        uint16_t ex = 10,   ey = 20;
+        uint64_t ts = 0x0102030405060708ull;
+        memcpy(pl + 0, &cx, 2); memcpy(pl + 2, &cy, 2);
+        memcpy(pl + 4, &ex, 2); memcpy(pl + 6, &ey, 2);
+        memcpy(pl + 8, &ts, 8);
+        pi_send_frame(PI_MAGIC_CENTROID, pl, sizeof pl);
+    }
+}
 
 // %==========================================================================%
 // %                                 Error                                    %
@@ -349,25 +389,30 @@ static void entry_error_active(app_ctx_t *ctx)
 // %==========================================================================%
 #define KEY_CTRL_R 0x12  // Reset ASCII code.
 
+static uint8_t manu_pan_tilt_deg(const app_ctx_t *ctx, float *pan_deg, float *tilt_deg)
+{
+    if (!ctx->gimbal) return 0u;
+    hamfly_telemetry_t st;
+    hamfly_get_telemetry(ctx->gimbal, &st);
+    if (!st.valid) return 0u;
+    float roll_deg;                                   /* discarded */
+    return hamfly_telemetry_to_euler(&st, pan_deg, tilt_deg, &roll_deg);
+}
+
 /* Capture current gimbal attitude as the origin (global '['). */
 static void set_origin(app_ctx_t *ctx)
 {
     if (!ctx->gimbal) { app_raise_error(ctx, SEV_USER, "no gimbal handle"); return; }
 
-    hamfly_telemetry_t st;
-    hamfly_get_telemetry(ctx->gimbal, &st);
-    if (!st.valid) { app_raise_error(ctx, SEV_USER, "no telemetry - origin not set"); return; }
-
-    /* quaternion -> pan/tilt degrees (same math as main.c get_euler_deg) */
-    float r = st.gimbal_r, ii = st.gimbal_i, j = st.gimbal_j, kk = st.gimbal_k;
-    float sinp = 2.0f * (r*j - kk*ii);
-    ctx->origin_tilt_deg = (sinp >=  1.0f) ?  90.0f :
-                           (sinp <= -1.0f) ? -90.0f :
-                           asinf(sinp) * 57.2958f;
-    float siny = 2.0f * (r*kk + ii*j), cosy = 1.0f - 2.0f*(j*j + kk*kk);
-    ctx->origin_pan_deg = atan2f(siny, cosy) * 57.2958f;
+    float pan, tilt;
+    if (!manu_pan_tilt_deg(ctx, &pan, &tilt)) {
+        app_raise_error(ctx, SEV_USER, "no telemetry (origin not set)");
+        return;
+    }
+    ctx->origin_pan_deg  = pan;
+    ctx->origin_tilt_deg = tilt;
     ctx->origin_set = 1u;
-    UART_DEBUG_PutString("\r\n[ORIGIN] captured\r\n");
+    UART_DEBUG_PutString("\r\n[ORIGIN] captured.\r\n");
 }
 
 static void print_help(const app_ctx_t *ctx)
@@ -377,8 +422,8 @@ static void print_help(const app_ctx_t *ctx)
         "\r\n--- keys ---\r\n"
         " 1 hold   2 manual       3 auto\r\n"
         " x kill   [ set-origin   ? help\r\n"
-        " (in MANU) numpad/ijkl/wasd nudge\r\n"
-        " e exit   ] home\r\n");
+        " e exit   ] home\r\n"
+        " (in MANU) numpad/ijkl/wasd nudge\r\n");
 }
 
 /* ---- always-global keys (honored in every non-FATAL leaf) ------------- */
@@ -412,7 +457,7 @@ static uint8_t handle_nav_key(app_ctx_t *ctx, char k)
     switch (k) {
         case '1': transition(ctx, STBY_HOLD);     return 1;
         case '2': transition(ctx, MANU_JOYSTICK); return 1;
-        case '3': app_raise_error(ctx, SEV_USER, "AUTO not yet implemented"); return 1;
+        case '3': transition(ctx, AUTO_TRACKING); return 1;
         default:  return 0;
     }
 }
@@ -508,8 +553,8 @@ static void nudge_apply(app_ctx_t *ctx, float dpan_deg, float dtilt_deg)
 {
     if (!ctx->nudge_hold) {// Capture nudge baseline
         float p, t;
-        if (!get_euler_deg(&p, &t)) {
-            app_raise_error(ctx, SEV_USER, "no telemetry - nudge ignored");
+        if (!manu_pan_tilt_deg(ctx, &p, &t)) {
+            app_raise_error(ctx, SEV_USER, "no telemetry (nudge ignored).");
             return;
         }
         UART_DEBUG_PutString("Nudging!\r\n");  // TODO: Verbose nudge print
@@ -556,7 +601,7 @@ void app_manual_tick(app_ctx_t *ctx)
     if (elapsed < NUDGE_MIN_DWELL_MS) return;       /* let the step physically land */
 
     float p, t; uint8_t arrived = 0u;
-    if (get_euler_deg(&p, &t))
+    if (manu_pan_tilt_deg(ctx, &p, &t))
         arrived = (fabsf(p - ctx->tgt_pan_deg)  < NUDGE_SETTLE_DEG) &&
                   (fabsf(t - ctx->tgt_tilt_deg) < NUDGE_SETTLE_DEG);
     if (arrived || elapsed >= NUDGE_TIMEOUT_MS)
