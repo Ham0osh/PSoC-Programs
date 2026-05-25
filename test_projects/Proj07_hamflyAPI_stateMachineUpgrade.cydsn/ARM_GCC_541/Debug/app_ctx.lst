@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 1
 
 
    1              		.syntax unified
@@ -29,65 +29,78 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
   26              	.LFB63:
   27              		.file 1 "app_ctx.c"
    1:app_ctx.c     **** /* ========================================
-   2:app_ctx.c     ****  *  ... (same banner) ...
-   3:app_ctx.c     ****  * Shared context initializer.
-   4:app_ctx.c     **** */
-   5:app_ctx.c     **** 
-   6:app_ctx.c     **** #include "app_ctx.h"
-   7:app_ctx.c     **** #include <string.h>
-   8:app_ctx.c     **** 
-   9:app_ctx.c     **** void app_ctx_init(app_ctx_t *ctx)
-  10:app_ctx.c     **** {
-  28              		.loc 1 10 0
+   2:app_ctx.c     ****  *
+   3:app_ctx.c     ****  * Copyright Hamish Johnson, 2026
+   4:app_ctx.c     ****  * All Rights Reserved
+   5:app_ctx.c     ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:app_ctx.c     ****  *
+   7:app_ctx.c     ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:app_ctx.c     ****  * WHICH IS THE PROPERTY OF 
+   9:app_ctx.c     ****  * Quantum Internet Systems Lab (QISL),
+  10:app_ctx.c     ****  * Department of Physics, SFU, Canada.
+  11:app_ctx.c     ****  *
+  12:app_ctx.c     ****  * Author: Hamish Johnson (2026)
+  13:app_ctx.c     ****  *
+  14:app_ctx.c     ****  * ========================================
+  15:app_ctx.c     ****  *
+  16:app_ctx.c     ****  * Struct init for state machine chared context.
+  17:app_ctx.c     **** */
+  18:app_ctx.c     **** 
+  19:app_ctx.c     **** #include "app_ctx.h"
+  20:app_ctx.c     **** #include <string.h>
+  21:app_ctx.c     **** 
+  22:app_ctx.c     **** void app_ctx_init(app_ctx_t *ctx)
+  23:app_ctx.c     **** {
+  28              		.loc 1 23 0
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 8
   31              		@ frame_needed = 1, uses_anonymous_args = 0
   32 0000 80B5     		push	{r7, lr}
   33              		.cfi_def_cfa_offset 8
   34              		.cfi_offset 7, -8
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 2
+
+
   35              		.cfi_offset 14, -4
   36 0002 82B0     		sub	sp, sp, #8
   37              		.cfi_def_cfa_offset 16
   38 0004 00AF     		add	r7, sp, #0
   39              		.cfi_def_cfa_register 7
   40 0006 7860     		str	r0, [r7, #4]
-  11:app_ctx.c     ****     memset(ctx, 0, sizeof *ctx);
-  41              		.loc 1 11 0
+  24:app_ctx.c     ****     memset(ctx, 0, sizeof *ctx);
+  41              		.loc 1 24 0
   42 0008 5C22     		movs	r2, #92
   43 000a 0021     		movs	r1, #0
   44 000c 7868     		ldr	r0, [r7, #4]
   45 000e FFF7FEFF 		bl	memset
-  12:app_ctx.c     ****     ctx->state         = STBY_DEFER;  // boot to defer
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 2
-
-
-  46              		.loc 1 12 0
+  25:app_ctx.c     ****     ctx->state         = STBY_DEFER;  // boot to defer
+  46              		.loc 1 25 0
   47 0012 7B68     		ldr	r3, [r7, #4]
   48 0014 0522     		movs	r2, #5
   49 0016 1A71     		strb	r2, [r3, #4]
-  13:app_ctx.c     ****     ctx->prev_leaf     = STBY_DEFER;  // boot to defer
-  50              		.loc 1 13 0
+  26:app_ctx.c     ****     ctx->prev_leaf     = STBY_DEFER;  // boot to defer
+  50              		.loc 1 26 0
   51 0018 7B68     		ldr	r3, [r7, #4]
   52 001a 0522     		movs	r2, #5
   53 001c 5A71     		strb	r2, [r3, #5]
-  14:app_ctx.c     ****     ctx->ctrl_mode     = HAMFLY_DEFER;
-  54              		.loc 1 14 0
+  27:app_ctx.c     ****     ctx->ctrl_mode     = HAMFLY_DEFER;
+  54              		.loc 1 27 0
   55 001e 7B68     		ldr	r3, [r7, #4]
   56 0020 0022     		movs	r2, #0
   57 0022 5A73     		strb	r2, [r3, #13]
-  15:app_ctx.c     ****     ctx->sense         = SENSE_MED;
-  58              		.loc 1 15 0
+  28:app_ctx.c     ****     ctx->sense         = SENSE_MED;
+  58              		.loc 1 28 0
   59 0024 7B68     		ldr	r3, [r7, #4]
   60 0026 0122     		movs	r2, #1
   61 0028 83F83C20 		strb	r2, [r3, #60]
-  16:app_ctx.c     ****     ctx->diag_active   = 1u;
-  62              		.loc 1 16 0
+  29:app_ctx.c     ****     ctx->diag_active   = 1u;
+  62              		.loc 1 29 0
   63 002c 7B68     		ldr	r3, [r7, #4]
   64 002e 0122     		movs	r2, #1
   65 0030 83F83020 		strb	r2, [r3, #48]
-  17:app_ctx.c     ****     /* origin_set, fatal_latched, err_msg already 0/NULL from memset */
-  18:app_ctx.c     **** }
-  66              		.loc 1 18 0
+  30:app_ctx.c     ****     /* origin_set, fatal_latched, err_msg already 0/NULL from memset */
+  31:app_ctx.c     **** }
+  66              		.loc 1 31 0
   67 0034 00BF     		nop
   68 0036 0837     		adds	r7, r7, #8
   69              		.cfi_def_cfa_offset 8
@@ -105,6 +118,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
   81              		.file 4 "..\\..\\..\\HamFlyAPI\\src/hamfly_core_control.h"
   82              		.file 5 "..\\..\\..\\HamFlyAPI\\src/hamfly_core_hal.h"
   83              		.file 6 "..\\..\\..\\HamFlyAPI\\src/hamfly_core_telemetry.h"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 3
+
+
   84              		.file 7 "..\\..\\..\\HamFlyAPI\\src/hamfly_comm_rb.h"
   85              		.file 8 "..\\..\\..\\HamFlyAPI\\src/hamfly_core_gimbal.h"
   86              		.file 9 "joystick.h"
@@ -118,9 +134,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
   94 000a 04       		.byte	0x4
   95 000b 01       		.uleb128 0x1
   96 000c A9000000 		.4byte	.LASF192
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 3
-
-
   97 0010 0C       		.byte	0xc
   98 0011 9A050000 		.4byte	.LASF193
   99 0015 55090000 		.4byte	.LASF194
@@ -165,6 +178,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  138 0069 6D000000 		.4byte	0x6d
  139 006d 02       		.uleb128 0x2
  140 006e 04       		.byte	0x4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 4
+
+
  141 006f 05       		.byte	0x5
  142 0070 58060000 		.4byte	.LASF8
  143 0074 03       		.uleb128 0x3
@@ -178,9 +194,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  151 0082 72070000 		.4byte	.LASF10
  152 0086 02       		.uleb128 0x2
  153 0087 08       		.byte	0x8
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 4
-
-
  154 0088 05       		.byte	0x5
  155 0089 EB040000 		.4byte	.LASF11
  156 008d 02       		.uleb128 0x2
@@ -225,6 +238,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  195 00db 04       		.byte	0x4
  196 00dc 2A020000 		.4byte	.LASF19
  197 00e0 02       		.uleb128 0x2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 5
+
+
  198 00e1 08       		.byte	0x8
  199 00e2 04       		.byte	0x4
  200 00e3 44090000 		.4byte	.LASF20
@@ -238,9 +254,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  208 00f1 F5050000 		.4byte	.LASF22
  209 00f5 02       		.uleb128 0x2
  210 00f6 04       		.byte	0x4
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 5
-
-
  211 00f7 07       		.byte	0x7
  212 00f8 4D070000 		.4byte	.LASF23
  213 00fc 05       		.uleb128 0x5
@@ -285,6 +298,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  252 0147 AC010000 		.4byte	0x1ac
  253 014b 0C       		.uleb128 0xc
  254 014c 70616E00 		.ascii	"pan\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 6
+
+
  255 0150 04       		.byte	0x4
  256 0151 2F       		.byte	0x2f
  257 0152 D9000000 		.4byte	0xd9
@@ -298,9 +314,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  265 0163 0D       		.uleb128 0xd
  266 0164 93040000 		.4byte	.LASF30
  267 0168 04       		.byte	0x4
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 6
-
-
  268 0169 31       		.byte	0x31
  269 016a D9000000 		.4byte	0xd9
  270 016e 08       		.byte	0x8
@@ -345,6 +358,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  309 01b9 05       		.byte	0x5
  310 01ba 24       		.byte	0x24
  311 01bb E4010000 		.4byte	0x1e4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 7
+
+
  312 01bf 0C       		.uleb128 0xc
  313 01c0 63747800 		.ascii	"ctx\000"
  314 01c4 05       		.byte	0x5
@@ -358,9 +374,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  322 01d2 F4010000 		.4byte	0x1f4
  323 01d6 04       		.byte	0x4
  324 01d7 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 7
-
-
  325 01d8 58010000 		.4byte	.LASF38
  326 01dc 05       		.byte	0x5
  327 01dd 27       		.byte	0x27
@@ -405,6 +418,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  366 022e 0D       		.uleb128 0xd
  367 022f 49010000 		.4byte	.LASF41
  368 0233 06       		.byte	0x6
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 8
+
+
  369 0234 22       		.byte	0x22
  370 0235 D9000000 		.4byte	0xd9
  371 0239 04       		.byte	0x4
@@ -418,9 +434,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  379 0247 8A040000 		.4byte	.LASF43
  380 024b 06       		.byte	0x6
  381 024c 24       		.byte	0x24
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 8
-
-
  382 024d D9000000 		.4byte	0xd9
  383 0251 0C       		.byte	0xc
  384 0252 0D       		.uleb128 0xd
@@ -465,6 +478,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  423 02a0 2E       		.byte	0x2e
  424 02a1 83050000 		.4byte	0x583
  425 02a5 1F       		.byte	0x1f
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 9
+
+
  426 02a6 0D       		.uleb128 0xd
  427 02a7 CC060000 		.4byte	.LASF51
  428 02ab 06       		.byte	0x6
@@ -478,9 +494,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  436 02b9 D9000000 		.4byte	0xd9
  437 02bd 24       		.byte	0x24
  438 02be 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 9
-
-
  439 02bf A3060000 		.4byte	.LASF53
  440 02c3 06       		.byte	0x6
  441 02c4 33       		.byte	0x33
@@ -525,6 +538,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  480 0312 0D       		.uleb128 0xd
  481 0313 FB080000 		.4byte	.LASF60
  482 0317 06       		.byte	0x6
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 10
+
+
  483 0318 3C       		.byte	0x3c
  484 0319 C3000000 		.4byte	0xc3
  485 031d 44       		.byte	0x44
@@ -538,9 +554,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  493 032b 8E060000 		.4byte	.LASF62
  494 032f 06       		.byte	0x6
  495 0330 42       		.byte	0x42
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 10
-
-
  496 0331 AD000000 		.4byte	0xad
  497 0335 4C       		.byte	0x4c
  498 0336 0D       		.uleb128 0xd
@@ -585,6 +598,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  537 0384 52       		.byte	0x52
  538 0385 D9000000 		.4byte	0xd9
  539 0389 5C       		.byte	0x5c
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 11
+
+
  540 038a 0D       		.uleb128 0xd
  541 038b 36080000 		.4byte	.LASF70
  542 038f 06       		.byte	0x6
@@ -598,9 +614,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  550 039d CE000000 		.4byte	0xce
  551 03a1 64       		.byte	0x64
  552 03a2 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 11
-
-
  553 03a3 7D030000 		.4byte	.LASF72
  554 03a7 06       		.byte	0x6
  555 03a8 59       		.byte	0x59
@@ -645,6 +658,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  594 03f6 0D       		.uleb128 0xd
  595 03f7 ED070000 		.4byte	.LASF79
  596 03fb 06       		.byte	0x6
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 12
+
+
  597 03fc 66       		.byte	0x66
  598 03fd D9000000 		.4byte	0xd9
  599 0401 84       		.byte	0x84
@@ -658,9 +674,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  607 040f D3020000 		.4byte	.LASF81
  608 0413 06       		.byte	0x6
  609 0414 6A       		.byte	0x6a
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 12
-
-
  610 0415 83050000 		.4byte	0x583
  611 0419 8C       		.byte	0x8c
  612 041a 0D       		.uleb128 0xd
@@ -705,6 +718,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  651 0468 74       		.byte	0x74
  652 0469 D9000000 		.4byte	0xd9
  653 046d 9C       		.byte	0x9c
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 13
+
+
  654 046e 0D       		.uleb128 0xd
  655 046f 4B000000 		.4byte	.LASF89
  656 0473 06       		.byte	0x6
@@ -718,9 +734,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  664 0481 AD000000 		.4byte	0xad
  665 0485 A2       		.byte	0xa2
  666 0486 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 13
-
-
  667 0487 FF070000 		.4byte	.LASF91
  668 048b 06       		.byte	0x6
  669 048c 77       		.byte	0x77
@@ -765,6 +778,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  708 04da 0D       		.uleb128 0xd
  709 04db B2010000 		.4byte	.LASF98
  710 04df 06       		.byte	0x6
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 14
+
+
  711 04e0 80       		.byte	0x80
  712 04e1 83050000 		.4byte	0x583
  713 04e5 BA       		.byte	0xba
@@ -778,9 +794,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  721 04f3 3D010000 		.4byte	.LASF100
  722 04f7 06       		.byte	0x6
  723 04f8 82       		.byte	0x82
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 14
-
-
  724 04f9 D9000000 		.4byte	0xd9
  725 04fd C0       		.byte	0xc0
  726 04fe 0D       		.uleb128 0xd
@@ -825,6 +838,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  765 054c 89       		.byte	0x89
  766 054d D9000000 		.4byte	0xd9
  767 0551 DC       		.byte	0xdc
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 15
+
+
  768 0552 0D       		.uleb128 0xd
  769 0553 53030000 		.4byte	.LASF108
  770 0557 06       		.byte	0x6
@@ -838,9 +854,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  778 0565 83050000 		.4byte	0x583
  779 0569 E1       		.byte	0xe1
  780 056a 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 15
-
-
  781 056b 98080000 		.4byte	.LASF110
  782 056f 06       		.byte	0x6
  783 0570 96       		.byte	0x96
@@ -885,6 +898,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  822 05bd 25       		.byte	0x25
  823 05be 0E010000 		.4byte	0x10e
  824 05c2 0201     		.2byte	0x102
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 16
+
+
  825 05c4 12       		.uleb128 0x12
  826 05c5 D9030000 		.4byte	.LASF116
  827 05c9 07       		.byte	0x7
@@ -898,9 +914,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  835 05db 14       		.uleb128 0x14
  836 05dc F5000000 		.4byte	0xf5
  837 05e0 FF       		.byte	0xff
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 16
-
-
  838 05e1 00       		.byte	0
  839 05e2 08       		.uleb128 0x8
  840 05e3 D2050000 		.4byte	0x5d2
@@ -945,6 +958,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  879 0631 CE000000 		.4byte	0xce
  880 0635 10       		.byte	0x10
  881 0636 0D       		.uleb128 0xd
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 17
+
+
  882 0637 24090000 		.4byte	.LASF123
  883 063b 08       		.byte	0x8
  884 063c 35       		.byte	0x35
@@ -958,9 +974,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  892 064d 16       		.byte	0x16
  893 064e 00       		.byte	0
  894 064f 03       		.uleb128 0x3
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 17
-
-
  895 0650 30090000 		.4byte	.LASF125
  896 0654 08       		.byte	0x8
  897 0655 37       		.byte	0x37
@@ -1005,6 +1018,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  936 06a6 08       		.byte	0x8
  937 06a7 44       		.byte	0x44
  938 06a8 E7050000 		.4byte	0x5e7
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 18
+
+
  939 06ac 2A02     		.2byte	0x22a
  940 06ae 12       		.uleb128 0x12
  941 06af 4B090000 		.4byte	.LASF130
@@ -1018,9 +1034,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  949 06c1 4C       		.byte	0x4c
  950 06c2 B8000000 		.4byte	0xb8
  951 06c6 3203     		.2byte	0x332
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 18
-
-
  952 06c8 12       		.uleb128 0x12
  953 06c9 BF050000 		.4byte	.LASF132
  954 06cd 08       		.byte	0x8
@@ -1065,6 +1078,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  993 0721 F5000000 		.4byte	0xf5
  994 0725 3F       		.byte	0x3f
  995 0726 00       		.byte	0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 19
+
+
  996 0727 03       		.uleb128 0x3
  997 0728 40080000 		.4byte	.LASF138
  998 072c 08       		.byte	0x8
@@ -1078,9 +1094,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1006 073a 51070000 		.4byte	0x751
  1007 073e 0A       		.uleb128 0xa
  1008 073f B8080000 		.4byte	.LASF139
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 19
-
-
  1009 0743 00       		.byte	0
  1010 0744 0A       		.uleb128 0xa
  1011 0745 0A060000 		.4byte	.LASF140
@@ -1125,6 +1138,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1050 0791 22       		.byte	0x22
  1051 0792 FD070000 		.4byte	0x7fd
  1052 0796 0A       		.uleb128 0xa
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 20
+
+
  1053 0797 B0040000 		.4byte	.LASF144
  1054 079b 00       		.byte	0
  1055 079c 0A       		.uleb128 0xa
@@ -1138,9 +1154,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1063 07ad 03       		.byte	0x3
  1064 07ae 0A       		.uleb128 0xa
  1065 07af 1D000000 		.4byte	.LASF148
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 20
-
-
  1066 07b3 04       		.byte	0x4
  1067 07b4 0A       		.uleb128 0xa
  1068 07b5 6E060000 		.4byte	.LASF149
@@ -1185,6 +1198,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1107 0803 32       		.byte	0x32
  1108 0804 8A070000 		.4byte	0x78a
  1109 0808 09       		.uleb128 0x9
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 21
+
+
  1110 0809 01       		.byte	0x1
  1111 080a 37000000 		.4byte	0x37
  1112 080e 0A       		.byte	0xa
@@ -1198,9 +1214,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1120 081f 01       		.byte	0x1
  1121 0820 0A       		.uleb128 0xa
  1122 0821 40070000 		.4byte	.LASF164
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 21
-
-
  1123 0825 02       		.byte	0x2
  1124 0826 0A       		.uleb128 0xa
  1125 0827 69010000 		.4byte	.LASF165
@@ -1245,6 +1258,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1164 0875 0A       		.byte	0xa
  1165 0876 4C       		.byte	0x4c
  1166 0877 FE000000 		.4byte	0xfe
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 22
+
+
  1167 087b 08       		.byte	0x8
  1168 087c 0D       		.uleb128 0xd
  1169 087d 1B070000 		.4byte	.LASF172
@@ -1258,9 +1274,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1177 088e 50       		.byte	0x50
  1178 088f 38010000 		.4byte	0x138
  1179 0893 0D       		.byte	0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 22
-
-
  1180 0894 0D       		.uleb128 0xd
  1181 0895 2F000000 		.4byte	.LASF174
  1182 0899 0A       		.byte	0xa
@@ -1305,6 +1318,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1221 08e7 28       		.byte	0x28
  1222 08e8 0D       		.uleb128 0xd
  1223 08e9 5C0A0000 		.4byte	.LASF181
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 23
+
+
  1224 08ed 0A       		.byte	0xa
  1225 08ee 5E       		.byte	0x5e
  1226 08ef CE000000 		.4byte	0xce
@@ -1318,9 +1334,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1234 0900 0C       		.uleb128 0xc
  1235 0901 636D6400 		.ascii	"cmd\000"
  1236 0905 0A       		.byte	0xa
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 23
-
-
  1237 0906 62       		.byte	0x62
  1238 0907 7F070000 		.4byte	0x77f
  1239 090b 34       		.byte	0x34
@@ -1365,6 +1378,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1278 0959 0A       		.byte	0xa
  1279 095a 6B       		.byte	0x6b
  1280 095b D9000000 		.4byte	0xd9
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 24
+
+
  1281 095f 54       		.byte	0x54
  1282 0960 0D       		.uleb128 0xd
  1283 0961 7D050000 		.4byte	.LASF190
@@ -1378,16 +1394,13 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1291 096f 27070000 		.4byte	0x727
  1292 0973 03       		.uleb128 0x3
  1293 0974 C0070000 		.4byte	.LASF191
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 24
-
-
  1294 0978 0A       		.byte	0xa
  1295 0979 6F       		.byte	0x6f
  1296 097a 38080000 		.4byte	0x838
  1297 097e 15       		.uleb128 0x15
  1298 097f 3E000000 		.4byte	.LASF195
  1299 0983 01       		.byte	0x1
- 1300 0984 09       		.byte	0x9
+ 1300 0984 16       		.byte	0x16
  1301 0985 00000000 		.4byte	.LFB63
  1302 0989 3C000000 		.4byte	.LFE63-.LFB63
  1303 098d 01       		.uleb128 0x1
@@ -1396,7 +1409,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1306 0993 16       		.uleb128 0x16
  1307 0994 63747800 		.ascii	"ctx\000"
  1308 0998 01       		.byte	0x1
- 1309 0999 09       		.byte	0x9
+ 1309 0999 16       		.byte	0x16
  1310 099a A2090000 		.4byte	0x9a2
  1311 099e 02       		.uleb128 0x2
  1312 099f 91       		.byte	0x91
@@ -1425,6 +1438,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1335 0007 03       		.uleb128 0x3
  1336 0008 0E       		.uleb128 0xe
  1337 0009 1B       		.uleb128 0x1b
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 25
+
+
  1338 000a 0E       		.uleb128 0xe
  1339 000b 55       		.uleb128 0x55
  1340 000c 17       		.uleb128 0x17
@@ -1438,9 +1454,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1348 0014 24       		.uleb128 0x24
  1349 0015 00       		.byte	0
  1350 0016 0B       		.uleb128 0xb
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 25
-
-
  1351 0017 0B       		.uleb128 0xb
  1352 0018 3E       		.uleb128 0x3e
  1353 0019 0B       		.uleb128 0xb
@@ -1485,6 +1498,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1392 0040 0B       		.uleb128 0xb
  1393 0041 0B       		.uleb128 0xb
  1394 0042 49       		.uleb128 0x49
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 26
+
+
  1395 0043 13       		.uleb128 0x13
  1396 0044 00       		.byte	0
  1397 0045 00       		.byte	0
@@ -1498,9 +1514,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1405 004d 08       		.uleb128 0x8
  1406 004e 35       		.uleb128 0x35
  1407 004f 00       		.byte	0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 26
-
-
  1408 0050 49       		.uleb128 0x49
  1409 0051 13       		.uleb128 0x13
  1410 0052 00       		.byte	0
@@ -1545,6 +1558,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1449 0079 0C       		.uleb128 0xc
  1450 007a 0D       		.uleb128 0xd
  1451 007b 00       		.byte	0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 27
+
+
  1452 007c 03       		.uleb128 0x3
  1453 007d 08       		.uleb128 0x8
  1454 007e 3A       		.uleb128 0x3a
@@ -1558,9 +1574,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1462 0086 00       		.byte	0
  1463 0087 00       		.byte	0
  1464 0088 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 27
-
-
  1465 0089 0D       		.uleb128 0xd
  1466 008a 00       		.byte	0
  1467 008b 03       		.uleb128 0x3
@@ -1605,6 +1618,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1506 00b2 11       		.uleb128 0x11
  1507 00b3 13       		.uleb128 0x13
  1508 00b4 01       		.byte	0x1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 28
+
+
  1509 00b5 0B       		.uleb128 0xb
  1510 00b6 05       		.uleb128 0x5
  1511 00b7 3A       		.uleb128 0x3a
@@ -1618,9 +1634,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1519 00bf 12       		.uleb128 0x12
  1520 00c0 0D       		.uleb128 0xd
  1521 00c1 00       		.byte	0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 28
-
-
  1522 00c2 03       		.uleb128 0x3
  1523 00c3 0E       		.uleb128 0xe
  1524 00c4 3A       		.uleb128 0x3a
@@ -1665,6 +1678,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1563 00eb 27       		.uleb128 0x27
  1564 00ec 19       		.uleb128 0x19
  1565 00ed 11       		.uleb128 0x11
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 29
+
+
  1566 00ee 01       		.uleb128 0x1
  1567 00ef 12       		.uleb128 0x12
  1568 00f0 06       		.uleb128 0x6
@@ -1678,9 +1694,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1576 00f9 00       		.byte	0
  1577 00fa 16       		.uleb128 0x16
  1578 00fb 05       		.uleb128 0x5
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 29
-
-
  1579 00fc 00       		.byte	0
  1580 00fd 03       		.uleb128 0x3
  1581 00fe 08       		.uleb128 0x8
@@ -1725,6 +1738,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1620 0018 00000000 		.4byte	0
  1621 001c 00000000 		.4byte	0
  1622              		.section	.debug_ranges,"",%progbits
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 30
+
+
  1623              	.Ldebug_ranges0:
  1624 0000 00000000 		.4byte	.LFB63
  1625 0004 3C000000 		.4byte	.LFE63
@@ -1738,9 +1754,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1630      FB0E0D00 
  1630      01010101 
  1631              	.LASF173:
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 30
-
-
  1632 0000 6374726C 		.ascii	"ctrl_mode\000"
  1632      5F6D6F64 
  1632      6500
@@ -1785,6 +1798,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1650 0072 756E7369 		.ascii	"unsigned int\000"
  1650      676E6564 
  1650      20696E74 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 31
+
+
  1650      00
  1651              	.LASF169:
  1652 007f 70726576 		.ascii	"prev_leaf\000"
@@ -1798,9 +1814,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1656      7433325F 
  1656      7400
  1657              	.LASF87:
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 31
-
-
  1658 0098 73797373 		.ascii	"sysstat_gps_sats\000"
  1658      7461745F 
  1658      6770735F 
@@ -1845,6 +1858,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1674      00
  1675              	.LASF165:
  1676 0169 5345565F 		.ascii	"SEV_FATAL\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 32
+
+
  1676      46415441 
  1676      4C00
  1677              	.LASF33:
@@ -1858,9 +1874,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1680      00
  1681              	.LASF82:
  1682 018a 666C6167 		.ascii	"flag_compass_error\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 32
-
-
  1682      5F636F6D 
  1682      70617373 
  1682      5F657272 
@@ -1905,6 +1918,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1700      70645F6D 
  1700      7300
  1701              	.LASF124:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 33
+
+
  1702 0204 75617274 		.ascii	"uart_err_flags\000"
  1702      5F657272 
  1702      5F666C61 
@@ -1918,9 +1934,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1706 0220 75617274 		.ascii	"uart_putc\000"
  1706      5F707574 
  1706      6300
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 33
-
-
  1707              	.LASF19:
  1708 022a 666C6F61 		.ascii	"float\000"
  1708      7400
@@ -1965,6 +1978,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1727              	.LASF66:
  1728 029d 6770735F 		.ascii	"gps_raw_sacc\000"
  1728      7261775F 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 34
+
+
  1728      73616363 
  1728      00
  1729              	.LASF97:
@@ -1978,9 +1994,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1732      6E743136 
  1732      5F7400
  1733              	.LASF141:
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 34
-
-
  1734 02c8 53454E53 		.ascii	"SENSE_HIGH\000"
  1734      455F4849 
  1734      474800
@@ -2025,6 +2038,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1751              	.LASF90:
  1752 033e 73797373 		.ascii	"sysstat_status_flags\000"
  1752      7461745F 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 35
+
+
  1752      73746174 
  1752      75735F66 
  1752      6C616773 
@@ -2038,9 +2054,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1756      6500
  1757              	.LASF31:
  1758 0367 70616E5F 		.ascii	"pan_mode\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 35
-
-
  1758      6D6F6465 
  1758      00
  1759              	.LASF154:
@@ -2085,6 +2098,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1777              	.LASF61:
  1778 03df 6770735F 		.ascii	"gps_raw_alt\000"
  1778      7261775F 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 36
+
+
  1778      616C7400 
  1779              	.LASF127:
  1780 03eb 73746174 		.ascii	"statistics\000"
@@ -2098,9 +2114,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1784 0401 74696C74 		.ascii	"tilt_mode\000"
  1784      5F6D6F64 
  1784      6500
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 36
-
-
  1785              	.LASF147:
  1786 040b 4155544F 		.ascii	"AUTO\000"
  1786      00
@@ -2145,6 +2158,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1804 0478 67696D62 		.ascii	"gimbal_k\000"
  1804      616C5F6B 
  1804      00
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 37
+
+
  1805              	.LASF163:
  1806 0481 5345565F 		.ascii	"SEV_WARN\000"
  1806      5741524E 
@@ -2158,9 +2174,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1810      00
  1811              	.LASF14:
  1812 0498 75696E74 		.ascii	"uint8_t\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 37
-
-
  1812      385F7400 
  1813              	.LASF122:
  1814 04a0 72785F62 		.ascii	"rx_bad_checksum\000"
@@ -2205,6 +2218,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1832      72656164 
  1832      7900
  1833              	.LASF40:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 38
+
+
  1834 0512 76616C69 		.ascii	"valid\000"
  1834      6400
  1835              	.LASF119:
@@ -2218,9 +2234,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1840 0528 5F5F696E 		.ascii	"__int16_t\000"
  1840      7431365F 
  1840      7400
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 38
-
-
  1841              	.LASF49:
  1842 0532 6770735F 		.ascii	"gps_valid\000"
  1842      76616C69 
@@ -2265,6 +2278,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1858      6300
  1859              	.LASF88:
  1860 05a4 73797373 		.ascii	"sysstat_temp_c\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 39
+
+
  1860      7461745F 
  1860      74656D70 
  1860      5F6300
@@ -2278,9 +2294,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1864      73656E74 
  1864      5F6D7300 
  1865              	.LASF134:
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 39
-
-
  1866 05cf 70656E64 		.ascii	"pending_response_attr\000"
  1866      696E675F 
  1866      72657370 
@@ -2325,6 +2338,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1883              	.LASF160:
  1884 064c 53544154 		.ascii	"STATE_COUNT\000"
  1884      455F434F 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 40
+
+
  1884      554E5400 
  1885              	.LASF8:
  1886 0658 6C6F6E67 		.ascii	"long int\000"
@@ -2338,9 +2354,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1889              	.LASF149:
  1890 066e 53544259 		.ascii	"STBY_DEFER\000"
  1890      5F444546 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 40
-
-
  1890      455200
  1891              	.LASF135:
  1892 0679 70656E64 		.ascii	"pending_response_len\000"
@@ -2385,6 +2398,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1908      5F6100
  1909              	.LASF42:
  1910 06f1 62617474 		.ascii	"battery_right_v\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 41
+
+
  1910      6572795F 
  1910      72696768 
  1910      745F7600 
@@ -2398,9 +2414,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1914      5F535049 
  1914      52414C00 
  1915              	.LASF172:
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 41
-
-
  1916 071b 66617461 		.ascii	"fatal_latched\000"
  1916      6C5F6C61 
  1916      74636865 
@@ -2445,6 +2458,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1933              	.LASF17:
  1934 078e 696E7433 		.ascii	"int32_t\000"
  1934      325F7400 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 42
+
+
  1935              	.LASF76:
  1936 0796 6174745F 		.ascii	"att_yaw_rate_dps\000"
  1936      7961775F 
@@ -2458,9 +2474,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1940 07ad 6174745F 		.ascii	"att_pitch_rate_dps\000"
  1940      70697463 
  1940      685F7261 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 42
-
-
  1940      74655F64 
  1940      707300
  1941              	.LASF191:
@@ -2505,6 +2518,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1958      00
  1959              	.LASF185:
  1960 082b 6E756467 		.ascii	"nudge_hold\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 43
+
+
  1960      655F686F 
  1960      6C6400
  1961              	.LASF70:
@@ -2518,9 +2534,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1964      6C5F7400 
  1965              	.LASF187:
  1966 0850 6E756467 		.ascii	"nudge_base_pan_deg\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 43
-
-
  1966      655F6261 
  1966      73655F70 
  1966      616E5F64 
@@ -2565,6 +2578,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1982      00
  1983              	.LASF6:
  1984 08cf 73686F72 		.ascii	"short unsigned int\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 44
+
+
  1984      7420756E 
  1984      7369676E 
  1984      65642069 
@@ -2578,9 +2594,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  1987              	.LASF60:
  1988 08fb 6770735F 		.ascii	"gps_raw_lon\000"
  1988      7261775F 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 44
-
-
  1988      6C6F6E00 
  1989              	.LASF184:
  1990 0907 696E7665 		.ascii	"invert_mask\000"
@@ -2625,6 +2638,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  2004      55706772 
  2004      6164652E 
  2004      63796473 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 45
+
+
  2005              	.LASF151:
  2006 09ca 4D414E55 		.ascii	"MANU_JOYSTICK\000"
  2006      5F4A4F59 
@@ -2638,9 +2654,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  2009              	.LASF146:
  2010 09e8 4D414E55 		.ascii	"MANU\000"
  2010      00
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 45
-
-
  2011              	.LASF189:
  2012 09ed 7467745F 		.ascii	"tgt_pan_deg\000"
  2012      70616E5F 
@@ -2685,3 +2698,6 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cclK0A62.s 			page 1
  2028      7472795F 
  2028      6D7300
  2029              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccviZjme.s 			page 46
+
+

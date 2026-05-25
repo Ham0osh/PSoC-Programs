@@ -1,7 +1,17 @@
-/* main.c
- * Author: Hamish Johnson
- * Org: Quantum Internet Systems Lab, SFU, Physics
- * Date: March 2026
+/* ========================================
+ *
+ * Copyright Hamish Johnson, 2026
+ * All Rights Reserved
+ * UNPUBLISHED, LICENSED SOFTWARE.
+ *
+ * CONFIDENTIAL AND PROPRIETARY INFORMATION
+ * WHICH IS THE PROPERTY OF 
+ * Quantum Internet Systems Lab (QISL),
+ * Department of Physics, SFU, Canada.
+ *
+ * Author: Hamish Johnson (2026)
+ *
+ * ========================================
  *
  * Uses HamflyAPI (hamfly.h) for all gimbal communication.
  *

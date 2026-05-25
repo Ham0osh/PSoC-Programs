@@ -1,5 +1,4 @@
-/* adc_balanced.h
- * ========================================
+/* ========================================
  *
  * Copyright Hamish Johnson, 2026
  * All Rights Reserved

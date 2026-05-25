@@ -1,6 +1,19 @@
 /* ========================================
- *  ... (same banner) ...
- * Shared context initializer.
+ *
+ * Copyright Hamish Johnson, 2026
+ * All Rights Reserved
+ * UNPUBLISHED, LICENSED SOFTWARE.
+ *
+ * CONFIDENTIAL AND PROPRIETARY INFORMATION
+ * WHICH IS THE PROPERTY OF 
+ * Quantum Internet Systems Lab (QISL),
+ * Department of Physics, SFU, Canada.
+ *
+ * Author: Hamish Johnson (2026)
+ *
+ * ========================================
+ *
+ * Struct init for state machine chared context.
 */
 
 #include "app_ctx.h"

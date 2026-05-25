@@ -333,28 +333,36 @@ void app_auto_tick(app_ctx_t *ctx)
 {
     if (ctx->state != AUTO_TRACKING) return;
 
-    pi_centroid_t c;
+    payload_centroid_t c;
+    // On tick try to receive centroid
     if (pi_get_centroid(&c)) {
-        char b[96];
-        snprintf(b, sizeof b, "[PI] cx=%d cy=%d ex=%u ey=%u ts=%lu crcErr=%u uartErr=%u\r\n",
-                 c.cx, c.cy, c.ex, c.ey,
-                 (unsigned long)(c.pi_time_us & 0xFFFFFFFFUL),
-                 pi_crc_errors(), pi_uart_errors());
+        char b[128];
+        snprintf(b, sizeof b,
+                 "[PI] t=%lu cx=%d cy=%d cxerr=%u cyerr=%u "
+                 "rx=%lu dt=%u unkMagic=%u crcErr=%u uartErr=%u\r\n",
+                 (unsigned long)c.t_ms, c.cx, c.cy, c.cxerr, c.cyerr,
+                 (unsigned long)pi_rx_pkt_count(),
+                 pi_last_centroid_dt_ms(),
+                 pi_unknown_magic(),
+                 pi_crc_errors(),
+                 pi_uart_errors());
         UART_DEBUG_PutString(b);
     }
 
-    // TEMP: build a fake centroid here and loop it back via the public framer
+    // TEMP: 1 Hz self-test centroid sent over UART_PI (jumpered for loopback)
     static uint32_t last = 0u;
     if (g_tick_ms - last >= 1000u) {
         last = g_tick_ms;
-        uint8_t pl[16];
-        int16_t  cx = 1234, cy = -567;
-        uint16_t ex = 10,   ey = 20;
-        uint64_t ts = 0x0102030405060708ull;
-        memcpy(pl + 0, &cx, 2); memcpy(pl + 2, &cy, 2);
-        memcpy(pl + 4, &ex, 2); memcpy(pl + 6, &ey, 2);
-        memcpy(pl + 8, &ts, 8);
-        pi_send_frame(PI_MAGIC_CENTROID, pl, sizeof pl);
+        uint8_t pl[12];
+        uint32_t t_ms  = g_tick_ms;
+        int16_t  cx    = 1234, cy = -567;
+        uint16_t cxerr = 10,   cyerr = 20;
+        memcpy(pl + 0, &t_ms,  4);
+        memcpy(pl + 4, &cx,    2);
+        memcpy(pl + 6, &cy,    2);
+        memcpy(pl + 8, &cxerr, 2);
+        memcpy(pl +10, &cyerr, 2);
+        pi_send_frame(PKT_CENTROID, pl, sizeof pl);
     }
 }
 

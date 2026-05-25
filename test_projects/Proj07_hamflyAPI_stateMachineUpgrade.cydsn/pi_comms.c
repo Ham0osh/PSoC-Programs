@@ -1,13 +1,19 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
+ * Copyright Hamish Johnson, 2026
  * All Rights Reserved
  * UNPUBLISHED, LICENSED SOFTWARE.
  *
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+ * WHICH IS THE PROPERTY OF 
+ * Quantum Internet Systems Lab (QISL),
+ * Department of Physics, SFU, Canada.
+ *
+ * Author: Hamish Johnson (2026)
  *
  * ========================================
+ *
+ * This code is for inter-device communications with a Raspberry Pi over UART.
 */
 
 #include "pi_comms.h"
@@ -52,63 +58,95 @@ static const uint8_t crc8_table[256] = {
     0xE6,0xE1,0xE8,0xEF,0xFA,0xFD,0xF4,0xF3,
 };
 
-#define PI_CENTROID_LEN  16u   /* 2*int16 + 2*uint16 + uint64 */
+#define PI_CENTROID_LEN  12u   // uint32 t_ms + 2*int16 + 2*uint16
 #define PI_RX_MAX        64u
 
-static enum { S_MAGIC, S_LEN, S_PAYLOAD, S_CRC } s_state = S_MAGIC;
-static uint8_t       s_len, s_idx, s_buf[PI_RX_MAX];
-static pi_centroid_t s_centroid;
-static volatile uint8_t s_fresh = 0u;
-static uint32_t      s_last_rx_ms = 0u;
-static uint16_t      s_crc_err = 0u;
-static uint16_t      s_uart_err = 0u;
+static enum { S_MAGIC, S_TYPE, S_LEN, S_PAYLOAD, S_CRC } s_state = S_MAGIC;
+static uint8_t              s_type;
+static uint8_t              s_len;
+static uint8_t              s_idx;
+static uint8_t              s_buf[PI_RX_MAX];
+static payload_centroid_t   s_centroid;
+static volatile uint8_t     s_fresh = 0u;
+
+static uint32_t s_last_rx_ms          = 0u;
+static uint16_t s_crc_err             = 0u;
+static uint16_t s_uart_err            = 0u;
+static uint16_t s_unknown_magic       = 0u;
+static uint32_t s_rx_pkt_count        = 0u;
+static uint16_t s_last_centroid_dt_ms = 0u;
 
 void pi_init(void)
 {
-    s_state = S_MAGIC; s_idx = 0u; s_fresh = 0u;
-    s_last_rx_ms = 0u; s_crc_err = 0u; s_uart_err = 0u;
+    s_state = S_MAGIC;
+    s_idx = 0u;
+    s_fresh = 0u;
+    s_last_rx_ms = 0u;
+    s_crc_err = s_uart_err = s_unknown_magic = 0u;
+    s_rx_pkt_count = 0u;
+    s_last_centroid_dt_ms = 0u;
 }
 
 static void decode_centroid(const uint8_t *p)
 {
-    memcpy(&s_centroid.cx,         p + 0, 2);   /* both ends little-endian */
-    memcpy(&s_centroid.cy,         p + 2, 2);
-    memcpy(&s_centroid.ex,         p + 4, 2);
-    memcpy(&s_centroid.ey,         p + 6, 2);
-    memcpy(&s_centroid.pi_time_us, p + 8, 8);
+    uint32_t now = g_tick_ms;
+    if (s_last_rx_ms != 0u) {
+        uint32_t dt = now - s_last_rx_ms;
+        s_last_centroid_dt_ms = (dt > 0xFFFFu) ? 0xFFFFu : (uint16_t)dt;
+    }
+    memcpy(&s_centroid.t_ms,  p +  0, 4);
+    memcpy(&s_centroid.cx,    p +  4, 2);
+    memcpy(&s_centroid.cy,    p +  6, 2);
+    memcpy(&s_centroid.cxerr, p +  8, 2);
+    memcpy(&s_centroid.cyerr, p + 10, 2);
     s_fresh = 1u;
-    s_last_rx_ms = g_tick_ms;
+    s_last_rx_ms = now;
 }
 
 void pi_on_rx_byte(uint8_t b)
 {
+    // Parse incoming bytes according to expected packet structure.
     switch (s_state) {
-    case S_MAGIC:
-        if (b == PI_MAGIC_CENTROID) s_state = S_LEN;
-        break;
-    case S_LEN:
-        s_len = b;
-        if (s_len == 0u || s_len > PI_RX_MAX) s_state = S_MAGIC;   /* bad len: resync */
-        else { s_idx = 0u; s_state = S_PAYLOAD; }
-        break;
-    case S_PAYLOAD:
-        s_buf[s_idx++] = b;
-        if (s_idx >= s_len) s_state = S_CRC;
-        break;
-    case S_CRC: {
-        /* ===== CRC COVERAGE: LEN + payload (confirm with Pi side) ===== */
-        uint8_t calc = crc8_table[s_len];
-        for (uint8_t i = 0u; i < s_len; i++)
-            calc = crc8_table[calc ^ s_buf[i]];
-        /* ============================================================== */
-        if (calc == b) {
-            if (s_len == PI_CENTROID_LEN) decode_centroid(s_buf);
-        } else {
-            s_crc_err++;
+        case S_MAGIC:
+            if (b == PI_MAGIC) s_state = S_TYPE;
+            else               s_unknown_magic++;  // Measure of noise
+            break;
+        case S_TYPE:
+            s_type  = b;
+            s_state = S_LEN;
+            break;
+        case S_LEN:
+            s_len = b;
+            if (s_len > PI_RX_MAX) s_state = S_MAGIC;  // Bad len -> resync
+            else if (s_len == 0u)  s_state = S_CRC;    // 0-byte payload legal
+            else { s_idx = 0u; s_state = S_PAYLOAD; }
+            break;
+        case S_PAYLOAD:
+            s_buf[s_idx++] = b;
+            if (s_idx >= s_len) s_state = S_CRC;
+            break;
+        case S_CRC: {
+            // CRC over TYPE + LEN + PAYLOAD
+            uint8_t calc = crc8_table[s_type];
+            calc = crc8_table[calc ^ s_len];
+            for (uint8_t i = 0u; i < s_len; i++)
+                calc = crc8_table[calc ^ s_buf[i]];
+
+            if (calc == b) {
+                s_rx_pkt_count++;
+                // Process payload bytes according to type.
+                switch (s_type) {
+                    case PKT_CENTROID:
+                        if (s_len == PI_CENTROID_LEN) decode_centroid(s_buf);
+                        break;
+                    default: break;
+                }
+            } else {
+                s_crc_err++;
+            }
+            s_state = S_MAGIC;
+            break;
         }
-        s_state = S_MAGIC;
-        break;
-    }
     }
 }
 
@@ -119,7 +157,7 @@ void pi_on_uart_err_flags(uint8_t flags)
     s_state = S_MAGIC;        /* drop the in-progress frame, resync */
 }
 
-uint8_t pi_get_centroid(pi_centroid_t *out)
+uint8_t pi_get_centroid(payload_centroid_t *out)
 {
     uint8_t got = 0u;
     uint8_t ist = CyEnterCriticalSection();
@@ -128,19 +166,26 @@ uint8_t pi_get_centroid(pi_centroid_t *out)
     return got;
 }
 
+uint16_t pi_unknown_magic(void)       { return s_unknown_magic; }
+uint32_t pi_rx_pkt_count(void)        { return s_rx_pkt_count; }
+uint16_t pi_last_centroid_dt_ms(void) { return s_last_centroid_dt_ms; }
+
 uint32_t pi_last_rx_ms(void) { return s_last_rx_ms; }
 uint16_t pi_crc_errors(void) { return s_crc_err; }
 uint16_t pi_uart_errors(void) { return s_uart_err; }
 
-void pi_send_frame(uint8_t magic, const uint8_t *payload, uint8_t len)
+void pi_send_frame(uint8_t type, const uint8_t *payload, uint8_t len)
 {
-    UART_PI_PutChar(magic);
-    UART_PI_PutChar(len);
-    uint8_t crc = crc8_table[len];                 /* LEN + payload — match RX */
+    UART_PI_PutChar(PI_MAGIC);  // Magic byte
+    UART_PI_PutChar(type);      // Type byte
+    UART_PI_PutChar(len);       // Length byte
+    uint8_t crc = crc8_table[type];
+    crc = crc8_table[crc ^ len];// Start CRC
     for (uint8_t i = 0u; i < len; i++) {
-        UART_PI_PutChar(payload[i]);
+        UART_PI_PutChar(payload[i]);  // Put payload and compute CRC
         crc = crc8_table[crc ^ payload[i]];
     }
-    UART_PI_PutChar(crc);
+    UART_PI_PutChar(crc);       // Put CRC
 }
+
 /* [] END OF FILE */

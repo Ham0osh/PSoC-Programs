@@ -1,13 +1,19 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
+ * Copyright Hamish Johnson, 2026
  * All Rights Reserved
  * UNPUBLISHED, LICENSED SOFTWARE.
  *
  * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+ * WHICH IS THE PROPERTY OF 
+ * Quantum Internet Systems Lab (QISL),
+ * Department of Physics, SFU, Canada.
+ *
+ * Author: Hamish Johnson (2026)
  *
  * ========================================
+ *
+ * For inter-device communications with Raspberry Pi SBC.
 */
 
 #ifndef PI_COMMS_H
@@ -16,23 +22,34 @@
 #include <stdint.h>
 
 // Temporary, will eventualy match Pi conventroin for all Tx and Rx
-#define PI_MAGIC_CENTROID  0xA5u  // Pi   -> PSoC
-#define PI_MAGIC_TELEM     0x5Au  // PSoC -> Pi
+#define PI_MAGIC   0xAB  // Pi <-> PSoC
+
+#define PKT_CENTROID    0x01u  // Pi   -> PSoC
+#define PKT_STATE_REQ   0x10u  // Pi   -> PSoC
+
+#define PKT_TELEM_HOT   0x20u  // PSoC -> Pi
+#define PKT_TELEM_POWER 0x21u  // PSoC -> Pi
+#define PKT_TELEM_ENV   0x22u  // PSoC -> Pi
+#define PKT_TELEM_LINK  0x23u  // PSoC -> Pi
+#define PKT_STATE_ACK   0x30u  // PSoC -> Pi
 
 typedef struct {
-    int16_t  cx, cy;      // centroid, 0.1 mrad
-    uint16_t ex, ey;      // per-axis error, 0.1 mrad
-    uint64_t pi_time_us;  // Pi uptime, microseconds
-} pi_centroid_t;
+    uint32_t t_ms;          // Pi monotonic ms
+    int16_t  cx, cy;        // 0.1 mrad
+    uint16_t cxerr, cyerr;  // one sigma stdev, 0 = undef
+} payload_centroid_t;
 
 void     pi_init(void);
 void     pi_on_rx_byte(uint8_t b);             // fed by isr_rx_pi_Handler
 void     pi_on_uart_err_flags(uint8_t flags);  // fed by isr_rx_pi_Handler
-uint8_t  pi_get_centroid(pi_centroid_t *out);  // 1 if a new frame arrived
+uint8_t  pi_get_centroid(payload_centroid_t *out);  // 1 if a new frame arrived
 uint32_t pi_last_rx_ms(void);
 uint16_t pi_crc_errors(void);
 uint16_t pi_uart_errors(void);
-void     pi_send_frame(uint8_t magic, const uint8_t *payload, uint8_t len);
+uint16_t pi_unknown_magic(void);
+uint32_t pi_rx_pkt_count(void);
+uint16_t pi_last_centroid_dt_ms(void);
+void     pi_send_frame(uint8_t type, const uint8_t *payload, uint8_t len);
 
 #endif /* PI_COMMS_H */
 /* [] END OF FILE */
