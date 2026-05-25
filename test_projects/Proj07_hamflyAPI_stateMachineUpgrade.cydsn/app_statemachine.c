@@ -331,6 +331,7 @@ static void entry_auto_test(app_ctx_t *ctx)
 
 void app_auto_tick(app_ctx_t *ctx)
 {
+    // Catch state change
     if (ctx->state != AUTO_TRACKING) return;
 
     payload_centroid_t c;

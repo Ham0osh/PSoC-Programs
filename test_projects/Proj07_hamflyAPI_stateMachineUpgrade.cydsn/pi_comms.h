@@ -21,10 +21,10 @@
 
 #include <stdint.h>
 
-// Temporary, will eventualy match Pi conventroin for all Tx and Rx
-#define PI_MAGIC   0xAB  // Pi <-> PSoC
+#define PI_MAGIC   0xAB  // Pi <-> PSoC both; signals packet start
 
-#define PKT_CENTROID    0x01u  // Pi   -> PSoC
+#define PKT_CENTROID_C  0x01u  // Pi   -> PSoC Coarse
+#define PKT_CENTROID_F  0x02u  // Pi   -> PSoC Fine
 #define PKT_STATE_REQ   0x10u  // Pi   -> PSoC
 
 #define PKT_TELEM_HOT   0x20u  // PSoC -> Pi
