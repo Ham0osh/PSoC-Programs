@@ -48,17 +48,17 @@ typedef struct {
     uint16_t cxerr, cyerr;  // one sigma stdev, 0 = undef
 } payload_centroid_t;
 
-void     pi_init(void);
-void     pi_on_rx_byte(uint8_t b);             // fed by isr_rx_pi_Handler
-void     pi_on_uart_err_flags(uint8_t flags);  // fed by isr_rx_pi_Handler
-uint8_t  pi_get_centroid(uint8_t stream, payload_centroid_t *out);  // 1 if a new frame arrived
-uint32_t pi_last_rx_ms(uint8_t stream);
-uint16_t pi_crc_errors(void);
-uint16_t pi_uart_errors(void);
-uint16_t pi_unknown_magic(void);
-uint32_t pi_rx_pkt_count(void);
-uint16_t pi_last_centroid_dt_ms(uint8_t stream);
-void     pi_send_frame(uint8_t type, const uint8_t *payload, uint8_t len);
+void     sbc_init(void);
+void     sbc_on_rx_byte(uint8_t b);             // fed by isr_rx_sbc_Handler
+void     sbc_on_uart_err_flags(uint8_t flags);  // fed by isr_rx_sbc_Handler
+uint8_t  sbc_get_centroid(uint8_t stream, payload_centroid_t *out);  // 1 if a new frame arrived
+uint32_t sbc_last_rx_ms(uint8_t stream);
+uint16_t sbc_crc_errors(void);
+uint16_t sbc_uart_errors(void);
+uint16_t sbc_unknown_magic(void);
+uint32_t sbc_rx_pkt_count(void);
+uint16_t sbc_last_centroid_dt_ms(uint8_t stream);
+void     sbc_send_frame(uint8_t type, const uint8_t *payload, uint8_t len);
 
 #endif /* PI_COMMS_H */
 /* [] END OF FILE */

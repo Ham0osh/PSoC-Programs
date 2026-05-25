@@ -51,7 +51,7 @@
 #include "app_statemachine.h"
 
 // Rasp Pi communications stuff
-#include "pi_comms.h"
+#include "sbc_comms.h"
 
 // Timing constants
 #define TX_BUF_SIZE           160u
@@ -110,19 +110,19 @@ CY_ISR(isr_Looptimer_Handler)
 }
 
 // For Raspberry Pi communications
-CY_ISR(isr_rx_pi_Handler)
+CY_ISR(isr_rx_sbc_Handler)
 {
     uint8_t st;
     do {
-        st = UART_PI_RXSTATUS_REG;
-        if (st & (UART_PI_RX_STS_BREAK     |
-                  UART_PI_RX_STS_PAR_ERROR |
-                  UART_PI_RX_STS_STOP_ERROR|
-                  UART_PI_RX_STS_OVERRUN))
-            pi_on_uart_err_flags(st);
-        if (st & UART_PI_RX_STS_FIFO_NOTEMPTY)
-            pi_on_rx_byte(UART_PI_RXDATA_REG);
-    } while (st & UART_PI_RX_STS_FIFO_NOTEMPTY);
+        st = UART_SBC_RXSTATUS_REG;
+        if (st & (UART_SBC_RX_STS_BREAK     |
+                  UART_SBC_RX_STS_PAR_ERROR |
+                  UART_SBC_RX_STS_STOP_ERROR|
+                  UART_SBC_RX_STS_OVERRUN))
+            sbc_on_uart_err_flags(st);
+        if (st & UART_SBC_RX_STS_FIFO_NOTEMPTY)
+            sbc_on_rx_byte(UART_SBC_RXDATA_REG);
+    } while (st & UART_SBC_RX_STS_FIFO_NOTEMPTY);
 }
 
 // Helper Functions  %========================================================%
@@ -235,11 +235,11 @@ int main(void)
     UART_DEBUG_PutString("\r\n=== Gimbal Control  PSoC 5LP ===\r\n");
     
     // Start Raspberry Pi comms.
-    UART_PI_Start();
-    UART_PI_ClearRxBuffer();
-    UART_PI_ClearTxBuffer();
-    pi_init();
-    isr_rx_pi_StartEx(isr_rx_pi_Handler);
+    UART_SBC_Start();
+    UART_SBC_ClearRxBuffer();
+    UART_SBC_ClearTxBuffer();
+    sbc_init();
+    isr_rx_sbc_StartEx(isr_rx_sbc_Handler);
     UART_DEBUG_PutString("[Init] Pi comms ready\r\n");
     
     // Start Movi comms

@@ -1,5 +1,5 @@
 # Proj07_hamflyAPI_stateMachineUpgrade
-# 2026-05-25 18:24:32Z
+# 2026-05-25 23:35:56Z
 
 # IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 0
@@ -36,13 +36,13 @@ set_location "\UART_MOVI:BUART:rx_postpoll\" 1 5 0 2
 set_location "\UART_MOVI:BUART:rx_status_4\" 1 1 0 1
 set_location "\UART_MOVI:BUART:rx_status_5\" 1 3 0 1
 set_location "Net_342" 1 2 1 2
-set_location "\UART_PI:BUART:counter_load_not\" 1 3 0 3
-set_location "\UART_PI:BUART:tx_status_0\" 1 2 0 2
-set_location "\UART_PI:BUART:tx_status_2\" 1 2 1 0
-set_location "\UART_PI:BUART:rx_counter_load\" 0 4 0 1
-set_location "\UART_PI:BUART:rx_postpoll\" 0 5 1 1
-set_location "\UART_PI:BUART:rx_status_4\" 0 3 1 2
-set_location "\UART_PI:BUART:rx_status_5\" 0 5 0 1
+set_location "\UART_SBC:BUART:counter_load_not\" 1 3 0 3
+set_location "\UART_SBC:BUART:tx_status_0\" 1 2 0 2
+set_location "\UART_SBC:BUART:tx_status_2\" 1 2 1 0
+set_location "\UART_SBC:BUART:rx_counter_load\" 0 4 0 1
+set_location "\UART_SBC:BUART:rx_postpoll\" 0 5 1 1
+set_location "\UART_SBC:BUART:rx_status_4\" 0 3 1 2
+set_location "\UART_SBC:BUART:rx_status_5\" 0 5 0 1
 set_location "\ADC_DelSig_1:DSM\" dsmodcell -1 -1 0
 set_location "\ADC_DelSig_1:IRQ\" interrupt -1 -1 29
 set_location "\ADC_DelSig_1:DEC\" decimatorcell -1 -1 0
@@ -63,13 +63,13 @@ set_location "\UART_MOVI:BUART:sRX:RxSts\" 1 1 4
 set_location "isr_rx_movi" interrupt -1 -1 1
 set_location "\Looptimer:TimerHW\" timercell -1 -1 0
 set_location "isr_Looptimer" interrupt -1 -1 17
-set_location "\UART_PI:BUART:sTX:TxShifter:u0\" 1 2 2
-set_location "\UART_PI:BUART:sTX:sCLOCK:TxBitClkGen\" 1 3 2
-set_location "\UART_PI:BUART:sTX:TxSts\" 1 2 4
-set_location "\UART_PI:BUART:sRX:RxShifter:u0\" 0 5 2
-set_location "\UART_PI:BUART:sRX:RxBitCounter\" 0 5 7
-set_location "\UART_PI:BUART:sRX:RxSts\" 0 4 4
-set_location "isr_rx_pi" interrupt -1 -1 2
+set_location "\UART_SBC:BUART:sTX:TxShifter:u0\" 1 2 2
+set_location "\UART_SBC:BUART:sTX:sCLOCK:TxBitClkGen\" 1 3 2
+set_location "\UART_SBC:BUART:sTX:TxSts\" 1 2 4
+set_location "\UART_SBC:BUART:sRX:RxShifter:u0\" 0 5 2
+set_location "\UART_SBC:BUART:sRX:RxBitCounter\" 0 5 7
+set_location "\UART_SBC:BUART:sRX:RxSts\" 0 4 4
+set_location "isr_rx_sbc" interrupt -1 -1 2
 set_location "\UART_DEBUG:BUART:txn\" 0 1 1 0
 set_location "\UART_DEBUG:BUART:tx_state_1\" 0 1 0 1
 set_location "\UART_DEBUG:BUART:tx_state_0\" 0 1 0 3
@@ -102,19 +102,19 @@ set_location "MODIN5_1" 0 3 0 1
 set_location "MODIN5_0" 0 3 0 0
 set_location "\UART_MOVI:BUART:rx_status_3\" 1 5 1 2
 set_location "\UART_MOVI:BUART:rx_last\" 0 3 0 3
-set_location "\UART_PI:BUART:txn\" 1 2 1 3
-set_location "\UART_PI:BUART:tx_state_1\" 1 3 0 0
-set_location "\UART_PI:BUART:tx_state_0\" 1 2 0 0
-set_location "\UART_PI:BUART:tx_state_2\" 1 3 0 2
-set_location "\UART_PI:BUART:tx_bitclk\" 1 3 1 3
-set_location "\UART_PI:BUART:tx_ctrl_mark_last\" 0 5 0 0
-set_location "\UART_PI:BUART:rx_state_0\" 0 4 0 0
-set_location "\UART_PI:BUART:rx_load_fifo\" 0 4 0 3
-set_location "\UART_PI:BUART:rx_state_3\" 0 4 0 2
-set_location "\UART_PI:BUART:rx_state_2\" 0 4 1 0
-set_location "\UART_PI:BUART:rx_bitclk_enable\" 0 5 1 2
-set_location "\UART_PI:BUART:rx_state_stop1_reg\" 0 4 1 3
-set_location "\UART_PI:BUART:pollcount_1\" 0 5 1 0
-set_location "\UART_PI:BUART:pollcount_0\" 0 5 0 2
-set_location "\UART_PI:BUART:rx_status_3\" 0 4 1 2
-set_location "\UART_PI:BUART:rx_last\" 1 3 1 0
+set_location "\UART_SBC:BUART:txn\" 1 2 1 3
+set_location "\UART_SBC:BUART:tx_state_1\" 1 3 0 0
+set_location "\UART_SBC:BUART:tx_state_0\" 1 2 0 0
+set_location "\UART_SBC:BUART:tx_state_2\" 1 3 0 2
+set_location "\UART_SBC:BUART:tx_bitclk\" 1 3 1 3
+set_location "\UART_SBC:BUART:tx_ctrl_mark_last\" 0 5 0 0
+set_location "\UART_SBC:BUART:rx_state_0\" 0 4 0 0
+set_location "\UART_SBC:BUART:rx_load_fifo\" 0 4 0 3
+set_location "\UART_SBC:BUART:rx_state_3\" 0 4 0 2
+set_location "\UART_SBC:BUART:rx_state_2\" 0 4 1 0
+set_location "\UART_SBC:BUART:rx_bitclk_enable\" 0 5 1 2
+set_location "\UART_SBC:BUART:rx_state_stop1_reg\" 0 4 1 3
+set_location "\UART_SBC:BUART:pollcount_1\" 0 5 1 0
+set_location "\UART_SBC:BUART:pollcount_0\" 0 5 0 2
+set_location "\UART_SBC:BUART:rx_status_3\" 0 4 1 2
+set_location "\UART_SBC:BUART:rx_last\" 1 3 1 0

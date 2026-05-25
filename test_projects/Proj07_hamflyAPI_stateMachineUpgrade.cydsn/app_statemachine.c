@@ -42,7 +42,7 @@
 
 #include "app_statemachine.h"
 #include "hamfly.h"
-#include "pi_comms.h"
+#include "sbc_comms.h"
 #include <project.h>  // For UART
 #include <math.h>
 #include <string.h>
@@ -340,16 +340,16 @@ void app_auto_tick(app_ctx_t *ctx)
     // TEMP: Print debug of what has been received.
     for (uint8_t s = 0u; s < STREAM_COUNTS; s++) {
         payload_centroid_t c;
-        if (pi_get_centroid(s, &c)) {
+        if (sbc_get_centroid(s, &c)) {
             char b[128];
             snprintf(b, sizeof b,
                      "[PI:%s] t=%lu cx=%d cy=%d cxerr=%u cyerr=%u "
                      "dt=%u rx=%lu unkMagic=%u crcErr=%u uartErr=%u\r\n",
                      tag[s],
                      (unsigned long)c.t_ms, c.cx, c.cy, c.cxerr, c.cyerr,
-                     pi_last_centroid_dt_ms(s),
-                     (unsigned long)pi_rx_pkt_count(),
-                     pi_unknown_magic(), pi_crc_errors(), pi_uart_errors());
+                     sbc_last_centroid_dt_ms(s),
+                     (unsigned long)sbc_rx_pkt_count(),
+                     sbc_unknown_magic(), sbc_crc_errors(), sbc_uart_errors());
             UART_DEBUG_PutString(b);
         }
     }

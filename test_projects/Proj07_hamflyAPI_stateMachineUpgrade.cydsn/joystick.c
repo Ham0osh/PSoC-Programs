@@ -25,7 +25,7 @@ static joy_cal_t s_default;
 static joy_cal_t s_saved;
 static joy_cal_t s_work;
 
-static joy_cal_state_t pi_rx_state = JOY_CAL_OFF;
+static joy_cal_state_t sbc_rx_state = JOY_CAL_OFF;
 
 static int16 s_latest_counts[N_CH];
 static uint32 s_invert_mask = 0u;
@@ -105,14 +105,14 @@ static void cal_begin_range_capture(const int16 counts[N_CH])
         s_work.center[i] = counts[i]; /* provisional */
     }
 
-    pi_rx_state = JOY_CAL_RANGE_CAPTURE;  // Enter calibration mode
+    sbc_rx_state = JOY_CAL_RANGE_CAPTURE;  // Enter calibration mode
 }
 
 // Helper - Update max and min from callibration data
 static void cal_update_ranges(const int16 counts[N_CH])
 {   
     // Dont run if not calibrating
-    if (pi_rx_state != JOY_CAL_RANGE_CAPTURE)
+    if (sbc_rx_state != JOY_CAL_RANGE_CAPTURE)
         return;
     
     // Loop over captured data and populate range limits.
@@ -131,14 +131,14 @@ static void cal_start_center_capture(void)
         s_center_sum[i] = 0;
 
     s_center_n = 0u;
-    pi_rx_state = JOY_CAL_CENTER_CAPTURE;  // Move to next state
+    sbc_rx_state = JOY_CAL_CENTER_CAPTURE;  // Move to next state
 }
 
 // Helper - Collect and average center data, save to calibration
 static void cal_center_capture_update(const int16 counts[N_CH])
 {
     // Dont run if not calibrating
-    if (pi_rx_state != JOY_CAL_CENTER_CAPTURE)
+    if (sbc_rx_state != JOY_CAL_CENTER_CAPTURE)
         return;
 
     // Collect data (User should not be touching joystick)
@@ -153,7 +153,7 @@ static void cal_center_capture_update(const int16 counts[N_CH])
         for (uint8 i = 0u; i < (uint8)N_CH; i++)
             s_work.center[i] = (int16)(s_center_sum[i] / (int32)CAL_CENTER_SAMPLES);
 
-        pi_rx_state = JOY_CAL_CONFIRM_SAVE;  // Move to next state
+        sbc_rx_state = JOY_CAL_CONFIRM_SAVE;  // Move to next state
     }
 }
 
@@ -170,7 +170,7 @@ static void cal_save_or_restart(void)
     // Save!
     s_saved = s_work;
     s_saved.valid = 1u;
-    pi_rx_state = JOY_CAL_OFF;
+    sbc_rx_state = JOY_CAL_OFF;
 }
 
 /* ------------------------------------------------------------------
@@ -190,7 +190,7 @@ void joystick_init(const joy_cal_t *defaults, uint32 invert_mask)
     for (uint8 i = 0u; i < (uint8)N_CH; i++)
         s_latest_counts[i] = defaults->center[i];
 
-    pi_rx_state = JOY_CAL_OFF;
+    sbc_rx_state = JOY_CAL_OFF;
     s_center_n = 0u;
 }
 
@@ -213,7 +213,7 @@ void joystick_on_key(char key)
 {
     if (key == 'x' || key == 'X')
     {
-        pi_rx_state = JOY_CAL_OFF;
+        sbc_rx_state = JOY_CAL_OFF;
         return;
     }
 
@@ -221,19 +221,19 @@ void joystick_on_key(char key)
         return;
 
     // c will advance through calibration stages
-    if (pi_rx_state == JOY_CAL_OFF)
+    if (sbc_rx_state == JOY_CAL_OFF)
     {
         cal_begin_range_capture(s_latest_counts);
     }
-    else if (pi_rx_state == JOY_CAL_RANGE_CAPTURE)
+    else if (sbc_rx_state == JOY_CAL_RANGE_CAPTURE)
     {
         cal_start_center_capture();
     }
-    else if (pi_rx_state == JOY_CAL_CENTER_CAPTURE)
+    else if (sbc_rx_state == JOY_CAL_CENTER_CAPTURE)
     {
         // Pass
     }
-    else if (pi_rx_state == JOY_CAL_CONFIRM_SAVE)
+    else if (sbc_rx_state == JOY_CAL_CONFIRM_SAVE)
     {
         cal_save_or_restart();
     }
@@ -242,7 +242,7 @@ void joystick_on_key(char key)
 // Calibration state machine state getter
 joy_cal_state_t joystick_cal_state(void)
 {
-    return pi_rx_state;
+    return sbc_rx_state;
 }
 
 // Getter function for calibration - Unused

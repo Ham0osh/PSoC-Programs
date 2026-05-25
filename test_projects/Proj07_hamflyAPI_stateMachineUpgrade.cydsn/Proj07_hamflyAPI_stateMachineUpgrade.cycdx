@@ -63,31 +63,31 @@
     <register name="Looptimer_COUNTER" address="0x40004F06" bitWidth="16" desc="TMRx.CNT_CMP0 - Current Down Counter Value" hidden="false" />
   </block>
   <block name="EEPROM_CONFIG" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="isr_rx_pi" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="isr_rx_sbc" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Em_EEPROM_Dynamic" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="UART_PI" BASE="0x0" SIZE="0x0" desc="UART" visible="true" hidden="false">
+  <block name="UART_SBC" BASE="0x0" SIZE="0x0" desc="UART" visible="true" hidden="false">
     <block name="IntClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="VirtualMux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="BUART" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <register name="RX_UART_PI_RX_ADDRESS1" address="0x4000642E" bitWidth="8" desc="RX Address1 Register" hidden="false" />
-    <register name="RX_UART_PI_RX_ADDRESS2" address="0x4000643E" bitWidth="8" desc="RX Address2 Register" hidden="false" />
-    <register name="TX_UART_PI_TX_DATA" address="0x40006448" bitWidth="8" desc="TX Data Register" hidden="false" />
-    <register name="RX_UART_PI_RX_DATA" address="0x4000644E" bitWidth="8" desc="RX Data Register" hidden="false" />
-    <register name="TX_UART_PI_TX_STATUS" address="0x40006468" bitWidth="8" desc="TX status register" hidden="false">
-      <field name="UART_PI_TX_STS_COMPLETE" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
-      <field name="UART_PI_TX_STS_FIFO_EMPTY" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
-      <field name="UART_PI_TX_STS_FIFO_FULL" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
-      <field name="UART_PI_TX_STS_FIFO_NOT_FULL" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
+    <register name="RX_UART_SBC_RX_ADDRESS1" address="0x4000642E" bitWidth="8" desc="RX Address1 Register" hidden="false" />
+    <register name="RX_UART_SBC_RX_ADDRESS2" address="0x4000643E" bitWidth="8" desc="RX Address2 Register" hidden="false" />
+    <register name="TX_UART_SBC_TX_DATA" address="0x40006448" bitWidth="8" desc="TX Data Register" hidden="false" />
+    <register name="RX_UART_SBC_RX_DATA" address="0x4000644E" bitWidth="8" desc="RX Data Register" hidden="false" />
+    <register name="TX_UART_SBC_TX_STATUS" address="0x40006468" bitWidth="8" desc="TX status register" hidden="false">
+      <field name="UART_SBC_TX_STS_COMPLETE" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
+      <field name="UART_SBC_TX_STS_FIFO_EMPTY" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
+      <field name="UART_SBC_TX_STS_FIFO_FULL" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
+      <field name="UART_SBC_TX_STS_FIFO_NOT_FULL" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
     </register>
-    <register name="RX_UART_PI_RX_STATUS" address="0x4000646D" bitWidth="8" desc="RX status register" hidden="false">
-      <field name="UART_PI_RX_STS_MRKSPC" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
-      <field name="UART_PI_RX_STS_BREAK" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
-      <field name="UART_PI_RX_STS_PAR_ERROR" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
-      <field name="UART_PI_RX_STS_STOP_ERROR" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
-      <field name="UART_PI_RX_STS_OVERRUN" from="4" to="4" access="R" resetVal="" desc="" hidden="false" />
-      <field name="UART_PI_RX_STS_FIFO_NOTEMPTY" from="5" to="5" access="R" resetVal="" desc="" hidden="false" />
-      <field name="UART_PI_RX_STS_ADDR_MATCH" from="6" to="6" access="R" resetVal="" desc="" hidden="false" />
+    <register name="RX_UART_SBC_RX_STATUS" address="0x4000646D" bitWidth="8" desc="RX status register" hidden="false">
+      <field name="UART_SBC_RX_STS_MRKSPC" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
+      <field name="UART_SBC_RX_STS_BREAK" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
+      <field name="UART_SBC_RX_STS_PAR_ERROR" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
+      <field name="UART_SBC_RX_STS_STOP_ERROR" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
+      <field name="UART_SBC_RX_STS_OVERRUN" from="4" to="4" access="R" resetVal="" desc="" hidden="false" />
+      <field name="UART_SBC_RX_STS_FIFO_NOTEMPTY" from="5" to="5" access="R" resetVal="" desc="" hidden="false" />
+      <field name="UART_SBC_RX_STS_ADDR_MATCH" from="6" to="6" access="R" resetVal="" desc="" hidden="false" />
     </register>
   </block>
   <block name="Rx_3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />

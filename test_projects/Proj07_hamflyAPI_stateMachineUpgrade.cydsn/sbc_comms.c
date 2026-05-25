@@ -16,7 +16,7 @@
  * This code is for inter-device communications with a Raspberry Pi over UART.
 */
 
-#include "pi_comms.h"
+#include "sbc_comms.h"
 #include <string.h>
 #include <project.h>
 
@@ -65,18 +65,17 @@ static const uint8_t crc8_table[256] = {
 #define PI_CENTROID_LEN  12u   // uint32 t_ms + 2*int16 + 2*uint16
 #define PI_RX_MAX        64u
 
-
 // Packet parser section enum, initialized to magic byte
 // Expects:
 // [MAGIC] [TYPE] [LEN] ... [PAYLOAD] ... [CRC]
-static enum { S_MAGIC, S_TYPE, S_LEN, S_PAYLOAD, S_CRC } pi_rx_state = S_MAGIC;
+static enum { S_MAGIC, S_TYPE, S_LEN, S_PAYLOAD, S_CRC } sbc_rx_state = S_MAGIC;
 static uint8_t              s_type;  // Type loaded into here
 static uint8_t              s_len;   // Length loaded into here
 static uint8_t              s_idx;
 static uint8_t              s_buf[PI_RX_MAX];  // Payload parsed into here!
 // Per centroid stream
 static payload_centroid_t   s_centroid[STREAM_COUNTS];  // Payload per centroid
-static volatile uint8_t     s_fresh_bits;  // bit 0 for coarse and 1 for fine
+static volatile uint8_t     s_fresh_bits;  // bit 0 for coarse and bit 1 for fine
 static uint32_t             s_last_rx_ms[STREAM_COUNTS];
 static uint16_t             s_last_centroid_dt_ms[STREAM_COUNTS];
 // Global telemetry for communications.
@@ -85,9 +84,10 @@ static uint16_t s_uart_err            = 0u;
 static uint16_t s_unknown_magic       = 0u;
 static uint32_t s_rx_pkt_count        = 0u;
 
-void pi_init(void)
+void sbc_init(void)
 {
-    pi_rx_state    = S_MAGIC;
+    // Initialize parameters for SBC communications.
+    sbc_rx_state    = S_MAGIC;
     s_idx          = 0u;
     s_fresh_bits   = 0u;
     s_crc_err      = 0u;
@@ -125,36 +125,36 @@ static void decode_centroid(uint8_t stream, const uint8_t *p)
 // Incoming byte parser!
 // Parses each part of the packet structure,
 // then calls the apropriate decoder!
-void pi_on_rx_byte(uint8_t b)
+void sbc_on_rx_byte(uint8_t b)
 {
     // Parse incoming bytes according to expected packet structure.
-    switch (pi_rx_state) {
+    switch (sbc_rx_state) {
         case S_MAGIC:
             if (b == PI_MAGIC){
-                pi_rx_state = S_TYPE;  // Move to type parsing
+                sbc_rx_state = S_TYPE;  // Move to type parsing
             } else {
                 s_unknown_magic++;  // Measure of noise
             }
             break;
         case S_TYPE:
             s_type = b;  // Save bye as type
-            pi_rx_state = S_LEN;  // Move to length parsing
+            sbc_rx_state = S_LEN;  // Move to length parsing
             break;
         case S_LEN:
             s_len = b;
             if (s_len > PI_RX_MAX) {
-                pi_rx_state = S_MAGIC;  // Bad len -> resync
+                sbc_rx_state = S_MAGIC;  // Bad len -> resync
             } else if (s_len == 0u) {
-                pi_rx_state = S_CRC;    // 0-byte payload legal
+                sbc_rx_state = S_CRC;    // 0-byte payload legal
             } else {
                 s_idx = 0u;               // Reset to start of payload
-                pi_rx_state = S_PAYLOAD;  // Move to payload parsing
+                sbc_rx_state = S_PAYLOAD;  // Move to payload parsing
             }
             break;
         case S_PAYLOAD:
             s_buf[s_idx++] = b;  // Load bytes into buffer
             if (s_idx >= s_len){
-                pi_rx_state = S_CRC;  // Move to CRC when reached tot length
+                sbc_rx_state = S_CRC;  // Move to CRC when reached tot length
             }
             break;
         case S_CRC: {
@@ -187,21 +187,21 @@ void pi_on_rx_byte(uint8_t b)
             } else {
                 s_crc_err++;
             }
-            pi_rx_state = S_MAGIC;
+            sbc_rx_state = S_MAGIC;
             break;
         }
     }
 }
 
-void pi_on_uart_err_flags(uint8_t flags)
+void sbc_on_uart_err_flags(uint8_t flags)
 {
     // If UART errors, accumulate counter and reset to magic (next frame)
     (void)flags;
     s_uart_err++;
-    pi_rx_state = S_MAGIC;
+    sbc_rx_state = S_MAGIC;
 }
 
-uint8_t pi_get_centroid(uint8_t stream, payload_centroid_t *out)
+uint8_t sbc_get_centroid(uint8_t stream, payload_centroid_t *out)
 {
     // Getter function for the rest of our codebase to use
     // Runs as atomic so it cannot be interrupted. If it were interrupted we
@@ -221,52 +221,52 @@ uint8_t pi_get_centroid(uint8_t stream, payload_centroid_t *out)
     return got;  // Caller is told they got a new centroid!
 }
 
-uint16_t pi_unknown_magic(void)
+uint16_t sbc_unknown_magic(void)
 {
     // When magic byte unknown
     return s_unknown_magic;
 }
 
-uint32_t pi_rx_pkt_count(void)
+uint32_t sbc_rx_pkt_count(void)
 {
     // Received packet count getter
     return s_rx_pkt_count;
 }
-uint16_t pi_last_centroid_dt_ms(uint8_t stream)
+uint16_t sbc_last_centroid_dt_ms(uint8_t stream)
 {
     // Time between last centroid pair getter
     return (stream < STREAM_COUNTS) ? s_last_rx_ms[stream] : 0u;
 }
 
-uint32_t pi_last_rx_ms(uint8_t stream)
+uint32_t sbc_last_rx_ms(uint8_t stream)
 {
     // Time of last received packet getter
     return (stream < STREAM_COUNTS) ? s_last_centroid_dt_ms[stream] : 0u;
 }
-uint16_t pi_crc_errors(void)
+uint16_t sbc_crc_errors(void)
 {
     // CRC error getter
     return s_crc_err;
 }
-uint16_t pi_uart_errors(void)
+uint16_t sbc_uart_errors(void)
 {
     // UART error getter
     return s_uart_err;
 }
 
-void pi_send_frame(uint8_t type, const uint8_t *payload, uint8_t len)
+void sbc_send_frame(uint8_t type, const uint8_t *payload, uint8_t len)
 {
     // Encoder to send a frame to the Pi
-    UART_PI_PutChar(PI_MAGIC);  // Magic byte
-    UART_PI_PutChar(type);      // Type byte
-    UART_PI_PutChar(len);       // Length byte
+    UART_SBC_PutChar(PI_MAGIC);  // Magic byte
+    UART_SBC_PutChar(type);      // Type byte
+    UART_SBC_PutChar(len);       // Length byte
     uint8_t crc = crc8_table[type];
     crc = crc8_table[crc ^ len];// Start CRC
     for (uint8_t i = 0u; i < len; i++) {
-        UART_PI_PutChar(payload[i]);  // Put payload and compute CRC
+        UART_SBC_PutChar(payload[i]);  // Put payload and compute CRC
         crc = crc8_table[crc ^ payload[i]];
     }
-    UART_PI_PutChar(crc);       // Put calculates CRC
+    UART_SBC_PutChar(crc);       // Put calculates CRC
 }
 
 /* [] END OF FILE */

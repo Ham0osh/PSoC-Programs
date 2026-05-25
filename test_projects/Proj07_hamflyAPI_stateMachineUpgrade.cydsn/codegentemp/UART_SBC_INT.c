@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: UART_PIINT.c
+* File Name: UART_SBCINT.c
 * Version 2.50
 *
 * Description:
@@ -12,7 +12,7 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#include "UART_PI.h"
+#include "UART_SBC.h"
 #include "cyapicallbacks.h"
 
 
@@ -23,9 +23,9 @@
 
 /* `#END` */
 
-#if (UART_PI_RX_INTERRUPT_ENABLED && (UART_PI_RX_ENABLED || UART_PI_HD_ENABLED))
+#if (UART_SBC_RX_INTERRUPT_ENABLED && (UART_SBC_RX_ENABLED || UART_SBC_HD_ENABLED))
     /*******************************************************************************
-    * Function Name: UART_PI_RXISR
+    * Function Name: UART_SBC_RXISR
     ********************************************************************************
     *
     * Summary:
@@ -38,25 +38,25 @@
     *  None.
     *
     * Global Variables:
-    *  UART_PI_rxBuffer - RAM buffer pointer for save received data.
-    *  UART_PI_rxBufferWrite - cyclic index for write to rxBuffer,
+    *  UART_SBC_rxBuffer - RAM buffer pointer for save received data.
+    *  UART_SBC_rxBufferWrite - cyclic index for write to rxBuffer,
     *     increments after each byte saved to buffer.
-    *  UART_PI_rxBufferRead - cyclic index for read from rxBuffer,
+    *  UART_SBC_rxBufferRead - cyclic index for read from rxBuffer,
     *     checked to detect overflow condition.
-    *  UART_PI_rxBufferOverflow - software overflow flag. Set to one
-    *     when UART_PI_rxBufferWrite index overtakes
-    *     UART_PI_rxBufferRead index.
-    *  UART_PI_rxBufferLoopDetect - additional variable to detect overflow.
-    *     Set to one when UART_PI_rxBufferWrite is equal to
-    *    UART_PI_rxBufferRead
-    *  UART_PI_rxAddressMode - this variable contains the Address mode,
+    *  UART_SBC_rxBufferOverflow - software overflow flag. Set to one
+    *     when UART_SBC_rxBufferWrite index overtakes
+    *     UART_SBC_rxBufferRead index.
+    *  UART_SBC_rxBufferLoopDetect - additional variable to detect overflow.
+    *     Set to one when UART_SBC_rxBufferWrite is equal to
+    *    UART_SBC_rxBufferRead
+    *  UART_SBC_rxAddressMode - this variable contains the Address mode,
     *     selected in customizer or set by UART_SetRxAddressMode() API.
-    *  UART_PI_rxAddressDetected - set to 1 when correct address received,
+    *  UART_SBC_rxAddressDetected - set to 1 when correct address received,
     *     and analysed to store following addressed data bytes to the buffer.
     *     When not correct address received, set to 0 to skip following data bytes.
     *
     *******************************************************************************/
-    CY_ISR(UART_PI_RXISR)
+    CY_ISR(UART_SBC_RXISR)
     {
         uint8 readData;
         uint8 readStatus;
@@ -66,12 +66,12 @@
         uint8 int_en;
     #endif /* (CY_PSOC3) */
 
-    #ifdef UART_PI_RXISR_ENTRY_CALLBACK
-        UART_PI_RXISR_EntryCallback();
-    #endif /* UART_PI_RXISR_ENTRY_CALLBACK */
+    #ifdef UART_SBC_RXISR_ENTRY_CALLBACK
+        UART_SBC_RXISR_EntryCallback();
+    #endif /* UART_SBC_RXISR_ENTRY_CALLBACK */
 
         /* User code required at start of ISR */
-        /* `#START UART_PI_RXISR_START` */
+        /* `#START UART_SBC_RXISR_START` */
 
         /* `#END` */
 
@@ -83,117 +83,117 @@
         do
         {
             /* Read receiver status register */
-            readStatus = UART_PI_RXSTATUS_REG;
+            readStatus = UART_SBC_RXSTATUS_REG;
             /* Copy the same status to readData variable for backward compatibility support 
-            *  of the user code in UART_PI_RXISR_ERROR` section. 
+            *  of the user code in UART_SBC_RXISR_ERROR` section. 
             */
             readData = readStatus;
 
-            if((readStatus & (UART_PI_RX_STS_BREAK | 
-                            UART_PI_RX_STS_PAR_ERROR |
-                            UART_PI_RX_STS_STOP_ERROR | 
-                            UART_PI_RX_STS_OVERRUN)) != 0u)
+            if((readStatus & (UART_SBC_RX_STS_BREAK | 
+                            UART_SBC_RX_STS_PAR_ERROR |
+                            UART_SBC_RX_STS_STOP_ERROR | 
+                            UART_SBC_RX_STS_OVERRUN)) != 0u)
             {
                 /* ERROR handling. */
-                UART_PI_errorStatus |= readStatus & ( UART_PI_RX_STS_BREAK | 
-                                                            UART_PI_RX_STS_PAR_ERROR | 
-                                                            UART_PI_RX_STS_STOP_ERROR | 
-                                                            UART_PI_RX_STS_OVERRUN);
-                /* `#START UART_PI_RXISR_ERROR` */
+                UART_SBC_errorStatus |= readStatus & ( UART_SBC_RX_STS_BREAK | 
+                                                            UART_SBC_RX_STS_PAR_ERROR | 
+                                                            UART_SBC_RX_STS_STOP_ERROR | 
+                                                            UART_SBC_RX_STS_OVERRUN);
+                /* `#START UART_SBC_RXISR_ERROR` */
 
                 /* `#END` */
                 
-            #ifdef UART_PI_RXISR_ERROR_CALLBACK
-                UART_PI_RXISR_ERROR_Callback();
-            #endif /* UART_PI_RXISR_ERROR_CALLBACK */
+            #ifdef UART_SBC_RXISR_ERROR_CALLBACK
+                UART_SBC_RXISR_ERROR_Callback();
+            #endif /* UART_SBC_RXISR_ERROR_CALLBACK */
             }
             
-            if((readStatus & UART_PI_RX_STS_FIFO_NOTEMPTY) != 0u)
+            if((readStatus & UART_SBC_RX_STS_FIFO_NOTEMPTY) != 0u)
             {
                 /* Read data from the RX data register */
-                readData = UART_PI_RXDATA_REG;
-            #if (UART_PI_RXHW_ADDRESS_ENABLED)
-                if(UART_PI_rxAddressMode == (uint8)UART_PI__B_UART__AM_SW_DETECT_TO_BUFFER)
+                readData = UART_SBC_RXDATA_REG;
+            #if (UART_SBC_RXHW_ADDRESS_ENABLED)
+                if(UART_SBC_rxAddressMode == (uint8)UART_SBC__B_UART__AM_SW_DETECT_TO_BUFFER)
                 {
-                    if((readStatus & UART_PI_RX_STS_MRKSPC) != 0u)
+                    if((readStatus & UART_SBC_RX_STS_MRKSPC) != 0u)
                     {
-                        if ((readStatus & UART_PI_RX_STS_ADDR_MATCH) != 0u)
+                        if ((readStatus & UART_SBC_RX_STS_ADDR_MATCH) != 0u)
                         {
-                            UART_PI_rxAddressDetected = 1u;
+                            UART_SBC_rxAddressDetected = 1u;
                         }
                         else
                         {
-                            UART_PI_rxAddressDetected = 0u;
+                            UART_SBC_rxAddressDetected = 0u;
                         }
                     }
-                    if(UART_PI_rxAddressDetected != 0u)
+                    if(UART_SBC_rxAddressDetected != 0u)
                     {   /* Store only addressed data */
-                        UART_PI_rxBuffer[UART_PI_rxBufferWrite] = readData;
+                        UART_SBC_rxBuffer[UART_SBC_rxBufferWrite] = readData;
                         increment_pointer = 1u;
                     }
                 }
                 else /* Without software addressing */
                 {
-                    UART_PI_rxBuffer[UART_PI_rxBufferWrite] = readData;
+                    UART_SBC_rxBuffer[UART_SBC_rxBufferWrite] = readData;
                     increment_pointer = 1u;
                 }
             #else  /* Without addressing */
-                UART_PI_rxBuffer[UART_PI_rxBufferWrite] = readData;
+                UART_SBC_rxBuffer[UART_SBC_rxBufferWrite] = readData;
                 increment_pointer = 1u;
-            #endif /* (UART_PI_RXHW_ADDRESS_ENABLED) */
+            #endif /* (UART_SBC_RXHW_ADDRESS_ENABLED) */
 
                 /* Do not increment buffer pointer when skip not addressed data */
                 if(increment_pointer != 0u)
                 {
-                    if(UART_PI_rxBufferLoopDetect != 0u)
+                    if(UART_SBC_rxBufferLoopDetect != 0u)
                     {   /* Set Software Buffer status Overflow */
-                        UART_PI_rxBufferOverflow = 1u;
+                        UART_SBC_rxBufferOverflow = 1u;
                     }
                     /* Set next pointer. */
-                    UART_PI_rxBufferWrite++;
+                    UART_SBC_rxBufferWrite++;
 
                     /* Check pointer for a loop condition */
-                    if(UART_PI_rxBufferWrite >= UART_PI_RX_BUFFER_SIZE)
+                    if(UART_SBC_rxBufferWrite >= UART_SBC_RX_BUFFER_SIZE)
                     {
-                        UART_PI_rxBufferWrite = 0u;
+                        UART_SBC_rxBufferWrite = 0u;
                     }
 
                     /* Detect pre-overload condition and set flag */
-                    if(UART_PI_rxBufferWrite == UART_PI_rxBufferRead)
+                    if(UART_SBC_rxBufferWrite == UART_SBC_rxBufferRead)
                     {
-                        UART_PI_rxBufferLoopDetect = 1u;
+                        UART_SBC_rxBufferLoopDetect = 1u;
                         /* When Hardware Flow Control selected */
-                        #if (UART_PI_FLOW_CONTROL != 0u)
+                        #if (UART_SBC_FLOW_CONTROL != 0u)
                             /* Disable RX interrupt mask, it is enabled when user read data from the buffer using APIs */
-                            UART_PI_RXSTATUS_MASK_REG  &= (uint8)~UART_PI_RX_STS_FIFO_NOTEMPTY;
-                            CyIntClearPending(UART_PI_RX_VECT_NUM);
+                            UART_SBC_RXSTATUS_MASK_REG  &= (uint8)~UART_SBC_RX_STS_FIFO_NOTEMPTY;
+                            CyIntClearPending(UART_SBC_RX_VECT_NUM);
                             break; /* Break the reading of the FIFO loop, leave the data there for generating RTS signal */
-                        #endif /* (UART_PI_FLOW_CONTROL != 0u) */
+                        #endif /* (UART_SBC_FLOW_CONTROL != 0u) */
                     }
                 }
             }
-        }while((readStatus & UART_PI_RX_STS_FIFO_NOTEMPTY) != 0u);
+        }while((readStatus & UART_SBC_RX_STS_FIFO_NOTEMPTY) != 0u);
 
         /* User code required at end of ISR (Optional) */
-        /* `#START UART_PI_RXISR_END` */
+        /* `#START UART_SBC_RXISR_END` */
 
         /* `#END` */
 
-    #ifdef UART_PI_RXISR_EXIT_CALLBACK
-        UART_PI_RXISR_ExitCallback();
-    #endif /* UART_PI_RXISR_EXIT_CALLBACK */
+    #ifdef UART_SBC_RXISR_EXIT_CALLBACK
+        UART_SBC_RXISR_ExitCallback();
+    #endif /* UART_SBC_RXISR_EXIT_CALLBACK */
 
     #if(CY_PSOC3)
         EA = int_en;
     #endif /* (CY_PSOC3) */
     }
     
-#endif /* (UART_PI_RX_INTERRUPT_ENABLED && (UART_PI_RX_ENABLED || UART_PI_HD_ENABLED)) */
+#endif /* (UART_SBC_RX_INTERRUPT_ENABLED && (UART_SBC_RX_ENABLED || UART_SBC_HD_ENABLED)) */
 
 
-#if (UART_PI_TX_INTERRUPT_ENABLED && UART_PI_TX_ENABLED)
+#if (UART_SBC_TX_INTERRUPT_ENABLED && UART_SBC_TX_ENABLED)
     /*******************************************************************************
-    * Function Name: UART_PI_TXISR
+    * Function Name: UART_SBC_TXISR
     ********************************************************************************
     *
     * Summary:
@@ -206,25 +206,25 @@
     *  None.
     *
     * Global Variables:
-    *  UART_PI_txBuffer - RAM buffer pointer for transmit data from.
-    *  UART_PI_txBufferRead - cyclic index for read and transmit data
+    *  UART_SBC_txBuffer - RAM buffer pointer for transmit data from.
+    *  UART_SBC_txBufferRead - cyclic index for read and transmit data
     *     from txBuffer, increments after each transmitted byte.
-    *  UART_PI_rxBufferWrite - cyclic index for write to txBuffer,
+    *  UART_SBC_rxBufferWrite - cyclic index for write to txBuffer,
     *     checked to detect available for transmission bytes.
     *
     *******************************************************************************/
-    CY_ISR(UART_PI_TXISR)
+    CY_ISR(UART_SBC_TXISR)
     {
     #if(CY_PSOC3)
         uint8 int_en;
     #endif /* (CY_PSOC3) */
 
-    #ifdef UART_PI_TXISR_ENTRY_CALLBACK
-        UART_PI_TXISR_EntryCallback();
-    #endif /* UART_PI_TXISR_ENTRY_CALLBACK */
+    #ifdef UART_SBC_TXISR_ENTRY_CALLBACK
+        UART_SBC_TXISR_EntryCallback();
+    #endif /* UART_SBC_TXISR_ENTRY_CALLBACK */
 
         /* User code required at start of ISR */
-        /* `#START UART_PI_TXISR_START` */
+        /* `#START UART_SBC_TXISR_START` */
 
         /* `#END` */
 
@@ -233,35 +233,35 @@
         CyGlobalIntEnable;
     #endif /* (CY_PSOC3) */
 
-        while((UART_PI_txBufferRead != UART_PI_txBufferWrite) &&
-             ((UART_PI_TXSTATUS_REG & UART_PI_TX_STS_FIFO_FULL) == 0u))
+        while((UART_SBC_txBufferRead != UART_SBC_txBufferWrite) &&
+             ((UART_SBC_TXSTATUS_REG & UART_SBC_TX_STS_FIFO_FULL) == 0u))
         {
             /* Check pointer wrap around */
-            if(UART_PI_txBufferRead >= UART_PI_TX_BUFFER_SIZE)
+            if(UART_SBC_txBufferRead >= UART_SBC_TX_BUFFER_SIZE)
             {
-                UART_PI_txBufferRead = 0u;
+                UART_SBC_txBufferRead = 0u;
             }
 
-            UART_PI_TXDATA_REG = UART_PI_txBuffer[UART_PI_txBufferRead];
+            UART_SBC_TXDATA_REG = UART_SBC_txBuffer[UART_SBC_txBufferRead];
 
             /* Set next pointer */
-            UART_PI_txBufferRead++;
+            UART_SBC_txBufferRead++;
         }
 
         /* User code required at end of ISR (Optional) */
-        /* `#START UART_PI_TXISR_END` */
+        /* `#START UART_SBC_TXISR_END` */
 
         /* `#END` */
 
-    #ifdef UART_PI_TXISR_EXIT_CALLBACK
-        UART_PI_TXISR_ExitCallback();
-    #endif /* UART_PI_TXISR_EXIT_CALLBACK */
+    #ifdef UART_SBC_TXISR_EXIT_CALLBACK
+        UART_SBC_TXISR_ExitCallback();
+    #endif /* UART_SBC_TXISR_EXIT_CALLBACK */
 
     #if(CY_PSOC3)
         EA = int_en;
     #endif /* (CY_PSOC3) */
    }
-#endif /* (UART_PI_TX_INTERRUPT_ENABLED && UART_PI_TX_ENABLED) */
+#endif /* (UART_SBC_TX_INTERRUPT_ENABLED && UART_SBC_TX_ENABLED) */
 
 
 /* [] END OF FILE */

@@ -1,0 +1,3388 @@
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"sbc_comms.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.rodata
+  20              		.align	2
+  21              		.type	crc8_table, %object
+  22              		.size	crc8_table, 256
+  23              	crc8_table:
+  24 0000 00       		.byte	0
+  25 0001 07       		.byte	7
+  26 0002 0E       		.byte	14
+  27 0003 09       		.byte	9
+  28 0004 1C       		.byte	28
+  29 0005 1B       		.byte	27
+  30 0006 12       		.byte	18
+  31 0007 15       		.byte	21
+  32 0008 38       		.byte	56
+  33 0009 3F       		.byte	63
+  34 000a 36       		.byte	54
+  35 000b 31       		.byte	49
+  36 000c 24       		.byte	36
+  37 000d 23       		.byte	35
+  38 000e 2A       		.byte	42
+  39 000f 2D       		.byte	45
+  40 0010 70       		.byte	112
+  41 0011 77       		.byte	119
+  42 0012 7E       		.byte	126
+  43 0013 79       		.byte	121
+  44 0014 6C       		.byte	108
+  45 0015 6B       		.byte	107
+  46 0016 62       		.byte	98
+  47 0017 65       		.byte	101
+  48 0018 48       		.byte	72
+  49 0019 4F       		.byte	79
+  50 001a 46       		.byte	70
+  51 001b 41       		.byte	65
+  52 001c 54       		.byte	84
+  53 001d 53       		.byte	83
+  54 001e 5A       		.byte	90
+  55 001f 5D       		.byte	93
+  56 0020 E0       		.byte	-32
+  57 0021 E7       		.byte	-25
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 2
+
+
+  58 0022 EE       		.byte	-18
+  59 0023 E9       		.byte	-23
+  60 0024 FC       		.byte	-4
+  61 0025 FB       		.byte	-5
+  62 0026 F2       		.byte	-14
+  63 0027 F5       		.byte	-11
+  64 0028 D8       		.byte	-40
+  65 0029 DF       		.byte	-33
+  66 002a D6       		.byte	-42
+  67 002b D1       		.byte	-47
+  68 002c C4       		.byte	-60
+  69 002d C3       		.byte	-61
+  70 002e CA       		.byte	-54
+  71 002f CD       		.byte	-51
+  72 0030 90       		.byte	-112
+  73 0031 97       		.byte	-105
+  74 0032 9E       		.byte	-98
+  75 0033 99       		.byte	-103
+  76 0034 8C       		.byte	-116
+  77 0035 8B       		.byte	-117
+  78 0036 82       		.byte	-126
+  79 0037 85       		.byte	-123
+  80 0038 A8       		.byte	-88
+  81 0039 AF       		.byte	-81
+  82 003a A6       		.byte	-90
+  83 003b A1       		.byte	-95
+  84 003c B4       		.byte	-76
+  85 003d B3       		.byte	-77
+  86 003e BA       		.byte	-70
+  87 003f BD       		.byte	-67
+  88 0040 C7       		.byte	-57
+  89 0041 C0       		.byte	-64
+  90 0042 C9       		.byte	-55
+  91 0043 CE       		.byte	-50
+  92 0044 DB       		.byte	-37
+  93 0045 DC       		.byte	-36
+  94 0046 D5       		.byte	-43
+  95 0047 D2       		.byte	-46
+  96 0048 FF       		.byte	-1
+  97 0049 F8       		.byte	-8
+  98 004a F1       		.byte	-15
+  99 004b F6       		.byte	-10
+ 100 004c E3       		.byte	-29
+ 101 004d E4       		.byte	-28
+ 102 004e ED       		.byte	-19
+ 103 004f EA       		.byte	-22
+ 104 0050 B7       		.byte	-73
+ 105 0051 B0       		.byte	-80
+ 106 0052 B9       		.byte	-71
+ 107 0053 BE       		.byte	-66
+ 108 0054 AB       		.byte	-85
+ 109 0055 AC       		.byte	-84
+ 110 0056 A5       		.byte	-91
+ 111 0057 A2       		.byte	-94
+ 112 0058 8F       		.byte	-113
+ 113 0059 88       		.byte	-120
+ 114 005a 81       		.byte	-127
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 3
+
+
+ 115 005b 86       		.byte	-122
+ 116 005c 93       		.byte	-109
+ 117 005d 94       		.byte	-108
+ 118 005e 9D       		.byte	-99
+ 119 005f 9A       		.byte	-102
+ 120 0060 27       		.byte	39
+ 121 0061 20       		.byte	32
+ 122 0062 29       		.byte	41
+ 123 0063 2E       		.byte	46
+ 124 0064 3B       		.byte	59
+ 125 0065 3C       		.byte	60
+ 126 0066 35       		.byte	53
+ 127 0067 32       		.byte	50
+ 128 0068 1F       		.byte	31
+ 129 0069 18       		.byte	24
+ 130 006a 11       		.byte	17
+ 131 006b 16       		.byte	22
+ 132 006c 03       		.byte	3
+ 133 006d 04       		.byte	4
+ 134 006e 0D       		.byte	13
+ 135 006f 0A       		.byte	10
+ 136 0070 57       		.byte	87
+ 137 0071 50       		.byte	80
+ 138 0072 59       		.byte	89
+ 139 0073 5E       		.byte	94
+ 140 0074 4B       		.byte	75
+ 141 0075 4C       		.byte	76
+ 142 0076 45       		.byte	69
+ 143 0077 42       		.byte	66
+ 144 0078 6F       		.byte	111
+ 145 0079 68       		.byte	104
+ 146 007a 61       		.byte	97
+ 147 007b 66       		.byte	102
+ 148 007c 73       		.byte	115
+ 149 007d 74       		.byte	116
+ 150 007e 7D       		.byte	125
+ 151 007f 7A       		.byte	122
+ 152 0080 89       		.byte	-119
+ 153 0081 8E       		.byte	-114
+ 154 0082 87       		.byte	-121
+ 155 0083 80       		.byte	-128
+ 156 0084 95       		.byte	-107
+ 157 0085 92       		.byte	-110
+ 158 0086 9B       		.byte	-101
+ 159 0087 9C       		.byte	-100
+ 160 0088 B1       		.byte	-79
+ 161 0089 B6       		.byte	-74
+ 162 008a BF       		.byte	-65
+ 163 008b B8       		.byte	-72
+ 164 008c AD       		.byte	-83
+ 165 008d AA       		.byte	-86
+ 166 008e A3       		.byte	-93
+ 167 008f A4       		.byte	-92
+ 168 0090 F9       		.byte	-7
+ 169 0091 FE       		.byte	-2
+ 170 0092 F7       		.byte	-9
+ 171 0093 F0       		.byte	-16
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 4
+
+
+ 172 0094 E5       		.byte	-27
+ 173 0095 E2       		.byte	-30
+ 174 0096 EB       		.byte	-21
+ 175 0097 EC       		.byte	-20
+ 176 0098 C1       		.byte	-63
+ 177 0099 C6       		.byte	-58
+ 178 009a CF       		.byte	-49
+ 179 009b C8       		.byte	-56
+ 180 009c DD       		.byte	-35
+ 181 009d DA       		.byte	-38
+ 182 009e D3       		.byte	-45
+ 183 009f D4       		.byte	-44
+ 184 00a0 69       		.byte	105
+ 185 00a1 6E       		.byte	110
+ 186 00a2 67       		.byte	103
+ 187 00a3 60       		.byte	96
+ 188 00a4 75       		.byte	117
+ 189 00a5 72       		.byte	114
+ 190 00a6 7B       		.byte	123
+ 191 00a7 7C       		.byte	124
+ 192 00a8 51       		.byte	81
+ 193 00a9 56       		.byte	86
+ 194 00aa 5F       		.byte	95
+ 195 00ab 58       		.byte	88
+ 196 00ac 4D       		.byte	77
+ 197 00ad 4A       		.byte	74
+ 198 00ae 43       		.byte	67
+ 199 00af 44       		.byte	68
+ 200 00b0 19       		.byte	25
+ 201 00b1 1E       		.byte	30
+ 202 00b2 17       		.byte	23
+ 203 00b3 10       		.byte	16
+ 204 00b4 05       		.byte	5
+ 205 00b5 02       		.byte	2
+ 206 00b6 0B       		.byte	11
+ 207 00b7 0C       		.byte	12
+ 208 00b8 21       		.byte	33
+ 209 00b9 26       		.byte	38
+ 210 00ba 2F       		.byte	47
+ 211 00bb 28       		.byte	40
+ 212 00bc 3D       		.byte	61
+ 213 00bd 3A       		.byte	58
+ 214 00be 33       		.byte	51
+ 215 00bf 34       		.byte	52
+ 216 00c0 4E       		.byte	78
+ 217 00c1 49       		.byte	73
+ 218 00c2 40       		.byte	64
+ 219 00c3 47       		.byte	71
+ 220 00c4 52       		.byte	82
+ 221 00c5 55       		.byte	85
+ 222 00c6 5C       		.byte	92
+ 223 00c7 5B       		.byte	91
+ 224 00c8 76       		.byte	118
+ 225 00c9 71       		.byte	113
+ 226 00ca 78       		.byte	120
+ 227 00cb 7F       		.byte	127
+ 228 00cc 6A       		.byte	106
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 5
+
+
+ 229 00cd 6D       		.byte	109
+ 230 00ce 64       		.byte	100
+ 231 00cf 63       		.byte	99
+ 232 00d0 3E       		.byte	62
+ 233 00d1 39       		.byte	57
+ 234 00d2 30       		.byte	48
+ 235 00d3 37       		.byte	55
+ 236 00d4 22       		.byte	34
+ 237 00d5 25       		.byte	37
+ 238 00d6 2C       		.byte	44
+ 239 00d7 2B       		.byte	43
+ 240 00d8 06       		.byte	6
+ 241 00d9 01       		.byte	1
+ 242 00da 08       		.byte	8
+ 243 00db 0F       		.byte	15
+ 244 00dc 1A       		.byte	26
+ 245 00dd 1D       		.byte	29
+ 246 00de 14       		.byte	20
+ 247 00df 13       		.byte	19
+ 248 00e0 AE       		.byte	-82
+ 249 00e1 A9       		.byte	-87
+ 250 00e2 A0       		.byte	-96
+ 251 00e3 A7       		.byte	-89
+ 252 00e4 B2       		.byte	-78
+ 253 00e5 B5       		.byte	-75
+ 254 00e6 BC       		.byte	-68
+ 255 00e7 BB       		.byte	-69
+ 256 00e8 96       		.byte	-106
+ 257 00e9 91       		.byte	-111
+ 258 00ea 98       		.byte	-104
+ 259 00eb 9F       		.byte	-97
+ 260 00ec 8A       		.byte	-118
+ 261 00ed 8D       		.byte	-115
+ 262 00ee 84       		.byte	-124
+ 263 00ef 83       		.byte	-125
+ 264 00f0 DE       		.byte	-34
+ 265 00f1 D9       		.byte	-39
+ 266 00f2 D0       		.byte	-48
+ 267 00f3 D7       		.byte	-41
+ 268 00f4 C2       		.byte	-62
+ 269 00f5 C5       		.byte	-59
+ 270 00f6 CC       		.byte	-52
+ 271 00f7 CB       		.byte	-53
+ 272 00f8 E6       		.byte	-26
+ 273 00f9 E1       		.byte	-31
+ 274 00fa E8       		.byte	-24
+ 275 00fb EF       		.byte	-17
+ 276 00fc FA       		.byte	-6
+ 277 00fd FD       		.byte	-3
+ 278 00fe F4       		.byte	-12
+ 279 00ff F3       		.byte	-13
+ 280              		.bss
+ 281              	sbc_rx_state:
+ 282 0000 00       		.space	1
+ 283              	s_type:
+ 284 0001 00       		.space	1
+ 285              	s_len:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 6
+
+
+ 286 0002 00       		.space	1
+ 287              	s_idx:
+ 288 0003 00       		.space	1
+ 289              		.align	2
+ 290              	s_buf:
+ 291 0004 00000000 		.space	64
+ 291      00000000 
+ 291      00000000 
+ 291      00000000 
+ 291      00000000 
+ 292              		.align	2
+ 293              	s_centroid:
+ 294 0044 00000000 		.space	24
+ 294      00000000 
+ 294      00000000 
+ 294      00000000 
+ 294      00000000 
+ 295              	s_fresh_bits:
+ 296 005c 00       		.space	1
+ 297 005d 000000   		.align	2
+ 298              	s_last_rx_ms:
+ 299 0060 00000000 		.space	8
+ 299      00000000 
+ 300              		.align	2
+ 301              	s_last_centroid_dt_ms:
+ 302 0068 00000000 		.space	4
+ 303              		.align	1
+ 304              	s_crc_err:
+ 305 006c 0000     		.space	2
+ 306              		.align	1
+ 307              	s_uart_err:
+ 308 006e 0000     		.space	2
+ 309              		.align	1
+ 310              	s_unknown_magic:
+ 311 0070 0000     		.space	2
+ 312 0072 0000     		.align	2
+ 313              	s_rx_pkt_count:
+ 314 0074 00000000 		.space	4
+ 315              		.section	.text.sbc_init,"ax",%progbits
+ 316              		.align	2
+ 317              		.global	sbc_init
+ 318              		.thumb
+ 319              		.thumb_func
+ 320              		.type	sbc_init, %function
+ 321              	sbc_init:
+ 322              	.LFB63:
+ 323              		.file 1 "sbc_comms.c"
+   1:sbc_comms.c   **** /* ========================================
+   2:sbc_comms.c   ****  *
+   3:sbc_comms.c   ****  * Copyright Hamish Johnson, 2026
+   4:sbc_comms.c   ****  * All Rights Reserved
+   5:sbc_comms.c   ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:sbc_comms.c   ****  *
+   7:sbc_comms.c   ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:sbc_comms.c   ****  * WHICH IS THE PROPERTY OF 
+   9:sbc_comms.c   ****  * Quantum Internet Systems Lab (QISL),
+  10:sbc_comms.c   ****  * Department of Physics, SFU, Canada.
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 7
+
+
+  11:sbc_comms.c   ****  *
+  12:sbc_comms.c   ****  * Author: Hamish Johnson (2026)
+  13:sbc_comms.c   ****  *
+  14:sbc_comms.c   ****  * ========================================
+  15:sbc_comms.c   ****  *
+  16:sbc_comms.c   ****  * This code is for inter-device communications with a Raspberry Pi over UART.
+  17:sbc_comms.c   **** */
+  18:sbc_comms.c   **** 
+  19:sbc_comms.c   **** #include "sbc_comms.h"
+  20:sbc_comms.c   **** #include <string.h>
+  21:sbc_comms.c   **** #include <project.h>
+  22:sbc_comms.c   **** 
+  23:sbc_comms.c   **** extern volatile uint32_t g_tick_ms;  // PSoC ms timer
+  24:sbc_comms.c   **** 
+  25:sbc_comms.c   **** // Copied for Pi software codebase
+  26:sbc_comms.c   **** // We use a Cyclic Redundancy Check (CRC).
+  27:sbc_comms.c   **** // The CRC takes the whole message as one binary number, divides it by 0x07
+  28:sbc_comms.c   **** // using XOR operations to be left with the remainder. A table is used instead
+  29:sbc_comms.c   **** // of computing each of the possible bit-wise division operations.
+  30:sbc_comms.c   **** static const uint8_t crc8_table[256] = {
+  31:sbc_comms.c   ****     0x00,0x07,0x0E,0x09,0x1C,0x1B,0x12,0x15,
+  32:sbc_comms.c   ****     0x38,0x3F,0x36,0x31,0x24,0x23,0x2A,0x2D,
+  33:sbc_comms.c   ****     0x70,0x77,0x7E,0x79,0x6C,0x6B,0x62,0x65,
+  34:sbc_comms.c   ****     0x48,0x4F,0x46,0x41,0x54,0x53,0x5A,0x5D,
+  35:sbc_comms.c   ****     0xE0,0xE7,0xEE,0xE9,0xFC,0xFB,0xF2,0xF5,
+  36:sbc_comms.c   ****     0xD8,0xDF,0xD6,0xD1,0xC4,0xC3,0xCA,0xCD,
+  37:sbc_comms.c   ****     0x90,0x97,0x9E,0x99,0x8C,0x8B,0x82,0x85,
+  38:sbc_comms.c   ****     0xA8,0xAF,0xA6,0xA1,0xB4,0xB3,0xBA,0xBD,
+  39:sbc_comms.c   ****     0xC7,0xC0,0xC9,0xCE,0xDB,0xDC,0xD5,0xD2,
+  40:sbc_comms.c   ****     0xFF,0xF8,0xF1,0xF6,0xE3,0xE4,0xED,0xEA,
+  41:sbc_comms.c   ****     0xB7,0xB0,0xB9,0xBE,0xAB,0xAC,0xA5,0xA2,
+  42:sbc_comms.c   ****     0x8F,0x88,0x81,0x86,0x93,0x94,0x9D,0x9A,
+  43:sbc_comms.c   ****     0x27,0x20,0x29,0x2E,0x3B,0x3C,0x35,0x32,
+  44:sbc_comms.c   ****     0x1F,0x18,0x11,0x16,0x03,0x04,0x0D,0x0A,
+  45:sbc_comms.c   ****     0x57,0x50,0x59,0x5E,0x4B,0x4C,0x45,0x42,
+  46:sbc_comms.c   ****     0x6F,0x68,0x61,0x66,0x73,0x74,0x7D,0x7A,
+  47:sbc_comms.c   ****     0x89,0x8E,0x87,0x80,0x95,0x92,0x9B,0x9C,
+  48:sbc_comms.c   ****     0xB1,0xB6,0xBF,0xB8,0xAD,0xAA,0xA3,0xA4,
+  49:sbc_comms.c   ****     0xF9,0xFE,0xF7,0xF0,0xE5,0xE2,0xEB,0xEC,
+  50:sbc_comms.c   ****     0xC1,0xC6,0xCF,0xC8,0xDD,0xDA,0xD3,0xD4,
+  51:sbc_comms.c   ****     0x69,0x6E,0x67,0x60,0x75,0x72,0x7B,0x7C,
+  52:sbc_comms.c   ****     0x51,0x56,0x5F,0x58,0x4D,0x4A,0x43,0x44,
+  53:sbc_comms.c   ****     0x19,0x1E,0x17,0x10,0x05,0x02,0x0B,0x0C,
+  54:sbc_comms.c   ****     0x21,0x26,0x2F,0x28,0x3D,0x3A,0x33,0x34,
+  55:sbc_comms.c   ****     0x4E,0x49,0x40,0x47,0x52,0x55,0x5C,0x5B,
+  56:sbc_comms.c   ****     0x76,0x71,0x78,0x7F,0x6A,0x6D,0x64,0x63,
+  57:sbc_comms.c   ****     0x3E,0x39,0x30,0x37,0x22,0x25,0x2C,0x2B,
+  58:sbc_comms.c   ****     0x06,0x01,0x08,0x0F,0x1A,0x1D,0x14,0x13,
+  59:sbc_comms.c   ****     0xAE,0xA9,0xA0,0xA7,0xB2,0xB5,0xBC,0xBB,
+  60:sbc_comms.c   ****     0x96,0x91,0x98,0x9F,0x8A,0x8D,0x84,0x83,
+  61:sbc_comms.c   ****     0xDE,0xD9,0xD0,0xD7,0xC2,0xC5,0xCC,0xCB,
+  62:sbc_comms.c   ****     0xE6,0xE1,0xE8,0xEF,0xFA,0xFD,0xF4,0xF3,
+  63:sbc_comms.c   **** };
+  64:sbc_comms.c   **** 
+  65:sbc_comms.c   **** #define PI_CENTROID_LEN  12u   // uint32 t_ms + 2*int16 + 2*uint16
+  66:sbc_comms.c   **** #define PI_RX_MAX        64u
+  67:sbc_comms.c   **** 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 8
+
+
+  68:sbc_comms.c   **** // Packet parser section enum, initialized to magic byte
+  69:sbc_comms.c   **** // Expects:
+  70:sbc_comms.c   **** // [MAGIC] [TYPE] [LEN] ... [PAYLOAD] ... [CRC]
+  71:sbc_comms.c   **** static enum { S_MAGIC, S_TYPE, S_LEN, S_PAYLOAD, S_CRC } sbc_rx_state = S_MAGIC;
+  72:sbc_comms.c   **** static uint8_t              s_type;  // Type loaded into here
+  73:sbc_comms.c   **** static uint8_t              s_len;   // Length loaded into here
+  74:sbc_comms.c   **** static uint8_t              s_idx;
+  75:sbc_comms.c   **** static uint8_t              s_buf[PI_RX_MAX];  // Payload parsed into here!
+  76:sbc_comms.c   **** // Per centroid stream
+  77:sbc_comms.c   **** static payload_centroid_t   s_centroid[STREAM_COUNTS];  // Payload per centroid
+  78:sbc_comms.c   **** static volatile uint8_t     s_fresh_bits;  // bit 0 for coarse and bit 1 for fine
+  79:sbc_comms.c   **** static uint32_t             s_last_rx_ms[STREAM_COUNTS];
+  80:sbc_comms.c   **** static uint16_t             s_last_centroid_dt_ms[STREAM_COUNTS];
+  81:sbc_comms.c   **** // Global telemetry for communications.
+  82:sbc_comms.c   **** static uint16_t s_crc_err             = 0u;  // inter-device communications.
+  83:sbc_comms.c   **** static uint16_t s_uart_err            = 0u;
+  84:sbc_comms.c   **** static uint16_t s_unknown_magic       = 0u;
+  85:sbc_comms.c   **** static uint32_t s_rx_pkt_count        = 0u;
+  86:sbc_comms.c   **** 
+  87:sbc_comms.c   **** void sbc_init(void)
+  88:sbc_comms.c   **** {
+ 324              		.loc 1 88 0
+ 325              		.cfi_startproc
+ 326              		@ args = 0, pretend = 0, frame = 8
+ 327              		@ frame_needed = 1, uses_anonymous_args = 0
+ 328              		@ link register save eliminated.
+ 329 0000 80B4     		push	{r7}
+ 330              		.cfi_def_cfa_offset 4
+ 331              		.cfi_offset 7, -4
+ 332 0002 83B0     		sub	sp, sp, #12
+ 333              		.cfi_def_cfa_offset 16
+ 334 0004 00AF     		add	r7, sp, #0
+ 335              		.cfi_def_cfa_register 7
+  89:sbc_comms.c   ****     // Initialize parameters for SBC communications.
+  90:sbc_comms.c   ****     sbc_rx_state    = S_MAGIC;
+ 336              		.loc 1 90 0
+ 337 0006 164B     		ldr	r3, .L4
+ 338 0008 0022     		movs	r2, #0
+ 339 000a 1A70     		strb	r2, [r3]
+  91:sbc_comms.c   ****     s_idx          = 0u;
+ 340              		.loc 1 91 0
+ 341 000c 154B     		ldr	r3, .L4+4
+ 342 000e 0022     		movs	r2, #0
+ 343 0010 1A70     		strb	r2, [r3]
+  92:sbc_comms.c   ****     s_fresh_bits   = 0u;
+ 344              		.loc 1 92 0
+ 345 0012 154B     		ldr	r3, .L4+8
+ 346 0014 0022     		movs	r2, #0
+ 347 0016 1A70     		strb	r2, [r3]
+  93:sbc_comms.c   ****     s_crc_err      = 0u;
+ 348              		.loc 1 93 0
+ 349 0018 144B     		ldr	r3, .L4+12
+ 350 001a 0022     		movs	r2, #0
+ 351 001c 1A80     		strh	r2, [r3]	@ movhi
+  94:sbc_comms.c   ****     s_uart_err     = 0u;
+ 352              		.loc 1 94 0
+ 353 001e 144B     		ldr	r3, .L4+16
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 9
+
+
+ 354 0020 0022     		movs	r2, #0
+ 355 0022 1A80     		strh	r2, [r3]	@ movhi
+  95:sbc_comms.c   ****     s_unknown_magic = 0u;
+ 356              		.loc 1 95 0
+ 357 0024 134B     		ldr	r3, .L4+20
+ 358 0026 0022     		movs	r2, #0
+ 359 0028 1A80     		strh	r2, [r3]	@ movhi
+  96:sbc_comms.c   ****     s_rx_pkt_count = 0u;
+ 360              		.loc 1 96 0
+ 361 002a 134B     		ldr	r3, .L4+24
+ 362 002c 0022     		movs	r2, #0
+ 363 002e 1A60     		str	r2, [r3]
+ 364              	.LBB2:
+  97:sbc_comms.c   ****     // Init each of the N centroid streams
+  98:sbc_comms.c   ****     for (uint8_t i = 0u; i < STREAM_COUNTS; i++) {
+ 365              		.loc 1 98 0
+ 366 0030 0023     		movs	r3, #0
+ 367 0032 FB71     		strb	r3, [r7, #7]
+ 368 0034 0CE0     		b	.L2
+ 369              	.L3:
+  99:sbc_comms.c   ****         s_last_rx_ms[i]          = 0u;
+ 370              		.loc 1 99 0 discriminator 3
+ 371 0036 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 372 0038 104A     		ldr	r2, .L4+28
+ 373 003a 0021     		movs	r1, #0
+ 374 003c 42F82310 		str	r1, [r2, r3, lsl #2]
+ 100:sbc_comms.c   ****         s_last_centroid_dt_ms[i] = 0u;
+ 375              		.loc 1 100 0 discriminator 3
+ 376 0040 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 377 0042 0F4A     		ldr	r2, .L4+32
+ 378 0044 0021     		movs	r1, #0
+ 379 0046 22F81310 		strh	r1, [r2, r3, lsl #1]	@ movhi
+  98:sbc_comms.c   ****         s_last_rx_ms[i]          = 0u;
+ 380              		.loc 1 98 0 discriminator 3
+ 381 004a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 382 004c 0133     		adds	r3, r3, #1
+ 383 004e FB71     		strb	r3, [r7, #7]
+ 384              	.L2:
+  98:sbc_comms.c   ****         s_last_rx_ms[i]          = 0u;
+ 385              		.loc 1 98 0 is_stmt 0 discriminator 1
+ 386 0050 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 387 0052 012B     		cmp	r3, #1
+ 388 0054 EFD9     		bls	.L3
+ 389              	.LBE2:
+ 101:sbc_comms.c   ****     }
+ 102:sbc_comms.c   **** }
+ 390              		.loc 1 102 0 is_stmt 1
+ 391 0056 00BF     		nop
+ 392 0058 0C37     		adds	r7, r7, #12
+ 393              		.cfi_def_cfa_offset 4
+ 394 005a BD46     		mov	sp, r7
+ 395              		.cfi_def_cfa_register 13
+ 396              		@ sp needed
+ 397 005c 80BC     		pop	{r7}
+ 398              		.cfi_restore 7
+ 399              		.cfi_def_cfa_offset 0
+ 400 005e 7047     		bx	lr
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 10
+
+
+ 401              	.L5:
+ 402              		.align	2
+ 403              	.L4:
+ 404 0060 00000000 		.word	sbc_rx_state
+ 405 0064 03000000 		.word	s_idx
+ 406 0068 5C000000 		.word	s_fresh_bits
+ 407 006c 6C000000 		.word	s_crc_err
+ 408 0070 6E000000 		.word	s_uart_err
+ 409 0074 70000000 		.word	s_unknown_magic
+ 410 0078 74000000 		.word	s_rx_pkt_count
+ 411 007c 60000000 		.word	s_last_rx_ms
+ 412 0080 68000000 		.word	s_last_centroid_dt_ms
+ 413              		.cfi_endproc
+ 414              	.LFE63:
+ 415              		.size	sbc_init, .-sbc_init
+ 416              		.section	.text.decode_centroid,"ax",%progbits
+ 417              		.align	2
+ 418              		.thumb
+ 419              		.thumb_func
+ 420              		.type	decode_centroid, %function
+ 421              	decode_centroid:
+ 422              	.LFB64:
+ 103:sbc_comms.c   **** 
+ 104:sbc_comms.c   **** static void decode_centroid(uint8_t stream, const uint8_t *p)
+ 105:sbc_comms.c   **** {
+ 423              		.loc 1 105 0
+ 424              		.cfi_startproc
+ 425              		@ args = 0, pretend = 0, frame = 16
+ 426              		@ frame_needed = 1, uses_anonymous_args = 0
+ 427 0000 80B5     		push	{r7, lr}
+ 428              		.cfi_def_cfa_offset 8
+ 429              		.cfi_offset 7, -8
+ 430              		.cfi_offset 14, -4
+ 431 0002 84B0     		sub	sp, sp, #16
+ 432              		.cfi_def_cfa_offset 24
+ 433 0004 00AF     		add	r7, sp, #0
+ 434              		.cfi_def_cfa_register 7
+ 435 0006 0346     		mov	r3, r0
+ 436 0008 3960     		str	r1, [r7]
+ 437 000a FB71     		strb	r3, [r7, #7]
+ 106:sbc_comms.c   ****     // Store time since last centroid arrived.
+ 107:sbc_comms.c   ****     uint32_t now = g_tick_ms;
+ 438              		.loc 1 107 0
+ 439 000c 3C4B     		ldr	r3, .L10
+ 440 000e 1B68     		ldr	r3, [r3]
+ 441 0010 FB60     		str	r3, [r7, #12]
+ 108:sbc_comms.c   ****     if (s_last_rx_ms[stream] != 0u) {
+ 442              		.loc 1 108 0
+ 443 0012 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 444 0014 3B4A     		ldr	r2, .L10+4
+ 445 0016 52F82330 		ldr	r3, [r2, r3, lsl #2]
+ 446 001a 002B     		cmp	r3, #0
+ 447 001c 13D0     		beq	.L7
+ 448              	.LBB3:
+ 109:sbc_comms.c   ****         uint32_t dt = now - s_last_rx_ms[stream];
+ 449              		.loc 1 109 0
+ 450 001e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 11
+
+
+ 451 0020 384A     		ldr	r2, .L10+4
+ 452 0022 52F82330 		ldr	r3, [r2, r3, lsl #2]
+ 453 0026 FA68     		ldr	r2, [r7, #12]
+ 454 0028 D31A     		subs	r3, r2, r3
+ 455 002a BB60     		str	r3, [r7, #8]
+ 110:sbc_comms.c   ****         s_last_centroid_dt_ms[stream] = (dt > 0xFFFFu)  // Clamp to uint16
+ 456              		.loc 1 110 0
+ 457 002c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 458 002e BA68     		ldr	r2, [r7, #8]
+ 459 0030 B2F5803F 		cmp	r2, #65536
+ 460 0034 02D2     		bcs	.L8
+ 461              		.loc 1 110 0 is_stmt 0 discriminator 1
+ 462 0036 BA68     		ldr	r2, [r7, #8]
+ 463 0038 92B2     		uxth	r2, r2
+ 464 003a 01E0     		b	.L9
+ 465              	.L8:
+ 466              		.loc 1 110 0 discriminator 2
+ 467 003c 4FF6FF72 		movw	r2, #65535
+ 468              	.L9:
+ 469              		.loc 1 110 0 discriminator 4
+ 470 0040 3149     		ldr	r1, .L10+8
+ 471 0042 21F81320 		strh	r2, [r1, r3, lsl #1]	@ movhi
+ 472              	.L7:
+ 473              	.LBE3:
+ 111:sbc_comms.c   ****                                       ? 0xFFFFu         // Max to 65 seconds
+ 112:sbc_comms.c   ****                                       : (uint16_t)dt;   // Cast down
+ 113:sbc_comms.c   ****     }
+ 114:sbc_comms.c   ****     // COpy into array of centroid structs
+ 115:sbc_comms.c   ****     memcpy(&s_centroid[stream].t_ms,  p +  0, 4);
+ 474              		.loc 1 115 0 is_stmt 1
+ 475 0046 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 476 0048 1346     		mov	r3, r2
+ 477 004a 5B00     		lsls	r3, r3, #1
+ 478 004c 1344     		add	r3, r3, r2
+ 479 004e 9B00     		lsls	r3, r3, #2
+ 480 0050 2E4A     		ldr	r2, .L10+12
+ 481 0052 1344     		add	r3, r3, r2
+ 482 0054 0422     		movs	r2, #4
+ 483 0056 3968     		ldr	r1, [r7]
+ 484 0058 1846     		mov	r0, r3
+ 485 005a FFF7FEFF 		bl	memcpy
+ 116:sbc_comms.c   ****     memcpy(&s_centroid[stream].cx,    p +  4, 2);
+ 486              		.loc 1 116 0
+ 487 005e FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 488 0060 1346     		mov	r3, r2
+ 489 0062 5B00     		lsls	r3, r3, #1
+ 490 0064 1344     		add	r3, r3, r2
+ 491 0066 9B00     		lsls	r3, r3, #2
+ 492 0068 284A     		ldr	r2, .L10+12
+ 493 006a 1344     		add	r3, r3, r2
+ 494 006c 181D     		adds	r0, r3, #4
+ 495 006e 3B68     		ldr	r3, [r7]
+ 496 0070 0433     		adds	r3, r3, #4
+ 497 0072 0222     		movs	r2, #2
+ 498 0074 1946     		mov	r1, r3
+ 499 0076 FFF7FEFF 		bl	memcpy
+ 117:sbc_comms.c   ****     memcpy(&s_centroid[stream].cy,    p +  6, 2);
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 12
+
+
+ 500              		.loc 1 117 0
+ 501 007a FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 502 007c 1346     		mov	r3, r2
+ 503 007e 5B00     		lsls	r3, r3, #1
+ 504 0080 1344     		add	r3, r3, r2
+ 505 0082 9B00     		lsls	r3, r3, #2
+ 506 0084 214A     		ldr	r2, .L10+12
+ 507 0086 1344     		add	r3, r3, r2
+ 508 0088 981D     		adds	r0, r3, #6
+ 509 008a 3B68     		ldr	r3, [r7]
+ 510 008c 0633     		adds	r3, r3, #6
+ 511 008e 0222     		movs	r2, #2
+ 512 0090 1946     		mov	r1, r3
+ 513 0092 FFF7FEFF 		bl	memcpy
+ 118:sbc_comms.c   ****     memcpy(&s_centroid[stream].cxerr, p +  8, 2);
+ 514              		.loc 1 118 0
+ 515 0096 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 516 0098 1346     		mov	r3, r2
+ 517 009a 5B00     		lsls	r3, r3, #1
+ 518 009c 1344     		add	r3, r3, r2
+ 519 009e 9B00     		lsls	r3, r3, #2
+ 520 00a0 0833     		adds	r3, r3, #8
+ 521 00a2 1A4A     		ldr	r2, .L10+12
+ 522 00a4 9818     		adds	r0, r3, r2
+ 523 00a6 3B68     		ldr	r3, [r7]
+ 524 00a8 0833     		adds	r3, r3, #8
+ 525 00aa 0222     		movs	r2, #2
+ 526 00ac 1946     		mov	r1, r3
+ 527 00ae FFF7FEFF 		bl	memcpy
+ 119:sbc_comms.c   ****     memcpy(&s_centroid[stream].cyerr, p + 10, 2);
+ 528              		.loc 1 119 0
+ 529 00b2 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 530 00b4 1346     		mov	r3, r2
+ 531 00b6 5B00     		lsls	r3, r3, #1
+ 532 00b8 1344     		add	r3, r3, r2
+ 533 00ba 9B00     		lsls	r3, r3, #2
+ 534 00bc 0833     		adds	r3, r3, #8
+ 535 00be 134A     		ldr	r2, .L10+12
+ 536 00c0 1344     		add	r3, r3, r2
+ 537 00c2 981C     		adds	r0, r3, #2
+ 538 00c4 3B68     		ldr	r3, [r7]
+ 539 00c6 0A33     		adds	r3, r3, #10
+ 540 00c8 0222     		movs	r2, #2
+ 541 00ca 1946     		mov	r1, r3
+ 542 00cc FFF7FEFF 		bl	memcpy
+ 120:sbc_comms.c   ****     // Pip freshness into the streams byte
+ 121:sbc_comms.c   ****     s_fresh_bits |= (uint8_t)(1u << stream);
+ 543              		.loc 1 121 0
+ 544 00d0 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 545 00d2 0122     		movs	r2, #1
+ 546 00d4 02FA03F3 		lsl	r3, r2, r3
+ 547 00d8 5AB2     		sxtb	r2, r3
+ 548 00da 0D4B     		ldr	r3, .L10+16
+ 549 00dc 1B78     		ldrb	r3, [r3]
+ 550 00de DBB2     		uxtb	r3, r3
+ 551 00e0 5BB2     		sxtb	r3, r3
+ 552 00e2 1343     		orrs	r3, r3, r2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 13
+
+
+ 553 00e4 5BB2     		sxtb	r3, r3
+ 554 00e6 DAB2     		uxtb	r2, r3
+ 555 00e8 094B     		ldr	r3, .L10+16
+ 556 00ea 1A70     		strb	r2, [r3]
+ 122:sbc_comms.c   ****     s_last_rx_ms[stream] = now;  // Update last heard from
+ 557              		.loc 1 122 0
+ 558 00ec FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 559 00ee 0549     		ldr	r1, .L10+4
+ 560 00f0 FA68     		ldr	r2, [r7, #12]
+ 561 00f2 41F82320 		str	r2, [r1, r3, lsl #2]
+ 123:sbc_comms.c   **** }
+ 562              		.loc 1 123 0
+ 563 00f6 00BF     		nop
+ 564 00f8 1037     		adds	r7, r7, #16
+ 565              		.cfi_def_cfa_offset 8
+ 566 00fa BD46     		mov	sp, r7
+ 567              		.cfi_def_cfa_register 13
+ 568              		@ sp needed
+ 569 00fc 80BD     		pop	{r7, pc}
+ 570              	.L11:
+ 571 00fe 00BF     		.align	2
+ 572              	.L10:
+ 573 0100 00000000 		.word	g_tick_ms
+ 574 0104 60000000 		.word	s_last_rx_ms
+ 575 0108 68000000 		.word	s_last_centroid_dt_ms
+ 576 010c 44000000 		.word	s_centroid
+ 577 0110 5C000000 		.word	s_fresh_bits
+ 578              		.cfi_endproc
+ 579              	.LFE64:
+ 580              		.size	decode_centroid, .-decode_centroid
+ 581              		.section	.text.sbc_on_rx_byte,"ax",%progbits
+ 582              		.align	2
+ 583              		.global	sbc_on_rx_byte
+ 584              		.thumb
+ 585              		.thumb_func
+ 586              		.type	sbc_on_rx_byte, %function
+ 587              	sbc_on_rx_byte:
+ 588              	.LFB65:
+ 124:sbc_comms.c   **** 
+ 125:sbc_comms.c   **** // Incoming byte parser!
+ 126:sbc_comms.c   **** // Parses each part of the packet structure,
+ 127:sbc_comms.c   **** // then calls the apropriate decoder!
+ 128:sbc_comms.c   **** void sbc_on_rx_byte(uint8_t b)
+ 129:sbc_comms.c   **** {
+ 589              		.loc 1 129 0
+ 590              		.cfi_startproc
+ 591              		@ args = 0, pretend = 0, frame = 16
+ 592              		@ frame_needed = 1, uses_anonymous_args = 0
+ 593 0000 80B5     		push	{r7, lr}
+ 594              		.cfi_def_cfa_offset 8
+ 595              		.cfi_offset 7, -8
+ 596              		.cfi_offset 14, -4
+ 597 0002 84B0     		sub	sp, sp, #16
+ 598              		.cfi_def_cfa_offset 24
+ 599 0004 00AF     		add	r7, sp, #0
+ 600              		.cfi_def_cfa_register 7
+ 601 0006 0346     		mov	r3, r0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 14
+
+
+ 602 0008 FB71     		strb	r3, [r7, #7]
+ 130:sbc_comms.c   ****     // Parse incoming bytes according to expected packet structure.
+ 131:sbc_comms.c   ****     switch (sbc_rx_state) {
+ 603              		.loc 1 131 0
+ 604 000a 574B     		ldr	r3, .L40
+ 605 000c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 606 000e 042B     		cmp	r3, #4
+ 607 0010 00F2A680 		bhi	.L36
+ 608 0014 01A2     		adr	r2, .L15
+ 609 0016 52F823F0 		ldr	pc, [r2, r3, lsl #2]
+ 610 001a 00BF     		.p2align 2
+ 611              	.L15:
+ 612 001c 31000000 		.word	.L14+1
+ 613 0020 4D000000 		.word	.L16+1
+ 614 0024 5B000000 		.word	.L17+1
+ 615 0028 8F000000 		.word	.L18+1
+ 616 002c B7000000 		.word	.L19+1
+ 617              		.p2align 1
+ 618              	.L14:
+ 132:sbc_comms.c   ****         case S_MAGIC:
+ 133:sbc_comms.c   ****             if (b == PI_MAGIC){
+ 619              		.loc 1 133 0
+ 620 0030 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 621 0032 AB2B     		cmp	r3, #171
+ 622 0034 03D1     		bne	.L20
+ 134:sbc_comms.c   ****                 sbc_rx_state = S_TYPE;  // Move to type parsing
+ 623              		.loc 1 134 0
+ 624 0036 4C4B     		ldr	r3, .L40
+ 625 0038 0122     		movs	r2, #1
+ 626 003a 1A70     		strb	r2, [r3]
+ 135:sbc_comms.c   ****             } else {
+ 136:sbc_comms.c   ****                 s_unknown_magic++;  // Measure of noise
+ 137:sbc_comms.c   ****             }
+ 138:sbc_comms.c   ****             break;
+ 627              		.loc 1 138 0
+ 628 003c 90E0     		b	.L13
+ 629              	.L20:
+ 136:sbc_comms.c   ****             }
+ 630              		.loc 1 136 0
+ 631 003e 4B4B     		ldr	r3, .L40+4
+ 632 0040 1B88     		ldrh	r3, [r3]
+ 633 0042 0133     		adds	r3, r3, #1
+ 634 0044 9AB2     		uxth	r2, r3
+ 635 0046 494B     		ldr	r3, .L40+4
+ 636 0048 1A80     		strh	r2, [r3]	@ movhi
+ 637              		.loc 1 138 0
+ 638 004a 89E0     		b	.L13
+ 639              	.L16:
+ 139:sbc_comms.c   ****         case S_TYPE:
+ 140:sbc_comms.c   ****             s_type = b;  // Save bye as type
+ 640              		.loc 1 140 0
+ 641 004c 484A     		ldr	r2, .L40+8
+ 642 004e FB79     		ldrb	r3, [r7, #7]
+ 643 0050 1370     		strb	r3, [r2]
+ 141:sbc_comms.c   ****             sbc_rx_state = S_LEN;  // Move to length parsing
+ 644              		.loc 1 141 0
+ 645 0052 454B     		ldr	r3, .L40
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 15
+
+
+ 646 0054 0222     		movs	r2, #2
+ 647 0056 1A70     		strb	r2, [r3]
+ 142:sbc_comms.c   ****             break;
+ 648              		.loc 1 142 0
+ 649 0058 82E0     		b	.L13
+ 650              	.L17:
+ 143:sbc_comms.c   ****         case S_LEN:
+ 144:sbc_comms.c   ****             s_len = b;
+ 651              		.loc 1 144 0
+ 652 005a 464A     		ldr	r2, .L40+12
+ 653 005c FB79     		ldrb	r3, [r7, #7]
+ 654 005e 1370     		strb	r3, [r2]
+ 145:sbc_comms.c   ****             if (s_len > PI_RX_MAX) {
+ 655              		.loc 1 145 0
+ 656 0060 444B     		ldr	r3, .L40+12
+ 657 0062 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 658 0064 402B     		cmp	r3, #64
+ 659 0066 03D9     		bls	.L22
+ 146:sbc_comms.c   ****                 sbc_rx_state = S_MAGIC;  // Bad len -> resync
+ 660              		.loc 1 146 0
+ 661 0068 3F4B     		ldr	r3, .L40
+ 662 006a 0022     		movs	r2, #0
+ 663 006c 1A70     		strb	r2, [r3]
+ 147:sbc_comms.c   ****             } else if (s_len == 0u) {
+ 148:sbc_comms.c   ****                 sbc_rx_state = S_CRC;    // 0-byte payload legal
+ 149:sbc_comms.c   ****             } else {
+ 150:sbc_comms.c   ****                 s_idx = 0u;               // Reset to start of payload
+ 151:sbc_comms.c   ****                 sbc_rx_state = S_PAYLOAD;  // Move to payload parsing
+ 152:sbc_comms.c   ****             }
+ 153:sbc_comms.c   ****             break;
+ 664              		.loc 1 153 0
+ 665 006e 77E0     		b	.L13
+ 666              	.L22:
+ 147:sbc_comms.c   ****             } else if (s_len == 0u) {
+ 667              		.loc 1 147 0
+ 668 0070 404B     		ldr	r3, .L40+12
+ 669 0072 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 670 0074 002B     		cmp	r3, #0
+ 671 0076 03D1     		bne	.L24
+ 148:sbc_comms.c   ****             } else {
+ 672              		.loc 1 148 0
+ 673 0078 3B4B     		ldr	r3, .L40
+ 674 007a 0422     		movs	r2, #4
+ 675 007c 1A70     		strb	r2, [r3]
+ 676              		.loc 1 153 0
+ 677 007e 6FE0     		b	.L13
+ 678              	.L24:
+ 150:sbc_comms.c   ****                 sbc_rx_state = S_PAYLOAD;  // Move to payload parsing
+ 679              		.loc 1 150 0
+ 680 0080 3D4B     		ldr	r3, .L40+16
+ 681 0082 0022     		movs	r2, #0
+ 682 0084 1A70     		strb	r2, [r3]
+ 151:sbc_comms.c   ****             }
+ 683              		.loc 1 151 0
+ 684 0086 384B     		ldr	r3, .L40
+ 685 0088 0322     		movs	r2, #3
+ 686 008a 1A70     		strb	r2, [r3]
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 16
+
+
+ 687              		.loc 1 153 0
+ 688 008c 68E0     		b	.L13
+ 689              	.L18:
+ 154:sbc_comms.c   ****         case S_PAYLOAD:
+ 155:sbc_comms.c   ****             s_buf[s_idx++] = b;  // Load bytes into buffer
+ 690              		.loc 1 155 0
+ 691 008e 3A4B     		ldr	r3, .L40+16
+ 692 0090 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 693 0092 5A1C     		adds	r2, r3, #1
+ 694 0094 D1B2     		uxtb	r1, r2
+ 695 0096 384A     		ldr	r2, .L40+16
+ 696 0098 1170     		strb	r1, [r2]
+ 697 009a 1946     		mov	r1, r3
+ 698 009c 374A     		ldr	r2, .L40+20
+ 699 009e FB79     		ldrb	r3, [r7, #7]
+ 700 00a0 5354     		strb	r3, [r2, r1]
+ 156:sbc_comms.c   ****             if (s_idx >= s_len){
+ 701              		.loc 1 156 0
+ 702 00a2 354B     		ldr	r3, .L40+16
+ 703 00a4 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 704 00a6 334B     		ldr	r3, .L40+12
+ 705 00a8 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 706 00aa 9A42     		cmp	r2, r3
+ 707 00ac 57D3     		bcc	.L37
+ 157:sbc_comms.c   ****                 sbc_rx_state = S_CRC;  // Move to CRC when reached tot length
+ 708              		.loc 1 157 0
+ 709 00ae 2E4B     		ldr	r3, .L40
+ 710 00b0 0422     		movs	r2, #4
+ 711 00b2 1A70     		strb	r2, [r3]
+ 158:sbc_comms.c   ****             }
+ 159:sbc_comms.c   ****             break;
+ 712              		.loc 1 159 0
+ 713 00b4 53E0     		b	.L37
+ 714              	.L19:
+ 715              	.LBB4:
+ 160:sbc_comms.c   ****         case S_CRC: {
+ 161:sbc_comms.c   ****             // CRC over TYPE + LEN + PAYLOAD
+ 162:sbc_comms.c   ****             // byte-wise XOR then CRC lookup.
+ 163:sbc_comms.c   ****             uint8_t calc = crc8_table[s_type];  // On type
+ 716              		.loc 1 163 0
+ 717 00b6 2E4B     		ldr	r3, .L40+8
+ 718 00b8 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 719 00ba 1A46     		mov	r2, r3
+ 720 00bc 304B     		ldr	r3, .L40+24
+ 721 00be 9B5C     		ldrb	r3, [r3, r2]
+ 722 00c0 FB73     		strb	r3, [r7, #15]
+ 164:sbc_comms.c   ****             calc = crc8_table[calc ^ s_len];    // On length
+ 723              		.loc 1 164 0
+ 724 00c2 2C4B     		ldr	r3, .L40+12
+ 725 00c4 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 726 00c6 FB7B     		ldrb	r3, [r7, #15]
+ 727 00c8 5340     		eors	r3, r3, r2
+ 728 00ca DBB2     		uxtb	r3, r3
+ 729 00cc 1A46     		mov	r2, r3
+ 730 00ce 2C4B     		ldr	r3, .L40+24
+ 731 00d0 9B5C     		ldrb	r3, [r3, r2]
+ 732 00d2 FB73     		strb	r3, [r7, #15]
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 17
+
+
+ 733              	.LBB5:
+ 165:sbc_comms.c   ****             for (uint8_t i = 0u; i < s_len; i++)// Over payload
+ 734              		.loc 1 165 0
+ 735 00d4 0023     		movs	r3, #0
+ 736 00d6 BB73     		strb	r3, [r7, #14]
+ 737 00d8 0CE0     		b	.L26
+ 738              	.L27:
+ 166:sbc_comms.c   ****                 calc = crc8_table[calc ^ s_buf[i]];
+ 739              		.loc 1 166 0 discriminator 3
+ 740 00da BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 741 00dc 274A     		ldr	r2, .L40+20
+ 742 00de D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 743 00e0 FB7B     		ldrb	r3, [r7, #15]
+ 744 00e2 5340     		eors	r3, r3, r2
+ 745 00e4 DBB2     		uxtb	r3, r3
+ 746 00e6 1A46     		mov	r2, r3
+ 747 00e8 254B     		ldr	r3, .L40+24
+ 748 00ea 9B5C     		ldrb	r3, [r3, r2]
+ 749 00ec FB73     		strb	r3, [r7, #15]
+ 165:sbc_comms.c   ****             for (uint8_t i = 0u; i < s_len; i++)// Over payload
+ 750              		.loc 1 165 0 discriminator 3
+ 751 00ee BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 752 00f0 0133     		adds	r3, r3, #1
+ 753 00f2 BB73     		strb	r3, [r7, #14]
+ 754              	.L26:
+ 165:sbc_comms.c   ****             for (uint8_t i = 0u; i < s_len; i++)// Over payload
+ 755              		.loc 1 165 0 is_stmt 0 discriminator 1
+ 756 00f4 1F4B     		ldr	r3, .L40+12
+ 757 00f6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 758 00f8 BA7B     		ldrb	r2, [r7, #14]	@ zero_extendqisi2
+ 759 00fa 9A42     		cmp	r2, r3
+ 760 00fc EDD3     		bcc	.L27
+ 761              	.LBE5:
+ 167:sbc_comms.c   **** 
+ 168:sbc_comms.c   ****             // Verify checksum, if good then decode!
+ 169:sbc_comms.c   ****             if (calc == b) {
+ 762              		.loc 1 169 0 is_stmt 1
+ 763 00fe FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 764 0100 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 765 0102 9A42     		cmp	r2, r3
+ 766 0104 1DD1     		bne	.L28
+ 170:sbc_comms.c   ****                 s_rx_pkt_count++;
+ 767              		.loc 1 170 0
+ 768 0106 1F4B     		ldr	r3, .L40+28
+ 769 0108 1B68     		ldr	r3, [r3]
+ 770 010a 0133     		adds	r3, r3, #1
+ 771 010c 1D4A     		ldr	r2, .L40+28
+ 772 010e 1360     		str	r3, [r2]
+ 171:sbc_comms.c   ****                 // Process payload bytes according to type.
+ 172:sbc_comms.c   ****                 // Add as we accumulate more things to Rx.
+ 173:sbc_comms.c   ****                 switch (s_type) {
+ 773              		.loc 1 173 0
+ 774 0110 174B     		ldr	r3, .L40+8
+ 775 0112 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 776 0114 012B     		cmp	r3, #1
+ 777 0116 02D0     		beq	.L30
+ 778 0118 022B     		cmp	r3, #2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 18
+
+
+ 779 011a 09D0     		beq	.L31
+ 174:sbc_comms.c   ****                     case PKT_CENTROID_C:
+ 175:sbc_comms.c   ****                         if (s_len == PI_CENTROID_LEN){
+ 176:sbc_comms.c   ****                             decode_centroid(STREAM_COARSE, s_buf);
+ 177:sbc_comms.c   ****                         }
+ 178:sbc_comms.c   ****                         break;
+ 179:sbc_comms.c   ****                     case PKT_CENTROID_F:
+ 180:sbc_comms.c   ****                         if (s_len == PI_CENTROID_LEN){
+ 181:sbc_comms.c   ****                             decode_centroid(STREAM_FINE,   s_buf);
+ 182:sbc_comms.c   ****                         }
+ 183:sbc_comms.c   ****                         break;
+ 184:sbc_comms.c   ****                     default:
+ 185:sbc_comms.c   ****                         break;
+ 780              		.loc 1 185 0
+ 781 011c 1BE0     		b	.L35
+ 782              	.L30:
+ 175:sbc_comms.c   ****                             decode_centroid(STREAM_COARSE, s_buf);
+ 783              		.loc 1 175 0
+ 784 011e 154B     		ldr	r3, .L40+12
+ 785 0120 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 786 0122 0C2B     		cmp	r3, #12
+ 787 0124 14D1     		bne	.L38
+ 176:sbc_comms.c   ****                         }
+ 788              		.loc 1 176 0
+ 789 0126 1549     		ldr	r1, .L40+20
+ 790 0128 0020     		movs	r0, #0
+ 791 012a FFF7FEFF 		bl	decode_centroid
+ 178:sbc_comms.c   ****                     case PKT_CENTROID_F:
+ 792              		.loc 1 178 0
+ 793 012e 0FE0     		b	.L38
+ 794              	.L31:
+ 180:sbc_comms.c   ****                             decode_centroid(STREAM_FINE,   s_buf);
+ 795              		.loc 1 180 0
+ 796 0130 104B     		ldr	r3, .L40+12
+ 797 0132 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 798 0134 0C2B     		cmp	r3, #12
+ 799 0136 0DD1     		bne	.L39
+ 181:sbc_comms.c   ****                         }
+ 800              		.loc 1 181 0
+ 801 0138 1049     		ldr	r1, .L40+20
+ 802 013a 0120     		movs	r0, #1
+ 803 013c FFF7FEFF 		bl	decode_centroid
+ 183:sbc_comms.c   ****                     default:
+ 804              		.loc 1 183 0
+ 805 0140 08E0     		b	.L39
+ 806              	.L28:
+ 186:sbc_comms.c   ****                 }
+ 187:sbc_comms.c   ****             } else {
+ 188:sbc_comms.c   ****                 s_crc_err++;
+ 807              		.loc 1 188 0
+ 808 0142 114B     		ldr	r3, .L40+32
+ 809 0144 1B88     		ldrh	r3, [r3]
+ 810 0146 0133     		adds	r3, r3, #1
+ 811 0148 9AB2     		uxth	r2, r3
+ 812 014a 0F4B     		ldr	r3, .L40+32
+ 813 014c 1A80     		strh	r2, [r3]	@ movhi
+ 814 014e 02E0     		b	.L35
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 19
+
+
+ 815              	.L38:
+ 178:sbc_comms.c   ****                     case PKT_CENTROID_F:
+ 816              		.loc 1 178 0
+ 817 0150 00BF     		nop
+ 818 0152 00E0     		b	.L35
+ 819              	.L39:
+ 183:sbc_comms.c   ****                     default:
+ 820              		.loc 1 183 0
+ 821 0154 00BF     		nop
+ 822              	.L35:
+ 189:sbc_comms.c   ****             }
+ 190:sbc_comms.c   ****             sbc_rx_state = S_MAGIC;
+ 823              		.loc 1 190 0
+ 824 0156 044B     		ldr	r3, .L40
+ 825 0158 0022     		movs	r2, #0
+ 826 015a 1A70     		strb	r2, [r3]
+ 191:sbc_comms.c   ****             break;
+ 827              		.loc 1 191 0
+ 828 015c 00E0     		b	.L13
+ 829              	.L37:
+ 830              	.LBE4:
+ 159:sbc_comms.c   ****         case S_CRC: {
+ 831              		.loc 1 159 0
+ 832 015e 00BF     		nop
+ 833              	.L13:
+ 834              	.L36:
+ 192:sbc_comms.c   ****         }
+ 193:sbc_comms.c   ****     }
+ 194:sbc_comms.c   **** }
+ 835              		.loc 1 194 0
+ 836 0160 00BF     		nop
+ 837 0162 1037     		adds	r7, r7, #16
+ 838              		.cfi_def_cfa_offset 8
+ 839 0164 BD46     		mov	sp, r7
+ 840              		.cfi_def_cfa_register 13
+ 841              		@ sp needed
+ 842 0166 80BD     		pop	{r7, pc}
+ 843              	.L41:
+ 844              		.align	2
+ 845              	.L40:
+ 846 0168 00000000 		.word	sbc_rx_state
+ 847 016c 70000000 		.word	s_unknown_magic
+ 848 0170 01000000 		.word	s_type
+ 849 0174 02000000 		.word	s_len
+ 850 0178 03000000 		.word	s_idx
+ 851 017c 04000000 		.word	s_buf
+ 852 0180 00000000 		.word	crc8_table
+ 853 0184 74000000 		.word	s_rx_pkt_count
+ 854 0188 6C000000 		.word	s_crc_err
+ 855              		.cfi_endproc
+ 856              	.LFE65:
+ 857              		.size	sbc_on_rx_byte, .-sbc_on_rx_byte
+ 858              		.section	.text.sbc_on_uart_err_flags,"ax",%progbits
+ 859              		.align	2
+ 860              		.global	sbc_on_uart_err_flags
+ 861              		.thumb
+ 862              		.thumb_func
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 20
+
+
+ 863              		.type	sbc_on_uart_err_flags, %function
+ 864              	sbc_on_uart_err_flags:
+ 865              	.LFB66:
+ 195:sbc_comms.c   **** 
+ 196:sbc_comms.c   **** void sbc_on_uart_err_flags(uint8_t flags)
+ 197:sbc_comms.c   **** {
+ 866              		.loc 1 197 0
+ 867              		.cfi_startproc
+ 868              		@ args = 0, pretend = 0, frame = 8
+ 869              		@ frame_needed = 1, uses_anonymous_args = 0
+ 870              		@ link register save eliminated.
+ 871 0000 80B4     		push	{r7}
+ 872              		.cfi_def_cfa_offset 4
+ 873              		.cfi_offset 7, -4
+ 874 0002 83B0     		sub	sp, sp, #12
+ 875              		.cfi_def_cfa_offset 16
+ 876 0004 00AF     		add	r7, sp, #0
+ 877              		.cfi_def_cfa_register 7
+ 878 0006 0346     		mov	r3, r0
+ 879 0008 FB71     		strb	r3, [r7, #7]
+ 198:sbc_comms.c   ****     // If UART errors, accumulate counter and reset to magic (next frame)
+ 199:sbc_comms.c   ****     (void)flags;
+ 200:sbc_comms.c   ****     s_uart_err++;
+ 880              		.loc 1 200 0
+ 881 000a 074B     		ldr	r3, .L43
+ 882 000c 1B88     		ldrh	r3, [r3]
+ 883 000e 0133     		adds	r3, r3, #1
+ 884 0010 9AB2     		uxth	r2, r3
+ 885 0012 054B     		ldr	r3, .L43
+ 886 0014 1A80     		strh	r2, [r3]	@ movhi
+ 201:sbc_comms.c   ****     sbc_rx_state = S_MAGIC;
+ 887              		.loc 1 201 0
+ 888 0016 054B     		ldr	r3, .L43+4
+ 889 0018 0022     		movs	r2, #0
+ 890 001a 1A70     		strb	r2, [r3]
+ 202:sbc_comms.c   **** }
+ 891              		.loc 1 202 0
+ 892 001c 00BF     		nop
+ 893 001e 0C37     		adds	r7, r7, #12
+ 894              		.cfi_def_cfa_offset 4
+ 895 0020 BD46     		mov	sp, r7
+ 896              		.cfi_def_cfa_register 13
+ 897              		@ sp needed
+ 898 0022 80BC     		pop	{r7}
+ 899              		.cfi_restore 7
+ 900              		.cfi_def_cfa_offset 0
+ 901 0024 7047     		bx	lr
+ 902              	.L44:
+ 903 0026 00BF     		.align	2
+ 904              	.L43:
+ 905 0028 6E000000 		.word	s_uart_err
+ 906 002c 00000000 		.word	sbc_rx_state
+ 907              		.cfi_endproc
+ 908              	.LFE66:
+ 909              		.size	sbc_on_uart_err_flags, .-sbc_on_uart_err_flags
+ 910              		.section	.text.sbc_get_centroid,"ax",%progbits
+ 911              		.align	2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 21
+
+
+ 912              		.global	sbc_get_centroid
+ 913              		.thumb
+ 914              		.thumb_func
+ 915              		.type	sbc_get_centroid, %function
+ 916              	sbc_get_centroid:
+ 917              	.LFB67:
+ 203:sbc_comms.c   **** 
+ 204:sbc_comms.c   **** uint8_t sbc_get_centroid(uint8_t stream, payload_centroid_t *out)
+ 205:sbc_comms.c   **** {
+ 918              		.loc 1 205 0
+ 919              		.cfi_startproc
+ 920              		@ args = 0, pretend = 0, frame = 16
+ 921              		@ frame_needed = 1, uses_anonymous_args = 0
+ 922 0000 80B5     		push	{r7, lr}
+ 923              		.cfi_def_cfa_offset 8
+ 924              		.cfi_offset 7, -8
+ 925              		.cfi_offset 14, -4
+ 926 0002 84B0     		sub	sp, sp, #16
+ 927              		.cfi_def_cfa_offset 24
+ 928 0004 00AF     		add	r7, sp, #0
+ 929              		.cfi_def_cfa_register 7
+ 930 0006 0346     		mov	r3, r0
+ 931 0008 3960     		str	r1, [r7]
+ 932 000a FB71     		strb	r3, [r7, #7]
+ 206:sbc_comms.c   ****     // Getter function for the rest of our codebase to use
+ 207:sbc_comms.c   ****     // Runs as atomic so it cannot be interrupted. If it were interrupted we
+ 208:sbc_comms.c   ****     // could start copying out the centroid, then rx a new centroid, and
+ 209:sbc_comms.c   ****     // continue reading out from the new centroid data.
+ 210:sbc_comms.c   ****     // This would corrupt the data, or at least confuse our control loop.
+ 211:sbc_comms.c   ****     if (stream >= STREAM_COUNTS) return 0u;
+ 933              		.loc 1 211 0
+ 934 000c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 935 000e 012B     		cmp	r3, #1
+ 936 0010 01D9     		bls	.L46
+ 937              		.loc 1 211 0 is_stmt 0 discriminator 1
+ 938 0012 0023     		movs	r3, #0
+ 939 0014 2FE0     		b	.L47
+ 940              	.L46:
+ 212:sbc_comms.c   ****     uint8_t bit = (uint8_t)(1u << stream);
+ 941              		.loc 1 212 0 is_stmt 1
+ 942 0016 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 943 0018 0122     		movs	r2, #1
+ 944 001a 02FA03F3 		lsl	r3, r2, r3
+ 945 001e BB73     		strb	r3, [r7, #14]
+ 213:sbc_comms.c   ****     uint8_t got = 0u;
+ 946              		.loc 1 213 0
+ 947 0020 0023     		movs	r3, #0
+ 948 0022 FB73     		strb	r3, [r7, #15]
+ 214:sbc_comms.c   ****     uint8_t ist = CyEnterCriticalSection();// Disables interruprs
+ 949              		.loc 1 214 0
+ 950 0024 FFF7FEFF 		bl	CyEnterCriticalSection
+ 951 0028 0346     		mov	r3, r0
+ 952 002a 7B73     		strb	r3, [r7, #13]
+ 215:sbc_comms.c   ****     if (s_fresh_bits & bit) {
+ 953              		.loc 1 215 0
+ 954 002c 144B     		ldr	r3, .L49
+ 955 002e 1B78     		ldrb	r3, [r3]
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 22
+
+
+ 956 0030 DAB2     		uxtb	r2, r3
+ 957 0032 BB7B     		ldrb	r3, [r7, #14]
+ 958 0034 1340     		ands	r3, r3, r2
+ 959 0036 DBB2     		uxtb	r3, r3
+ 960 0038 002B     		cmp	r3, #0
+ 961 003a 17D0     		beq	.L48
+ 216:sbc_comms.c   ****         *out = s_centroid[stream];  // Copy out the centroid
+ 962              		.loc 1 216 0
+ 963 003c FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 964 003e 3868     		ldr	r0, [r7]
+ 965 0040 1049     		ldr	r1, .L49+4
+ 966 0042 1346     		mov	r3, r2
+ 967 0044 5B00     		lsls	r3, r3, #1
+ 968 0046 1344     		add	r3, r3, r2
+ 969 0048 9B00     		lsls	r3, r3, #2
+ 970 004a CA18     		adds	r2, r1, r3
+ 971 004c 0346     		mov	r3, r0
+ 972 004e 07CA     		ldmia	r2, {r0, r1, r2}
+ 973 0050 83E80700 		stmia	r3, {r0, r1, r2}
+ 217:sbc_comms.c   ****         s_fresh_bits &= (uint8_t)~bit;  // Set stale (already grabbed)
+ 974              		.loc 1 217 0
+ 975 0054 BB7B     		ldrb	r3, [r7, #14]
+ 976 0056 DB43     		mvns	r3, r3
+ 977 0058 DAB2     		uxtb	r2, r3
+ 978 005a 094B     		ldr	r3, .L49
+ 979 005c 1B78     		ldrb	r3, [r3]
+ 980 005e DBB2     		uxtb	r3, r3
+ 981 0060 1340     		ands	r3, r3, r2
+ 982 0062 DAB2     		uxtb	r2, r3
+ 983 0064 064B     		ldr	r3, .L49
+ 984 0066 1A70     		strb	r2, [r3]
+ 218:sbc_comms.c   ****         got = 1u;  // Say we got em.
+ 985              		.loc 1 218 0
+ 986 0068 0123     		movs	r3, #1
+ 987 006a FB73     		strb	r3, [r7, #15]
+ 988              	.L48:
+ 219:sbc_comms.c   ****     }
+ 220:sbc_comms.c   ****     CyExitCriticalSection(ist);  // Re-enables interruprs
+ 989              		.loc 1 220 0
+ 990 006c 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 991 006e 1846     		mov	r0, r3
+ 992 0070 FFF7FEFF 		bl	CyExitCriticalSection
+ 221:sbc_comms.c   ****     return got;  // Caller is told they got a new centroid!
+ 993              		.loc 1 221 0
+ 994 0074 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 995              	.L47:
+ 222:sbc_comms.c   **** }
+ 996              		.loc 1 222 0
+ 997 0076 1846     		mov	r0, r3
+ 998 0078 1037     		adds	r7, r7, #16
+ 999              		.cfi_def_cfa_offset 8
+ 1000 007a BD46     		mov	sp, r7
+ 1001              		.cfi_def_cfa_register 13
+ 1002              		@ sp needed
+ 1003 007c 80BD     		pop	{r7, pc}
+ 1004              	.L50:
+ 1005 007e 00BF     		.align	2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 23
+
+
+ 1006              	.L49:
+ 1007 0080 5C000000 		.word	s_fresh_bits
+ 1008 0084 44000000 		.word	s_centroid
+ 1009              		.cfi_endproc
+ 1010              	.LFE67:
+ 1011              		.size	sbc_get_centroid, .-sbc_get_centroid
+ 1012              		.section	.text.sbc_unknown_magic,"ax",%progbits
+ 1013              		.align	2
+ 1014              		.global	sbc_unknown_magic
+ 1015              		.thumb
+ 1016              		.thumb_func
+ 1017              		.type	sbc_unknown_magic, %function
+ 1018              	sbc_unknown_magic:
+ 1019              	.LFB68:
+ 223:sbc_comms.c   **** 
+ 224:sbc_comms.c   **** uint16_t sbc_unknown_magic(void)
+ 225:sbc_comms.c   **** {
+ 1020              		.loc 1 225 0
+ 1021              		.cfi_startproc
+ 1022              		@ args = 0, pretend = 0, frame = 0
+ 1023              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1024              		@ link register save eliminated.
+ 1025 0000 80B4     		push	{r7}
+ 1026              		.cfi_def_cfa_offset 4
+ 1027              		.cfi_offset 7, -4
+ 1028 0002 00AF     		add	r7, sp, #0
+ 1029              		.cfi_def_cfa_register 7
+ 226:sbc_comms.c   ****     // When magic byte unknown
+ 227:sbc_comms.c   ****     return s_unknown_magic;
+ 1030              		.loc 1 227 0
+ 1031 0004 024B     		ldr	r3, .L53
+ 1032 0006 1B88     		ldrh	r3, [r3]
+ 228:sbc_comms.c   **** }
+ 1033              		.loc 1 228 0
+ 1034 0008 1846     		mov	r0, r3
+ 1035 000a BD46     		mov	sp, r7
+ 1036              		.cfi_def_cfa_register 13
+ 1037              		@ sp needed
+ 1038 000c 80BC     		pop	{r7}
+ 1039              		.cfi_restore 7
+ 1040              		.cfi_def_cfa_offset 0
+ 1041 000e 7047     		bx	lr
+ 1042              	.L54:
+ 1043              		.align	2
+ 1044              	.L53:
+ 1045 0010 70000000 		.word	s_unknown_magic
+ 1046              		.cfi_endproc
+ 1047              	.LFE68:
+ 1048              		.size	sbc_unknown_magic, .-sbc_unknown_magic
+ 1049              		.section	.text.sbc_rx_pkt_count,"ax",%progbits
+ 1050              		.align	2
+ 1051              		.global	sbc_rx_pkt_count
+ 1052              		.thumb
+ 1053              		.thumb_func
+ 1054              		.type	sbc_rx_pkt_count, %function
+ 1055              	sbc_rx_pkt_count:
+ 1056              	.LFB69:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 24
+
+
+ 229:sbc_comms.c   **** 
+ 230:sbc_comms.c   **** uint32_t sbc_rx_pkt_count(void)
+ 231:sbc_comms.c   **** {
+ 1057              		.loc 1 231 0
+ 1058              		.cfi_startproc
+ 1059              		@ args = 0, pretend = 0, frame = 0
+ 1060              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1061              		@ link register save eliminated.
+ 1062 0000 80B4     		push	{r7}
+ 1063              		.cfi_def_cfa_offset 4
+ 1064              		.cfi_offset 7, -4
+ 1065 0002 00AF     		add	r7, sp, #0
+ 1066              		.cfi_def_cfa_register 7
+ 232:sbc_comms.c   ****     // Received packet count getter
+ 233:sbc_comms.c   ****     return s_rx_pkt_count;
+ 1067              		.loc 1 233 0
+ 1068 0004 024B     		ldr	r3, .L57
+ 1069 0006 1B68     		ldr	r3, [r3]
+ 234:sbc_comms.c   **** }
+ 1070              		.loc 1 234 0
+ 1071 0008 1846     		mov	r0, r3
+ 1072 000a BD46     		mov	sp, r7
+ 1073              		.cfi_def_cfa_register 13
+ 1074              		@ sp needed
+ 1075 000c 80BC     		pop	{r7}
+ 1076              		.cfi_restore 7
+ 1077              		.cfi_def_cfa_offset 0
+ 1078 000e 7047     		bx	lr
+ 1079              	.L58:
+ 1080              		.align	2
+ 1081              	.L57:
+ 1082 0010 74000000 		.word	s_rx_pkt_count
+ 1083              		.cfi_endproc
+ 1084              	.LFE69:
+ 1085              		.size	sbc_rx_pkt_count, .-sbc_rx_pkt_count
+ 1086              		.section	.text.sbc_last_centroid_dt_ms,"ax",%progbits
+ 1087              		.align	2
+ 1088              		.global	sbc_last_centroid_dt_ms
+ 1089              		.thumb
+ 1090              		.thumb_func
+ 1091              		.type	sbc_last_centroid_dt_ms, %function
+ 1092              	sbc_last_centroid_dt_ms:
+ 1093              	.LFB70:
+ 235:sbc_comms.c   **** uint16_t sbc_last_centroid_dt_ms(uint8_t stream)
+ 236:sbc_comms.c   **** {
+ 1094              		.loc 1 236 0
+ 1095              		.cfi_startproc
+ 1096              		@ args = 0, pretend = 0, frame = 8
+ 1097              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1098              		@ link register save eliminated.
+ 1099 0000 80B4     		push	{r7}
+ 1100              		.cfi_def_cfa_offset 4
+ 1101              		.cfi_offset 7, -4
+ 1102 0002 83B0     		sub	sp, sp, #12
+ 1103              		.cfi_def_cfa_offset 16
+ 1104 0004 00AF     		add	r7, sp, #0
+ 1105              		.cfi_def_cfa_register 7
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 25
+
+
+ 1106 0006 0346     		mov	r3, r0
+ 1107 0008 FB71     		strb	r3, [r7, #7]
+ 237:sbc_comms.c   ****     // Time between last centroid pair getter
+ 238:sbc_comms.c   ****     return (stream < STREAM_COUNTS) ? s_last_rx_ms[stream] : 0u;
+ 1108              		.loc 1 238 0
+ 1109 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1110 000c 012B     		cmp	r3, #1
+ 1111 000e 05D8     		bhi	.L60
+ 1112              		.loc 1 238 0 is_stmt 0 discriminator 1
+ 1113 0010 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1114 0012 054A     		ldr	r2, .L63
+ 1115 0014 52F82330 		ldr	r3, [r2, r3, lsl #2]
+ 1116 0018 9BB2     		uxth	r3, r3
+ 1117 001a 00E0     		b	.L61
+ 1118              	.L60:
+ 1119              		.loc 1 238 0 discriminator 2
+ 1120 001c 0023     		movs	r3, #0
+ 1121              	.L61:
+ 239:sbc_comms.c   **** }
+ 1122              		.loc 1 239 0 is_stmt 1 discriminator 4
+ 1123 001e 1846     		mov	r0, r3
+ 1124 0020 0C37     		adds	r7, r7, #12
+ 1125              		.cfi_def_cfa_offset 4
+ 1126 0022 BD46     		mov	sp, r7
+ 1127              		.cfi_def_cfa_register 13
+ 1128              		@ sp needed
+ 1129 0024 80BC     		pop	{r7}
+ 1130              		.cfi_restore 7
+ 1131              		.cfi_def_cfa_offset 0
+ 1132 0026 7047     		bx	lr
+ 1133              	.L64:
+ 1134              		.align	2
+ 1135              	.L63:
+ 1136 0028 60000000 		.word	s_last_rx_ms
+ 1137              		.cfi_endproc
+ 1138              	.LFE70:
+ 1139              		.size	sbc_last_centroid_dt_ms, .-sbc_last_centroid_dt_ms
+ 1140              		.section	.text.sbc_last_rx_ms,"ax",%progbits
+ 1141              		.align	2
+ 1142              		.global	sbc_last_rx_ms
+ 1143              		.thumb
+ 1144              		.thumb_func
+ 1145              		.type	sbc_last_rx_ms, %function
+ 1146              	sbc_last_rx_ms:
+ 1147              	.LFB71:
+ 240:sbc_comms.c   **** 
+ 241:sbc_comms.c   **** uint32_t sbc_last_rx_ms(uint8_t stream)
+ 242:sbc_comms.c   **** {
+ 1148              		.loc 1 242 0
+ 1149              		.cfi_startproc
+ 1150              		@ args = 0, pretend = 0, frame = 8
+ 1151              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1152              		@ link register save eliminated.
+ 1153 0000 80B4     		push	{r7}
+ 1154              		.cfi_def_cfa_offset 4
+ 1155              		.cfi_offset 7, -4
+ 1156 0002 83B0     		sub	sp, sp, #12
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 26
+
+
+ 1157              		.cfi_def_cfa_offset 16
+ 1158 0004 00AF     		add	r7, sp, #0
+ 1159              		.cfi_def_cfa_register 7
+ 1160 0006 0346     		mov	r3, r0
+ 1161 0008 FB71     		strb	r3, [r7, #7]
+ 243:sbc_comms.c   ****     // Time of last received packet getter
+ 244:sbc_comms.c   ****     return (stream < STREAM_COUNTS) ? s_last_centroid_dt_ms[stream] : 0u;
+ 1162              		.loc 1 244 0
+ 1163 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1164 000c 012B     		cmp	r3, #1
+ 1165 000e 04D8     		bhi	.L66
+ 1166              		.loc 1 244 0 is_stmt 0 discriminator 1
+ 1167 0010 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1168 0012 054A     		ldr	r2, .L69
+ 1169 0014 32F81330 		ldrh	r3, [r2, r3, lsl #1]
+ 1170 0018 00E0     		b	.L68
+ 1171              	.L66:
+ 1172              		.loc 1 244 0 discriminator 2
+ 1173 001a 0023     		movs	r3, #0
+ 1174              	.L68:
+ 245:sbc_comms.c   **** }
+ 1175              		.loc 1 245 0 is_stmt 1 discriminator 5
+ 1176 001c 1846     		mov	r0, r3
+ 1177 001e 0C37     		adds	r7, r7, #12
+ 1178              		.cfi_def_cfa_offset 4
+ 1179 0020 BD46     		mov	sp, r7
+ 1180              		.cfi_def_cfa_register 13
+ 1181              		@ sp needed
+ 1182 0022 80BC     		pop	{r7}
+ 1183              		.cfi_restore 7
+ 1184              		.cfi_def_cfa_offset 0
+ 1185 0024 7047     		bx	lr
+ 1186              	.L70:
+ 1187 0026 00BF     		.align	2
+ 1188              	.L69:
+ 1189 0028 68000000 		.word	s_last_centroid_dt_ms
+ 1190              		.cfi_endproc
+ 1191              	.LFE71:
+ 1192              		.size	sbc_last_rx_ms, .-sbc_last_rx_ms
+ 1193              		.section	.text.sbc_crc_errors,"ax",%progbits
+ 1194              		.align	2
+ 1195              		.global	sbc_crc_errors
+ 1196              		.thumb
+ 1197              		.thumb_func
+ 1198              		.type	sbc_crc_errors, %function
+ 1199              	sbc_crc_errors:
+ 1200              	.LFB72:
+ 246:sbc_comms.c   **** uint16_t sbc_crc_errors(void)
+ 247:sbc_comms.c   **** {
+ 1201              		.loc 1 247 0
+ 1202              		.cfi_startproc
+ 1203              		@ args = 0, pretend = 0, frame = 0
+ 1204              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1205              		@ link register save eliminated.
+ 1206 0000 80B4     		push	{r7}
+ 1207              		.cfi_def_cfa_offset 4
+ 1208              		.cfi_offset 7, -4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 27
+
+
+ 1209 0002 00AF     		add	r7, sp, #0
+ 1210              		.cfi_def_cfa_register 7
+ 248:sbc_comms.c   ****     // CRC error getter
+ 249:sbc_comms.c   ****     return s_crc_err;
+ 1211              		.loc 1 249 0
+ 1212 0004 024B     		ldr	r3, .L73
+ 1213 0006 1B88     		ldrh	r3, [r3]
+ 250:sbc_comms.c   **** }
+ 1214              		.loc 1 250 0
+ 1215 0008 1846     		mov	r0, r3
+ 1216 000a BD46     		mov	sp, r7
+ 1217              		.cfi_def_cfa_register 13
+ 1218              		@ sp needed
+ 1219 000c 80BC     		pop	{r7}
+ 1220              		.cfi_restore 7
+ 1221              		.cfi_def_cfa_offset 0
+ 1222 000e 7047     		bx	lr
+ 1223              	.L74:
+ 1224              		.align	2
+ 1225              	.L73:
+ 1226 0010 6C000000 		.word	s_crc_err
+ 1227              		.cfi_endproc
+ 1228              	.LFE72:
+ 1229              		.size	sbc_crc_errors, .-sbc_crc_errors
+ 1230              		.section	.text.sbc_uart_errors,"ax",%progbits
+ 1231              		.align	2
+ 1232              		.global	sbc_uart_errors
+ 1233              		.thumb
+ 1234              		.thumb_func
+ 1235              		.type	sbc_uart_errors, %function
+ 1236              	sbc_uart_errors:
+ 1237              	.LFB73:
+ 251:sbc_comms.c   **** uint16_t sbc_uart_errors(void)
+ 252:sbc_comms.c   **** {
+ 1238              		.loc 1 252 0
+ 1239              		.cfi_startproc
+ 1240              		@ args = 0, pretend = 0, frame = 0
+ 1241              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1242              		@ link register save eliminated.
+ 1243 0000 80B4     		push	{r7}
+ 1244              		.cfi_def_cfa_offset 4
+ 1245              		.cfi_offset 7, -4
+ 1246 0002 00AF     		add	r7, sp, #0
+ 1247              		.cfi_def_cfa_register 7
+ 253:sbc_comms.c   ****     // UART error getter
+ 254:sbc_comms.c   ****     return s_uart_err;
+ 1248              		.loc 1 254 0
+ 1249 0004 024B     		ldr	r3, .L77
+ 1250 0006 1B88     		ldrh	r3, [r3]
+ 255:sbc_comms.c   **** }
+ 1251              		.loc 1 255 0
+ 1252 0008 1846     		mov	r0, r3
+ 1253 000a BD46     		mov	sp, r7
+ 1254              		.cfi_def_cfa_register 13
+ 1255              		@ sp needed
+ 1256 000c 80BC     		pop	{r7}
+ 1257              		.cfi_restore 7
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 28
+
+
+ 1258              		.cfi_def_cfa_offset 0
+ 1259 000e 7047     		bx	lr
+ 1260              	.L78:
+ 1261              		.align	2
+ 1262              	.L77:
+ 1263 0010 6E000000 		.word	s_uart_err
+ 1264              		.cfi_endproc
+ 1265              	.LFE73:
+ 1266              		.size	sbc_uart_errors, .-sbc_uart_errors
+ 1267              		.section	.text.sbc_send_frame,"ax",%progbits
+ 1268              		.align	2
+ 1269              		.global	sbc_send_frame
+ 1270              		.thumb
+ 1271              		.thumb_func
+ 1272              		.type	sbc_send_frame, %function
+ 1273              	sbc_send_frame:
+ 1274              	.LFB74:
+ 256:sbc_comms.c   **** 
+ 257:sbc_comms.c   **** void sbc_send_frame(uint8_t type, const uint8_t *payload, uint8_t len)
+ 258:sbc_comms.c   **** {
+ 1275              		.loc 1 258 0
+ 1276              		.cfi_startproc
+ 1277              		@ args = 0, pretend = 0, frame = 16
+ 1278              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1279 0000 80B5     		push	{r7, lr}
+ 1280              		.cfi_def_cfa_offset 8
+ 1281              		.cfi_offset 7, -8
+ 1282              		.cfi_offset 14, -4
+ 1283 0002 84B0     		sub	sp, sp, #16
+ 1284              		.cfi_def_cfa_offset 24
+ 1285 0004 00AF     		add	r7, sp, #0
+ 1286              		.cfi_def_cfa_register 7
+ 1287 0006 0346     		mov	r3, r0
+ 1288 0008 3960     		str	r1, [r7]
+ 1289 000a FB71     		strb	r3, [r7, #7]
+ 1290 000c 1346     		mov	r3, r2
+ 1291 000e BB71     		strb	r3, [r7, #6]
+ 259:sbc_comms.c   ****     // Encoder to send a frame to the Pi
+ 260:sbc_comms.c   ****     UART_SBC_PutChar(PI_MAGIC);  // Magic byte
+ 1292              		.loc 1 260 0
+ 1293 0010 AB20     		movs	r0, #171
+ 1294 0012 FFF7FEFF 		bl	UART_SBC_PutChar
+ 261:sbc_comms.c   ****     UART_SBC_PutChar(type);      // Type byte
+ 1295              		.loc 1 261 0
+ 1296 0016 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1297 0018 1846     		mov	r0, r3
+ 1298 001a FFF7FEFF 		bl	UART_SBC_PutChar
+ 262:sbc_comms.c   ****     UART_SBC_PutChar(len);       // Length byte
+ 1299              		.loc 1 262 0
+ 1300 001e BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1301 0020 1846     		mov	r0, r3
+ 1302 0022 FFF7FEFF 		bl	UART_SBC_PutChar
+ 263:sbc_comms.c   ****     uint8_t crc = crc8_table[type];
+ 1303              		.loc 1 263 0
+ 1304 0026 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1305 0028 174A     		ldr	r2, .L82
+ 1306 002a D35C     		ldrb	r3, [r2, r3]
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 29
+
+
+ 1307 002c FB73     		strb	r3, [r7, #15]
+ 264:sbc_comms.c   ****     crc = crc8_table[crc ^ len];// Start CRC
+ 1308              		.loc 1 264 0
+ 1309 002e FA7B     		ldrb	r2, [r7, #15]
+ 1310 0030 BB79     		ldrb	r3, [r7, #6]
+ 1311 0032 5340     		eors	r3, r3, r2
+ 1312 0034 DBB2     		uxtb	r3, r3
+ 1313 0036 1A46     		mov	r2, r3
+ 1314 0038 134B     		ldr	r3, .L82
+ 1315 003a 9B5C     		ldrb	r3, [r3, r2]
+ 1316 003c FB73     		strb	r3, [r7, #15]
+ 1317              	.LBB6:
+ 265:sbc_comms.c   ****     for (uint8_t i = 0u; i < len; i++) {
+ 1318              		.loc 1 265 0
+ 1319 003e 0023     		movs	r3, #0
+ 1320 0040 BB73     		strb	r3, [r7, #14]
+ 1321 0042 14E0     		b	.L80
+ 1322              	.L81:
+ 266:sbc_comms.c   ****         UART_SBC_PutChar(payload[i]);  // Put payload and compute CRC
+ 1323              		.loc 1 266 0 discriminator 3
+ 1324 0044 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 1325 0046 3A68     		ldr	r2, [r7]
+ 1326 0048 1344     		add	r3, r3, r2
+ 1327 004a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1328 004c 1846     		mov	r0, r3
+ 1329 004e FFF7FEFF 		bl	UART_SBC_PutChar
+ 267:sbc_comms.c   ****         crc = crc8_table[crc ^ payload[i]];
+ 1330              		.loc 1 267 0 discriminator 3
+ 1331 0052 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 1332 0054 3A68     		ldr	r2, [r7]
+ 1333 0056 1344     		add	r3, r3, r2
+ 1334 0058 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 1335 005a FB7B     		ldrb	r3, [r7, #15]
+ 1336 005c 5340     		eors	r3, r3, r2
+ 1337 005e DBB2     		uxtb	r3, r3
+ 1338 0060 1A46     		mov	r2, r3
+ 1339 0062 094B     		ldr	r3, .L82
+ 1340 0064 9B5C     		ldrb	r3, [r3, r2]
+ 1341 0066 FB73     		strb	r3, [r7, #15]
+ 265:sbc_comms.c   ****     for (uint8_t i = 0u; i < len; i++) {
+ 1342              		.loc 1 265 0 discriminator 3
+ 1343 0068 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 1344 006a 0133     		adds	r3, r3, #1
+ 1345 006c BB73     		strb	r3, [r7, #14]
+ 1346              	.L80:
+ 265:sbc_comms.c   ****     for (uint8_t i = 0u; i < len; i++) {
+ 1347              		.loc 1 265 0 is_stmt 0 discriminator 1
+ 1348 006e BA7B     		ldrb	r2, [r7, #14]	@ zero_extendqisi2
+ 1349 0070 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1350 0072 9A42     		cmp	r2, r3
+ 1351 0074 E6D3     		bcc	.L81
+ 1352              	.LBE6:
+ 268:sbc_comms.c   ****     }
+ 269:sbc_comms.c   ****     UART_SBC_PutChar(crc);       // Put calculates CRC
+ 1353              		.loc 1 269 0 is_stmt 1
+ 1354 0076 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 1355 0078 1846     		mov	r0, r3
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 30
+
+
+ 1356 007a FFF7FEFF 		bl	UART_SBC_PutChar
+ 270:sbc_comms.c   **** }
+ 1357              		.loc 1 270 0
+ 1358 007e 00BF     		nop
+ 1359 0080 1037     		adds	r7, r7, #16
+ 1360              		.cfi_def_cfa_offset 8
+ 1361 0082 BD46     		mov	sp, r7
+ 1362              		.cfi_def_cfa_register 13
+ 1363              		@ sp needed
+ 1364 0084 80BD     		pop	{r7, pc}
+ 1365              	.L83:
+ 1366 0086 00BF     		.align	2
+ 1367              	.L82:
+ 1368 0088 00000000 		.word	crc8_table
+ 1369              		.cfi_endproc
+ 1370              	.LFE74:
+ 1371              		.size	sbc_send_frame, .-sbc_send_frame
+ 1372              		.text
+ 1373              	.Letext0:
+ 1374              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1375              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1376              		.file 4 "sbc_comms.h"
+ 1377              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 1378              		.section	.debug_info,"",%progbits
+ 1379              	.Ldebug_info0:
+ 1380 0000 4F050000 		.4byte	0x54f
+ 1381 0004 0400     		.2byte	0x4
+ 1382 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1383 000a 04       		.byte	0x4
+ 1384 000b 01       		.uleb128 0x1
+ 1385 000c B1000000 		.4byte	.LASF65
+ 1386 0010 0C       		.byte	0xc
+ 1387 0011 9C030000 		.4byte	.LASF66
+ 1388 0015 5B010000 		.4byte	.LASF67
+ 1389 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1390 001d 00000000 		.4byte	0
+ 1391 0021 00000000 		.4byte	.Ldebug_line0
+ 1392 0025 02       		.uleb128 0x2
+ 1393 0026 01       		.byte	0x1
+ 1394 0027 06       		.byte	0x6
+ 1395 0028 16020000 		.4byte	.LASF0
+ 1396 002c 03       		.uleb128 0x3
+ 1397 002d E5030000 		.4byte	.LASF2
+ 1398 0031 02       		.byte	0x2
+ 1399 0032 1D       		.byte	0x1d
+ 1400 0033 37000000 		.4byte	0x37
+ 1401 0037 02       		.uleb128 0x2
+ 1402 0038 01       		.byte	0x1
+ 1403 0039 08       		.byte	0x8
+ 1404 003a 6E020000 		.4byte	.LASF1
+ 1405 003e 03       		.uleb128 0x3
+ 1406 003f 77030000 		.4byte	.LASF3
+ 1407 0043 02       		.byte	0x2
+ 1408 0044 29       		.byte	0x29
+ 1409 0045 49000000 		.4byte	0x49
+ 1410 0049 02       		.uleb128 0x2
+ 1411 004a 02       		.byte	0x2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 31
+
+
+ 1412 004b 05       		.byte	0x5
+ 1413 004c 88000000 		.4byte	.LASF4
+ 1414 0050 03       		.uleb128 0x3
+ 1415 0051 D0010000 		.4byte	.LASF5
+ 1416 0055 02       		.byte	0x2
+ 1417 0056 2B       		.byte	0x2b
+ 1418 0057 5B000000 		.4byte	0x5b
+ 1419 005b 02       		.uleb128 0x2
+ 1420 005c 02       		.byte	0x2
+ 1421 005d 07       		.byte	0x7
+ 1422 005e F7020000 		.4byte	.LASF6
+ 1423 0062 03       		.uleb128 0x3
+ 1424 0063 6D030000 		.4byte	.LASF7
+ 1425 0067 02       		.byte	0x2
+ 1426 0068 3F       		.byte	0x3f
+ 1427 0069 6D000000 		.4byte	0x6d
+ 1428 006d 02       		.uleb128 0x2
+ 1429 006e 04       		.byte	0x4
+ 1430 006f 05       		.byte	0x5
+ 1431 0070 0F030000 		.4byte	.LASF8
+ 1432 0074 03       		.uleb128 0x3
+ 1433 0075 49010000 		.4byte	.LASF9
+ 1434 0079 02       		.byte	0x2
+ 1435 007a 41       		.byte	0x41
+ 1436 007b 7F000000 		.4byte	0x7f
+ 1437 007f 02       		.uleb128 0x2
+ 1438 0080 04       		.byte	0x4
+ 1439 0081 07       		.byte	0x7
+ 1440 0082 4F030000 		.4byte	.LASF10
+ 1441 0086 02       		.uleb128 0x2
+ 1442 0087 08       		.byte	0x8
+ 1443 0088 05       		.byte	0x5
+ 1444 0089 2D020000 		.4byte	.LASF11
+ 1445 008d 02       		.uleb128 0x2
+ 1446 008e 08       		.byte	0x8
+ 1447 008f 07       		.byte	0x7
+ 1448 0090 C1020000 		.4byte	.LASF12
+ 1449 0094 04       		.uleb128 0x4
+ 1450 0095 04       		.byte	0x4
+ 1451 0096 05       		.byte	0x5
+ 1452 0097 696E7400 		.ascii	"int\000"
+ 1453 009b 02       		.uleb128 0x2
+ 1454 009c 04       		.byte	0x4
+ 1455 009d 07       		.byte	0x7
+ 1456 009e E1020000 		.4byte	.LASF13
+ 1457 00a2 03       		.uleb128 0x3
+ 1458 00a3 08020000 		.4byte	.LASF14
+ 1459 00a7 03       		.byte	0x3
+ 1460 00a8 18       		.byte	0x18
+ 1461 00a9 2C000000 		.4byte	0x2c
+ 1462 00ad 03       		.uleb128 0x3
+ 1463 00ae 25030000 		.4byte	.LASF15
+ 1464 00b2 03       		.byte	0x3
+ 1465 00b3 20       		.byte	0x20
+ 1466 00b4 3E000000 		.4byte	0x3e
+ 1467 00b8 03       		.uleb128 0x3
+ 1468 00b9 EE020000 		.4byte	.LASF16
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 32
+
+
+ 1469 00bd 03       		.byte	0x3
+ 1470 00be 24       		.byte	0x24
+ 1471 00bf 50000000 		.4byte	0x50
+ 1472 00c3 03       		.uleb128 0x3
+ 1473 00c4 1D030000 		.4byte	.LASF17
+ 1474 00c8 03       		.byte	0x3
+ 1475 00c9 2C       		.byte	0x2c
+ 1476 00ca 62000000 		.4byte	0x62
+ 1477 00ce 03       		.uleb128 0x3
+ 1478 00cf D8020000 		.4byte	.LASF18
+ 1479 00d3 03       		.byte	0x3
+ 1480 00d4 30       		.byte	0x30
+ 1481 00d5 74000000 		.4byte	0x74
+ 1482 00d9 05       		.uleb128 0x5
+ 1483 00da 0C       		.byte	0xc
+ 1484 00db 04       		.byte	0x4
+ 1485 00dc 2D       		.byte	0x2d
+ 1486 00dd 1C010000 		.4byte	0x11c
+ 1487 00e1 06       		.uleb128 0x6
+ 1488 00e2 68030000 		.4byte	.LASF19
+ 1489 00e6 04       		.byte	0x4
+ 1490 00e7 2E       		.byte	0x2e
+ 1491 00e8 CE000000 		.4byte	0xce
+ 1492 00ec 00       		.byte	0
+ 1493 00ed 07       		.uleb128 0x7
+ 1494 00ee 637800   		.ascii	"cx\000"
+ 1495 00f1 04       		.byte	0x4
+ 1496 00f2 2F       		.byte	0x2f
+ 1497 00f3 AD000000 		.4byte	0xad
+ 1498 00f7 04       		.byte	0x4
+ 1499 00f8 07       		.uleb128 0x7
+ 1500 00f9 637900   		.ascii	"cy\000"
+ 1501 00fc 04       		.byte	0x4
+ 1502 00fd 2F       		.byte	0x2f
+ 1503 00fe AD000000 		.4byte	0xad
+ 1504 0102 06       		.byte	0x6
+ 1505 0103 06       		.uleb128 0x6
+ 1506 0104 57000000 		.4byte	.LASF20
+ 1507 0108 04       		.byte	0x4
+ 1508 0109 30       		.byte	0x30
+ 1509 010a B8000000 		.4byte	0xb8
+ 1510 010e 08       		.byte	0x8
+ 1511 010f 06       		.uleb128 0x6
+ 1512 0110 E5010000 		.4byte	.LASF21
+ 1513 0114 04       		.byte	0x4
+ 1514 0115 30       		.byte	0x30
+ 1515 0116 B8000000 		.4byte	0xb8
+ 1516 011a 0A       		.byte	0xa
+ 1517 011b 00       		.byte	0
+ 1518 011c 03       		.uleb128 0x3
+ 1519 011d 68000000 		.4byte	.LASF22
+ 1520 0121 04       		.byte	0x4
+ 1521 0122 31       		.byte	0x31
+ 1522 0123 D9000000 		.4byte	0xd9
+ 1523 0127 02       		.uleb128 0x2
+ 1524 0128 08       		.byte	0x8
+ 1525 0129 04       		.byte	0x4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 33
+
+
+ 1526 012a 7C020000 		.4byte	.LASF23
+ 1527 012e 02       		.uleb128 0x2
+ 1528 012f 04       		.byte	0x4
+ 1529 0130 07       		.byte	0x7
+ 1530 0131 92000000 		.4byte	.LASF24
+ 1531 0135 02       		.uleb128 0x2
+ 1532 0136 01       		.byte	0x1
+ 1533 0137 08       		.byte	0x8
+ 1534 0138 0A030000 		.4byte	.LASF25
+ 1535 013c 02       		.uleb128 0x2
+ 1536 013d 04       		.byte	0x4
+ 1537 013e 04       		.byte	0x4
+ 1538 013f 22020000 		.4byte	.LASF26
+ 1539 0143 02       		.uleb128 0x2
+ 1540 0144 08       		.byte	0x8
+ 1541 0145 04       		.byte	0x4
+ 1542 0146 61030000 		.4byte	.LASF27
+ 1543 014a 08       		.uleb128 0x8
+ 1544 014b CE000000 		.4byte	0xce
+ 1545 014f 08       		.uleb128 0x8
+ 1546 0150 A2000000 		.4byte	0xa2
+ 1547 0154 09       		.uleb128 0x9
+ 1548 0155 CE000000 		.4byte	0xce
+ 1549 0159 64010000 		.4byte	0x164
+ 1550 015d 0A       		.uleb128 0xa
+ 1551 015e 2E010000 		.4byte	0x12e
+ 1552 0162 01       		.byte	0x1
+ 1553 0163 00       		.byte	0
+ 1554 0164 0B       		.uleb128 0xb
+ 1555 0165 01       		.byte	0x1
+ 1556 0166 37000000 		.4byte	0x37
+ 1557 016a 01       		.byte	0x1
+ 1558 016b 47       		.byte	0x47
+ 1559 016c 8F010000 		.4byte	0x18f
+ 1560 0170 0C       		.uleb128 0xc
+ 1561 0171 88020000 		.4byte	.LASF28
+ 1562 0175 00       		.byte	0
+ 1563 0176 0C       		.uleb128 0xc
+ 1564 0177 54010000 		.4byte	.LASF29
+ 1565 017b 01       		.byte	0x1
+ 1566 017c 0C       		.uleb128 0xc
+ 1567 017d 3E030000 		.4byte	.LASF30
+ 1568 0181 02       		.byte	0x2
+ 1569 0182 0C       		.uleb128 0xc
+ 1570 0183 3F010000 		.4byte	.LASF31
+ 1571 0187 03       		.byte	0x3
+ 1572 0188 0C       		.uleb128 0xc
+ 1573 0189 10020000 		.4byte	.LASF32
+ 1574 018d 04       		.byte	0x4
+ 1575 018e 00       		.byte	0
+ 1576 018f 0D       		.uleb128 0xd
+ 1577 0190 9D020000 		.4byte	.LASF34
+ 1578 0194 01       		.byte	0x1
+ 1579 0195 57       		.byte	0x57
+ 1580 0196 00000000 		.4byte	.LFB63
+ 1581 019a 84000000 		.4byte	.LFE63-.LFB63
+ 1582 019e 01       		.uleb128 0x1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 34
+
+
+ 1583 019f 9C       		.byte	0x9c
+ 1584 01a0 BB010000 		.4byte	0x1bb
+ 1585 01a4 0E       		.uleb128 0xe
+ 1586 01a5 30000000 		.4byte	.LBB2
+ 1587 01a9 26000000 		.4byte	.LBE2-.LBB2
+ 1588 01ad 0F       		.uleb128 0xf
+ 1589 01ae 6900     		.ascii	"i\000"
+ 1590 01b0 01       		.byte	0x1
+ 1591 01b1 62       		.byte	0x62
+ 1592 01b2 A2000000 		.4byte	0xa2
+ 1593 01b6 02       		.uleb128 0x2
+ 1594 01b7 91       		.byte	0x91
+ 1595 01b8 77       		.sleb128 -9
+ 1596 01b9 00       		.byte	0
+ 1597 01ba 00       		.byte	0
+ 1598 01bb 10       		.uleb128 0x10
+ 1599 01bc CD030000 		.4byte	.LASF68
+ 1600 01c0 01       		.byte	0x1
+ 1601 01c1 68       		.byte	0x68
+ 1602 01c2 00000000 		.4byte	.LFB64
+ 1603 01c6 14010000 		.4byte	.LFE64-.LFB64
+ 1604 01ca 01       		.uleb128 0x1
+ 1605 01cb 9C       		.byte	0x9c
+ 1606 01cc 10020000 		.4byte	0x210
+ 1607 01d0 11       		.uleb128 0x11
+ 1608 01d1 61020000 		.4byte	.LASF33
+ 1609 01d5 01       		.byte	0x1
+ 1610 01d6 68       		.byte	0x68
+ 1611 01d7 A2000000 		.4byte	0xa2
+ 1612 01db 02       		.uleb128 0x2
+ 1613 01dc 91       		.byte	0x91
+ 1614 01dd 6F       		.sleb128 -17
+ 1615 01de 12       		.uleb128 0x12
+ 1616 01df 7000     		.ascii	"p\000"
+ 1617 01e1 01       		.byte	0x1
+ 1618 01e2 68       		.byte	0x68
+ 1619 01e3 10020000 		.4byte	0x210
+ 1620 01e7 02       		.uleb128 0x2
+ 1621 01e8 91       		.byte	0x91
+ 1622 01e9 68       		.sleb128 -24
+ 1623 01ea 0F       		.uleb128 0xf
+ 1624 01eb 6E6F7700 		.ascii	"now\000"
+ 1625 01ef 01       		.byte	0x1
+ 1626 01f0 6B       		.byte	0x6b
+ 1627 01f1 CE000000 		.4byte	0xce
+ 1628 01f5 02       		.uleb128 0x2
+ 1629 01f6 91       		.byte	0x91
+ 1630 01f7 74       		.sleb128 -12
+ 1631 01f8 0E       		.uleb128 0xe
+ 1632 01f9 1E000000 		.4byte	.LBB3
+ 1633 01fd 28000000 		.4byte	.LBE3-.LBB3
+ 1634 0201 0F       		.uleb128 0xf
+ 1635 0202 647400   		.ascii	"dt\000"
+ 1636 0205 01       		.byte	0x1
+ 1637 0206 6D       		.byte	0x6d
+ 1638 0207 CE000000 		.4byte	0xce
+ 1639 020b 02       		.uleb128 0x2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 35
+
+
+ 1640 020c 91       		.byte	0x91
+ 1641 020d 70       		.sleb128 -16
+ 1642 020e 00       		.byte	0
+ 1643 020f 00       		.byte	0
+ 1644 0210 13       		.uleb128 0x13
+ 1645 0211 04       		.byte	0x4
+ 1646 0212 16020000 		.4byte	0x216
+ 1647 0216 14       		.uleb128 0x14
+ 1648 0217 A2000000 		.4byte	0xa2
+ 1649 021b 15       		.uleb128 0x15
+ 1650 021c EF030000 		.4byte	.LASF35
+ 1651 0220 01       		.byte	0x1
+ 1652 0221 80       		.byte	0x80
+ 1653 0222 00000000 		.4byte	.LFB65
+ 1654 0226 8C010000 		.4byte	.LFE65-.LFB65
+ 1655 022a 01       		.uleb128 0x1
+ 1656 022b 9C       		.byte	0x9c
+ 1657 022c 6B020000 		.4byte	0x26b
+ 1658 0230 12       		.uleb128 0x12
+ 1659 0231 6200     		.ascii	"b\000"
+ 1660 0233 01       		.byte	0x1
+ 1661 0234 80       		.byte	0x80
+ 1662 0235 A2000000 		.4byte	0xa2
+ 1663 0239 02       		.uleb128 0x2
+ 1664 023a 91       		.byte	0x91
+ 1665 023b 6F       		.sleb128 -17
+ 1666 023c 0E       		.uleb128 0xe
+ 1667 023d B6000000 		.4byte	.LBB4
+ 1668 0241 A8000000 		.4byte	.LBE4-.LBB4
+ 1669 0245 16       		.uleb128 0x16
+ 1670 0246 28020000 		.4byte	.LASF36
+ 1671 024a 01       		.byte	0x1
+ 1672 024b A3       		.byte	0xa3
+ 1673 024c A2000000 		.4byte	0xa2
+ 1674 0250 02       		.uleb128 0x2
+ 1675 0251 91       		.byte	0x91
+ 1676 0252 77       		.sleb128 -9
+ 1677 0253 0E       		.uleb128 0xe
+ 1678 0254 D4000000 		.4byte	.LBB5
+ 1679 0258 2A000000 		.4byte	.LBE5-.LBB5
+ 1680 025c 0F       		.uleb128 0xf
+ 1681 025d 6900     		.ascii	"i\000"
+ 1682 025f 01       		.byte	0x1
+ 1683 0260 A5       		.byte	0xa5
+ 1684 0261 A2000000 		.4byte	0xa2
+ 1685 0265 02       		.uleb128 0x2
+ 1686 0266 91       		.byte	0x91
+ 1687 0267 76       		.sleb128 -10
+ 1688 0268 00       		.byte	0
+ 1689 0269 00       		.byte	0
+ 1690 026a 00       		.byte	0
+ 1691 026b 0D       		.uleb128 0xd
+ 1692 026c F2010000 		.4byte	.LASF37
+ 1693 0270 01       		.byte	0x1
+ 1694 0271 C4       		.byte	0xc4
+ 1695 0272 00000000 		.4byte	.LFB66
+ 1696 0276 30000000 		.4byte	.LFE66-.LFB66
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 36
+
+
+ 1697 027a 01       		.uleb128 0x1
+ 1698 027b 9C       		.byte	0x9c
+ 1699 027c 8F020000 		.4byte	0x28f
+ 1700 0280 11       		.uleb128 0x11
+ 1701 0281 BB020000 		.4byte	.LASF38
+ 1702 0285 01       		.byte	0x1
+ 1703 0286 C4       		.byte	0xc4
+ 1704 0287 A2000000 		.4byte	0xa2
+ 1705 028b 02       		.uleb128 0x2
+ 1706 028c 91       		.byte	0x91
+ 1707 028d 77       		.sleb128 -9
+ 1708 028e 00       		.byte	0
+ 1709 028f 17       		.uleb128 0x17
+ 1710 0290 24000000 		.4byte	.LASF41
+ 1711 0294 01       		.byte	0x1
+ 1712 0295 CC       		.byte	0xcc
+ 1713 0296 A2000000 		.4byte	0xa2
+ 1714 029a 00000000 		.4byte	.LFB67
+ 1715 029e 88000000 		.4byte	.LFE67-.LFB67
+ 1716 02a2 01       		.uleb128 0x1
+ 1717 02a3 9C       		.byte	0x9c
+ 1718 02a4 EF020000 		.4byte	0x2ef
+ 1719 02a8 11       		.uleb128 0x11
+ 1720 02a9 61020000 		.4byte	.LASF33
+ 1721 02ad 01       		.byte	0x1
+ 1722 02ae CC       		.byte	0xcc
+ 1723 02af A2000000 		.4byte	0xa2
+ 1724 02b3 02       		.uleb128 0x2
+ 1725 02b4 91       		.byte	0x91
+ 1726 02b5 6F       		.sleb128 -17
+ 1727 02b6 12       		.uleb128 0x12
+ 1728 02b7 6F757400 		.ascii	"out\000"
+ 1729 02bb 01       		.byte	0x1
+ 1730 02bc CC       		.byte	0xcc
+ 1731 02bd EF020000 		.4byte	0x2ef
+ 1732 02c1 02       		.uleb128 0x2
+ 1733 02c2 91       		.byte	0x91
+ 1734 02c3 68       		.sleb128 -24
+ 1735 02c4 0F       		.uleb128 0xf
+ 1736 02c5 62697400 		.ascii	"bit\000"
+ 1737 02c9 01       		.byte	0x1
+ 1738 02ca D4       		.byte	0xd4
+ 1739 02cb A2000000 		.4byte	0xa2
+ 1740 02cf 02       		.uleb128 0x2
+ 1741 02d0 91       		.byte	0x91
+ 1742 02d1 76       		.sleb128 -10
+ 1743 02d2 0F       		.uleb128 0xf
+ 1744 02d3 676F7400 		.ascii	"got\000"
+ 1745 02d7 01       		.byte	0x1
+ 1746 02d8 D5       		.byte	0xd5
+ 1747 02d9 A2000000 		.4byte	0xa2
+ 1748 02dd 02       		.uleb128 0x2
+ 1749 02de 91       		.byte	0x91
+ 1750 02df 77       		.sleb128 -9
+ 1751 02e0 0F       		.uleb128 0xf
+ 1752 02e1 69737400 		.ascii	"ist\000"
+ 1753 02e5 01       		.byte	0x1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 37
+
+
+ 1754 02e6 D6       		.byte	0xd6
+ 1755 02e7 A2000000 		.4byte	0xa2
+ 1756 02eb 02       		.uleb128 0x2
+ 1757 02ec 91       		.byte	0x91
+ 1758 02ed 75       		.sleb128 -11
+ 1759 02ee 00       		.byte	0
+ 1760 02ef 13       		.uleb128 0x13
+ 1761 02f0 04       		.byte	0x4
+ 1762 02f1 1C010000 		.4byte	0x11c
+ 1763 02f5 18       		.uleb128 0x18
+ 1764 02f6 35000000 		.4byte	.LASF39
+ 1765 02fa 01       		.byte	0x1
+ 1766 02fb E0       		.byte	0xe0
+ 1767 02fc B8000000 		.4byte	0xb8
+ 1768 0300 00000000 		.4byte	.LFB68
+ 1769 0304 14000000 		.4byte	.LFE68-.LFB68
+ 1770 0308 01       		.uleb128 0x1
+ 1771 0309 9C       		.byte	0x9c
+ 1772 030a 18       		.uleb128 0x18
+ 1773 030b 2D030000 		.4byte	.LASF40
+ 1774 030f 01       		.byte	0x1
+ 1775 0310 E6       		.byte	0xe6
+ 1776 0311 CE000000 		.4byte	0xce
+ 1777 0315 00000000 		.4byte	.LFB69
+ 1778 0319 14000000 		.4byte	.LFE69-.LFB69
+ 1779 031d 01       		.uleb128 0x1
+ 1780 031e 9C       		.byte	0x9c
+ 1781 031f 19       		.uleb128 0x19
+ 1782 0320 B5030000 		.4byte	.LASF42
+ 1783 0324 01       		.byte	0x1
+ 1784 0325 EB       		.byte	0xeb
+ 1785 0326 B8000000 		.4byte	0xb8
+ 1786 032a 00000000 		.4byte	.LFB70
+ 1787 032e 2C000000 		.4byte	.LFE70-.LFB70
+ 1788 0332 01       		.uleb128 0x1
+ 1789 0333 9C       		.byte	0x9c
+ 1790 0334 47030000 		.4byte	0x347
+ 1791 0338 11       		.uleb128 0x11
+ 1792 0339 61020000 		.4byte	.LASF33
+ 1793 033d 01       		.byte	0x1
+ 1794 033e EB       		.byte	0xeb
+ 1795 033f A2000000 		.4byte	0xa2
+ 1796 0343 02       		.uleb128 0x2
+ 1797 0344 91       		.byte	0x91
+ 1798 0345 77       		.sleb128 -9
+ 1799 0346 00       		.byte	0
+ 1800 0347 19       		.uleb128 0x19
+ 1801 0348 06000000 		.4byte	.LASF43
+ 1802 034c 01       		.byte	0x1
+ 1803 034d F1       		.byte	0xf1
+ 1804 034e CE000000 		.4byte	0xce
+ 1805 0352 00000000 		.4byte	.LFB71
+ 1806 0356 2C000000 		.4byte	.LFE71-.LFB71
+ 1807 035a 01       		.uleb128 0x1
+ 1808 035b 9C       		.byte	0x9c
+ 1809 035c 6F030000 		.4byte	0x36f
+ 1810 0360 11       		.uleb128 0x11
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 38
+
+
+ 1811 0361 61020000 		.4byte	.LASF33
+ 1812 0365 01       		.byte	0x1
+ 1813 0366 F1       		.byte	0xf1
+ 1814 0367 A2000000 		.4byte	0xa2
+ 1815 036b 02       		.uleb128 0x2
+ 1816 036c 91       		.byte	0x91
+ 1817 036d 77       		.sleb128 -9
+ 1818 036e 00       		.byte	0
+ 1819 036f 18       		.uleb128 0x18
+ 1820 0370 52020000 		.4byte	.LASF44
+ 1821 0374 01       		.byte	0x1
+ 1822 0375 F6       		.byte	0xf6
+ 1823 0376 B8000000 		.4byte	0xb8
+ 1824 037a 00000000 		.4byte	.LFB72
+ 1825 037e 14000000 		.4byte	.LFE72-.LFB72
+ 1826 0382 01       		.uleb128 0x1
+ 1827 0383 9C       		.byte	0x9c
+ 1828 0384 18       		.uleb128 0x18
+ 1829 0385 47000000 		.4byte	.LASF45
+ 1830 0389 01       		.byte	0x1
+ 1831 038a FB       		.byte	0xfb
+ 1832 038b B8000000 		.4byte	0xb8
+ 1833 038f 00000000 		.4byte	.LFB73
+ 1834 0393 14000000 		.4byte	.LFE73-.LFB73
+ 1835 0397 01       		.uleb128 0x1
+ 1836 0398 9C       		.byte	0x9c
+ 1837 0399 1A       		.uleb128 0x1a
+ 1838 039a A6020000 		.4byte	.LASF46
+ 1839 039e 01       		.byte	0x1
+ 1840 039f 0101     		.2byte	0x101
+ 1841 03a1 00000000 		.4byte	.LFB74
+ 1842 03a5 8C000000 		.4byte	.LFE74-.LFB74
+ 1843 03a9 01       		.uleb128 0x1
+ 1844 03aa 9C       		.byte	0x9c
+ 1845 03ab 03040000 		.4byte	0x403
+ 1846 03af 1B       		.uleb128 0x1b
+ 1847 03b0 18030000 		.4byte	.LASF47
+ 1848 03b4 01       		.byte	0x1
+ 1849 03b5 0101     		.2byte	0x101
+ 1850 03b7 A2000000 		.4byte	0xa2
+ 1851 03bb 02       		.uleb128 0x2
+ 1852 03bc 91       		.byte	0x91
+ 1853 03bd 6F       		.sleb128 -17
+ 1854 03be 1B       		.uleb128 0x1b
+ 1855 03bf DD030000 		.4byte	.LASF48
+ 1856 03c3 01       		.byte	0x1
+ 1857 03c4 0101     		.2byte	0x101
+ 1858 03c6 10020000 		.4byte	0x210
+ 1859 03ca 02       		.uleb128 0x2
+ 1860 03cb 91       		.byte	0x91
+ 1861 03cc 68       		.sleb128 -24
+ 1862 03cd 1C       		.uleb128 0x1c
+ 1863 03ce 6C656E00 		.ascii	"len\000"
+ 1864 03d2 01       		.byte	0x1
+ 1865 03d3 0101     		.2byte	0x101
+ 1866 03d5 A2000000 		.4byte	0xa2
+ 1867 03d9 02       		.uleb128 0x2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 39
+
+
+ 1868 03da 91       		.byte	0x91
+ 1869 03db 6E       		.sleb128 -18
+ 1870 03dc 1D       		.uleb128 0x1d
+ 1871 03dd 63726300 		.ascii	"crc\000"
+ 1872 03e1 01       		.byte	0x1
+ 1873 03e2 0701     		.2byte	0x107
+ 1874 03e4 A2000000 		.4byte	0xa2
+ 1875 03e8 02       		.uleb128 0x2
+ 1876 03e9 91       		.byte	0x91
+ 1877 03ea 77       		.sleb128 -9
+ 1878 03eb 0E       		.uleb128 0xe
+ 1879 03ec 3E000000 		.4byte	.LBB6
+ 1880 03f0 38000000 		.4byte	.LBE6-.LBB6
+ 1881 03f4 1D       		.uleb128 0x1d
+ 1882 03f5 6900     		.ascii	"i\000"
+ 1883 03f7 01       		.byte	0x1
+ 1884 03f8 0901     		.2byte	0x109
+ 1885 03fa A2000000 		.4byte	0xa2
+ 1886 03fe 02       		.uleb128 0x2
+ 1887 03ff 91       		.byte	0x91
+ 1888 0400 76       		.sleb128 -10
+ 1889 0401 00       		.byte	0
+ 1890 0402 00       		.byte	0
+ 1891 0403 09       		.uleb128 0x9
+ 1892 0404 16020000 		.4byte	0x216
+ 1893 0408 13040000 		.4byte	0x413
+ 1894 040c 0A       		.uleb128 0xa
+ 1895 040d 2E010000 		.4byte	0x12e
+ 1896 0411 FF       		.byte	0xff
+ 1897 0412 00       		.byte	0
+ 1898 0413 16       		.uleb128 0x16
+ 1899 0414 5D000000 		.4byte	.LASF49
+ 1900 0418 01       		.byte	0x1
+ 1901 0419 1E       		.byte	0x1e
+ 1902 041a 24040000 		.4byte	0x424
+ 1903 041e 05       		.uleb128 0x5
+ 1904 041f 03       		.byte	0x3
+ 1905 0420 00000000 		.4byte	crc8_table
+ 1906 0424 14       		.uleb128 0x14
+ 1907 0425 03040000 		.4byte	0x403
+ 1908 0429 16       		.uleb128 0x16
+ 1909 042a 7B000000 		.4byte	.LASF50
+ 1910 042e 01       		.byte	0x1
+ 1911 042f 47       		.byte	0x47
+ 1912 0430 64010000 		.4byte	0x164
+ 1913 0434 05       		.uleb128 0x5
+ 1914 0435 03       		.byte	0x3
+ 1915 0436 00000000 		.4byte	sbc_rx_state
+ 1916 043a 16       		.uleb128 0x16
+ 1917 043b EB010000 		.4byte	.LASF51
+ 1918 043f 01       		.byte	0x1
+ 1919 0440 48       		.byte	0x48
+ 1920 0441 A2000000 		.4byte	0xa2
+ 1921 0445 05       		.uleb128 0x5
+ 1922 0446 03       		.byte	0x3
+ 1923 0447 01000000 		.4byte	s_type
+ 1924 044b 16       		.uleb128 0x16
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 40
+
+
+ 1925 044c 68020000 		.4byte	.LASF52
+ 1926 0450 01       		.byte	0x1
+ 1927 0451 49       		.byte	0x49
+ 1928 0452 A2000000 		.4byte	0xa2
+ 1929 0456 05       		.uleb128 0x5
+ 1930 0457 03       		.byte	0x3
+ 1931 0458 02000000 		.4byte	s_len
+ 1932 045c 16       		.uleb128 0x16
+ 1933 045d B5020000 		.4byte	.LASF53
+ 1934 0461 01       		.byte	0x1
+ 1935 0462 4A       		.byte	0x4a
+ 1936 0463 A2000000 		.4byte	0xa2
+ 1937 0467 05       		.uleb128 0x5
+ 1938 0468 03       		.byte	0x3
+ 1939 0469 03000000 		.4byte	s_idx
+ 1940 046d 09       		.uleb128 0x9
+ 1941 046e A2000000 		.4byte	0xa2
+ 1942 0472 7D040000 		.4byte	0x47d
+ 1943 0476 0A       		.uleb128 0xa
+ 1944 0477 2E010000 		.4byte	0x12e
+ 1945 047b 3F       		.byte	0x3f
+ 1946 047c 00       		.byte	0
+ 1947 047d 16       		.uleb128 0x16
+ 1948 047e 00000000 		.4byte	.LASF54
+ 1949 0482 01       		.byte	0x1
+ 1950 0483 4B       		.byte	0x4b
+ 1951 0484 6D040000 		.4byte	0x46d
+ 1952 0488 05       		.uleb128 0x5
+ 1953 0489 03       		.byte	0x3
+ 1954 048a 04000000 		.4byte	s_buf
+ 1955 048e 09       		.uleb128 0x9
+ 1956 048f 1C010000 		.4byte	0x11c
+ 1957 0493 9E040000 		.4byte	0x49e
+ 1958 0497 0A       		.uleb128 0xa
+ 1959 0498 2E010000 		.4byte	0x12e
+ 1960 049c 01       		.byte	0x1
+ 1961 049d 00       		.byte	0
+ 1962 049e 16       		.uleb128 0x16
+ 1963 049f 44030000 		.4byte	.LASF55
+ 1964 04a3 01       		.byte	0x1
+ 1965 04a4 4D       		.byte	0x4d
+ 1966 04a5 8E040000 		.4byte	0x48e
+ 1967 04a9 05       		.uleb128 0x5
+ 1968 04aa 03       		.byte	0x3
+ 1969 04ab 44000000 		.4byte	s_centroid
+ 1970 04af 16       		.uleb128 0x16
+ 1971 04b0 90020000 		.4byte	.LASF56
+ 1972 04b4 01       		.byte	0x1
+ 1973 04b5 4E       		.byte	0x4e
+ 1974 04b6 4F010000 		.4byte	0x14f
+ 1975 04ba 05       		.uleb128 0x5
+ 1976 04bb 03       		.byte	0x3
+ 1977 04bc 5C000000 		.4byte	s_fresh_bits
+ 1978 04c0 16       		.uleb128 0x16
+ 1979 04c1 3B020000 		.4byte	.LASF57
+ 1980 04c5 01       		.byte	0x1
+ 1981 04c6 4F       		.byte	0x4f
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 41
+
+
+ 1982 04c7 54010000 		.4byte	0x154
+ 1983 04cb 05       		.uleb128 0x5
+ 1984 04cc 03       		.byte	0x3
+ 1985 04cd 60000000 		.4byte	s_last_rx_ms
+ 1986 04d1 09       		.uleb128 0x9
+ 1987 04d2 B8000000 		.4byte	0xb8
+ 1988 04d6 E1040000 		.4byte	0x4e1
+ 1989 04da 0A       		.uleb128 0xa
+ 1990 04db 2E010000 		.4byte	0x12e
+ 1991 04df 01       		.byte	0x1
+ 1992 04e0 00       		.byte	0
+ 1993 04e1 16       		.uleb128 0x16
+ 1994 04e2 9B000000 		.4byte	.LASF58
+ 1995 04e6 01       		.byte	0x1
+ 1996 04e7 50       		.byte	0x50
+ 1997 04e8 D1040000 		.4byte	0x4d1
+ 1998 04ec 05       		.uleb128 0x5
+ 1999 04ed 03       		.byte	0x3
+ 2000 04ee 68000000 		.4byte	s_last_centroid_dt_ms
+ 2001 04f2 16       		.uleb128 0x16
+ 2002 04f3 48020000 		.4byte	.LASF59
+ 2003 04f7 01       		.byte	0x1
+ 2004 04f8 52       		.byte	0x52
+ 2005 04f9 B8000000 		.4byte	0xb8
+ 2006 04fd 05       		.uleb128 0x5
+ 2007 04fe 03       		.byte	0x3
+ 2008 04ff 6C000000 		.4byte	s_crc_err
+ 2009 0503 16       		.uleb128 0x16
+ 2010 0504 91030000 		.4byte	.LASF60
+ 2011 0508 01       		.byte	0x1
+ 2012 0509 53       		.byte	0x53
+ 2013 050a B8000000 		.4byte	0xb8
+ 2014 050e 05       		.uleb128 0x5
+ 2015 050f 03       		.byte	0x3
+ 2016 0510 6E000000 		.4byte	s_uart_err
+ 2017 0514 16       		.uleb128 0x16
+ 2018 0515 81030000 		.4byte	.LASF61
+ 2019 0519 01       		.byte	0x1
+ 2020 051a 54       		.byte	0x54
+ 2021 051b B8000000 		.4byte	0xb8
+ 2022 051f 05       		.uleb128 0x5
+ 2023 0520 03       		.byte	0x3
+ 2024 0521 70000000 		.4byte	s_unknown_magic
+ 2025 0525 16       		.uleb128 0x16
+ 2026 0526 15000000 		.4byte	.LASF62
+ 2027 052a 01       		.byte	0x1
+ 2028 052b 55       		.byte	0x55
+ 2029 052c CE000000 		.4byte	0xce
+ 2030 0530 05       		.uleb128 0x5
+ 2031 0531 03       		.byte	0x3
+ 2032 0532 74000000 		.4byte	s_rx_pkt_count
+ 2033 0536 1E       		.uleb128 0x1e
+ 2034 0537 A8030000 		.4byte	.LASF63
+ 2035 053b 05       		.byte	0x5
+ 2036 053c 1207     		.2byte	0x712
+ 2037 053e 42050000 		.4byte	0x542
+ 2038 0542 08       		.uleb128 0x8
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 42
+
+
+ 2039 0543 C3000000 		.4byte	0xc3
+ 2040 0547 1F       		.uleb128 0x1f
+ 2041 0548 DB010000 		.4byte	.LASF64
+ 2042 054c 01       		.byte	0x1
+ 2043 054d 17       		.byte	0x17
+ 2044 054e 4A010000 		.4byte	0x14a
+ 2045 0552 00       		.byte	0
+ 2046              		.section	.debug_abbrev,"",%progbits
+ 2047              	.Ldebug_abbrev0:
+ 2048 0000 01       		.uleb128 0x1
+ 2049 0001 11       		.uleb128 0x11
+ 2050 0002 01       		.byte	0x1
+ 2051 0003 25       		.uleb128 0x25
+ 2052 0004 0E       		.uleb128 0xe
+ 2053 0005 13       		.uleb128 0x13
+ 2054 0006 0B       		.uleb128 0xb
+ 2055 0007 03       		.uleb128 0x3
+ 2056 0008 0E       		.uleb128 0xe
+ 2057 0009 1B       		.uleb128 0x1b
+ 2058 000a 0E       		.uleb128 0xe
+ 2059 000b 55       		.uleb128 0x55
+ 2060 000c 17       		.uleb128 0x17
+ 2061 000d 11       		.uleb128 0x11
+ 2062 000e 01       		.uleb128 0x1
+ 2063 000f 10       		.uleb128 0x10
+ 2064 0010 17       		.uleb128 0x17
+ 2065 0011 00       		.byte	0
+ 2066 0012 00       		.byte	0
+ 2067 0013 02       		.uleb128 0x2
+ 2068 0014 24       		.uleb128 0x24
+ 2069 0015 00       		.byte	0
+ 2070 0016 0B       		.uleb128 0xb
+ 2071 0017 0B       		.uleb128 0xb
+ 2072 0018 3E       		.uleb128 0x3e
+ 2073 0019 0B       		.uleb128 0xb
+ 2074 001a 03       		.uleb128 0x3
+ 2075 001b 0E       		.uleb128 0xe
+ 2076 001c 00       		.byte	0
+ 2077 001d 00       		.byte	0
+ 2078 001e 03       		.uleb128 0x3
+ 2079 001f 16       		.uleb128 0x16
+ 2080 0020 00       		.byte	0
+ 2081 0021 03       		.uleb128 0x3
+ 2082 0022 0E       		.uleb128 0xe
+ 2083 0023 3A       		.uleb128 0x3a
+ 2084 0024 0B       		.uleb128 0xb
+ 2085 0025 3B       		.uleb128 0x3b
+ 2086 0026 0B       		.uleb128 0xb
+ 2087 0027 49       		.uleb128 0x49
+ 2088 0028 13       		.uleb128 0x13
+ 2089 0029 00       		.byte	0
+ 2090 002a 00       		.byte	0
+ 2091 002b 04       		.uleb128 0x4
+ 2092 002c 24       		.uleb128 0x24
+ 2093 002d 00       		.byte	0
+ 2094 002e 0B       		.uleb128 0xb
+ 2095 002f 0B       		.uleb128 0xb
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 43
+
+
+ 2096 0030 3E       		.uleb128 0x3e
+ 2097 0031 0B       		.uleb128 0xb
+ 2098 0032 03       		.uleb128 0x3
+ 2099 0033 08       		.uleb128 0x8
+ 2100 0034 00       		.byte	0
+ 2101 0035 00       		.byte	0
+ 2102 0036 05       		.uleb128 0x5
+ 2103 0037 13       		.uleb128 0x13
+ 2104 0038 01       		.byte	0x1
+ 2105 0039 0B       		.uleb128 0xb
+ 2106 003a 0B       		.uleb128 0xb
+ 2107 003b 3A       		.uleb128 0x3a
+ 2108 003c 0B       		.uleb128 0xb
+ 2109 003d 3B       		.uleb128 0x3b
+ 2110 003e 0B       		.uleb128 0xb
+ 2111 003f 01       		.uleb128 0x1
+ 2112 0040 13       		.uleb128 0x13
+ 2113 0041 00       		.byte	0
+ 2114 0042 00       		.byte	0
+ 2115 0043 06       		.uleb128 0x6
+ 2116 0044 0D       		.uleb128 0xd
+ 2117 0045 00       		.byte	0
+ 2118 0046 03       		.uleb128 0x3
+ 2119 0047 0E       		.uleb128 0xe
+ 2120 0048 3A       		.uleb128 0x3a
+ 2121 0049 0B       		.uleb128 0xb
+ 2122 004a 3B       		.uleb128 0x3b
+ 2123 004b 0B       		.uleb128 0xb
+ 2124 004c 49       		.uleb128 0x49
+ 2125 004d 13       		.uleb128 0x13
+ 2126 004e 38       		.uleb128 0x38
+ 2127 004f 0B       		.uleb128 0xb
+ 2128 0050 00       		.byte	0
+ 2129 0051 00       		.byte	0
+ 2130 0052 07       		.uleb128 0x7
+ 2131 0053 0D       		.uleb128 0xd
+ 2132 0054 00       		.byte	0
+ 2133 0055 03       		.uleb128 0x3
+ 2134 0056 08       		.uleb128 0x8
+ 2135 0057 3A       		.uleb128 0x3a
+ 2136 0058 0B       		.uleb128 0xb
+ 2137 0059 3B       		.uleb128 0x3b
+ 2138 005a 0B       		.uleb128 0xb
+ 2139 005b 49       		.uleb128 0x49
+ 2140 005c 13       		.uleb128 0x13
+ 2141 005d 38       		.uleb128 0x38
+ 2142 005e 0B       		.uleb128 0xb
+ 2143 005f 00       		.byte	0
+ 2144 0060 00       		.byte	0
+ 2145 0061 08       		.uleb128 0x8
+ 2146 0062 35       		.uleb128 0x35
+ 2147 0063 00       		.byte	0
+ 2148 0064 49       		.uleb128 0x49
+ 2149 0065 13       		.uleb128 0x13
+ 2150 0066 00       		.byte	0
+ 2151 0067 00       		.byte	0
+ 2152 0068 09       		.uleb128 0x9
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 44
+
+
+ 2153 0069 01       		.uleb128 0x1
+ 2154 006a 01       		.byte	0x1
+ 2155 006b 49       		.uleb128 0x49
+ 2156 006c 13       		.uleb128 0x13
+ 2157 006d 01       		.uleb128 0x1
+ 2158 006e 13       		.uleb128 0x13
+ 2159 006f 00       		.byte	0
+ 2160 0070 00       		.byte	0
+ 2161 0071 0A       		.uleb128 0xa
+ 2162 0072 21       		.uleb128 0x21
+ 2163 0073 00       		.byte	0
+ 2164 0074 49       		.uleb128 0x49
+ 2165 0075 13       		.uleb128 0x13
+ 2166 0076 2F       		.uleb128 0x2f
+ 2167 0077 0B       		.uleb128 0xb
+ 2168 0078 00       		.byte	0
+ 2169 0079 00       		.byte	0
+ 2170 007a 0B       		.uleb128 0xb
+ 2171 007b 04       		.uleb128 0x4
+ 2172 007c 01       		.byte	0x1
+ 2173 007d 0B       		.uleb128 0xb
+ 2174 007e 0B       		.uleb128 0xb
+ 2175 007f 49       		.uleb128 0x49
+ 2176 0080 13       		.uleb128 0x13
+ 2177 0081 3A       		.uleb128 0x3a
+ 2178 0082 0B       		.uleb128 0xb
+ 2179 0083 3B       		.uleb128 0x3b
+ 2180 0084 0B       		.uleb128 0xb
+ 2181 0085 01       		.uleb128 0x1
+ 2182 0086 13       		.uleb128 0x13
+ 2183 0087 00       		.byte	0
+ 2184 0088 00       		.byte	0
+ 2185 0089 0C       		.uleb128 0xc
+ 2186 008a 28       		.uleb128 0x28
+ 2187 008b 00       		.byte	0
+ 2188 008c 03       		.uleb128 0x3
+ 2189 008d 0E       		.uleb128 0xe
+ 2190 008e 1C       		.uleb128 0x1c
+ 2191 008f 0B       		.uleb128 0xb
+ 2192 0090 00       		.byte	0
+ 2193 0091 00       		.byte	0
+ 2194 0092 0D       		.uleb128 0xd
+ 2195 0093 2E       		.uleb128 0x2e
+ 2196 0094 01       		.byte	0x1
+ 2197 0095 3F       		.uleb128 0x3f
+ 2198 0096 19       		.uleb128 0x19
+ 2199 0097 03       		.uleb128 0x3
+ 2200 0098 0E       		.uleb128 0xe
+ 2201 0099 3A       		.uleb128 0x3a
+ 2202 009a 0B       		.uleb128 0xb
+ 2203 009b 3B       		.uleb128 0x3b
+ 2204 009c 0B       		.uleb128 0xb
+ 2205 009d 27       		.uleb128 0x27
+ 2206 009e 19       		.uleb128 0x19
+ 2207 009f 11       		.uleb128 0x11
+ 2208 00a0 01       		.uleb128 0x1
+ 2209 00a1 12       		.uleb128 0x12
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 45
+
+
+ 2210 00a2 06       		.uleb128 0x6
+ 2211 00a3 40       		.uleb128 0x40
+ 2212 00a4 18       		.uleb128 0x18
+ 2213 00a5 9742     		.uleb128 0x2117
+ 2214 00a7 19       		.uleb128 0x19
+ 2215 00a8 01       		.uleb128 0x1
+ 2216 00a9 13       		.uleb128 0x13
+ 2217 00aa 00       		.byte	0
+ 2218 00ab 00       		.byte	0
+ 2219 00ac 0E       		.uleb128 0xe
+ 2220 00ad 0B       		.uleb128 0xb
+ 2221 00ae 01       		.byte	0x1
+ 2222 00af 11       		.uleb128 0x11
+ 2223 00b0 01       		.uleb128 0x1
+ 2224 00b1 12       		.uleb128 0x12
+ 2225 00b2 06       		.uleb128 0x6
+ 2226 00b3 00       		.byte	0
+ 2227 00b4 00       		.byte	0
+ 2228 00b5 0F       		.uleb128 0xf
+ 2229 00b6 34       		.uleb128 0x34
+ 2230 00b7 00       		.byte	0
+ 2231 00b8 03       		.uleb128 0x3
+ 2232 00b9 08       		.uleb128 0x8
+ 2233 00ba 3A       		.uleb128 0x3a
+ 2234 00bb 0B       		.uleb128 0xb
+ 2235 00bc 3B       		.uleb128 0x3b
+ 2236 00bd 0B       		.uleb128 0xb
+ 2237 00be 49       		.uleb128 0x49
+ 2238 00bf 13       		.uleb128 0x13
+ 2239 00c0 02       		.uleb128 0x2
+ 2240 00c1 18       		.uleb128 0x18
+ 2241 00c2 00       		.byte	0
+ 2242 00c3 00       		.byte	0
+ 2243 00c4 10       		.uleb128 0x10
+ 2244 00c5 2E       		.uleb128 0x2e
+ 2245 00c6 01       		.byte	0x1
+ 2246 00c7 03       		.uleb128 0x3
+ 2247 00c8 0E       		.uleb128 0xe
+ 2248 00c9 3A       		.uleb128 0x3a
+ 2249 00ca 0B       		.uleb128 0xb
+ 2250 00cb 3B       		.uleb128 0x3b
+ 2251 00cc 0B       		.uleb128 0xb
+ 2252 00cd 27       		.uleb128 0x27
+ 2253 00ce 19       		.uleb128 0x19
+ 2254 00cf 11       		.uleb128 0x11
+ 2255 00d0 01       		.uleb128 0x1
+ 2256 00d1 12       		.uleb128 0x12
+ 2257 00d2 06       		.uleb128 0x6
+ 2258 00d3 40       		.uleb128 0x40
+ 2259 00d4 18       		.uleb128 0x18
+ 2260 00d5 9642     		.uleb128 0x2116
+ 2261 00d7 19       		.uleb128 0x19
+ 2262 00d8 01       		.uleb128 0x1
+ 2263 00d9 13       		.uleb128 0x13
+ 2264 00da 00       		.byte	0
+ 2265 00db 00       		.byte	0
+ 2266 00dc 11       		.uleb128 0x11
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 46
+
+
+ 2267 00dd 05       		.uleb128 0x5
+ 2268 00de 00       		.byte	0
+ 2269 00df 03       		.uleb128 0x3
+ 2270 00e0 0E       		.uleb128 0xe
+ 2271 00e1 3A       		.uleb128 0x3a
+ 2272 00e2 0B       		.uleb128 0xb
+ 2273 00e3 3B       		.uleb128 0x3b
+ 2274 00e4 0B       		.uleb128 0xb
+ 2275 00e5 49       		.uleb128 0x49
+ 2276 00e6 13       		.uleb128 0x13
+ 2277 00e7 02       		.uleb128 0x2
+ 2278 00e8 18       		.uleb128 0x18
+ 2279 00e9 00       		.byte	0
+ 2280 00ea 00       		.byte	0
+ 2281 00eb 12       		.uleb128 0x12
+ 2282 00ec 05       		.uleb128 0x5
+ 2283 00ed 00       		.byte	0
+ 2284 00ee 03       		.uleb128 0x3
+ 2285 00ef 08       		.uleb128 0x8
+ 2286 00f0 3A       		.uleb128 0x3a
+ 2287 00f1 0B       		.uleb128 0xb
+ 2288 00f2 3B       		.uleb128 0x3b
+ 2289 00f3 0B       		.uleb128 0xb
+ 2290 00f4 49       		.uleb128 0x49
+ 2291 00f5 13       		.uleb128 0x13
+ 2292 00f6 02       		.uleb128 0x2
+ 2293 00f7 18       		.uleb128 0x18
+ 2294 00f8 00       		.byte	0
+ 2295 00f9 00       		.byte	0
+ 2296 00fa 13       		.uleb128 0x13
+ 2297 00fb 0F       		.uleb128 0xf
+ 2298 00fc 00       		.byte	0
+ 2299 00fd 0B       		.uleb128 0xb
+ 2300 00fe 0B       		.uleb128 0xb
+ 2301 00ff 49       		.uleb128 0x49
+ 2302 0100 13       		.uleb128 0x13
+ 2303 0101 00       		.byte	0
+ 2304 0102 00       		.byte	0
+ 2305 0103 14       		.uleb128 0x14
+ 2306 0104 26       		.uleb128 0x26
+ 2307 0105 00       		.byte	0
+ 2308 0106 49       		.uleb128 0x49
+ 2309 0107 13       		.uleb128 0x13
+ 2310 0108 00       		.byte	0
+ 2311 0109 00       		.byte	0
+ 2312 010a 15       		.uleb128 0x15
+ 2313 010b 2E       		.uleb128 0x2e
+ 2314 010c 01       		.byte	0x1
+ 2315 010d 3F       		.uleb128 0x3f
+ 2316 010e 19       		.uleb128 0x19
+ 2317 010f 03       		.uleb128 0x3
+ 2318 0110 0E       		.uleb128 0xe
+ 2319 0111 3A       		.uleb128 0x3a
+ 2320 0112 0B       		.uleb128 0xb
+ 2321 0113 3B       		.uleb128 0x3b
+ 2322 0114 0B       		.uleb128 0xb
+ 2323 0115 27       		.uleb128 0x27
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 47
+
+
+ 2324 0116 19       		.uleb128 0x19
+ 2325 0117 11       		.uleb128 0x11
+ 2326 0118 01       		.uleb128 0x1
+ 2327 0119 12       		.uleb128 0x12
+ 2328 011a 06       		.uleb128 0x6
+ 2329 011b 40       		.uleb128 0x40
+ 2330 011c 18       		.uleb128 0x18
+ 2331 011d 9642     		.uleb128 0x2116
+ 2332 011f 19       		.uleb128 0x19
+ 2333 0120 01       		.uleb128 0x1
+ 2334 0121 13       		.uleb128 0x13
+ 2335 0122 00       		.byte	0
+ 2336 0123 00       		.byte	0
+ 2337 0124 16       		.uleb128 0x16
+ 2338 0125 34       		.uleb128 0x34
+ 2339 0126 00       		.byte	0
+ 2340 0127 03       		.uleb128 0x3
+ 2341 0128 0E       		.uleb128 0xe
+ 2342 0129 3A       		.uleb128 0x3a
+ 2343 012a 0B       		.uleb128 0xb
+ 2344 012b 3B       		.uleb128 0x3b
+ 2345 012c 0B       		.uleb128 0xb
+ 2346 012d 49       		.uleb128 0x49
+ 2347 012e 13       		.uleb128 0x13
+ 2348 012f 02       		.uleb128 0x2
+ 2349 0130 18       		.uleb128 0x18
+ 2350 0131 00       		.byte	0
+ 2351 0132 00       		.byte	0
+ 2352 0133 17       		.uleb128 0x17
+ 2353 0134 2E       		.uleb128 0x2e
+ 2354 0135 01       		.byte	0x1
+ 2355 0136 3F       		.uleb128 0x3f
+ 2356 0137 19       		.uleb128 0x19
+ 2357 0138 03       		.uleb128 0x3
+ 2358 0139 0E       		.uleb128 0xe
+ 2359 013a 3A       		.uleb128 0x3a
+ 2360 013b 0B       		.uleb128 0xb
+ 2361 013c 3B       		.uleb128 0x3b
+ 2362 013d 0B       		.uleb128 0xb
+ 2363 013e 27       		.uleb128 0x27
+ 2364 013f 19       		.uleb128 0x19
+ 2365 0140 49       		.uleb128 0x49
+ 2366 0141 13       		.uleb128 0x13
+ 2367 0142 11       		.uleb128 0x11
+ 2368 0143 01       		.uleb128 0x1
+ 2369 0144 12       		.uleb128 0x12
+ 2370 0145 06       		.uleb128 0x6
+ 2371 0146 40       		.uleb128 0x40
+ 2372 0147 18       		.uleb128 0x18
+ 2373 0148 9642     		.uleb128 0x2116
+ 2374 014a 19       		.uleb128 0x19
+ 2375 014b 01       		.uleb128 0x1
+ 2376 014c 13       		.uleb128 0x13
+ 2377 014d 00       		.byte	0
+ 2378 014e 00       		.byte	0
+ 2379 014f 18       		.uleb128 0x18
+ 2380 0150 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 48
+
+
+ 2381 0151 00       		.byte	0
+ 2382 0152 3F       		.uleb128 0x3f
+ 2383 0153 19       		.uleb128 0x19
+ 2384 0154 03       		.uleb128 0x3
+ 2385 0155 0E       		.uleb128 0xe
+ 2386 0156 3A       		.uleb128 0x3a
+ 2387 0157 0B       		.uleb128 0xb
+ 2388 0158 3B       		.uleb128 0x3b
+ 2389 0159 0B       		.uleb128 0xb
+ 2390 015a 27       		.uleb128 0x27
+ 2391 015b 19       		.uleb128 0x19
+ 2392 015c 49       		.uleb128 0x49
+ 2393 015d 13       		.uleb128 0x13
+ 2394 015e 11       		.uleb128 0x11
+ 2395 015f 01       		.uleb128 0x1
+ 2396 0160 12       		.uleb128 0x12
+ 2397 0161 06       		.uleb128 0x6
+ 2398 0162 40       		.uleb128 0x40
+ 2399 0163 18       		.uleb128 0x18
+ 2400 0164 9742     		.uleb128 0x2117
+ 2401 0166 19       		.uleb128 0x19
+ 2402 0167 00       		.byte	0
+ 2403 0168 00       		.byte	0
+ 2404 0169 19       		.uleb128 0x19
+ 2405 016a 2E       		.uleb128 0x2e
+ 2406 016b 01       		.byte	0x1
+ 2407 016c 3F       		.uleb128 0x3f
+ 2408 016d 19       		.uleb128 0x19
+ 2409 016e 03       		.uleb128 0x3
+ 2410 016f 0E       		.uleb128 0xe
+ 2411 0170 3A       		.uleb128 0x3a
+ 2412 0171 0B       		.uleb128 0xb
+ 2413 0172 3B       		.uleb128 0x3b
+ 2414 0173 0B       		.uleb128 0xb
+ 2415 0174 27       		.uleb128 0x27
+ 2416 0175 19       		.uleb128 0x19
+ 2417 0176 49       		.uleb128 0x49
+ 2418 0177 13       		.uleb128 0x13
+ 2419 0178 11       		.uleb128 0x11
+ 2420 0179 01       		.uleb128 0x1
+ 2421 017a 12       		.uleb128 0x12
+ 2422 017b 06       		.uleb128 0x6
+ 2423 017c 40       		.uleb128 0x40
+ 2424 017d 18       		.uleb128 0x18
+ 2425 017e 9742     		.uleb128 0x2117
+ 2426 0180 19       		.uleb128 0x19
+ 2427 0181 01       		.uleb128 0x1
+ 2428 0182 13       		.uleb128 0x13
+ 2429 0183 00       		.byte	0
+ 2430 0184 00       		.byte	0
+ 2431 0185 1A       		.uleb128 0x1a
+ 2432 0186 2E       		.uleb128 0x2e
+ 2433 0187 01       		.byte	0x1
+ 2434 0188 3F       		.uleb128 0x3f
+ 2435 0189 19       		.uleb128 0x19
+ 2436 018a 03       		.uleb128 0x3
+ 2437 018b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 49
+
+
+ 2438 018c 3A       		.uleb128 0x3a
+ 2439 018d 0B       		.uleb128 0xb
+ 2440 018e 3B       		.uleb128 0x3b
+ 2441 018f 05       		.uleb128 0x5
+ 2442 0190 27       		.uleb128 0x27
+ 2443 0191 19       		.uleb128 0x19
+ 2444 0192 11       		.uleb128 0x11
+ 2445 0193 01       		.uleb128 0x1
+ 2446 0194 12       		.uleb128 0x12
+ 2447 0195 06       		.uleb128 0x6
+ 2448 0196 40       		.uleb128 0x40
+ 2449 0197 18       		.uleb128 0x18
+ 2450 0198 9642     		.uleb128 0x2116
+ 2451 019a 19       		.uleb128 0x19
+ 2452 019b 01       		.uleb128 0x1
+ 2453 019c 13       		.uleb128 0x13
+ 2454 019d 00       		.byte	0
+ 2455 019e 00       		.byte	0
+ 2456 019f 1B       		.uleb128 0x1b
+ 2457 01a0 05       		.uleb128 0x5
+ 2458 01a1 00       		.byte	0
+ 2459 01a2 03       		.uleb128 0x3
+ 2460 01a3 0E       		.uleb128 0xe
+ 2461 01a4 3A       		.uleb128 0x3a
+ 2462 01a5 0B       		.uleb128 0xb
+ 2463 01a6 3B       		.uleb128 0x3b
+ 2464 01a7 05       		.uleb128 0x5
+ 2465 01a8 49       		.uleb128 0x49
+ 2466 01a9 13       		.uleb128 0x13
+ 2467 01aa 02       		.uleb128 0x2
+ 2468 01ab 18       		.uleb128 0x18
+ 2469 01ac 00       		.byte	0
+ 2470 01ad 00       		.byte	0
+ 2471 01ae 1C       		.uleb128 0x1c
+ 2472 01af 05       		.uleb128 0x5
+ 2473 01b0 00       		.byte	0
+ 2474 01b1 03       		.uleb128 0x3
+ 2475 01b2 08       		.uleb128 0x8
+ 2476 01b3 3A       		.uleb128 0x3a
+ 2477 01b4 0B       		.uleb128 0xb
+ 2478 01b5 3B       		.uleb128 0x3b
+ 2479 01b6 05       		.uleb128 0x5
+ 2480 01b7 49       		.uleb128 0x49
+ 2481 01b8 13       		.uleb128 0x13
+ 2482 01b9 02       		.uleb128 0x2
+ 2483 01ba 18       		.uleb128 0x18
+ 2484 01bb 00       		.byte	0
+ 2485 01bc 00       		.byte	0
+ 2486 01bd 1D       		.uleb128 0x1d
+ 2487 01be 34       		.uleb128 0x34
+ 2488 01bf 00       		.byte	0
+ 2489 01c0 03       		.uleb128 0x3
+ 2490 01c1 08       		.uleb128 0x8
+ 2491 01c2 3A       		.uleb128 0x3a
+ 2492 01c3 0B       		.uleb128 0xb
+ 2493 01c4 3B       		.uleb128 0x3b
+ 2494 01c5 05       		.uleb128 0x5
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 50
+
+
+ 2495 01c6 49       		.uleb128 0x49
+ 2496 01c7 13       		.uleb128 0x13
+ 2497 01c8 02       		.uleb128 0x2
+ 2498 01c9 18       		.uleb128 0x18
+ 2499 01ca 00       		.byte	0
+ 2500 01cb 00       		.byte	0
+ 2501 01cc 1E       		.uleb128 0x1e
+ 2502 01cd 34       		.uleb128 0x34
+ 2503 01ce 00       		.byte	0
+ 2504 01cf 03       		.uleb128 0x3
+ 2505 01d0 0E       		.uleb128 0xe
+ 2506 01d1 3A       		.uleb128 0x3a
+ 2507 01d2 0B       		.uleb128 0xb
+ 2508 01d3 3B       		.uleb128 0x3b
+ 2509 01d4 05       		.uleb128 0x5
+ 2510 01d5 49       		.uleb128 0x49
+ 2511 01d6 13       		.uleb128 0x13
+ 2512 01d7 3F       		.uleb128 0x3f
+ 2513 01d8 19       		.uleb128 0x19
+ 2514 01d9 3C       		.uleb128 0x3c
+ 2515 01da 19       		.uleb128 0x19
+ 2516 01db 00       		.byte	0
+ 2517 01dc 00       		.byte	0
+ 2518 01dd 1F       		.uleb128 0x1f
+ 2519 01de 34       		.uleb128 0x34
+ 2520 01df 00       		.byte	0
+ 2521 01e0 03       		.uleb128 0x3
+ 2522 01e1 0E       		.uleb128 0xe
+ 2523 01e2 3A       		.uleb128 0x3a
+ 2524 01e3 0B       		.uleb128 0xb
+ 2525 01e4 3B       		.uleb128 0x3b
+ 2526 01e5 0B       		.uleb128 0xb
+ 2527 01e6 49       		.uleb128 0x49
+ 2528 01e7 13       		.uleb128 0x13
+ 2529 01e8 3F       		.uleb128 0x3f
+ 2530 01e9 19       		.uleb128 0x19
+ 2531 01ea 3C       		.uleb128 0x3c
+ 2532 01eb 19       		.uleb128 0x19
+ 2533 01ec 00       		.byte	0
+ 2534 01ed 00       		.byte	0
+ 2535 01ee 00       		.byte	0
+ 2536              		.section	.debug_aranges,"",%progbits
+ 2537 0000 74000000 		.4byte	0x74
+ 2538 0004 0200     		.2byte	0x2
+ 2539 0006 00000000 		.4byte	.Ldebug_info0
+ 2540 000a 04       		.byte	0x4
+ 2541 000b 00       		.byte	0
+ 2542 000c 0000     		.2byte	0
+ 2543 000e 0000     		.2byte	0
+ 2544 0010 00000000 		.4byte	.LFB63
+ 2545 0014 84000000 		.4byte	.LFE63-.LFB63
+ 2546 0018 00000000 		.4byte	.LFB64
+ 2547 001c 14010000 		.4byte	.LFE64-.LFB64
+ 2548 0020 00000000 		.4byte	.LFB65
+ 2549 0024 8C010000 		.4byte	.LFE65-.LFB65
+ 2550 0028 00000000 		.4byte	.LFB66
+ 2551 002c 30000000 		.4byte	.LFE66-.LFB66
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 51
+
+
+ 2552 0030 00000000 		.4byte	.LFB67
+ 2553 0034 88000000 		.4byte	.LFE67-.LFB67
+ 2554 0038 00000000 		.4byte	.LFB68
+ 2555 003c 14000000 		.4byte	.LFE68-.LFB68
+ 2556 0040 00000000 		.4byte	.LFB69
+ 2557 0044 14000000 		.4byte	.LFE69-.LFB69
+ 2558 0048 00000000 		.4byte	.LFB70
+ 2559 004c 2C000000 		.4byte	.LFE70-.LFB70
+ 2560 0050 00000000 		.4byte	.LFB71
+ 2561 0054 2C000000 		.4byte	.LFE71-.LFB71
+ 2562 0058 00000000 		.4byte	.LFB72
+ 2563 005c 14000000 		.4byte	.LFE72-.LFB72
+ 2564 0060 00000000 		.4byte	.LFB73
+ 2565 0064 14000000 		.4byte	.LFE73-.LFB73
+ 2566 0068 00000000 		.4byte	.LFB74
+ 2567 006c 8C000000 		.4byte	.LFE74-.LFB74
+ 2568 0070 00000000 		.4byte	0
+ 2569 0074 00000000 		.4byte	0
+ 2570              		.section	.debug_ranges,"",%progbits
+ 2571              	.Ldebug_ranges0:
+ 2572 0000 00000000 		.4byte	.LFB63
+ 2573 0004 84000000 		.4byte	.LFE63
+ 2574 0008 00000000 		.4byte	.LFB64
+ 2575 000c 14010000 		.4byte	.LFE64
+ 2576 0010 00000000 		.4byte	.LFB65
+ 2577 0014 8C010000 		.4byte	.LFE65
+ 2578 0018 00000000 		.4byte	.LFB66
+ 2579 001c 30000000 		.4byte	.LFE66
+ 2580 0020 00000000 		.4byte	.LFB67
+ 2581 0024 88000000 		.4byte	.LFE67
+ 2582 0028 00000000 		.4byte	.LFB68
+ 2583 002c 14000000 		.4byte	.LFE68
+ 2584 0030 00000000 		.4byte	.LFB69
+ 2585 0034 14000000 		.4byte	.LFE69
+ 2586 0038 00000000 		.4byte	.LFB70
+ 2587 003c 2C000000 		.4byte	.LFE70
+ 2588 0040 00000000 		.4byte	.LFB71
+ 2589 0044 2C000000 		.4byte	.LFE71
+ 2590 0048 00000000 		.4byte	.LFB72
+ 2591 004c 14000000 		.4byte	.LFE72
+ 2592 0050 00000000 		.4byte	.LFB73
+ 2593 0054 14000000 		.4byte	.LFE73
+ 2594 0058 00000000 		.4byte	.LFB74
+ 2595 005c 8C000000 		.4byte	.LFE74
+ 2596 0060 00000000 		.4byte	0
+ 2597 0064 00000000 		.4byte	0
+ 2598              		.section	.debug_line,"",%progbits
+ 2599              	.Ldebug_line0:
+ 2600 0000 FD020000 		.section	.debug_str,"MS",%progbits,1
+ 2600      02005301 
+ 2600      00000201 
+ 2600      FB0E0D00 
+ 2600      01010101 
+ 2601              	.LASF54:
+ 2602 0000 735F6275 		.ascii	"s_buf\000"
+ 2602      6600
+ 2603              	.LASF43:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 52
+
+
+ 2604 0006 7362635F 		.ascii	"sbc_last_rx_ms\000"
+ 2604      6C617374 
+ 2604      5F72785F 
+ 2604      6D7300
+ 2605              	.LASF62:
+ 2606 0015 735F7278 		.ascii	"s_rx_pkt_count\000"
+ 2606      5F706B74 
+ 2606      5F636F75 
+ 2606      6E7400
+ 2607              	.LASF41:
+ 2608 0024 7362635F 		.ascii	"sbc_get_centroid\000"
+ 2608      6765745F 
+ 2608      63656E74 
+ 2608      726F6964 
+ 2608      00
+ 2609              	.LASF39:
+ 2610 0035 7362635F 		.ascii	"sbc_unknown_magic\000"
+ 2610      756E6B6E 
+ 2610      6F776E5F 
+ 2610      6D616769 
+ 2610      6300
+ 2611              	.LASF45:
+ 2612 0047 7362635F 		.ascii	"sbc_uart_errors\000"
+ 2612      75617274 
+ 2612      5F657272 
+ 2612      6F727300 
+ 2613              	.LASF20:
+ 2614 0057 63786572 		.ascii	"cxerr\000"
+ 2614      7200
+ 2615              	.LASF49:
+ 2616 005d 63726338 		.ascii	"crc8_table\000"
+ 2616      5F746162 
+ 2616      6C6500
+ 2617              	.LASF22:
+ 2618 0068 7061796C 		.ascii	"payload_centroid_t\000"
+ 2618      6F61645F 
+ 2618      63656E74 
+ 2618      726F6964 
+ 2618      5F7400
+ 2619              	.LASF50:
+ 2620 007b 7362635F 		.ascii	"sbc_rx_state\000"
+ 2620      72785F73 
+ 2620      74617465 
+ 2620      00
+ 2621              	.LASF4:
+ 2622 0088 73686F72 		.ascii	"short int\000"
+ 2622      7420696E 
+ 2622      7400
+ 2623              	.LASF24:
+ 2624 0092 73697A65 		.ascii	"sizetype\000"
+ 2624      74797065 
+ 2624      00
+ 2625              	.LASF58:
+ 2626 009b 735F6C61 		.ascii	"s_last_centroid_dt_ms\000"
+ 2626      73745F63 
+ 2626      656E7472 
+ 2626      6F69645F 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 53
+
+
+ 2626      64745F6D 
+ 2627              	.LASF65:
+ 2628 00b1 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2628      43313120 
+ 2628      352E342E 
+ 2628      31203230 
+ 2628      31363036 
+ 2629 00e4 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2629      20726576 
+ 2629      6973696F 
+ 2629      6E203233 
+ 2629      37373135 
+ 2630 0117 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 2630      66756E63 
+ 2630      74696F6E 
+ 2630      2D736563 
+ 2630      74696F6E 
+ 2631              	.LASF31:
+ 2632 013f 535F5041 		.ascii	"S_PAYLOAD\000"
+ 2632      594C4F41 
+ 2632      4400
+ 2633              	.LASF9:
+ 2634 0149 5F5F7569 		.ascii	"__uint32_t\000"
+ 2634      6E743332 
+ 2634      5F7400
+ 2635              	.LASF29:
+ 2636 0154 535F5459 		.ascii	"S_TYPE\000"
+ 2636      504500
+ 2637              	.LASF67:
+ 2638 015b 433A5C55 		.ascii	"C:\\Users\\Jennewein\\Documents\\hamish-workspace\\"
+ 2638      73657273 
+ 2638      5C4A656E 
+ 2638      6E657765 
+ 2638      696E5C44 
+ 2639 0189 50536F43 		.ascii	"PSoC-Programs\\test_projects\\Proj07_hamflyAPI_stat"
+ 2639      2D50726F 
+ 2639      6772616D 
+ 2639      735C7465 
+ 2639      73745F70 
+ 2640 01ba 654D6163 		.ascii	"eMachineUpgrade.cydsn\000"
+ 2640      68696E65 
+ 2640      55706772 
+ 2640      6164652E 
+ 2640      63796473 
+ 2641              	.LASF5:
+ 2642 01d0 5F5F7569 		.ascii	"__uint16_t\000"
+ 2642      6E743136 
+ 2642      5F7400
+ 2643              	.LASF64:
+ 2644 01db 675F7469 		.ascii	"g_tick_ms\000"
+ 2644      636B5F6D 
+ 2644      7300
+ 2645              	.LASF21:
+ 2646 01e5 63796572 		.ascii	"cyerr\000"
+ 2646      7200
+ 2647              	.LASF51:
+ 2648 01eb 735F7479 		.ascii	"s_type\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 54
+
+
+ 2648      706500
+ 2649              	.LASF37:
+ 2650 01f2 7362635F 		.ascii	"sbc_on_uart_err_flags\000"
+ 2650      6F6E5F75 
+ 2650      6172745F 
+ 2650      6572725F 
+ 2650      666C6167 
+ 2651              	.LASF14:
+ 2652 0208 75696E74 		.ascii	"uint8_t\000"
+ 2652      385F7400 
+ 2653              	.LASF32:
+ 2654 0210 535F4352 		.ascii	"S_CRC\000"
+ 2654      4300
+ 2655              	.LASF0:
+ 2656 0216 7369676E 		.ascii	"signed char\000"
+ 2656      65642063 
+ 2656      68617200 
+ 2657              	.LASF26:
+ 2658 0222 666C6F61 		.ascii	"float\000"
+ 2658      7400
+ 2659              	.LASF36:
+ 2660 0228 63616C63 		.ascii	"calc\000"
+ 2660      00
+ 2661              	.LASF11:
+ 2662 022d 6C6F6E67 		.ascii	"long long int\000"
+ 2662      206C6F6E 
+ 2662      6720696E 
+ 2662      7400
+ 2663              	.LASF57:
+ 2664 023b 735F6C61 		.ascii	"s_last_rx_ms\000"
+ 2664      73745F72 
+ 2664      785F6D73 
+ 2664      00
+ 2665              	.LASF59:
+ 2666 0248 735F6372 		.ascii	"s_crc_err\000"
+ 2666      635F6572 
+ 2666      7200
+ 2667              	.LASF44:
+ 2668 0252 7362635F 		.ascii	"sbc_crc_errors\000"
+ 2668      6372635F 
+ 2668      6572726F 
+ 2668      727300
+ 2669              	.LASF33:
+ 2670 0261 73747265 		.ascii	"stream\000"
+ 2670      616D00
+ 2671              	.LASF52:
+ 2672 0268 735F6C65 		.ascii	"s_len\000"
+ 2672      6E00
+ 2673              	.LASF1:
+ 2674 026e 756E7369 		.ascii	"unsigned char\000"
+ 2674      676E6564 
+ 2674      20636861 
+ 2674      7200
+ 2675              	.LASF23:
+ 2676 027c 6C6F6E67 		.ascii	"long double\000"
+ 2676      20646F75 
+ 2676      626C6500 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 55
+
+
+ 2677              	.LASF28:
+ 2678 0288 535F4D41 		.ascii	"S_MAGIC\000"
+ 2678      47494300 
+ 2679              	.LASF56:
+ 2680 0290 735F6672 		.ascii	"s_fresh_bits\000"
+ 2680      6573685F 
+ 2680      62697473 
+ 2680      00
+ 2681              	.LASF34:
+ 2682 029d 7362635F 		.ascii	"sbc_init\000"
+ 2682      696E6974 
+ 2682      00
+ 2683              	.LASF46:
+ 2684 02a6 7362635F 		.ascii	"sbc_send_frame\000"
+ 2684      73656E64 
+ 2684      5F667261 
+ 2684      6D6500
+ 2685              	.LASF53:
+ 2686 02b5 735F6964 		.ascii	"s_idx\000"
+ 2686      7800
+ 2687              	.LASF38:
+ 2688 02bb 666C6167 		.ascii	"flags\000"
+ 2688      7300
+ 2689              	.LASF12:
+ 2690 02c1 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2690      206C6F6E 
+ 2690      6720756E 
+ 2690      7369676E 
+ 2690      65642069 
+ 2691              	.LASF18:
+ 2692 02d8 75696E74 		.ascii	"uint32_t\000"
+ 2692      33325F74 
+ 2692      00
+ 2693              	.LASF13:
+ 2694 02e1 756E7369 		.ascii	"unsigned int\000"
+ 2694      676E6564 
+ 2694      20696E74 
+ 2694      00
+ 2695              	.LASF16:
+ 2696 02ee 75696E74 		.ascii	"uint16_t\000"
+ 2696      31365F74 
+ 2696      00
+ 2697              	.LASF6:
+ 2698 02f7 73686F72 		.ascii	"short unsigned int\000"
+ 2698      7420756E 
+ 2698      7369676E 
+ 2698      65642069 
+ 2698      6E7400
+ 2699              	.LASF25:
+ 2700 030a 63686172 		.ascii	"char\000"
+ 2700      00
+ 2701              	.LASF8:
+ 2702 030f 6C6F6E67 		.ascii	"long int\000"
+ 2702      20696E74 
+ 2702      00
+ 2703              	.LASF47:
+ 2704 0318 74797065 		.ascii	"type\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 56
+
+
+ 2704      00
+ 2705              	.LASF17:
+ 2706 031d 696E7433 		.ascii	"int32_t\000"
+ 2706      325F7400 
+ 2707              	.LASF15:
+ 2708 0325 696E7431 		.ascii	"int16_t\000"
+ 2708      365F7400 
+ 2709              	.LASF40:
+ 2710 032d 7362635F 		.ascii	"sbc_rx_pkt_count\000"
+ 2710      72785F70 
+ 2710      6B745F63 
+ 2710      6F756E74 
+ 2710      00
+ 2711              	.LASF30:
+ 2712 033e 535F4C45 		.ascii	"S_LEN\000"
+ 2712      4E00
+ 2713              	.LASF55:
+ 2714 0344 735F6365 		.ascii	"s_centroid\000"
+ 2714      6E74726F 
+ 2714      696400
+ 2715              	.LASF10:
+ 2716 034f 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2716      20756E73 
+ 2716      69676E65 
+ 2716      6420696E 
+ 2716      7400
+ 2717              	.LASF27:
+ 2718 0361 646F7562 		.ascii	"double\000"
+ 2718      6C6500
+ 2719              	.LASF19:
+ 2720 0368 745F6D73 		.ascii	"t_ms\000"
+ 2720      00
+ 2721              	.LASF7:
+ 2722 036d 5F5F696E 		.ascii	"__int32_t\000"
+ 2722      7433325F 
+ 2722      7400
+ 2723              	.LASF3:
+ 2724 0377 5F5F696E 		.ascii	"__int16_t\000"
+ 2724      7431365F 
+ 2724      7400
+ 2725              	.LASF61:
+ 2726 0381 735F756E 		.ascii	"s_unknown_magic\000"
+ 2726      6B6E6F77 
+ 2726      6E5F6D61 
+ 2726      67696300 
+ 2727              	.LASF60:
+ 2728 0391 735F7561 		.ascii	"s_uart_err\000"
+ 2728      72745F65 
+ 2728      727200
+ 2729              	.LASF66:
+ 2730 039c 7362635F 		.ascii	"sbc_comms.c\000"
+ 2730      636F6D6D 
+ 2730      732E6300 
+ 2731              	.LASF63:
+ 2732 03a8 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2732      52784275 
+ 2732      66666572 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccdSYuJH.s 			page 57
+
+
+ 2732      00
+ 2733              	.LASF42:
+ 2734 03b5 7362635F 		.ascii	"sbc_last_centroid_dt_ms\000"
+ 2734      6C617374 
+ 2734      5F63656E 
+ 2734      74726F69 
+ 2734      645F6474 
+ 2735              	.LASF68:
+ 2736 03cd 6465636F 		.ascii	"decode_centroid\000"
+ 2736      64655F63 
+ 2736      656E7472 
+ 2736      6F696400 
+ 2737              	.LASF48:
+ 2738 03dd 7061796C 		.ascii	"payload\000"
+ 2738      6F616400 
+ 2739              	.LASF2:
+ 2740 03e5 5F5F7569 		.ascii	"__uint8_t\000"
+ 2740      6E74385F 
+ 2740      7400
+ 2741              	.LASF35:
+ 2742 03ef 7362635F 		.ascii	"sbc_on_rx_byte\000"
+ 2742      6F6E5F72 
+ 2742      785F6279 
+ 2742      746500
+ 2743              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
