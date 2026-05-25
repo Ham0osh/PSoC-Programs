@@ -322,11 +322,11 @@ static void exit_manu_joystick(app_ctx_t *ctx)
 // %==========================================================================%
 // %                                 Auto                                     %
 // %==========================================================================%
-// TEMP: for initial inter-device comms testing
+// AUTO_TRACKING placeholder: prints centroid frames received from the Pi.
 static void entry_auto_test(app_ctx_t *ctx)
 {
     (void)ctx;
-    UART_DEBUG_PutString("\r\n[AUTO] link loopback test: TX centroid @1Hz, echo on RX\r\n");
+    UART_DEBUG_PutString("\r\n[AUTO] listening for centroid frames from Pi\r\n");
 }
 
 void app_auto_tick(app_ctx_t *ctx)
@@ -350,20 +350,20 @@ void app_auto_tick(app_ctx_t *ctx)
     }
 
     // TEMP: 1 Hz self-test centroid sent over UART_PI (jumpered for loopback)
-    static uint32_t last = 0u;
-    if (g_tick_ms - last >= 1000u) {
-        last = g_tick_ms;
-        uint8_t pl[12];
-        uint32_t t_ms  = g_tick_ms;
-        int16_t  cx    = 1234, cy = -567;
-        uint16_t cxerr = 10,   cyerr = 20;
-        memcpy(pl + 0, &t_ms,  4);
-        memcpy(pl + 4, &cx,    2);
-        memcpy(pl + 6, &cy,    2);
-        memcpy(pl + 8, &cxerr, 2);
-        memcpy(pl +10, &cyerr, 2);
-        pi_send_frame(PKT_CENTROID, pl, sizeof pl);
-    }
+//    static uint32_t last = 0u;
+//    if (g_tick_ms - last >= 1000u) {
+//        last = g_tick_ms;
+//        uint8_t pl[12];
+//        uint32_t t_ms  = g_tick_ms;
+//        int16_t  cx    = 1234, cy = -567;
+//        uint16_t cxerr = 10,   cyerr = 20;
+//        memcpy(pl + 0, &t_ms,  4);
+//        memcpy(pl + 4, &cx,    2);
+//        memcpy(pl + 6, &cy,    2);
+//        memcpy(pl + 8, &cxerr, 2);
+//        memcpy(pl +10, &cyerr, 2);
+//        pi_send_frame(PKT_CENTROID, pl, sizeof pl);
+//    }
 }
 
 // %==========================================================================%
