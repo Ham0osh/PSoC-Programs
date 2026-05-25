@@ -331,40 +331,28 @@ static void entry_auto_test(app_ctx_t *ctx)
 
 void app_auto_tick(app_ctx_t *ctx)
 {
-    // Catch state change
+    // Check we are actualy in tracking
     if (ctx->state != AUTO_TRACKING) return;
+    // Printing tag appropriate for the two hard coded centroiding input streams.
+    static const char *tag[STREAM_COUNTS] = { "C", "F" };
 
-    payload_centroid_t c;
-    // On tick try to receive centroid
-    if (pi_get_centroid(&c)) {
-        char b[128];
-        snprintf(b, sizeof b,
-                 "[PI] t=%lu cx=%d cy=%d cxerr=%u cyerr=%u "
-                 "rx=%lu dt=%u unkMagic=%u crcErr=%u uartErr=%u\r\n",
-                 (unsigned long)c.t_ms, c.cx, c.cy, c.cxerr, c.cyerr,
-                 (unsigned long)pi_rx_pkt_count(),
-                 pi_last_centroid_dt_ms(),
-                 pi_unknown_magic(),
-                 pi_crc_errors(),
-                 pi_uart_errors());
-        UART_DEBUG_PutString(b);
+    // For each stream
+    // TEMP: Print debug of what has been received.
+    for (uint8_t s = 0u; s < STREAM_COUNTS; s++) {
+        payload_centroid_t c;
+        if (pi_get_centroid(s, &c)) {
+            char b[128];
+            snprintf(b, sizeof b,
+                     "[PI:%s] t=%lu cx=%d cy=%d cxerr=%u cyerr=%u "
+                     "dt=%u rx=%lu unkMagic=%u crcErr=%u uartErr=%u\r\n",
+                     tag[s],
+                     (unsigned long)c.t_ms, c.cx, c.cy, c.cxerr, c.cyerr,
+                     pi_last_centroid_dt_ms(s),
+                     (unsigned long)pi_rx_pkt_count(),
+                     pi_unknown_magic(), pi_crc_errors(), pi_uart_errors());
+            UART_DEBUG_PutString(b);
+        }
     }
-
-    // TEMP: 1 Hz self-test centroid sent over UART_PI (jumpered for loopback)
-//    static uint32_t last = 0u;
-//    if (g_tick_ms - last >= 1000u) {
-//        last = g_tick_ms;
-//        uint8_t pl[12];
-//        uint32_t t_ms  = g_tick_ms;
-//        int16_t  cx    = 1234, cy = -567;
-//        uint16_t cxerr = 10,   cyerr = 20;
-//        memcpy(pl + 0, &t_ms,  4);
-//        memcpy(pl + 4, &cx,    2);
-//        memcpy(pl + 6, &cy,    2);
-//        memcpy(pl + 8, &cxerr, 2);
-//        memcpy(pl +10, &cyerr, 2);
-//        pi_send_frame(PKT_CENTROID, pl, sizeof pl);
-//    }
 }
 
 // %==========================================================================%

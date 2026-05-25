@@ -229,12 +229,11 @@ Discarded input sections
  .data          0x00000000        0x0 .\ARM_GCC_541\Debug\app_ctx.o
  .bss           0x00000000        0x0 .\ARM_GCC_541\Debug\app_ctx.o
  .text          0x00000000        0x0 .\ARM_GCC_541\Debug\app_statemachine.o
- .data          0x00000000        0x0 .\ARM_GCC_541\Debug\app_statemachine.o
  .bss           0x00000000        0x0 .\ARM_GCC_541\Debug\app_statemachine.o
  .text          0x00000000        0x0 .\ARM_GCC_541\Debug\pi_comms.o
  .data          0x00000000        0x0 .\ARM_GCC_541\Debug\pi_comms.o
  .text.pi_last_rx_ms
-                0x00000000       0x14 .\ARM_GCC_541\Debug\pi_comms.o
+                0x00000000       0x2c .\ARM_GCC_541\Debug\pi_comms.o
  .text.pi_send_frame
                 0x00000000       0x8c .\ARM_GCC_541\Debug\pi_comms.o
  .text          0x00000000        0x0 .\ARM_GCC_541\Debug\hamfly_comm_rb.o
@@ -1316,7 +1315,7 @@ END GROUP
                 0x00000800                ee_size = (CY_APPL_LOADABLE && ! (CY_EE_IN_BTLDR))?(CY_EE_SIZE / CY_APPL_MAX):CY_EE_SIZE
                 [!provide]                PROVIDE (CY_ECC_OFFSET, ecc_offset)
 
-.text           0x00000000     0xab66
+.text           0x00000000     0xac86
  CREATE_OBJECT_SYMBOLS
                 0x00000000                PROVIDE (__cy_interrupt_vector, RomVectors)
  *(.romvectors)
@@ -1440,876 +1439,875 @@ END GROUP
  .text.entry_auto_test
                 0x000011f4       0x1c .\ARM_GCC_541\Debug\app_statemachine.o
  .text.app_auto_tick
-                0x00001210       0xa4 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x00001210       0xdc .\ARM_GCC_541\Debug\app_statemachine.o
                 0x00001210                app_auto_tick
- .text.sev_str  0x000012b4       0x40 .\ARM_GCC_541\Debug\app_statemachine.o
+ .text.sev_str  0x000012ec       0x40 .\ARM_GCC_541\Debug\app_statemachine.o
  .text.entry_error_active
-                0x000012f4       0x80 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x0000132c       0x80 .\ARM_GCC_541\Debug\app_statemachine.o
  .text.manu_pan_tilt_deg
-                0x00001374       0x54 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x000013ac       0x54 .\ARM_GCC_541\Debug\app_statemachine.o
  .text.set_origin
-                0x000013c8       0x6c .\ARM_GCC_541\Debug\app_statemachine.o
+                0x00001400       0x6c .\ARM_GCC_541\Debug\app_statemachine.o
  .text.print_help
-                0x00001434       0x1c .\ARM_GCC_541\Debug\app_statemachine.o
+                0x0000146c       0x1c .\ARM_GCC_541\Debug\app_statemachine.o
  .text.handle_global_key
-                0x00001450       0x94 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x00001488       0x94 .\ARM_GCC_541\Debug\app_statemachine.o
  .text.leaf_traps_nav
-                0x000014e4       0x20 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x0000151c       0x20 .\ARM_GCC_541\Debug\app_statemachine.o
  .text.handle_nav_key
-                0x00001504       0x48 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x0000153c       0x48 .\ARM_GCC_541\Debug\app_statemachine.o
  .text.key_error_active
-                0x0000154c       0x40 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x00001584       0x40 .\ARM_GCC_541\Debug\app_statemachine.o
  .text.app_dispatch_key
-                0x0000158c       0xa0 .\ARM_GCC_541\Debug\app_statemachine.o
-                0x0000158c                app_dispatch_key
+                0x000015c4       0xa0 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x000015c4                app_dispatch_key
  .text.build_zero
-                0x0000162c       0x1c .\ARM_GCC_541\Debug\app_statemachine.o
+                0x00001664       0x1c .\ARM_GCC_541\Debug\app_statemachine.o
  .text.build_stby
-                0x00001648       0x1c .\ARM_GCC_541\Debug\app_statemachine.o
+                0x00001680       0x1c .\ARM_GCC_541\Debug\app_statemachine.o
  .text.build_manu_joystick
-                0x00001664       0xa4 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x0000169c       0xa4 .\ARM_GCC_541\Debug\app_statemachine.o
  .text.build_error
-                0x00001708       0x28 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x00001740       0x28 .\ARM_GCC_541\Debug\app_statemachine.o
  .text.app_build_control
-                0x00001730       0x3c .\ARM_GCC_541\Debug\app_statemachine.o
-                0x00001730                app_build_control
+                0x00001768       0x3c .\ARM_GCC_541\Debug\app_statemachine.o
+                0x00001768                app_build_control
  .text.nudge_apply
-                0x0000176c      0x1a0 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x000017a4      0x1a0 .\ARM_GCC_541\Debug\app_statemachine.o
  .text.key_manu_joystick
-                0x0000190c      0x224 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x00001944      0x224 .\ARM_GCC_541\Debug\app_statemachine.o
  .text.app_manual_tick
-                0x00001b30       0xc0 .\ARM_GCC_541\Debug\app_statemachine.o
-                0x00001b30                app_manual_tick
- .text.pi_init  0x00001bf0       0x6c .\ARM_GCC_541\Debug\pi_comms.o
-                0x00001bf0                pi_init
+                0x00001b68       0xc0 .\ARM_GCC_541\Debug\app_statemachine.o
+                0x00001b68                app_manual_tick
+ .text.pi_init  0x00001c28       0x84 .\ARM_GCC_541\Debug\pi_comms.o
+                0x00001c28                pi_init
  .text.decode_centroid
-                0x00001c5c       0xb0 .\ARM_GCC_541\Debug\pi_comms.o
+                0x00001cac      0x114 .\ARM_GCC_541\Debug\pi_comms.o
  .text.pi_on_rx_byte
-                0x00001d0c      0x170 .\ARM_GCC_541\Debug\pi_comms.o
-                0x00001d0c                pi_on_rx_byte
+                0x00001dc0      0x18c .\ARM_GCC_541\Debug\pi_comms.o
+                0x00001dc0                pi_on_rx_byte
  .text.pi_on_uart_err_flags
-                0x00001e7c       0x30 .\ARM_GCC_541\Debug\pi_comms.o
-                0x00001e7c                pi_on_uart_err_flags
+                0x00001f4c       0x30 .\ARM_GCC_541\Debug\pi_comms.o
+                0x00001f4c                pi_on_uart_err_flags
  .text.pi_get_centroid
-                0x00001eac       0x4c .\ARM_GCC_541\Debug\pi_comms.o
-                0x00001eac                pi_get_centroid
+                0x00001f7c       0x88 .\ARM_GCC_541\Debug\pi_comms.o
+                0x00001f7c                pi_get_centroid
  .text.pi_unknown_magic
-                0x00001ef8       0x14 .\ARM_GCC_541\Debug\pi_comms.o
-                0x00001ef8                pi_unknown_magic
+                0x00002004       0x14 .\ARM_GCC_541\Debug\pi_comms.o
+                0x00002004                pi_unknown_magic
  .text.pi_rx_pkt_count
-                0x00001f0c       0x14 .\ARM_GCC_541\Debug\pi_comms.o
-                0x00001f0c                pi_rx_pkt_count
+                0x00002018       0x14 .\ARM_GCC_541\Debug\pi_comms.o
+                0x00002018                pi_rx_pkt_count
  .text.pi_last_centroid_dt_ms
-                0x00001f20       0x14 .\ARM_GCC_541\Debug\pi_comms.o
-                0x00001f20                pi_last_centroid_dt_ms
+                0x0000202c       0x2c .\ARM_GCC_541\Debug\pi_comms.o
+                0x0000202c                pi_last_centroid_dt_ms
  .text.pi_crc_errors
-                0x00001f34       0x14 .\ARM_GCC_541\Debug\pi_comms.o
-                0x00001f34                pi_crc_errors
+                0x00002058       0x14 .\ARM_GCC_541\Debug\pi_comms.o
+                0x00002058                pi_crc_errors
  .text.pi_uart_errors
-                0x00001f48       0x14 .\ARM_GCC_541\Debug\pi_comms.o
-                0x00001f48                pi_uart_errors
- .text.rb_next  0x00001f5c       0x28 .\ARM_GCC_541\Debug\hamfly_comm_rb.o
+                0x0000206c       0x14 .\ARM_GCC_541\Debug\pi_comms.o
+                0x0000206c                pi_uart_errors
+ .text.rb_next  0x00002080       0x28 .\ARM_GCC_541\Debug\hamfly_comm_rb.o
  .text.hamfly_rb_init
-                0x00001f84       0x2c .\ARM_GCC_541\Debug\hamfly_comm_rb.o
-                0x00001f84                hamfly_rb_init
+                0x000020a8       0x2c .\ARM_GCC_541\Debug\hamfly_comm_rb.o
+                0x000020a8                hamfly_rb_init
  .text.hamfly_rb_push
-                0x00001fb0       0x64 .\ARM_GCC_541\Debug\hamfly_comm_rb.o
-                0x00001fb0                hamfly_rb_push
+                0x000020d4       0x64 .\ARM_GCC_541\Debug\hamfly_comm_rb.o
+                0x000020d4                hamfly_rb_push
  .text.hamfly_rb_pop
-                0x00002014       0x58 .\ARM_GCC_541\Debug\hamfly_comm_rb.o
-                0x00002014                hamfly_rb_pop
+                0x00002138       0x58 .\ARM_GCC_541\Debug\hamfly_comm_rb.o
+                0x00002138                hamfly_rb_pop
  .text.load_freefly_control
-                0x0000206c       0x50 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+                0x00002190       0x50 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
  .text.copy_qx287_to_telemetry
-                0x000020bc       0x1c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+                0x000021e0       0x1c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
  .text.drain_rb
-                0x000020d8       0x44 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+                0x000021fc       0x44 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
  .text.hamfly_init
-                0x0000211c       0x5c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
-                0x0000211c                hamfly_init
+                0x00002240       0x5c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+                0x00002240                hamfly_init
  .text.hamfly_on_rx_byte
-                0x00002178       0x3c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
-                0x00002178                hamfly_on_rx_byte
+                0x0000229c       0x3c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+                0x0000229c                hamfly_on_rx_byte
  .text.hamfly_on_uart_err_flags
-                0x000021b4       0x30 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
-                0x000021b4                hamfly_on_uart_err_flags
+                0x000022d8       0x30 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+                0x000022d8                hamfly_on_uart_err_flags
  .text.hamfly_pump
-                0x000021e4      0x27c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
-                0x000021e4                hamfly_pump
+                0x00002308      0x27c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+                0x00002308                hamfly_pump
  .text.hamfly_send_control
-                0x00002460       0x7c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
-                0x00002460                hamfly_send_control
+                0x00002584       0x7c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+                0x00002584                hamfly_send_control
  .text.hamfly_kill
-                0x000024dc       0x3c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
-                0x000024dc                hamfly_kill
+                0x00002600       0x3c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+                0x00002600                hamfly_kill
  .text.hamfly_get_telemetry
-                0x00002518       0x30 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
-                0x00002518                hamfly_get_telemetry
- .text.rd_be32  0x00002548       0x34 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
- .text.rd_be16  0x0000257c       0x28 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+                0x0000263c       0x30 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+                0x0000263c                hamfly_get_telemetry
+ .text.rd_be32  0x0000266c       0x34 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+ .text.rd_be16  0x000026a0       0x28 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
  .text.rd_be_u16
-                0x000025a4       0x28 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
- .text.rd_le16  0x000025cc       0x24 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+                0x000026c8       0x28 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+ .text.rd_le16  0x000026f0       0x24 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
  .text.hamfly_telemetry_to_euler
-                0x000025f0      0x1d4 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
-                0x000025f0                hamfly_telemetry_to_euler
+                0x00002714      0x1d4 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+                0x00002714                hamfly_telemetry_to_euler
  .text.hamfly_decode_qx287
-                0x000027c4       0x68 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
-                0x000027c4                hamfly_decode_qx287
+                0x000028e8       0x68 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+                0x000028e8                hamfly_decode_qx287
  .text.hamfly_decode_gps
-                0x0000282c      0x1a0 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
-                0x0000282c                hamfly_decode_gps
+                0x00002950      0x1a0 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+                0x00002950                hamfly_decode_gps
  .text.hamfly_decode_baro
-                0x000029cc       0x78 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
-                0x000029cc                hamfly_decode_baro
+                0x00002af0       0x78 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+                0x00002af0                hamfly_decode_baro
  .text.hamfly_decode_attitude
-                0x00002a44      0x144 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
-                0x00002a44                hamfly_decode_attitude
+                0x00002b68      0x144 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+                0x00002b68                hamfly_decode_attitude
  .text.hamfly_decode_sysstat
-                0x00002b88      0x1c8 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
-                0x00002b88                hamfly_decode_sysstat
+                0x00002cac      0x1c8 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+                0x00002cac                hamfly_decode_sysstat
  .text.hamfly_decode_mag
-                0x00002d50      0x18c .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
-                0x00002d50                hamfly_decode_mag
+                0x00002e74      0x18c .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+                0x00002e74                hamfly_decode_mag
  .text.hamfly_decode_sysecho
-                0x00002edc       0x7c .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
-                0x00002edc                hamfly_decode_sysecho
+                0x00003000       0x7c .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+                0x00003000                hamfly_decode_sysecho
  .text.ff_api_init
-                0x00002f58       0x7c .\ARM_GCC_541\Debug\hamfly_qx_app.o
+                0x0000307c       0x7c .\ARM_GCC_541\Debug\hamfly_qx_app.o
  .text.ff_api_send
-                0x00002fd4       0x44 .\ARM_GCC_541\Debug\hamfly_qx_app.o
+                0x000030f8       0x44 .\ARM_GCC_541\Debug\hamfly_qx_app.o
  .text.QX_ParsePacket_Cli_MoVI_Ctrl_CB
-                0x00003018      0x884 .\ARM_GCC_541\Debug\hamfly_qx_app.o
+                0x0000313c      0x884 .\ARM_GCC_541\Debug\hamfly_qx_app.o
  .text.QX_SendMsg2CommsPort_CB
-                0x0000389c       0x64 .\ARM_GCC_541\Debug\hamfly_qx_app.o
-                0x0000389c                QX_SendMsg2CommsPort_CB
+                0x000039c0       0x64 .\ARM_GCC_541\Debug\hamfly_qx_app.o
+                0x000039c0                QX_SendMsg2CommsPort_CB
  .text.QX_FwdMsg_CB
-                0x00003900       0x14 .\ARM_GCC_541\Debug\hamfly_qx_app.o
-                0x00003900                QX_FwdMsg_CB
+                0x00003a24       0x14 .\ARM_GCC_541\Debug\hamfly_qx_app.o
+                0x00003a24                QX_FwdMsg_CB
  .text.QX_GetTicks_ms
-                0x00003914       0x34 .\ARM_GCC_541\Debug\hamfly_qx_app.o
-                0x00003914                QX_GetTicks_ms
+                0x00003a38       0x34 .\ARM_GCC_541\Debug\hamfly_qx_app.o
+                0x00003a38                QX_GetTicks_ms
  .text.QX_Parser_SetMsgPtr
-                0x00003948       0x1c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00003948                QX_Parser_SetMsgPtr
+                0x00003a6c       0x1c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00003a6c                QX_Parser_SetMsgPtr
  .text.QX_Parser_AdvMsgPtr
-                0x00003964       0x1c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00003964                QX_Parser_AdvMsgPtr
+                0x00003a88       0x1c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00003a88                QX_Parser_AdvMsgPtr
  .text.QX_Parser_GetMsgPtr
-                0x00003980       0x14 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00003980                QX_Parser_GetMsgPtr
+                0x00003aa4       0x14 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00003aa4                QX_Parser_GetMsgPtr
  .text.QX_Parser_SetDir_Read
-                0x00003994       0x18 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00003994                QX_Parser_SetDir_Read
+                0x00003ab8       0x18 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00003ab8                QX_Parser_SetDir_Read
  .text.QX_Parser_SetDir_WriteAbs
-                0x000039ac       0x18 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x000039ac                QX_Parser_SetDir_WriteAbs
+                0x00003ad0       0x18 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00003ad0                QX_Parser_SetDir_WriteAbs
  .text.AddFloatAsSignedShort
-                0x000039c4       0xc8 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x000039c4                AddFloatAsSignedShort
+                0x00003ae8       0xc8 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00003ae8                AddFloatAsSignedShort
  .text.GetFloatAsSignedShort
-                0x00003a8c      0x170 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00003a8c                GetFloatAsSignedShort
+                0x00003bb0      0x170 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00003bb0                GetFloatAsSignedShort
  .text.AddSignedShortAsSignedShort
-                0x00003bfc       0x58 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00003bfc                AddSignedShortAsSignedShort
+                0x00003d20       0x58 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00003d20                AddSignedShortAsSignedShort
  .text.GetSignedShortAsSignedShort
-                0x00003c54      0x15c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00003c54                GetSignedShortAsSignedShort
+                0x00003d78      0x15c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00003d78                GetSignedShortAsSignedShort
  .text.AddUnsignedCharAsUnsignedChar
-                0x00003db0       0x3c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00003db0                AddUnsignedCharAsUnsignedChar
+                0x00003ed4       0x3c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00003ed4                AddUnsignedCharAsUnsignedChar
  .text.GetUnsignedCharAsUnsignedChar
-                0x00003dec       0xc8 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00003dec                GetUnsignedCharAsUnsignedChar
+                0x00003f10       0xc8 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00003f10                GetUnsignedCharAsUnsignedChar
  .text.AddUnsignedShortAsUnsignedShort
-                0x00003eb4       0x54 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00003eb4                AddUnsignedShortAsUnsignedShort
+                0x00003fd8       0x54 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00003fd8                AddUnsignedShortAsUnsignedShort
  .text.GetUnsignedShortAsUnsignedShort
-                0x00003f08       0xf8 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00003f08                GetUnsignedShortAsUnsignedShort
+                0x0000402c       0xf8 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x0000402c                GetUnsignedShortAsUnsignedShort
  .text.AddBitsAsByte
-                0x00004000       0xcc .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00004000                AddBitsAsByte
+                0x00004124       0xcc .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004124                AddBitsAsByte
  .text.GetBitsAsByte
-                0x000040cc       0xdc .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x000040cc                GetBitsAsByte
+                0x000041f0       0xdc .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x000041f0                GetBitsAsByte
  .text.QX_InitMsg
-                0x000041a8       0x30 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x000042cc       0x30 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_RxMsg
-                0x000041d8       0xec .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x000042fc       0xec .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_Srv_Rx_Read
-                0x000042c4       0x90 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x000043e8       0x90 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_Srv_Rx_Write
-                0x00004354       0xc4 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004478       0xc4 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_Cli_Rx_CurVal
-                0x00004418       0x3c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x0000453c       0x3c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_TxMsg_Setup
-                0x00004454       0x4c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004578       0x4c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_TxMsg_Finish
-                0x000044a0      0x1dc .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x000045c4      0x1dc .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_BuildHeader
-                0x0000467c      0x188 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x000047a0      0x188 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_ParseHeader
-                0x00004804      0x114 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004928      0x114 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_Calc8bChecksum
-                0x00004918       0x3c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004a3c       0x3c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_AddExtdValToBuf
-                0x00004954       0x88 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004a78       0x88 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_GetExtdValFromBuf
-                0x000049dc       0x6c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004b00       0x6c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_compute_crc32
-                0x00004a48       0x4c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004b6c       0x4c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
  .text.QX_accumulate_crc32
-                0x00004a94       0x54 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00004a94                QX_accumulate_crc32
+                0x00004bb8       0x54 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004bb8                QX_accumulate_crc32
  .text.QX_InitCli
-                0x00004ae8       0x24 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00004ae8                QX_InitCli
+                0x00004c0c       0x24 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004c0c                QX_InitCli
  .text.QX_InitTxOptions
-                0x00004b0c       0x3c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00004b0c                QX_InitTxOptions
+                0x00004c30       0x3c .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004c30                QX_InitTxOptions
  .text.QX_SendPacket_Srv_CurVal
-                0x00004b48       0x98 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00004b48                QX_SendPacket_Srv_CurVal
+                0x00004c6c       0x98 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004c6c                QX_SendPacket_Srv_CurVal
  .text.QX_SendPacket_Cli_WriteABS
-                0x00004be0       0x98 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00004be0                QX_SendPacket_Cli_WriteABS
+                0x00004d04       0x98 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004d04                QX_SendPacket_Cli_WriteABS
  .text.QX_StreamRxCharSM
-                0x00004c78      0x6e0 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x00004c78                QX_StreamRxCharSM
+                0x00004d9c      0x6e0 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x00004d9c                QX_StreamRxCharSM
  .text.CYMEMZERO
-                0x00005358       0x1c .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x0000547c       0x1c .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .text.CYCONFIGCPY
-                0x00005374       0x20 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00005498       0x20 .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .text.CyClockStartupError
-                0x00005394        0xc .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x000054b8        0xc .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .text.cfg_write_bytes32
-                0x000053a0       0x74 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x000054c4       0x74 .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .text.ClockSetup
-                0x00005414      0x180 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00005538      0x180 .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .text.AnalogSetDefault
-                0x00005594       0x44 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x000056b8       0x44 .\ARM_GCC_541\Debug\cyfitter_cfg.o
  .text.AMux_1_Set
-                0x000055d8       0x6c .\ARM_GCC_541\Debug\cyfitter_cfg.o
-                0x000055d8                AMux_1_Set
+                0x000056fc       0x6c .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x000056fc                AMux_1_Set
  .text.AMux_1_Unset
-                0x00005644       0x74 .\ARM_GCC_541\Debug\cyfitter_cfg.o
-                0x00005644                AMux_1_Unset
+                0x00005768       0x74 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00005768                AMux_1_Unset
  .text.ADC_DelSig_1_AMux_Set
-                0x000056b8       0x40 .\ARM_GCC_541\Debug\cyfitter_cfg.o
-                0x000056b8                ADC_DelSig_1_AMux_Set
+                0x000057dc       0x40 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x000057dc                ADC_DelSig_1_AMux_Set
  .text.ADC_DelSig_1_AMux_Unset
-                0x000056f8       0x44 .\ARM_GCC_541\Debug\cyfitter_cfg.o
-                0x000056f8                ADC_DelSig_1_AMux_Unset
+                0x0000581c       0x44 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x0000581c                ADC_DelSig_1_AMux_Unset
  .text.cyfitter_cfg
-                0x0000573c      0x1ac .\ARM_GCC_541\Debug\cyfitter_cfg.o
-                0x0000573c                cyfitter_cfg
+                0x00005860      0x1ac .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x00005860                cyfitter_cfg
  .text.IntDefaultHandler
-                0x000058e8       0x14 .\ARM_GCC_541\Debug\Cm3Start.o
-                0x000058e8                IntDefaultHandler
- .text._sbrk    0x000058fc       0x50 .\ARM_GCC_541\Debug\Cm3Start.o
-                0x000058fc                _sbrk
- .text.Start_c  0x0000594c       0x98 .\ARM_GCC_541\Debug\Cm3Start.o
-                0x0000594c                Start_c
+                0x00005a0c       0x14 .\ARM_GCC_541\Debug\Cm3Start.o
+                0x00005a0c                IntDefaultHandler
+ .text._sbrk    0x00005a20       0x50 .\ARM_GCC_541\Debug\Cm3Start.o
+                0x00005a20                _sbrk
+ .text.Start_c  0x00005a70       0x98 .\ARM_GCC_541\Debug\Cm3Start.o
+                0x00005a70                Start_c
  .text.initialize_psoc
-                0x000059e4       0x90 .\ARM_GCC_541\Debug\Cm3Start.o
-                0x000059e4                initialize_psoc
+                0x00005b08       0x90 .\ARM_GCC_541\Debug\Cm3Start.o
+                0x00005b08                initialize_psoc
  .text.ADC_DelSig_1_Init
-                0x00005a74      0x11c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
-                0x00005a74                ADC_DelSig_1_Init
+                0x00005b98      0x11c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+                0x00005b98                ADC_DelSig_1_Init
  .text.ADC_DelSig_1_Enable
-                0x00005b90      0x158 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
-                0x00005b90                ADC_DelSig_1_Enable
+                0x00005cb4      0x158 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+                0x00005cb4                ADC_DelSig_1_Enable
  .text.ADC_DelSig_1_Start
-                0x00005ce8       0x30 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
-                0x00005ce8                ADC_DelSig_1_Start
+                0x00005e0c       0x30 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+                0x00005e0c                ADC_DelSig_1_Start
  .text.ADC_DelSig_1_StartConvert
-                0x00005d18       0x20 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
-                0x00005d18                ADC_DelSig_1_StartConvert
+                0x00005e3c       0x20 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+                0x00005e3c                ADC_DelSig_1_StartConvert
  .text.ADC_DelSig_1_StopConvert
-                0x00005d38       0x20 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
-                0x00005d38                ADC_DelSig_1_StopConvert
+                0x00005e5c       0x20 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+                0x00005e5c                ADC_DelSig_1_StopConvert
  .text.ADC_DelSig_1_GetResult16
-                0x00005d58       0x7c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
-                0x00005d58                ADC_DelSig_1_GetResult16
+                0x00005e7c       0x7c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+                0x00005e7c                ADC_DelSig_1_GetResult16
  .text.ADC_DelSig_1_InitConfig
-                0x00005dd4      0x164 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+                0x00005ef8      0x164 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_GainCompensation
-                0x00005f38      0x170 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+                0x0000605c      0x170 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_SetDSMRef0Reg
-                0x000060a8       0x7c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+                0x000061cc       0x7c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
  .text.ADC_DelSig_1_ISR1
-                0x00006124        0xc .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_INT.o)
-                0x00006124                ADC_DelSig_1_ISR1
+                0x00006248        0xc .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_INT.o)
+                0x00006248                ADC_DelSig_1_ISR1
  .text.AMux_1_Start
-                0x00006130       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
-                0x00006130                AMux_1_Start
+                0x00006254       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
+                0x00006254                AMux_1_Start
  .text.AMux_1_FastSelect
-                0x00006164       0x38 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
-                0x00006164                AMux_1_FastSelect
+                0x00006288       0x38 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
+                0x00006288                AMux_1_FastSelect
  .text.isr_adc_StartEx
-                0x0000619c       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
-                0x0000619c                isr_adc_StartEx
+                0x000062c0       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
+                0x000062c0                isr_adc_StartEx
  .text.isr_adc_SetVector
-                0x000061c0       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
-                0x000061c0                isr_adc_SetVector
+                0x000062e4       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
+                0x000062e4                isr_adc_SetVector
  .text.isr_adc_SetPriority
-                0x000061e4       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
-                0x000061e4                isr_adc_SetPriority
+                0x00006308       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
+                0x00006308                isr_adc_SetPriority
  .text.isr_adc_Enable
-                0x00006208       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
-                0x00006208                isr_adc_Enable
+                0x0000632c       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
+                0x0000632c                isr_adc_Enable
  .text.isr_adc_Disable
-                0x00006220       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
-                0x00006220                isr_adc_Disable
+                0x00006344       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
+                0x00006344                isr_adc_Disable
  .text.isr_adc_ClearPending
-                0x00006238       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
-                0x00006238                isr_adc_ClearPending
+                0x0000635c       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
+                0x0000635c                isr_adc_ClearPending
  .text.UART_MOVI_Start
-                0x00006250       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
-                0x00006250                UART_MOVI_Start
+                0x00006374       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
+                0x00006374                UART_MOVI_Start
  .text.UART_MOVI_Init
-                0x00006274       0x40 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
-                0x00006274                UART_MOVI_Init
+                0x00006398       0x40 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
+                0x00006398                UART_MOVI_Init
  .text.UART_MOVI_Enable
-                0x000062b4       0x5c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
-                0x000062b4                UART_MOVI_Enable
+                0x000063d8       0x5c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
+                0x000063d8                UART_MOVI_Enable
  .text.UART_MOVI_ClearRxBuffer
-                0x00006310       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
-                0x00006310                UART_MOVI_ClearRxBuffer
+                0x00006434       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
+                0x00006434                UART_MOVI_ClearRxBuffer
  .text.UART_MOVI_PutChar
-                0x00006354       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
-                0x00006354                UART_MOVI_PutChar
+                0x00006478       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
+                0x00006478                UART_MOVI_PutChar
  .text.UART_MOVI_ClearTxBuffer
-                0x00006388       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
-                0x00006388                UART_MOVI_ClearTxBuffer
+                0x000064ac       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
+                0x000064ac                UART_MOVI_ClearTxBuffer
  .text.isr_rx_movi_StartEx
-                0x000063cc       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
-                0x000063cc                isr_rx_movi_StartEx
+                0x000064f0       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
+                0x000064f0                isr_rx_movi_StartEx
  .text.isr_rx_movi_SetVector
-                0x000063f0       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
-                0x000063f0                isr_rx_movi_SetVector
+                0x00006514       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
+                0x00006514                isr_rx_movi_SetVector
  .text.isr_rx_movi_SetPriority
-                0x00006414       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
-                0x00006414                isr_rx_movi_SetPriority
+                0x00006538       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
+                0x00006538                isr_rx_movi_SetPriority
  .text.isr_rx_movi_Enable
-                0x00006438       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
-                0x00006438                isr_rx_movi_Enable
+                0x0000655c       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
+                0x0000655c                isr_rx_movi_Enable
  .text.isr_rx_movi_Disable
-                0x00006450       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
-                0x00006450                isr_rx_movi_Disable
+                0x00006574       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
+                0x00006574                isr_rx_movi_Disable
  .text.Looptimer_Init
-                0x00006468       0xa0 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
-                0x00006468                Looptimer_Init
+                0x0000658c       0xa0 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+                0x0000658c                Looptimer_Init
  .text.Looptimer_Enable
-                0x00006508       0x48 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
-                0x00006508                Looptimer_Enable
+                0x0000662c       0x48 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+                0x0000662c                Looptimer_Enable
  .text.Looptimer_Start
-                0x00006550       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
-                0x00006550                Looptimer_Start
+                0x00006674       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+                0x00006674                Looptimer_Start
  .text.Looptimer_SetInterruptMode
-                0x00006574       0x20 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
-                0x00006574                Looptimer_SetInterruptMode
+                0x00006698       0x20 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+                0x00006698                Looptimer_SetInterruptMode
  .text.Looptimer_ReadStatusRegister
-                0x00006594       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
-                0x00006594                Looptimer_ReadStatusRegister
+                0x000066b8       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+                0x000066b8                Looptimer_ReadStatusRegister
  .text.Looptimer_WritePeriod
-                0x000065ac       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
-                0x000065ac                Looptimer_WritePeriod
+                0x000066d0       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+                0x000066d0                Looptimer_WritePeriod
  .text.Looptimer_WriteCounter
-                0x000065d0       0x20 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
-                0x000065d0                Looptimer_WriteCounter
+                0x000066f4       0x20 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+                0x000066f4                Looptimer_WriteCounter
  .text.isr_Looptimer_StartEx
-                0x000065f0       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
-                0x000065f0                isr_Looptimer_StartEx
+                0x00006714       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
+                0x00006714                isr_Looptimer_StartEx
  .text.isr_Looptimer_SetVector
-                0x00006614       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
-                0x00006614                isr_Looptimer_SetVector
+                0x00006738       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
+                0x00006738                isr_Looptimer_SetVector
  .text.isr_Looptimer_SetPriority
-                0x00006638       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
-                0x00006638                isr_Looptimer_SetPriority
+                0x0000675c       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
+                0x0000675c                isr_Looptimer_SetPriority
  .text.isr_Looptimer_Enable
-                0x0000665c       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
-                0x0000665c                isr_Looptimer_Enable
+                0x00006780       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
+                0x00006780                isr_Looptimer_Enable
  .text.isr_Looptimer_Disable
-                0x00006674       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
-                0x00006674                isr_Looptimer_Disable
+                0x00006798       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
+                0x00006798                isr_Looptimer_Disable
  .text.EEPROM_CONFIG_Enable
-                0x0000668c       0x10 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
-                0x0000668c                EEPROM_CONFIG_Enable
+                0x000067b0       0x10 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
+                0x000067b0                EEPROM_CONFIG_Enable
  .text.EEPROM_CONFIG_Start
-                0x0000669c        0xc .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
-                0x0000669c                EEPROM_CONFIG_Start
+                0x000067c0        0xc .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
+                0x000067c0                EEPROM_CONFIG_Start
  .text.ADC_DelSig_1_AMux_Start
-                0x000066a8       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
-                0x000066a8                ADC_DelSig_1_AMux_Start
+                0x000067cc       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
+                0x000067cc                ADC_DelSig_1_AMux_Start
  .text.ADC_DelSig_1_AMux_Select
-                0x000066dc       0x28 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
-                0x000066dc                ADC_DelSig_1_AMux_Select
+                0x00006800       0x28 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
+                0x00006800                ADC_DelSig_1_AMux_Select
  .text.ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister
-                0x00006704      0x164 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
-                0x00006704                ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister
+                0x00006828      0x164 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x00006828                ADC_DelSig_1_Ext_CP_Clk_SetDividerRegister
  .text.ADC_DelSig_1_Ext_CP_Clk_GetDividerRegister
-                0x00006868       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
-                0x00006868                ADC_DelSig_1_Ext_CP_Clk_GetDividerRegister
+                0x0000698c       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x0000698c                ADC_DelSig_1_Ext_CP_Clk_GetDividerRegister
  .text.ADC_DelSig_1_Ext_CP_Clk_SetModeRegister
-                0x00006880       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
-                0x00006880                ADC_DelSig_1_Ext_CP_Clk_SetModeRegister
+                0x000069a4       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x000069a4                ADC_DelSig_1_Ext_CP_Clk_SetModeRegister
  .text.ADC_DelSig_1_Ext_CP_Clk_GetSourceRegister
-                0x000068b4       0x1c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
-                0x000068b4                ADC_DelSig_1_Ext_CP_Clk_GetSourceRegister
+                0x000069d8       0x1c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
+                0x000069d8                ADC_DelSig_1_Ext_CP_Clk_GetSourceRegister
  .text.ADC_DelSig_1_theACLK_SetDividerRegister
-                0x000068d0      0x164 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
-                0x000068d0                ADC_DelSig_1_theACLK_SetDividerRegister
+                0x000069f4      0x164 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
+                0x000069f4                ADC_DelSig_1_theACLK_SetDividerRegister
  .text.ADC_DelSig_1_theACLK_GetDividerRegister
-                0x00006a34       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
-                0x00006a34                ADC_DelSig_1_theACLK_GetDividerRegister
+                0x00006b58       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
+                0x00006b58                ADC_DelSig_1_theACLK_GetDividerRegister
  .text.ADC_DelSig_1_theACLK_SetModeRegister
-                0x00006a4c       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
-                0x00006a4c                ADC_DelSig_1_theACLK_SetModeRegister
+                0x00006b70       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
+                0x00006b70                ADC_DelSig_1_theACLK_SetModeRegister
  .text.ADC_DelSig_1_theACLK_GetSourceRegister
-                0x00006a80       0x1c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
-                0x00006a80                ADC_DelSig_1_theACLK_GetSourceRegister
+                0x00006ba4       0x1c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
+                0x00006ba4                ADC_DelSig_1_theACLK_GetSourceRegister
  .text.CySetTempInt
-                0x00006a9c       0x7c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
+                0x00006bc0       0x7c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
  .text.CyFlashGetSpcAlgorithm
-                0x00006b18       0x70 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
-                0x00006b18                CyFlashGetSpcAlgorithm
+                0x00006c3c       0x70 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
+                0x00006c3c                CyFlashGetSpcAlgorithm
  .text.CySetTemp
-                0x00006b88       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
-                0x00006b88                CySetTemp
+                0x00006cac       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
+                0x00006cac                CySetTemp
  .text.CyEEPROM_Start
-                0x00006bac       0x8c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
-                0x00006bac                CyEEPROM_Start
- .text.CyHalt   0x00006c38       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
-                0x00006c38                CyHalt
+                0x00006cd0       0x8c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
+                0x00006cd0                CyEEPROM_Start
+ .text.CyHalt   0x00006d5c       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
+                0x00006d5c                CyHalt
  .text.CyDelayUs
-                0x00006c50       0x28 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
-                0x00006c50                CyDelayUs
+                0x00006d74       0x28 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
+                0x00006d74                CyDelayUs
  .text.CyIntSetVector
-                0x00006c78       0x50 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
-                0x00006c78                CyIntSetVector
+                0x00006d9c       0x50 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
+                0x00006d9c                CyIntSetVector
  .text.CyIntSetPriority
-                0x00006cc8       0x48 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
-                0x00006cc8                CyIntSetPriority
+                0x00006dec       0x48 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
+                0x00006dec                CyIntSetPriority
  .text.CySpcStart
-                0x00006d10       0x48 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
-                0x00006d10                CySpcStart
+                0x00006e34       0x48 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
+                0x00006e34                CySpcStart
  .text.CySpcReadData
-                0x00006d58       0x54 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
-                0x00006d58                CySpcReadData
+                0x00006e7c       0x54 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
+                0x00006e7c                CySpcReadData
  .text.CySpcGetTemp
-                0x00006dac       0x64 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
-                0x00006dac                CySpcGetTemp
+                0x00006ed0       0x64 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
+                0x00006ed0                CySpcGetTemp
  .text.CySpcLock
-                0x00006e10       0x68 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
-                0x00006e10                CySpcLock
+                0x00006f34       0x68 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
+                0x00006f34                CySpcLock
  .text.CySpcUnlock
-                0x00006e78       0x50 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
-                0x00006e78                CySpcUnlock
+                0x00006f9c       0x50 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
+                0x00006f9c                CySpcUnlock
  .text.CySpcGetAlgorithm
-                0x00006ec8       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
-                0x00006ec8                CySpcGetAlgorithm
+                0x00006fec       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
+                0x00006fec                CySpcGetAlgorithm
  .text.UART_PI_Start
-                0x00006f0c       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
-                0x00006f0c                UART_PI_Start
+                0x00007030       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
+                0x00007030                UART_PI_Start
  .text.UART_PI_Init
-                0x00006f30       0x40 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
-                0x00006f30                UART_PI_Init
+                0x00007054       0x40 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
+                0x00007054                UART_PI_Init
  .text.UART_PI_Enable
-                0x00006f70       0x60 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
-                0x00006f70                UART_PI_Enable
+                0x00007094       0x60 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
+                0x00007094                UART_PI_Enable
  .text.UART_PI_ClearRxBuffer
-                0x00006fd0       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
-                0x00006fd0                UART_PI_ClearRxBuffer
+                0x000070f4       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
+                0x000070f4                UART_PI_ClearRxBuffer
  .text.UART_PI_ClearTxBuffer
-                0x00007014       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
-                0x00007014                UART_PI_ClearTxBuffer
+                0x00007138       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
+                0x00007138                UART_PI_ClearTxBuffer
  .text.UART_PI_IntClock_Start
-                0x00007058       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI_IntClock.o)
-                0x00007058                UART_PI_IntClock_Start
+                0x0000717c       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI_IntClock.o)
+                0x0000717c                UART_PI_IntClock_Start
  .text.UART_DEBUG_Start
-                0x0000708c       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
-                0x0000708c                UART_DEBUG_Start
+                0x000071b0       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
+                0x000071b0                UART_DEBUG_Start
  .text.UART_DEBUG_Init
-                0x000070b0       0x40 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
-                0x000070b0                UART_DEBUG_Init
+                0x000071d4       0x40 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
+                0x000071d4                UART_DEBUG_Init
  .text.UART_DEBUG_Enable
-                0x000070f0       0x60 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
-                0x000070f0                UART_DEBUG_Enable
+                0x00007214       0x60 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
+                0x00007214                UART_DEBUG_Enable
  .text.UART_DEBUG_GetChar
-                0x00007150       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
-                0x00007150                UART_DEBUG_GetChar
+                0x00007274       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
+                0x00007274                UART_DEBUG_GetChar
  .text.UART_DEBUG_PutChar
-                0x00007194       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
-                0x00007194                UART_DEBUG_PutChar
+                0x000072b8       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
+                0x000072b8                UART_DEBUG_PutChar
  .text.UART_DEBUG_PutString
-                0x000071c8       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
-                0x000071c8                UART_DEBUG_PutString
+                0x000072ec       0x44 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
+                0x000072ec                UART_DEBUG_PutString
  .text.UART_DEBUG_IntClock_Start
-                0x0000720c       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG_IntClock.o)
-                0x0000720c                UART_DEBUG_IntClock_Start
+                0x00007330       0x34 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG_IntClock.o)
+                0x00007330                UART_DEBUG_IntClock_Start
  .text.isr_rx_pi_StartEx
-                0x00007240       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
-                0x00007240                isr_rx_pi_StartEx
+                0x00007364       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
+                0x00007364                isr_rx_pi_StartEx
  .text.isr_rx_pi_SetVector
-                0x00007264       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
-                0x00007264                isr_rx_pi_SetVector
+                0x00007388       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
+                0x00007388                isr_rx_pi_SetVector
  .text.isr_rx_pi_SetPriority
-                0x00007288       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
-                0x00007288                isr_rx_pi_SetPriority
+                0x000073ac       0x24 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
+                0x000073ac                isr_rx_pi_SetPriority
  .text.isr_rx_pi_Enable
-                0x000072ac       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
-                0x000072ac                isr_rx_pi_Enable
+                0x000073d0       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
+                0x000073d0                isr_rx_pi_Enable
  .text.isr_rx_pi_Disable
-                0x000072c4       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
-                0x000072c4                isr_rx_pi_Disable
- *fill*         0x000072dc        0x4 
- .text          0x000072e0       0x54 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyBootAsmGnu.o)
-                0x000072e0                CyDelayCycles
-                0x0000731e                CyEnterCriticalSection
-                0x00007326                CyExitCriticalSection
- .text.asinf    0x00007334       0xa4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_asin.o)
-                0x00007334                asinf
- .text.atan2f   0x000073d8        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_atan2.o)
-                0x000073d8                atan2f
+                0x000073e8       0x18 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
+                0x000073e8                isr_rx_pi_Disable
+ .text          0x00007400       0x54 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyBootAsmGnu.o)
+                0x00007400                CyDelayCycles
+                0x0000743e                CyEnterCriticalSection
+                0x00007446                CyExitCriticalSection
+ .text.asinf    0x00007454       0xa4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_asin.o)
+                0x00007454                asinf
+ .text.atan2f   0x000074f8        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_atan2.o)
+                0x000074f8                atan2f
  .text.__ieee754_asinf
-                0x000073dc      0x294 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_asin.o)
-                0x000073dc                __ieee754_asinf
+                0x000074fc      0x294 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_asin.o)
+                0x000074fc                __ieee754_asinf
  .text.__ieee754_atan2f
-                0x00007670      0x124 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_atan2.o)
-                0x00007670                __ieee754_atan2f
+                0x00007790      0x124 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_atan2.o)
+                0x00007790                __ieee754_atan2f
  .text.__ieee754_sqrtf
-                0x00007794       0xa8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_sqrt.o)
-                0x00007794                __ieee754_sqrtf
- .text.matherr  0x0000783c        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_matherr.o)
-                0x0000783c                matherr
- .text.nan      0x00007840        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_nan.o)
-                0x00007840                nan
- .text.atanf    0x0000784c      0x22c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
-                0x0000784c                atanf
- .text.fabsf    0x00007a78        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_fabs.o)
-                0x00007a78                fabsf
- .text          0x00007a80      0x370 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubdf3.o)
-                0x00007a80                __aeabi_drsub
-                0x00007a88                __aeabi_dsub
-                0x00007a88                __subdf3
-                0x00007a8c                __aeabi_dadd
-                0x00007a8c                __adddf3
-                0x00007d04                __floatunsidf
-                0x00007d04                __aeabi_ui2d
-                0x00007d24                __floatsidf
-                0x00007d24                __aeabi_i2d
-                0x00007d48                __aeabi_f2d
-                0x00007d48                __extendsfdf2
-                0x00007d84                __floatundidf
-                0x00007d84                __aeabi_ul2d
-                0x00007d94                __floatdidf
-                0x00007d94                __aeabi_l2d
- .text          0x00007df0      0x424 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_muldivdf3.o)
-                0x00007df0                __aeabi_dmul
-                0x00007df0                __muldf3
-                0x00008044                __divdf3
-                0x00008044                __aeabi_ddiv
- .text          0x00008214      0x110 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_cmpdf2.o)
-                0x00008214                __gtdf2
-                0x00008214                __gedf2
-                0x0000821c                __ltdf2
-                0x0000821c                __ledf2
-                0x00008224                __nedf2
-                0x00008224                __eqdf2
-                0x00008224                __cmpdf2
-                0x000082a0                __aeabi_cdrcmple
-                0x000082b0                __aeabi_cdcmpeq
-                0x000082b0                __aeabi_cdcmple
-                0x000082c0                __aeabi_dcmpeq
-                0x000082d4                __aeabi_dcmplt
-                0x000082e8                __aeabi_dcmple
-                0x000082fc                __aeabi_dcmpge
-                0x00008310                __aeabi_dcmpgt
- .text          0x00008324       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_unorddf2.o)
-                0x00008324                __unorddf2
-                0x00008324                __aeabi_dcmpun
- .text          0x00008350       0x50 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixdfsi.o)
-                0x00008350                __aeabi_d2iz
-                0x00008350                __fixdfsi
- .text          0x000083a0       0xa0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_truncdfsf2.o)
-                0x000083a0                __truncdfsf2
-                0x000083a0                __aeabi_d2f
- .text          0x00008440      0x21c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubsf3.o)
-                0x00008440                __aeabi_frsub
-                0x00008448                __subsf3
-                0x00008448                __aeabi_fsub
-                0x0000844c                __aeabi_fadd
-                0x0000844c                __addsf3
-                0x000085ac                __aeabi_ui2f
-                0x000085ac                __floatunsisf
-                0x000085b4                __aeabi_i2f
-                0x000085b4                __floatsisf
-                0x000085d0                __aeabi_ul2f
-                0x000085d0                __floatundisf
-                0x000085e0                __aeabi_l2f
-                0x000085e0                __floatdisf
- .text          0x0000865c      0x2a0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_muldivsf3.o)
-                0x0000865c                __mulsf3
-                0x0000865c                __aeabi_fmul
-                0x000087c4                __aeabi_fdiv
-                0x000087c4                __divsf3
- .text          0x000088fc       0xec c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_cmpsf2.o)
-                0x000088fc                __gesf2
-                0x000088fc                __gtsf2
-                0x00008904                __lesf2
-                0x00008904                __ltsf2
-                0x0000890c                __nesf2
-                0x0000890c                __eqsf2
-                0x0000890c                __cmpsf2
-                0x0000896c                __aeabi_cfrcmple
-                0x00008974                __aeabi_cfcmpeq
-                0x00008974                __aeabi_cfcmple
-                0x00008984                __aeabi_fcmpeq
-                0x00008998                __aeabi_fcmplt
-                0x000089ac                __aeabi_fcmple
-                0x000089c0                __aeabi_fcmpge
-                0x000089d4                __aeabi_fcmpgt
- .text          0x000089e8       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_unordsf2.o)
-                0x000089e8                __unordsf2
-                0x000089e8                __aeabi_fcmpun
- .text          0x00008a14       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixsfsi.o)
-                0x00008a14                __aeabi_f2iz
-                0x00008a14                __fixsfsi
- .text          0x00008a60       0x40 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixunssfsi.o)
-                0x00008a60                __fixunssfsi
-                0x00008a60                __aeabi_f2uiz
- .text.__errno  0x00008aa0        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
-                0x00008aa0                __errno
+                0x000078b4       0xa8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_sqrt.o)
+                0x000078b4                __ieee754_sqrtf
+ .text.matherr  0x0000795c        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_matherr.o)
+                0x0000795c                matherr
+ .text.nan      0x00007960        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_nan.o)
+                0x00007960                nan
+ .text.atanf    0x0000796c      0x22c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
+                0x0000796c                atanf
+ .text.fabsf    0x00007b98        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_fabs.o)
+                0x00007b98                fabsf
+ .text          0x00007ba0      0x370 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubdf3.o)
+                0x00007ba0                __aeabi_drsub
+                0x00007ba8                __aeabi_dsub
+                0x00007ba8                __subdf3
+                0x00007bac                __aeabi_dadd
+                0x00007bac                __adddf3
+                0x00007e24                __floatunsidf
+                0x00007e24                __aeabi_ui2d
+                0x00007e44                __floatsidf
+                0x00007e44                __aeabi_i2d
+                0x00007e68                __aeabi_f2d
+                0x00007e68                __extendsfdf2
+                0x00007ea4                __floatundidf
+                0x00007ea4                __aeabi_ul2d
+                0x00007eb4                __floatdidf
+                0x00007eb4                __aeabi_l2d
+ .text          0x00007f10      0x424 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_muldivdf3.o)
+                0x00007f10                __aeabi_dmul
+                0x00007f10                __muldf3
+                0x00008164                __divdf3
+                0x00008164                __aeabi_ddiv
+ .text          0x00008334      0x110 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_cmpdf2.o)
+                0x00008334                __gtdf2
+                0x00008334                __gedf2
+                0x0000833c                __ltdf2
+                0x0000833c                __ledf2
+                0x00008344                __nedf2
+                0x00008344                __eqdf2
+                0x00008344                __cmpdf2
+                0x000083c0                __aeabi_cdrcmple
+                0x000083d0                __aeabi_cdcmpeq
+                0x000083d0                __aeabi_cdcmple
+                0x000083e0                __aeabi_dcmpeq
+                0x000083f4                __aeabi_dcmplt
+                0x00008408                __aeabi_dcmple
+                0x0000841c                __aeabi_dcmpge
+                0x00008430                __aeabi_dcmpgt
+ .text          0x00008444       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_unorddf2.o)
+                0x00008444                __unorddf2
+                0x00008444                __aeabi_dcmpun
+ .text          0x00008470       0x50 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixdfsi.o)
+                0x00008470                __aeabi_d2iz
+                0x00008470                __fixdfsi
+ .text          0x000084c0       0xa0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_truncdfsf2.o)
+                0x000084c0                __truncdfsf2
+                0x000084c0                __aeabi_d2f
+ .text          0x00008560      0x21c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_addsubsf3.o)
+                0x00008560                __aeabi_frsub
+                0x00008568                __subsf3
+                0x00008568                __aeabi_fsub
+                0x0000856c                __aeabi_fadd
+                0x0000856c                __addsf3
+                0x000086cc                __aeabi_ui2f
+                0x000086cc                __floatunsisf
+                0x000086d4                __aeabi_i2f
+                0x000086d4                __floatsisf
+                0x000086f0                __aeabi_ul2f
+                0x000086f0                __floatundisf
+                0x00008700                __aeabi_l2f
+                0x00008700                __floatdisf
+ .text          0x0000877c      0x2a0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_muldivsf3.o)
+                0x0000877c                __mulsf3
+                0x0000877c                __aeabi_fmul
+                0x000088e4                __aeabi_fdiv
+                0x000088e4                __divsf3
+ .text          0x00008a1c       0xec c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_cmpsf2.o)
+                0x00008a1c                __gesf2
+                0x00008a1c                __gtsf2
+                0x00008a24                __lesf2
+                0x00008a24                __ltsf2
+                0x00008a2c                __nesf2
+                0x00008a2c                __eqsf2
+                0x00008a2c                __cmpsf2
+                0x00008a8c                __aeabi_cfrcmple
+                0x00008a94                __aeabi_cfcmpeq
+                0x00008a94                __aeabi_cfcmple
+                0x00008aa4                __aeabi_fcmpeq
+                0x00008ab8                __aeabi_fcmplt
+                0x00008acc                __aeabi_fcmple
+                0x00008ae0                __aeabi_fcmpge
+                0x00008af4                __aeabi_fcmpgt
+ .text          0x00008b08       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_unordsf2.o)
+                0x00008b08                __unordsf2
+                0x00008b08                __aeabi_fcmpun
+ .text          0x00008b34       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixsfsi.o)
+                0x00008b34                __aeabi_f2iz
+                0x00008b34                __fixsfsi
+ .text          0x00008b80       0x40 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m\libgcc.a(_arm_fixunssfsi.o)
+                0x00008b80                __fixunssfsi
+                0x00008b80                __aeabi_f2uiz
+ .text.__errno  0x00008bc0        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+                0x00008bc0                __errno
  .text.__libc_init_array
-                0x00008aac       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
-                0x00008aac                __libc_init_array
- .text.memcpy   0x00008af8       0x16 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy-stub.o)
-                0x00008af8                memcpy
- .text.memset   0x00008b0e       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
-                0x00008b0e                memset
- .text.__cvt    0x00008b1e       0xc0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
-                0x00008b1e                __cvt
+                0x00008bcc       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+                0x00008bcc                __libc_init_array
+ .text.memcpy   0x00008c18       0x16 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy-stub.o)
+                0x00008c18                memcpy
+ .text.memset   0x00008c2e       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+                0x00008c2e                memset
+ .text.__cvt    0x00008c3e       0xc0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
+                0x00008c3e                __cvt
  .text.__exponent
-                0x00008bde       0x62 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
-                0x00008bde                __exponent
+                0x00008cfe       0x62 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
+                0x00008cfe                __exponent
  .text._printf_float
-                0x00008c40      0x488 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
-                0x00008c40                _printf_float
+                0x00008d60      0x488 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
+                0x00008d60                _printf_float
  .text._printf_common
-                0x000090c8       0xec c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
-                0x000090c8                _printf_common
+                0x000091e8       0xec c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x000091e8                _printf_common
  .text._printf_i
-                0x000091b4      0x24c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
-                0x000091b4                _printf_i
+                0x000092d4      0x24c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x000092d4                _printf_i
  .text.snprintf
-                0x00009400       0x64 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-snprintf.o)
-                0x00009400                sniprintf
-                0x00009400                snprintf
- .text          0x00009464       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-strlen.o)
-                0x00009464                strlen
- .text.quorem   0x00009474      0x116 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-dtoa.o)
- *fill*         0x0000958a        0x6 
- .text._dtoa_r  0x00009590      0xb30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-dtoa.o)
-                0x00009590                _dtoa_r
+                0x00009520       0x64 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-snprintf.o)
+                0x00009520                sniprintf
+                0x00009520                snprintf
+ .text          0x00009584       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-strlen.o)
+                0x00009584                strlen
+ .text.quorem   0x00009594      0x116 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-dtoa.o)
+ *fill*         0x000096aa        0x6 
+ .text._dtoa_r  0x000096b0      0xb30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-dtoa.o)
+                0x000096b0                _dtoa_r
  .text._localeconv_r
-                0x0000a0c0        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-locale.o)
-                0x0000a0c0                _localeconv_r
- .text.malloc   0x0000a0c8       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-malloc.o)
-                0x0000a0c8                malloc
- .text.memchr   0x0000a0d8       0x1c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memchr-stub.o)
-                0x0000a0d8                memchr
- .text._Balloc  0x0000a0f4       0x6a c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000a0f4                _Balloc
- .text._Bfree   0x0000a15e       0x2e c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000a15e                _Bfree
+                0x0000a1e0        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-locale.o)
+                0x0000a1e0                _localeconv_r
+ .text.malloc   0x0000a1e8       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-malloc.o)
+                0x0000a1e8                malloc
+ .text.memchr   0x0000a1f8       0x1c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memchr-stub.o)
+                0x0000a1f8                memchr
+ .text._Balloc  0x0000a214       0x6a c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000a214                _Balloc
+ .text._Bfree   0x0000a27e       0x2e c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000a27e                _Bfree
  .text.__multadd
-                0x0000a18c       0x76 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000a18c                __multadd
+                0x0000a2ac       0x76 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000a2ac                __multadd
  .text.__hi0bits
-                0x0000a202       0x40 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000a202                __hi0bits
+                0x0000a322       0x40 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000a322                __hi0bits
  .text.__lo0bits
-                0x0000a242       0x5a c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000a242                __lo0bits
- .text.__i2b    0x0000a29c       0x12 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000a29c                __i2b
+                0x0000a362       0x5a c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000a362                __lo0bits
+ .text.__i2b    0x0000a3bc       0x12 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000a3bc                __i2b
  .text.__multiply
-                0x0000a2ae      0x120 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000a2ae                __multiply
- *fill*         0x0000a3ce        0x2 
+                0x0000a3ce      0x120 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000a3ce                __multiply
+ *fill*         0x0000a4ee        0x2 
  .text.__pow5mult
-                0x0000a3d0       0x9c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000a3d0                __pow5mult
+                0x0000a4f0       0x9c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000a4f0                __pow5mult
  .text.__lshift
-                0x0000a46c       0xa2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000a46c                __lshift
- .text.__mcmp   0x0000a50e       0x38 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000a50e                __mcmp
- .text.__mdiff  0x0000a546       0xbe c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000a546                __mdiff
- .text.__d2b    0x0000a604       0x9c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000a604                __d2b
+                0x0000a58c       0xa2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000a58c                __lshift
+ .text.__mcmp   0x0000a62e       0x38 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000a62e                __mcmp
+ .text.__mdiff  0x0000a666       0xbe c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000a666                __mdiff
+ .text.__d2b    0x0000a724       0x9c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000a724                __d2b
  .text._calloc_r
-                0x0000a6a0       0x1c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-callocr.o)
-                0x0000a6a0                _calloc_r
- .text._free_r  0x0000a6bc       0x98 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-freer.o)
-                0x0000a6bc                _free_r
+                0x0000a7c0       0x1c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-callocr.o)
+                0x0000a7c0                _calloc_r
+ .text._free_r  0x0000a7dc       0x98 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-freer.o)
+                0x0000a7dc                _free_r
  .text._malloc_r
-                0x0000a754       0xbc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
-                0x0000a754                _malloc_r
+                0x0000a874       0xbc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
+                0x0000a874                _malloc_r
  .text.__ssputs_r
-                0x0000a810       0xb2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
-                0x0000a810                __ssputs_r
- *fill*         0x0000a8c2        0x2 
+                0x0000a930       0xb2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
+                0x0000a930                __ssputs_r
+ *fill*         0x0000a9e2        0x2 
  .text._svfprintf_r
-                0x0000a8c4      0x1e8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
-                0x0000a8c4                _svfiprintf_r
-                0x0000a8c4                _svfprintf_r
- .text._sbrk_r  0x0000aaac       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sbrkr.o)
-                0x0000aaac                _sbrk_r
- .text.memmove  0x0000aacc       0x36 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memmove.o)
-                0x0000aacc                memmove
+                0x0000a9e4      0x1e8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
+                0x0000a9e4                _svfiprintf_r
+                0x0000a9e4                _svfprintf_r
+ .text._sbrk_r  0x0000abcc       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sbrkr.o)
+                0x0000abcc                _sbrk_r
+ .text.memmove  0x0000abec       0x36 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memmove.o)
+                0x0000abec                memmove
  .text.__malloc_lock
-                0x0000ab02        0x2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mlock.o)
-                0x0000ab02                __malloc_lock
+                0x0000ac22        0x2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mlock.o)
+                0x0000ac22                __malloc_lock
  .text.__malloc_unlock
-                0x0000ab04        0x2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mlock.o)
-                0x0000ab04                __malloc_unlock
+                0x0000ac24        0x2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mlock.o)
+                0x0000ac24                __malloc_unlock
  .text._realloc_r
-                0x0000ab06       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-reallocr.o)
-                0x0000ab06                _realloc_r
+                0x0000ac26       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-reallocr.o)
+                0x0000ac26                _realloc_r
  .text._malloc_usable_size_r
-                0x0000ab52       0x14 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-msizer.o)
-                0x0000ab52                _malloc_usable_size_r
+                0x0000ac72       0x14 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-msizer.o)
+                0x0000ac72                _malloc_usable_size_r
  *(.plt)
  *(.gnu.warning)
  *(.glue_7t)
- .glue_7t       0x0000ab66        0x0 linker stubs
+ .glue_7t       0x0000ac86        0x0 linker stubs
  *(.glue_7)
- .glue_7        0x0000ab66        0x0 linker stubs
+ .glue_7        0x0000ac86        0x0 linker stubs
  *(.vfp11_veneer)
- .vfp11_veneer  0x0000ab66        0x0 linker stubs
+ .vfp11_veneer  0x0000ac86        0x0 linker stubs
  *(.bootloader)
  *(.ARM.extab* .gnu.linkonce.armextab.*)
  *(.gcc_except_table)
 
-.v4_bx          0x0000ab68        0x0
- .v4_bx         0x0000ab68        0x0 linker stubs
+.v4_bx          0x0000ac88        0x0
+ .v4_bx         0x0000ac88        0x0 linker stubs
 
-.iplt           0x0000ab68        0x0
- .iplt          0x0000ab68        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+.iplt           0x0000ac88        0x0
+ .iplt          0x0000ac88        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
 
-.eh_frame       0x0000ab68        0x4
+.eh_frame       0x0000ac88        0x4
  *(.eh_frame)
- .eh_frame      0x0000ab68        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
- .eh_frame      0x0000ab68        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtend.o
+ .eh_frame      0x0000ac88        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+ .eh_frame      0x0000ac88        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtend.o
                 [!provide]                PROVIDE (__exidx_start, .)
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x0000ab6c                __exidx_end = .
+                0x0000ac8c                __exidx_end = .
 
-.rodata         0x0000ab70      0xa58
+.rodata         0x0000ac90      0xa60
  *(.rodata .rodata.* .gnu.linkonce.r.*)
- .rodata        0x0000ab70      0x23e .\ARM_GCC_541\Debug\main.o
- *fill*         0x0000adae        0x2 
- .rodata        0x0000adb0      0x4fb .\ARM_GCC_541\Debug\app_statemachine.o
- *fill*         0x0000b2ab        0x1 
- .rodata        0x0000b2ac      0x100 .\ARM_GCC_541\Debug\pi_comms.o
- .rodata        0x0000b3ac        0x4 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
- .rodata        0x0000b3b0       0x56 .\ARM_GCC_541\Debug\cyfitter_cfg.o
-                0x0000b3b0                AMux_1__addrTable
-                0x0000b3c0                AMux_1__maskTable
-                0x0000b3c4                ADC_DelSig_1_AMux__addrTable
-                0x0000b3cc                ADC_DelSig_1_AMux__maskTable
- *fill*         0x0000b406        0x2 
+ .rodata        0x0000ac90      0x23e .\ARM_GCC_541\Debug\main.o
+ *fill*         0x0000aece        0x2 
+ .rodata        0x0000aed0      0x502 .\ARM_GCC_541\Debug\app_statemachine.o
+ *fill*         0x0000b3d2        0x2 
+ .rodata        0x0000b3d4      0x100 .\ARM_GCC_541\Debug\pi_comms.o
+ .rodata        0x0000b4d4        0x4 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+ .rodata        0x0000b4d8       0x56 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+                0x0000b4d8                AMux_1__addrTable
+                0x0000b4e8                AMux_1__maskTable
+                0x0000b4ec                ADC_DelSig_1_AMux__addrTable
+                0x0000b4f4                ADC_DelSig_1_AMux__maskTable
+ *fill*         0x0000b52e        0x2 
  .rodata.str1.4
-                0x0000b408        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_asin.o)
+                0x0000b530        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_asin.o)
                                   0x9 (size before relaxing)
  .rodata.atanlo
-                0x0000b414       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
+                0x0000b53c       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
  .rodata.atanhi
-                0x0000b424       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
+                0x0000b54c       0x10 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
  .rodata.str1.1
-                0x0000b434        0x2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+                0x0000b55c        0x2 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
  .rodata.str1.1
-                0x0000b436       0x12 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
+                0x0000b55e       0x12 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
  .rodata.str1.1
-                0x0000b448       0x22 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000b570       0x22 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
  .rodata.str1.1
-                0x0000b46a        0xd c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-dtoa.o)
+                0x0000b592        0xd c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-dtoa.o)
                                   0xf (size before relaxing)
  .rodata.str1.1
-                0x0000b477        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-locale.o)
+                0x0000b59f        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-locale.o)
                                   0xb (size before relaxing)
- *fill*         0x0000b47f        0x1 
+ *fill*         0x0000b5a7        0x1 
  .rodata.__mprec_tens
-                0x0000b480       0xc8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000b480                __mprec_tens
+                0x0000b5a8       0xc8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000b5a8                __mprec_tens
  .rodata.p05.5408
-                0x0000b548        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
- *fill*         0x0000b554        0x4 
+                0x0000b670        0xc c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+ *fill*         0x0000b67c        0x4 
  .rodata.__mprec_bigtens
-                0x0000b558       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
-                0x0000b558                __mprec_bigtens
+                0x0000b680       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000b680                __mprec_bigtens
  .rodata.str1.1
-                0x0000b580       0x11 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
-                0x0000b594                . = ALIGN (0x4)
- *fill*         0x0000b591        0x3 
+                0x0000b6a8       0x11 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
+                0x0000b6bc                . = ALIGN (0x4)
+ *fill*         0x0000b6b9        0x3 
  *(.init)
- .init          0x0000b594        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crti.o
-                0x0000b594                _init
- .init          0x0000b598        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtn.o
-                0x0000b5a0                . = ALIGN (0x4)
-                0x0000b5a0                __preinit_array_start = .
+ .init          0x0000b6bc        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crti.o
+                0x0000b6bc                _init
+ .init          0x0000b6c0        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtn.o
+                0x0000b6c8                . = ALIGN (0x4)
+                0x0000b6c8                __preinit_array_start = .
  *(.preinit_array)
-                0x0000b5a0                __preinit_array_end = .
-                0x0000b5a0                . = ALIGN (0x4)
-                0x0000b5a0                __init_array_start = .
+                0x0000b6c8                __preinit_array_end = .
+                0x0000b6c8                . = ALIGN (0x4)
+                0x0000b6c8                __init_array_start = .
  *(SORT(.init_array.*))
  *(.init_array)
- .init_array    0x0000b5a0        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
- .init_array    0x0000b5a4        0x4 .\ARM_GCC_541\Debug\Cm3Start.o
-                0x0000b5a8                __init_array_end = .
-                0x0000b5a8                . = ALIGN (0x4)
+ .init_array    0x0000b6c8        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+ .init_array    0x0000b6cc        0x4 .\ARM_GCC_541\Debug\Cm3Start.o
+                0x0000b6d0                __init_array_end = .
+                0x0000b6d0                . = ALIGN (0x4)
  *(.fini)
- .fini          0x0000b5a8        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crti.o
-                0x0000b5a8                _fini
- .fini          0x0000b5ac        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtn.o
-                0x0000b5b4                . = ALIGN (0x4)
-                0x0000b5b4                __fini_array_start = .
+ .fini          0x0000b6d0        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crti.o
+                0x0000b6d0                _fini
+ .fini          0x0000b6d4        0x8 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtn.o
+                0x0000b6dc                . = ALIGN (0x4)
+                0x0000b6dc                __fini_array_start = .
  *(.fini_array)
- .fini_array    0x0000b5b4        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+ .fini_array    0x0000b6dc        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
  *(SORT(.fini_array.*))
-                0x0000b5b8                __fini_array_end = .
-                0x0000b5b8                . = ALIGN (0x4)
+                0x0000b6e0                __fini_array_end = .
+                0x0000b6e0                . = ALIGN (0x4)
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
-                0x0000b5b8                . = ALIGN (0x4)
+                0x0000b6e0                . = ALIGN (0x4)
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x0000b5b8                . = ALIGN (0x4)
-                0x0000b5b8                __cy_regions = .
-                0x0000b5b8        0x4 LONG 0xb5c8 __cy_region_init_ram
-                0x0000b5bc        0x4 LONG 0x1fff80c8 __cy_region_start_data
-                0x0000b5c0        0x4 LONG 0x138 __cy_region_init_size_ram
-                0x0000b5c4        0x4 LONG 0x538 __cy_region_zero_size_ram
-                0x0000b5c8                __cy_regions_end = .
-                0x0000b5c8                . = ALIGN (0x8)
-                0x0000b5c8                _etext = .
+                0x0000b6e0                . = ALIGN (0x4)
+                0x0000b6e0                __cy_regions = .
+                0x0000b6e0        0x4 LONG 0xb6f0 __cy_region_init_ram
+                0x0000b6e4        0x4 LONG 0x1fff80c8 __cy_region_start_data
+                0x0000b6e8        0x4 LONG 0x140 __cy_region_init_size_ram
+                0x0000b6ec        0x4 LONG 0x548 __cy_region_zero_size_ram
+                0x0000b6f0                __cy_regions_end = .
+                0x0000b6f0                . = ALIGN (0x8)
+                0x0000b6f0                _etext = .
 
 .cy_checksum_exclude
-                0x0000b5c8        0x0
+                0x0000b6f0        0x0
  *(.cy_checksum_exclude)
 
 .ramvectors     0x1fff8000       0xc0
@@ -2324,7 +2322,7 @@ END GROUP
  .noinit        0x1fff80c4        0x1 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
                 0x1fff80c4                CyResetStatus
 
-.data           0x1fff80c8      0x138 load address 0x0000b5c8
+.data           0x1fff80c8      0x140 load address 0x0000b6f0
                 0x1fff80c8                __cy_region_start_data = .
  *(.jcr)
  .jcr           0x1fff80c8        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
@@ -2334,107 +2332,107 @@ END GROUP
  *(.shdata)
  *(.data .data.* .gnu.linkonce.d.*)
  .data          0x1fff80cc        0x4 .\ARM_GCC_541\Debug\joystick.o
- .data          0x1fff80d0       0x74 .\ARM_GCC_541\Debug\hamfly_qx_app.o
-                0x1fff80d0                FreeflyAPI
- .data          0x1fff8144        0x4 .\ARM_GCC_541\Debug\Cm3Start.o
- .data          0x1fff8148        0x1 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
-                0x1fff8148                ADC_DelSig_1_Config
- .data          0x1fff8149        0x1 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
- .data          0x1fff814a        0x1 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
- *fill*         0x1fff814b        0x1 
- .data          0x1fff814c       0x10 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
-                0x1fff814c                cydelay_freq_hz
-                0x1fff8150                cydelay_freq_khz
-                0x1fff8154                cydelay_freq_mhz
-                0x1fff8158                cydelay_32k_ms
+ .data          0x1fff80d0        0x8 .\ARM_GCC_541\Debug\app_statemachine.o
+ .data          0x1fff80d8       0x74 .\ARM_GCC_541\Debug\hamfly_qx_app.o
+                0x1fff80d8                FreeflyAPI
+ .data          0x1fff814c        0x4 .\ARM_GCC_541\Debug\Cm3Start.o
+ .data          0x1fff8150        0x1 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+                0x1fff8150                ADC_DelSig_1_Config
+ .data          0x1fff8151        0x1 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
+ .data          0x1fff8152        0x1 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
+ *fill*         0x1fff8153        0x1 
+ .data          0x1fff8154       0x10 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
+                0x1fff8154                cydelay_freq_hz
+                0x1fff8158                cydelay_freq_khz
+                0x1fff815c                cydelay_freq_mhz
+                0x1fff8160                cydelay_32k_ms
  .data.__fdlib_version
-                0x1fff815c        0x1 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_lib_ver.o)
-                0x1fff815c                __fdlib_version
- *fill*         0x1fff815d        0x3 
+                0x1fff8164        0x1 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_lib_ver.o)
+                0x1fff8164                __fdlib_version
+ *fill*         0x1fff8165        0x3 
  .data.impure_data
-                0x1fff8160       0x60 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+                0x1fff8168       0x60 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
  .data._impure_ptr
-                0x1fff81c0        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
-                0x1fff81c0                _impure_ptr
- .data.lconv    0x1fff81c4       0x38 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-locale.o)
-                0x1fff8200                . = ALIGN (0x8)
- *fill*         0x1fff81fc        0x4 
+                0x1fff81c8        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+                0x1fff81c8                _impure_ptr
+ .data.lconv    0x1fff81cc       0x38 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-locale.o)
+                0x1fff8208                . = ALIGN (0x8)
+ *fill*         0x1fff8204        0x4 
  *(.ram)
-                0x1fff8200                _edata = .
+                0x1fff8208                _edata = .
 
-.igot.plt       0x1fff8200        0x0 load address 0x0000b700
- .igot.plt      0x1fff8200        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+.igot.plt       0x1fff8208        0x0 load address 0x0000b830
+ .igot.plt      0x1fff8208        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
 
-.bss            0x1fff8200      0x538 load address 0x0000b700
-                0x1fff8200                PROVIDE (__bss_start__, .)
+.bss            0x1fff8208      0x548 load address 0x0000b830
+                0x1fff8208                PROVIDE (__bss_start__, .)
  *(.shbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
- .bss           0x1fff8200       0x1c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
- .bss           0x1fff821c      0x384 .\ARM_GCC_541\Debug\main.o
-                0x1fff859c                g_tick_ms
- .bss           0x1fff85a0        0x8 .\ARM_GCC_541\Debug\adc_balanced.o
- .bss           0x1fff85a8       0x42 .\ARM_GCC_541\Debug\joystick.o
- *fill*         0x1fff85ea        0x2 
- .bss           0x1fff85ec       0x66 .\ARM_GCC_541\Debug\pi_comms.o
- *fill*         0x1fff8652        0x2 
- .bss           0x1fff8654        0x4 .\ARM_GCC_541\Debug\hamfly_qx_app.o
-                0x1fff8654                qx_active_gimbal_ptr
- .bss           0x1fff8658        0x9 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x1fff8658                QX_BuildHeader_Legacy
-                0x1fff865c                QX_ParseHeader_Legacy
- *fill*         0x1fff8661        0x3 
- .bss           0x1fff8664        0xc .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
-                0x1fff8664                ADC_DelSig_1_convDone
-                0x1fff8665                ADC_DelSig_1_stopConversion
-                0x1fff8666                ADC_DelSig_1_initVar
-                0x1fff8667                ADC_DelSig_1_started
-                0x1fff8668                ADC_DelSig_1_Offset
- .bss           0x1fff8670        0x2 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
-                0x1fff8670                UART_MOVI_initVar
- .bss           0x1fff8672        0x1 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
-                0x1fff8672                Looptimer_initVar
- *fill*         0x1fff8673        0x1 
- .bss           0x1fff8674        0x8 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
-                0x1fff8674                SpcLockState
- .bss           0x1fff867c        0x2 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
-                0x1fff867c                UART_PI_initVar
- .bss           0x1fff867e        0x2 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
-                0x1fff867e                UART_DEBUG_initVar
+ .bss           0x1fff8208       0x1c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+ .bss           0x1fff8224      0x384 .\ARM_GCC_541\Debug\main.o
+                0x1fff85a4                g_tick_ms
+ .bss           0x1fff85a8        0x8 .\ARM_GCC_541\Debug\adc_balanced.o
+ .bss           0x1fff85b0       0x42 .\ARM_GCC_541\Debug\joystick.o
+ *fill*         0x1fff85f2        0x2 
+ .bss           0x1fff85f4       0x78 .\ARM_GCC_541\Debug\pi_comms.o
+ .bss           0x1fff866c        0x4 .\ARM_GCC_541\Debug\hamfly_qx_app.o
+                0x1fff866c                qx_active_gimbal_ptr
+ .bss           0x1fff8670        0x9 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x1fff8670                QX_BuildHeader_Legacy
+                0x1fff8674                QX_ParseHeader_Legacy
+ *fill*         0x1fff8679        0x3 
+ .bss           0x1fff867c        0xc .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+                0x1fff867c                ADC_DelSig_1_convDone
+                0x1fff867d                ADC_DelSig_1_stopConversion
+                0x1fff867e                ADC_DelSig_1_initVar
+                0x1fff867f                ADC_DelSig_1_started
+                0x1fff8680                ADC_DelSig_1_Offset
+ .bss           0x1fff8688        0x2 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
+                0x1fff8688                UART_MOVI_initVar
+ .bss           0x1fff868a        0x1 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+                0x1fff868a                Looptimer_initVar
+ *fill*         0x1fff868b        0x1 
+ .bss           0x1fff868c        0x8 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
+                0x1fff868c                SpcLockState
+ .bss           0x1fff8694        0x2 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
+                0x1fff8694                UART_PI_initVar
+ .bss           0x1fff8696        0x2 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
+                0x1fff8696                UART_DEBUG_initVar
  .bss.__malloc_sbrk_start
-                0x1fff8680        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
-                0x1fff8680                __malloc_sbrk_start
+                0x1fff8698        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
+                0x1fff8698                __malloc_sbrk_start
  .bss.__malloc_free_list
-                0x1fff8684        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
-                0x1fff8684                __malloc_free_list
+                0x1fff869c        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
+                0x1fff869c                __malloc_free_list
  *(COMMON)
- COMMON         0x1fff8688       0xa4 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
-                0x1fff8688                rw
-                0x1fff868c                QX_Clients
-                0x1fff8694                QX_CommsPorts
-                0x1fff8720                QX_Servers
-                0x1fff8728                msgPtr
- COMMON         0x1fff872c        0x4 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
-                0x1fff872c                ADC_DelSig_1_CountsPerVolt
- COMMON         0x1fff8730        0x2 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
-                0x1fff8730                dieTemperature
- *fill*         0x1fff8732        0x2 
- COMMON         0x1fff8734        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
-                0x1fff8734                errno
-                0x1fff8738                . = ALIGN (0x8)
+ COMMON         0x1fff86a0       0xa4 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+                0x1fff86a0                rw
+                0x1fff86a4                QX_Clients
+                0x1fff86ac                QX_CommsPorts
+                0x1fff8738                QX_Servers
+                0x1fff8740                msgPtr
+ COMMON         0x1fff8744        0x4 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+                0x1fff8744                ADC_DelSig_1_CountsPerVolt
+ COMMON         0x1fff8748        0x2 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
+                0x1fff8748                dieTemperature
+ *fill*         0x1fff874a        0x2 
+ COMMON         0x1fff874c        0x4 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
+                0x1fff874c                errno
+                0x1fff8750                . = ALIGN (0x8)
  *(.ram.b)
-                0x1fff8738                _end = .
-                0x1fff8738                __end = .
-                0x1fff8738                PROVIDE (end, .)
-                0x1fff8738                PROVIDE (__bss_end__, .)
-                0x0000b5c8                __cy_region_init_ram = LOADADDR (.data)
-                0x00000138                __cy_region_init_size_ram = (_edata - ADDR (.data))
-                0x00000538                __cy_region_zero_size_ram = (_end - _edata)
+                0x1fff8750                _end = .
+                0x1fff8750                __end = .
+                0x1fff8750                PROVIDE (end, .)
+                0x1fff8750                PROVIDE (__bss_end__, .)
+                0x0000b6f0                __cy_region_init_ram = LOADADDR (.data)
+                0x00000140                __cy_region_init_size_ram = (_edata - ADDR (.data))
+                0x00000548                __cy_region_zero_size_ram = (_end - _edata)
 
-.heap           0x1fff8738       0x80 load address 0x0000b700
-                0x1fff8738                . = _end
-                0x1fff87b8                . = (. + 0x80)
- *fill*         0x1fff8738       0x80 
-                0x1fff87b8                __cy_heap_limit = .
+.heap           0x1fff8750       0x80 load address 0x0000b830
+                0x1fff8750                . = _end
+                0x1fff87d0                . = (. + 0x80)
+ *fill*         0x1fff8750       0x80 
+                0x1fff87d0                __cy_heap_limit = .
 
 .stack          0x20007800      0x800
                 0x20007800                __cy_stack_limit = .
@@ -2481,8 +2479,8 @@ END GROUP
  .cymeta        0x90500000        0xc .\ARM_GCC_541\Debug\cymetadata.o
                 0x90500000                cy_metadata
 
-.rel.dyn        0x0000b700        0x0 load address 0x9050000c
- .rel.iplt      0x0000b700        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
+.rel.dyn        0x0000b830        0x0 load address 0x9050000c
+ .rel.iplt      0x0000b830        0x0 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7-m/crtbegin.o
 
 .stab
  *(.stab)
@@ -2582,47 +2580,47 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0xdfe2
+.debug_info     0x00000000     0xe0c6
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0xe56 .\ARM_GCC_541\Debug\main.o
  .debug_info    0x00000e56      0x1f7 .\ARM_GCC_541\Debug\adc_balanced.o
  .debug_info    0x0000104d      0x6c5 .\ARM_GCC_541\Debug\joystick.o
  .debug_info    0x00001712      0x2db .\ARM_GCC_541\Debug\psoc_eeprom.o
  .debug_info    0x000019ed      0x9ba .\ARM_GCC_541\Debug\app_ctx.o
- .debug_info    0x000023a7     0x1296 .\ARM_GCC_541\Debug\app_statemachine.o
- .debug_info    0x0000363d      0x4b2 .\ARM_GCC_541\Debug\pi_comms.o
- .debug_info    0x00003aef      0x23c .\ARM_GCC_541\Debug\hamfly_comm_rb.o
- .debug_info    0x00003d2b     0x155c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
- .debug_info    0x00005287      0xaf2 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
- .debug_info    0x00005d79      0xef5 .\ARM_GCC_541\Debug\hamfly_qx_app.o
- .debug_info    0x00006c6e     0x1aff .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
- .debug_info    0x0000876d      0x59a .\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_info    0x00008d07      0x139 .\ARM_GCC_541\Debug\cymetadata.o
- .debug_info    0x00008e40      0x32b .\ARM_GCC_541\Debug\Cm3Start.o
- .debug_info    0x0000916b      0x72c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
- .debug_info    0x00009897       0xd3 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_INT.o)
- .debug_info    0x0000996a       0xf7 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
- .debug_info    0x00009a61      0x241 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
- .debug_info    0x00009ca2      0x50a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
- .debug_info    0x0000a1ac      0x241 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
- .debug_info    0x0000a3ed      0x245 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
- .debug_info    0x0000a632      0x241 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
- .debug_info    0x0000a873      0x359 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
- .debug_info    0x0000abcc      0x10a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
- .debug_info    0x0000acd6      0x25d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_info    0x0000af33      0x299 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
- .debug_info    0x0000b1cc      0x3b9 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
- .debug_info    0x0000b585      0xe51 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
- .debug_info    0x0000c3d6      0x57a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(cyPm.o)
- .debug_info    0x0000c950      0x4c0 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
- .debug_info    0x0000ce10      0x50a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
- .debug_info    0x0000d31a      0x25d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI_IntClock.o)
- .debug_info    0x0000d577      0x50a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
- .debug_info    0x0000da81      0x25d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG_IntClock.o)
- .debug_info    0x0000dcde      0x241 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
- .debug_info    0x0000df1f       0xc3 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyBootAsmGnu.o)
+ .debug_info    0x000023a7     0x12d9 .\ARM_GCC_541\Debug\app_statemachine.o
+ .debug_info    0x00003680      0x553 .\ARM_GCC_541\Debug\pi_comms.o
+ .debug_info    0x00003bd3      0x23c .\ARM_GCC_541\Debug\hamfly_comm_rb.o
+ .debug_info    0x00003e0f     0x155c .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+ .debug_info    0x0000536b      0xaf2 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+ .debug_info    0x00005e5d      0xef5 .\ARM_GCC_541\Debug\hamfly_qx_app.o
+ .debug_info    0x00006d52     0x1aff .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+ .debug_info    0x00008851      0x59a .\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_info    0x00008deb      0x139 .\ARM_GCC_541\Debug\cymetadata.o
+ .debug_info    0x00008f24      0x32b .\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_info    0x0000924f      0x72c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+ .debug_info    0x0000997b       0xd3 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_INT.o)
+ .debug_info    0x00009a4e       0xf7 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
+ .debug_info    0x00009b45      0x241 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
+ .debug_info    0x00009d86      0x50a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
+ .debug_info    0x0000a290      0x241 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
+ .debug_info    0x0000a4d1      0x245 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+ .debug_info    0x0000a716      0x241 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
+ .debug_info    0x0000a957      0x359 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
+ .debug_info    0x0000acb0      0x10a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
+ .debug_info    0x0000adba      0x25d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_info    0x0000b017      0x299 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
+ .debug_info    0x0000b2b0      0x3b9 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
+ .debug_info    0x0000b669      0xe51 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
+ .debug_info    0x0000c4ba      0x57a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(cyPm.o)
+ .debug_info    0x0000ca34      0x4c0 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
+ .debug_info    0x0000cef4      0x50a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
+ .debug_info    0x0000d3fe      0x25d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI_IntClock.o)
+ .debug_info    0x0000d65b      0x50a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
+ .debug_info    0x0000db65      0x25d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG_IntClock.o)
+ .debug_info    0x0000ddc2      0x241 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
+ .debug_info    0x0000e003       0xc3 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyBootAsmGnu.o)
 
-.debug_abbrev   0x00000000     0x336b
+.debug_abbrev   0x00000000     0x33b6
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x1fe .\ARM_GCC_541\Debug\main.o
  .debug_abbrev  0x000001fe      0x111 .\ARM_GCC_541\Debug\adc_balanced.o
@@ -2630,80 +2628,80 @@ END GROUP
  .debug_abbrev  0x00000576      0x13f .\ARM_GCC_541\Debug\psoc_eeprom.o
  .debug_abbrev  0x000006b5      0x11b .\ARM_GCC_541\Debug\app_ctx.o
  .debug_abbrev  0x000007d0      0x2ab .\ARM_GCC_541\Debug\app_statemachine.o
- .debug_abbrev  0x00000a7b      0x1a4 .\ARM_GCC_541\Debug\pi_comms.o
- .debug_abbrev  0x00000c1f      0x124 .\ARM_GCC_541\Debug\hamfly_comm_rb.o
- .debug_abbrev  0x00000d43      0x280 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
- .debug_abbrev  0x00000fc3      0x1a3 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
- .debug_abbrev  0x00001166      0x1fa .\ARM_GCC_541\Debug\hamfly_qx_app.o
- .debug_abbrev  0x00001360      0x277 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
- .debug_abbrev  0x000015d7      0x1ca .\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_abbrev  0x000017a1       0x77 .\ARM_GCC_541\Debug\cymetadata.o
- .debug_abbrev  0x00001818      0x1d6 .\ARM_GCC_541\Debug\Cm3Start.o
- .debug_abbrev  0x000019ee      0x19d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
- .debug_abbrev  0x00001b8b       0x42 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_INT.o)
- .debug_abbrev  0x00001bcd       0x87 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
- .debug_abbrev  0x00001c54      0x172 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
- .debug_abbrev  0x00001dc6      0x163 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
- .debug_abbrev  0x00001f29      0x172 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
- .debug_abbrev  0x0000209b       0xe9 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
- .debug_abbrev  0x00002184      0x172 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
- .debug_abbrev  0x000022f6      0x117 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
- .debug_abbrev  0x0000240d       0x6f .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
- .debug_abbrev  0x0000247c      0x11d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_abbrev  0x00002599      0x11d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
- .debug_abbrev  0x000026b6      0x14b .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
- .debug_abbrev  0x00002801      0x217 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
- .debug_abbrev  0x00002a18      0x161 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(cyPm.o)
- .debug_abbrev  0x00002b79      0x16c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
- .debug_abbrev  0x00002ce5      0x163 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
- .debug_abbrev  0x00002e48      0x11d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI_IntClock.o)
- .debug_abbrev  0x00002f65      0x163 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
- .debug_abbrev  0x000030c8      0x11d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG_IntClock.o)
- .debug_abbrev  0x000031e5      0x172 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
- .debug_abbrev  0x00003357       0x14 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyBootAsmGnu.o)
+ .debug_abbrev  0x00000a7b      0x1ef .\ARM_GCC_541\Debug\pi_comms.o
+ .debug_abbrev  0x00000c6a      0x124 .\ARM_GCC_541\Debug\hamfly_comm_rb.o
+ .debug_abbrev  0x00000d8e      0x280 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+ .debug_abbrev  0x0000100e      0x1a3 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+ .debug_abbrev  0x000011b1      0x1fa .\ARM_GCC_541\Debug\hamfly_qx_app.o
+ .debug_abbrev  0x000013ab      0x277 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+ .debug_abbrev  0x00001622      0x1ca .\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_abbrev  0x000017ec       0x77 .\ARM_GCC_541\Debug\cymetadata.o
+ .debug_abbrev  0x00001863      0x1d6 .\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_abbrev  0x00001a39      0x19d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+ .debug_abbrev  0x00001bd6       0x42 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_INT.o)
+ .debug_abbrev  0x00001c18       0x87 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
+ .debug_abbrev  0x00001c9f      0x172 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
+ .debug_abbrev  0x00001e11      0x163 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
+ .debug_abbrev  0x00001f74      0x172 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
+ .debug_abbrev  0x000020e6       0xe9 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+ .debug_abbrev  0x000021cf      0x172 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
+ .debug_abbrev  0x00002341      0x117 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
+ .debug_abbrev  0x00002458       0x6f .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
+ .debug_abbrev  0x000024c7      0x11d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_abbrev  0x000025e4      0x11d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
+ .debug_abbrev  0x00002701      0x14b .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
+ .debug_abbrev  0x0000284c      0x217 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
+ .debug_abbrev  0x00002a63      0x161 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(cyPm.o)
+ .debug_abbrev  0x00002bc4      0x16c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
+ .debug_abbrev  0x00002d30      0x163 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
+ .debug_abbrev  0x00002e93      0x11d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI_IntClock.o)
+ .debug_abbrev  0x00002fb0      0x163 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
+ .debug_abbrev  0x00003113      0x11d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG_IntClock.o)
+ .debug_abbrev  0x00003230      0x172 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
+ .debug_abbrev  0x000033a2       0x14 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyBootAsmGnu.o)
 
-.debug_line     0x00000000     0x6839
+.debug_line     0x00000000     0x685d
  *(.debug_line)
  .debug_line    0x00000000      0x434 .\ARM_GCC_541\Debug\main.o
  .debug_line    0x00000434      0x1f0 .\ARM_GCC_541\Debug\adc_balanced.o
  .debug_line    0x00000624      0x459 .\ARM_GCC_541\Debug\joystick.o
  .debug_line    0x00000a7d      0x24b .\ARM_GCC_541\Debug\psoc_eeprom.o
  .debug_line    0x00000cc8      0x209 .\ARM_GCC_541\Debug\app_ctx.o
- .debug_line    0x00000ed1      0x636 .\ARM_GCC_541\Debug\app_statemachine.o
- .debug_line    0x00001507      0x2e2 .\ARM_GCC_541\Debug\pi_comms.o
- .debug_line    0x000017e9      0x1ee .\ARM_GCC_541\Debug\hamfly_comm_rb.o
- .debug_line    0x000019d7        0x0 .\ARM_GCC_541\Debug\hamfly_comm_txbuf.o
- .debug_line    0x000019d7      0x51a .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
- .debug_line    0x00001ef1      0x2fb .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
- .debug_line    0x000021ec      0x4b1 .\ARM_GCC_541\Debug\hamfly_qx_app.o
- .debug_line    0x0000269d      0xd66 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
- .debug_line    0x00003403      0x27c .\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_line    0x0000367f      0x141 .\ARM_GCC_541\Debug\cymetadata.o
- .debug_line    0x000037c0      0x1dc .\ARM_GCC_541\Debug\Cm3Start.o
- .debug_line    0x0000399c      0x365 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
- .debug_line    0x00003d01       0x95 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_INT.o)
- .debug_line    0x00003d96       0x9b .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
- .debug_line    0x00003e31      0x142 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
- .debug_line    0x00003f73      0x2e7 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
- .debug_line    0x0000425a      0x156 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
- .debug_line    0x000043b0      0x161 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
- .debug_line    0x00004511      0x158 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
- .debug_line    0x00004669      0x22d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
- .debug_line    0x00004896       0xa6 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
- .debug_line    0x0000493c      0x1b6 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_line    0x00004af2      0x1d7 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
- .debug_line    0x00004cc9      0x22f .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
- .debug_line    0x00004ef8      0x883 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
- .debug_line    0x0000577b      0x38e .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(cyPm.o)
- .debug_line    0x00005b09      0x231 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
- .debug_line    0x00005d3a      0x2e5 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
- .debug_line    0x0000601f      0x1af .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI_IntClock.o)
- .debug_line    0x000061ce      0x2e8 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
- .debug_line    0x000064b6      0x1b2 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG_IntClock.o)
- .debug_line    0x00006668      0x154 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
- .debug_line    0x000067bc       0x7d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyBootAsmGnu.o)
+ .debug_line    0x00000ed1      0x63d .\ARM_GCC_541\Debug\app_statemachine.o
+ .debug_line    0x0000150e      0x2ff .\ARM_GCC_541\Debug\pi_comms.o
+ .debug_line    0x0000180d      0x1ee .\ARM_GCC_541\Debug\hamfly_comm_rb.o
+ .debug_line    0x000019fb        0x0 .\ARM_GCC_541\Debug\hamfly_comm_txbuf.o
+ .debug_line    0x000019fb      0x51a .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+ .debug_line    0x00001f15      0x2fb .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+ .debug_line    0x00002210      0x4b1 .\ARM_GCC_541\Debug\hamfly_qx_app.o
+ .debug_line    0x000026c1      0xd66 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+ .debug_line    0x00003427      0x27c .\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_line    0x000036a3      0x141 .\ARM_GCC_541\Debug\cymetadata.o
+ .debug_line    0x000037e4      0x1dc .\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_line    0x000039c0      0x365 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+ .debug_line    0x00003d25       0x95 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_INT.o)
+ .debug_line    0x00003dba       0x9b .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
+ .debug_line    0x00003e55      0x142 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
+ .debug_line    0x00003f97      0x2e7 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
+ .debug_line    0x0000427e      0x156 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
+ .debug_line    0x000043d4      0x161 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+ .debug_line    0x00004535      0x158 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
+ .debug_line    0x0000468d      0x22d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
+ .debug_line    0x000048ba       0xa6 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
+ .debug_line    0x00004960      0x1b6 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_line    0x00004b16      0x1d7 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
+ .debug_line    0x00004ced      0x22f .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
+ .debug_line    0x00004f1c      0x883 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
+ .debug_line    0x0000579f      0x38e .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(cyPm.o)
+ .debug_line    0x00005b2d      0x231 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
+ .debug_line    0x00005d5e      0x2e5 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
+ .debug_line    0x00006043      0x1af .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI_IntClock.o)
+ .debug_line    0x000061f2      0x2e8 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
+ .debug_line    0x000064da      0x1b2 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG_IntClock.o)
+ .debug_line    0x0000668c      0x154 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
+ .debug_line    0x000067e0       0x7d .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyBootAsmGnu.o)
 
-.debug_frame    0x00000000     0x6730
+.debug_frame    0x00000000     0x673c
  *(.debug_frame)
  .debug_frame   0x00000000      0x1c4 .\ARM_GCC_541\Debug\main.o
  .debug_frame   0x000001c4       0xc8 .\ARM_GCC_541\Debug\adc_balanced.o
@@ -2711,159 +2709,159 @@ END GROUP
  .debug_frame   0x0000059c      0x138 .\ARM_GCC_541\Debug\psoc_eeprom.o
  .debug_frame   0x000006d4       0x38 .\ARM_GCC_541\Debug\app_ctx.o
  .debug_frame   0x0000070c      0x4d0 .\ARM_GCC_541\Debug\app_statemachine.o
- .debug_frame   0x00000bdc      0x1d4 .\ARM_GCC_541\Debug\pi_comms.o
- .debug_frame   0x00000db0      0x100 .\ARM_GCC_541\Debug\hamfly_comm_rb.o
- .debug_frame   0x00000eb0      0x374 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
- .debug_frame   0x00001224      0x1f4 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
- .debug_frame   0x00001418       0xe8 .\ARM_GCC_541\Debug\hamfly_qx_app.o
- .debug_frame   0x00001500      0xab8 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
- .debug_frame   0x00001fb8      0x20c .\ARM_GCC_541\Debug\cyfitter_cfg.o
- .debug_frame   0x000021c4       0xd8 .\ARM_GCC_541\Debug\Cm3Start.o
- .debug_frame   0x0000229c      0x40c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
- .debug_frame   0x000026a8       0xa0 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_INT.o)
- .debug_frame   0x00002748       0x7c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
- .debug_frame   0x000027c4      0x1e8 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
- .debug_frame   0x000029ac      0x42c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
- .debug_frame   0x00002dd8      0x1e8 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
- .debug_frame   0x00002fc0      0x208 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
- .debug_frame   0x000031c8      0x1e8 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
- .debug_frame   0x000033b0      0x1c0 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
- .debug_frame   0x00003570       0x88 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
- .debug_frame   0x000035f8      0x1b4 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
- .debug_frame   0x000037ac      0x200 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
- .debug_frame   0x000039ac      0x238 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
- .debug_frame   0x00003be4      0xc0c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
- .debug_frame   0x000047f0      0x234 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(cyPm.o)
- .debug_frame   0x00004a24      0x228 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
- .debug_frame   0x00004c4c      0x42c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
- .debug_frame   0x00005078      0x1b4 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI_IntClock.o)
- .debug_frame   0x0000522c      0x42c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
- .debug_frame   0x00005658      0x1b4 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG_IntClock.o)
- .debug_frame   0x0000580c      0x1e8 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
- .debug_frame   0x000059f4       0x38 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_cos.o)
- .debug_frame   0x00005a2c       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-w_atan2.o)
- .debug_frame   0x00005a4c       0x44 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-w_sqrt.o)
- .debug_frame   0x00005a90       0x3c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_asin.o)
- .debug_frame   0x00005acc       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_atan2.o)
- .debug_frame   0x00005aec       0x48 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_atan2.o)
- .debug_frame   0x00005b34       0x48 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_rem_pio2.o)
- .debug_frame   0x00005b7c       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_sqrt.o)
- .debug_frame   0x00005bac       0x34 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_asin.o)
- .debug_frame   0x00005be0       0x3c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_atan2.o)
- .debug_frame   0x00005c1c       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_sqrt.o)
- .debug_frame   0x00005c48       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-k_cos.o)
- .debug_frame   0x00005c94       0x50 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-k_rem_pio2.o)
- .debug_frame   0x00005ce4       0x48 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-k_sin.o)
- .debug_frame   0x00005d2c       0x38 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_atan.o)
- .debug_frame   0x00005d64       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_fabs.o)
- .debug_frame   0x00005d84       0x34 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_floor.o)
- .debug_frame   0x00005db8       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_matherr.o)
- .debug_frame   0x00005dd8       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_nan.o)
- .debug_frame   0x00005df8       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_scalbn.o)
- .debug_frame   0x00005e28       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
- .debug_frame   0x00005e58       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_fabs.o)
- .debug_frame   0x00005e78       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_copysign.o)
- .debug_frame   0x00005e98       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
- .debug_frame   0x00005eb8       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
- .debug_frame   0x00005ee0       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
- .debug_frame   0x00005f0c       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x00005f34       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
- .debug_frame   0x00005f54       0x8c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
- .debug_frame   0x00005fe0       0x60 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
- .debug_frame   0x00006040       0x74 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-snprintf.o)
- .debug_frame   0x000060b4       0x70 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sprintf.o)
- .debug_frame   0x00006124       0x6c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-dtoa.o)
- .debug_frame   0x00006190       0x98 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-locale.o)
- .debug_frame   0x00006228       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-malloc.o)
- .debug_frame   0x00006258       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memchr-stub.o)
- .debug_frame   0x00006280      0x234 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
- .debug_frame   0x000064b4       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-callocr.o)
- .debug_frame   0x000064e0       0x38 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x00006518       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x00006544       0x90 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
- .debug_frame   0x000065d4       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sbrkr.o)
- .debug_frame   0x00006600       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-strcmp.o)
- .debug_frame   0x00006620       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memmove.o)
- .debug_frame   0x00006648       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mlock.o)
- .debug_frame   0x00006678       0x3c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-reallocr.o)
- .debug_frame   0x000066b4       0x5c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
- .debug_frame   0x00006710       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-msizer.o)
+ .debug_frame   0x00000bdc      0x1e0 .\ARM_GCC_541\Debug\pi_comms.o
+ .debug_frame   0x00000dbc      0x100 .\ARM_GCC_541\Debug\hamfly_comm_rb.o
+ .debug_frame   0x00000ebc      0x374 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+ .debug_frame   0x00001230      0x1f4 .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+ .debug_frame   0x00001424       0xe8 .\ARM_GCC_541\Debug\hamfly_qx_app.o
+ .debug_frame   0x0000150c      0xab8 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+ .debug_frame   0x00001fc4      0x20c .\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_frame   0x000021d0       0xd8 .\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_frame   0x000022a8      0x40c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+ .debug_frame   0x000026b4       0xa0 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_INT.o)
+ .debug_frame   0x00002754       0x7c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
+ .debug_frame   0x000027d0      0x1e8 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
+ .debug_frame   0x000029b8      0x42c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
+ .debug_frame   0x00002de4      0x1e8 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
+ .debug_frame   0x00002fcc      0x208 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+ .debug_frame   0x000031d4      0x1e8 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
+ .debug_frame   0x000033bc      0x1c0 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
+ .debug_frame   0x0000357c       0x88 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
+ .debug_frame   0x00003604      0x1b4 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_frame   0x000037b8      0x200 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
+ .debug_frame   0x000039b8      0x238 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
+ .debug_frame   0x00003bf0      0xc0c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
+ .debug_frame   0x000047fc      0x234 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(cyPm.o)
+ .debug_frame   0x00004a30      0x228 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
+ .debug_frame   0x00004c58      0x42c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
+ .debug_frame   0x00005084      0x1b4 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI_IntClock.o)
+ .debug_frame   0x00005238      0x42c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
+ .debug_frame   0x00005664      0x1b4 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG_IntClock.o)
+ .debug_frame   0x00005818      0x1e8 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
+ .debug_frame   0x00005a00       0x38 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_cos.o)
+ .debug_frame   0x00005a38       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-w_atan2.o)
+ .debug_frame   0x00005a58       0x44 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-w_sqrt.o)
+ .debug_frame   0x00005a9c       0x3c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_asin.o)
+ .debug_frame   0x00005ad8       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-wf_atan2.o)
+ .debug_frame   0x00005af8       0x48 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_atan2.o)
+ .debug_frame   0x00005b40       0x48 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_rem_pio2.o)
+ .debug_frame   0x00005b88       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-e_sqrt.o)
+ .debug_frame   0x00005bb8       0x34 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_asin.o)
+ .debug_frame   0x00005bec       0x3c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_atan2.o)
+ .debug_frame   0x00005c28       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-ef_sqrt.o)
+ .debug_frame   0x00005c54       0x4c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-k_cos.o)
+ .debug_frame   0x00005ca0       0x50 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-k_rem_pio2.o)
+ .debug_frame   0x00005cf0       0x48 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-k_sin.o)
+ .debug_frame   0x00005d38       0x38 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_atan.o)
+ .debug_frame   0x00005d70       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_fabs.o)
+ .debug_frame   0x00005d90       0x34 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_floor.o)
+ .debug_frame   0x00005dc4       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_matherr.o)
+ .debug_frame   0x00005de4       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_nan.o)
+ .debug_frame   0x00005e04       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_scalbn.o)
+ .debug_frame   0x00005e34       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_atan.o)
+ .debug_frame   0x00005e64       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-sf_fabs.o)
+ .debug_frame   0x00005e84       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libm.a(lib_a-s_copysign.o)
+ .debug_frame   0x00005ea4       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+ .debug_frame   0x00005ec4       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
+ .debug_frame   0x00005eec       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+ .debug_frame   0x00005f18       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x00005f40       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+ .debug_frame   0x00005f60       0x8c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
+ .debug_frame   0x00005fec       0x60 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+ .debug_frame   0x0000604c       0x74 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-snprintf.o)
+ .debug_frame   0x000060c0       0x70 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sprintf.o)
+ .debug_frame   0x00006130       0x6c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-dtoa.o)
+ .debug_frame   0x0000619c       0x98 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-locale.o)
+ .debug_frame   0x00006234       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-malloc.o)
+ .debug_frame   0x00006264       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memchr-stub.o)
+ .debug_frame   0x0000628c      0x234 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+ .debug_frame   0x000064c0       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-callocr.o)
+ .debug_frame   0x000064ec       0x38 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x00006524       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x00006550       0x90 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-svfprintf.o)
+ .debug_frame   0x000065e0       0x2c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x0000660c       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-strcmp.o)
+ .debug_frame   0x0000662c       0x28 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memmove.o)
+ .debug_frame   0x00006654       0x30 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mlock.o)
+ .debug_frame   0x00006684       0x3c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-reallocr.o)
+ .debug_frame   0x000066c0       0x5c c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
+ .debug_frame   0x0000671c       0x20 c:/program files (x86)/cypress/psoc creator/4.4/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-msizer.o)
 
-.debug_str      0x00000000     0x5837
+.debug_str      0x00000000     0x584f
  *(.debug_str)
  .debug_str     0x00000000      0xb08 .\ARM_GCC_541\Debug\main.o
                                 0xbf1 (size before relaxing)
  .debug_str     0x00000b08       0xb5 .\ARM_GCC_541\Debug\adc_balanced.o
                                 0x29b (size before relaxing)
  .debug_str     0x00000bbd      0x231 .\ARM_GCC_541\Debug\joystick.o
-                                0x4f9 (size before relaxing)
+                                0x4fd (size before relaxing)
  .debug_str     0x00000dee       0xd9 .\ARM_GCC_541\Debug\psoc_eeprom.o
                                 0x2b8 (size before relaxing)
  .debug_str     0x00000ec7       0x17 .\ARM_GCC_541\Debug\app_ctx.o
                                 0xa6b (size before relaxing)
  .debug_str     0x00000ede      0x25e .\ARM_GCC_541\Debug\app_statemachine.o
                                 0xcee (size before relaxing)
- .debug_str     0x0000113c      0x177 .\ARM_GCC_541\Debug\pi_comms.o
-                                0x3e1 (size before relaxing)
- .debug_str     0x000012b3       0x7c .\ARM_GCC_541\Debug\hamfly_comm_rb.o
+ .debug_str     0x0000113c      0x183 .\ARM_GCC_541\Debug\pi_comms.o
+                                0x3f1 (size before relaxing)
+ .debug_str     0x000012bf       0x7c .\ARM_GCC_541\Debug\hamfly_comm_rb.o
                                 0x253 (size before relaxing)
- .debug_str     0x0000132f       0x2b .\ARM_GCC_541\Debug\hamfly_comm_txbuf.o
+ .debug_str     0x0000133b       0x2b .\ARM_GCC_541\Debug\hamfly_comm_txbuf.o
                                 0x12e (size before relaxing)
- .debug_str     0x0000135a      0xbf0 .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
-                               0x1448 (size before relaxing)
- .debug_str     0x00001f4a      0x14d .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
-                                0xb62 (size before relaxing)
- .debug_str     0x00002097      0x181 .\ARM_GCC_541\Debug\hamfly_qx_app.o
-                               0x10f9 (size before relaxing)
- .debug_str     0x00002218      0x831 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
+ .debug_str     0x00001366      0xbfc .\ARM_GCC_541\Debug\hamfly_core_gimbal.o
+                               0x1454 (size before relaxing)
+ .debug_str     0x00001f62      0x14d .\ARM_GCC_541\Debug\hamfly_core_telemetry.o
+                                0xb6e (size before relaxing)
+ .debug_str     0x000020af      0x181 .\ARM_GCC_541\Debug\hamfly_qx_app.o
+                               0x1105 (size before relaxing)
+ .debug_str     0x00002230      0x831 .\ARM_GCC_541\Debug\hamfly_qx_protocol.o
                                 0xf95 (size before relaxing)
- .debug_str     0x00002a49      0x230 .\ARM_GCC_541\Debug\cyfitter_cfg.o
+ .debug_str     0x00002a61      0x230 .\ARM_GCC_541\Debug\cyfitter_cfg.o
                                 0x417 (size before relaxing)
- .debug_str     0x00002c79       0x75 .\ARM_GCC_541\Debug\cymetadata.o
+ .debug_str     0x00002c91       0x75 .\ARM_GCC_541\Debug\cymetadata.o
                                 0x217 (size before relaxing)
- .debug_str     0x00002cee      0x118 .\ARM_GCC_541\Debug\Cm3Start.o
+ .debug_str     0x00002d06      0x118 .\ARM_GCC_541\Debug\Cm3Start.o
                                 0x30a (size before relaxing)
- .debug_str     0x00002e06      0x42f .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
+ .debug_str     0x00002e1e      0x42f .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1.o)
                                 0x656 (size before relaxing)
- .debug_str     0x00003235       0x72 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_INT.o)
+ .debug_str     0x0000324d       0x72 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_INT.o)
                                 0x220 (size before relaxing)
- .debug_str     0x000032a7       0x6c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
+ .debug_str     0x000032bf       0x6c .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(AMux_1.o)
                                 0x213 (size before relaxing)
- .debug_str     0x00003313      0x11a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
+ .debug_str     0x0000332b      0x11a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_adc.o)
                                 0x2f5 (size before relaxing)
- .debug_str     0x0000342d      0x2f0 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
+ .debug_str     0x00003445      0x2f0 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_MOVI.o)
                                 0x4e5 (size before relaxing)
- .debug_str     0x0000371d      0x13a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
+ .debug_str     0x00003735      0x13a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_movi.o)
                                 0x32d (size before relaxing)
- .debug_str     0x00003857      0x16a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
+ .debug_str     0x0000386f      0x16a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(Looptimer.o)
                                 0x368 (size before relaxing)
- .debug_str     0x000039c1      0x156 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
+ .debug_str     0x000039d9      0x156 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_Looptimer.o)
                                 0x349 (size before relaxing)
- .debug_str     0x00003b17      0x19a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
+ .debug_str     0x00003b2f      0x19a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(EEPROM_CONFIG.o)
                                 0x372 (size before relaxing)
- .debug_str     0x00003cb1       0x97 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
+ .debug_str     0x00003cc9       0x97 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_AMux.o)
                                 0x243 (size before relaxing)
- .debug_str     0x00003d48      0x21a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
+ .debug_str     0x00003d60      0x21a .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_Ext_CP_Clk.o)
                                 0x3e1 (size before relaxing)
- .debug_str     0x00003f62      0x208 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
+ .debug_str     0x00003f7a      0x208 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(ADC_DelSig_1_theACLK.o)
                                 0x412 (size before relaxing)
- .debug_str     0x0000416a      0x12e .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
+ .debug_str     0x00004182      0x12e .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyFlash.o)
                                 0x33a (size before relaxing)
- .debug_str     0x00004298      0x7c1 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
+ .debug_str     0x000042b0      0x7c1 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CyLib.o)
                                 0xa1d (size before relaxing)
- .debug_str     0x00004a59      0x371 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(cyPm.o)
+ .debug_str     0x00004a71      0x371 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(cyPm.o)
                                 0x576 (size before relaxing)
- .debug_str     0x00004dca      0x120 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
+ .debug_str     0x00004de2      0x120 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(CySpc.o)
                                 0x334 (size before relaxing)
- .debug_str     0x00004eea      0x257 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
+ .debug_str     0x00004f02      0x257 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI.o)
                                 0x4ab (size before relaxing)
- .debug_str     0x00005141      0x183 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI_IntClock.o)
+ .debug_str     0x00005159      0x183 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_PI_IntClock.o)
                                 0x38d (size before relaxing)
- .debug_str     0x000052c4      0x2ae .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
+ .debug_str     0x000052dc      0x2ae .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG.o)
                                 0x502 (size before relaxing)
- .debug_str     0x00005572      0x1a7 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG_IntClock.o)
+ .debug_str     0x0000558a      0x1a7 .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(UART_DEBUG_IntClock.o)
                                 0x3b1 (size before relaxing)
- .debug_str     0x00005719      0x11e .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
+ .debug_str     0x00005731      0x11e .\ARM_GCC_541\Debug\Proj07_hamflyAPI_stateMachineUpgrade.a(isr_rx_pi.o)
                                 0x311 (size before relaxing)
 
 .debug_loc

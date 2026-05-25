@@ -65,14 +65,6 @@ static const uint8_t crc8_table[256] = {
 #define PI_CENTROID_LEN  12u   // uint32 t_ms + 2*int16 + 2*uint16
 #define PI_RX_MAX        64u
 
-// Index for both camera streams, accepts up to two inputs for now!
-// ATTENTION: Hard coded definition of camera based centroid streams.
-// Add or reduce according to needs, and sensor types!
-// TODO: Is there a more generalizable way to handle N streams?
-//       Or maybe stream-wise packet types for different sensors?
-#define STREAM_COARSE 0
-#define STREAM_FINE   1
-#define STREAM_COUNTS 2
 
 // Packet parser section enum, initialized to magic byte
 // Expects:
@@ -95,34 +87,39 @@ static uint32_t s_rx_pkt_count        = 0u;
 
 void pi_init(void)
 {
-    pi_rx_state = S_MAGIC;  // Start waiting for the magic byte
-    // Initialize counters to empty
-    s_idx = 0u;
-    s_fresh = 0u;
-    s_last_rx_ms = 0u;
-    s_crc_err = s_uart_err = s_unknown_magic = 0u;
+    pi_rx_state    = S_MAGIC;
+    s_idx          = 0u;
+    s_fresh_bits   = 0u;
+    s_crc_err      = 0u;
+    s_uart_err     = 0u;
+    s_unknown_magic = 0u;
     s_rx_pkt_count = 0u;
-    s_last_centroid_dt_ms = 0u;
+    // Init each of the N centroid streams
+    for (uint8_t i = 0u; i < STREAM_COUNTS; i++) {
+        s_last_rx_ms[i]          = 0u;
+        s_last_centroid_dt_ms[i] = 0u;
+    }
 }
 
-static void decode_centroid(const uint8_t *p)
+static void decode_centroid(uint8_t stream, const uint8_t *p)
 {
+    // Store time since last centroid arrived.
     uint32_t now = g_tick_ms;
-    if (s_last_rx_ms != 0u) {
-        // Store time since last centroid arrived.
-        uint32_t dt = now - s_last_rx_ms;
-        s_last_centroid_dt_ms = (dt > 0xFFFFu)  // Clamp to uint16
-                              ? 0xFFFFu         // Max to 65 seconds
-                              : (uint16_t)dt;   // Cast down
+    if (s_last_rx_ms[stream] != 0u) {
+        uint32_t dt = now - s_last_rx_ms[stream];
+        s_last_centroid_dt_ms[stream] = (dt > 0xFFFFu)  // Clamp to uint16
+                                      ? 0xFFFFu         // Max to 65 seconds
+                                      : (uint16_t)dt;   // Cast down
     }
-    // Copy out bytes into their respective struct variables.
-    memcpy(&s_centroid.t_ms,  p +  0, 4);
-    memcpy(&s_centroid.cx,    p +  4, 2);
-    memcpy(&s_centroid.cy,    p +  6, 2);
-    memcpy(&s_centroid.cxerr, p +  8, 2);
-    memcpy(&s_centroid.cyerr, p + 10, 2);
-    s_fresh = 1u;
-    s_last_rx_ms = now;
+    // COpy into array of centroid structs
+    memcpy(&s_centroid[stream].t_ms,  p +  0, 4);
+    memcpy(&s_centroid[stream].cx,    p +  4, 2);
+    memcpy(&s_centroid[stream].cy,    p +  6, 2);
+    memcpy(&s_centroid[stream].cxerr, p +  8, 2);
+    memcpy(&s_centroid[stream].cyerr, p + 10, 2);
+    // Pip freshness into the streams byte
+    s_fresh_bits |= (uint8_t)(1u << stream);
+    s_last_rx_ms[stream] = now;  // Update last heard from
 }
 
 // Incoming byte parser!
@@ -174,10 +171,17 @@ void pi_on_rx_byte(uint8_t b)
                 // Process payload bytes according to type.
                 // Add as we accumulate more things to Rx.
                 switch (s_type) {
-                    case PKT_CENTROID:
-                        if (s_len == PI_CENTROID_LEN) decode_centroid(s_buf);
+                    case PKT_CENTROID_C:
+                        if (s_len == PI_CENTROID_LEN){
+                            decode_centroid(STREAM_COARSE, s_buf);
+                        }
                         break;
-                    default: 
+                    case PKT_CENTROID_F:
+                        if (s_len == PI_CENTROID_LEN){
+                            decode_centroid(STREAM_FINE,   s_buf);
+                        }
+                        break;
+                    default:
                         break;
                 }
             } else {
@@ -197,19 +201,20 @@ void pi_on_uart_err_flags(uint8_t flags)
     pi_rx_state = S_MAGIC;
 }
 
-uint8_t pi_get_centroid(payload_centroid_t *out)
+uint8_t pi_get_centroid(uint8_t stream, payload_centroid_t *out)
 {
     // Getter function for the rest of our codebase to use
     // Runs as atomic so it cannot be interrupted. If it were interrupted we
     // could start copying out the centroid, then rx a new centroid, and
     // continue reading out from the new centroid data.
     // This would corrupt the data, or at least confuse our control loop.
+    if (stream >= STREAM_COUNTS) return 0u;
+    uint8_t bit = (uint8_t)(1u << stream);
     uint8_t got = 0u;
-    uint8_t ist = CyEnterCriticalSection();  // Disables interruprs
-    if (s_fresh)
-    {
-        *out = s_centroid;  // Copy out the centroid
-        s_fresh = 0u;  // Set stale (already grabbed)
+    uint8_t ist = CyEnterCriticalSection();// Disables interruprs
+    if (s_fresh_bits & bit) {
+        *out = s_centroid[stream];  // Copy out the centroid
+        s_fresh_bits &= (uint8_t)~bit;  // Set stale (already grabbed)
         got = 1u;  // Say we got em.
     }
     CyExitCriticalSection(ist);  // Re-enables interruprs
@@ -227,16 +232,16 @@ uint32_t pi_rx_pkt_count(void)
     // Received packet count getter
     return s_rx_pkt_count;
 }
-uint16_t pi_last_centroid_dt_ms(void)
+uint16_t pi_last_centroid_dt_ms(uint8_t stream)
 {
     // Time between last centroid pair getter
-    return s_last_centroid_dt_ms;
+    return (stream < STREAM_COUNTS) ? s_last_rx_ms[stream] : 0u;
 }
 
-uint32_t pi_last_rx_ms(void)
+uint32_t pi_last_rx_ms(uint8_t stream)
 {
     // Time of last received packet getter
-    return s_last_rx_ms;
+    return (stream < STREAM_COUNTS) ? s_last_centroid_dt_ms[stream] : 0u;
 }
 uint16_t pi_crc_errors(void)
 {
