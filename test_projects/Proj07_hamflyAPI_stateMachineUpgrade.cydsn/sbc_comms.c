@@ -63,7 +63,7 @@ static const uint8_t crc8_table[256] = {
 };
 
 #define SBC_CENTROID_LEN  12u   // uint32 t_ms + 2*int16 + 2*uint16
-#define SBCRX_MAX        64u
+#define SBC_RX_MAX        64u
 
 // Packet parser section enum, initialized to magic byte
 // Expects:

@@ -52,6 +52,7 @@
 
 // Rasp Pi communications stuff
 #include "sbc_comms.h"
+#include "telemetry.h"
 
 #define TX_BUF_SIZE           160u
 
@@ -290,6 +291,7 @@ int main(void)
         
         // Always pump gimbal Rx
         hamfly_pump(&g_movi);
+        telemetry_pump(&ctx);
         
         // Always read joystick
         int16_t counts[N_CH];
@@ -300,8 +302,11 @@ int main(void)
         }
         
         // Always run on tick definition
+        // These are by state but only run when in the given state
+        // Per state logiv before making acontrol packet or telem etc.
         app_manual_tick(&ctx);
         app_auto_tick(&ctx);
+        app_telem_tick(&ctx);
         
         // At 'CONTROL_PERIOD_MS' build and send control packet
         // app_build_control handles the state of the state machine

@@ -16,8 +16,8 @@
  * For inter-device communications with Raspberry Pi SBC.
 */
 
-#ifndef PI_COMMS_H
-#define PI_COMMS_H
+#ifndef SBC_COMMS_H
+#define SBC_COMMS_H
 
 #include <stdint.h>
 
@@ -60,5 +60,5 @@ uint32_t sbc_rx_pkt_count(void);
 uint16_t sbc_last_centroid_dt_ms(uint8_t stream);
 void     sbc_send_frame(uint8_t type, const uint8_t *payload, uint8_t len);
 
-#endif /* PI_COMMS_H */
+#endif /* SBC_COMMS_H */
 /* [] END OF FILE */

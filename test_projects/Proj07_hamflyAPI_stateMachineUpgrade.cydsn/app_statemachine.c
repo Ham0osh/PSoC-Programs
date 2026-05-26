@@ -278,6 +278,26 @@ static const char *const state_names[STATE_COUNT] = {
 // Helper for serial monitor.
 const char *app_state_name(state_t s) { return state_names[s]; }
 
+// Telemetry %===============================================================%
+void app_telem_tick(app_ctx_t *ctx)
+{
+    // Do the telemetry grabs if gimble connected
+    if (!ctx->gimbal) return;
+
+    static uint32_t last_hot_ms  = 0u;  // Hot is the Movi status
+    static uint32_t last_link_ms = 0u;  // Cold are all other sensors
+    if (g_tick_ms - last_hot_ms  >= CONTROL_PERIOD_MS) {  //  10 Hz
+        last_hot_ms = g_tick_ms;
+        telemetry_send_hot_sbc(ctx);
+    }
+    if (g_tick_ms - last_link_ms >= DIAG_PERIOD_MS) {     //  1 Hz
+        last_link_ms = g_tick_ms;
+        telemetry_send_link_sbc(ctx);
+        telemetry_send_power_sbc(ctx);
+        telemetry_send_env_sbc(ctx);
+    }
+}
+
 // %==========================================================================%
 // %                               Standby                                    %
 // %==========================================================================%
@@ -353,18 +373,6 @@ void app_auto_tick(app_ctx_t *ctx)
                      sbc_unknown_magic(), sbc_crc_errors(), sbc_uart_errors());
             UART_DEBUG_PutString(b);
         }
-    }
-    
-    // Send telemetry back over to the SBC
-    static uint32_t last_hot_ms  = 0u;
-    static uint32_t last_link_ms = 0u;
-    if (g_tick_ms - last_hot_ms  >= CONTROL_PERIOD_MS) {  /* 10 Hz */
-        last_hot_ms = g_tick_ms;
-        telemetry_send_hot_sbc(ctx);
-    }
-    if (g_tick_ms - last_link_ms >= DIAG_PERIOD_MS) {     /* 1 Hz */
-        last_link_ms = g_tick_ms;
-        telemetry_send_link_sbc(ctx);
     }
 }
 

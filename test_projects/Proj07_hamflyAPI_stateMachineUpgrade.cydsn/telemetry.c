@@ -33,6 +33,19 @@ static int16_t sat_i16(float f)
     if (f <= -32768.0f) return -32768;
     return (int16_t)f;
 }
+// Helper for unsigned ints and avoid rollovers.
+static uint32_t sat_u32(float f)
+{
+    if (f <= 0.0f)          return 0u;
+    if (f >= 4294967295.0f) return 0xFFFFFFFFu;
+    return (uint32_t)f;
+}
+static uint16_t sat_u16(float f)
+{
+    if (f <= 0.0f)          return 0u;
+    if (f >= 65535.0f)      return 0xFFFFu;
+    return (uint16_t)f;
+}
 
 // Helpers: Collectors
 void telemetry_collect_hot(const app_ctx_t *ctx, telem_hot_t *out)
@@ -75,10 +88,43 @@ void telemetry_collect_link(const app_ctx_t *ctx, telem_link_t *out)
     out->rx_pkt_count        = sbc_rx_pkt_count();
     out->last_centroid_dt_ms = sbc_last_centroid_dt_ms(STREAM_COARSE);
 }
+void telemetry_collect_power(const app_ctx_t *ctx, telem_power_t *out)
+{
+    memset(out, 0, sizeof *out);
+    out->t_ms = g_tick_ms;
+
+    if (!ctx->gimbal) return;
+    hamfly_telemetry_t tel;
+    hamfly_get_telemetry(ctx->gimbal, &tel);
+
+    out->vbat_left_mv    = sat_u16(tel.battery_left_v  * 1000.0f);
+    out->vbat_right_mv   = sat_u16(tel.battery_right_v * 1000.0f);
+    out->sysstat_batt_mv = sat_u16(tel.sysstat_batt_v  * 1000.0f);
+    out->sysstat_batt_ma = sat_i16(tel.sysstat_batt_a  * 1000.0f);
+    out->sysstat_cpu_pct = tel.sysstat_cpu_pct;
+
+    //  TODO: wire DieTemp component if/when added to TopDesign.
+    out->mcu_temp_c = 0;
+}
+
+void telemetry_collect_env(const app_ctx_t *ctx, telem_env_t *out)
+{
+    memset(out, 0, sizeof *out);
+    out->t_ms = g_tick_ms;
+
+    if (!ctx->gimbal) return;
+    hamfly_telemetry_t tel;
+    hamfly_get_telemetry(ctx->gimbal, &tel);
+
+    out->sysstat_temp_c10  = sat_i16(tel.sysstat_temp_c     * 10.0f);
+    out->sysstat_press_Pa  = sat_u32(tel.sysstat_pressure_mb * 100.0f);
+}
 
 // Packet encoders on the SBC wire
 #define TELEM_HOT_LEN   26u
 #define TELEM_LINK_LEN  16u
+#define TELEM_POWER_LEN 14u
+#define TELEM_ENV_LEN   10u
 
 static uint8_t encode_hot(const telem_hot_t *h, uint8_t *buf)
 {
@@ -114,6 +160,27 @@ static uint8_t encode_link(const telem_link_t *l, uint8_t *buf)
     return (uint8_t)(p - buf);  //  == TELEM_LINK_LEN
 }
 
+static uint8_t encode_power(const telem_power_t *p, uint8_t *buf)
+{
+    uint8_t *q = buf;
+    memcpy(q, &p->t_ms,            4); q += 4;
+    memcpy(q, &p->vbat_left_mv,    2); q += 2;
+    memcpy(q, &p->vbat_right_mv,   2); q += 2;
+    memcpy(q, &p->sysstat_batt_mv, 2); q += 2;
+    memcpy(q, &p->sysstat_batt_ma, 2); q += 2;
+    *q++ = p->sysstat_cpu_pct;
+    *q++ = (uint8_t)p->mcu_temp_c;
+    return (uint8_t)(q - buf);  //  == TELEM_POWER_LEN
+}
+
+static uint8_t encode_env(const telem_env_t *e, uint8_t *buf)
+{
+    uint8_t *q = buf;
+    memcpy(q, &e->t_ms,             4); q += 4;
+    memcpy(q, &e->sysstat_temp_c10, 2); q += 2;
+    memcpy(q, &e->sysstat_press_Pa, 4); q += 4;
+    return (uint8_t)(q - buf);  //  == TELEM_ENV_LEN
+}
 
 // Packet senders
 void telemetry_send_hot_sbc(const app_ctx_t *ctx)
@@ -134,6 +201,24 @@ void telemetry_send_link_sbc(const app_ctx_t *ctx)
     sbc_send_frame(PKT_TELEM_LINK, buf, n);
 }
 
+void telemetry_send_power_sbc(const app_ctx_t *ctx)
+{
+    telem_power_t p;
+    telemetry_collect_power(ctx, &p);
+    uint8_t buf[TELEM_POWER_LEN];
+    uint8_t n = encode_power(&p, buf);
+    sbc_send_frame(PKT_TELEM_POWER, buf, n);
+}
+
+void telemetry_send_env_sbc(const app_ctx_t *ctx)
+{
+    telem_env_t e;
+    telemetry_collect_env(ctx, &e);
+    uint8_t buf[TELEM_ENV_LEN];
+    uint8_t n = encode_env(&e, buf);
+    sbc_send_frame(PKT_TELEM_ENV, buf, n);
+}
+
 // Gimbal sensor attribultes and request scheduling
 typedef struct {
     uint16_t attr_id;           // HAMFLY_ATTR_SYSSTAT, etc.
@@ -142,16 +227,17 @@ typedef struct {
 } attr_sched_t;
 
 static attr_sched_t s_attrs[] = {
-    //  { HAMFLY_ATTR_SYSSTAT, 5000u, 0u },   //  POWER + ENV cold
-    //  { HAMFLY_ATTR_BARO,    5000u, 0u },   //  BARO cold
-    //  { HAMFLY_ATTR_GPS,     5000u, 0u },   //  GPS cold
-    //  ... examples
+    { HAMFLY_ATTR_SYSSTAT, 5000u, 0u },  //  POWER + ENV
+    //  { HAMFLY_ATTR_BARO,    5000u, 0u },  //  BARO
+    //  { HAMFLY_ATTR_GPS,     5000u, 0u },  //  GPS
+    //  ... examples (magnetometer! IMU? etc).
 };
 #define N_ATTRS (sizeof s_attrs / sizeof s_attrs[0])
 
 void telemetry_pump(app_ctx_t *ctx)
 {
-    // Earcly check if gimbal exists, and there are attrs to grab
+    // Do a HamflyAttr request if on schedule and no control in process.
+    // Early check if gimbal exists, and there are attrs to grab
     if (!ctx->gimbal || N_ATTRS == 0u) return;
     // Yield to control packet being sent to Movi
     if (g_tick_ms - ctx->last_tx_ms < 5u) return;
