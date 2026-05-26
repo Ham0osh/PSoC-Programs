@@ -62,8 +62,8 @@ static const uint8_t crc8_table[256] = {
     0xE6,0xE1,0xE8,0xEF,0xFA,0xFD,0xF4,0xF3,
 };
 
-#define PI_CENTROID_LEN  12u   // uint32 t_ms + 2*int16 + 2*uint16
-#define PI_RX_MAX        64u
+#define SBC_CENTROID_LEN  12u   // uint32 t_ms + 2*int16 + 2*uint16
+#define SBCRX_MAX        64u
 
 // Packet parser section enum, initialized to magic byte
 // Expects:
@@ -72,7 +72,7 @@ static enum { S_MAGIC, S_TYPE, S_LEN, S_PAYLOAD, S_CRC } sbc_rx_state = S_MAGIC;
 static uint8_t              s_type;  // Type loaded into here
 static uint8_t              s_len;   // Length loaded into here
 static uint8_t              s_idx;
-static uint8_t              s_buf[PI_RX_MAX];  // Payload parsed into here!
+static uint8_t              s_buf[SBC_RX_MAX];  // Payload parsed into here!
 // Per centroid stream
 static payload_centroid_t   s_centroid[STREAM_COUNTS];  // Payload per centroid
 static volatile uint8_t     s_fresh_bits;  // bit 0 for coarse and bit 1 for fine
@@ -130,7 +130,7 @@ void sbc_on_rx_byte(uint8_t b)
     // Parse incoming bytes according to expected packet structure.
     switch (sbc_rx_state) {
         case S_MAGIC:
-            if (b == PI_MAGIC){
+            if (b == SBC_MAGIC){
                 sbc_rx_state = S_TYPE;  // Move to type parsing
             } else {
                 s_unknown_magic++;  // Measure of noise
@@ -142,7 +142,7 @@ void sbc_on_rx_byte(uint8_t b)
             break;
         case S_LEN:
             s_len = b;
-            if (s_len > PI_RX_MAX) {
+            if (s_len > SBC_RX_MAX) {
                 sbc_rx_state = S_MAGIC;  // Bad len -> resync
             } else if (s_len == 0u) {
                 sbc_rx_state = S_CRC;    // 0-byte payload legal
@@ -172,12 +172,12 @@ void sbc_on_rx_byte(uint8_t b)
                 // Add as we accumulate more things to Rx.
                 switch (s_type) {
                     case PKT_CENTROID_C:
-                        if (s_len == PI_CENTROID_LEN){
+                        if (s_len == SBC_CENTROID_LEN){
                             decode_centroid(STREAM_COARSE, s_buf);
                         }
                         break;
                     case PKT_CENTROID_F:
-                        if (s_len == PI_CENTROID_LEN){
+                        if (s_len == SBC_CENTROID_LEN){
                             decode_centroid(STREAM_FINE,   s_buf);
                         }
                         break;
@@ -235,13 +235,13 @@ uint32_t sbc_rx_pkt_count(void)
 uint16_t sbc_last_centroid_dt_ms(uint8_t stream)
 {
     // Time between last centroid pair getter
-    return (stream < STREAM_COUNTS) ? s_last_rx_ms[stream] : 0u;
+    return (stream < STREAM_COUNTS) ? s_last_centroid_dt_ms[stream] : 0u;
 }
 
 uint32_t sbc_last_rx_ms(uint8_t stream)
 {
     // Time of last received packet getter
-    return (stream < STREAM_COUNTS) ? s_last_centroid_dt_ms[stream] : 0u;
+    return (stream < STREAM_COUNTS) ? s_last_rx_ms[stream] : 0u;
 }
 uint16_t sbc_crc_errors(void)
 {
@@ -257,7 +257,7 @@ uint16_t sbc_uart_errors(void)
 void sbc_send_frame(uint8_t type, const uint8_t *payload, uint8_t len)
 {
     // Encoder to send a frame to the Pi
-    UART_SBC_PutChar(PI_MAGIC);  // Magic byte
+    UART_SBC_PutChar(SBC_MAGIC);  // Magic byte
     UART_SBC_PutChar(type);      // Type byte
     UART_SBC_PutChar(len);       // Length byte
     uint8_t crc = crc8_table[type];

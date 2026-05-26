@@ -28,6 +28,11 @@
 #define CH_X   0u
 #define CH_Y   1u
 
+// Timing constants
+#define CONTROL_PERIOD_MS     100u   // 10 Hz control TX
+#define DIAG_PERIOD_MS        1000u  // 1 Hz diagnostic print
+#define QUERY_TIMEOUT_MS      2000u  // max wait for attr response in QUERY
+
 // HFSM states %==============================================================%
 // ROOT is a sentinel; STBY/MANU/AUTO/ERROR are parents (never set directly).
 // All other entries are leaves and ARE the only legal values of ctx.state.

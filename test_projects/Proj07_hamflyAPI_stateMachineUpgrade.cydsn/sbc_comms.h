@@ -30,7 +30,7 @@
 #define STREAM_FINE    1u
 #define STREAM_COUNTS  2u
 
-#define PI_MAGIC   0xAB  // Pi <-> PSoC both; signals packet start
+#define SBC_MAGIC   0xAB  // Pi <-> PSoC both; signals packet start
 
 #define PKT_CENTROID_C  0x01u  // Pi   -> PSoC Coarse
 #define PKT_CENTROID_F  0x02u  // Pi   -> PSoC Fine

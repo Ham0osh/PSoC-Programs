@@ -53,11 +53,7 @@
 // Rasp Pi communications stuff
 #include "sbc_comms.h"
 
-// Timing constants
 #define TX_BUF_SIZE           160u
-#define CONTROL_PERIOD_MS     100u   // 10 Hz control TX
-#define DIAG_PERIOD_MS        1000u  // 1 Hz diagnostic print
-#define QUERY_TIMEOUT_MS      2000u  // max wait for attr response in QUERY
 
 // Soft limits relative to origin (degrees)
 // Origin set by pressing '[' in any mode

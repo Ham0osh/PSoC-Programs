@@ -43,6 +43,7 @@
 #include "app_statemachine.h"
 #include "hamfly.h"
 #include "sbc_comms.h"
+#include "telemetry.h"
 #include <project.h>  // For UART
 #include <math.h>
 #include <string.h>
@@ -343,7 +344,7 @@ void app_auto_tick(app_ctx_t *ctx)
         if (sbc_get_centroid(s, &c)) {
             char b[128];
             snprintf(b, sizeof b,
-                     "[PI:%s] t=%lu cx=%d cy=%d cxerr=%u cyerr=%u "
+                     "[SBC:%s] t=%lu cx=%d cy=%d cxerr=%u cyerr=%u "
                      "dt=%u rx=%lu unkMagic=%u crcErr=%u uartErr=%u\r\n",
                      tag[s],
                      (unsigned long)c.t_ms, c.cx, c.cy, c.cxerr, c.cyerr,
@@ -352,6 +353,18 @@ void app_auto_tick(app_ctx_t *ctx)
                      sbc_unknown_magic(), sbc_crc_errors(), sbc_uart_errors());
             UART_DEBUG_PutString(b);
         }
+    }
+    
+    // Send telemetry back over to the SBC
+    static uint32_t last_hot_ms  = 0u;
+    static uint32_t last_link_ms = 0u;
+    if (g_tick_ms - last_hot_ms  >= CONTROL_PERIOD_MS) {  /* 10 Hz */
+        last_hot_ms = g_tick_ms;
+        telemetry_send_hot_sbc(ctx);
+    }
+    if (g_tick_ms - last_link_ms >= DIAG_PERIOD_MS) {     /* 1 Hz */
+        last_link_ms = g_tick_ms;
+        telemetry_send_link_sbc(ctx);
     }
 }
 
