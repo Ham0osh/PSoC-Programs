@@ -25,6 +25,7 @@ void app_ctx_init(app_ctx_t *ctx)
     ctx->state         = STBY_DEFER;  // boot to defer
     ctx->prev_leaf     = STBY_DEFER;  // boot to defer
     ctx->ctrl_mode     = HAMFLY_DEFER;
+    ctx->origin_set    = 1u;          // Origin initialy 0,0.
     ctx->sense         = SENSE_MED;
     ctx->diag_active   = 1u;
     /* origin_set, fatal_latched, err_msg already 0/NULL from memset */

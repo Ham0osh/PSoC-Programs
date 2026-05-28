@@ -43,7 +43,7 @@ typedef enum {
     // STBY leaves
     STBY_DEFER, STBY_HOLD,
     // MANU leaves
-    MANU_JOYSTICK, MANU_NUDGE,
+    MANU_JOYSTICK,
     // AUTO leaves
     AUTO_HOME,                      // Go to software origin
     AUTO_ACQ_GPS, AUTO_ACQ_SPIRAL,  // TODO: Open loop acquisition patterns
