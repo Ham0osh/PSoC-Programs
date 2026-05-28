@@ -35,12 +35,18 @@
 #define PKT_CENTROID_C  0x01u  // Pi   -> PSoC Coarse
 #define PKT_CENTROID_F  0x02u  // Pi   -> PSoC Fine
 #define PKT_STATE_REQ   0x10u  // Pi   -> PSoC
+#define PKT_GPS_TARGET  0x0Fu  // Pi   -> PSoC GPS target
 
 #define PKT_TELEM_HOT   0x20u  // PSoC -> Pi
 #define PKT_TELEM_POWER 0x21u  // PSoC -> Pi
 #define PKT_TELEM_ENV   0x22u  // PSoC -> Pi
 #define PKT_TELEM_LINK  0x23u  // PSoC -> Pi
+#define PKT_TELEM_GPS   0x24u  // PSoC -> Pi
+#define PKT_TELEM_BARO  0x25u  // PSoC -> Pi
+#define PKT_TELEM_MAG   0x26u  // PSoC -> Pi
+    
 #define PKT_STATE_ACK   0x30u  // PSoC -> Pi
+    
 
 typedef struct {
     uint32_t t_ms;          // Pi monotonic ms

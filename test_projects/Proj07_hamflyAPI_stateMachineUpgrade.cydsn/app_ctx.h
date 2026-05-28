@@ -29,7 +29,7 @@
 #define CH_Y   1u
 
 // Timing constants
-#define CONTROL_PERIOD_MS     100u   // 10 Hz control TX
+#define CONTROL_PERIOD_MS     200u   // 5   Hz control TX
 #define DIAG_PERIOD_MS        5000u  // 0.2 Hz diagnostic print
 #define QUERY_TIMEOUT_MS      2000u  // max wait for attr response in QUERY
 

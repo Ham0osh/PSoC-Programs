@@ -120,11 +120,66 @@ void telemetry_collect_env(const app_ctx_t *ctx, telem_env_t *out)
     out->sysstat_press_Pa  = sat_u32(tel.sysstat_pressure_mb * 100.0f);
 }
 
+void telemetry_collect_gps(const app_ctx_t *ctx, telem_gps_t *out)
+{
+    memset(out, 0, sizeof *out);
+    out->t_ms = g_tick_ms;
+
+    if (!ctx->gimbal) return;
+    hamfly_telemetry_t tel;
+    hamfly_get_telemetry(ctx->gimbal, &tel);
+
+    out->flags   = (uint8_t)((tel.gps_valid  ? 0x01u : 0u)
+                           | (tel.gps_locked ? 0x02u : 0u));
+    out->sats    = tel.sysstat_gps_sats;   //  comes from SYSSTAT, not GPS attr
+    out->raw_lat = tel.gps_raw_lat;
+    out->raw_lon = tel.gps_raw_lon;
+    out->raw_alt = tel.gps_raw_alt;
+    out->raw_spd = tel.gps_raw_spd;
+    out->raw_hdg = tel.gps_raw_hdg;
+    out->hacc    = tel.gps_raw_hacc;
+    out->vacc    = tel.gps_raw_vacc;
+    out->sacc    = tel.gps_raw_sacc;
+}
+
+void telemetry_collect_baro(const app_ctx_t *ctx, telem_baro_t *out)
+{
+    memset(out, 0, sizeof *out);
+    out->t_ms = g_tick_ms;
+
+    if (!ctx->gimbal) return;
+    hamfly_telemetry_t tel;
+    hamfly_get_telemetry(ctx->gimbal, &tel);
+
+    out->flags   = (uint8_t)(tel.baro_valid ? 0x01u : 0u);
+    out->alt_dm  = (int32_t)(tel.baro_alt_m * 10.0f);     //  saturate not needed: alt range fits int32 easily
+    out->roc_cms = sat_i16(tel.baro_roc_ms * 100.0f);
+}
+
+void telemetry_collect_mag(const app_ctx_t *ctx, telem_mag_t *out)
+{
+    memset(out, 0, sizeof *out);
+    out->t_ms = g_tick_ms;
+
+    if (!ctx->gimbal) return;
+    hamfly_telemetry_t tel;
+    hamfly_get_telemetry(ctx->gimbal, &tel);
+
+    out->flags    = (uint8_t)(tel.mag_valid ? 0x01u : 0u);
+    out->x_raw    = sat_i16(tel.mag_x          * 1000.0f);
+    out->y_raw    = sat_i16(tel.mag_y          * 1000.0f);
+    out->z_raw    = sat_i16(tel.mag_z          * 1000.0f);
+    out->decl_raw = sat_i16(tel.mag_declination * 10.0f);
+}
+
 // Packet encoders on the SBC wire
 #define TELEM_HOT_LEN   26u
 #define TELEM_LINK_LEN  16u
 #define TELEM_POWER_LEN 14u
 #define TELEM_ENV_LEN   10u
+#define TELEM_GPS_LEN   28u
+#define TELEM_BARO_LEN  11u
+#define TELEM_MAG_LEN  13u
 
 static uint8_t encode_hot(const telem_hot_t *h, uint8_t *buf)
 {
@@ -182,7 +237,46 @@ static uint8_t encode_env(const telem_env_t *e, uint8_t *buf)
     return (uint8_t)(q - buf);  //  == TELEM_ENV_LEN
 }
 
-// Packet senders
+static uint8_t encode_gps(const telem_gps_t *g, uint8_t *buf)
+{
+    uint8_t *q = buf;
+    memcpy(q, &g->t_ms,    4); q += 4;
+    *q++ = g->flags;
+    *q++ = g->sats;
+    memcpy(q, &g->raw_lat, 4); q += 4;
+    memcpy(q, &g->raw_lon, 4); q += 4;
+    memcpy(q, &g->raw_alt, 4); q += 4;
+    memcpy(q, &g->raw_spd, 2); q += 2;
+    memcpy(q, &g->raw_hdg, 2); q += 2;
+    memcpy(q, &g->hacc,    2); q += 2;
+    memcpy(q, &g->vacc,    2); q += 2;
+    memcpy(q, &g->sacc,    2); q += 2;
+    return (uint8_t)(q - buf);  //  == TELEM_GPS_LEN
+}
+
+static uint8_t encode_baro(const telem_baro_t *b, uint8_t *buf)
+{
+    uint8_t *q = buf;
+    memcpy(q, &b->t_ms,    4); q += 4;
+    *q++ = b->flags;
+    memcpy(q, &b->alt_dm,  4); q += 4;
+    memcpy(q, &b->roc_cms, 2); q += 2;
+    return (uint8_t)(q - buf);  //  == TELEM_BARO_LEN
+}
+
+static uint8_t encode_mag(const telem_mag_t *m, uint8_t *buf)
+{
+    uint8_t *q = buf;
+    memcpy(q, &m->t_ms,     4); q += 4;
+    *q++ = m->flags;
+    memcpy(q, &m->x_raw,    2); q += 2;
+    memcpy(q, &m->y_raw,    2); q += 2;
+    memcpy(q, &m->z_raw,    2); q += 2;
+    memcpy(q, &m->decl_raw, 2); q += 2;
+    return (uint8_t)(q - buf);  //  == TELEM_MAG_LEN
+}
+
+// Packet senders -- These are what the code publicly calls!
 void telemetry_send_hot_sbc(const app_ctx_t *ctx)
 {
     telem_hot_t h;
@@ -219,6 +313,33 @@ void telemetry_send_env_sbc(const app_ctx_t *ctx)
     sbc_send_frame(PKT_TELEM_ENV, buf, n);
 }
 
+void telemetry_send_gps_sbc(const app_ctx_t *ctx)
+{
+    telem_gps_t g;
+    telemetry_collect_gps(ctx, &g);
+    uint8_t buf[TELEM_GPS_LEN];
+    uint8_t n = encode_gps(&g, buf);
+    sbc_send_frame(PKT_TELEM_GPS, buf, n);
+}
+
+void telemetry_send_baro_sbc(const app_ctx_t *ctx)
+{
+    telem_baro_t b;
+    telemetry_collect_baro(ctx, &b);
+    uint8_t buf[TELEM_BARO_LEN];
+    uint8_t n = encode_baro(&b, buf);
+    sbc_send_frame(PKT_TELEM_BARO, buf, n);
+}
+
+void telemetry_send_mag_sbc(const app_ctx_t *ctx)
+{
+    telem_mag_t m;
+    telemetry_collect_mag(ctx, &m);
+    uint8_t buf[TELEM_MAG_LEN];
+    uint8_t n = encode_mag(&m, buf);
+    sbc_send_frame(PKT_TELEM_MAG, buf, n);
+}
+
 // Gimbal sensor attribultes and request scheduling
 typedef struct {
     uint16_t attr_id;           // HAMFLY_ATTR_SYSSTAT, etc.
@@ -228,8 +349,9 @@ typedef struct {
 
 static attr_sched_t s_attrs[] = {
     { HAMFLY_ATTR_SYSSTAT, 5000u, 0u },  //  POWER + ENV
-    //  { HAMFLY_ATTR_BARO,    5000u, 0u },  //  BARO
-    //  { HAMFLY_ATTR_GPS,     5000u, 0u },  //  GPS
+    { HAMFLY_ATTR_GPS,     5000u, 0u },  //  GPS
+    { HAMFLY_ATTR_BARO,    5000u, 0u },  //  BARO
+    { HAMFLY_ATTR_MAG,     5000u, 0u },  //  MAG
     //  ... examples (magnetometer! IMU? etc).
 };
 #define N_ATTRS (sizeof s_attrs / sizeof s_attrs[0])

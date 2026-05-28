@@ -295,6 +295,9 @@ void app_telem_tick(app_ctx_t *ctx)
         telemetry_send_link_sbc(ctx);
         telemetry_send_power_sbc(ctx);
         telemetry_send_env_sbc(ctx);
+        telemetry_send_gps_sbc(ctx);
+        telemetry_send_baro_sbc(ctx);
+        telemetry_send_mag_sbc(ctx);
     }
 }
 
