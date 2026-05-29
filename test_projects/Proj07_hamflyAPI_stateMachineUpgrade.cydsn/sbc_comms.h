@@ -47,12 +47,29 @@
     
 #define PKT_STATE_ACK   0x30u  // PSoC -> Pi
     
-
+// Incoming packet types from SBC
 typedef struct {
     uint32_t t_ms;          // Pi monotonic ms
     int16_t  cx, cy;        // 0.1 mrad
     uint16_t cxerr, cyerr;  // one sigma stdev, 0 = undef
 } payload_centroid_t;
+
+#define SBC_STATE_REQ_LEN   1u     // single byte: state_t value
+typedef struct {
+    uint8_t requested_state;       // state_t value — SBC must use the same enum
+} payload_state_req_t;
+
+#define SBC_GPS_TARGET_LEN  12u    // 3x int32
+typedef struct {
+    int32_t lat_raw;               // /1e7 deg
+    int32_t lon_raw;
+    int32_t alt_mm;                // mm above MSL
+} payload_gps_target_t;
+
+// Response codes for state change
+#define STATE_ACK_OK        0x00u  // transition accepted
+#define STATE_ACK_REJECTED  0x01u  // FATAL latch active
+#define STATE_ACK_INVALID   0x02u  // state value not a requestable leaf
 
 void     sbc_init(void);
 void     sbc_on_rx_byte(uint8_t b);             // fed by isr_rx_sbc_Handler
@@ -65,6 +82,11 @@ uint16_t sbc_unknown_magic(void);
 uint32_t sbc_rx_pkt_count(void);
 uint16_t sbc_last_centroid_dt_ms(uint8_t stream);
 void     sbc_send_frame(uint8_t type, const uint8_t *payload, uint8_t len);
+
+uint8_t sbc_get_state_req (payload_state_req_t  *out);  // 1 if a new request arrived
+uint8_t sbc_get_gps_target(payload_gps_target_t *out);  // 1 if a new target arrived
+void    sbc_send_state_ack(uint8_t actual_state, uint8_t result);
+
 
 #endif /* SBC_COMMS_H */
 /* [] END OF FILE */

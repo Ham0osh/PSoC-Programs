@@ -28,7 +28,12 @@ void app_ctx_init(app_ctx_t *ctx)
     ctx->origin_set    = 1u;          // Origin initialy 0,0.
     ctx->sense         = SENSE_MED;
     ctx->diag_active   = 1u;
-    /* origin_set, fatal_latched, err_msg already 0/NULL from memset */
+    ctx->gps_target_set  = 0u;  // TODO: Refactor shared app_ctx and debloat gps params.
+    ctx->gps_new_target  = 0u;
+    ctx->gps_settled     = 0u;
+    ctx->track_kp        = TRACK_KP_DEFAULT;
+    ctx->track_cx_last   = 0;
+    ctx->track_cy_last   = 0;
 }
 
 /* [] END OF FILE */

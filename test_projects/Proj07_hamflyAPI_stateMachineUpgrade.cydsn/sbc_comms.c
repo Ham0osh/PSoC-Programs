@@ -83,6 +83,12 @@ static uint16_t s_crc_err             = 0u;  // inter-device communications.
 static uint16_t s_uart_err            = 0u;
 static uint16_t s_unknown_magic       = 0u;
 static uint32_t s_rx_pkt_count        = 0u;
+// SBC -> PSoC State Requests
+static payload_state_req_t  s_state_req;
+static volatile uint8_t     s_state_req_fresh  = 0u;
+// SBC -> PSoC GPS Target Sets
+static payload_gps_target_t s_gps_target;
+static volatile uint8_t     s_gps_target_fresh = 0u;
 
 void sbc_init(void)
 {
@@ -99,6 +105,10 @@ void sbc_init(void)
         s_last_rx_ms[i]          = 0u;
         s_last_centroid_dt_ms[i] = 0u;
     }
+    // Init state change status
+    s_state_req_fresh  = 0u;
+    // Init gps setter status
+    s_gps_target_fresh = 0u;
 }
 
 static void decode_centroid(uint8_t stream, const uint8_t *p)
@@ -179,6 +189,20 @@ void sbc_on_rx_byte(uint8_t b)
                     case PKT_CENTROID_F:
                         if (s_len == SBC_CENTROID_LEN){
                             decode_centroid(STREAM_FINE,   s_buf);
+                        }
+                        break;
+                    case PKT_STATE_REQ:
+                        if (s_len == SBC_STATE_REQ_LEN) {
+                            s_state_req.requested_state = s_buf[0];
+                            s_state_req_fresh = 1u;
+                        }
+                        break;
+                    case PKT_GPS_TARGET:
+                        if (s_len == SBC_GPS_TARGET_LEN) {
+                            memcpy(&s_gps_target.lat_raw, s_buf + 0, 4);
+                            memcpy(&s_gps_target.lon_raw, s_buf + 4, 4);
+                            memcpy(&s_gps_target.alt_mm,  s_buf + 8, 4);
+                            s_gps_target_fresh = 1u;
                         }
                         break;
                     default:
@@ -267,6 +291,38 @@ void sbc_send_frame(uint8_t type, const uint8_t *payload, uint8_t len)
         crc = crc8_table[crc ^ payload[i]];
     }
     UART_SBC_PutChar(crc);       // Put calculates CRC
+}
+
+uint8_t sbc_get_state_req(payload_state_req_t *out)
+{
+    uint8_t got = 0u;
+    uint8_t ist = CyEnterCriticalSection();
+    if (s_state_req_fresh) {
+        *out = s_state_req;
+        s_state_req_fresh = 0u;
+        got = 1u;
+    }
+    CyExitCriticalSection(ist);
+    return got;
+}
+
+uint8_t sbc_get_gps_target(payload_gps_target_t *out)
+{
+    uint8_t got = 0u;
+    uint8_t ist = CyEnterCriticalSection();
+    if (s_gps_target_fresh) {
+        *out = s_gps_target;
+        s_gps_target_fresh = 0u;
+        got = 1u;
+    }
+    CyExitCriticalSection(ist);
+    return got;
+}
+
+void sbc_send_state_ack(uint8_t actual_state, uint8_t result)
+{
+    uint8_t payload[2] = { actual_state, result };
+    sbc_send_frame(PKT_STATE_ACK, payload, sizeof payload);
 }
 
 /* [] END OF FILE */

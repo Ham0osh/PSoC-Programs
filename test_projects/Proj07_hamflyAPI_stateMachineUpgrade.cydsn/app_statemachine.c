@@ -16,10 +16,15 @@
  * HFSM engine: parent table, LCA walk, transition driver, error raiser.
  *
  *   ROOT
- *   ├─ STBY ── STBY_DEFER (boot)   STBY_HOLD
- *   ├─ MANU ── MANU_JOYSTICK       MANU_NUDGE*
- *   ├─ AUTO ── AUTO_HOME*  ACQ_GPS*  ACQ_SPIRAL*
- *   │          TRACKING*   LOSS*     NO_LOCK*
+ *   ├─ STBY ── STBY_DEFER (boot)
+ *   ├       ── STBY_HOLD
+ *   ├─ MANU ── MANU_JOYSTICK
+ *   ├─ AUTO ── AUTO_HOME*
+ *   ├       ── ACQ_GPS*
+ *   ├       ── ACQ_SPIRAL*
+ *   ├       ── TRACKING*
+ *   ├       ── LOSS*
+ *   ├       ── NO_LOCK*
  *   └─ ERROR ─ ERROR_ACTIVE
  * 
  *      * = declared, not yet implemented
@@ -84,26 +89,47 @@ typedef uint8_t (*key_fn_t)  (app_ctx_t *, char);  // Input handlers
 typedef void    (*build_fn_t)(const app_ctx_t *, hamfly_control_t *); //Packet
 
 // Entry handlers
-static void entry_stby_defer   (app_ctx_t *);
-static void entry_stby_hold    (app_ctx_t *);
-static void entry_manu_joystick(app_ctx_t *);
-static void entry_error_active (app_ctx_t *);
-
-static void entry_auto_test(app_ctx_t *ctx);
+static void entry_stby_defer    (app_ctx_t *);
+static void entry_stby_hold     (app_ctx_t *);
+static void entry_manu_joystick (app_ctx_t *);
+static void entry_auto_home     (app_ctx_t *);
+static void entry_auto_acq_gps  (app_ctx_t *);
+static void entry_auto_acq_spiral(app_ctx_t *);
+static void entry_auto_tracking (app_ctx_t *);
+static void entry_auto_loss     (app_ctx_t *);
+static void entry_auto_no_lock  (app_ctx_t *);
+static void entry_error_active  (app_ctx_t *);
 
 // Exit handlers
-static void exit_manu_joystick (app_ctx_t *);
+static void exit_manu_joystick  (app_ctx_t *);
+static void exit_auto_home      (app_ctx_t *);
+static void exit_auto_acq_gps   (app_ctx_t *);
 
 // Key handlers
 static uint8_t key_manu_joystick(app_ctx_t *, char);
+static uint8_t key_auto_home    (app_ctx_t *, char);
+static uint8_t key_auto_acq_gps (app_ctx_t *, char);
+static uint8_t key_auto_tracking(app_ctx_t *, char);
+static uint8_t key_auto_loss    (app_ctx_t *, char);
+static uint8_t key_auto_no_lock (app_ctx_t *, char);
 static uint8_t key_error_active (app_ctx_t *, char);
 
 // Packet building handlers
-static void build_zero         (const app_ctx_t *, hamfly_control_t *);
-static void build_stby         (const app_ctx_t *, hamfly_control_t *);
-static void build_manu_joystick(const app_ctx_t *, hamfly_control_t *);
-static void build_error        (const app_ctx_t *, hamfly_control_t *);
-// AUTO_* and MANU_NUDGE: NULL in the tables until implemented
+static void build_zero          (const app_ctx_t *, hamfly_control_t *);
+static void build_stby          (const app_ctx_t *, hamfly_control_t *);
+static void build_manu_joystick (const app_ctx_t *, hamfly_control_t *);
+static void build_auto_home     (const app_ctx_t *, hamfly_control_t *);
+static void build_auto_acq_gps  (const app_ctx_t *, hamfly_control_t *);
+static void build_auto_tracking (const app_ctx_t *, hamfly_control_t *);
+static void build_error         (const app_ctx_t *, hamfly_control_t *);
+
+// GPS vector math + slew helpers (internal)
+static float gps_bearing_deg (float lat1, float lon1, float lat2, float lon2);
+static float gps_elev_deg    (float lat1, float lon1, float alt1_m,
+                              float lat2, float lon2, float alt2_m);
+static void  gps_start_slew    (app_ctx_t *);
+static void  gps_update_pointing(app_ctx_t *);
+static void  gps_check_settle  (app_ctx_t *);
 
 static const state_fn_t on_entry[STATE_COUNT] = {
     [STBY]            = NULL,   /* parent: shared STBY entry, if ever needed */
@@ -113,12 +139,12 @@ static const state_fn_t on_entry[STATE_COUNT] = {
     [STBY_DEFER]      = entry_stby_defer,
     [STBY_HOLD]       = entry_stby_hold,
     [MANU_JOYSTICK]   = entry_manu_joystick,
-    [AUTO_HOME]       = NULL,   /* TODO */
-    [AUTO_ACQ_GPS]    = NULL,   /* TODO */
-    [AUTO_ACQ_SPIRAL] = NULL,   /* TODO */
-    [AUTO_TRACKING]   = entry_auto_test,  // Temp for testing
-    [AUTO_LOSS]       = NULL,   /* TODO */
-    [AUTO_NO_LOCK]    = NULL,   /* TODO */
+    [AUTO_HOME]       = entry_auto_home,
+    [AUTO_ACQ_GPS]    = entry_auto_acq_gps,
+    [AUTO_ACQ_SPIRAL] = entry_auto_acq_spiral,
+    [AUTO_TRACKING]   = entry_auto_tracking,
+    [AUTO_LOSS]       = entry_auto_loss,
+    [AUTO_NO_LOCK]    = entry_auto_no_lock,
     [ERROR_ACTIVE]    = entry_error_active,
 };
 
@@ -130,10 +156,10 @@ static const state_fn_t on_exit[STATE_COUNT] = {
     [STBY_DEFER]      = NULL,
     [STBY_HOLD]       = NULL,
     [MANU_JOYSTICK]   = exit_manu_joystick,
-    [AUTO_HOME]       = NULL,   /* TODO */
-    [AUTO_ACQ_GPS]    = NULL,   /* TODO */
+    [AUTO_HOME]       = exit_auto_home,
+    [AUTO_ACQ_GPS]    = exit_auto_acq_gps,
     [AUTO_ACQ_SPIRAL] = NULL,   /* TODO */
-    [AUTO_TRACKING]   = NULL ,  
+    [AUTO_TRACKING]   = NULL,  
     [AUTO_LOSS]       = NULL,   /* TODO */
     [AUTO_NO_LOCK]    = NULL,   /* TODO */
     [ERROR_ACTIVE]    = NULL,
@@ -143,12 +169,12 @@ static const key_fn_t on_key[STATE_COUNT] = {
     [STBY_DEFER]      = NULL,
     [STBY_HOLD]       = NULL,
     [MANU_JOYSTICK]   = key_manu_joystick,
-    [AUTO_HOME]       = NULL,   /* TODO */
-    [AUTO_ACQ_GPS]    = NULL,   /* TODO */
+    [AUTO_HOME]       = key_auto_home,
+    [AUTO_ACQ_GPS]    = key_auto_acq_gps,
     [AUTO_ACQ_SPIRAL] = NULL,   /* TODO */
-    [AUTO_TRACKING]   = NULL,   /* TODO */
-    [AUTO_LOSS]       = NULL,   /* TODO */
-    [AUTO_NO_LOCK]    = NULL,   /* TODO */
+    [AUTO_TRACKING]   = key_auto_tracking,
+    [AUTO_LOSS]       = key_auto_loss,
+    [AUTO_NO_LOCK]    = key_auto_no_lock,
     [ERROR_ACTIVE]    = key_error_active,
 };
 
@@ -156,12 +182,12 @@ static const build_fn_t on_build[STATE_COUNT] = {
     [STBY_DEFER]      = build_stby,
     [STBY_HOLD]       = build_stby,
     [MANU_JOYSTICK]   = build_manu_joystick,
-    [AUTO_HOME]       = NULL,   /* TODO */
-    [AUTO_ACQ_GPS]    = NULL,   /* TODO */
-    [AUTO_ACQ_SPIRAL] = NULL,   /* TODO */
-    [AUTO_TRACKING]   = build_zero,  // Temp for testing.
-    [AUTO_LOSS]       = NULL,   /* TODO */
-    [AUTO_NO_LOCK]    = NULL,   /* TODO */
+    [AUTO_HOME]       = build_auto_home,
+    [AUTO_ACQ_GPS]    = build_auto_acq_gps,
+    [AUTO_ACQ_SPIRAL] = build_stby,          /* placeholder: zero rates, hold */
+    [AUTO_TRACKING]   = build_auto_tracking,
+    [AUTO_LOSS]       = build_stby,          /* placeholder: hold position */
+    [AUTO_NO_LOCK]    = build_stby,          /* placeholder: hold position */
     [ERROR_ACTIVE]    = build_error,
 };
 
@@ -182,6 +208,76 @@ static state_t lca(state_t a, state_t b)
     while (db > da) { b = parent_of[b]; db--; }
     while (a != b)  { a = parent_of[a]; b = parent_of[b]; }
     return a;
+}
+
+// GPS Helper Functions %========================================================%
+// Snap the active target into the working copy and reset the slew.
+static void gps_start_slew(app_ctx_t *ctx)
+{
+    ctx->gps_work_lat_raw = ctx->gps_target_lat_raw;
+    ctx->gps_work_lon_raw = ctx->gps_target_lon_raw;
+    ctx->gps_work_alt_mm  = ctx->gps_target_alt_mm;
+    ctx->gps_settled      = 0u;
+    ctx->gps_new_target   = 0u;
+}
+
+// Recompute abs_pan/tilt from the working copy + live gimbal GPS.
+// Called on entry and at 1 Hz while running.
+static void gps_update_pointing(app_ctx_t *ctx)
+{
+    hamfly_telemetry_t st;
+    hamfly_get_telemetry(ctx->gimbal, &st);
+    if (!st.gps_valid) return;
+    float tlat = (float)ctx->gps_work_lat_raw * 1e-7f;
+    float tlon = (float)ctx->gps_work_lon_raw * 1e-7f;
+    float talt = (float)ctx->gps_work_alt_mm  * 0.001f;
+    ctx->abs_pan_target  = DEG_TO_UNIT(
+        gps_bearing_deg(st.gps_lat_deg, st.gps_lon_deg, tlat, tlon) - st.gps_heading_deg);
+    ctx->abs_tilt_target = DEG_TO_UNIT(
+        gps_elev_deg(st.gps_lat_deg, st.gps_lon_deg, st.gps_alt_m, tlat, tlon, talt));
+}
+
+// Settle gate — self-throttled to GPS_SETTLE_PERIOD_MS.
+// Promotes a new target (via gps_new_target flag) the moment we arrive AND are slow,
+// or immediately if we're already sitting still.
+static void gps_check_settle(app_ctx_t *ctx)
+{
+    uint32_t now = g_tick_ms;
+    if (now - ctx->gps_last_sample_ms < GPS_SETTLE_PERIOD_MS) return;
+
+    float pan, tilt;
+    if (!manu_pan_tilt_deg(ctx, &pan, &tilt)) return;
+
+    float speed_dps = 1.0e9f;
+    if (ctx->gps_last_sample_ms != 0u) {
+        float dt = (float)(now - ctx->gps_last_sample_ms) * 0.001f;
+        if (dt > 0.0f)
+            speed_dps = (fabsf(pan  - ctx->gps_last_pan_deg) +
+                         fabsf(tilt - ctx->gps_last_tilt_deg)) / dt;
+    }
+    ctx->gps_last_pan_deg   = pan;
+    ctx->gps_last_tilt_deg  = tilt;
+    ctx->gps_last_sample_ms = now;
+
+    float cmd_pan_deg  = UNIT_TO_DEG(ctx->abs_pan_target);
+    float cmd_tilt_deg = UNIT_TO_DEG(ctx->abs_tilt_target);
+    uint8_t arrived = (fabsf(pan  - cmd_pan_deg)  < GPS_POINT_SETTLE_DEG) &&
+                      (fabsf(tilt - cmd_tilt_deg) < GPS_POINT_SETTLE_DEG);
+    uint8_t slow    = (speed_dps < GPS_RATE_SETTLE_DPS);
+
+    // Pick up a new target at the first moment we're arrived+slow,
+    // whether we were already sitting still or just finished a slew.
+    if (ctx->gps_new_target && (ctx->gps_settled || (arrived && slow))) {
+        UART_DEBUG_PutString("[AUTO_ACQ_GPS] new target -> re-slew\r\n");
+        gps_start_slew(ctx);   // copies target->work, clears flag + settled
+        gps_update_pointing(ctx);
+        return;
+    }
+
+    if (!ctx->gps_settled && arrived && slow) {
+        ctx->gps_settled = 1u;
+        UART_DEBUG_PutString("[AUTO_ACQ_GPS] settled\r\n");
+    }
 }
 
 // Transition driver %========================================================%
@@ -373,6 +469,177 @@ void app_auto_tick(app_ctx_t *ctx)
     }
 }
 
+// AUTO_HOME %================================================================%
+static void entry_auto_home(app_ctx_t *ctx)
+{
+    UART_DEBUG_PutString("\r\n[AUTO_HOME] slewing to origin  e=exit\r\n> ");
+    if (!ctx->origin_set) {
+        app_raise_error(ctx, SEV_USER, "no origin set (press '[' first)");
+        transition(ctx, STBY_HOLD);
+        return;
+    }
+    float pan, tilt;
+    if (!manu_pan_tilt_deg(ctx, &pan, &tilt)) {
+        app_raise_error(ctx, SEV_USER, "no telemetry (home aborted)");
+        transition(ctx, STBY_HOLD);
+        return;
+    }
+    ctx->nudge_base_pan_deg  = pan;
+    ctx->nudge_base_tilt_deg = tilt;
+    ctx->tgt_pan_deg         = ctx->origin_pan_deg;
+    ctx->tgt_tilt_deg        = ctx->origin_tilt_deg;
+    ctx->nudge_hold          = 1u;
+    ctx->nudge_start_ms      = g_tick_ms;
+}
+static void exit_auto_home(app_ctx_t *ctx) { ctx->nudge_hold = 0u; }
+
+static uint8_t key_auto_home(app_ctx_t *ctx, char k)
+{
+    switch (k) {
+        case 'e': transition(ctx, STBY_HOLD); return 1;
+        default:  return 0;
+    }
+}
+
+static void build_auto_home(const app_ctx_t *ctx, hamfly_control_t *out)
+{
+    out->enable    = 1u;
+    out->kill      = 0u;
+    out->roll_mode = HAMFLY_DEFER;
+    out->roll      = 0.0f;
+    out->pan_mode  = out->tilt_mode = HAMFLY_ABSOLUTE;
+    out->pan  = DEG_TO_UNIT(ctx->tgt_pan_deg - ctx->nudge_base_pan_deg);
+    out->tilt = DEG_TO_UNIT(ctx->tgt_tilt_deg);
+}
+
+// AUTO_GPS %=================================================================%
+// All float trig; PSoC 5 LP has no HW FPU, so callers run these at most 1 Hz.
+static float gps_bearing_deg(float lat1, float lon1, float lat2, float lon2)
+{
+    float la1 = lat1 * DEG_TO_RAD, la2 = lat2 * DEG_TO_RAD;
+    float dlo = (lon2 - lon1) * DEG_TO_RAD;
+    float x   = sinf(dlo) * cosf(la2);
+    float y   = cosf(la1) * sinf(la2) - sinf(la1) * cosf(la2) * cosf(dlo);
+    float b   = atan2f(x, y) * RAD_TO_DEG;
+    if (b < 0.0f) b += 360.0f;
+    return b;  // 0 = North, clockwise
+}
+static float gps_elev_deg(float lat1, float lon1, float alt1_m,
+                          float lat2, float lon2, float alt2_m)
+{
+    float la1 = lat1 * DEG_TO_RAD, la2 = lat2 * DEG_TO_RAD;
+    float dlo = (lon2 - lon1) * DEG_TO_RAD;
+    float dla = la2 - la1;
+    float a   = sinf(dla * 0.5f) * sinf(dla * 0.5f)
+              + cosf(la1) * cosf(la2) * sinf(dlo * 0.5f) * sinf(dlo * 0.5f);
+    float dist_m = 2.0f * GPS_EARTH_R_M * atan2f(sqrtf(a), sqrtf(1.0f - a));
+    if (dist_m < 1.0f) dist_m = 1.0f;  // guard div/0 at zero range
+    return atan2f(alt2_m - alt1_m, dist_m) * RAD_TO_DEG;
+}
+
+// Snap the active target into the working copy and reset the slew.
+static void gps_start_slew(app_ctx_t *ctx)
+{
+    ctx->gps_work_lat_raw = ctx->gps_target_lat_raw;
+    ctx->gps_work_lon_raw = ctx->gps_target_lon_raw;
+    ctx->gps_work_alt_mm  = ctx->gps_target_alt_mm;
+    ctx->gps_settled      = 0u;
+    ctx->gps_new_target   = 0u;
+}
+
+// Recompute abs_pan/tilt setpoints from the working copy + live gimbal GPS.
+static void gps_update_pointing(app_ctx_t *ctx)
+{
+    hamfly_telemetry_t st;
+    hamfly_get_telemetry(ctx->gimbal, &st);
+    if (!st.gps_valid) return;
+    float tlat = (float)ctx->gps_work_lat_raw * 1e-7f;
+    float tlon = (float)ctx->gps_work_lon_raw * 1e-7f;
+    float talt = (float)ctx->gps_work_alt_mm  * 0.001f;
+    ctx->abs_pan_target  = DEG_TO_UNIT(
+        gps_bearing_deg(st.gps_lat_deg, st.gps_lon_deg, tlat, tlon) - st.gps_heading_deg);
+    ctx->abs_tilt_target = DEG_TO_UNIT(
+        gps_elev_deg(st.gps_lat_deg, st.gps_lon_deg, st.gps_alt_m, tlat, tlon, talt));
+}
+
+static void gps_check_settle(app_ctx_t *ctx)
+{
+    uint32_t now = g_tick_ms;
+    if (now - ctx->gps_last_sample_ms < GPS_SETTLE_PERIOD_MS) return;
+
+    float pan, tilt;
+    if (!manu_pan_tilt_deg(ctx, &pan, &tilt)) return;  // no telemetry -> can't judge
+
+    float speed_dps = 1.0e9f;   // assume moving until we have a valid dt
+    if (ctx->gps_last_sample_ms != 0u) {
+        float dt = (float)(now - ctx->gps_last_sample_ms) * 0.001f;
+        if (dt > 0.0f)
+            speed_dps = (fabsf(pan  - ctx->gps_last_pan_deg) +
+                         fabsf(tilt - ctx->gps_last_tilt_deg)) / dt;
+    }
+    ctx->gps_last_pan_deg   = pan;
+    ctx->gps_last_tilt_deg  = tilt;
+    ctx->gps_last_sample_ms = now;
+
+    /* Frame assumption: measured euler pan/tilt share the gimbal's ABSOLUTE
+       command reference. Validate on hardware; if frames differ, the low-speed
+       gate still gives a usable settle proxy. */
+    float cmd_pan_deg  = UNIT_TO_DEG(ctx->abs_pan_target);
+    float cmd_tilt_deg = UNIT_TO_DEG(ctx->abs_tilt_target);
+    uint8_t arrived = (fabsf(pan  - cmd_pan_deg)  < GPS_POINT_SETTLE_DEG) &&
+                      (fabsf(tilt - cmd_tilt_deg) < GPS_POINT_SETTLE_DEG);
+    uint8_t slow    = (speed_dps < GPS_RATE_SETTLE_DPS);
+
+    if (ctx->gps_new_target && (ctx->gps_settled || (arrived && slow))) {
+        UART_DEBUG_PutString("[AUTO_ACQ_GPS] new target -> re-slew\r\n");
+        gps_start_slew(ctx);        // copies target->work, clears flag + settled
+        gps_update_pointing(ctx);
+        return;
+    }
+    if (!ctx->gps_settled && arrived && slow) {
+        ctx->gps_settled = 1u;
+        UART_DEBUG_PutString("[AUTO_ACQ_GPS] settled\r\n");
+    }
+}
+
+static void entry_auto_acq_gps(app_ctx_t *ctx)
+{
+    if (!ctx->gps_target_set) {
+        UART_DEBUG_PutString("\r\n[AUTO_ACQ_GPS] no GPS target -> STBY_HOLD\r\n");
+        transition(ctx, STBY_HOLD);
+        return;
+    }
+    UART_DEBUG_PutString("\r\n[AUTO_ACQ_GPS] open-loop GPS pointing  e=exit\r\n> ");
+    ctx->gps_last_sample_ms = 0u;
+    gps_start_slew(ctx);        // snap target -> work, start fresh
+    gps_update_pointing(ctx);   // initial bearing
+}
+static void exit_auto_acq_gps(app_ctx_t *ctx)
+{
+    ctx->abs_pan_target = ctx->abs_tilt_target = 0.0f;
+}
+static uint8_t key_auto_acq_gps(app_ctx_t *ctx, char k)
+{
+    switch (k) {
+        case 'e': transition(ctx, STBY_HOLD); return 1;
+        default:  return 0;
+    }
+}
+static void build_auto_acq_gps(const app_ctx_t *ctx, hamfly_control_t *out)
+{
+    out->enable    = 1u;
+    out->kill      = 0u;
+    out->roll_mode = HAMFLY_DEFER;
+    out->roll      = 0.0f;
+    out->pan_mode  = out->tilt_mode = HAMFLY_ABSOLUTE;
+    out->pan  = CLAMP(ctx->abs_pan_target,  -1.0f, 1.0f);
+    out->tilt = CLAMP(ctx->abs_tilt_target, -1.0f, 1.0f);
+}
+
+// AUTO_GPS %=================================================================%
+// TODO: Left off here
+
+
 // %==========================================================================%
 // %                                 Error                                    %
 // %==========================================================================%
@@ -465,8 +732,15 @@ static uint8_t handle_global_key(app_ctx_t *ctx, char k)
 }
 
 /* ---- navigation keys (suppressed in trapping leaves) ------------------ */
-static uint8_t leaf_traps_nav(state_t s) { return (s == MANU_JOYSTICK); }
-
+static uint8_t leaf_traps_nav(state_t s)
+{
+    /* Active control states swallow nav keys; loss/no-lock allow user escape. */
+    return (s == MANU_JOYSTICK   ||
+            s == AUTO_HOME       ||
+            s == AUTO_ACQ_GPS    ||
+            s == AUTO_ACQ_SPIRAL ||
+            s == AUTO_TRACKING);
+}
 static uint8_t handle_nav_key(app_ctx_t *ctx, char k)
 {
     switch (k) {

@@ -88,6 +88,31 @@ typedef struct {
     float    abs_pan_target;  // units [-1, +1]
     float    abs_tilt_target;
     
+    // GPS Pointing target
+    // Written by app_sbc_tick any time.
+    // Read only by app_sbc_tick and AUTO_ACQ_GPS.
+    int32_t  gps_target_lat_raw;   // /1e7 deg
+    int32_t  gps_target_lon_raw;   // /1e7 deg
+    int32_t  gps_target_alt_mm;    // mm above MSL
+    uint8_t  gps_target_set;       // 1 once any target has been received
+    uint8_t  gps_new_target;       // 1 when a new target arrived during ACQ_GPS
+
+    // Working copy of coordinates to point at so we dont overwrite mid point.
+    int32_t  gps_work_lat_raw;
+    int32_t  gps_work_lon_raw;
+    int32_t  gps_work_alt_mm;
+
+    // Settle state (valid only while in AUTO_ACQ_GPS)
+    uint8_t  gps_settled;
+    float    gps_last_pan_deg;
+    float    gps_last_tilt_deg;
+    uint32_t gps_last_sample_ms;
+
+    // AUTO_TRACKING proportional control
+    float    track_kp;             // norm_rate per mrad, tune on hardware
+    int16_t  track_cx_last;
+    int16_t  track_cy_last;
+    
     // Origin (set by '[')
     float    origin_pan_deg;
     float    origin_tilt_deg;
@@ -120,12 +145,20 @@ void app_ctx_init(app_ctx_t *ctx);
 // Manual control macros
 #define DEG_TO_UNIT(d)   ((float)(d) / 180.0f)
 #define UNIT_TO_DEG(u)   ((float)(u) * 180.0f)
+#define DEG_TO_RAD            0.017453f
+#define RAD_TO_DEG            57.2958f
 #define CLAMP(v,lo,hi)   ((v)<(lo)?(lo):((v)>(hi)?(hi):(v)))
 #define LIMIT_PAN_MAX_DEG   30.0f
 #define LIMIT_PAN_MIN_DEG  -30.0f
 #define LIMIT_TILT_MAX_DEG  20.0f
 #define LIMIT_TILT_MIN_DEG -20.0f
 
+#define TRACK_KP_DEFAULT      0.001f    // norm_rate per mrad, tune on hardware
+
+#define GPS_EARTH_R_M         6371000.0f
+#define GPS_POINT_SETTLE_DEG  0.5f      // "arrived" tolerance for slew-done
+#define GPS_RATE_SETTLE_DPS   1.0f      // "slow" threshold for slew-done
+#define GPS_SETTLE_PERIOD_MS  50u       // settle-check / rate finite-diff cadence
 
 #endif /* APP_CTX_H */
 
