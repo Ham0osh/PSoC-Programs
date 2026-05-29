@@ -49,6 +49,7 @@
 #include "hamfly.h"
 #include "sbc_comms.h"
 #include "telemetry.h"
+#include "sbc_comms.h"
 #include <project.h>  // For UART
 #include <math.h>
 #include <string.h>
@@ -443,27 +444,56 @@ static void entry_auto_test(app_ctx_t *ctx)
     UART_DEBUG_PutString("\r\n[AUTO] listening for centroid frames from Pi\r\n");
 }
 
+// Auto has sub-modes: HOME, GPS, SPIRAL, TRACKING, LOSS, NO LOCK
 void app_auto_tick(app_ctx_t *ctx)
 {
-    // Check we are actualy in tracking
-    if (ctx->state != AUTO_TRACKING) return;
-    // Printing tag appropriate for the two hard coded centroiding input streams.
-    static const char *tag[STREAM_COUNTS] = { "C", "F" };
+    // %--- AUTO_HOME: settle then drop to STBY_HOLD ------------------------%
+    if (ctx->state == AUTO_HOME && ctx->nudge_hold) {
+        uint32_t elapsed = g_tick_ms - ctx->nudge_start_ms;
+        if (elapsed >= NUDGE_MIN_DWELL_MS) {
+            float p, t; uint8_t arrived = 0u;
+            if (manu_pan_tilt_deg(ctx, &p, &t))
+                arrived = (fabsf(p - ctx->tgt_pan_deg)  < NUDGE_SETTLE_DEG) &&
+                          (fabsf(t - ctx->tgt_tilt_deg) < NUDGE_SETTLE_DEG);
+            if (arrived || elapsed >= NUDGE_TIMEOUT_MS) {
+                UART_DEBUG_PutString("[AUTO_HOME] arrived -> STBY_HOLD\r\n");
+                transition(ctx, STBY_HOLD);  // -> STBY_HOLD
+            }
+        }
+        return;
+    }
 
-    // For each stream
-    // TEMP: Print debug of what has been received.
-    for (uint8_t s = 0u; s < STREAM_COUNTS; s++) {
-        payload_centroid_t c;
-        if (sbc_get_centroid(s, &c)) {
+    // %--- AUTO_ACQ_GPS: re-point at 1 Hz, settle check every loop ---------%
+    // TODO: GPS should go to the set coordinate and settle and stay there,
+    // waiting for centroid packets to arrive for N seconds (0 means wait forever).
+    // If no lock in N seconds, spiral, if lock go to tracking.
+    if (ctx->state == AUTO_ACQ_GPS) {
+        static uint32_t last_pt_ms = 0u;
+        if (g_tick_ms - last_pt_ms >= DIAG_PERIOD_MS) {
+            last_pt_ms = g_tick_ms;
+            if (ctx->gps_target_set) gps_update_pointing(ctx);
+        }
+        gps_check_settle(ctx);   // self-throttled to GPS_SETTLE_PERIOD_MS
+        return;
+    }
+
+    // %--- AUTO_TRACKING: pull freshest centroid into P-control state ------%
+    if (ctx->state == AUTO_TRACKING) {
+        static const char *tag[STREAM_COUNTS] = { "C", "F" };
+        for (uint8_t s = 0u; s < STREAM_COUNTS; s++) {
+            payload_centroid_t c;
+            if (!sbc_get_centroid(s, &c)) continue;
+            if (s == STREAM_COARSE) {  // Save coarse tracking centroids
+                ctx->track_cx_last = c.cx;
+                ctx->track_cy_last = c.cy;
+            }
             char b[128];
             snprintf(b, sizeof b,
-                     "[SBC:%s] t=%lu cx=%d cy=%d cxerr=%u cyerr=%u "
-                     "dt=%u rx=%lu unkMagic=%u crcErr=%u uartErr=%u\r\n",
-                     tag[s],
-                     (unsigned long)c.t_ms, c.cx, c.cy, c.cxerr, c.cyerr,
+                     "[SBC:%s] cx=%d cy=%d dt=%u rx=%lu crcErr=%u uartErr=%u\r\n",
+                     tag[s], c.cx, c.cy,
                      sbc_last_centroid_dt_ms(s),
                      (unsigned long)sbc_rx_pkt_count(),
-                     sbc_unknown_magic(), sbc_crc_errors(), sbc_uart_errors());
+                     sbc_crc_errors(), sbc_uart_errors());
             UART_DEBUG_PutString(b);
         }
     }
@@ -636,10 +666,73 @@ static void build_auto_acq_gps(const app_ctx_t *ctx, hamfly_control_t *out)
     out->tilt = CLAMP(ctx->abs_tilt_target, -1.0f, 1.0f);
 }
 
-// AUTO_GPS %=================================================================%
-// TODO: Left off here
+// AUTO_SPIRAL %=================================================================%
+static void entry_auto_acq_spiral(app_ctx_t *ctx)
+{
+    (void)ctx;
+    UART_DEBUG_PutString("\r\n[AUTO_ACQ_SPIRAL] placeholder (NI).\r\n> ");
+}
 
+// AUTO_TRACKING %=================================================================%
+static void entry_auto_tracking(app_ctx_t *ctx)
+{
+    ctx->track_cx_last = 0;  // Clear last centroid value (TODO: Init wht the first centroid packet? Wait for centroid packet before we enter this state?)
+    ctx->track_cy_last = 0;
+    UART_DEBUG_PutString("\r\n[AUTO_TRACKING] closed-loop  e=exit\r\n> ");
+}
+static uint8_t key_auto_tracking(app_ctx_t *ctx, char k)
+{
+    // TEMP: Debug exit to hold with e over serial.
+    switch (k) {
+        case 'e': transition(ctx, STBY_HOLD); return 1;
+        default:  return 0;
+    }
+}
 
+static void build_auto_tracking(const app_ctx_t *ctx, hamfly_control_t *out)
+{
+    // Construct control packet from centroid error signal.
+    out->enable    = 1u;  // Update these if not already set.
+    out->kill      = 0u;
+    out->roll_mode = HAMFLY_DEFER;  // No roll
+    out->roll      = 0.0f;
+    out->pan_mode  = out->tilt_mode = HAMFLY_RATE;
+    float cx_mrad = (float)ctx->track_cx_last * 0.1f;  // 0.1 mrad to mrad
+    float cy_mrad = (float)ctx->track_cy_last * 0.1f;
+    // Simple proportional gain linear feedback.
+    out->pan  =  CLAMP(ctx->track_kp * cx_mrad, -1.0f, 1.0f);  // TODO: Confirm direction with physical test
+    out->tilt = -CLAMP(ctx->track_kp * cy_mrad, -1.0f, 1.0f);  // +cy = up
+}
+
+// AUTO_LOSS %=================================================================%
+static void entry_auto_loss(app_ctx_t *ctx)
+{
+    // TODO: Loss should hold and wait. If packets re-commence we go back into tracking,
+    // TODO: Let user trigger spiral search, GPS re-aqc, or exit to STBY later.
+    (void)ctx;
+    UART_DEBUG_PutString("\r\n[AUTO_LOSS] centroid lost  1=hold  3=retry\r\n> ");
+}
+static uint8_t key_auto_loss(app_ctx_t *ctx, char k)
+{
+    switch (k) {  // Keep stationary, spiral search if requested.
+        case '3': transition(ctx, AUTO_ACQ_SPIRAL); return 1;
+        default:  return 0;
+    }
+}
+
+// AUTO_NO_LOCK %=================================================================%
+static void entry_auto_no_lock(app_ctx_t *ctx)
+{
+    (void)ctx;
+    UART_DEBUG_PutString("\r\n[AUTO_NO_LOCK] acquisition failed  1=hold  3=retry\r\n> ");
+}
+static uint8_t key_auto_no_lock(app_ctx_t *ctx, char k)
+{
+    switch (k) {
+        case '3': transition(ctx, AUTO_ACQ_SPIRAL); return 1;
+        default:  return 0;
+    }
+}
 // %==========================================================================%
 // %                                 Error                                    %
 // %==========================================================================%
@@ -897,4 +990,60 @@ void app_manual_tick(app_ctx_t *ctx)
                   (fabsf(t - ctx->tgt_tilt_deg) < NUDGE_SETTLE_DEG);
     if (arrived || elapsed >= NUDGE_TIMEOUT_MS)
         ctx->nudge_hold = 0u;                        /* rate=0 holds the new attitude */
+}
+
+// Helper - Validate state change request
+static uint8_t sbc_state_is_requestable(uint8_t s)
+{
+    // Not implemented.
+    switch ((state_t)s) {
+        case STBY_HOLD:
+        case MANU_JOYSTICK:
+        case AUTO_HOME:
+        case AUTO_ACQ_GPS:
+        case AUTO_ACQ_SPIRAL:
+        case AUTO_TRACKING:
+            return 1u;
+        default:
+            return 0u;
+    }
+}
+
+void app_sbc_tick(app_ctx_t *ctx)
+{
+    // 1) GPS target — always commit to ctx + flag. Run BEFORE the state req so
+    //    a "target then go" pair landing in one tick has the target ready when
+    //    entry_auto_acq_gps checks gps_target_set.
+    payload_gps_target_t tgt;
+    if (sbc_get_gps_target(&tgt)) {
+        ctx->gps_target_lat_raw = tgt.lat_raw;
+        ctx->gps_target_lon_raw = tgt.lon_raw;
+        ctx->gps_target_alt_mm  = tgt.alt_mm;
+        ctx->gps_target_set     = 1u;
+        ctx->gps_new_target     = 1u;   // ACQ_GPS picks this up on next settle
+    }
+
+    // 2) State change request
+    payload_state_req_t req;
+    if (!sbc_get_state_req(&req)) return;
+
+    if (ctx->fatal_latched) {
+        sbc_send_state_ack((uint8_t)ctx->state, STATE_ACK_REJECTED);
+        return;
+    }
+    if (!sbc_state_is_requestable(req.requested_state)) {
+        sbc_send_state_ack((uint8_t)ctx->state, STATE_ACK_INVALID);
+        char b[64];
+        snprintf(b, sizeof b, "[SBC] invalid state req=%u\r\n",
+                 (unsigned)req.requested_state);
+        UART_DEBUG_PutString(b);
+        return;
+    }
+
+    state_t target = (state_t)req.requested_state;
+    char b[64];
+    snprintf(b, sizeof b, "[SBC] state req -> %s\r\n", app_state_name(target));
+    UART_DEBUG_PutString(b);
+    transition(ctx, target);
+    sbc_send_state_ack((uint8_t)ctx->state, STATE_ACK_OK);
 }
