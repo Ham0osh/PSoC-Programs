@@ -33,6 +33,14 @@
 #define DIAG_PERIOD_MS        5000u  // 0.2 Hz diagnostic print
 #define QUERY_TIMEOUT_MS      2000u  // max wait for attr response in QUERY
 
+// TEMP: Nudge constants
+#define NUDGE_LSB_DEG     (180.0f/32767.0f)  /* ~0.00549°, one on-wire LSB */
+#define NUDGE_FINE_DEG    0.5f
+#define NUDGE_COARSE_DEG  1.0f
+#define NUDGE_SETTLE_DEG  0.05f   /* "arrived" tolerance */
+#define NUDGE_MIN_DWELL_MS 150u   /* hold long enough for the step to land */
+#define NUDGE_TIMEOUT_MS  2000u   /* give up if it never settles */
+    
 // HFSM states %==============================================================%
 // ROOT is a sentinel; STBY/MANU/AUTO/ERROR are parents (never set directly).
 // All other entries are leaves and ARE the only legal values of ctx.state.

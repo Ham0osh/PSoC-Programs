@@ -38,7 +38,7 @@ const char *app_state_name(state_t s);
 void app_manual_tick(app_ctx_t *ctx); // For nudge smoothing
 void app_auto_tick(app_ctx_t *ctx);   // Temp for debug prints
 void app_telem_tick(app_ctx_t *ctx);  // Handles Hot and Cold telemetry
-
+void app_sbc_tick(app_ctx_t *ctx);  // Handles SBC command and GPS target
 
 #endif /* APP_STATEMACHINE_H */
 /* [] END OF FILE */

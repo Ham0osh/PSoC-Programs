@@ -304,9 +304,11 @@ int main(void)
         // Always run on tick definition
         // These are by state but only run when in the given state
         // Per state logiv before making acontrol packet or telem etc.
-        app_manual_tick(&ctx);
-        app_auto_tick(&ctx);
-        app_telem_tick(&ctx);
+        app_manual_tick(&ctx);  // For MANU substates
+        app_auto_tick(&ctx);  // For AUTO substates
+        
+        app_telem_tick(&ctx);  // Telemetry getting and scheduling
+        app_sbc_tick(&ctx);  // SBC communications processing
         
         // At 'CONTROL_PERIOD_MS' build and send control packet
         // app_build_control handles the state of the state machine

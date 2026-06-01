@@ -132,6 +132,10 @@ static void  gps_start_slew    (app_ctx_t *);
 static void  gps_update_pointing(app_ctx_t *);
 static void  gps_check_settle  (app_ctx_t *);
 
+// Telemetry Helper
+// Telemetry helper (defined in the Key Handling section, used earlier by GPS)
+static uint8_t manu_pan_tilt_deg(const app_ctx_t *ctx, float *pan_deg, float *tilt_deg);
+
 static const state_fn_t on_entry[STATE_COUNT] = {
     [STBY]            = NULL,   /* parent: shared STBY entry, if ever needed */
     [MANU]            = NULL,   /* parent */
@@ -211,83 +215,11 @@ static state_t lca(state_t a, state_t b)
     return a;
 }
 
-// GPS Helper Functions %========================================================%
-// Snap the active target into the working copy and reset the slew.
-static void gps_start_slew(app_ctx_t *ctx)
-{
-    ctx->gps_work_lat_raw = ctx->gps_target_lat_raw;
-    ctx->gps_work_lon_raw = ctx->gps_target_lon_raw;
-    ctx->gps_work_alt_mm  = ctx->gps_target_alt_mm;
-    ctx->gps_settled      = 0u;
-    ctx->gps_new_target   = 0u;
-}
-
-// Recompute abs_pan/tilt from the working copy + live gimbal GPS.
-// Called on entry and at 1 Hz while running.
-static void gps_update_pointing(app_ctx_t *ctx)
-{
-    hamfly_telemetry_t st;
-    hamfly_get_telemetry(ctx->gimbal, &st);
-    if (!st.gps_valid) return;
-    float tlat = (float)ctx->gps_work_lat_raw * 1e-7f;
-    float tlon = (float)ctx->gps_work_lon_raw * 1e-7f;
-    float talt = (float)ctx->gps_work_alt_mm  * 0.001f;
-    ctx->abs_pan_target  = DEG_TO_UNIT(
-        gps_bearing_deg(st.gps_lat_deg, st.gps_lon_deg, tlat, tlon) - st.gps_heading_deg);
-    ctx->abs_tilt_target = DEG_TO_UNIT(
-        gps_elev_deg(st.gps_lat_deg, st.gps_lon_deg, st.gps_alt_m, tlat, tlon, talt));
-}
-
-// Settle gate — self-throttled to GPS_SETTLE_PERIOD_MS.
-// Promotes a new target (via gps_new_target flag) the moment we arrive AND are slow,
-// or immediately if we're already sitting still.
-static void gps_check_settle(app_ctx_t *ctx)
-{
-    uint32_t now = g_tick_ms;
-    if (now - ctx->gps_last_sample_ms < GPS_SETTLE_PERIOD_MS) return;
-
-    float pan, tilt;
-    if (!manu_pan_tilt_deg(ctx, &pan, &tilt)) return;
-
-    float speed_dps = 1.0e9f;
-    if (ctx->gps_last_sample_ms != 0u) {
-        float dt = (float)(now - ctx->gps_last_sample_ms) * 0.001f;
-        if (dt > 0.0f)
-            speed_dps = (fabsf(pan  - ctx->gps_last_pan_deg) +
-                         fabsf(tilt - ctx->gps_last_tilt_deg)) / dt;
-    }
-    ctx->gps_last_pan_deg   = pan;
-    ctx->gps_last_tilt_deg  = tilt;
-    ctx->gps_last_sample_ms = now;
-
-    float cmd_pan_deg  = UNIT_TO_DEG(ctx->abs_pan_target);
-    float cmd_tilt_deg = UNIT_TO_DEG(ctx->abs_tilt_target);
-    uint8_t arrived = (fabsf(pan  - cmd_pan_deg)  < GPS_POINT_SETTLE_DEG) &&
-                      (fabsf(tilt - cmd_tilt_deg) < GPS_POINT_SETTLE_DEG);
-    uint8_t slow    = (speed_dps < GPS_RATE_SETTLE_DPS);
-
-    // Pick up a new target at the first moment we're arrived+slow,
-    // whether we were already sitting still or just finished a slew.
-    if (ctx->gps_new_target && (ctx->gps_settled || (arrived && slow))) {
-        UART_DEBUG_PutString("[AUTO_ACQ_GPS] new target -> re-slew\r\n");
-        gps_start_slew(ctx);   // copies target->work, clears flag + settled
-        gps_update_pointing(ctx);
-        return;
-    }
-
-    if (!ctx->gps_settled && arrived && slow) {
-        ctx->gps_settled = 1u;
-        UART_DEBUG_PutString("[AUTO_ACQ_GPS] settled\r\n");
-    }
-}
-
 // Transition driver %========================================================%
 // Walk src up to LCA (running on_exit), then LCA down to target (running
 // on_entry). Self-transitions are a no-op. ROOT is the absorbing root, so
 // any pair has an LCA.
 
-// Transition workhorse %=====================================================%
-//
 static void transition(app_ctx_t *ctx, state_t target)
 {
     // Self transition handle.
@@ -923,13 +855,6 @@ void app_build_control(const app_ctx_t *ctx, hamfly_control_t *out)
     else    build_zero(ctx, out);  // Safe default.
 }
 
-// TEMP: Nudge constants
-#define NUDGE_LSB_DEG     (180.0f/32767.0f)  /* ~0.00549°, one on-wire LSB */
-#define NUDGE_FINE_DEG    0.5f
-#define NUDGE_COARSE_DEG  1.0f
-#define NUDGE_SETTLE_DEG  0.05f   /* "arrived" tolerance */
-#define NUDGE_MIN_DWELL_MS 150u   /* hold long enough for the step to land */
-#define NUDGE_TIMEOUT_MS  2000u   /* give up if it never settles */
 // TEMP: Nudge handler
 static void nudge_apply(app_ctx_t *ctx, float dpan_deg, float dtilt_deg)
 {
