@@ -132,23 +132,6 @@ static void decomp(float val, int16_t *i_out, int16_t *f_out, char *sign)
     if (*f_out < 0) *f_out = -*f_out;
 }
 
-/* Extract pan and tilt in degrees from current telemetry (no decomp). */
-uint8_t get_euler_deg(float *pan_deg_out, float *tilt_deg_out)
-{
-    hamfly_telemetry_t st;
-    hamfly_get_telemetry(&g_movi, &st);
-    if (!st.valid) return FALSE;
-    float r  = st.gimbal_r, ii = st.gimbal_i;
-    float j  = st.gimbal_j, k  = st.gimbal_k;
-    float sinp = 2.0f*(r*j-k*ii);
-    *tilt_deg_out = (sinp >= 1.0f) ?  90.0f :
-                    (sinp <=-1.0f) ? -90.0f :
-                    asinf(sinp) * 57.2958f;
-    float siny = 2.0f*(r*k+ii*j), cosy = 1.0f-2.0f*(j*j+k*k);
-    *pan_deg_out = atan2f(siny, cosy) * 57.2958f;
-    return TRUE;
-}
-
 // Joystick calibration printer
 static void cal_prompt(joy_cal_state_t prev, joy_cal_state_t now)
 {
@@ -325,8 +308,9 @@ int main(void)
             decomp(ctx.cmd.u[CH_X], &pi, &pf, &ps);
             decomp(ctx.cmd.u[CH_Y], &ti, &tf, &ts);
             snprintf(tx, sizeof tx,
-                     "[%lu] state=%s ctrl=%s pan=%c%d.%02d tilt=%c%d.%02d\r\n",
-                     (unsigned long)now, app_state_name(ctx.state), mode_str(ctx.ctrl_mode),
+                     "[%lu] state=%s pan=%c%d.%02d tilt=%c%d.%02d\r\n",
+                     (unsigned long)now,
+                     app_state_name(ctx.state),
                      ps, pi, pf, ts, ti, tf);
             UART_DEBUG_PutString(tx);
         }

@@ -60,7 +60,7 @@ void telemetry_collect_hot(const app_ctx_t *ctx, telem_hot_t *out)
     out->ctrl_mode_pan  = (uint8_t)ctl->pan_mode;
     out->ctrl_mode_tilt = (uint8_t)ctl->tilt_mode;
     out->ctrl_mode_roll = (uint8_t)ctl->roll_mode;
-    out->enable         = ctl->enable;
+    out->enable         = ctl->enable;  // TODO: Remove?
     out->kill           = ctl->kill;
     out->input_pan      = sat_i16(ctl->pan  * 100.0f);
     out->input_tilt     = sat_i16(ctl->tilt * 100.0f);
@@ -189,7 +189,7 @@ static uint8_t encode_hot(const telem_hot_t *h, uint8_t *buf)
     *p++ = h->ctrl_mode_pan;
     *p++ = h->ctrl_mode_tilt;
     *p++ = h->ctrl_mode_roll;
-    *p++ = h->enable;
+    *p++ = h->enable;  // TODO: Remove?
     *p++ = h->kill;
     memcpy(p, &h->input_pan,    2); p += 2;
     memcpy(p, &h->input_tilt,   2); p += 2;

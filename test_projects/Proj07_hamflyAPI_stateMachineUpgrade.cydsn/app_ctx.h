@@ -29,7 +29,7 @@
 #define CH_Y   1u
 
 // Timing constants
-#define CONTROL_PERIOD_MS     200u   // 5   Hz control TX
+#define CONTROL_PERIOD_MS     100u   // Must be faster than 5 Hz else gimble times out.
 #define DIAG_PERIOD_MS        5000u  // 0.2 Hz diagnostic print
 #define QUERY_TIMEOUT_MS      2000u  // max wait for attr response in QUERY
 
@@ -58,8 +58,8 @@ typedef enum {
     AUTO_TRACKING,                  // TODO: Closed loop tracking
     AUTO_LOSS, AUTO_NO_LOCK,        // No lock states.
     // ERROR leaf (one leaf, severity carried on ctx)
-    ERROR_ACTIVE,
-    STATE_COUNT
+    ERROR_ACTIVE,  // Has flag for error severity
+    STATE_COUNT  // THis is the value of the max state!
 } state_t;
 
 // Error severity %===========================================================%
@@ -85,14 +85,15 @@ typedef struct {
     state_t   prev_leaf;  // for return-to-last-state ergonomics
     
     // Error
-    err_sev_t err_sev;
+    err_sev_t   err_sev;
     const char *err_msg;  // string literal; lifetime = program
-    uint8_t    fatal_latched;  // 1 once FATAL fires, cleared only by ctrl+R
+    uint8_t     fatal_latched;  // 1 once FATAL fires, cleared only by ctrl+R
     
     // Control mode toggle, used for joystick.
-    hamfly_control_mode_t ctrl_mode;   // DEFER, RATE, ABSOLUTE
+    // Depricated, joystick always rate now.
+    // hamfly_control_mode_t ctrl_mode;   // DEFER, RATE, ABSOLUTE
     
-    // Absolute target (used by AUTO_HOME, future tracking integrators)
+    // Absolute target (used by AUTO_HOME, and eventualy GPS pointing too.)
     float    abs_pan_target;  // units [-1, +1]
     float    abs_tilt_target;
     
@@ -118,10 +119,12 @@ typedef struct {
 
     // AUTO_TRACKING proportional control
     float    track_kp;             // norm_rate per mrad, tune on hardware
+    // TODO: track_kd;
     int16_t  track_cx_last;
     int16_t  track_cy_last;
     
     // Origin (set by '[')
+    // Defines relative origin for software attitude limits.
     float    origin_pan_deg;
     float    origin_tilt_deg;
     uint8_t  origin_set;
@@ -138,14 +141,13 @@ typedef struct {
     uint32_t          invert_mask;
 
     // TEMP: Manual control vars
-    uint8_t nudge_hold;          /* 1 = streaming absolute target; 0 = joystick rate */
-    uint32_t nudge_start_ms;     /* episode start, for the release timeout */
-    float   nudge_base_pan_deg;  /* attitude captured at episode start */
-    float   nudge_base_tilt_deg;
-    float   tgt_pan_deg;         /* accumulated targets, MoVI frame degrees */
-    float   tgt_tilt_deg;
+    uint8_t  nudge_hold;          // 1 = streaming absolute target; 0 = joystick rate
+    uint32_t nudge_start_ms;      // episode start, for the release timeout
+    float    nudge_base_pan_deg;  // attitude captured at episode start
+    float    nudge_base_tilt_deg;
+    float    tgt_pan_deg;         // accumulated targets, MoVI frame degree
+    float    tgt_tilt_deg;
 
-    // TODO: Closed loop tracking vars.
 } app_ctx_t;
 
 void app_ctx_init(app_ctx_t *ctx);
@@ -156,6 +158,7 @@ void app_ctx_init(app_ctx_t *ctx);
 #define DEG_TO_RAD            0.017453f
 #define RAD_TO_DEG            57.2958f
 #define CLAMP(v,lo,hi)   ((v)<(lo)?(lo):((v)>(hi)?(hi):(v)))
+// Firmware limits relative to software origin
 #define LIMIT_PAN_MAX_DEG   30.0f
 #define LIMIT_PAN_MIN_DEG  -30.0f
 #define LIMIT_TILT_MAX_DEG  20.0f
@@ -163,6 +166,8 @@ void app_ctx_init(app_ctx_t *ctx);
 
 #define TRACK_KP_DEFAULT      0.001f    // norm_rate per mrad, tune on hardware
 
+// Todo: Update with relevant params for pointing when in Vancouver and in Waterloo.
+// Todo: Think about letting the GPS hand off early as long as speed is low enough, and centroids coming.
 #define GPS_EARTH_R_M         6371000.0f
 #define GPS_POINT_SETTLE_DEG  0.5f      // "arrived" tolerance for slew-done
 #define GPS_RATE_SETTLE_DPS   1.0f      // "slow" threshold for slew-done

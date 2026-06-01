@@ -22,15 +22,18 @@
 void app_ctx_init(app_ctx_t *ctx)
 {
     memset(ctx, 0, sizeof *ctx);
+    ctx->diag_active   = 1u;
+    // State context
     ctx->state         = STBY_DEFER;  // boot to defer
     ctx->prev_leaf     = STBY_DEFER;  // boot to defer
-    ctx->ctrl_mode     = HAMFLY_DEFER;
-    ctx->origin_set    = 1u;          // Origin initialy 0,0.
-    ctx->sense         = SENSE_MED;
-    ctx->diag_active   = 1u;
+    // Orientation context
+    ctx->origin_set      = 1u;          // Origin initialy 0,0.
     ctx->gps_target_set  = 0u;  // TODO: Refactor shared app_ctx and debloat gps params.
     ctx->gps_new_target  = 0u;
     ctx->gps_settled     = 0u;
+    // Sensitivity context
+    ctx->sense           = SENSE_MED;  // Manual joystick
+    // Tracking context
     ctx->track_kp        = TRACK_KP_DEFAULT;
     ctx->track_cx_last   = 0;
     ctx->track_cy_last   = 0;

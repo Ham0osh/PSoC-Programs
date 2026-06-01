@@ -132,9 +132,12 @@ static void  gps_start_slew    (app_ctx_t *);
 static void  gps_update_pointing(app_ctx_t *);
 static void  gps_check_settle  (app_ctx_t *);
 
-// Telemetry Helper
-// Telemetry helper (defined in the Key Handling section, used earlier by GPS)
-static uint8_t manu_pan_tilt_deg(const app_ctx_t *ctx, float *pan_deg, float *tilt_deg);
+// Telemetry Helpers
+
+// Gets the current pan and tilt as azm alt in degrees from latest gimble
+// status telemetry. Returns 1 on success, 0 on fail or stale. Read-only
+// helper.
+static uint8_t gimbal_pan_tilt_deg(const app_ctx_t *ctx, float *pan_deg, float *tilt_deg);
 
 static const state_fn_t on_entry[STATE_COUNT] = {
     [STBY]            = NULL,   /* parent: shared STBY entry, if ever needed */
@@ -356,26 +359,18 @@ static void entry_stby_hold(app_ctx_t *ctx)
 // On Enter: Enable joystick, print message.
 static void entry_manu_joystick(app_ctx_t *ctx)
 {
-    // Rate default
-    ctx->ctrl_mode = HAMFLY_RATE;
-     UART_DEBUG_PutString("\r\n[MANU] joystick=rate  nudge: numpad=fine  ijkl=0.5  wasd=1  e=exit\r\n> ");
+    (void)ctx;
+    UART_DEBUG_PutString("\r\n[MANU] joystick=rate  nudge: numpad=fine  ijkl=0.5 deg wasd=1 deg e=exit\r\n> ");
 }
 // On Exit: Disable joystick, zero control mode.
 static void exit_manu_joystick(app_ctx_t *ctx)
 {
-    ctx->ctrl_mode = HAMFLY_DEFER;
+    ctx->nudge_hold = 0u;  // Clean nudge if in progress.
 }
 
 // %==========================================================================%
 // %                                 Auto                                     %
 // %==========================================================================%
-// AUTO_TRACKING placeholder: prints centroid frames received from the Pi.
-static void entry_auto_test(app_ctx_t *ctx)
-{
-    (void)ctx;
-    UART_DEBUG_PutString("\r\n[AUTO] listening for centroid frames from Pi\r\n");
-}
-
 // Auto has sub-modes: HOME, GPS, SPIRAL, TRACKING, LOSS, NO LOCK
 void app_auto_tick(app_ctx_t *ctx)
 {
@@ -384,7 +379,7 @@ void app_auto_tick(app_ctx_t *ctx)
         uint32_t elapsed = g_tick_ms - ctx->nudge_start_ms;
         if (elapsed >= NUDGE_MIN_DWELL_MS) {
             float p, t; uint8_t arrived = 0u;
-            if (manu_pan_tilt_deg(ctx, &p, &t))
+            if (gimbal_pan_tilt_deg(ctx, &p, &t))
                 arrived = (fabsf(p - ctx->tgt_pan_deg)  < NUDGE_SETTLE_DEG) &&
                           (fabsf(t - ctx->tgt_tilt_deg) < NUDGE_SETTLE_DEG);
             if (arrived || elapsed >= NUDGE_TIMEOUT_MS) {
@@ -441,7 +436,7 @@ static void entry_auto_home(app_ctx_t *ctx)
         return;
     }
     float pan, tilt;
-    if (!manu_pan_tilt_deg(ctx, &pan, &tilt)) {
+    if (!gimbal_pan_tilt_deg(ctx, &pan, &tilt)) {
         app_raise_error(ctx, SEV_USER, "no telemetry (home aborted)");
         transition(ctx, STBY_HOLD);
         return;
@@ -465,7 +460,6 @@ static uint8_t key_auto_home(app_ctx_t *ctx, char k)
 
 static void build_auto_home(const app_ctx_t *ctx, hamfly_control_t *out)
 {
-    out->enable    = 1u;
     out->kill      = 0u;
     out->roll_mode = HAMFLY_DEFER;
     out->roll      = 0.0f;
@@ -530,7 +524,7 @@ static void gps_check_settle(app_ctx_t *ctx)
     if (now - ctx->gps_last_sample_ms < GPS_SETTLE_PERIOD_MS) return;
 
     float pan, tilt;
-    if (!manu_pan_tilt_deg(ctx, &pan, &tilt)) return;  // no telemetry -> can't judge
+    if (!gimbal_pan_tilt_deg(ctx, &pan, &tilt)) return;  // no telemetry -> can't judge
 
     float speed_dps = 1.0e9f;   // assume moving until we have a valid dt
     if (ctx->gps_last_sample_ms != 0u) {
@@ -589,7 +583,6 @@ static uint8_t key_auto_acq_gps(app_ctx_t *ctx, char k)
 }
 static void build_auto_acq_gps(const app_ctx_t *ctx, hamfly_control_t *out)
 {
-    out->enable    = 1u;
     out->kill      = 0u;
     out->roll_mode = HAMFLY_DEFER;
     out->roll      = 0.0f;
@@ -624,7 +617,6 @@ static uint8_t key_auto_tracking(app_ctx_t *ctx, char k)
 static void build_auto_tracking(const app_ctx_t *ctx, hamfly_control_t *out)
 {
     // Construct control packet from centroid error signal.
-    out->enable    = 1u;  // Update these if not already set.
     out->kill      = 0u;
     out->roll_mode = HAMFLY_DEFER;  // No roll
     out->roll      = 0.0f;
@@ -696,7 +688,7 @@ static void entry_error_active(app_ctx_t *ctx)
 // %==========================================================================%
 #define KEY_CTRL_R 0x12  // Reset ASCII code.
 
-static uint8_t manu_pan_tilt_deg(const app_ctx_t *ctx, float *pan_deg, float *tilt_deg)
+static uint8_t gimbal_pan_tilt_deg(const app_ctx_t *ctx, float *pan_deg, float *tilt_deg)
 {
     if (!ctx->gimbal) return 0u;
     hamfly_telemetry_t st;
@@ -712,7 +704,7 @@ static void set_origin(app_ctx_t *ctx)
     if (!ctx->gimbal) { app_raise_error(ctx, SEV_USER, "no gimbal handle"); return; }
 
     float pan, tilt;
-    if (!manu_pan_tilt_deg(ctx, &pan, &tilt)) {
+    if (!gimbal_pan_tilt_deg(ctx, &pan, &tilt)) {
         app_raise_error(ctx, SEV_USER, "no telemetry (origin not set)");
         return;
     }
@@ -823,7 +815,6 @@ static void build_stby(const app_ctx_t *ctx, hamfly_control_t *out) {
 
 // Build packet from joystick inputs.
 static void build_manu_joystick(const app_ctx_t *ctx, hamfly_control_t *out) {
-    out->enable    = 1u;
     out->roll_mode = HAMFLY_DEFER;
     out->roll      = 0.0f;
     out->kill      = 0u;
@@ -860,7 +851,7 @@ static void nudge_apply(app_ctx_t *ctx, float dpan_deg, float dtilt_deg)
 {
     if (!ctx->nudge_hold) {// Capture nudge baseline
         float p, t;
-        if (!manu_pan_tilt_deg(ctx, &p, &t)) {
+        if (!gimbal_pan_tilt_deg(ctx, &p, &t)) {
             app_raise_error(ctx, SEV_USER, "no telemetry (nudge ignored).");
             return;
         }
@@ -910,7 +901,7 @@ void app_manual_tick(app_ctx_t *ctx)
     if (elapsed < NUDGE_MIN_DWELL_MS) return;       /* let the step physically land */
 
     float p, t; uint8_t arrived = 0u;
-    if (manu_pan_tilt_deg(ctx, &p, &t))
+    if (gimbal_pan_tilt_deg(ctx, &p, &t))
         arrived = (fabsf(p - ctx->tgt_pan_deg)  < NUDGE_SETTLE_DEG) &&
                   (fabsf(t - ctx->tgt_tilt_deg) < NUDGE_SETTLE_DEG);
     if (arrived || elapsed >= NUDGE_TIMEOUT_MS)
