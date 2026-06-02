@@ -85,9 +85,15 @@ static const state_t parent_of[STATE_COUNT] = {
 
 // Per-state hook tables %====================================================%
 // Forward declaration of state handlers.
-typedef void    (*state_fn_t)(app_ctx_t *);  // Entry and Exit handlers
-typedef uint8_t (*key_fn_t)  (app_ctx_t *, char);  // Input handlers
+typedef void    (*state_fn_t)(app_ctx_t *);         // Entry and Exit handlers
+typedef uint8_t (*key_fn_t)  (app_ctx_t *, char);   // Input handlers
 typedef void    (*build_fn_t)(const app_ctx_t *, hamfly_control_t *); //Packet
+typedef uint8_t (*guard_fn_t)(const app_ctx_t *);   // 1=valid, 0=refuse
+
+// State change guarding
+// TODO: Add data validation not just check if set.
+static uint8_t guard_auto_home   (const app_ctx_t *);  // Is 'home' set? Valid?
+static uint8_t guard_auto_acq_gps(const app_ctx_t *);  // Is a target set? Valid?
 
 // Entry handlers
 static void entry_stby_defer    (app_ctx_t *);
@@ -116,8 +122,8 @@ static uint8_t key_auto_no_lock (app_ctx_t *, char);
 static uint8_t key_error_active (app_ctx_t *, char);
 
 // Packet building handlers
-static void build_zero          (const app_ctx_t *, hamfly_control_t *);
-static void build_stby          (const app_ctx_t *, hamfly_control_t *);
+static void build_defer         (const app_ctx_t *, hamfly_control_t *);
+static void build_hold          (const app_ctx_t *, hamfly_control_t *);
 static void build_manu_joystick (const app_ctx_t *, hamfly_control_t *);
 static void build_auto_home     (const app_ctx_t *, hamfly_control_t *);
 static void build_auto_acq_gps  (const app_ctx_t *, hamfly_control_t *);
@@ -138,6 +144,12 @@ static void  gps_check_settle  (app_ctx_t *);
 // status telemetry. Returns 1 on success, 0 on fail or stale. Read-only
 // helper.
 static uint8_t gimbal_pan_tilt_deg(const app_ctx_t *ctx, float *pan_deg, float *tilt_deg);
+
+// Table of entry guards.
+static const guard_fn_t can_enter[STATE_COUNT] = {
+    [AUTO_HOME]    = guard_auto_home,     // needs origin set + live telemetry
+    [AUTO_ACQ_GPS] = guard_auto_acq_gps,  // needs a GPS target
+};
 
 static const state_fn_t on_entry[STATE_COUNT] = {
     [STBY]            = NULL,   /* parent: shared STBY entry, if ever needed */
@@ -187,15 +199,15 @@ static const key_fn_t on_key[STATE_COUNT] = {
 };
 
 static const build_fn_t on_build[STATE_COUNT] = {
-    [STBY_DEFER]      = build_stby,
-    [STBY_HOLD]       = build_stby,
-    [MANU_JOYSTICK]   = build_manu_joystick,
+    [STBY_DEFER]      = build_defer,
+    [STBY_HOLD]       = build_hold,
+    [MANU_JOYSTICK]   = build_manu_joystick,  // NOTE: Nudge folded into joysticl leaf.
     [AUTO_HOME]       = build_auto_home,
     [AUTO_ACQ_GPS]    = build_auto_acq_gps,
-    [AUTO_ACQ_SPIRAL] = build_stby,          /* placeholder: zero rates, hold */
+    [AUTO_ACQ_SPIRAL] = build_hold,          /* placeholder: zero rates, hold */
     [AUTO_TRACKING]   = build_auto_tracking,
-    [AUTO_LOSS]       = build_stby,          /* placeholder: hold position */
-    [AUTO_NO_LOCK]    = build_stby,          /* placeholder: hold position */
+    [AUTO_LOSS]       = build_hold,          /* placeholder: hold position */
+    [AUTO_NO_LOCK]    = build_hold,          /* placeholder: hold position */
     [ERROR_ACTIVE]    = build_error,
 };
 
@@ -223,8 +235,14 @@ static state_t lca(state_t a, state_t b)
 // on_entry). Self-transitions are a no-op. ROOT is the absorbing root, so
 // any pair has an LCA.
 
-static void transition(app_ctx_t *ctx, state_t target)
+void app_transition(app_ctx_t *ctx, state_t target)
 {
+    // Check entry guard
+    if (can_enter[target] && !can_enter[target](ctx)) {
+        UART_DEBUG_PutString("[FSM] entry guard failed -> STBY_HOLD\r\n");
+        target = STBY_HOLD;
+    }
+    
     // Self transition handle.
     state_t src = ctx->state;
     if (target == src) return;
@@ -261,7 +279,7 @@ void app_start(app_ctx_t *ctx)
     // Walk entry conditions from ROOT to the init state,
     state_t target = ctx->state;
     ctx->state = ROOT;
-    transition(ctx, target);
+    app_transition(ctx, target);
 }
 
 // On error: Handles severity.
@@ -282,7 +300,19 @@ void app_raise_error(app_ctx_t *ctx, err_sev_t sev, const char *msg)
     ctx->err_msg = msg;
     if (sev == SEV_FATAL) ctx->fatal_latched = 1u;
     
-    transition(ctx, ERROR_ACTIVE);  // Go to error state.
+    app_transition(ctx, ERROR_ACTIVE);  // Go to error state.
+}
+
+// Entry guards
+static uint8_t guard_auto_home(const app_ctx_t *ctx)
+{
+    float p, t;
+    return ctx->origin_set && gimbal_pan_tilt_deg(ctx, &p, &t);
+}
+
+static uint8_t guard_auto_acq_gps(const app_ctx_t *ctx)
+{
+    return ctx->gps_target_set;
 }
 
 // Lookup table for state names, used by serial monitor.
@@ -384,7 +414,7 @@ void app_auto_tick(app_ctx_t *ctx)
                           (fabsf(t - ctx->tgt_tilt_deg) < NUDGE_SETTLE_DEG);
             if (arrived || elapsed >= NUDGE_TIMEOUT_MS) {
                 UART_DEBUG_PutString("[AUTO_HOME] arrived -> STBY_HOLD\r\n");
-                transition(ctx, STBY_HOLD);  // -> STBY_HOLD
+                app_transition(ctx, STBY_HOLD);  // -> STBY_HOLD
             }
         }
         return;
@@ -432,13 +462,13 @@ static void entry_auto_home(app_ctx_t *ctx)
     UART_DEBUG_PutString("\r\n[AUTO_HOME] slewing to origin  e=exit\r\n> ");
     if (!ctx->origin_set) {
         app_raise_error(ctx, SEV_USER, "no origin set (press '[' first)");
-        transition(ctx, STBY_HOLD);
+        app_transition(ctx, STBY_HOLD);
         return;
     }
     float pan, tilt;
     if (!gimbal_pan_tilt_deg(ctx, &pan, &tilt)) {
         app_raise_error(ctx, SEV_USER, "no telemetry (home aborted)");
-        transition(ctx, STBY_HOLD);
+        app_transition(ctx, STBY_HOLD);
         return;
     }
     ctx->nudge_base_pan_deg  = pan;
@@ -453,7 +483,7 @@ static void exit_auto_home(app_ctx_t *ctx) { ctx->nudge_hold = 0u; }
 static uint8_t key_auto_home(app_ctx_t *ctx, char k)
 {
     switch (k) {
-        case 'e': transition(ctx, STBY_HOLD); return 1;
+        case 'e': app_transition(ctx, STBY_HOLD); return 1;
         default:  return 0;
     }
 }
@@ -562,7 +592,7 @@ static void entry_auto_acq_gps(app_ctx_t *ctx)
 {
     if (!ctx->gps_target_set) {
         UART_DEBUG_PutString("\r\n[AUTO_ACQ_GPS] no GPS target -> STBY_HOLD\r\n");
-        transition(ctx, STBY_HOLD);
+        app_transition(ctx, STBY_HOLD);
         return;
     }
     UART_DEBUG_PutString("\r\n[AUTO_ACQ_GPS] open-loop GPS pointing  e=exit\r\n> ");
@@ -577,7 +607,7 @@ static void exit_auto_acq_gps(app_ctx_t *ctx)
 static uint8_t key_auto_acq_gps(app_ctx_t *ctx, char k)
 {
     switch (k) {
-        case 'e': transition(ctx, STBY_HOLD); return 1;
+        case 'e': app_transition(ctx, STBY_HOLD); return 1;
         default:  return 0;
     }
 }
@@ -609,7 +639,7 @@ static uint8_t key_auto_tracking(app_ctx_t *ctx, char k)
 {
     // TEMP: Debug exit to hold with e over serial.
     switch (k) {
-        case 'e': transition(ctx, STBY_HOLD); return 1;
+        case 'e': app_transition(ctx, STBY_HOLD); return 1;
         default:  return 0;
     }
 }
@@ -639,7 +669,7 @@ static void entry_auto_loss(app_ctx_t *ctx)
 static uint8_t key_auto_loss(app_ctx_t *ctx, char k)
 {
     switch (k) {  // Keep stationary, spiral search if requested.
-        case '3': transition(ctx, AUTO_ACQ_SPIRAL); return 1;
+        case '3': app_transition(ctx, AUTO_ACQ_SPIRAL); return 1;
         default:  return 0;
     }
 }
@@ -653,7 +683,7 @@ static void entry_auto_no_lock(app_ctx_t *ctx)
 static uint8_t key_auto_no_lock(app_ctx_t *ctx, char k)
 {
     switch (k) {
-        case '3': transition(ctx, AUTO_ACQ_SPIRAL); return 1;
+        case '3': app_transition(ctx, AUTO_ACQ_SPIRAL); return 1;
         default:  return 0;
     }
 }
@@ -735,12 +765,12 @@ static uint8_t handle_global_key(app_ctx_t *ctx, char k)
                 ctx->err_sev = SEV_USER;
                 ctx->err_msg = NULL;
                 UART_DEBUG_PutString("\r\nFATAL cleared.\r\n");
-                transition(ctx, STBY_HOLD);
+                app_transition(ctx, STBY_HOLD);
             }
             return 1;                          /* reserved key, always consumed */
         case 'x':                              /* soft kill */
             if (ctx->gimbal) hamfly_kill(ctx->gimbal);
-            transition(ctx, STBY_HOLD);
+            app_transition(ctx, STBY_HOLD);
             return 1;
         case '[': set_origin(ctx);  return 1;
             case '?': print_help(ctx);  return 1;
@@ -761,9 +791,9 @@ static uint8_t leaf_traps_nav(state_t s)
 static uint8_t handle_nav_key(app_ctx_t *ctx, char k)
 {
     switch (k) {
-        case '1': transition(ctx, STBY_HOLD);     return 1;
-        case '2': transition(ctx, MANU_JOYSTICK); return 1;
-        case '3': transition(ctx, AUTO_TRACKING); return 1;
+        case '1': app_transition(ctx, STBY_HOLD);     return 1;
+        case '2': app_transition(ctx, MANU_JOYSTICK); return 1;
+        case '3': app_transition(ctx, AUTO_TRACKING); return 1;
         default:  return 0;
     }
 }
@@ -774,7 +804,7 @@ static uint8_t key_error_active(app_ctx_t *ctx, char k)
     (void)k;
     if (ctx->err_sev != SEV_FATAL) {            /* WARN/SOFTWARE ack */
         state_t back = (ctx->prev_leaf == ERROR_ACTIVE) ? STBY_HOLD : ctx->prev_leaf;
-        transition(ctx, back);
+        app_transition(ctx, back);
         return 1;
     }
     return 0;                                   /* FATAL: only Ctrl+R (handled in lockout) */
@@ -802,15 +832,25 @@ uint8_t app_dispatch_key(app_ctx_t *ctx, char key)
 // %==========================================================================%
 // %                       Gimbal Control Packet                              %
 // %==========================================================================%
-// Initialize empty packet.
-static void build_zero(const app_ctx_t *ctx, hamfly_control_t *out)
+
+// Send a defer packet to the gimble. Defer releases control.
+// Defer is really an empty packet! But lets set explicitly.
+void build_defer(const app_ctx_t *ctx, hamfly_control_t *out)
+{
+    (void)ctx;
+    memset(out, 0, sizeof *out);          /* DEFER == 0, so this releases */
+    out->pan_mode = HAMFLY_DEFER;
+    out->tilt_mode = HAMFLY_DEFER;
+    out->roll_mode = HAMFLY_DEFER;
+}
+// Active hold at vel=0.
+void build_hold(const app_ctx_t *ctx, hamfly_control_t *out)
 {
     (void)ctx;
     memset(out, 0, sizeof *out);
-}
-// Build packet for STBY states: zero rates, defer mode.
-static void build_stby(const app_ctx_t *ctx, hamfly_control_t *out) {
-    build_zero(ctx, out);  // DEFERed, and disabled.
+    out->pan_mode  = HAMFLY_RATE;          /* RATE with value 0 == "stay put" */
+    out->tilt_mode = HAMFLY_RATE;
+    out->roll_mode = HAMFLY_DEFER;         /* roll has always been deferred here */
 }
 
 // Build packet from joystick inputs.
@@ -833,7 +873,7 @@ static void build_manu_joystick(const app_ctx_t *ctx, hamfly_control_t *out) {
 
 // Build packet for when in ERROR state
 static void build_error(const app_ctx_t *ctx, hamfly_control_t *out) {
-    build_zero(ctx, out);
+    build_defer(ctx, out);  // Error
     if (ctx->err_sev == SEV_FATAL) out->kill = 1u;
 }
 
@@ -843,7 +883,7 @@ void app_build_control(const app_ctx_t *ctx, hamfly_control_t *out)
 {
     build_fn_t f = on_build[ctx->state];
     if (f)  f(ctx, out);
-    else    build_zero(ctx, out);  // Safe default.
+    else    build_defer(ctx, out);  // Safe default.
 }
 
 // TEMP: Nudge handler
@@ -888,7 +928,7 @@ static uint8_t key_manu_joystick(app_ctx_t *ctx, char k)
         case 's': nudge_apply(ctx, 0,    -NUDGE_COARSE_DEG); return 1;  // wasd
         case 'a': nudge_apply(ctx, -NUDGE_COARSE_DEG, 0);    return 1;  // wasd
         case 'd': nudge_apply(ctx, +NUDGE_COARSE_DEG, 0);    return 1;  // wasd
-        case 'e': transition(ctx, STBY_HOLD);                return 1;  // Exit
+        case 'e': app_transition(ctx, STBY_HOLD);                return 1;  // Exit
         default:  return 0;
     }
 }
@@ -960,6 +1000,6 @@ void app_sbc_tick(app_ctx_t *ctx)
     char b[64];
     snprintf(b, sizeof b, "[SBC] state req -> %s\r\n", app_state_name(target));
     UART_DEBUG_PutString(b);
-    transition(ctx, target);
+    app_transition(ctx, target);
     sbc_send_state_ack((uint8_t)ctx->state, STATE_ACK_OK);
 }

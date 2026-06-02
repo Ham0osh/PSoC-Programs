@@ -32,6 +32,7 @@ uint8_t     app_dispatch_key(app_ctx_t *ctx, char key);
 void        app_build_control(const app_ctx_t *ctx, hamfly_control_t *out);
 void        app_raise_error(app_ctx_t *ctx, err_sev_t sev, const char *msg);
 const char *app_state_name(state_t s);
+void        app_transition(app_ctx_t *ctx, state_t target);
 
 // State based on tick.
 // TEMP: Ticker for manual nudge.
