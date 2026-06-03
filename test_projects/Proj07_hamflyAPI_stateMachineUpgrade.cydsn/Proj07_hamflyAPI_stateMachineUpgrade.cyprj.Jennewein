@@ -2140,6 +2140,13 @@
 <v>Generated_Source\PSoC5\Pin_Debug_SBCComms_aliases.h</v>
 <v>Generated_Source\PSoC5\Pin_Debug_SBCComms.c</v>
 <v>Generated_Source\PSoC5\Pin_Debug_SBCComms.h</v>
+<v>Generated_Source\PSoC5\Pin_Debug_GimbalComms_aliases.h</v>
+<v>Generated_Source\PSoC5\Pin_Debug_GimbalComms.c</v>
+<v>Generated_Source\PSoC5\Pin_Debug_GimbalComms.h</v>
+<v>Generated_Source\PSoC5\Clock_1.c</v>
+<v>Generated_Source\PSoC5\Clock_1.h</v>
+<v>Generated_Source\PSoC5\Clock_MCU.c</v>
+<v>Generated_Source\PSoC5\Clock_MCU.h</v>
 </gen_list>
 <warp_dep>
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\ieee\work\stdlogic.vif</v>
@@ -2149,7 +2156,7 @@
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif</v>
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\warp\lib\common\stdlogic\cy_psoc3.vif</v>
 </warp_dep>
-<deps_time v="134249216784041357" />
+<deps_time v="134249249187671928" />
 <top_block v="TopDesign" />
 <last_generation v="7" />
 <pdl_path v="" />
@@ -2175,28 +2182,38 @@
 <v>Off-Chip</v>
 </tree_states_tab_names>
 <tree_states>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Cypress Component Catalog\Ports and Pins\Digital Output Pin [v2.20]">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Cypress Component Catalog\System\Clock [v2.20]">
 <ExpandedNodeIds>
 <v>Cypress Component Catalog</v>
-<v>Cypress Component Catalog\Analog</v>
-<v>Cypress Component Catalog\Digital</v>
-<v>Cypress Component Catalog\Ports and Pins</v>
+<v>Cypress Component Catalog\Analog\Manual Routing</v>
+<v>Cypress Component Catalog\System</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
+<v>Cypress Component Catalog</v>
+<v>Cypress Component Catalog\Analog</v>
+<v>Cypress Component Catalog\CapSense</v>
+<v>Cypress Component Catalog\Communications</v>
 <v>Cypress Component Catalog\Digital</v>
-<v>Cypress Component Catalog\Digital\Functions</v>
-<v>Cypress Component Catalog\Digital\Logic</v>
-<v>Cypress Component Catalog\Digital\Registers</v>
-<v>Cypress Component Catalog\Digital\Utility</v>
 <v>Cypress Component Catalog\Display</v>
 <v>Cypress Component Catalog\Filters</v>
 <v>Cypress Component Catalog\Ports and Pins</v>
-<v>Cypress Component Catalog\Ports and Pins\Analog Pin [v2.20]</v>
-<v>Cypress Component Catalog\Ports and Pins\Digital Bidirectional Pin [v2.20]</v>
-<v>Cypress Component Catalog\Ports and Pins\Digital Input Pin [v2.20]</v>
-<v>Cypress Component Catalog\Ports and Pins\Digital Output Pin [v2.20]</v>
 <v>Cypress Component Catalog\Power Supervision</v>
 <v>Cypress Component Catalog\System</v>
+<v>Cypress Component Catalog\System\Boost Converter [v5.0]</v>
+<v>Cypress Component Catalog\System\Bootloadable [v1.60]</v>
+<v>Cypress Component Catalog\System\Bootloader [v1.60]</v>
+<v>Cypress Component Catalog\System\Clock [v2.20]</v>
+<v>Cypress Component Catalog\System\Die Temperature [v2.10]</v>
+<v>Cypress Component Catalog\System\DMA [v1.70]</v>
+<v>Cypress Component Catalog\System\EEPROM [v3.0]</v>
+<v>Cypress Component Catalog\System\Emulated EEPROM [v2.20]</v>
+<v>Cypress Component Catalog\System\External Memory Interface</v>
+<v>Cypress Component Catalog\System\Global Signal Reference [v2.10]</v>
+<v>Cypress Component Catalog\System\ILO Trim [v2.0]</v>
+<v>Cypress Component Catalog\System\Interrupt [v1.71]</v>
+<v>Cypress Component Catalog\System\RTC [v2.0]</v>
+<v>Cypress Component Catalog\System\SleepTimer [v3.20]</v>
+<v>Cypress Component Catalog\Thermal Management</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Off-Chip Component Catalog\Sensors\Microphone [v1.0]">
@@ -2223,6 +2240,23 @@
 <v>Off-Chip Component Catalog\Diodes\Zener Diode [v1.0]</v>
 <v>Off-Chip Component Catalog\Electro-Mechanical</v>
 <v>Off-Chip Component Catalog\Electro-Mechanical\Connector (1-20 Pins) [v1.0]</v>
+<v>Off-Chip Component Catalog\Electro-Mechanical\Motor (3 Phase) [v1.0]</v>
+<v>Off-Chip Component Catalog\Electro-Mechanical\Motor (DC) [v1.0]</v>
+<v>Off-Chip Component Catalog\Electro-Mechanical\Relay [v1.0]</v>
+<v>Off-Chip Component Catalog\Electro-Mechanical\Speaker [v1.0]</v>
+<v>Off-Chip Component Catalog\Electro-Mechanical\Switch (SPDT- DPDT) [v1.0]</v>
+<v>Off-Chip Component Catalog\Electro-Mechanical\Switch (SPST) [v1.0]</v>
+<v>Off-Chip Component Catalog\Electro-Mechanical\Test Point [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive</v>
+<v>Off-Chip Component Catalog\Passive\Capacitor [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive\Crystal [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive\Fuse [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive\Inductor [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive\Potentiometer [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive\Resistor [v1.0]</v>
+<v>Off-Chip Component Catalog\Passive\Transformer [v1.0]</v>
+<v>Off-Chip Component Catalog\Power</v>
+<v>Off-Chip Component Catalog\Power\Battery [v1.0]</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </tree_states>

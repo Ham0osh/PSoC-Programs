@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: Pin_Sensitivity.c  
+* File Name: Pin_Debug_GimbalComms.c  
 * Version 2.20
 *
 * Description:
@@ -15,15 +15,15 @@
 *******************************************************************************/
 
 #include "cytypes.h"
-#include "Pin_Sensitivity.h"
+#include "Pin_Debug_GimbalComms.h"
 
 /* APIs are not generated for P15[7:6] on PSoC 5 */
 #if !(CY_PSOC5A &&\
-	 Pin_Sensitivity__PORT == 15 && ((Pin_Sensitivity__MASK & 0xC0) != 0))
+	 Pin_Debug_GimbalComms__PORT == 15 && ((Pin_Debug_GimbalComms__MASK & 0xC0) != 0))
 
 
 /*******************************************************************************
-* Function Name: Pin_Sensitivity_Write
+* Function Name: Pin_Debug_GimbalComms_Write
 ****************************************************************************//**
 *
 * \brief Writes the value to the physical port (data output register), masking
@@ -52,17 +52,17 @@
 *  this function.
 *
 * \funcusage
-*  \snippet Pin_Sensitivity_SUT.c usage_Pin_Sensitivity_Write
+*  \snippet Pin_Debug_GimbalComms_SUT.c usage_Pin_Debug_GimbalComms_Write
 *******************************************************************************/
-void Pin_Sensitivity_Write(uint8 value)
+void Pin_Debug_GimbalComms_Write(uint8 value)
 {
-    uint8 staticBits = (Pin_Sensitivity_DR & (uint8)(~Pin_Sensitivity_MASK));
-    Pin_Sensitivity_DR = staticBits | ((uint8)(value << Pin_Sensitivity_SHIFT) & Pin_Sensitivity_MASK);
+    uint8 staticBits = (Pin_Debug_GimbalComms_DR & (uint8)(~Pin_Debug_GimbalComms_MASK));
+    Pin_Debug_GimbalComms_DR = staticBits | ((uint8)(value << Pin_Debug_GimbalComms_SHIFT) & Pin_Debug_GimbalComms_MASK);
 }
 
 
 /*******************************************************************************
-* Function Name: Pin_Sensitivity_SetDriveMode
+* Function Name: Pin_Debug_GimbalComms_SetDriveMode
 ****************************************************************************//**
 *
 * \brief Sets the drive mode for each of the Pins component's pins.
@@ -85,16 +85,16 @@ void Pin_Sensitivity_Write(uint8 value)
 *  APIs (primary method) or disable interrupts around this function.
 *
 * \funcusage
-*  \snippet Pin_Sensitivity_SUT.c usage_Pin_Sensitivity_SetDriveMode
+*  \snippet Pin_Debug_GimbalComms_SUT.c usage_Pin_Debug_GimbalComms_SetDriveMode
 *******************************************************************************/
-void Pin_Sensitivity_SetDriveMode(uint8 mode)
+void Pin_Debug_GimbalComms_SetDriveMode(uint8 mode)
 {
-	CyPins_SetPinDriveMode(Pin_Sensitivity_0, mode);
+	CyPins_SetPinDriveMode(Pin_Debug_GimbalComms_0, mode);
 }
 
 
 /*******************************************************************************
-* Function Name: Pin_Sensitivity_Read
+* Function Name: Pin_Debug_GimbalComms_Read
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port (pin status register) and masks 
@@ -108,16 +108,16 @@ void Pin_Sensitivity_SetDriveMode(uint8 mode)
 *  The current value for the pins in the component as a right justified number.
 *
 * \funcusage
-*  \snippet Pin_Sensitivity_SUT.c usage_Pin_Sensitivity_Read  
+*  \snippet Pin_Debug_GimbalComms_SUT.c usage_Pin_Debug_GimbalComms_Read  
 *******************************************************************************/
-uint8 Pin_Sensitivity_Read(void)
+uint8 Pin_Debug_GimbalComms_Read(void)
 {
-    return (Pin_Sensitivity_PS & Pin_Sensitivity_MASK) >> Pin_Sensitivity_SHIFT;
+    return (Pin_Debug_GimbalComms_PS & Pin_Debug_GimbalComms_MASK) >> Pin_Debug_GimbalComms_SHIFT;
 }
 
 
 /*******************************************************************************
-* Function Name: Pin_Sensitivity_ReadDataReg
+* Function Name: Pin_Debug_GimbalComms_ReadDataReg
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port's data output register and masks 
@@ -126,8 +126,8 @@ uint8 Pin_Sensitivity_Read(void)
 *
 * The data output register controls the signal applied to the physical pin in 
 * conjunction with the drive mode parameter. This is not the same as the 
-* preferred Pin_Sensitivity_Read() API because the 
-* Pin_Sensitivity_ReadDataReg() reads the data register instead of the status 
+* preferred Pin_Debug_GimbalComms_Read() API because the 
+* Pin_Debug_GimbalComms_ReadDataReg() reads the data register instead of the status 
 * register. For output pins this is a useful function to determine the value 
 * just written to the pin.
 *
@@ -136,19 +136,19 @@ uint8 Pin_Sensitivity_Read(void)
 *  justified number for the component instance.
 *
 * \funcusage
-*  \snippet Pin_Sensitivity_SUT.c usage_Pin_Sensitivity_ReadDataReg 
+*  \snippet Pin_Debug_GimbalComms_SUT.c usage_Pin_Debug_GimbalComms_ReadDataReg 
 *******************************************************************************/
-uint8 Pin_Sensitivity_ReadDataReg(void)
+uint8 Pin_Debug_GimbalComms_ReadDataReg(void)
 {
-    return (Pin_Sensitivity_DR & Pin_Sensitivity_MASK) >> Pin_Sensitivity_SHIFT;
+    return (Pin_Debug_GimbalComms_DR & Pin_Debug_GimbalComms_MASK) >> Pin_Debug_GimbalComms_SHIFT;
 }
 
 
 /* If interrupt is connected for this Pins component */ 
-#if defined(Pin_Sensitivity_INTSTAT) 
+#if defined(Pin_Debug_GimbalComms_INTSTAT) 
 
     /*******************************************************************************
-    * Function Name: Pin_Sensitivity_SetInterruptMode
+    * Function Name: Pin_Debug_GimbalComms_SetInterruptMode
     ****************************************************************************//**
     *
     * \brief Configures the interrupt mode for each of the Pins component's
@@ -161,12 +161,12 @@ uint8 Pin_Sensitivity_ReadDataReg(void)
     * \param position
     *  The pin position as listed in the Pins component. You may OR these to be 
     *  able to configure the interrupt mode of multiple pins within a Pins 
-    *  component. Or you may use Pin_Sensitivity_INTR_ALL to configure the
+    *  component. Or you may use Pin_Debug_GimbalComms_INTR_ALL to configure the
     *  interrupt mode of all the pins in the Pins component.       
-    *  - Pin_Sensitivity_0_INTR       (First pin in the list)
-    *  - Pin_Sensitivity_1_INTR       (Second pin in the list)
+    *  - Pin_Debug_GimbalComms_0_INTR       (First pin in the list)
+    *  - Pin_Debug_GimbalComms_1_INTR       (Second pin in the list)
     *  - ...
-    *  - Pin_Sensitivity_INTR_ALL     (All pins in Pins component)
+    *  - Pin_Debug_GimbalComms_INTR_ALL     (All pins in Pins component)
     *
     * \param mode
     *  Interrupt mode for the selected pins. Valid options are documented in
@@ -182,19 +182,19 @@ uint8 Pin_Sensitivity_ReadDataReg(void)
     *  port.
     *
     * \funcusage
-    *  \snippet Pin_Sensitivity_SUT.c usage_Pin_Sensitivity_SetInterruptMode
+    *  \snippet Pin_Debug_GimbalComms_SUT.c usage_Pin_Debug_GimbalComms_SetInterruptMode
     *******************************************************************************/
-    void Pin_Sensitivity_SetInterruptMode(uint16 position, uint16 mode)
+    void Pin_Debug_GimbalComms_SetInterruptMode(uint16 position, uint16 mode)
     {
-		if((position & Pin_Sensitivity_0_INTR) != 0u) 
+		if((position & Pin_Debug_GimbalComms_0_INTR) != 0u) 
 		{ 
-			 Pin_Sensitivity_0_INTTYPE_REG = (uint8)mode; 
+			 Pin_Debug_GimbalComms_0_INTTYPE_REG = (uint8)mode; 
 		}
     }
     
     
     /*******************************************************************************
-    * Function Name: Pin_Sensitivity_ClearInterrupt
+    * Function Name: Pin_Debug_GimbalComms_ClearInterrupt
     ****************************************************************************//**
     *
     * \brief Clears any active interrupts attached with the component and returns 
@@ -211,11 +211,11 @@ uint8 Pin_Sensitivity_ReadDataReg(void)
     *  those associated with the Pins component.
     *
     * \funcusage
-    *  \snippet Pin_Sensitivity_SUT.c usage_Pin_Sensitivity_ClearInterrupt
+    *  \snippet Pin_Debug_GimbalComms_SUT.c usage_Pin_Debug_GimbalComms_ClearInterrupt
     *******************************************************************************/
-    uint8 Pin_Sensitivity_ClearInterrupt(void)
+    uint8 Pin_Debug_GimbalComms_ClearInterrupt(void)
     {
-        return (Pin_Sensitivity_INTSTAT & Pin_Sensitivity_MASK) >> Pin_Sensitivity_SHIFT;
+        return (Pin_Debug_GimbalComms_INTSTAT & Pin_Debug_GimbalComms_MASK) >> Pin_Debug_GimbalComms_SHIFT;
     }
 
 #endif /* If Interrupts Are Enabled for this Pins component */ 
