@@ -1,5 +1,5 @@
 # Proj07_hamflyAPI_stateMachineUpgrade
-# 2026-06-03 00:37:10Z
+# 2026-06-03 00:54:35Z
 
 # IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 0
@@ -19,6 +19,11 @@ set_io "Pin_LED(0)" iocell 2 1
 set_io "Pin_Sensitivity(0)" iocell 12 2
 set_io "Rx_3(0)" iocell 2 6
 set_io "Tx_3(0)" iocell 2 7
+set_io "Pin_Debug_Tick(0)" iocell 3 0
+set_io "Pin_Debug_SuperLoop(0)" iocell 3 1
+set_io "Pin_Debug_CoarseCentroid(0)" iocell 3 2
+set_io "Pin_Debug_GimbalControl(0)" iocell 3 3
+set_io "Pin_Debug_SBCComms(0)" iocell 3 4
 set_location "Net_298" 0 1 1 2
 set_location "\UART_DEBUG:BUART:counter_load_not\" 0 0 0 2
 set_location "\UART_DEBUG:BUART:tx_status_0\" 0 0 0 0
