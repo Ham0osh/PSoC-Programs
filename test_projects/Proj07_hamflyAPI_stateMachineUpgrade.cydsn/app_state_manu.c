@@ -17,7 +17,8 @@
 */
 
 #include "app_state_manu.h"
-#include "app_statemachine.h"   // app_transition, app_raise_error, gimbal_pan_tilt_deg
+#include "app_statemachine.h"   // app_transition, app_raise_error
+#include "utils.h"             // Euler angles calc
 #include <project.h>            // For UART
 #include <math.h>               // fabsf
 

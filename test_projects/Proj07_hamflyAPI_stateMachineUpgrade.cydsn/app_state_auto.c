@@ -20,6 +20,7 @@
 #include "app_statemachine.h"  // app_transitions and app_raise_error
 #include "hamfly.h"            // telemetry helpers and gimble mode enums
 #include "sbc_comms.h"         // centroid stream getters + counters
+#include "utils.h"             // Euler angles calc
 #include <project.h>           // UART_DEBUG_PutString
 #include <math.h>              // sinf cosf atan2f sqrtf fabsf
 #include <stdio.h>             // snprintf
@@ -34,20 +35,6 @@ static float gps_elev_deg    (float lat1, float lon1, float alt1_m,
 static void  gps_start_slew     (app_ctx_t *ctx);
 static void  gps_update_pointing(app_ctx_t *ctx);
 static void  gps_check_settle   (app_ctx_t *ctx);
-
-// Telemetry Helper %=========================================================%
-uint8_t gimbal_pan_tilt_deg(const app_ctx_t *ctx,
-                            float *pan_deg, float *tilt_deg)
-{
-    // Get gimble attitude and return alt and azimuth angles in degrees
-    // TODO: Refactor codebase to also show roll.
-    if (!ctx->gimbal) return 0u;  // Verify connected
-    hamfly_telemetry_t st;
-    hamfly_get_telemetry(ctx->gimbal, &st);
-    if (!st.valid) return 0u;
-    float roll_deg;  // TEMP: Disgarded for now.
-    return hamfly_telemetry_to_euler(&st, pan_deg, tilt_deg, &roll_deg);
-}
 
 // State On-Entry Guards %====================================================%
 uint8_t guard_auto_home(const app_ctx_t *ctx)
