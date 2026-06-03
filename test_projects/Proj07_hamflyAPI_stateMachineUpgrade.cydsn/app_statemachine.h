@@ -41,5 +41,12 @@ void app_auto_tick(app_ctx_t *ctx);   // Temp for debug prints
 void app_telem_tick(app_ctx_t *ctx);  // Handles Hot and Cold telemetry
 void app_sbc_tick(app_ctx_t *ctx);  // Handles SBC command and GPS target
 
+// Shared helpers for leaf handlers to use
+// Safe base control packets.
+void build_defer(const app_ctx_t *ctx, hamfly_control_t *out);
+void build_hold (const app_ctx_t *ctx, hamfly_control_t *out);
+// Get degree alt az of attitude from telemetry.
+uint8_t gimbal_pan_tilt_deg(const app_ctx_t *ctx, float *pan_deg, float *tilt_deg);
+
 #endif /* APP_STATEMACHINE_H */
 /* [] END OF FILE */
