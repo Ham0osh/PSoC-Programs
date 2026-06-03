@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
   28:app_state_auto.c **** 
   29:app_state_auto.c **** // GPS Pointing Math %========================================================%
   30:app_state_auto.c **** // Forward declare here, defined below.
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 2
 
 
   31:app_state_auto.c **** static float gps_bearing_deg (float lat1, float lon1, float lat2, float lon2);
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
   65              		.loc 1 47 0 is_stmt 0 discriminator 1
   66 0034 0023     		movs	r3, #0
   67 0036 08E0     		b	.L5
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 3
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 3
 
 
   68              	.L4:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  112 000e 002B     		cmp	r3, #0
  113 0010 0CD0     		beq	.L7
  114              		.loc 1 57 0 is_stmt 0 discriminator 1
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 4
 
 
  115 0012 07F10802 		add	r2, r7, #8
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
   63:app_state_auto.c ****     return ctx->gps_target_set;
  164              		.loc 1 63 0
  165 0008 7B68     		ldr	r3, [r7, #4]
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 5
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 5
 
 
  166 000a 93F82430 		ldrb	r3, [r3, #36]	@ zero_extendqisi2
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  199              		.loc 1 75 0
  200              		.cfi_startproc
  201              		@ args = 0, pretend = 0, frame = 176
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 6
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 6
 
 
  202              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
   82:app_state_auto.c ****                 arrived = (fabsf(p - ctx->tgt_pan_deg)  < NUDGE_SETTLE_DEG) &&
  250              		.loc 1 82 0
  251 004e D7F8A420 		ldr	r2, [r7, #164]	@ float
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 7
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 7
 
 
  252 0052 FB68     		ldr	r3, [r7, #12]
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
   85:app_state_auto.c ****                 UART_DEBUG_PutString("[AUTO_HOME] arrived -> STBY_HOLD\r\n");
  300              		.loc 1 85 0 is_stmt 1
  301 00b8 4548     		ldr	r0, .L34+8
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 8
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 8
 
 
  302 00ba FFF7FEFF 		bl	UART_DEBUG_PutString
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  101:app_state_auto.c ****         }
  102:app_state_auto.c ****         gps_check_settle(ctx);   // self-throttled to GPS_SETTLE_PERIOD_MS
  341              		.loc 1 102 0 is_stmt 1
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 9
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 9
 
 
  342 00fa F868     		ldr	r0, [r7, #12]
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  116:app_state_auto.c ****             char b[128];
  117:app_state_auto.c ****             snprintf(b, sizeof b,
  383              		.loc 1 117 0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 10
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 10
 
 
  384 0144 97F8AE30 		ldrb	r3, [r7, #174]	@ zero_extendqisi2
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  123:app_state_auto.c ****             UART_DEBUG_PutString(b);
  428              		.loc 1 123 0
  429 019c 07F11403 		add	r3, r7, #20
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 11
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 11
 
 
  430 01a0 1846     		mov	r0, r3
@@ -647,8 +647,8 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  466 01c8 00000000 		.word	g_tick_ms
  467 01cc CDCC4C3D 		.word	1028443341
  468 01d0 00000000 		.word	.LC0
- 469 01d4 00000000 		.word	last_pt_ms.8025
- 470 01d8 00000000 		.word	tag.8026
+ 469 01d4 00000000 		.word	last_pt_ms.8087
+ 470 01d8 00000000 		.word	tag.8088
  471 01dc 24000000 		.word	.LC1
  472              		.cfi_endproc
  473              	.LFE67:
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  477              	.LC2:
  478 0060 0D0A5B41 		.ascii	"\015\012[AUTO_HOME] slewing to origin  e=exit\015\012"
  478      55544F5F 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 12
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 12
 
 
  478      484F4D45 
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  511 000e 7B68     		ldr	r3, [r7, #4]
  512 0010 93F85430 		ldrb	r3, [r3, #84]	@ zero_extendqisi2
  513 0014 002B     		cmp	r3, #0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 13
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 13
 
 
  514 0016 09D1     		bne	.L37
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  555 0062 C3F88420 		str	r2, [r3, #132]	@ float
  151:app_state_auto.c ****     ctx->tgt_pan_deg         = ctx->origin_pan_deg;  // TODO: Do we actualy use these??
  556              		.loc 1 151 0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 14
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 14
 
 
  557 0066 7B68     		ldr	r3, [r7, #4]
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  604              		@ frame_needed = 1, uses_anonymous_args = 0
  605              		@ link register save eliminated.
  606 0000 80B4     		push	{r7}
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 15
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 15
 
 
  607              		.cfi_def_cfa_offset 4
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  165:app_state_auto.c ****     // Exit home with e
  166:app_state_auto.c ****     switch (k) {
  655              		.loc 1 166 0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 16
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 16
 
 
  656 000c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  174:app_state_auto.c ****     // Use absolute mode to point to saftware origin.
  175:app_state_auto.c ****     // Software origin defaults to gimbal origin.
  176:app_state_auto.c ****     out->kill      = 0u;
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 17
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 17
 
 
  703              		.loc 1 176 0
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  751 006a 0837     		adds	r7, r7, #8
  752              		.cfi_def_cfa_offset 8
  753 006c BD46     		mov	sp, r7
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 18
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 18
 
 
  754              		.cfi_def_cfa_register 13
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  789 000a 7A60     		str	r2, [r7, #4]	@ float
  790 000c 3B60     		str	r3, [r7]	@ float
  202:app_state_auto.c ****     // Calculates bearing between two points in degrees.
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 19
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 19
 
 
  203:app_state_auto.c ****     float la1 = lat1 * DEG_TO_RAD, la2 = lat2 * DEG_TO_RAD;
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  841 0082 0346     		mov	r3, r0
  842 0084 1946     		mov	r1, r3
  843 0086 2846     		mov	r0, r5
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 20
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 20
 
 
  844 0088 FFF7FEFF 		bl	__aeabi_fmul
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  894 00ea 00BF     		.align	2
  895              	.L57:
  896 00ec 98F98E3C 		.word	1016002968
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 21
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 21
 
 
  897 00f0 E62E6542 		.word	1113927398
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  945 0034 FFF7FEFF 		bl	__aeabi_fmul
  946 0038 0346     		mov	r3, r0
  947 003a BB61     		str	r3, [r7, #24]	@ float
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 22
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 22
 
 
  217:app_state_auto.c ****     float dla = la2 - la1;
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  999 00bc B869     		ldr	r0, [r7, #24]	@ float
  1000 00be FFF7FEFF 		bl	__aeabi_fmul
  1001 00c2 0346     		mov	r3, r0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 23
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 23
 
 
  1002 00c4 1846     		mov	r0, r3
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1052 0136 1846     		mov	r0, r3
  1053 0138 FFF7FEFF 		bl	atan2f
  1054 013c 0346     		mov	r3, r0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 24
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 24
 
 
  1055 013e 0649     		ldr	r1, .L64+8
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1102 0010 7B68     		ldr	r3, [r7, #4]
  1103 0012 DA69     		ldr	r2, [r3, #28]
  1104 0014 7B68     		ldr	r3, [r7, #4]
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 25
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 25
 
 
  1105 0016 DA62     		str	r2, [r3, #44]
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1147              		.cfi_offset 7, -8
  1148              		.cfi_offset 14, -4
  1149 0002 C2B0     		sub	sp, sp, #264
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 26
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 26
 
 
  1150              		.cfi_def_cfa_offset 272
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1195 0066 1E49     		ldr	r1, .L71+4
  1196 0068 1846     		mov	r0, r3
  1197 006a FFF7FEFF 		bl	__aeabi_fmul
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 27
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 27
 
 
  1198 006e 0346     		mov	r3, r0
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1243 00d2 07F58077 		add	r7, r7, #256
  1244              		.cfi_def_cfa_offset 8
  1245 00d6 BD46     		mov	sp, r7
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 28
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 28
 
 
  1246              		.cfi_def_cfa_register 13
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1286              		.cfi_def_cfa_register 7
  1287 0006 7860     		str	r0, [r7, #4]
  265:app_state_auto.c ****     // Too fast? Dont judge.
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 29
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 29
 
 
  266:app_state_auto.c ****     uint32_t now = g_tick_ms;
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1331 005c 4FF00001 		mov	r1, #0
  1332 0060 F869     		ldr	r0, [r7, #28]	@ float
  1333 0062 FFF7FEFF 		bl	__aeabi_fcmpgt
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 30
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 30
 
 
  1334 0066 0346     		mov	r3, r0
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  285:app_state_auto.c ****        command reference. Validate on hardware; if frames differ, the low-speed
  286:app_state_auto.c ****        gate still gives a usable settle proxy. */
  287:app_state_auto.c ****     float cmd_pan_deg  = UNIT_TO_DEG(ctx->abs_pan_target);
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 31
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 31
 
 
  1379              		.loc 1 287 0
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1427 0120 0023     		movs	r3, #0
  1428              	.L82:
  289:app_state_auto.c ****     uint8_t arrived = (fabsf(pan  - cmd_pan_deg)  < GPS_POINT_SETTLE_DEG) &&
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 32
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 32
 
 
  1429              		.loc 1 289 0 discriminator 6
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1475              	.L84:
  299:app_state_auto.c ****     }
  300:app_state_auto.c ****     // Exit condition for valid finishing of GPS slew.
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 33
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 33
 
 
  301:app_state_auto.c ****     if (!ctx->gps_settled && arrived && slow) {
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1523              		.size	gps_check_settle, .-gps_check_settle
  1524              		.section	.rodata
  1525 0109 000000   		.align	2
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 34
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 34
 
 
  1526              	.LC7:
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1564 001a 7868     		ldr	r0, [r7, #4]
  1565 001c FFF7FEFF 		bl	app_transition
  313:app_state_auto.c ****         return;
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 35
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 35
 
 
  1566              		.loc 1 313 0
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1608              		@ args = 0, pretend = 0, frame = 8
  1609              		@ frame_needed = 1, uses_anonymous_args = 0
  1610              		@ link register save eliminated.
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 36
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 36
 
 
  1611 0000 80B4     		push	{r7}
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1659 0004 00AF     		add	r7, sp, #0
  1660              		.cfi_def_cfa_register 7
  1661 0006 7860     		str	r0, [r7, #4]
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 37
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 37
 
 
  1662 0008 0B46     		mov	r3, r1
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1708              		.cfi_def_cfa_register 7
  1709 0006 7860     		str	r0, [r7, #4]
  1710 0008 3960     		str	r1, [r7]
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 38
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 38
 
 
  340:app_state_auto.c ****     out->kill      = 0u;
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1760              	.L109:
  1761              		.loc 1 344 0 discriminator 8
  1762 0060 3A68     		ldr	r2, [r7]
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 39
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 39
 
 
  1763 0062 1360     		str	r3, [r2]	@ float
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1815 0170 0D0A5B41 		.ascii	"\015\012[AUTO_ACQ_SPIRAL] placeholder (NI).\015\012"
  1815      55544F5F 
  1815      4143515F 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 40
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 40
 
 
  1815      53504952 
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1857 019a 0000     		.align	2
  1858              	.LC10:
  1859 019c 0D0A5B41 		.ascii	"\015\012[AUTO_TRACKING] closed-loop  e=exit\015\012"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 41
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 41
 
 
  1859      55544F5F 
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1899              		@ sp needed
  1900 0024 80BD     		pop	{r7, pc}
  1901              	.L134:
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 42
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 42
 
 
  1902 0026 00BF     		.align	2
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1947 0022 0837     		adds	r7, r7, #8
  1948              		.cfi_def_cfa_offset 8
  1949 0024 BD46     		mov	sp, r7
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 43
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 43
 
 
  1950              		.cfi_def_cfa_register 13
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  1996 0028 3B68     		ldr	r3, [r7]
  1997 002a 1A73     		strb	r2, [r3, #12]
  386:app_state_auto.c ****     float cx_mrad = (float)ctx->track_cx_last * 0.1f;  // 0.1 mrad to mrad
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 44
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 44
 
 
  1998              		.loc 1 386 0
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2049 009c 02D0     		beq	.L158
  2050              		.loc 1 389 0 discriminator 4
  2051 009e 4FF07E53 		mov	r3, #1065353216
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 45
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 45
 
 
  2052 00a2 06E0     		b	.L143
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2105 0106 0346     		mov	r3, r0
  2106 0108 83F00043 		eor	r3, r3, #-2147483648
  2107              	.L149:
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 46
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 46
 
 
  2108              		.loc 1 390 0 discriminator 8
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2151              		.cfi_def_cfa_register 7
  2152 0006 7860     		str	r0, [r7, #4]
  398:app_state_auto.c ****     // TODO: Loss should hold and wait. If packets re-commence go back to tracking,
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 47
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 47
 
 
  399:app_state_auto.c ****     // TODO: Let user trigger spiral search, GPS re-acq, or exit to STBY later.
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2198              		.loc 1 407 0
  2199 0012 0A21     		movs	r1, #10
  2200 0014 7868     		ldr	r0, [r7, #4]
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 48
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 48
 
 
  2201 0016 FFF7FEFF 		bl	app_transition
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2240 0002 82B0     		sub	sp, sp, #8
  2241              		.cfi_def_cfa_offset 16
  2242 0004 00AF     		add	r7, sp, #0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 49
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 49
 
 
  2243              		.cfi_def_cfa_register 7
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  424:app_state_auto.c ****         case '3': app_transition(ctx, AUTO_ACQ_SPIRAL); return 1;
  2290              		.loc 1 424 0
  2291 0012 0A21     		movs	r1, #10
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 50
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 50
 
 
  2292 0014 7868     		ldr	r0, [r7, #4]
@@ -2965,7 +2965,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2310              		.size	key_auto_no_lock, .-key_auto_no_lock
  2311              		.bss
  2312              		.align	2
- 2313              	last_pt_ms.8025:
+ 2313              	last_pt_ms.8087:
  2314 0000 00000000 		.space	4
  2315              		.section	.rodata
  2316 0235 000000   		.align	2
@@ -2976,9 +2976,9 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2321 023c 4600     		.ascii	"F\000"
  2322              		.data
  2323              		.align	2
- 2324              		.type	tag.8026, %object
- 2325              		.size	tag.8026, 8
- 2326              	tag.8026:
+ 2324              		.type	tag.8088, %object
+ 2325              		.size	tag.8088, 8
+ 2326              	tag.8088:
  2327 0000 38020000 		.word	.LC13
  2328 0004 3C020000 		.word	.LC14
  2329              		.text
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2343              	.Ldebug_info0:
  2344 0000 1E120000 		.4byte	0x121e
  2345 0004 0400     		.2byte	0x4
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 51
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 51
 
 
  2346 0006 00000000 		.4byte	.Ldebug_abbrev0
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2400 007b 7F000000 		.4byte	0x7f
  2401 007f 02       		.uleb128 0x2
  2402 0080 04       		.byte	0x4
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 52
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 52
 
 
  2403 0081 07       		.byte	0x7
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2457 00ea 34030000 		.4byte	.LASF21
  2458 00ee 02       		.uleb128 0x2
  2459 00ef 08       		.byte	0x8
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 53
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 53
 
 
  2460 00f0 04       		.byte	0x4
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2514 015c 0D       		.uleb128 0xd
  2515 015d 640A0000 		.4byte	.LASF29
  2516 0161 04       		.byte	0x4
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 54
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 54
 
 
  2517 0162 30       		.byte	0x30
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2571 01cb FC000000 		.4byte	0xfc
  2572 01cf 00       		.byte	0
  2573 01d0 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 55
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 55
 
 
  2574 01d1 B4050000 		.4byte	.LASF37
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2628 0240 D5030000 		.4byte	.LASF42
  2629 0244 06       		.byte	0x6
  2630 0245 23       		.byte	0x23
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 56
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 56
 
 
  2631 0246 D9000000 		.4byte	0xd9
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2685 02b2 D9000000 		.4byte	0xd9
  2686 02b6 20       		.byte	0x20
  2687 02b7 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 57
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 57
 
 
  2688 02b8 020D0000 		.4byte	.LASF52
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2742 0324 58080000 		.4byte	.LASF61
  2743 0328 06       		.byte	0x6
  2744 0329 41       		.byte	0x41
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 58
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 58
 
 
  2745 032a C3000000 		.4byte	0xc3
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2799 0396 88050000 		.4byte	0x588
  2800 039a 60       		.byte	0x60
  2801 039b 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 59
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 59
 
 
  2802 039c 39030000 		.4byte	.LASF71
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2856 0408 CA050000 		.4byte	.LASF80
  2857 040c 06       		.byte	0x6
  2858 040d 67       		.byte	0x67
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 60
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 60
 
 
  2859 040e D9000000 		.4byte	0xd9
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2913 047a A2000000 		.4byte	0xa2
  2914 047e A0       		.byte	0xa0
  2915 047f 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 61
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 61
 
 
  2916 0480 A0090000 		.4byte	.LASF90
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  2970 04ec 7E080000 		.4byte	.LASF99
  2971 04f0 06       		.byte	0x6
  2972 04f1 81       		.byte	0x81
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 62
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 62
 
 
  2973 04f2 D9000000 		.4byte	0xd9
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3027 055e 88050000 		.4byte	0x588
  3028 0562 E0       		.byte	0xe0
  3029 0563 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 63
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 63
 
 
  3030 0564 C10C0000 		.4byte	.LASF109
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3084 05d0 13010000 		.4byte	0x113
  3085 05d4 0401     		.2byte	0x104
  3086 05d6 00       		.byte	0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 64
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 64
 
 
  3087 05d7 13       		.uleb128 0x13
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3141 0646 14       		.byte	0x14
  3142 0647 0D       		.uleb128 0xd
  3143 0648 71040000 		.4byte	.LASF124
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 65
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 65
 
 
  3144 064c 08       		.byte	0x8
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3198 06b9 48       		.byte	0x48
  3199 06ba A2000000 		.4byte	0xa2
  3200 06be 3003     		.2byte	0x330
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 66
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 66
 
 
  3201 06c0 12       		.uleb128 0x12
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3255 0733 5F060000 		.4byte	0x65f
  3256 0737 09       		.uleb128 0x9
  3257 0738 01       		.byte	0x1
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 67
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 67
 
 
  3258 0739 37000000 		.4byte	0x37
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3312 07a6 01       		.byte	0x1
  3313 07a7 0A       		.uleb128 0xa
  3314 07a8 01090000 		.4byte	.LASF146
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 68
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 68
 
 
  3315 07ac 02       		.byte	0x2
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3369 0818 00       		.byte	0
  3370 0819 0A       		.uleb128 0xa
  3371 081a 45020000 		.4byte	.LASF162
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 69
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 69
 
 
  3372 081e 01       		.byte	0x1
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3426 0887 0D       		.uleb128 0xd
  3427 0888 B20C0000 		.4byte	.LASF172
  3428 088c 0A       		.byte	0xa
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 70
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 70
 
 
  3429 088d 61       		.byte	0x61
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3483 08f9 70       		.byte	0x70
  3484 08fa C3000000 		.4byte	0xc3
  3485 08fe 30       		.byte	0x30
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 71
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 71
 
 
  3486 08ff 0D       		.uleb128 0xd
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3540 096b 0D       		.uleb128 0xd
  3541 096c B9010000 		.4byte	.LASF191
  3542 0970 0A       		.byte	0xa
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 72
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 72
 
 
  3543 0971 82       		.byte	0x82
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3597 09dd 91       		.byte	0x91
  3598 09de CE000000 		.4byte	0xce
  3599 09e2 7C       		.byte	0x7c
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 73
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 73
 
 
  3600 09e3 0D       		.uleb128 0xd
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3654 0a4a AD000000 		.4byte	0xad
  3655 0a4e 06       		.byte	0x6
  3656 0a4f 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 74
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 74
 
 
  3657 0a50 BA0D0000 		.4byte	.LASF206
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3711 0abe 2D       		.byte	0x2d
  3712 0abf 8F050000 		.4byte	0x58f
  3713 0ac3 03       		.uleb128 0x3
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 75
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 75
 
 
  3714 0ac4 91       		.byte	0x91
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3768 0b28 1A       		.uleb128 0x1a
  3769 0b29 DE010000 		.4byte	.LASF214
  3770 0b2d 01       		.byte	0x1
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 76
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 76
 
 
  3771 0b2e 3C       		.byte	0x3c
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3825 0b9f 5C       		.sleb128 -36
  3826 0ba0 18       		.uleb128 0x18
  3827 0ba1 7400     		.ascii	"t\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 77
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 77
 
 
  3828 0ba3 01       		.byte	0x1
@@ -4588,7 +4588,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3852 0bd0 CE000000 		.4byte	0xce
  3853 0bd4 05       		.uleb128 0x5
  3854 0bd5 03       		.byte	0x3
- 3855 0bd6 00000000 		.4byte	last_pt_ms.8025
+ 3855 0bd6 00000000 		.4byte	last_pt_ms.8087
  3856 0bda 00       		.byte	0
  3857 0bdb 1D       		.uleb128 0x1d
  3858 0bdc 0A010000 		.4byte	.LBB5
@@ -4600,7 +4600,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3864 0beb 360C0000 		.4byte	0xc36
  3865 0bef 05       		.uleb128 0x5
  3866 0bf0 03       		.byte	0x3
- 3867 0bf1 00000000 		.4byte	tag.8026
+ 3867 0bf1 00000000 		.4byte	tag.8088
  3868 0bf5 1D       		.uleb128 0x1d
  3869 0bf6 0A010000 		.4byte	.LBB6
  3870 0bfa B4000000 		.4byte	.LBE6-.LBB6
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3882 0c13 18       		.uleb128 0x18
  3883 0c14 6300     		.ascii	"c\000"
  3884 0c16 01       		.byte	0x1
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 78
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 78
 
 
  3885 0c17 6E       		.byte	0x6e
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3939 0c7f 8F       		.byte	0x8f
  3940 0c80 D9000000 		.4byte	0xd9
  3941 0c84 02       		.uleb128 0x2
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 79
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 79
 
 
  3942 0c85 91       		.byte	0x91
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  3996 0cec 73       		.sleb128 -13
  3997 0ced 00       		.byte	0
  3998 0cee 1B       		.uleb128 0x1b
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 80
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 80
 
 
  3999 0cef 6F0C0000 		.4byte	.LASF222
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4053 0d5b 17       		.uleb128 0x17
  4054 0d5c EC040000 		.4byte	.LASF225
  4055 0d60 01       		.byte	0x1
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 81
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 81
 
 
  4056 0d61 C8       		.byte	0xc8
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4110 0dba 6200     		.ascii	"b\000"
  4111 0dbc 01       		.byte	0x1
  4112 0dbd CF       		.byte	0xcf
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 82
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 82
 
 
  4113 0dbe D9000000 		.4byte	0xd9
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4167 0e24 00       		.sleb128 0
  4168 0e25 17       		.uleb128 0x17
  4169 0e26 8D020000 		.4byte	.LASF230
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 83
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 83
 
 
  4170 0e2a 01       		.byte	0x1
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4224 0e85 00       		.byte	0
  4225 0e86 21       		.uleb128 0x21
  4226 0e87 FD070000 		.4byte	.LASF232
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 84
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 84
 
 
  4227 0e8b 01       		.byte	0x1
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4281 0ef5 02       		.uleb128 0x2
  4282 0ef6 91       		.byte	0x91
  4283 0ef7 70       		.sleb128 -16
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 85
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 85
 
 
  4284 0ef8 19       		.uleb128 0x19
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4338 0f61 D9000000 		.4byte	0xd9
  4339 0f65 02       		.uleb128 0x2
  4340 0f66 91       		.byte	0x91
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 86
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 86
 
 
  4341 0f67 6C       		.sleb128 -20
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4395 0fcf E30F0000 		.4byte	0xfe3
  4396 0fd3 24       		.uleb128 0x24
  4397 0fd4 63747800 		.ascii	"ctx\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 87
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 87
 
 
  4398 0fd8 01       		.byte	0x1
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4452 1045 01       		.byte	0x1
  4453 1046 5201     		.2byte	0x152
  4454 1048 00000000 		.4byte	.LFB80
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 88
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 88
 
 
  4455 104c A8000000 		.4byte	.LFE80-.LFB80
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4509 10be 91       		.byte	0x91
  4510 10bf 74       		.sleb128 -12
  4511 10c0 00       		.byte	0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 89
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 89
 
 
  4512 10c1 29       		.uleb128 0x29
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4566 1131 01       		.byte	0x1
  4567 1132 8201     		.2byte	0x182
  4568 1134 D9000000 		.4byte	0xd9
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 90
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 90
 
 
  4569 1138 02       		.uleb128 0x2
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4623 11a5 91       		.byte	0x91
  4624 11a6 73       		.sleb128 -13
  4625 11a7 00       		.byte	0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 91
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 91
 
 
  4626 11a8 27       		.uleb128 0x27
@@ -5458,7 +5458,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4680 121b 01       		.byte	0x1
  4681 121c 1B       		.byte	0x1b
  4682 121d 09010000 		.4byte	0x109
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 92
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 92
 
 
  4683 1221 00       		.byte	0
@@ -5518,7 +5518,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4737 0033 08       		.uleb128 0x8
  4738 0034 00       		.byte	0
  4739 0035 00       		.byte	0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 93
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 93
 
 
  4740 0036 05       		.uleb128 0x5
@@ -5578,7 +5578,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4794 006c 0B       		.uleb128 0xb
  4795 006d 13       		.uleb128 0x13
  4796 006e 01       		.byte	0x1
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 94
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 94
 
 
  4797 006f 0B       		.uleb128 0xb
@@ -5638,7 +5638,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4851 00a5 00       		.byte	0
  4852 00a6 00       		.byte	0
  4853 00a7 10       		.uleb128 0x10
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 95
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 95
 
 
  4854 00a8 15       		.uleb128 0x15
@@ -5698,7 +5698,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4908 00de 00       		.byte	0
  4909 00df 00       		.byte	0
  4910 00e0 15       		.uleb128 0x15
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 96
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 96
 
 
  4911 00e1 2E       		.uleb128 0x2e
@@ -5758,7 +5758,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  4965 0118 00       		.byte	0
  4966 0119 00       		.byte	0
  4967 011a 18       		.uleb128 0x18
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 97
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 97
 
 
  4968 011b 34       		.uleb128 0x34
@@ -5818,7 +5818,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5022 0152 00       		.byte	0
  5023 0153 00       		.byte	0
  5024 0154 1B       		.uleb128 0x1b
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 98
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 98
 
 
  5025 0155 2E       		.uleb128 0x2e
@@ -5878,7 +5878,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5079 018c 2E       		.uleb128 0x2e
  5080 018d 01       		.byte	0x1
  5081 018e 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 99
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 99
 
 
  5082 018f 19       		.uleb128 0x19
@@ -5938,7 +5938,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5136 01c7 0B       		.uleb128 0xb
  5137 01c8 27       		.uleb128 0x27
  5138 01c9 19       		.uleb128 0x19
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 100
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 100
 
 
  5139 01ca 11       		.uleb128 0x11
@@ -5998,7 +5998,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5193 0203 01       		.uleb128 0x1
  5194 0204 13       		.uleb128 0x13
  5195 0205 00       		.byte	0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 101
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 101
 
 
  5196 0206 00       		.byte	0
@@ -6058,7 +6058,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5250 023c 0B       		.uleb128 0xb
  5251 023d 3B       		.uleb128 0x3b
  5252 023e 05       		.uleb128 0x5
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 102
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 102
 
 
  5253 023f 27       		.uleb128 0x27
@@ -6118,7 +6118,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5307 0277 11       		.uleb128 0x11
  5308 0278 01       		.uleb128 0x1
  5309 0279 12       		.uleb128 0x12
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 103
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 103
 
 
  5310 027a 06       		.uleb128 0x6
@@ -6178,7 +6178,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5364 0018 00000000 		.4byte	.LFB65
  5365 001c 38000000 		.4byte	.LFE65-.LFB65
  5366 0020 00000000 		.4byte	.LFB66
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 104
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 104
 
 
  5367 0024 18000000 		.4byte	.LFE66-.LFB66
@@ -6238,7 +6238,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5421 0014 00000000 		.4byte	0
  5422 0018 00000000 		.4byte	.LFB64
  5423 001c 54000000 		.4byte	.LFE64
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 105
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 105
 
 
  5424 0020 00000000 		.4byte	.LFB65
@@ -6298,7 +6298,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5476      00000201 
  5476      FB0E0D00 
  5476      01010101 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 106
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 106
 
 
  5477              	.LASF138:
@@ -6358,7 +6358,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5501              	.LASF17:
  5502 0095 696E7433 		.ascii	"int32_t\000"
  5502      325F7400 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 107
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 107
 
 
  5503              	.LASF185:
@@ -6418,7 +6418,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5526      5F545241 
  5526      434B494E 
  5526      4700
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 108
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 108
 
 
  5527              	.LASF163:
@@ -6478,7 +6478,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5553              	.LASF65:
  5554 01c4 6770735F 		.ascii	"gps_raw_vacc\000"
  5554      7261775F 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 109
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 109
 
 
  5554      76616363 
@@ -6538,7 +6538,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5577              	.LASF53:
  5578 025f 6770735F 		.ascii	"gps_alt_m\000"
  5578      616C745F 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 110
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 110
 
 
  5578      6D00
@@ -6598,7 +6598,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5604      4400
  5605              	.LASF156:
  5606 02fd 4155544F 		.ascii	"AUTO_LOSS\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 111
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 111
 
 
  5606      5F4C4F53 
@@ -6658,7 +6658,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5630 0393 6770735F 		.ascii	"gps_target_set\000"
  5630      74617267 
  5630      65745F73 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 112
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 112
 
 
  5630      657400
@@ -6718,7 +6718,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5652      7300
  5653              	.LASF91:
  5654 043b 73797373 		.ascii	"sysstat_time_s\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 113
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 113
 
 
  5654      7461745F 
@@ -6778,7 +6778,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5677              	.LASF130:
  5678 04e2 67696D62 		.ascii	"gimbal_id\000"
  5678      616C5F69 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 114
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 114
 
 
  5678      6400
@@ -6838,7 +6838,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5704      7200
  5705              	.LASF113:
  5706 057b 68616D66 		.ascii	"hamfly_telemetry_t\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 115
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 115
 
 
  5706      6C795F74 
@@ -6898,7 +6898,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5729              	.LASF258:
  5730 061e 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
  5730      43313120 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 116
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 116
 
 
  5730      352E342E 
@@ -6958,7 +6958,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5750      795F6175 
  5750      746F5F6E 
  5750      6F5F6C6F 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 117
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 117
 
 
  5750      636B00
@@ -7018,7 +7018,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5775              	.LASF259:
  5776 07c6 6170705F 		.ascii	"app_state_auto.c\000"
  5776      73746174 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 118
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 118
 
 
  5776      655F6175 
@@ -7078,7 +7078,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5798      5F617574 
  5798      6F5F686F 
  5798      6D6500
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 119
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 119
 
 
  5799              	.LASF141:
@@ -7138,7 +7138,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5826      6D7300
  5827              	.LASF146:
  5828 0901 4D414E55 		.ascii	"MANU\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 120
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 120
 
 
  5828      00
@@ -7198,7 +7198,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5848      75735F66 
  5848      6C616773 
  5849              	.LASF151:
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 121
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 121
 
 
  5850 09b5 4D414E55 		.ascii	"MANU_JOYSTICK\000"
@@ -7258,7 +7258,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5874 0a51 666C6167 		.ascii	"flag_compass_error\000"
  5874      5F636F6D 
  5874      70617373 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 122
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 122
 
 
  5874      5F657272 
@@ -7318,7 +7318,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5898      6B5F6379 
  5898      5F6C6173 
  5898      7400
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 123
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 123
 
 
  5899              	.LASF186:
@@ -7378,7 +7378,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5924      6400
  5925              	.LASF67:
  5926 0b97 6261726F 		.ascii	"baro_valid\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 124
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 124
 
 
  5926      5F76616C 
@@ -7438,7 +7438,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5949              	.LASF60:
  5950 0c2e 6770735F 		.ascii	"gps_raw_lon\000"
  5950      7261775F 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 125
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 125
 
 
  5950      6C6F6E00 
@@ -7498,7 +7498,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  5974      656400
  5975              	.LASF194:
  5976 0cd4 73746174 		.ascii	"state_entry_ms\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 126
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 126
 
 
  5976      655F656E 
@@ -7558,7 +7558,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 1
  6000 0daf 6C617374 		.ascii	"last_pt_ms\000"
  6000      5F70745F 
  6000      6D7300
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccnF7cMk.s 			page 127
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccqmBS6Z.s 			page 127
 
 
  6001              	.LASF206:

@@ -17,6 +17,7 @@
 */
 
 #include "sbc_comms.h"
+#include "debug_pins.h"
 #include <string.h>
 #include <project.h>
 
@@ -240,8 +241,10 @@ uint8_t sbc_get_centroid(uint8_t stream, payload_centroid_t *out)
         *out = s_centroid[stream];  // Copy out the centroid
         s_fresh_bits &= (uint8_t)~bit;  // Set stale (already grabbed)
         got = 1u;  // Say we got em.
+        if (stream == STREAM_COARSE) DPIN_CENTROID();
     }
-    CyExitCriticalSection(ist);  // Re-enables interruprs
+    CyExitCriticalSection(ist);  // Re-enables interruprs;
+    // Toggle relevant debug pin
     return got;  // Caller is told they got a new centroid!
 }
 

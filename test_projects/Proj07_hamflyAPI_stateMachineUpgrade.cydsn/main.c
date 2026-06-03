@@ -44,6 +44,7 @@
 // Implementation specific stuff
 #include "adc_balanced.h"
 #include "joystick.h"
+#include "debug_pins.h"
 
 // PSoC state machine stuff
 #include "psoc_eeprom.h"
@@ -260,6 +261,7 @@ int main(void)
     // %======================================================================%
     for (;;)
     {
+        DPIN_LOOP_TOGGLE();  // Toggle debug pin
         uint32_t  now = g_tick_ms;
         // Get serial monitor input.
         uint8_t ch = (uint8_t)UART_DEBUG_GetChar();

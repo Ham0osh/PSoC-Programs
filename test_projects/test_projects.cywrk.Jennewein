@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Header Files\debug_pins.h">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\sbc_comms.c">
 <ExpandedNodeIds>
 <v>test_projects</v>
 <v>test_projects\Ex_UART_Full_Duplex01\TopDesign</v>
@@ -260,9 +260,6 @@
 <v>test_projects\UDB_Library\Source Files</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
-<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Proj07_hamflyAPI_stateMachineUpgrade.cydwr\Analog</v>
-<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Proj07_hamflyAPI_stateMachineUpgrade.cydwr\Clocks</v>
-<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Proj07_hamflyAPI_stateMachineUpgrade.cydwr\Interrupts</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Proj07_hamflyAPI_stateMachineUpgrade.cydwr\DMA</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Proj07_hamflyAPI_stateMachineUpgrade.cydwr\System</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Proj07_hamflyAPI_stateMachineUpgrade.cydwr\Directives</v>
@@ -295,6 +292,9 @@
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\main.c</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\psoc_eeprom.c</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\sbc_comms.c</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Source Files\telemetry.c</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\Generated_Source</v>
+<v>test_projects\UDB_Library</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="test_projects">
@@ -733,6 +733,7 @@
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\app_state_manu.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\app_state_stby.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\app_statemachine.lst</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_MCU.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_Movi.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
@@ -760,6 +761,11 @@
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Looptimer.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Looptimer_PM.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_Debug_CoarseCentroid.lst</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_Debug_GimbalComms.lst</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_Debug_SBCComms.lst</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_Debug_SuperLoop.lst</v>
+<v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_Debug_Tick.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\Pin_LED.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\psoc_eeprom.lst</v>
 <v>test_projects\Proj07_hamflyAPI_stateMachineUpgrade\CortexM3\ARM_GCC_541\Debug\Listing Files\sbc_comms.lst</v>
@@ -791,6 +797,36 @@
 <VisibleNodeIds>
 <v>test_projects</v>
 <v>test_projects\Ex_UART_Full_Duplex01</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\CyScBoostClk.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\debug.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_rx.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\LED.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\SW2.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\UART.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_BOOT.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_INT.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_IntClock.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_PM.lst</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Ex_UART_Full_Duplex01.elf</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Ex_UART_Full_Duplex01.hex</v>
+<v>test_projects\Ex_UART_Full_Duplex01\CortexM3\ARM_GCC_541\Debug\Ex_UART_Full_Duplex01.map</v>
+<v>test_projects\Ex_UART_Full_Duplex01\Ex_UART_Full_Duplex01.gpdsc</v>
 <v>test_projects\Ex_UART_Full_Duplex01\Ex_UART_Full_Duplex01.rpt</v>
 <v>test_projects\Ex_UART_Full_Duplex01\Ex_UART_Full_Duplex01_timing.html</v>
 <v>test_projects\proj00_custom_blinker</v>

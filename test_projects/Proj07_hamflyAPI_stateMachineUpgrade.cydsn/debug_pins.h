@@ -28,7 +28,7 @@
 
 // Pulse at each coarse frame received.
 #define DPIN_CENTROID() \
-    do { Pin_Debug_CoarseCentroid_Write(1u); Pin_Debug_CoarseCentroid_Write(0u); } while (0)
+    Pin_Debug_CoarseCentroid_Write(Pin_Debug_CoarseCentroid_Read() ^ 1u)
 
 #endif /* DEBUG_PINS_H */
 /* [] END OF FILE */
