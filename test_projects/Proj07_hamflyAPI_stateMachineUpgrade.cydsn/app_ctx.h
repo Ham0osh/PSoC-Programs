@@ -36,7 +36,8 @@
 #define TRACKING_LOSS_TIMEOUT_MS   5000u  // TRACKING -> LOSS if no centroid
 #define NUDGE_BURST_MS               80u  // velocity burst, tbd.
 #define TELEM_STABLE_MS         5000u  // Consecutive gimbal telemetry before leaving defer.
-    
+#define MOVI_TIMEOUT_MS         5000u  // How long to wait if gimbal stops responding
+
 // TEMP: Nudge constants
 #define NUDGE_LSB_DEG     (180.0f/32767.0f)  /* ~0.00549°, one on-wire LSB */
 #define NUDGE_FINE_DEG    0.5f
@@ -94,8 +95,9 @@ typedef struct {
     uint8_t  home_return_stby;  // Bool, if true then AUTO_HOME exits to STBY
     // Timer for how long in AUTO HOLD
     uint32_t auto_hold_entry_ms;
-    // Timer for good telemetry from gimbal
-    uint32_t telem_good_since_ms;
+    // Timer for good telemetry from gimbal, and int of when last good packet
+    uint32_t telem_stable_since_ms;
+    uint32_t gimbal_last_rx_ms;
     
     // Error
     err_sev_t   err_sev;

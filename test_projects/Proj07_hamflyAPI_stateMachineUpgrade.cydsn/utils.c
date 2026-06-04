@@ -21,6 +21,8 @@
 #include "app_statemachine.h"  // Raise error helper
 //#include "debug_pins.h"  // Uncoment if we add pin macros here
 #include <project.h>  // Pustring to UART_DEBUG
+#include <stdio.h>
+#include <string.h>
 
 extern volatile uint32_t g_tick_ms;
 
@@ -44,6 +46,9 @@ void nudge_apply(app_ctx_t *ctx, float dpan_deg, float dtilt_deg)
             app_raise_error(ctx, SEV_USER, "no telemetry (nudge ignored).");
             return;
         }
+        char dbg[64];
+        sprintf(dbg, "[NUDGE] seed p=%.2f t=%.2f\r\n", p, t);
+        UART_DEBUG_PutString(dbg);
         UART_DEBUG_PutString("Nudging!\r\n");
         // Save base and movement
         ctx->nudge_base_pan_deg  = p;

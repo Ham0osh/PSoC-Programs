@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
   11:app_state_error.c ****  *
   12:app_state_error.c ****  * Author: Hamish Johnson (2026)
   13:app_state_error.c ****  *
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 2
 
 
   14:app_state_error.c ****  * ========================================
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
   76              	.L6:
   32:app_state_error.c ****     }
   33:app_state_error.c **** }
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 3
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 3
 
 
   77              		.loc 1 33 0
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  118              		.thumb
  119              		.thumb_func
  120              		.type	entry_error_active, %function
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 4
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 4
 
 
  121              	entry_error_active:
@@ -207,7 +207,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
   39:app_state_error.c ****     UART_DEBUG_PutString(sev_str(ctx->err_sev));
  139              		.loc 1 39 0
  140 000e 7B68     		ldr	r3, [r7, #4]
- 141 0010 1B7C     		ldrb	r3, [r3, #16]	@ zero_extendqisi2
+ 141 0010 1B7D     		ldrb	r3, [r3, #20]	@ zero_extendqisi2
  142 0012 1846     		mov	r0, r3
  143 0014 FFF7FEFF 		bl	sev_str
  144 0018 0346     		mov	r3, r0
@@ -220,12 +220,12 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
   41:app_state_error.c ****     UART_DEBUG_PutString(ctx->err_msg ? ctx->err_msg : "(no msg)");
  150              		.loc 1 41 0
  151 0026 7B68     		ldr	r3, [r7, #4]
- 152 0028 5B69     		ldr	r3, [r3, #20]
+ 152 0028 9B69     		ldr	r3, [r3, #24]
  153 002a 002B     		cmp	r3, #0
  154 002c 02D0     		beq	.L11
  155              		.loc 1 41 0 is_stmt 0 discriminator 1
  156 002e 7B68     		ldr	r3, [r7, #4]
- 157 0030 5B69     		ldr	r3, [r3, #20]
+ 157 0030 9B69     		ldr	r3, [r3, #24]
  158 0032 00E0     		b	.L12
  159              	.L11:
  160              		.loc 1 41 0 discriminator 2
@@ -237,8 +237,8 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
   42:app_state_error.c ****     if (ctx->err_sev == SEV_FATAL && ctx->gimbal)
  166              		.loc 1 42 0 is_stmt 1 discriminator 4
  167 003c 7B68     		ldr	r3, [r7, #4]
- 168 003e 1B7C     		ldrb	r3, [r3, #16]	@ zero_extendqisi2
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 5
+ 168 003e 1B7D     		ldrb	r3, [r3, #20]	@ zero_extendqisi2
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 5
 
 
  169 0040 032B     		cmp	r3, #3
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
   54:app_state_error.c **** {
  212              		.loc 1 54 0
  213              		.cfi_startproc
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 6
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 6
 
 
  214              		@ args = 0, pretend = 0, frame = 16
@@ -318,7 +318,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
   56:app_state_error.c ****     if (ctx->err_sev != SEV_FATAL) {
  227              		.loc 1 56 0
  228 000c 7B68     		ldr	r3, [r7, #4]
- 229 000e 1B7C     		ldrb	r3, [r3, #16]	@ zero_extendqisi2
+ 229 000e 1B7D     		ldrb	r3, [r3, #20]	@ zero_extendqisi2
  230 0010 032B     		cmp	r3, #3
  231 0012 13D0     		beq	.L18
  232              	.LBB2:
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  258 0034 FFF7FEFF 		bl	app_transition
   61:app_state_error.c ****         return 1;
  259              		.loc 1 61 0 discriminator 6
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 7
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 7
 
 
  260 0038 0123     		movs	r3, #1
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  302              		.cfi_def_cfa_register 7
  303 0006 7860     		str	r0, [r7, #4]
   69:app_state_error.c ****     UART_DEBUG_PutString("\r\n[ERROR_KILL] hamfly_kill fired. Ctrl+R to clear.\r\n");
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 8
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 8
 
 
  304              		.loc 1 69 0
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  353 0006 7860     		str	r0, [r7, #4]
  354 0008 0B46     		mov	r3, r1
  355 000a FB70     		strb	r3, [r7, #3]
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 9
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 9
 
 
   75:app_state_error.c ****     (void)ctx; (void)k;
@@ -534,11 +534,11 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
   83:app_state_error.c ****     if (ctx->err_sev == SEV_FATAL) out->kill = 1u;
  398              		.loc 1 83 0
  399 0012 7B68     		ldr	r3, [r7, #4]
- 400 0014 1B7C     		ldrb	r3, [r3, #16]	@ zero_extendqisi2
+ 400 0014 1B7D     		ldrb	r3, [r3, #20]	@ zero_extendqisi2
  401 0016 032B     		cmp	r3, #3
  402 0018 02D1     		bne	.L31
  403              		.loc 1 83 0 is_stmt 0 discriminator 1
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 10
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 10
 
 
  404 001a 3B68     		ldr	r3, [r7]
@@ -571,34 +571,34 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  430              		.file 11 "Generated_Source\\PSoC5/core_cm3.h"
  431              		.section	.debug_info,"",%progbits
  432              	.Ldebug_info0:
- 433 0000 B90B0000 		.4byte	0xbb9
+ 433 0000 C50B0000 		.4byte	0xbc5
  434 0004 0400     		.2byte	0x4
  435 0006 00000000 		.4byte	.Ldebug_abbrev0
  436 000a 04       		.byte	0x4
  437 000b 01       		.uleb128 0x1
- 438 000c DF000000 		.4byte	.LASF218
+ 438 000c E0000000 		.4byte	.LASF219
  439 0010 0C       		.byte	0xc
- 440 0011 70000000 		.4byte	.LASF219
- 441 0015 0B0B0000 		.4byte	.LASF220
+ 440 0011 71000000 		.4byte	.LASF220
+ 441 0015 1F0B0000 		.4byte	.LASF221
  442 0019 00000000 		.4byte	.Ldebug_ranges0+0
  443 001d 00000000 		.4byte	0
  444 0021 00000000 		.4byte	.Ldebug_line0
  445 0025 02       		.uleb128 0x2
  446 0026 01       		.byte	0x1
  447 0027 06       		.byte	0x6
- 448 0028 620A0000 		.4byte	.LASF0
+ 448 0028 760A0000 		.4byte	.LASF0
  449 002c 03       		.uleb128 0x3
- 450 002d 06080000 		.4byte	.LASF2
+ 450 002d 2E080000 		.4byte	.LASF2
  451 0031 02       		.byte	0x2
  452 0032 1D       		.byte	0x1d
  453 0033 37000000 		.4byte	0x37
  454 0037 02       		.uleb128 0x2
  455 0038 01       		.byte	0x1
  456 0039 08       		.byte	0x8
- 457 003a 49090000 		.4byte	.LASF1
+ 457 003a 71090000 		.4byte	.LASF1
  458 003e 03       		.uleb128 0x3
- 459 003f FE050000 		.4byte	.LASF3
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 11
+ 459 003f 26060000 		.4byte	.LASF3
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 11
 
 
  460 0043 02       		.byte	0x2
@@ -607,42 +607,42 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  463 0049 02       		.uleb128 0x2
  464 004a 02       		.byte	0x2
  465 004b 05       		.byte	0x5
- 466 004c 0E070000 		.4byte	.LASF4
+ 466 004c 36070000 		.4byte	.LASF4
  467 0050 03       		.uleb128 0x3
- 468 0051 02030000 		.4byte	.LASF5
+ 468 0051 15030000 		.4byte	.LASF5
  469 0055 02       		.byte	0x2
  470 0056 2B       		.byte	0x2b
  471 0057 5B000000 		.4byte	0x5b
  472 005b 02       		.uleb128 0x2
  473 005c 02       		.byte	0x2
  474 005d 07       		.byte	0x7
- 475 005e 850A0000 		.4byte	.LASF6
+ 475 005e 990A0000 		.4byte	.LASF6
  476 0062 03       		.uleb128 0x3
- 477 0063 B5000000 		.4byte	.LASF7
+ 477 0063 B6000000 		.4byte	.LASF7
  478 0067 02       		.byte	0x2
  479 0068 3F       		.byte	0x3f
  480 0069 6D000000 		.4byte	0x6d
  481 006d 02       		.uleb128 0x2
  482 006e 04       		.byte	0x4
  483 006f 05       		.byte	0x5
- 484 0070 47070000 		.4byte	.LASF8
+ 484 0070 6F070000 		.4byte	.LASF8
  485 0074 03       		.uleb128 0x3
- 486 0075 57090000 		.4byte	.LASF9
+ 486 0075 7F090000 		.4byte	.LASF9
  487 0079 02       		.byte	0x2
  488 007a 41       		.byte	0x41
  489 007b 7F000000 		.4byte	0x7f
  490 007f 02       		.uleb128 0x2
  491 0080 04       		.byte	0x4
  492 0081 07       		.byte	0x7
- 493 0082 CA080000 		.4byte	.LASF10
+ 493 0082 F2080000 		.4byte	.LASF10
  494 0086 02       		.uleb128 0x2
  495 0087 08       		.byte	0x8
  496 0088 05       		.byte	0x5
- 497 0089 C1050000 		.4byte	.LASF11
+ 497 0089 E9050000 		.4byte	.LASF11
  498 008d 02       		.uleb128 0x2
  499 008e 08       		.byte	0x8
  500 008f 07       		.byte	0x7
- 501 0090 84020000 		.4byte	.LASF12
+ 501 0090 97020000 		.4byte	.LASF12
  502 0094 04       		.uleb128 0x4
  503 0095 04       		.byte	0x4
  504 0096 05       		.byte	0x5
@@ -650,55 +650,55 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  506 009b 02       		.uleb128 0x2
  507 009c 04       		.byte	0x4
  508 009d 07       		.byte	0x7
- 509 009e 99000000 		.4byte	.LASF13
+ 509 009e 9A000000 		.4byte	.LASF13
  510 00a2 03       		.uleb128 0x3
- 511 00a3 39050000 		.4byte	.LASF14
+ 511 00a3 61050000 		.4byte	.LASF14
  512 00a7 03       		.byte	0x3
  513 00a8 18       		.byte	0x18
  514 00a9 2C000000 		.4byte	0x2c
  515 00ad 03       		.uleb128 0x3
- 516 00ae 7C020000 		.4byte	.LASF15
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 12
+ 516 00ae 8F020000 		.4byte	.LASF15
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 12
 
 
  517 00b2 03       		.byte	0x3
  518 00b3 20       		.byte	0x20
  519 00b4 3E000000 		.4byte	0x3e
  520 00b8 03       		.uleb128 0x3
- 521 00b9 CD060000 		.4byte	.LASF16
+ 521 00b9 F5060000 		.4byte	.LASF16
  522 00bd 03       		.byte	0x3
  523 00be 24       		.byte	0x24
  524 00bf 50000000 		.4byte	0x50
  525 00c3 03       		.uleb128 0x3
- 526 00c4 03090000 		.4byte	.LASF17
+ 526 00c4 2B090000 		.4byte	.LASF17
  527 00c8 03       		.byte	0x3
  528 00c9 2C       		.byte	0x2c
  529 00ca 62000000 		.4byte	0x62
  530 00ce 03       		.uleb128 0x3
- 531 00cf 24020000 		.4byte	.LASF18
+ 531 00cf 37020000 		.4byte	.LASF18
  532 00d3 03       		.byte	0x3
  533 00d4 30       		.byte	0x30
  534 00d5 74000000 		.4byte	0x74
  535 00d9 02       		.uleb128 0x2
  536 00da 04       		.byte	0x4
  537 00db 04       		.byte	0x4
- 538 00dc 65020000 		.4byte	.LASF19
+ 538 00dc 78020000 		.4byte	.LASF19
  539 00e0 02       		.uleb128 0x2
  540 00e1 08       		.byte	0x8
  541 00e2 04       		.byte	0x4
- 542 00e3 FA0A0000 		.4byte	.LASF20
+ 542 00e3 0E0B0000 		.4byte	.LASF20
  543 00e7 02       		.uleb128 0x2
  544 00e8 01       		.byte	0x1
  545 00e9 08       		.byte	0x8
- 546 00ea C9040000 		.4byte	.LASF21
+ 546 00ea DC040000 		.4byte	.LASF21
  547 00ee 02       		.uleb128 0x2
  548 00ef 08       		.byte	0x8
  549 00f0 04       		.byte	0x4
- 550 00f1 C1060000 		.4byte	.LASF22
+ 550 00f1 E9060000 		.4byte	.LASF22
  551 00f5 02       		.uleb128 0x2
  552 00f6 04       		.byte	0x4
  553 00f7 07       		.byte	0x7
- 554 00f8 A5080000 		.4byte	.LASF23
+ 554 00f8 CD080000 		.4byte	.LASF23
  555 00fc 05       		.uleb128 0x5
  556 00fd 04       		.byte	0x4
  557 00fe 06       		.uleb128 0x6
@@ -717,23 +717,23 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  570 011a 1E       		.byte	0x1e
  571 011b 38010000 		.4byte	0x138
  572 011f 0A       		.uleb128 0xa
- 573 0120 93090000 		.4byte	.LASF24
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 13
+ 573 0120 BB090000 		.4byte	.LASF24
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 13
 
 
  574 0124 00       		.byte	0
  575 0125 0A       		.uleb128 0xa
- 576 0126 DC010000 		.4byte	.LASF25
+ 576 0126 DD010000 		.4byte	.LASF25
  577 012a 01       		.byte	0x1
  578 012b 0A       		.uleb128 0xa
- 579 012c 60060000 		.4byte	.LASF26
+ 579 012c 88060000 		.4byte	.LASF26
  580 0130 02       		.byte	0x2
  581 0131 0A       		.uleb128 0xa
- 582 0132 980A0000 		.4byte	.LASF27
+ 582 0132 AC0A0000 		.4byte	.LASF27
  583 0136 03       		.byte	0x3
  584 0137 00       		.byte	0
  585 0138 03       		.uleb128 0x3
- 586 0139 0B040000 		.4byte	.LASF28
+ 586 0139 1E040000 		.4byte	.LASF28
  587 013d 04       		.byte	0x4
  588 013e 2A       		.byte	0x2a
  589 013f 13010000 		.4byte	0x113
@@ -749,53 +749,53 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  599 0152 D9000000 		.4byte	0xd9
  600 0156 00       		.byte	0
  601 0157 0D       		.uleb128 0xd
- 602 0158 77020000 		.4byte	.LASF29
+ 602 0158 8A020000 		.4byte	.LASF29
  603 015c 04       		.byte	0x4
  604 015d 30       		.byte	0x30
  605 015e D9000000 		.4byte	0xd9
  606 0162 04       		.byte	0x4
  607 0163 0D       		.uleb128 0xd
- 608 0164 34050000 		.4byte	.LASF30
+ 608 0164 5C050000 		.4byte	.LASF30
  609 0168 04       		.byte	0x4
  610 0169 31       		.byte	0x31
  611 016a D9000000 		.4byte	0xd9
  612 016e 08       		.byte	0x8
  613 016f 0D       		.uleb128 0xd
- 614 0170 BC030000 		.4byte	.LASF31
+ 614 0170 CF030000 		.4byte	.LASF31
  615 0174 04       		.byte	0x4
  616 0175 32       		.byte	0x32
  617 0176 38010000 		.4byte	0x138
  618 017a 0C       		.byte	0xc
  619 017b 0D       		.uleb128 0xd
- 620 017c 70040000 		.4byte	.LASF32
+ 620 017c 83040000 		.4byte	.LASF32
  621 0180 04       		.byte	0x4
  622 0181 33       		.byte	0x33
  623 0182 38010000 		.4byte	0x138
  624 0186 0D       		.byte	0xd
  625 0187 0D       		.uleb128 0xd
- 626 0188 A9010000 		.4byte	.LASF33
+ 626 0188 AA010000 		.4byte	.LASF33
  627 018c 04       		.byte	0x4
  628 018d 34       		.byte	0x34
  629 018e 38010000 		.4byte	0x138
  630 0192 0E       		.byte	0xe
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 14
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 14
 
 
  631 0193 0D       		.uleb128 0xd
- 632 0194 56030000 		.4byte	.LASF34
+ 632 0194 69030000 		.4byte	.LASF34
  633 0198 04       		.byte	0x4
  634 0199 35       		.byte	0x35
  635 019a A2000000 		.4byte	0xa2
  636 019e 0F       		.byte	0xf
  637 019f 0D       		.uleb128 0xd
- 638 01a0 9A010000 		.4byte	.LASF35
+ 638 01a0 9B010000 		.4byte	.LASF35
  639 01a4 04       		.byte	0x4
  640 01a5 36       		.byte	0x36
  641 01a6 A2000000 		.4byte	0xa2
  642 01aa 10       		.byte	0x10
  643 01ab 00       		.byte	0
  644 01ac 03       		.uleb128 0x3
- 645 01ad AE080000 		.4byte	.LASF36
+ 645 01ad D6080000 		.4byte	.LASF36
  646 01b1 04       		.byte	0x4
  647 01b2 37       		.byte	0x37
  648 01b3 43010000 		.4byte	0x143
@@ -811,13 +811,13 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  658 01c6 FC000000 		.4byte	0xfc
  659 01ca 00       		.byte	0
  660 01cb 0D       		.uleb128 0xd
- 661 01cc 5B020000 		.4byte	.LASF37
+ 661 01cc 6E020000 		.4byte	.LASF37
  662 01d0 05       		.byte	0x5
  663 01d1 26       		.byte	0x26
  664 01d2 F4010000 		.4byte	0x1f4
  665 01d6 04       		.byte	0x4
  666 01d7 0D       		.uleb128 0xd
- 667 01d8 8E010000 		.4byte	.LASF38
+ 667 01d8 8F010000 		.4byte	.LASF38
  668 01dc 05       		.byte	0x5
  669 01dd 27       		.byte	0x27
  670 01de 09020000 		.4byte	0x209
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  685 01ff 09020000 		.4byte	0x209
  686 0203 0F       		.uleb128 0xf
  687 0204 FC000000 		.4byte	0xfc
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 15
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 15
 
 
  688 0208 00       		.byte	0
@@ -846,7 +846,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  690 020a 04       		.byte	0x4
  691 020b FA010000 		.4byte	0x1fa
  692 020f 03       		.uleb128 0x3
- 693 0210 82000000 		.4byte	.LASF39
+ 693 0210 83000000 		.4byte	.LASF39
  694 0214 05       		.byte	0x5
  695 0215 28       		.byte	0x28
  696 0216 B7010000 		.4byte	0x1b7
@@ -856,121 +856,121 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  700 021d 1F       		.byte	0x1f
  701 021e 83050000 		.4byte	0x583
  702 0222 0D       		.uleb128 0xd
- 703 0223 E8050000 		.4byte	.LASF40
+ 703 0223 10060000 		.4byte	.LASF40
  704 0227 06       		.byte	0x6
  705 0228 21       		.byte	0x21
  706 0229 83050000 		.4byte	0x583
  707 022d 00       		.byte	0
  708 022e 0D       		.uleb128 0xd
- 709 022f 7F010000 		.4byte	.LASF41
+ 709 022f 80010000 		.4byte	.LASF41
  710 0233 06       		.byte	0x6
  711 0234 22       		.byte	0x22
  712 0235 D9000000 		.4byte	0xd9
  713 0239 04       		.byte	0x4
  714 023a 0D       		.uleb128 0xd
- 715 023b 36080000 		.4byte	.LASF42
+ 715 023b 5E080000 		.4byte	.LASF42
  716 023f 06       		.byte	0x6
  717 0240 23       		.byte	0x23
  718 0241 D9000000 		.4byte	0xd9
  719 0245 08       		.byte	0x8
  720 0246 0D       		.uleb128 0xd
- 721 0247 2B050000 		.4byte	.LASF43
+ 721 0247 53050000 		.4byte	.LASF43
  722 024b 06       		.byte	0x6
  723 024c 24       		.byte	0x24
  724 024d D9000000 		.4byte	0xd9
  725 0251 0C       		.byte	0xc
  726 0252 0D       		.uleb128 0xd
- 727 0253 07050000 		.4byte	.LASF44
+ 727 0253 1A050000 		.4byte	.LASF44
  728 0257 06       		.byte	0x6
  729 0258 25       		.byte	0x25
  730 0259 D9000000 		.4byte	0xd9
  731 025d 10       		.byte	0x10
  732 025e 0D       		.uleb128 0xd
- 733 025f 10050000 		.4byte	.LASF45
+ 733 025f 23050000 		.4byte	.LASF45
  734 0263 06       		.byte	0x6
  735 0264 26       		.byte	0x26
  736 0265 D9000000 		.4byte	0xd9
  737 0269 14       		.byte	0x14
  738 026a 0D       		.uleb128 0xd
- 739 026b 19050000 		.4byte	.LASF46
+ 739 026b 2C050000 		.4byte	.LASF46
  740 026f 06       		.byte	0x6
  741 0270 27       		.byte	0x27
  742 0271 D9000000 		.4byte	0xd9
  743 0275 18       		.byte	0x18
  744 0276 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 16
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 16
 
 
- 745 0277 F0060000 		.4byte	.LASF47
+ 745 0277 18070000 		.4byte	.LASF47
  746 027b 06       		.byte	0x6
  747 027c 28       		.byte	0x28
  748 027d A2000000 		.4byte	0xa2
  749 0281 1C       		.byte	0x1c
  750 0282 0D       		.uleb128 0xd
- 751 0283 FF060000 		.4byte	.LASF48
+ 751 0283 27070000 		.4byte	.LASF48
  752 0287 06       		.byte	0x6
  753 0288 29       		.byte	0x29
  754 0289 A2000000 		.4byte	0xa2
  755 028d 1D       		.byte	0x1d
  756 028e 0D       		.uleb128 0xd
- 757 028f 08060000 		.4byte	.LASF49
+ 757 028f 30060000 		.4byte	.LASF49
  758 0293 06       		.byte	0x6
  759 0294 2C       		.byte	0x2c
  760 0295 83050000 		.4byte	0x583
  761 0299 1E       		.byte	0x1e
  762 029a 0D       		.uleb128 0xd
- 763 029b CF050000 		.4byte	.LASF50
+ 763 029b F7050000 		.4byte	.LASF50
  764 029f 06       		.byte	0x6
  765 02a0 2E       		.byte	0x2e
  766 02a1 83050000 		.4byte	0x583
  767 02a5 1F       		.byte	0x1f
  768 02a6 0D       		.uleb128 0xd
- 769 02a7 FA070000 		.4byte	.LASF51
+ 769 02a7 22080000 		.4byte	.LASF51
  770 02ab 06       		.byte	0x6
  771 02ac 31       		.byte	0x31
  772 02ad D9000000 		.4byte	0xd9
  773 02b1 20       		.byte	0x20
  774 02b2 0D       		.uleb128 0xd
- 775 02b3 2C040000 		.4byte	.LASF52
+ 775 02b3 3F040000 		.4byte	.LASF52
  776 02b7 06       		.byte	0x6
  777 02b8 32       		.byte	0x32
  778 02b9 D9000000 		.4byte	0xd9
  779 02bd 24       		.byte	0x24
  780 02be 0D       		.uleb128 0xd
- 781 02bf B1070000 		.4byte	.LASF53
+ 781 02bf D9070000 		.4byte	.LASF53
  782 02c3 06       		.byte	0x6
  783 02c4 33       		.byte	0x33
  784 02c5 D9000000 		.4byte	0xd9
  785 02c9 28       		.byte	0x28
  786 02ca 0D       		.uleb128 0xd
- 787 02cb 2D020000 		.4byte	.LASF54
+ 787 02cb 40020000 		.4byte	.LASF54
  788 02cf 06       		.byte	0x6
  789 02d0 34       		.byte	0x34
  790 02d1 D9000000 		.4byte	0xd9
  791 02d5 2C       		.byte	0x2c
  792 02d6 0D       		.uleb128 0xd
- 793 02d7 B1060000 		.4byte	.LASF55
+ 793 02d7 D9060000 		.4byte	.LASF55
  794 02db 06       		.byte	0x6
  795 02dc 36       		.byte	0x36
  796 02dd D9000000 		.4byte	0xd9
  797 02e1 30       		.byte	0x30
  798 02e2 0D       		.uleb128 0xd
- 799 02e3 65040000 		.4byte	.LASF56
+ 799 02e3 78040000 		.4byte	.LASF56
  800 02e7 06       		.byte	0x6
  801 02e8 37       		.byte	0x37
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 17
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 17
 
 
  802 02e9 D9000000 		.4byte	0xd9
  803 02ed 34       		.byte	0x34
  804 02ee 0D       		.uleb128 0xd
- 805 02ef F5090000 		.4byte	.LASF57
+ 805 02ef 090A0000 		.4byte	.LASF57
  806 02f3 06       		.byte	0x6
  807 02f4 38       		.byte	0x38
  808 02f5 D9000000 		.4byte	0xd9
  809 02f9 38       		.byte	0x38
  810 02fa 0D       		.uleb128 0xd
- 811 02fb B5050000 		.4byte	.LASF58
+ 811 02fb DD050000 		.4byte	.LASF58
  812 02ff 06       		.byte	0x6
  813 0300 39       		.byte	0x39
  814 0301 D9000000 		.4byte	0xd9
@@ -982,184 +982,184 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  820 030d C3000000 		.4byte	0xc3
  821 0311 40       		.byte	0x40
  822 0312 0D       		.uleb128 0xd
- 823 0313 B10A0000 		.4byte	.LASF60
+ 823 0313 C50A0000 		.4byte	.LASF60
  824 0317 06       		.byte	0x6
  825 0318 3C       		.byte	0x3c
  826 0319 C3000000 		.4byte	0xc3
  827 031d 44       		.byte	0x44
  828 031e 0D       		.uleb128 0xd
- 829 031f 4E040000 		.4byte	.LASF61
+ 829 031f 61040000 		.4byte	.LASF61
  830 0323 06       		.byte	0x6
  831 0324 41       		.byte	0x41
  832 0325 C3000000 		.4byte	0xc3
  833 0329 48       		.byte	0x48
  834 032a 0D       		.uleb128 0xd
- 835 032b 8B070000 		.4byte	.LASF62
+ 835 032b B3070000 		.4byte	.LASF62
  836 032f 06       		.byte	0x6
  837 0330 42       		.byte	0x42
  838 0331 AD000000 		.4byte	0xad
  839 0335 4C       		.byte	0x4c
  840 0336 0D       		.uleb128 0xd
- 841 0337 7F060000 		.4byte	.LASF63
+ 841 0337 A7060000 		.4byte	.LASF63
  842 033b 06       		.byte	0x6
  843 033c 44       		.byte	0x44
  844 033d AD000000 		.4byte	0xad
  845 0341 4E       		.byte	0x4e
  846 0342 0D       		.uleb128 0xd
- 847 0343 780A0000 		.4byte	.LASF64
+ 847 0343 8C0A0000 		.4byte	.LASF64
  848 0347 06       		.byte	0x6
  849 0348 45       		.byte	0x45
  850 0349 B8000000 		.4byte	0xb8
  851 034d 50       		.byte	0x50
  852 034e 0D       		.uleb128 0xd
- 853 034f F40B0000 		.4byte	.LASF65
+ 853 034f 080C0000 		.4byte	.LASF65
  854 0353 06       		.byte	0x6
  855 0354 46       		.byte	0x46
  856 0355 B8000000 		.4byte	0xb8
  857 0359 52       		.byte	0x52
  858 035a 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 18
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 18
 
 
- 859 035b E2020000 		.4byte	.LASF66
+ 859 035b F5020000 		.4byte	.LASF66
  860 035f 06       		.byte	0x6
  861 0360 47       		.byte	0x47
  862 0361 B8000000 		.4byte	0xb8
  863 0365 54       		.byte	0x54
  864 0366 0D       		.uleb128 0xd
- 865 0367 BF080000 		.4byte	.LASF67
+ 865 0367 E7080000 		.4byte	.LASF67
  866 036b 06       		.byte	0x6
  867 036c 4A       		.byte	0x4a
  868 036d 83050000 		.4byte	0x583
  869 0371 56       		.byte	0x56
  870 0372 0D       		.uleb128 0xd
- 871 0373 AF0B0000 		.4byte	.LASF68
+ 871 0373 C30B0000 		.4byte	.LASF68
  872 0377 06       		.byte	0x6
  873 0378 4E       		.byte	0x4e
  874 0379 D9000000 		.4byte	0xd9
  875 037d 58       		.byte	0x58
  876 037e 0D       		.uleb128 0xd
- 877 037f A5020000 		.4byte	.LASF69
+ 877 037f B8020000 		.4byte	.LASF69
  878 0383 06       		.byte	0x6
  879 0384 52       		.byte	0x52
  880 0385 D9000000 		.4byte	0xd9
  881 0389 5C       		.byte	0x5c
  882 038a 0D       		.uleb128 0xd
- 883 038b AB090000 		.4byte	.LASF70
+ 883 038b D3090000 		.4byte	.LASF70
  884 038f 06       		.byte	0x6
  885 0390 57       		.byte	0x57
  886 0391 83050000 		.4byte	0x583
  887 0395 60       		.byte	0x60
  888 0396 0D       		.uleb128 0xd
- 889 0397 45030000 		.4byte	.LASF71
+ 889 0397 58030000 		.4byte	.LASF71
  890 039b 06       		.byte	0x6
  891 039c 58       		.byte	0x58
  892 039d CE000000 		.4byte	0xce
  893 03a1 64       		.byte	0x64
  894 03a2 0D       		.uleb128 0xd
- 895 03a3 D2030000 		.4byte	.LASF72
+ 895 03a3 E5030000 		.4byte	.LASF72
  896 03a7 06       		.byte	0x6
  897 03a8 59       		.byte	0x59
  898 03a9 D9000000 		.4byte	0xd9
  899 03ad 68       		.byte	0x68
  900 03ae 0D       		.uleb128 0xd
- 901 03af 02020000 		.4byte	.LASF73
+ 901 03af 15020000 		.4byte	.LASF73
  902 03b3 06       		.byte	0x6
  903 03b4 5A       		.byte	0x5a
  904 03b5 D9000000 		.4byte	0xd9
  905 03b9 6C       		.byte	0x6c
  906 03ba 0D       		.uleb128 0xd
- 907 03bb 0F0A0000 		.4byte	.LASF74
+ 907 03bb 230A0000 		.4byte	.LASF74
  908 03bf 06       		.byte	0x6
  909 03c0 5B       		.byte	0x5b
  910 03c1 D9000000 		.4byte	0xd9
  911 03c5 70       		.byte	0x70
  912 03c6 0D       		.uleb128 0xd
- 913 03c7 22090000 		.4byte	.LASF75
+ 913 03c7 4A090000 		.4byte	.LASF75
  914 03cb 06       		.byte	0x6
  915 03cc 5F       		.byte	0x5f
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 19
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 19
 
 
  916 03cd D9000000 		.4byte	0xd9
  917 03d1 74       		.byte	0x74
  918 03d2 0D       		.uleb128 0xd
- 919 03d3 0B090000 		.4byte	.LASF76
+ 919 03d3 33090000 		.4byte	.LASF76
  920 03d7 06       		.byte	0x6
  921 03d8 60       		.byte	0x60
  922 03d9 D9000000 		.4byte	0xd9
  923 03dd 78       		.byte	0x78
  924 03de 0D       		.uleb128 0xd
- 925 03df E20B0000 		.4byte	.LASF77
+ 925 03df F60B0000 		.4byte	.LASF77
  926 03e3 06       		.byte	0x6
  927 03e4 61       		.byte	0x61
  928 03e5 D9000000 		.4byte	0xd9
  929 03e9 7C       		.byte	0x7c
  930 03ea 0D       		.uleb128 0xd
- 931 03eb C90A0000 		.4byte	.LASF78
+ 931 03eb DD0A0000 		.4byte	.LASF78
  932 03ef 06       		.byte	0x6
  933 03f0 65       		.byte	0x65
  934 03f1 D9000000 		.4byte	0xd9
  935 03f5 80       		.byte	0x80
  936 03f6 0D       		.uleb128 0xd
- 937 03f7 62090000 		.4byte	.LASF79
+ 937 03f7 8A090000 		.4byte	.LASF79
  938 03fb 06       		.byte	0x6
  939 03fc 66       		.byte	0x66
  940 03fd D9000000 		.4byte	0xd9
  941 0401 84       		.byte	0x84
  942 0402 0D       		.uleb128 0xd
- 943 0403 38040000 		.4byte	.LASF80
+ 943 0403 4B040000 		.4byte	.LASF80
  944 0407 06       		.byte	0x6
  945 0408 67       		.byte	0x67
  946 0409 D9000000 		.4byte	0xd9
  947 040d 88       		.byte	0x88
  948 040e 0D       		.uleb128 0xd
- 949 040f 18030000 		.4byte	.LASF81
+ 949 040f 2B030000 		.4byte	.LASF81
  950 0413 06       		.byte	0x6
  951 0414 6A       		.byte	0x6a
  952 0415 83050000 		.4byte	0x583
  953 0419 8C       		.byte	0x8c
  954 041a 0D       		.uleb128 0xd
- 955 041b C0010000 		.4byte	.LASF82
+ 955 041b C1010000 		.4byte	.LASF82
  956 041f 06       		.byte	0x6
  957 0420 6E       		.byte	0x6e
  958 0421 83050000 		.4byte	0x583
  959 0425 8D       		.byte	0x8d
  960 0426 0D       		.uleb128 0xd
- 961 0427 25060000 		.4byte	.LASF83
+ 961 0427 4D060000 		.4byte	.LASF83
  962 042b 06       		.byte	0x6
  963 042c 6F       		.byte	0x6f
  964 042d 83050000 		.4byte	0x583
  965 0431 8E       		.byte	0x8e
  966 0432 0D       		.uleb128 0xd
- 967 0433 36030000 		.4byte	.LASF84
+ 967 0433 49030000 		.4byte	.LASF84
  968 0437 06       		.byte	0x6
  969 0438 70       		.byte	0x70
  970 0439 83050000 		.4byte	0x583
  971 043d 8F       		.byte	0x8f
  972 043e 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 20
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 20
 
 
- 973 043f 8E0B0000 		.4byte	.LASF85
+ 973 043f A20B0000 		.4byte	.LASF85
  974 0443 06       		.byte	0x6
  975 0444 71       		.byte	0x71
  976 0445 83050000 		.4byte	0x583
  977 0449 90       		.byte	0x90
  978 044a 0D       		.uleb128 0xd
- 979 044b 81080000 		.4byte	.LASF86
+ 979 044b A9080000 		.4byte	.LASF86
  980 044f 06       		.byte	0x6
  981 0450 72       		.byte	0x72
  982 0451 D9000000 		.4byte	0xd9
  983 0455 94       		.byte	0x94
  984 0456 0D       		.uleb128 0xd
- 985 0457 CE000000 		.4byte	.LASF87
+ 985 0457 CF000000 		.4byte	.LASF87
  986 045b 06       		.byte	0x6
  987 045c 73       		.byte	0x73
  988 045d A2000000 		.4byte	0xa2
  989 0461 98       		.byte	0x98
  990 0462 0D       		.uleb128 0xd
- 991 0463 70060000 		.4byte	.LASF88
+ 991 0463 98060000 		.4byte	.LASF88
  992 0467 06       		.byte	0x6
  993 0468 74       		.byte	0x74
  994 0469 D9000000 		.4byte	0xd9
@@ -1171,139 +1171,139 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  1000 0475 A2000000 		.4byte	0xa2
  1001 0479 A0       		.byte	0xa0
  1002 047a 0D       		.uleb128 0xd
- 1003 047b 93030000 		.4byte	.LASF90
+ 1003 047b A6030000 		.4byte	.LASF90
  1004 047f 06       		.byte	0x6
  1005 0480 76       		.byte	0x76
  1006 0481 AD000000 		.4byte	0xad
  1007 0485 A2       		.byte	0xa2
  1008 0486 0D       		.uleb128 0xd
- 1009 0487 74090000 		.4byte	.LASF91
+ 1009 0487 9C090000 		.4byte	.LASF91
  1010 048b 06       		.byte	0x6
  1011 048c 77       		.byte	0x77
  1012 048d AD000000 		.4byte	0xad
  1013 0491 A4       		.byte	0xa4
  1014 0492 0D       		.uleb128 0xd
- 1015 0493 BA0B0000 		.4byte	.LASF92
+ 1015 0493 CE0B0000 		.4byte	.LASF92
  1016 0497 06       		.byte	0x6
  1017 0498 78       		.byte	0x78
  1018 0499 D9000000 		.4byte	0xd9
  1019 049d A8       		.byte	0xa8
  1020 049e 0D       		.uleb128 0xd
- 1021 049f EA040000 		.4byte	.LASF93
+ 1021 049f FD040000 		.4byte	.LASF93
  1022 04a3 06       		.byte	0x6
  1023 04a4 79       		.byte	0x79
  1024 04a5 AD000000 		.4byte	0xad
  1025 04a9 AC       		.byte	0xac
  1026 04aa 0D       		.uleb128 0xd
- 1027 04ab 70030000 		.4byte	.LASF94
+ 1027 04ab 83030000 		.4byte	.LASF94
  1028 04af 06       		.byte	0x6
  1029 04b0 7A       		.byte	0x7a
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 21
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 21
 
 
  1030 04b1 AD000000 		.4byte	0xad
  1031 04b5 AE       		.byte	0xae
  1032 04b6 0D       		.uleb128 0xd
- 1033 04b7 CE0B0000 		.4byte	.LASF95
+ 1033 04b7 E20B0000 		.4byte	.LASF95
  1034 04bb 06       		.byte	0x6
  1035 04bc 7B       		.byte	0x7b
  1036 04bd AD000000 		.4byte	0xad
  1037 04c1 B0       		.byte	0xb0
  1038 04c2 0D       		.uleb128 0xd
- 1039 04c3 10080000 		.4byte	.LASF96
+ 1039 04c3 38080000 		.4byte	.LASF96
  1040 04c7 06       		.byte	0x6
  1041 04c8 7C       		.byte	0x7c
  1042 04c9 D9000000 		.4byte	0xd9
  1043 04cd B4       		.byte	0xb4
  1044 04ce 0D       		.uleb128 0xd
- 1045 04cf EF020000 		.4byte	.LASF97
+ 1045 04cf 02030000 		.4byte	.LASF97
  1046 04d3 06       		.byte	0x6
  1047 04d4 7D       		.byte	0x7d
  1048 04d5 AD000000 		.4byte	0xad
  1049 04d9 B8       		.byte	0xb8
  1050 04da 0D       		.uleb128 0xd
- 1051 04db E8010000 		.4byte	.LASF98
+ 1051 04db FB010000 		.4byte	.LASF98
  1052 04df 06       		.byte	0x6
  1053 04e0 80       		.byte	0x80
  1054 04e1 83050000 		.4byte	0x583
  1055 04e5 BA       		.byte	0xba
  1056 04e6 0D       		.uleb128 0xd
- 1057 04e7 6D010000 		.4byte	.LASF99
+ 1057 04e7 6E010000 		.4byte	.LASF99
  1058 04eb 06       		.byte	0x6
  1059 04ec 81       		.byte	0x81
  1060 04ed D9000000 		.4byte	0xd9
  1061 04f1 BC       		.byte	0xbc
  1062 04f2 0D       		.uleb128 0xd
- 1063 04f3 73010000 		.4byte	.LASF100
+ 1063 04f3 74010000 		.4byte	.LASF100
  1064 04f7 06       		.byte	0x6
  1065 04f8 82       		.byte	0x82
  1066 04f9 D9000000 		.4byte	0xd9
  1067 04fd C0       		.byte	0xc0
  1068 04fe 0D       		.uleb128 0xd
- 1069 04ff 79010000 		.4byte	.LASF101
+ 1069 04ff 7A010000 		.4byte	.LASF101
  1070 0503 06       		.byte	0x6
  1071 0504 83       		.byte	0x83
  1072 0505 D9000000 		.4byte	0xd9
  1073 0509 C4       		.byte	0xc4
  1074 050a 0D       		.uleb128 0xd
- 1075 050b 2F0A0000 		.4byte	.LASF102
+ 1075 050b 430A0000 		.4byte	.LASF102
  1076 050f 06       		.byte	0x6
  1077 0510 84       		.byte	0x84
  1078 0511 D9000000 		.4byte	0xd9
  1079 0515 C8       		.byte	0xc8
  1080 0516 0D       		.uleb128 0xd
- 1081 0517 D3010000 		.4byte	.LASF103
+ 1081 0517 D4010000 		.4byte	.LASF103
  1082 051b 06       		.byte	0x6
  1083 051c 85       		.byte	0x85
  1084 051d D9000000 		.4byte	0xd9
  1085 0521 CC       		.byte	0xcc
  1086 0522 0D       		.uleb128 0xd
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 22
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 22
 
 
- 1087 0523 86050000 		.4byte	.LASF104
+ 1087 0523 AE050000 		.4byte	.LASF104
  1088 0527 06       		.byte	0x6
  1089 0528 86       		.byte	0x86
  1090 0529 D9000000 		.4byte	0xd9
  1091 052d D0       		.byte	0xd0
  1092 052e 0D       		.uleb128 0xd
- 1093 052f 90050000 		.4byte	.LASF105
+ 1093 052f B8050000 		.4byte	.LASF105
  1094 0533 06       		.byte	0x6
  1095 0534 87       		.byte	0x87
  1096 0535 D9000000 		.4byte	0xd9
  1097 0539 D4       		.byte	0xd4
  1098 053a 0D       		.uleb128 0xd
- 1099 053b 9A050000 		.4byte	.LASF106
+ 1099 053b C2050000 		.4byte	.LASF106
  1100 053f 06       		.byte	0x6
  1101 0540 88       		.byte	0x88
  1102 0541 D9000000 		.4byte	0xd9
  1103 0545 D8       		.byte	0xd8
  1104 0546 0D       		.uleb128 0xd
- 1105 0547 E0060000 		.4byte	.LASF107
+ 1105 0547 08070000 		.4byte	.LASF107
  1106 054b 06       		.byte	0x6
  1107 054c 89       		.byte	0x89
  1108 054d D9000000 		.4byte	0xd9
  1109 0551 DC       		.byte	0xdc
  1110 0552 0D       		.uleb128 0xd
- 1111 0553 A8030000 		.4byte	.LASF108
+ 1111 0553 BB030000 		.4byte	.LASF108
  1112 0557 06       		.byte	0x6
  1113 0558 94       		.byte	0x94
  1114 0559 83050000 		.4byte	0x583
  1115 055d E0       		.byte	0xe0
  1116 055e 0D       		.uleb128 0xd
- 1117 055f 12060000 		.4byte	.LASF109
+ 1117 055f 3A060000 		.4byte	.LASF109
  1118 0563 06       		.byte	0x6
  1119 0564 95       		.byte	0x95
  1120 0565 83050000 		.4byte	0x583
  1121 0569 E1       		.byte	0xe1
  1122 056a 0D       		.uleb128 0xd
- 1123 056b 4E0A0000 		.4byte	.LASF110
+ 1123 056b 620A0000 		.4byte	.LASF110
  1124 056f 06       		.byte	0x6
  1125 0570 96       		.byte	0x96
  1126 0571 D9000000 		.4byte	0xd9
  1127 0575 E4       		.byte	0xe4
  1128 0576 0D       		.uleb128 0xd
- 1129 0577 0E020000 		.4byte	.LASF111
+ 1129 0577 21020000 		.4byte	.LASF111
  1130 057b 06       		.byte	0x6
  1131 057c 97       		.byte	0x97
  1132 057d AD000000 		.4byte	0xad
@@ -1312,13 +1312,13 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  1135 0583 02       		.uleb128 0x2
  1136 0584 01       		.byte	0x1
  1137 0585 02       		.byte	0x2
- 1138 0586 FA030000 		.4byte	.LASF112
+ 1138 0586 0D040000 		.4byte	.LASF112
  1139 058a 03       		.uleb128 0x3
  1140 058b 00000000 		.4byte	.LASF113
  1141 058f 06       		.byte	0x6
  1142 0590 99       		.byte	0x99
  1143 0591 1A020000 		.4byte	0x21a
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 23
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 23
 
 
  1144 0595 11       		.uleb128 0x11
@@ -1333,19 +1333,19 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  1153 05a5 E2050000 		.4byte	0x5e2
  1154 05a9 00       		.byte	0
  1155 05aa 12       		.uleb128 0x12
- 1156 05ab B0000000 		.4byte	.LASF114
+ 1156 05ab B1000000 		.4byte	.LASF114
  1157 05af 07       		.byte	0x7
  1158 05b0 24       		.byte	0x24
  1159 05b1 0E010000 		.4byte	0x10e
  1160 05b5 0001     		.2byte	0x100
  1161 05b7 12       		.uleb128 0x12
- 1162 05b8 83090000 		.4byte	.LASF115
+ 1162 05b8 AB090000 		.4byte	.LASF115
  1163 05bc 07       		.byte	0x7
  1164 05bd 25       		.byte	0x25
  1165 05be 0E010000 		.4byte	0x10e
  1166 05c2 0201     		.2byte	0x102
  1167 05c4 12       		.uleb128 0x12
- 1168 05c5 48040000 		.4byte	.LASF116
+ 1168 05c5 5B040000 		.4byte	.LASF116
  1169 05c9 07       		.byte	0x7
  1170 05ca 26       		.byte	0x26
  1171 05cb 0E010000 		.4byte	0x10e
@@ -1361,7 +1361,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  1181 05e2 08       		.uleb128 0x8
  1182 05e3 D2050000 		.4byte	0x5d2
  1183 05e7 03       		.uleb128 0x3
- 1184 05e8 7A050000 		.4byte	.LASF117
+ 1184 05e8 A2050000 		.4byte	.LASF117
  1185 05ec 07       		.byte	0x7
  1186 05ed 27       		.byte	0x27
  1187 05ee 95050000 		.4byte	0x595
@@ -1371,14 +1371,14 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  1191 05f5 2F       		.byte	0x2f
  1192 05f6 4F060000 		.4byte	0x64f
  1193 05fa 0D       		.uleb128 0xd
- 1194 05fb 88090000 		.4byte	.LASF118
+ 1194 05fb B0090000 		.4byte	.LASF118
  1195 05ff 08       		.byte	0x8
  1196 0600 30       		.byte	0x30
  1197 0601 CE000000 		.4byte	0xce
  1198 0605 00       		.byte	0
  1199 0606 0D       		.uleb128 0xd
- 1200 0607 EE050000 		.4byte	.LASF119
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 24
+ 1200 0607 16060000 		.4byte	.LASF119
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 24
 
 
  1201 060b 08       		.byte	0x8
@@ -1386,38 +1386,38 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  1203 060d CE000000 		.4byte	0xce
  1204 0611 04       		.byte	0x4
  1205 0612 0D       		.uleb128 0xd
- 1206 0613 21040000 		.4byte	.LASF120
+ 1206 0613 34040000 		.4byte	.LASF120
  1207 0617 08       		.byte	0x8
  1208 0618 32       		.byte	0x32
  1209 0619 CE000000 		.4byte	0xce
  1210 061d 08       		.byte	0x8
  1211 061e 0D       		.uleb128 0xd
- 1212 061f A8070000 		.4byte	.LASF121
+ 1212 061f D0070000 		.4byte	.LASF121
  1213 0623 08       		.byte	0x8
  1214 0624 33       		.byte	0x33
  1215 0625 CE000000 		.4byte	0xce
  1216 0629 0C       		.byte	0xc
  1217 062a 0D       		.uleb128 0xd
- 1218 062b 41050000 		.4byte	.LASF122
+ 1218 062b 69050000 		.4byte	.LASF122
  1219 062f 08       		.byte	0x8
  1220 0630 34       		.byte	0x34
  1221 0631 CE000000 		.4byte	0xce
  1222 0635 10       		.byte	0x10
  1223 0636 0D       		.uleb128 0xd
- 1224 0637 DA0A0000 		.4byte	.LASF123
+ 1224 0637 EE0A0000 		.4byte	.LASF123
  1225 063b 08       		.byte	0x8
  1226 063c 35       		.byte	0x35
  1227 063d B8000000 		.4byte	0xb8
  1228 0641 14       		.byte	0x14
  1229 0642 0D       		.uleb128 0xd
- 1230 0643 3F020000 		.4byte	.LASF124
+ 1230 0643 52020000 		.4byte	.LASF124
  1231 0647 08       		.byte	0x8
  1232 0648 36       		.byte	0x36
  1233 0649 A2000000 		.4byte	0xa2
  1234 064d 16       		.byte	0x16
  1235 064e 00       		.byte	0
  1236 064f 03       		.uleb128 0x3
- 1237 0650 E60A0000 		.4byte	.LASF125
+ 1237 0650 FA0A0000 		.4byte	.LASF125
  1238 0654 08       		.byte	0x8
  1239 0655 37       		.byte	0x37
  1240 0656 F2050000 		.4byte	0x5f2
@@ -1438,80 +1438,80 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  1255 0675 40       		.byte	0x40
  1256 0676 AC010000 		.4byte	0x1ac
  1257 067a 0C       		.byte	0xc
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 25
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 25
 
 
  1258 067b 0D       		.uleb128 0xd
- 1259 067c 9B020000 		.4byte	.LASF126
+ 1259 067c AE020000 		.4byte	.LASF126
  1260 0680 08       		.byte	0x8
  1261 0681 41       		.byte	0x41
  1262 0682 8A050000 		.4byte	0x58a
  1263 0686 20       		.byte	0x20
  1264 0687 12       		.uleb128 0x12
- 1265 0688 5A040000 		.4byte	.LASF127
+ 1265 0688 6D040000 		.4byte	.LASF127
  1266 068c 08       		.byte	0x8
  1267 068d 42       		.byte	0x42
  1268 068e 4F060000 		.4byte	0x64f
  1269 0692 0C01     		.2byte	0x10c
  1270 0694 12       		.uleb128 0x12
- 1271 0695 010C0000 		.4byte	.LASF128
+ 1271 0695 150C0000 		.4byte	.LASF128
  1272 0699 08       		.byte	0x8
  1273 069a 43       		.byte	0x43
  1274 069b E7050000 		.4byte	0x5e7
  1275 069f 2401     		.2byte	0x124
  1276 06a1 12       		.uleb128 0x12
- 1277 06a2 6A030000 		.4byte	.LASF129
+ 1277 06a2 7D030000 		.4byte	.LASF129
  1278 06a6 08       		.byte	0x8
  1279 06a7 44       		.byte	0x44
  1280 06a8 E7050000 		.4byte	0x5e7
  1281 06ac 2A02     		.2byte	0x22a
  1282 06ae 12       		.uleb128 0x12
- 1283 06af 010B0000 		.4byte	.LASF130
+ 1283 06af 150B0000 		.4byte	.LASF130
  1284 06b3 08       		.byte	0x8
  1285 06b4 48       		.byte	0x48
  1286 06b5 A2000000 		.4byte	0xa2
  1287 06b9 3003     		.2byte	0x330
  1288 06bb 12       		.uleb128 0x12
- 1289 06bc B3010000 		.4byte	.LASF131
+ 1289 06bc B4010000 		.4byte	.LASF131
  1290 06c0 08       		.byte	0x8
  1291 06c1 4C       		.byte	0x4c
  1292 06c2 B8000000 		.4byte	0xb8
  1293 06c6 3203     		.2byte	0x332
  1294 06c8 12       		.uleb128 0x12
- 1295 06c9 8B060000 		.4byte	.LASF132
+ 1295 06c9 B3060000 		.4byte	.LASF132
  1296 06cd 08       		.byte	0x8
  1297 06ce 4D       		.byte	0x4d
  1298 06cf CE000000 		.4byte	0xce
  1299 06d3 3403     		.2byte	0x334
  1300 06d5 12       		.uleb128 0x12
- 1301 06d6 DA050000 		.4byte	.LASF133
+ 1301 06d6 02060000 		.4byte	.LASF133
  1302 06da 08       		.byte	0x8
  1303 06db 4E       		.byte	0x4e
  1304 06dc 83050000 		.4byte	0x583
  1305 06e0 3803     		.2byte	0x338
  1306 06e2 12       		.uleb128 0x12
- 1307 06e3 9B060000 		.4byte	.LASF134
+ 1307 06e3 C3060000 		.4byte	.LASF134
  1308 06e7 08       		.byte	0x8
  1309 06e8 4F       		.byte	0x4f
  1310 06e9 B8000000 		.4byte	0xb8
  1311 06ed 3A03     		.2byte	0x33a
  1312 06ef 12       		.uleb128 0x12
- 1313 06f0 76070000 		.4byte	.LASF135
+ 1313 06f0 9E070000 		.4byte	.LASF135
  1314 06f4 08       		.byte	0x8
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 26
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 26
 
 
  1315 06f5 50       		.byte	0x50
  1316 06f6 B8000000 		.4byte	0xb8
  1317 06fa 3C03     		.2byte	0x33c
  1318 06fc 12       		.uleb128 0x12
- 1319 06fd EA070000 		.4byte	.LASF136
+ 1319 06fd 12080000 		.4byte	.LASF136
  1320 0701 08       		.byte	0x8
  1321 0702 51       		.byte	0x51
  1322 0703 17070000 		.4byte	0x717
  1323 0707 3E03     		.2byte	0x33e
  1324 0709 12       		.uleb128 0x12
- 1325 070a 7F040000 		.4byte	.LASF137
+ 1325 070a 92040000 		.4byte	.LASF137
  1326 070e 08       		.byte	0x8
  1327 070f 54       		.byte	0x54
  1328 0710 A2000000 		.4byte	0xa2
@@ -1525,7 +1525,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  1336 0725 3F       		.byte	0x3f
  1337 0726 00       		.byte	0
  1338 0727 03       		.uleb128 0x3
- 1339 0728 B5090000 		.4byte	.LASF138
+ 1339 0728 DD090000 		.4byte	.LASF138
  1340 072c 08       		.byte	0x8
  1341 072d 56       		.byte	0x56
  1342 072e 5A060000 		.4byte	0x65a
@@ -1536,17 +1536,17 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  1347 0739 38       		.byte	0x38
  1348 073a 51070000 		.4byte	0x751
  1349 073e 0A       		.uleb128 0xa
- 1350 073f 6E0A0000 		.4byte	.LASF139
+ 1350 073f 820A0000 		.4byte	.LASF139
  1351 0743 00       		.byte	0
  1352 0744 0A       		.uleb128 0xa
- 1353 0745 D6060000 		.4byte	.LASF140
+ 1353 0745 FE060000 		.4byte	.LASF140
  1354 0749 01       		.byte	0x1
  1355 074a 0A       		.uleb128 0xa
- 1356 074b 0D030000 		.4byte	.LASF141
+ 1356 074b 20030000 		.4byte	.LASF141
  1357 074f 02       		.byte	0x2
  1358 0750 00       		.byte	0
  1359 0751 03       		.uleb128 0x3
- 1360 0752 D0020000 		.4byte	.LASF142
+ 1360 0752 E3020000 		.4byte	.LASF142
  1361 0756 09       		.byte	0x9
  1362 0757 3C       		.byte	0x3c
  1363 0758 32070000 		.4byte	0x732
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  1369 0764 0C       		.uleb128 0xc
  1370 0765 7500     		.ascii	"u\000"
  1371 0767 09       		.byte	0x9
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 27
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 27
 
 
  1372 0768 51       		.byte	0x51
@@ -1573,7 +1573,7 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  1381 077d 01       		.byte	0x1
  1382 077e 00       		.byte	0
  1383 077f 03       		.uleb128 0x3
- 1384 0780 49060000 		.4byte	.LASF143
+ 1384 0780 71060000 		.4byte	.LASF143
  1385 0784 09       		.byte	0x9
  1386 0785 52       		.byte	0x52
  1387 0786 5C070000 		.4byte	0x75c
@@ -1581,2120 +1581,2132 @@ ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 1
  1389 078b 01       		.byte	0x1
  1390 078c 37000000 		.4byte	0x37
  1391 0790 0A       		.byte	0xa
- 1392 0791 33       		.byte	0x33
+ 1392 0791 34       		.byte	0x34
  1393 0792 03080000 		.4byte	0x803
  1394 0796 0A       		.uleb128 0xa
- 1395 0797 75050000 		.4byte	.LASF144
+ 1395 0797 9D050000 		.4byte	.LASF144
  1396 079b 00       		.byte	0
  1397 079c 0A       		.uleb128 0xa
- 1398 079d 1F020000 		.4byte	.LASF145
+ 1398 079d 32020000 		.4byte	.LASF145
  1399 07a1 01       		.byte	0x1
  1400 07a2 0A       		.uleb128 0xa
- 1401 07a3 9E0B0000 		.4byte	.LASF146
+ 1401 07a3 B20B0000 		.4byte	.LASF146
  1402 07a7 02       		.byte	0x2
  1403 07a8 0A       		.uleb128 0xa
- 1404 07a9 7A040000 		.4byte	.LASF147
+ 1404 07a9 8D040000 		.4byte	.LASF147
  1405 07ad 03       		.byte	0x3
  1406 07ae 0A       		.uleb128 0xa
  1407 07af 13000000 		.4byte	.LASF148
  1408 07b3 04       		.byte	0x4
  1409 07b4 0A       		.uleb128 0xa
- 1410 07b5 5D070000 		.4byte	.LASF149
+ 1410 07b5 85070000 		.4byte	.LASF149
  1411 07b9 05       		.byte	0x5
  1412 07ba 0A       		.uleb128 0xa
- 1413 07bb 46080000 		.4byte	.LASF150
+ 1413 07bb 6E080000 		.4byte	.LASF150
  1414 07bf 06       		.byte	0x6
  1415 07c0 0A       		.uleb128 0xa
- 1416 07c1 800B0000 		.4byte	.LASF151
+ 1416 07c1 940B0000 		.4byte	.LASF151
  1417 07c5 07       		.byte	0x7
  1418 07c6 0A       		.uleb128 0xa
- 1419 07c7 8F000000 		.4byte	.LASF152
+ 1419 07c7 90000000 		.4byte	.LASF152
  1420 07cb 08       		.byte	0x8
  1421 07cc 0A       		.uleb128 0xa
  1422 07cd 19000000 		.4byte	.LASF153
  1423 07d1 09       		.byte	0x9
  1424 07d2 0A       		.uleb128 0xa
- 1425 07d3 C5030000 		.4byte	.LASF154
+ 1425 07d3 D8030000 		.4byte	.LASF154
  1426 07d7 0A       		.byte	0xa
  1427 07d8 0A       		.uleb128 0xa
- 1428 07d9 50080000 		.4byte	.LASF155
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 28
+ 1428 07d9 78080000 		.4byte	.LASF155
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 28
 
 
  1429 07dd 0B       		.byte	0xb
  1430 07de 0A       		.uleb128 0xa
- 1431 07df 32060000 		.4byte	.LASF156
+ 1431 07df 5A060000 		.4byte	.LASF156
  1432 07e3 0C       		.byte	0xc
  1433 07e4 0A       		.uleb128 0xa
- 1434 07e5 DC080000 		.4byte	.LASF157
+ 1434 07e5 04090000 		.4byte	.LASF157
  1435 07e9 0D       		.byte	0xd
  1436 07ea 0A       		.uleb128 0xa
- 1437 07eb C3020000 		.4byte	.LASF158
+ 1437 07eb D6020000 		.4byte	.LASF158
  1438 07ef 0E       		.byte	0xe
  1439 07f0 0A       		.uleb128 0xa
- 1440 07f1 5D030000 		.4byte	.LASF159
+ 1440 07f1 70030000 		.4byte	.LASF159
  1441 07f5 0F       		.byte	0xf
  1442 07f6 0A       		.uleb128 0xa
- 1443 07f7 E6080000 		.4byte	.LASF160
+ 1443 07f7 0E090000 		.4byte	.LASF160
  1444 07fb 10       		.byte	0x10
  1445 07fc 0A       		.uleb128 0xa
- 1446 07fd 18070000 		.4byte	.LASF161
+ 1446 07fd 40070000 		.4byte	.LASF161
  1447 0801 11       		.byte	0x11
  1448 0802 00       		.byte	0
  1449 0803 03       		.uleb128 0x3
- 1450 0804 CE040000 		.4byte	.LASF162
+ 1450 0804 E1040000 		.4byte	.LASF162
  1451 0808 0A       		.byte	0xa
- 1452 0809 45       		.byte	0x45
+ 1452 0809 46       		.byte	0x46
  1453 080a 8A070000 		.4byte	0x78a
  1454 080e 09       		.uleb128 0x9
  1455 080f 01       		.byte	0x1
  1456 0810 37000000 		.4byte	0x37
  1457 0814 0A       		.byte	0xa
- 1458 0815 4D       		.byte	0x4d
+ 1458 0815 4E       		.byte	0x4e
  1459 0816 33080000 		.4byte	0x833
  1460 081a 0A       		.uleb128 0xa
- 1461 081b 40060000 		.4byte	.LASF163
+ 1461 081b 68060000 		.4byte	.LASF163
  1462 081f 00       		.byte	0
  1463 0820 0A       		.uleb128 0xa
- 1464 0821 22050000 		.4byte	.LASF164
+ 1464 0821 35050000 		.4byte	.LASF164
  1465 0825 01       		.byte	0x1
  1466 0826 0A       		.uleb128 0xa
- 1467 0827 98080000 		.4byte	.LASF165
+ 1467 0827 C0080000 		.4byte	.LASF165
  1468 082b 02       		.byte	0x2
  1469 082c 0A       		.uleb128 0xa
- 1470 082d 9F010000 		.4byte	.LASF166
+ 1470 082d A0010000 		.4byte	.LASF166
  1471 0831 03       		.byte	0x3
  1472 0832 00       		.byte	0
  1473 0833 03       		.uleb128 0x3
- 1474 0834 3F090000 		.4byte	.LASF167
+ 1474 0834 67090000 		.4byte	.LASF167
  1475 0838 0A       		.byte	0xa
- 1476 0839 52       		.byte	0x52
+ 1476 0839 53       		.byte	0x53
  1477 083a 0E080000 		.4byte	0x80e
  1478 083e 0B       		.uleb128 0xb
- 1479 083f A4       		.byte	0xa4
+ 1479 083f A8       		.byte	0xa8
  1480 0840 0A       		.byte	0xa
- 1481 0841 55       		.byte	0x55
- 1482 0842 630A0000 		.4byte	0xa63
+ 1481 0841 56       		.byte	0x56
+ 1482 0842 6F0A0000 		.4byte	0xa6f
  1483 0846 0D       		.uleb128 0xd
- 1484 0847 F7050000 		.4byte	.LASF168
+ 1484 0847 1F060000 		.4byte	.LASF168
  1485 084b 0A       		.byte	0xa
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 29
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 29
 
 
- 1486 084c 57       		.byte	0x57
- 1487 084d 630A0000 		.4byte	0xa63
+ 1486 084c 58       		.byte	0x58
+ 1487 084d 6F0A0000 		.4byte	0xa6f
  1488 0851 00       		.byte	0
  1489 0852 0D       		.uleb128 0xd
- 1490 0853 1C090000 		.4byte	.LASF169
+ 1490 0853 44090000 		.4byte	.LASF169
  1491 0857 0A       		.byte	0xa
- 1492 0858 5A       		.byte	0x5a
+ 1492 0858 5B       		.byte	0x5b
  1493 0859 03080000 		.4byte	0x803
  1494 085d 04       		.byte	0x4
  1495 085e 0D       		.uleb128 0xd
- 1496 085f A6000000 		.4byte	.LASF170
+ 1496 085f A7000000 		.4byte	.LASF170
  1497 0863 0A       		.byte	0xa
- 1498 0864 5B       		.byte	0x5b
+ 1498 0864 5C       		.byte	0x5c
  1499 0865 03080000 		.4byte	0x803
  1500 0869 05       		.byte	0x5
  1501 086a 0D       		.uleb128 0xd
- 1502 086b B1020000 		.4byte	.LASF171
+ 1502 086b C4020000 		.4byte	.LASF171
  1503 086f 0A       		.byte	0xa
- 1504 0870 5D       		.byte	0x5d
+ 1504 0870 5E       		.byte	0x5e
  1505 0871 A2000000 		.4byte	0xa2
  1506 0875 06       		.byte	0x6
  1507 0876 0D       		.uleb128 0xd
- 1508 0877 A4050000 		.4byte	.LASF172
+ 1508 0877 CC050000 		.4byte	.LASF172
  1509 087b 0A       		.byte	0xa
- 1510 087c 5E       		.byte	0x5e
+ 1510 087c 5F       		.byte	0x5f
  1511 087d A2000000 		.4byte	0xa2
  1512 0881 07       		.byte	0x7
  1513 0882 0D       		.uleb128 0xd
- 1514 0883 62050000 		.4byte	.LASF173
+ 1514 0883 8A050000 		.4byte	.LASF173
  1515 0887 0A       		.byte	0xa
- 1516 0888 60       		.byte	0x60
+ 1516 0888 61       		.byte	0x61
  1517 0889 CE000000 		.4byte	0xce
  1518 088d 08       		.byte	0x8
  1519 088e 0D       		.uleb128 0xd
- 1520 088f C5090000 		.4byte	.LASF174
+ 1520 088f 4E000000 		.4byte	.LASF174
  1521 0893 0A       		.byte	0xa
- 1522 0894 62       		.byte	0x62
+ 1522 0894 63       		.byte	0x63
  1523 0895 CE000000 		.4byte	0xce
  1524 0899 0C       		.byte	0xc
  1525 089a 0D       		.uleb128 0xd
- 1526 089b BB020000 		.4byte	.LASF175
+ 1526 089b E9010000 		.4byte	.LASF175
  1527 089f 0A       		.byte	0xa
- 1528 08a0 65       		.byte	0x65
- 1529 08a1 33080000 		.4byte	0x833
+ 1528 08a0 64       		.byte	0x64
+ 1529 08a1 CE000000 		.4byte	0xce
  1530 08a5 10       		.byte	0x10
  1531 08a6 0D       		.uleb128 0xd
- 1532 08a7 90080000 		.4byte	.LASF176
+ 1532 08a7 CE020000 		.4byte	.LASF176
  1533 08ab 0A       		.byte	0xa
- 1534 08ac 66       		.byte	0x66
- 1535 08ad FE000000 		.4byte	0xfe
+ 1534 08ac 67       		.byte	0x67
+ 1535 08ad 33080000 		.4byte	0x833
  1536 08b1 14       		.byte	0x14
  1537 08b2 0D       		.uleb128 0xd
- 1538 08b3 73080000 		.4byte	.LASF177
+ 1538 08b3 B8080000 		.4byte	.LASF177
  1539 08b7 0A       		.byte	0xa
- 1540 08b8 67       		.byte	0x67
- 1541 08b9 A2000000 		.4byte	0xa2
+ 1540 08b8 68       		.byte	0x68
+ 1541 08b9 FE000000 		.4byte	0xfe
  1542 08bd 18       		.byte	0x18
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 30
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 30
 
 
  1543 08be 0D       		.uleb128 0xd
- 1544 08bf 2F000000 		.4byte	.LASF178
+ 1544 08bf 9B080000 		.4byte	.LASF178
  1545 08c3 0A       		.byte	0xa
- 1546 08c4 6E       		.byte	0x6e
- 1547 08c5 D9000000 		.4byte	0xd9
+ 1546 08c4 69       		.byte	0x69
+ 1547 08c5 A2000000 		.4byte	0xa2
  1548 08c9 1C       		.byte	0x1c
  1549 08ca 0D       		.uleb128 0xd
- 1550 08cb 83030000 		.4byte	.LASF179
+ 1550 08cb 2F000000 		.4byte	.LASF179
  1551 08cf 0A       		.byte	0xa
- 1552 08d0 6F       		.byte	0x6f
+ 1552 08d0 70       		.byte	0x70
  1553 08d1 D9000000 		.4byte	0xd9
  1554 08d5 20       		.byte	0x20
  1555 08d6 0D       		.uleb128 0xd
- 1556 08d7 93040000 		.4byte	.LASF180
+ 1556 08d7 96030000 		.4byte	.LASF180
  1557 08db 0A       		.byte	0xa
- 1558 08dc 74       		.byte	0x74
- 1559 08dd C3000000 		.4byte	0xc3
+ 1558 08dc 71       		.byte	0x71
+ 1559 08dd D9000000 		.4byte	0xd9
  1560 08e1 24       		.byte	0x24
  1561 08e2 0D       		.uleb128 0xd
- 1562 08e3 1C0A0000 		.4byte	.LASF181
+ 1562 08e3 A6040000 		.4byte	.LASF181
  1563 08e7 0A       		.byte	0xa
- 1564 08e8 75       		.byte	0x75
+ 1564 08e8 76       		.byte	0x76
  1565 08e9 C3000000 		.4byte	0xc3
  1566 08ed 28       		.byte	0x28
  1567 08ee 0D       		.uleb128 0xd
- 1568 08ef F1080000 		.4byte	.LASF182
+ 1568 08ef 300A0000 		.4byte	.LASF182
  1569 08f3 0A       		.byte	0xa
- 1570 08f4 76       		.byte	0x76
+ 1570 08f4 77       		.byte	0x77
  1571 08f5 C3000000 		.4byte	0xc3
  1572 08f9 2C       		.byte	0x2c
  1573 08fa 0D       		.uleb128 0xd
- 1574 08fb DB070000 		.4byte	.LASF183
+ 1574 08fb 19090000 		.4byte	.LASF183
  1575 08ff 0A       		.byte	0xa
- 1576 0900 77       		.byte	0x77
- 1577 0901 A2000000 		.4byte	0xa2
+ 1576 0900 78       		.byte	0x78
+ 1577 0901 C3000000 		.4byte	0xc3
  1578 0905 30       		.byte	0x30
  1579 0906 0D       		.uleb128 0xd
- 1580 0907 27080000 		.4byte	.LASF184
+ 1580 0907 03080000 		.4byte	.LASF184
  1581 090b 0A       		.byte	0xa
- 1582 090c 78       		.byte	0x78
+ 1582 090c 79       		.byte	0x79
  1583 090d A2000000 		.4byte	0xa2
- 1584 0911 31       		.byte	0x31
+ 1584 0911 34       		.byte	0x34
  1585 0912 0D       		.uleb128 0xd
- 1586 0913 97070000 		.4byte	.LASF185
+ 1586 0913 4F080000 		.4byte	.LASF185
  1587 0917 0A       		.byte	0xa
- 1588 0918 7B       		.byte	0x7b
- 1589 0919 C3000000 		.4byte	0xc3
- 1590 091d 34       		.byte	0x34
+ 1588 0918 7A       		.byte	0x7a
+ 1589 0919 A2000000 		.4byte	0xa2
+ 1590 091d 35       		.byte	0x35
  1591 091e 0D       		.uleb128 0xd
- 1592 091f 3D0A0000 		.4byte	.LASF186
+ 1592 091f BF070000 		.4byte	.LASF186
  1593 0923 0A       		.byte	0xa
- 1594 0924 7C       		.byte	0x7c
+ 1594 0924 7D       		.byte	0x7d
  1595 0925 C3000000 		.4byte	0xc3
  1596 0929 38       		.byte	0x38
  1597 092a 0D       		.uleb128 0xd
- 1598 092b 26030000 		.4byte	.LASF187
+ 1598 092b 510A0000 		.4byte	.LASF187
  1599 092f 0A       		.byte	0xa
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 31
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 31
 
 
- 1600 0930 7D       		.byte	0x7d
+ 1600 0930 7E       		.byte	0x7e
  1601 0931 C3000000 		.4byte	0xc3
  1602 0935 3C       		.byte	0x3c
  1603 0936 0D       		.uleb128 0xd
- 1604 0937 E0030000 		.4byte	.LASF188
+ 1604 0937 39030000 		.4byte	.LASF188
  1605 093b 0A       		.byte	0xa
- 1606 093c 80       		.byte	0x80
- 1607 093d A2000000 		.4byte	0xa2
+ 1606 093c 7F       		.byte	0x7f
+ 1607 093d C3000000 		.4byte	0xc3
  1608 0941 40       		.byte	0x40
  1609 0942 0D       		.uleb128 0xd
- 1610 0943 24070000 		.4byte	.LASF189
+ 1610 0943 F3030000 		.4byte	.LASF189
  1611 0947 0A       		.byte	0xa
- 1612 0948 81       		.byte	0x81
- 1613 0949 D9000000 		.4byte	0xd9
+ 1612 0948 82       		.byte	0x82
+ 1613 0949 A2000000 		.4byte	0xa2
  1614 094d 44       		.byte	0x44
  1615 094e 0D       		.uleb128 0xd
- 1616 094f 35070000 		.4byte	.LASF190
+ 1616 094f 4C070000 		.4byte	.LASF190
  1617 0953 0A       		.byte	0xa
- 1618 0954 82       		.byte	0x82
+ 1618 0954 83       		.byte	0x83
  1619 0955 D9000000 		.4byte	0xd9
  1620 0959 48       		.byte	0x48
  1621 095a 0D       		.uleb128 0xd
- 1622 095b 60080000 		.4byte	.LASF191
+ 1622 095b 5D070000 		.4byte	.LASF191
  1623 095f 0A       		.byte	0xa
- 1624 0960 83       		.byte	0x83
- 1625 0961 CE000000 		.4byte	0xce
+ 1624 0960 84       		.byte	0x84
+ 1625 0961 D9000000 		.4byte	0xd9
  1626 0965 4C       		.byte	0x4c
  1627 0966 0D       		.uleb128 0xd
- 1628 0967 EC090000 		.4byte	.LASF192
+ 1628 0967 88080000 		.4byte	.LASF192
  1629 096b 0A       		.byte	0xa
- 1630 096c 86       		.byte	0x86
- 1631 096d D9000000 		.4byte	0xd9
+ 1630 096c 85       		.byte	0x85
+ 1631 096d CE000000 		.4byte	0xce
  1632 0971 50       		.byte	0x50
  1633 0972 0D       		.uleb128 0xd
- 1634 0973 68070000 		.4byte	.LASF193
+ 1634 0973 000A0000 		.4byte	.LASF193
  1635 0977 0A       		.byte	0xa
  1636 0978 88       		.byte	0x88
- 1637 0979 AD000000 		.4byte	0xad
+ 1637 0979 D9000000 		.4byte	0xd9
  1638 097d 54       		.byte	0x54
  1639 097e 0D       		.uleb128 0xd
- 1640 097f EC030000 		.4byte	.LASF194
+ 1640 097f 90070000 		.4byte	.LASF194
  1641 0983 0A       		.byte	0xa
- 1642 0984 89       		.byte	0x89
+ 1642 0984 8A       		.byte	0x8a
  1643 0985 AD000000 		.4byte	0xad
- 1644 0989 56       		.byte	0x56
+ 1644 0989 58       		.byte	0x58
  1645 098a 0D       		.uleb128 0xd
- 1646 098b BB070000 		.4byte	.LASF195
+ 1646 098b FF030000 		.4byte	.LASF195
  1647 098f 0A       		.byte	0xa
- 1648 0990 8D       		.byte	0x8d
- 1649 0991 D9000000 		.4byte	0xd9
- 1650 0995 58       		.byte	0x58
+ 1648 0990 8B       		.byte	0x8b
+ 1649 0991 AD000000 		.4byte	0xad
+ 1650 0995 5A       		.byte	0x5a
  1651 0996 0D       		.uleb128 0xd
- 1652 0997 B9040000 		.4byte	.LASF196
+ 1652 0997 E3070000 		.4byte	.LASF196
  1653 099b 0A       		.byte	0xa
- 1654 099c 8E       		.byte	0x8e
+ 1654 099c 8F       		.byte	0x8f
  1655 099d D9000000 		.4byte	0xd9
  1656 09a1 5C       		.byte	0x5c
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 32
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 32
 
 
  1657 09a2 0D       		.uleb128 0xd
- 1658 09a3 F2010000 		.4byte	.LASF197
+ 1658 09a3 CC040000 		.4byte	.LASF197
  1659 09a7 0A       		.byte	0xa
- 1660 09a8 8F       		.byte	0x8f
- 1661 09a9 A2000000 		.4byte	0xa2
+ 1660 09a8 90       		.byte	0x90
+ 1661 09a9 D9000000 		.4byte	0xd9
  1662 09ad 60       		.byte	0x60
  1663 09ae 0D       		.uleb128 0xd
- 1664 09af 00040000 		.4byte	.LASF198
+ 1664 09af 05020000 		.4byte	.LASF198
  1665 09b3 0A       		.byte	0xa
- 1666 09b4 92       		.byte	0x92
- 1667 09b5 CE000000 		.4byte	0xce
+ 1666 09b4 91       		.byte	0x91
+ 1667 09b5 A2000000 		.4byte	0xa2
  1668 09b9 64       		.byte	0x64
  1669 09ba 0D       		.uleb128 0xd
- 1670 09bb 4E020000 		.4byte	.LASF199
+ 1670 09bb 13040000 		.4byte	.LASF199
  1671 09bf 0A       		.byte	0xa
- 1672 09c0 93       		.byte	0x93
+ 1672 09c0 94       		.byte	0x94
  1673 09c1 CE000000 		.4byte	0xce
  1674 09c5 68       		.byte	0x68
  1675 09c6 0D       		.uleb128 0xd
- 1676 09c7 070C0000 		.4byte	.LASF200
+ 1676 09c7 61020000 		.4byte	.LASF200
  1677 09cb 0A       		.byte	0xa
- 1678 09cc 94       		.byte	0x94
+ 1678 09cc 95       		.byte	0x95
  1679 09cd CE000000 		.4byte	0xce
  1680 09d1 6C       		.byte	0x6c
  1681 09d2 0D       		.uleb128 0xd
- 1682 09d3 6B020000 		.4byte	.LASF201
+ 1682 09d3 1B0C0000 		.4byte	.LASF201
  1683 09d7 0A       		.byte	0xa
- 1684 09d8 95       		.byte	0x95
- 1685 09d9 A2000000 		.4byte	0xa2
+ 1684 09d8 96       		.byte	0x96
+ 1685 09d9 CE000000 		.4byte	0xce
  1686 09dd 70       		.byte	0x70
- 1687 09de 0C       		.uleb128 0xc
- 1688 09df 636D6400 		.ascii	"cmd\000"
+ 1687 09de 0D       		.uleb128 0xd
+ 1688 09df 7E020000 		.4byte	.LASF202
  1689 09e3 0A       		.byte	0xa
- 1690 09e4 98       		.byte	0x98
- 1691 09e5 7F070000 		.4byte	0x77f
+ 1690 09e4 97       		.byte	0x97
+ 1691 09e5 A2000000 		.4byte	0xa2
  1692 09e9 74       		.byte	0x74
- 1693 09ea 0D       		.uleb128 0xd
- 1694 09eb B6030000 		.4byte	.LASF202
+ 1693 09ea 0C       		.uleb128 0xc
+ 1694 09eb 636D6400 		.ascii	"cmd\000"
  1695 09ef 0A       		.byte	0xa
- 1696 09f0 99       		.byte	0x99
- 1697 09f1 51070000 		.4byte	0x751
- 1698 09f5 7C       		.byte	0x7c
+ 1696 09f0 9A       		.byte	0x9a
+ 1697 09f1 7F070000 		.4byte	0x77f
+ 1698 09f5 78       		.byte	0x78
  1699 09f6 0D       		.uleb128 0xd
- 1700 09f7 BD0A0000 		.4byte	.LASF203
+ 1700 09f7 C9030000 		.4byte	.LASF203
  1701 09fb 0A       		.byte	0xa
- 1702 09fc 9A       		.byte	0x9a
- 1703 09fd CE000000 		.4byte	0xce
+ 1702 09fc 9B       		.byte	0x9b
+ 1703 09fd 51070000 		.4byte	0x751
  1704 0a01 80       		.byte	0x80
  1705 0a02 0D       		.uleb128 0xd
- 1706 0a03 A0090000 		.4byte	.LASF204
+ 1706 0a03 D10A0000 		.4byte	.LASF204
  1707 0a07 0A       		.byte	0xa
- 1708 0a08 9D       		.byte	0x9d
- 1709 0a09 A2000000 		.4byte	0xa2
+ 1708 0a08 9C       		.byte	0x9c
+ 1709 0a09 CE000000 		.4byte	0xce
  1710 0a0d 84       		.byte	0x84
  1711 0a0e 0D       		.uleb128 0xd
- 1712 0a0f 000A0000 		.4byte	.LASF205
+ 1712 0a0f C8090000 		.4byte	.LASF205
  1713 0a13 0A       		.byte	0xa
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 33
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 33
 
 
- 1714 0a14 9E       		.byte	0x9e
- 1715 0a15 CE000000 		.4byte	0xce
+ 1714 0a14 9F       		.byte	0x9f
+ 1715 0a15 A2000000 		.4byte	0xa2
  1716 0a19 88       		.byte	0x88
  1717 0a1a 0D       		.uleb128 0xd
- 1718 0a1b D9090000 		.4byte	.LASF206
+ 1718 0a1b 140A0000 		.4byte	.LASF206
  1719 0a1f 0A       		.byte	0xa
- 1720 0a20 9F       		.byte	0x9f
- 1721 0a21 D9000000 		.4byte	0xd9
+ 1720 0a20 A0       		.byte	0xa0
+ 1721 0a21 CE000000 		.4byte	0xce
  1722 0a25 8C       		.byte	0x8c
  1723 0a26 0D       		.uleb128 0xd
- 1724 0a27 D6040000 		.4byte	.LASF207
+ 1724 0a27 ED090000 		.4byte	.LASF207
  1725 0a2b 0A       		.byte	0xa
- 1726 0a2c A0       		.byte	0xa0
+ 1726 0a2c A1       		.byte	0xa1
  1727 0a2d D9000000 		.4byte	0xd9
  1728 0a31 90       		.byte	0x90
  1729 0a32 0D       		.uleb128 0xd
- 1730 0a33 A30B0000 		.4byte	.LASF208
+ 1730 0a33 E9040000 		.4byte	.LASF208
  1731 0a37 0A       		.byte	0xa
- 1732 0a38 A1       		.byte	0xa1
+ 1732 0a38 A2       		.byte	0xa2
  1733 0a39 D9000000 		.4byte	0xd9
  1734 0a3d 94       		.byte	0x94
  1735 0a3e 0D       		.uleb128 0xd
- 1736 0a3f 53060000 		.4byte	.LASF209
+ 1736 0a3f B70B0000 		.4byte	.LASF209
  1737 0a43 0A       		.byte	0xa
- 1738 0a44 A2       		.byte	0xa2
+ 1738 0a44 A3       		.byte	0xa3
  1739 0a45 D9000000 		.4byte	0xd9
  1740 0a49 98       		.byte	0x98
  1741 0a4a 0D       		.uleb128 0xd
- 1742 0a4b 63000000 		.4byte	.LASF210
+ 1742 0a4b 7B060000 		.4byte	.LASF210
  1743 0a4f 0A       		.byte	0xa
- 1744 0a50 A3       		.byte	0xa3
- 1745 0a51 A2000000 		.4byte	0xa2
+ 1744 0a50 A4       		.byte	0xa4
+ 1745 0a51 D9000000 		.4byte	0xd9
  1746 0a55 9C       		.byte	0x9c
  1747 0a56 0D       		.uleb128 0xd
- 1748 0a57 4E000000 		.4byte	.LASF211
+ 1748 0a57 64000000 		.4byte	.LASF211
  1749 0a5b 0A       		.byte	0xa
- 1750 0a5c A4       		.byte	0xa4
- 1751 0a5d CE000000 		.4byte	0xce
+ 1750 0a5c A5       		.byte	0xa5
+ 1751 0a5d A2000000 		.4byte	0xa2
  1752 0a61 A0       		.byte	0xa0
- 1753 0a62 00       		.byte	0
- 1754 0a63 06       		.uleb128 0x6
- 1755 0a64 04       		.byte	0x4
- 1756 0a65 27070000 		.4byte	0x727
- 1757 0a69 03       		.uleb128 0x3
- 1758 0a6a 35090000 		.4byte	.LASF212
- 1759 0a6e 0A       		.byte	0xa
- 1760 0a6f A6       		.byte	0xa6
- 1761 0a70 3E080000 		.4byte	0x83e
- 1762 0a74 15       		.uleb128 0x15
- 1763 0a75 1F080000 		.4byte	.LASF221
- 1764 0a79 01       		.byte	0x1
- 1765 0a7a 19       		.byte	0x19
- 1766 0a7b FE000000 		.4byte	0xfe
- 1767 0a7f 00000000 		.4byte	.LFB63
- 1768 0a83 40000000 		.4byte	.LFE63-.LFB63
- 1769 0a87 01       		.uleb128 0x1
- 1770 0a88 9C       		.byte	0x9c
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 34
+ 1753 0a62 0D       		.uleb128 0xd
+ 1754 0a63 3E050000 		.4byte	.LASF212
+ 1755 0a67 0A       		.byte	0xa
+ 1756 0a68 A6       		.byte	0xa6
+ 1757 0a69 CE000000 		.4byte	0xce
+ 1758 0a6d A4       		.byte	0xa4
+ 1759 0a6e 00       		.byte	0
+ 1760 0a6f 06       		.uleb128 0x6
+ 1761 0a70 04       		.byte	0x4
+ 1762 0a71 27070000 		.4byte	0x727
+ 1763 0a75 03       		.uleb128 0x3
+ 1764 0a76 5D090000 		.4byte	.LASF213
+ 1765 0a7a 0A       		.byte	0xa
+ 1766 0a7b A8       		.byte	0xa8
+ 1767 0a7c 3E080000 		.4byte	0x83e
+ 1768 0a80 15       		.uleb128 0x15
+ 1769 0a81 47080000 		.4byte	.LASF222
+ 1770 0a85 01       		.byte	0x1
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 34
 
 
- 1771 0a89 9A0A0000 		.4byte	0xa9a
- 1772 0a8d 16       		.uleb128 0x16
- 1773 0a8e 7300     		.ascii	"s\000"
- 1774 0a90 01       		.byte	0x1
- 1775 0a91 19       		.byte	0x19
- 1776 0a92 33080000 		.4byte	0x833
- 1777 0a96 02       		.uleb128 0x2
- 1778 0a97 91       		.byte	0x91
- 1779 0a98 77       		.sleb128 -9
- 1780 0a99 00       		.byte	0
- 1781 0a9a 17       		.uleb128 0x17
- 1782 0a9b A6040000 		.4byte	.LASF213
- 1783 0a9f 01       		.byte	0x1
- 1784 0aa0 24       		.byte	0x24
- 1785 0aa1 00000000 		.4byte	.LFB64
- 1786 0aa5 78000000 		.4byte	.LFE64-.LFB64
- 1787 0aa9 01       		.uleb128 0x1
- 1788 0aaa 9C       		.byte	0x9c
- 1789 0aab BE0A0000 		.4byte	0xabe
- 1790 0aaf 16       		.uleb128 0x16
- 1791 0ab0 63747800 		.ascii	"ctx\000"
- 1792 0ab4 01       		.byte	0x1
- 1793 0ab5 24       		.byte	0x24
- 1794 0ab6 BE0A0000 		.4byte	0xabe
- 1795 0aba 02       		.uleb128 0x2
- 1796 0abb 91       		.byte	0x91
- 1797 0abc 74       		.sleb128 -12
- 1798 0abd 00       		.byte	0
- 1799 0abe 06       		.uleb128 0x6
- 1800 0abf 04       		.byte	0x4
- 1801 0ac0 690A0000 		.4byte	0xa69
- 1802 0ac4 18       		.uleb128 0x18
- 1803 0ac5 51050000 		.4byte	.LASF215
- 1804 0ac9 01       		.byte	0x1
- 1805 0aca 35       		.byte	0x35
- 1806 0acb A2000000 		.4byte	0xa2
- 1807 0acf 00000000 		.4byte	.LFB65
- 1808 0ad3 46000000 		.4byte	.LFE65-.LFB65
- 1809 0ad7 01       		.uleb128 0x1
- 1810 0ad8 9C       		.byte	0x9c
- 1811 0ad9 100B0000 		.4byte	0xb10
- 1812 0add 16       		.uleb128 0x16
- 1813 0ade 63747800 		.ascii	"ctx\000"
- 1814 0ae2 01       		.byte	0x1
- 1815 0ae3 35       		.byte	0x35
- 1816 0ae4 BE0A0000 		.4byte	0xabe
- 1817 0ae8 02       		.uleb128 0x2
- 1818 0ae9 91       		.byte	0x91
- 1819 0aea 6C       		.sleb128 -20
- 1820 0aeb 16       		.uleb128 0x16
- 1821 0aec 6B00     		.ascii	"k\000"
- 1822 0aee 01       		.byte	0x1
- 1823 0aef 35       		.byte	0x35
- 1824 0af0 E7000000 		.4byte	0xe7
- 1825 0af4 02       		.uleb128 0x2
- 1826 0af5 91       		.byte	0x91
- 1827 0af6 6B       		.sleb128 -21
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 35
+ 1771 0a86 19       		.byte	0x19
+ 1772 0a87 FE000000 		.4byte	0xfe
+ 1773 0a8b 00000000 		.4byte	.LFB63
+ 1774 0a8f 40000000 		.4byte	.LFE63-.LFB63
+ 1775 0a93 01       		.uleb128 0x1
+ 1776 0a94 9C       		.byte	0x9c
+ 1777 0a95 A60A0000 		.4byte	0xaa6
+ 1778 0a99 16       		.uleb128 0x16
+ 1779 0a9a 7300     		.ascii	"s\000"
+ 1780 0a9c 01       		.byte	0x1
+ 1781 0a9d 19       		.byte	0x19
+ 1782 0a9e 33080000 		.4byte	0x833
+ 1783 0aa2 02       		.uleb128 0x2
+ 1784 0aa3 91       		.byte	0x91
+ 1785 0aa4 77       		.sleb128 -9
+ 1786 0aa5 00       		.byte	0
+ 1787 0aa6 17       		.uleb128 0x17
+ 1788 0aa7 B9040000 		.4byte	.LASF214
+ 1789 0aab 01       		.byte	0x1
+ 1790 0aac 24       		.byte	0x24
+ 1791 0aad 00000000 		.4byte	.LFB64
+ 1792 0ab1 78000000 		.4byte	.LFE64-.LFB64
+ 1793 0ab5 01       		.uleb128 0x1
+ 1794 0ab6 9C       		.byte	0x9c
+ 1795 0ab7 CA0A0000 		.4byte	0xaca
+ 1796 0abb 16       		.uleb128 0x16
+ 1797 0abc 63747800 		.ascii	"ctx\000"
+ 1798 0ac0 01       		.byte	0x1
+ 1799 0ac1 24       		.byte	0x24
+ 1800 0ac2 CA0A0000 		.4byte	0xaca
+ 1801 0ac6 02       		.uleb128 0x2
+ 1802 0ac7 91       		.byte	0x91
+ 1803 0ac8 74       		.sleb128 -12
+ 1804 0ac9 00       		.byte	0
+ 1805 0aca 06       		.uleb128 0x6
+ 1806 0acb 04       		.byte	0x4
+ 1807 0acc 750A0000 		.4byte	0xa75
+ 1808 0ad0 18       		.uleb128 0x18
+ 1809 0ad1 79050000 		.4byte	.LASF216
+ 1810 0ad5 01       		.byte	0x1
+ 1811 0ad6 35       		.byte	0x35
+ 1812 0ad7 A2000000 		.4byte	0xa2
+ 1813 0adb 00000000 		.4byte	.LFB65
+ 1814 0adf 46000000 		.4byte	.LFE65-.LFB65
+ 1815 0ae3 01       		.uleb128 0x1
+ 1816 0ae4 9C       		.byte	0x9c
+ 1817 0ae5 1C0B0000 		.4byte	0xb1c
+ 1818 0ae9 16       		.uleb128 0x16
+ 1819 0aea 63747800 		.ascii	"ctx\000"
+ 1820 0aee 01       		.byte	0x1
+ 1821 0aef 35       		.byte	0x35
+ 1822 0af0 CA0A0000 		.4byte	0xaca
+ 1823 0af4 02       		.uleb128 0x2
+ 1824 0af5 91       		.byte	0x91
+ 1825 0af6 6C       		.sleb128 -20
+ 1826 0af7 16       		.uleb128 0x16
+ 1827 0af8 6B00     		.ascii	"k\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 35
 
 
- 1828 0af7 19       		.uleb128 0x19
- 1829 0af8 14000000 		.4byte	.LBB2
- 1830 0afc 28000000 		.4byte	.LBE2-.LBB2
- 1831 0b00 1A       		.uleb128 0x1a
- 1832 0b01 FD010000 		.4byte	.LASF222
- 1833 0b05 01       		.byte	0x1
- 1834 0b06 39       		.byte	0x39
- 1835 0b07 03080000 		.4byte	0x803
- 1836 0b0b 02       		.uleb128 0x2
- 1837 0b0c 91       		.byte	0x91
- 1838 0b0d 77       		.sleb128 -9
- 1839 0b0e 00       		.byte	0
- 1840 0b0f 00       		.byte	0
- 1841 0b10 17       		.uleb128 0x17
- 1842 0b11 CA070000 		.4byte	.LASF214
- 1843 0b15 01       		.byte	0x1
- 1844 0b16 43       		.byte	0x43
- 1845 0b17 00000000 		.4byte	.LFB66
- 1846 0b1b 2C000000 		.4byte	.LFE66-.LFB66
- 1847 0b1f 01       		.uleb128 0x1
- 1848 0b20 9C       		.byte	0x9c
- 1849 0b21 340B0000 		.4byte	0xb34
- 1850 0b25 16       		.uleb128 0x16
- 1851 0b26 63747800 		.ascii	"ctx\000"
- 1852 0b2a 01       		.byte	0x1
- 1853 0b2b 43       		.byte	0x43
- 1854 0b2c BE0A0000 		.4byte	0xabe
- 1855 0b30 02       		.uleb128 0x2
- 1856 0b31 91       		.byte	0x91
- 1857 0b32 74       		.sleb128 -12
- 1858 0b33 00       		.byte	0
- 1859 0b34 1B       		.uleb128 0x1b
- 1860 0b35 BF000000 		.4byte	.LASF216
- 1861 0b39 01       		.byte	0x1
- 1862 0b3a 49       		.byte	0x49
- 1863 0b3b A2000000 		.4byte	0xa2
- 1864 0b3f 00000000 		.4byte	.LFB67
- 1865 0b43 18000000 		.4byte	.LFE67-.LFB67
- 1866 0b47 01       		.uleb128 0x1
- 1867 0b48 9C       		.byte	0x9c
- 1868 0b49 680B0000 		.4byte	0xb68
- 1869 0b4d 16       		.uleb128 0x16
- 1870 0b4e 63747800 		.ascii	"ctx\000"
- 1871 0b52 01       		.byte	0x1
- 1872 0b53 49       		.byte	0x49
- 1873 0b54 BE0A0000 		.4byte	0xabe
- 1874 0b58 02       		.uleb128 0x2
- 1875 0b59 91       		.byte	0x91
- 1876 0b5a 74       		.sleb128 -12
- 1877 0b5b 16       		.uleb128 0x16
- 1878 0b5c 6B00     		.ascii	"k\000"
- 1879 0b5e 01       		.byte	0x1
- 1880 0b5f 49       		.byte	0x49
- 1881 0b60 E7000000 		.4byte	0xe7
- 1882 0b64 02       		.uleb128 0x2
- 1883 0b65 91       		.byte	0x91
- 1884 0b66 73       		.sleb128 -13
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 36
+ 1828 0afa 01       		.byte	0x1
+ 1829 0afb 35       		.byte	0x35
+ 1830 0afc E7000000 		.4byte	0xe7
+ 1831 0b00 02       		.uleb128 0x2
+ 1832 0b01 91       		.byte	0x91
+ 1833 0b02 6B       		.sleb128 -21
+ 1834 0b03 19       		.uleb128 0x19
+ 1835 0b04 14000000 		.4byte	.LBB2
+ 1836 0b08 28000000 		.4byte	.LBE2-.LBB2
+ 1837 0b0c 1A       		.uleb128 0x1a
+ 1838 0b0d 10020000 		.4byte	.LASF223
+ 1839 0b11 01       		.byte	0x1
+ 1840 0b12 39       		.byte	0x39
+ 1841 0b13 03080000 		.4byte	0x803
+ 1842 0b17 02       		.uleb128 0x2
+ 1843 0b18 91       		.byte	0x91
+ 1844 0b19 77       		.sleb128 -9
+ 1845 0b1a 00       		.byte	0
+ 1846 0b1b 00       		.byte	0
+ 1847 0b1c 17       		.uleb128 0x17
+ 1848 0b1d F2070000 		.4byte	.LASF215
+ 1849 0b21 01       		.byte	0x1
+ 1850 0b22 43       		.byte	0x43
+ 1851 0b23 00000000 		.4byte	.LFB66
+ 1852 0b27 2C000000 		.4byte	.LFE66-.LFB66
+ 1853 0b2b 01       		.uleb128 0x1
+ 1854 0b2c 9C       		.byte	0x9c
+ 1855 0b2d 400B0000 		.4byte	0xb40
+ 1856 0b31 16       		.uleb128 0x16
+ 1857 0b32 63747800 		.ascii	"ctx\000"
+ 1858 0b36 01       		.byte	0x1
+ 1859 0b37 43       		.byte	0x43
+ 1860 0b38 CA0A0000 		.4byte	0xaca
+ 1861 0b3c 02       		.uleb128 0x2
+ 1862 0b3d 91       		.byte	0x91
+ 1863 0b3e 74       		.sleb128 -12
+ 1864 0b3f 00       		.byte	0
+ 1865 0b40 1B       		.uleb128 0x1b
+ 1866 0b41 C0000000 		.4byte	.LASF217
+ 1867 0b45 01       		.byte	0x1
+ 1868 0b46 49       		.byte	0x49
+ 1869 0b47 A2000000 		.4byte	0xa2
+ 1870 0b4b 00000000 		.4byte	.LFB67
+ 1871 0b4f 18000000 		.4byte	.LFE67-.LFB67
+ 1872 0b53 01       		.uleb128 0x1
+ 1873 0b54 9C       		.byte	0x9c
+ 1874 0b55 740B0000 		.4byte	0xb74
+ 1875 0b59 16       		.uleb128 0x16
+ 1876 0b5a 63747800 		.ascii	"ctx\000"
+ 1877 0b5e 01       		.byte	0x1
+ 1878 0b5f 49       		.byte	0x49
+ 1879 0b60 CA0A0000 		.4byte	0xaca
+ 1880 0b64 02       		.uleb128 0x2
+ 1881 0b65 91       		.byte	0x91
+ 1882 0b66 74       		.sleb128 -12
+ 1883 0b67 16       		.uleb128 0x16
+ 1884 0b68 6B00     		.ascii	"k\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 36
 
 
- 1885 0b67 00       		.byte	0
- 1886 0b68 17       		.uleb128 0x17
- 1887 0b69 FB040000 		.4byte	.LASF217
- 1888 0b6d 01       		.byte	0x1
- 1889 0b6e 51       		.byte	0x51
- 1890 0b6f 00000000 		.4byte	.LFB68
- 1891 0b73 28000000 		.4byte	.LFE68-.LFB68
- 1892 0b77 01       		.uleb128 0x1
- 1893 0b78 9C       		.byte	0x9c
- 1894 0b79 9A0B0000 		.4byte	0xb9a
- 1895 0b7d 16       		.uleb128 0x16
- 1896 0b7e 63747800 		.ascii	"ctx\000"
- 1897 0b82 01       		.byte	0x1
- 1898 0b83 51       		.byte	0x51
- 1899 0b84 9A0B0000 		.4byte	0xb9a
- 1900 0b88 02       		.uleb128 0x2
- 1901 0b89 91       		.byte	0x91
- 1902 0b8a 74       		.sleb128 -12
- 1903 0b8b 16       		.uleb128 0x16
- 1904 0b8c 6F757400 		.ascii	"out\000"
- 1905 0b90 01       		.byte	0x1
- 1906 0b91 51       		.byte	0x51
- 1907 0b92 A50B0000 		.4byte	0xba5
- 1908 0b96 02       		.uleb128 0x2
- 1909 0b97 91       		.byte	0x91
- 1910 0b98 70       		.sleb128 -16
- 1911 0b99 00       		.byte	0
- 1912 0b9a 06       		.uleb128 0x6
- 1913 0b9b 04       		.byte	0x4
- 1914 0b9c A00B0000 		.4byte	0xba0
- 1915 0ba0 07       		.uleb128 0x7
- 1916 0ba1 690A0000 		.4byte	0xa69
- 1917 0ba5 06       		.uleb128 0x6
- 1918 0ba6 04       		.byte	0x4
- 1919 0ba7 AC010000 		.4byte	0x1ac
- 1920 0bab 1C       		.uleb128 0x1c
- 1921 0bac 50070000 		.4byte	.LASF223
- 1922 0bb0 0B       		.byte	0xb
- 1923 0bb1 1207     		.2byte	0x712
- 1924 0bb3 B70B0000 		.4byte	0xbb7
- 1925 0bb7 08       		.uleb128 0x8
- 1926 0bb8 C3000000 		.4byte	0xc3
- 1927 0bbc 00       		.byte	0
- 1928              		.section	.debug_abbrev,"",%progbits
- 1929              	.Ldebug_abbrev0:
- 1930 0000 01       		.uleb128 0x1
- 1931 0001 11       		.uleb128 0x11
- 1932 0002 01       		.byte	0x1
- 1933 0003 25       		.uleb128 0x25
- 1934 0004 0E       		.uleb128 0xe
- 1935 0005 13       		.uleb128 0x13
- 1936 0006 0B       		.uleb128 0xb
- 1937 0007 03       		.uleb128 0x3
- 1938 0008 0E       		.uleb128 0xe
- 1939 0009 1B       		.uleb128 0x1b
- 1940 000a 0E       		.uleb128 0xe
- 1941 000b 55       		.uleb128 0x55
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 37
+ 1885 0b6a 01       		.byte	0x1
+ 1886 0b6b 49       		.byte	0x49
+ 1887 0b6c E7000000 		.4byte	0xe7
+ 1888 0b70 02       		.uleb128 0x2
+ 1889 0b71 91       		.byte	0x91
+ 1890 0b72 73       		.sleb128 -13
+ 1891 0b73 00       		.byte	0
+ 1892 0b74 17       		.uleb128 0x17
+ 1893 0b75 0E050000 		.4byte	.LASF218
+ 1894 0b79 01       		.byte	0x1
+ 1895 0b7a 51       		.byte	0x51
+ 1896 0b7b 00000000 		.4byte	.LFB68
+ 1897 0b7f 28000000 		.4byte	.LFE68-.LFB68
+ 1898 0b83 01       		.uleb128 0x1
+ 1899 0b84 9C       		.byte	0x9c
+ 1900 0b85 A60B0000 		.4byte	0xba6
+ 1901 0b89 16       		.uleb128 0x16
+ 1902 0b8a 63747800 		.ascii	"ctx\000"
+ 1903 0b8e 01       		.byte	0x1
+ 1904 0b8f 51       		.byte	0x51
+ 1905 0b90 A60B0000 		.4byte	0xba6
+ 1906 0b94 02       		.uleb128 0x2
+ 1907 0b95 91       		.byte	0x91
+ 1908 0b96 74       		.sleb128 -12
+ 1909 0b97 16       		.uleb128 0x16
+ 1910 0b98 6F757400 		.ascii	"out\000"
+ 1911 0b9c 01       		.byte	0x1
+ 1912 0b9d 51       		.byte	0x51
+ 1913 0b9e B10B0000 		.4byte	0xbb1
+ 1914 0ba2 02       		.uleb128 0x2
+ 1915 0ba3 91       		.byte	0x91
+ 1916 0ba4 70       		.sleb128 -16
+ 1917 0ba5 00       		.byte	0
+ 1918 0ba6 06       		.uleb128 0x6
+ 1919 0ba7 04       		.byte	0x4
+ 1920 0ba8 AC0B0000 		.4byte	0xbac
+ 1921 0bac 07       		.uleb128 0x7
+ 1922 0bad 750A0000 		.4byte	0xa75
+ 1923 0bb1 06       		.uleb128 0x6
+ 1924 0bb2 04       		.byte	0x4
+ 1925 0bb3 AC010000 		.4byte	0x1ac
+ 1926 0bb7 1C       		.uleb128 0x1c
+ 1927 0bb8 78070000 		.4byte	.LASF224
+ 1928 0bbc 0B       		.byte	0xb
+ 1929 0bbd 1207     		.2byte	0x712
+ 1930 0bbf C30B0000 		.4byte	0xbc3
+ 1931 0bc3 08       		.uleb128 0x8
+ 1932 0bc4 C3000000 		.4byte	0xc3
+ 1933 0bc8 00       		.byte	0
+ 1934              		.section	.debug_abbrev,"",%progbits
+ 1935              	.Ldebug_abbrev0:
+ 1936 0000 01       		.uleb128 0x1
+ 1937 0001 11       		.uleb128 0x11
+ 1938 0002 01       		.byte	0x1
+ 1939 0003 25       		.uleb128 0x25
+ 1940 0004 0E       		.uleb128 0xe
+ 1941 0005 13       		.uleb128 0x13
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 37
 
 
- 1942 000c 17       		.uleb128 0x17
- 1943 000d 11       		.uleb128 0x11
- 1944 000e 01       		.uleb128 0x1
- 1945 000f 10       		.uleb128 0x10
- 1946 0010 17       		.uleb128 0x17
- 1947 0011 00       		.byte	0
- 1948 0012 00       		.byte	0
- 1949 0013 02       		.uleb128 0x2
- 1950 0014 24       		.uleb128 0x24
- 1951 0015 00       		.byte	0
- 1952 0016 0B       		.uleb128 0xb
- 1953 0017 0B       		.uleb128 0xb
- 1954 0018 3E       		.uleb128 0x3e
- 1955 0019 0B       		.uleb128 0xb
- 1956 001a 03       		.uleb128 0x3
- 1957 001b 0E       		.uleb128 0xe
- 1958 001c 00       		.byte	0
- 1959 001d 00       		.byte	0
- 1960 001e 03       		.uleb128 0x3
- 1961 001f 16       		.uleb128 0x16
- 1962 0020 00       		.byte	0
- 1963 0021 03       		.uleb128 0x3
- 1964 0022 0E       		.uleb128 0xe
- 1965 0023 3A       		.uleb128 0x3a
- 1966 0024 0B       		.uleb128 0xb
- 1967 0025 3B       		.uleb128 0x3b
- 1968 0026 0B       		.uleb128 0xb
- 1969 0027 49       		.uleb128 0x49
- 1970 0028 13       		.uleb128 0x13
- 1971 0029 00       		.byte	0
- 1972 002a 00       		.byte	0
- 1973 002b 04       		.uleb128 0x4
- 1974 002c 24       		.uleb128 0x24
- 1975 002d 00       		.byte	0
- 1976 002e 0B       		.uleb128 0xb
- 1977 002f 0B       		.uleb128 0xb
- 1978 0030 3E       		.uleb128 0x3e
- 1979 0031 0B       		.uleb128 0xb
- 1980 0032 03       		.uleb128 0x3
- 1981 0033 08       		.uleb128 0x8
- 1982 0034 00       		.byte	0
- 1983 0035 00       		.byte	0
- 1984 0036 05       		.uleb128 0x5
- 1985 0037 0F       		.uleb128 0xf
- 1986 0038 00       		.byte	0
- 1987 0039 0B       		.uleb128 0xb
- 1988 003a 0B       		.uleb128 0xb
- 1989 003b 00       		.byte	0
- 1990 003c 00       		.byte	0
- 1991 003d 06       		.uleb128 0x6
- 1992 003e 0F       		.uleb128 0xf
- 1993 003f 00       		.byte	0
- 1994 0040 0B       		.uleb128 0xb
- 1995 0041 0B       		.uleb128 0xb
- 1996 0042 49       		.uleb128 0x49
- 1997 0043 13       		.uleb128 0x13
- 1998 0044 00       		.byte	0
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 38
+ 1942 0006 0B       		.uleb128 0xb
+ 1943 0007 03       		.uleb128 0x3
+ 1944 0008 0E       		.uleb128 0xe
+ 1945 0009 1B       		.uleb128 0x1b
+ 1946 000a 0E       		.uleb128 0xe
+ 1947 000b 55       		.uleb128 0x55
+ 1948 000c 17       		.uleb128 0x17
+ 1949 000d 11       		.uleb128 0x11
+ 1950 000e 01       		.uleb128 0x1
+ 1951 000f 10       		.uleb128 0x10
+ 1952 0010 17       		.uleb128 0x17
+ 1953 0011 00       		.byte	0
+ 1954 0012 00       		.byte	0
+ 1955 0013 02       		.uleb128 0x2
+ 1956 0014 24       		.uleb128 0x24
+ 1957 0015 00       		.byte	0
+ 1958 0016 0B       		.uleb128 0xb
+ 1959 0017 0B       		.uleb128 0xb
+ 1960 0018 3E       		.uleb128 0x3e
+ 1961 0019 0B       		.uleb128 0xb
+ 1962 001a 03       		.uleb128 0x3
+ 1963 001b 0E       		.uleb128 0xe
+ 1964 001c 00       		.byte	0
+ 1965 001d 00       		.byte	0
+ 1966 001e 03       		.uleb128 0x3
+ 1967 001f 16       		.uleb128 0x16
+ 1968 0020 00       		.byte	0
+ 1969 0021 03       		.uleb128 0x3
+ 1970 0022 0E       		.uleb128 0xe
+ 1971 0023 3A       		.uleb128 0x3a
+ 1972 0024 0B       		.uleb128 0xb
+ 1973 0025 3B       		.uleb128 0x3b
+ 1974 0026 0B       		.uleb128 0xb
+ 1975 0027 49       		.uleb128 0x49
+ 1976 0028 13       		.uleb128 0x13
+ 1977 0029 00       		.byte	0
+ 1978 002a 00       		.byte	0
+ 1979 002b 04       		.uleb128 0x4
+ 1980 002c 24       		.uleb128 0x24
+ 1981 002d 00       		.byte	0
+ 1982 002e 0B       		.uleb128 0xb
+ 1983 002f 0B       		.uleb128 0xb
+ 1984 0030 3E       		.uleb128 0x3e
+ 1985 0031 0B       		.uleb128 0xb
+ 1986 0032 03       		.uleb128 0x3
+ 1987 0033 08       		.uleb128 0x8
+ 1988 0034 00       		.byte	0
+ 1989 0035 00       		.byte	0
+ 1990 0036 05       		.uleb128 0x5
+ 1991 0037 0F       		.uleb128 0xf
+ 1992 0038 00       		.byte	0
+ 1993 0039 0B       		.uleb128 0xb
+ 1994 003a 0B       		.uleb128 0xb
+ 1995 003b 00       		.byte	0
+ 1996 003c 00       		.byte	0
+ 1997 003d 06       		.uleb128 0x6
+ 1998 003e 0F       		.uleb128 0xf
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 38
 
 
- 1999 0045 00       		.byte	0
- 2000 0046 07       		.uleb128 0x7
- 2001 0047 26       		.uleb128 0x26
- 2002 0048 00       		.byte	0
- 2003 0049 49       		.uleb128 0x49
- 2004 004a 13       		.uleb128 0x13
- 2005 004b 00       		.byte	0
- 2006 004c 00       		.byte	0
- 2007 004d 08       		.uleb128 0x8
- 2008 004e 35       		.uleb128 0x35
- 2009 004f 00       		.byte	0
- 2010 0050 49       		.uleb128 0x49
- 2011 0051 13       		.uleb128 0x13
- 2012 0052 00       		.byte	0
- 2013 0053 00       		.byte	0
- 2014 0054 09       		.uleb128 0x9
- 2015 0055 04       		.uleb128 0x4
- 2016 0056 01       		.byte	0x1
- 2017 0057 0B       		.uleb128 0xb
- 2018 0058 0B       		.uleb128 0xb
- 2019 0059 49       		.uleb128 0x49
- 2020 005a 13       		.uleb128 0x13
- 2021 005b 3A       		.uleb128 0x3a
- 2022 005c 0B       		.uleb128 0xb
- 2023 005d 3B       		.uleb128 0x3b
- 2024 005e 0B       		.uleb128 0xb
- 2025 005f 01       		.uleb128 0x1
- 2026 0060 13       		.uleb128 0x13
- 2027 0061 00       		.byte	0
- 2028 0062 00       		.byte	0
- 2029 0063 0A       		.uleb128 0xa
- 2030 0064 28       		.uleb128 0x28
- 2031 0065 00       		.byte	0
- 2032 0066 03       		.uleb128 0x3
- 2033 0067 0E       		.uleb128 0xe
- 2034 0068 1C       		.uleb128 0x1c
- 2035 0069 0B       		.uleb128 0xb
- 2036 006a 00       		.byte	0
- 2037 006b 00       		.byte	0
- 2038 006c 0B       		.uleb128 0xb
- 2039 006d 13       		.uleb128 0x13
- 2040 006e 01       		.byte	0x1
- 2041 006f 0B       		.uleb128 0xb
- 2042 0070 0B       		.uleb128 0xb
- 2043 0071 3A       		.uleb128 0x3a
- 2044 0072 0B       		.uleb128 0xb
- 2045 0073 3B       		.uleb128 0x3b
- 2046 0074 0B       		.uleb128 0xb
- 2047 0075 01       		.uleb128 0x1
- 2048 0076 13       		.uleb128 0x13
- 2049 0077 00       		.byte	0
- 2050 0078 00       		.byte	0
- 2051 0079 0C       		.uleb128 0xc
- 2052 007a 0D       		.uleb128 0xd
- 2053 007b 00       		.byte	0
- 2054 007c 03       		.uleb128 0x3
- 2055 007d 08       		.uleb128 0x8
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 39
+ 1999 003f 00       		.byte	0
+ 2000 0040 0B       		.uleb128 0xb
+ 2001 0041 0B       		.uleb128 0xb
+ 2002 0042 49       		.uleb128 0x49
+ 2003 0043 13       		.uleb128 0x13
+ 2004 0044 00       		.byte	0
+ 2005 0045 00       		.byte	0
+ 2006 0046 07       		.uleb128 0x7
+ 2007 0047 26       		.uleb128 0x26
+ 2008 0048 00       		.byte	0
+ 2009 0049 49       		.uleb128 0x49
+ 2010 004a 13       		.uleb128 0x13
+ 2011 004b 00       		.byte	0
+ 2012 004c 00       		.byte	0
+ 2013 004d 08       		.uleb128 0x8
+ 2014 004e 35       		.uleb128 0x35
+ 2015 004f 00       		.byte	0
+ 2016 0050 49       		.uleb128 0x49
+ 2017 0051 13       		.uleb128 0x13
+ 2018 0052 00       		.byte	0
+ 2019 0053 00       		.byte	0
+ 2020 0054 09       		.uleb128 0x9
+ 2021 0055 04       		.uleb128 0x4
+ 2022 0056 01       		.byte	0x1
+ 2023 0057 0B       		.uleb128 0xb
+ 2024 0058 0B       		.uleb128 0xb
+ 2025 0059 49       		.uleb128 0x49
+ 2026 005a 13       		.uleb128 0x13
+ 2027 005b 3A       		.uleb128 0x3a
+ 2028 005c 0B       		.uleb128 0xb
+ 2029 005d 3B       		.uleb128 0x3b
+ 2030 005e 0B       		.uleb128 0xb
+ 2031 005f 01       		.uleb128 0x1
+ 2032 0060 13       		.uleb128 0x13
+ 2033 0061 00       		.byte	0
+ 2034 0062 00       		.byte	0
+ 2035 0063 0A       		.uleb128 0xa
+ 2036 0064 28       		.uleb128 0x28
+ 2037 0065 00       		.byte	0
+ 2038 0066 03       		.uleb128 0x3
+ 2039 0067 0E       		.uleb128 0xe
+ 2040 0068 1C       		.uleb128 0x1c
+ 2041 0069 0B       		.uleb128 0xb
+ 2042 006a 00       		.byte	0
+ 2043 006b 00       		.byte	0
+ 2044 006c 0B       		.uleb128 0xb
+ 2045 006d 13       		.uleb128 0x13
+ 2046 006e 01       		.byte	0x1
+ 2047 006f 0B       		.uleb128 0xb
+ 2048 0070 0B       		.uleb128 0xb
+ 2049 0071 3A       		.uleb128 0x3a
+ 2050 0072 0B       		.uleb128 0xb
+ 2051 0073 3B       		.uleb128 0x3b
+ 2052 0074 0B       		.uleb128 0xb
+ 2053 0075 01       		.uleb128 0x1
+ 2054 0076 13       		.uleb128 0x13
+ 2055 0077 00       		.byte	0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 39
 
 
- 2056 007e 3A       		.uleb128 0x3a
- 2057 007f 0B       		.uleb128 0xb
- 2058 0080 3B       		.uleb128 0x3b
- 2059 0081 0B       		.uleb128 0xb
- 2060 0082 49       		.uleb128 0x49
- 2061 0083 13       		.uleb128 0x13
- 2062 0084 38       		.uleb128 0x38
- 2063 0085 0B       		.uleb128 0xb
- 2064 0086 00       		.byte	0
- 2065 0087 00       		.byte	0
- 2066 0088 0D       		.uleb128 0xd
- 2067 0089 0D       		.uleb128 0xd
- 2068 008a 00       		.byte	0
- 2069 008b 03       		.uleb128 0x3
- 2070 008c 0E       		.uleb128 0xe
- 2071 008d 3A       		.uleb128 0x3a
- 2072 008e 0B       		.uleb128 0xb
- 2073 008f 3B       		.uleb128 0x3b
- 2074 0090 0B       		.uleb128 0xb
- 2075 0091 49       		.uleb128 0x49
- 2076 0092 13       		.uleb128 0x13
- 2077 0093 38       		.uleb128 0x38
- 2078 0094 0B       		.uleb128 0xb
- 2079 0095 00       		.byte	0
- 2080 0096 00       		.byte	0
- 2081 0097 0E       		.uleb128 0xe
- 2082 0098 15       		.uleb128 0x15
- 2083 0099 01       		.byte	0x1
- 2084 009a 27       		.uleb128 0x27
- 2085 009b 19       		.uleb128 0x19
- 2086 009c 01       		.uleb128 0x1
- 2087 009d 13       		.uleb128 0x13
- 2088 009e 00       		.byte	0
- 2089 009f 00       		.byte	0
- 2090 00a0 0F       		.uleb128 0xf
- 2091 00a1 05       		.uleb128 0x5
- 2092 00a2 00       		.byte	0
- 2093 00a3 49       		.uleb128 0x49
- 2094 00a4 13       		.uleb128 0x13
- 2095 00a5 00       		.byte	0
- 2096 00a6 00       		.byte	0
- 2097 00a7 10       		.uleb128 0x10
- 2098 00a8 15       		.uleb128 0x15
- 2099 00a9 01       		.byte	0x1
- 2100 00aa 27       		.uleb128 0x27
- 2101 00ab 19       		.uleb128 0x19
- 2102 00ac 49       		.uleb128 0x49
- 2103 00ad 13       		.uleb128 0x13
- 2104 00ae 01       		.uleb128 0x1
- 2105 00af 13       		.uleb128 0x13
- 2106 00b0 00       		.byte	0
- 2107 00b1 00       		.byte	0
- 2108 00b2 11       		.uleb128 0x11
- 2109 00b3 13       		.uleb128 0x13
- 2110 00b4 01       		.byte	0x1
- 2111 00b5 0B       		.uleb128 0xb
- 2112 00b6 05       		.uleb128 0x5
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 40
+ 2056 0078 00       		.byte	0
+ 2057 0079 0C       		.uleb128 0xc
+ 2058 007a 0D       		.uleb128 0xd
+ 2059 007b 00       		.byte	0
+ 2060 007c 03       		.uleb128 0x3
+ 2061 007d 08       		.uleb128 0x8
+ 2062 007e 3A       		.uleb128 0x3a
+ 2063 007f 0B       		.uleb128 0xb
+ 2064 0080 3B       		.uleb128 0x3b
+ 2065 0081 0B       		.uleb128 0xb
+ 2066 0082 49       		.uleb128 0x49
+ 2067 0083 13       		.uleb128 0x13
+ 2068 0084 38       		.uleb128 0x38
+ 2069 0085 0B       		.uleb128 0xb
+ 2070 0086 00       		.byte	0
+ 2071 0087 00       		.byte	0
+ 2072 0088 0D       		.uleb128 0xd
+ 2073 0089 0D       		.uleb128 0xd
+ 2074 008a 00       		.byte	0
+ 2075 008b 03       		.uleb128 0x3
+ 2076 008c 0E       		.uleb128 0xe
+ 2077 008d 3A       		.uleb128 0x3a
+ 2078 008e 0B       		.uleb128 0xb
+ 2079 008f 3B       		.uleb128 0x3b
+ 2080 0090 0B       		.uleb128 0xb
+ 2081 0091 49       		.uleb128 0x49
+ 2082 0092 13       		.uleb128 0x13
+ 2083 0093 38       		.uleb128 0x38
+ 2084 0094 0B       		.uleb128 0xb
+ 2085 0095 00       		.byte	0
+ 2086 0096 00       		.byte	0
+ 2087 0097 0E       		.uleb128 0xe
+ 2088 0098 15       		.uleb128 0x15
+ 2089 0099 01       		.byte	0x1
+ 2090 009a 27       		.uleb128 0x27
+ 2091 009b 19       		.uleb128 0x19
+ 2092 009c 01       		.uleb128 0x1
+ 2093 009d 13       		.uleb128 0x13
+ 2094 009e 00       		.byte	0
+ 2095 009f 00       		.byte	0
+ 2096 00a0 0F       		.uleb128 0xf
+ 2097 00a1 05       		.uleb128 0x5
+ 2098 00a2 00       		.byte	0
+ 2099 00a3 49       		.uleb128 0x49
+ 2100 00a4 13       		.uleb128 0x13
+ 2101 00a5 00       		.byte	0
+ 2102 00a6 00       		.byte	0
+ 2103 00a7 10       		.uleb128 0x10
+ 2104 00a8 15       		.uleb128 0x15
+ 2105 00a9 01       		.byte	0x1
+ 2106 00aa 27       		.uleb128 0x27
+ 2107 00ab 19       		.uleb128 0x19
+ 2108 00ac 49       		.uleb128 0x49
+ 2109 00ad 13       		.uleb128 0x13
+ 2110 00ae 01       		.uleb128 0x1
+ 2111 00af 13       		.uleb128 0x13
+ 2112 00b0 00       		.byte	0
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 40
 
 
- 2113 00b7 3A       		.uleb128 0x3a
- 2114 00b8 0B       		.uleb128 0xb
- 2115 00b9 3B       		.uleb128 0x3b
- 2116 00ba 0B       		.uleb128 0xb
- 2117 00bb 01       		.uleb128 0x1
- 2118 00bc 13       		.uleb128 0x13
- 2119 00bd 00       		.byte	0
- 2120 00be 00       		.byte	0
- 2121 00bf 12       		.uleb128 0x12
- 2122 00c0 0D       		.uleb128 0xd
- 2123 00c1 00       		.byte	0
- 2124 00c2 03       		.uleb128 0x3
- 2125 00c3 0E       		.uleb128 0xe
- 2126 00c4 3A       		.uleb128 0x3a
- 2127 00c5 0B       		.uleb128 0xb
- 2128 00c6 3B       		.uleb128 0x3b
- 2129 00c7 0B       		.uleb128 0xb
- 2130 00c8 49       		.uleb128 0x49
- 2131 00c9 13       		.uleb128 0x13
- 2132 00ca 38       		.uleb128 0x38
- 2133 00cb 05       		.uleb128 0x5
- 2134 00cc 00       		.byte	0
- 2135 00cd 00       		.byte	0
- 2136 00ce 13       		.uleb128 0x13
- 2137 00cf 01       		.uleb128 0x1
- 2138 00d0 01       		.byte	0x1
- 2139 00d1 49       		.uleb128 0x49
- 2140 00d2 13       		.uleb128 0x13
- 2141 00d3 01       		.uleb128 0x1
- 2142 00d4 13       		.uleb128 0x13
- 2143 00d5 00       		.byte	0
- 2144 00d6 00       		.byte	0
- 2145 00d7 14       		.uleb128 0x14
- 2146 00d8 21       		.uleb128 0x21
- 2147 00d9 00       		.byte	0
- 2148 00da 49       		.uleb128 0x49
- 2149 00db 13       		.uleb128 0x13
- 2150 00dc 2F       		.uleb128 0x2f
- 2151 00dd 0B       		.uleb128 0xb
- 2152 00de 00       		.byte	0
- 2153 00df 00       		.byte	0
- 2154 00e0 15       		.uleb128 0x15
- 2155 00e1 2E       		.uleb128 0x2e
- 2156 00e2 01       		.byte	0x1
- 2157 00e3 03       		.uleb128 0x3
- 2158 00e4 0E       		.uleb128 0xe
- 2159 00e5 3A       		.uleb128 0x3a
- 2160 00e6 0B       		.uleb128 0xb
- 2161 00e7 3B       		.uleb128 0x3b
- 2162 00e8 0B       		.uleb128 0xb
- 2163 00e9 27       		.uleb128 0x27
- 2164 00ea 19       		.uleb128 0x19
- 2165 00eb 49       		.uleb128 0x49
- 2166 00ec 13       		.uleb128 0x13
- 2167 00ed 11       		.uleb128 0x11
- 2168 00ee 01       		.uleb128 0x1
- 2169 00ef 12       		.uleb128 0x12
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 41
+ 2113 00b1 00       		.byte	0
+ 2114 00b2 11       		.uleb128 0x11
+ 2115 00b3 13       		.uleb128 0x13
+ 2116 00b4 01       		.byte	0x1
+ 2117 00b5 0B       		.uleb128 0xb
+ 2118 00b6 05       		.uleb128 0x5
+ 2119 00b7 3A       		.uleb128 0x3a
+ 2120 00b8 0B       		.uleb128 0xb
+ 2121 00b9 3B       		.uleb128 0x3b
+ 2122 00ba 0B       		.uleb128 0xb
+ 2123 00bb 01       		.uleb128 0x1
+ 2124 00bc 13       		.uleb128 0x13
+ 2125 00bd 00       		.byte	0
+ 2126 00be 00       		.byte	0
+ 2127 00bf 12       		.uleb128 0x12
+ 2128 00c0 0D       		.uleb128 0xd
+ 2129 00c1 00       		.byte	0
+ 2130 00c2 03       		.uleb128 0x3
+ 2131 00c3 0E       		.uleb128 0xe
+ 2132 00c4 3A       		.uleb128 0x3a
+ 2133 00c5 0B       		.uleb128 0xb
+ 2134 00c6 3B       		.uleb128 0x3b
+ 2135 00c7 0B       		.uleb128 0xb
+ 2136 00c8 49       		.uleb128 0x49
+ 2137 00c9 13       		.uleb128 0x13
+ 2138 00ca 38       		.uleb128 0x38
+ 2139 00cb 05       		.uleb128 0x5
+ 2140 00cc 00       		.byte	0
+ 2141 00cd 00       		.byte	0
+ 2142 00ce 13       		.uleb128 0x13
+ 2143 00cf 01       		.uleb128 0x1
+ 2144 00d0 01       		.byte	0x1
+ 2145 00d1 49       		.uleb128 0x49
+ 2146 00d2 13       		.uleb128 0x13
+ 2147 00d3 01       		.uleb128 0x1
+ 2148 00d4 13       		.uleb128 0x13
+ 2149 00d5 00       		.byte	0
+ 2150 00d6 00       		.byte	0
+ 2151 00d7 14       		.uleb128 0x14
+ 2152 00d8 21       		.uleb128 0x21
+ 2153 00d9 00       		.byte	0
+ 2154 00da 49       		.uleb128 0x49
+ 2155 00db 13       		.uleb128 0x13
+ 2156 00dc 2F       		.uleb128 0x2f
+ 2157 00dd 0B       		.uleb128 0xb
+ 2158 00de 00       		.byte	0
+ 2159 00df 00       		.byte	0
+ 2160 00e0 15       		.uleb128 0x15
+ 2161 00e1 2E       		.uleb128 0x2e
+ 2162 00e2 01       		.byte	0x1
+ 2163 00e3 03       		.uleb128 0x3
+ 2164 00e4 0E       		.uleb128 0xe
+ 2165 00e5 3A       		.uleb128 0x3a
+ 2166 00e6 0B       		.uleb128 0xb
+ 2167 00e7 3B       		.uleb128 0x3b
+ 2168 00e8 0B       		.uleb128 0xb
+ 2169 00e9 27       		.uleb128 0x27
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 41
 
 
- 2170 00f0 06       		.uleb128 0x6
- 2171 00f1 40       		.uleb128 0x40
- 2172 00f2 18       		.uleb128 0x18
- 2173 00f3 9742     		.uleb128 0x2117
- 2174 00f5 19       		.uleb128 0x19
- 2175 00f6 01       		.uleb128 0x1
- 2176 00f7 13       		.uleb128 0x13
- 2177 00f8 00       		.byte	0
- 2178 00f9 00       		.byte	0
- 2179 00fa 16       		.uleb128 0x16
- 2180 00fb 05       		.uleb128 0x5
- 2181 00fc 00       		.byte	0
- 2182 00fd 03       		.uleb128 0x3
- 2183 00fe 08       		.uleb128 0x8
- 2184 00ff 3A       		.uleb128 0x3a
- 2185 0100 0B       		.uleb128 0xb
- 2186 0101 3B       		.uleb128 0x3b
- 2187 0102 0B       		.uleb128 0xb
- 2188 0103 49       		.uleb128 0x49
- 2189 0104 13       		.uleb128 0x13
- 2190 0105 02       		.uleb128 0x2
- 2191 0106 18       		.uleb128 0x18
- 2192 0107 00       		.byte	0
- 2193 0108 00       		.byte	0
- 2194 0109 17       		.uleb128 0x17
- 2195 010a 2E       		.uleb128 0x2e
- 2196 010b 01       		.byte	0x1
- 2197 010c 3F       		.uleb128 0x3f
- 2198 010d 19       		.uleb128 0x19
- 2199 010e 03       		.uleb128 0x3
- 2200 010f 0E       		.uleb128 0xe
- 2201 0110 3A       		.uleb128 0x3a
- 2202 0111 0B       		.uleb128 0xb
- 2203 0112 3B       		.uleb128 0x3b
- 2204 0113 0B       		.uleb128 0xb
- 2205 0114 27       		.uleb128 0x27
- 2206 0115 19       		.uleb128 0x19
- 2207 0116 11       		.uleb128 0x11
- 2208 0117 01       		.uleb128 0x1
- 2209 0118 12       		.uleb128 0x12
- 2210 0119 06       		.uleb128 0x6
- 2211 011a 40       		.uleb128 0x40
- 2212 011b 18       		.uleb128 0x18
- 2213 011c 9642     		.uleb128 0x2116
- 2214 011e 19       		.uleb128 0x19
- 2215 011f 01       		.uleb128 0x1
- 2216 0120 13       		.uleb128 0x13
- 2217 0121 00       		.byte	0
- 2218 0122 00       		.byte	0
- 2219 0123 18       		.uleb128 0x18
- 2220 0124 2E       		.uleb128 0x2e
- 2221 0125 01       		.byte	0x1
- 2222 0126 3F       		.uleb128 0x3f
- 2223 0127 19       		.uleb128 0x19
- 2224 0128 03       		.uleb128 0x3
- 2225 0129 0E       		.uleb128 0xe
- 2226 012a 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 42
+ 2170 00ea 19       		.uleb128 0x19
+ 2171 00eb 49       		.uleb128 0x49
+ 2172 00ec 13       		.uleb128 0x13
+ 2173 00ed 11       		.uleb128 0x11
+ 2174 00ee 01       		.uleb128 0x1
+ 2175 00ef 12       		.uleb128 0x12
+ 2176 00f0 06       		.uleb128 0x6
+ 2177 00f1 40       		.uleb128 0x40
+ 2178 00f2 18       		.uleb128 0x18
+ 2179 00f3 9742     		.uleb128 0x2117
+ 2180 00f5 19       		.uleb128 0x19
+ 2181 00f6 01       		.uleb128 0x1
+ 2182 00f7 13       		.uleb128 0x13
+ 2183 00f8 00       		.byte	0
+ 2184 00f9 00       		.byte	0
+ 2185 00fa 16       		.uleb128 0x16
+ 2186 00fb 05       		.uleb128 0x5
+ 2187 00fc 00       		.byte	0
+ 2188 00fd 03       		.uleb128 0x3
+ 2189 00fe 08       		.uleb128 0x8
+ 2190 00ff 3A       		.uleb128 0x3a
+ 2191 0100 0B       		.uleb128 0xb
+ 2192 0101 3B       		.uleb128 0x3b
+ 2193 0102 0B       		.uleb128 0xb
+ 2194 0103 49       		.uleb128 0x49
+ 2195 0104 13       		.uleb128 0x13
+ 2196 0105 02       		.uleb128 0x2
+ 2197 0106 18       		.uleb128 0x18
+ 2198 0107 00       		.byte	0
+ 2199 0108 00       		.byte	0
+ 2200 0109 17       		.uleb128 0x17
+ 2201 010a 2E       		.uleb128 0x2e
+ 2202 010b 01       		.byte	0x1
+ 2203 010c 3F       		.uleb128 0x3f
+ 2204 010d 19       		.uleb128 0x19
+ 2205 010e 03       		.uleb128 0x3
+ 2206 010f 0E       		.uleb128 0xe
+ 2207 0110 3A       		.uleb128 0x3a
+ 2208 0111 0B       		.uleb128 0xb
+ 2209 0112 3B       		.uleb128 0x3b
+ 2210 0113 0B       		.uleb128 0xb
+ 2211 0114 27       		.uleb128 0x27
+ 2212 0115 19       		.uleb128 0x19
+ 2213 0116 11       		.uleb128 0x11
+ 2214 0117 01       		.uleb128 0x1
+ 2215 0118 12       		.uleb128 0x12
+ 2216 0119 06       		.uleb128 0x6
+ 2217 011a 40       		.uleb128 0x40
+ 2218 011b 18       		.uleb128 0x18
+ 2219 011c 9642     		.uleb128 0x2116
+ 2220 011e 19       		.uleb128 0x19
+ 2221 011f 01       		.uleb128 0x1
+ 2222 0120 13       		.uleb128 0x13
+ 2223 0121 00       		.byte	0
+ 2224 0122 00       		.byte	0
+ 2225 0123 18       		.uleb128 0x18
+ 2226 0124 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 42
 
 
- 2227 012b 0B       		.uleb128 0xb
- 2228 012c 3B       		.uleb128 0x3b
- 2229 012d 0B       		.uleb128 0xb
- 2230 012e 27       		.uleb128 0x27
- 2231 012f 19       		.uleb128 0x19
- 2232 0130 49       		.uleb128 0x49
- 2233 0131 13       		.uleb128 0x13
- 2234 0132 11       		.uleb128 0x11
- 2235 0133 01       		.uleb128 0x1
- 2236 0134 12       		.uleb128 0x12
- 2237 0135 06       		.uleb128 0x6
- 2238 0136 40       		.uleb128 0x40
- 2239 0137 18       		.uleb128 0x18
- 2240 0138 9642     		.uleb128 0x2116
- 2241 013a 19       		.uleb128 0x19
- 2242 013b 01       		.uleb128 0x1
- 2243 013c 13       		.uleb128 0x13
- 2244 013d 00       		.byte	0
- 2245 013e 00       		.byte	0
- 2246 013f 19       		.uleb128 0x19
- 2247 0140 0B       		.uleb128 0xb
- 2248 0141 01       		.byte	0x1
- 2249 0142 11       		.uleb128 0x11
- 2250 0143 01       		.uleb128 0x1
- 2251 0144 12       		.uleb128 0x12
- 2252 0145 06       		.uleb128 0x6
- 2253 0146 00       		.byte	0
- 2254 0147 00       		.byte	0
- 2255 0148 1A       		.uleb128 0x1a
- 2256 0149 34       		.uleb128 0x34
- 2257 014a 00       		.byte	0
- 2258 014b 03       		.uleb128 0x3
- 2259 014c 0E       		.uleb128 0xe
- 2260 014d 3A       		.uleb128 0x3a
- 2261 014e 0B       		.uleb128 0xb
- 2262 014f 3B       		.uleb128 0x3b
- 2263 0150 0B       		.uleb128 0xb
- 2264 0151 49       		.uleb128 0x49
- 2265 0152 13       		.uleb128 0x13
- 2266 0153 02       		.uleb128 0x2
- 2267 0154 18       		.uleb128 0x18
- 2268 0155 00       		.byte	0
- 2269 0156 00       		.byte	0
- 2270 0157 1B       		.uleb128 0x1b
- 2271 0158 2E       		.uleb128 0x2e
- 2272 0159 01       		.byte	0x1
- 2273 015a 3F       		.uleb128 0x3f
- 2274 015b 19       		.uleb128 0x19
- 2275 015c 03       		.uleb128 0x3
- 2276 015d 0E       		.uleb128 0xe
- 2277 015e 3A       		.uleb128 0x3a
- 2278 015f 0B       		.uleb128 0xb
- 2279 0160 3B       		.uleb128 0x3b
- 2280 0161 0B       		.uleb128 0xb
- 2281 0162 27       		.uleb128 0x27
- 2282 0163 19       		.uleb128 0x19
- 2283 0164 49       		.uleb128 0x49
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 43
+ 2227 0125 01       		.byte	0x1
+ 2228 0126 3F       		.uleb128 0x3f
+ 2229 0127 19       		.uleb128 0x19
+ 2230 0128 03       		.uleb128 0x3
+ 2231 0129 0E       		.uleb128 0xe
+ 2232 012a 3A       		.uleb128 0x3a
+ 2233 012b 0B       		.uleb128 0xb
+ 2234 012c 3B       		.uleb128 0x3b
+ 2235 012d 0B       		.uleb128 0xb
+ 2236 012e 27       		.uleb128 0x27
+ 2237 012f 19       		.uleb128 0x19
+ 2238 0130 49       		.uleb128 0x49
+ 2239 0131 13       		.uleb128 0x13
+ 2240 0132 11       		.uleb128 0x11
+ 2241 0133 01       		.uleb128 0x1
+ 2242 0134 12       		.uleb128 0x12
+ 2243 0135 06       		.uleb128 0x6
+ 2244 0136 40       		.uleb128 0x40
+ 2245 0137 18       		.uleb128 0x18
+ 2246 0138 9642     		.uleb128 0x2116
+ 2247 013a 19       		.uleb128 0x19
+ 2248 013b 01       		.uleb128 0x1
+ 2249 013c 13       		.uleb128 0x13
+ 2250 013d 00       		.byte	0
+ 2251 013e 00       		.byte	0
+ 2252 013f 19       		.uleb128 0x19
+ 2253 0140 0B       		.uleb128 0xb
+ 2254 0141 01       		.byte	0x1
+ 2255 0142 11       		.uleb128 0x11
+ 2256 0143 01       		.uleb128 0x1
+ 2257 0144 12       		.uleb128 0x12
+ 2258 0145 06       		.uleb128 0x6
+ 2259 0146 00       		.byte	0
+ 2260 0147 00       		.byte	0
+ 2261 0148 1A       		.uleb128 0x1a
+ 2262 0149 34       		.uleb128 0x34
+ 2263 014a 00       		.byte	0
+ 2264 014b 03       		.uleb128 0x3
+ 2265 014c 0E       		.uleb128 0xe
+ 2266 014d 3A       		.uleb128 0x3a
+ 2267 014e 0B       		.uleb128 0xb
+ 2268 014f 3B       		.uleb128 0x3b
+ 2269 0150 0B       		.uleb128 0xb
+ 2270 0151 49       		.uleb128 0x49
+ 2271 0152 13       		.uleb128 0x13
+ 2272 0153 02       		.uleb128 0x2
+ 2273 0154 18       		.uleb128 0x18
+ 2274 0155 00       		.byte	0
+ 2275 0156 00       		.byte	0
+ 2276 0157 1B       		.uleb128 0x1b
+ 2277 0158 2E       		.uleb128 0x2e
+ 2278 0159 01       		.byte	0x1
+ 2279 015a 3F       		.uleb128 0x3f
+ 2280 015b 19       		.uleb128 0x19
+ 2281 015c 03       		.uleb128 0x3
+ 2282 015d 0E       		.uleb128 0xe
+ 2283 015e 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 43
 
 
- 2284 0165 13       		.uleb128 0x13
- 2285 0166 11       		.uleb128 0x11
- 2286 0167 01       		.uleb128 0x1
- 2287 0168 12       		.uleb128 0x12
- 2288 0169 06       		.uleb128 0x6
- 2289 016a 40       		.uleb128 0x40
- 2290 016b 18       		.uleb128 0x18
- 2291 016c 9742     		.uleb128 0x2117
- 2292 016e 19       		.uleb128 0x19
- 2293 016f 01       		.uleb128 0x1
- 2294 0170 13       		.uleb128 0x13
- 2295 0171 00       		.byte	0
- 2296 0172 00       		.byte	0
- 2297 0173 1C       		.uleb128 0x1c
- 2298 0174 34       		.uleb128 0x34
- 2299 0175 00       		.byte	0
- 2300 0176 03       		.uleb128 0x3
- 2301 0177 0E       		.uleb128 0xe
- 2302 0178 3A       		.uleb128 0x3a
- 2303 0179 0B       		.uleb128 0xb
- 2304 017a 3B       		.uleb128 0x3b
- 2305 017b 05       		.uleb128 0x5
- 2306 017c 49       		.uleb128 0x49
- 2307 017d 13       		.uleb128 0x13
- 2308 017e 3F       		.uleb128 0x3f
- 2309 017f 19       		.uleb128 0x19
- 2310 0180 3C       		.uleb128 0x3c
- 2311 0181 19       		.uleb128 0x19
- 2312 0182 00       		.byte	0
- 2313 0183 00       		.byte	0
- 2314 0184 00       		.byte	0
- 2315              		.section	.debug_aranges,"",%progbits
- 2316 0000 44000000 		.4byte	0x44
- 2317 0004 0200     		.2byte	0x2
- 2318 0006 00000000 		.4byte	.Ldebug_info0
- 2319 000a 04       		.byte	0x4
- 2320 000b 00       		.byte	0
- 2321 000c 0000     		.2byte	0
- 2322 000e 0000     		.2byte	0
- 2323 0010 00000000 		.4byte	.LFB63
- 2324 0014 40000000 		.4byte	.LFE63-.LFB63
- 2325 0018 00000000 		.4byte	.LFB64
- 2326 001c 78000000 		.4byte	.LFE64-.LFB64
- 2327 0020 00000000 		.4byte	.LFB65
- 2328 0024 46000000 		.4byte	.LFE65-.LFB65
- 2329 0028 00000000 		.4byte	.LFB66
- 2330 002c 2C000000 		.4byte	.LFE66-.LFB66
- 2331 0030 00000000 		.4byte	.LFB67
- 2332 0034 18000000 		.4byte	.LFE67-.LFB67
- 2333 0038 00000000 		.4byte	.LFB68
- 2334 003c 28000000 		.4byte	.LFE68-.LFB68
- 2335 0040 00000000 		.4byte	0
- 2336 0044 00000000 		.4byte	0
- 2337              		.section	.debug_ranges,"",%progbits
- 2338              	.Ldebug_ranges0:
- 2339 0000 00000000 		.4byte	.LFB63
- 2340 0004 40000000 		.4byte	.LFE63
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 44
+ 2284 015f 0B       		.uleb128 0xb
+ 2285 0160 3B       		.uleb128 0x3b
+ 2286 0161 0B       		.uleb128 0xb
+ 2287 0162 27       		.uleb128 0x27
+ 2288 0163 19       		.uleb128 0x19
+ 2289 0164 49       		.uleb128 0x49
+ 2290 0165 13       		.uleb128 0x13
+ 2291 0166 11       		.uleb128 0x11
+ 2292 0167 01       		.uleb128 0x1
+ 2293 0168 12       		.uleb128 0x12
+ 2294 0169 06       		.uleb128 0x6
+ 2295 016a 40       		.uleb128 0x40
+ 2296 016b 18       		.uleb128 0x18
+ 2297 016c 9742     		.uleb128 0x2117
+ 2298 016e 19       		.uleb128 0x19
+ 2299 016f 01       		.uleb128 0x1
+ 2300 0170 13       		.uleb128 0x13
+ 2301 0171 00       		.byte	0
+ 2302 0172 00       		.byte	0
+ 2303 0173 1C       		.uleb128 0x1c
+ 2304 0174 34       		.uleb128 0x34
+ 2305 0175 00       		.byte	0
+ 2306 0176 03       		.uleb128 0x3
+ 2307 0177 0E       		.uleb128 0xe
+ 2308 0178 3A       		.uleb128 0x3a
+ 2309 0179 0B       		.uleb128 0xb
+ 2310 017a 3B       		.uleb128 0x3b
+ 2311 017b 05       		.uleb128 0x5
+ 2312 017c 49       		.uleb128 0x49
+ 2313 017d 13       		.uleb128 0x13
+ 2314 017e 3F       		.uleb128 0x3f
+ 2315 017f 19       		.uleb128 0x19
+ 2316 0180 3C       		.uleb128 0x3c
+ 2317 0181 19       		.uleb128 0x19
+ 2318 0182 00       		.byte	0
+ 2319 0183 00       		.byte	0
+ 2320 0184 00       		.byte	0
+ 2321              		.section	.debug_aranges,"",%progbits
+ 2322 0000 44000000 		.4byte	0x44
+ 2323 0004 0200     		.2byte	0x2
+ 2324 0006 00000000 		.4byte	.Ldebug_info0
+ 2325 000a 04       		.byte	0x4
+ 2326 000b 00       		.byte	0
+ 2327 000c 0000     		.2byte	0
+ 2328 000e 0000     		.2byte	0
+ 2329 0010 00000000 		.4byte	.LFB63
+ 2330 0014 40000000 		.4byte	.LFE63-.LFB63
+ 2331 0018 00000000 		.4byte	.LFB64
+ 2332 001c 78000000 		.4byte	.LFE64-.LFB64
+ 2333 0020 00000000 		.4byte	.LFB65
+ 2334 0024 46000000 		.4byte	.LFE65-.LFB65
+ 2335 0028 00000000 		.4byte	.LFB66
+ 2336 002c 2C000000 		.4byte	.LFE66-.LFB66
+ 2337 0030 00000000 		.4byte	.LFB67
+ 2338 0034 18000000 		.4byte	.LFE67-.LFB67
+ 2339 0038 00000000 		.4byte	.LFB68
+ 2340 003c 28000000 		.4byte	.LFE68-.LFB68
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 44
 
 
- 2341 0008 00000000 		.4byte	.LFB64
- 2342 000c 78000000 		.4byte	.LFE64
- 2343 0010 00000000 		.4byte	.LFB65
- 2344 0014 46000000 		.4byte	.LFE65
- 2345 0018 00000000 		.4byte	.LFB66
- 2346 001c 2C000000 		.4byte	.LFE66
- 2347 0020 00000000 		.4byte	.LFB67
- 2348 0024 18000000 		.4byte	.LFE67
- 2349 0028 00000000 		.4byte	.LFB68
- 2350 002c 28000000 		.4byte	.LFE68
- 2351 0030 00000000 		.4byte	0
- 2352 0034 00000000 		.4byte	0
- 2353              		.section	.debug_line,"",%progbits
- 2354              	.Ldebug_line0:
- 2355 0000 BD020000 		.section	.debug_str,"MS",%progbits,1
- 2355      0200F101 
- 2355      00000201 
- 2355      FB0E0D00 
- 2355      01010101 
- 2356              	.LASF113:
- 2357 0000 68616D66 		.ascii	"hamfly_telemetry_t\000"
- 2357      6C795F74 
- 2357      656C656D 
- 2357      65747279 
- 2357      5F7400
- 2358              	.LASF148:
- 2359 0013 4552524F 		.ascii	"ERROR\000"
- 2359      5200
- 2360              	.LASF153:
- 2361 0019 4155544F 		.ascii	"AUTO_HOLD\000"
- 2361      5F484F4C 
- 2361      4400
- 2362              	.LASF59:
- 2363 0023 6770735F 		.ascii	"gps_raw_lat\000"
- 2363      7261775F 
- 2363      6C617400 
- 2364              	.LASF178:
- 2365 002f 6162735F 		.ascii	"abs_pan_target\000"
- 2365      70616E5F 
- 2365      74617267 
- 2365      657400
- 2366              	.LASF89:
- 2367 003e 73797373 		.ascii	"sysstat_cpu_pct\000"
- 2367      7461745F 
- 2367      6370755F 
- 2367      70637400 
- 2368              	.LASF211:
- 2369 004e 6E756467 		.ascii	"nudge_burst_start_ms\000"
- 2369      655F6275 
- 2369      7273745F 
- 2369      73746172 
- 2369      745F6D73 
- 2370              	.LASF210:
- 2371 0063 6E756467 		.ascii	"nudge_active\000"
- 2371      655F6163 
- 2371      74697665 
- 2371      00
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 45
+ 2341 0040 00000000 		.4byte	0
+ 2342 0044 00000000 		.4byte	0
+ 2343              		.section	.debug_ranges,"",%progbits
+ 2344              	.Ldebug_ranges0:
+ 2345 0000 00000000 		.4byte	.LFB63
+ 2346 0004 40000000 		.4byte	.LFE63
+ 2347 0008 00000000 		.4byte	.LFB64
+ 2348 000c 78000000 		.4byte	.LFE64
+ 2349 0010 00000000 		.4byte	.LFB65
+ 2350 0014 46000000 		.4byte	.LFE65
+ 2351 0018 00000000 		.4byte	.LFB66
+ 2352 001c 2C000000 		.4byte	.LFE66
+ 2353 0020 00000000 		.4byte	.LFB67
+ 2354 0024 18000000 		.4byte	.LFE67
+ 2355 0028 00000000 		.4byte	.LFB68
+ 2356 002c 28000000 		.4byte	.LFE68
+ 2357 0030 00000000 		.4byte	0
+ 2358 0034 00000000 		.4byte	0
+ 2359              		.section	.debug_line,"",%progbits
+ 2360              	.Ldebug_line0:
+ 2361 0000 BD020000 		.section	.debug_str,"MS",%progbits,1
+ 2361      0200F101 
+ 2361      00000201 
+ 2361      FB0E0D00 
+ 2361      01010101 
+ 2362              	.LASF113:
+ 2363 0000 68616D66 		.ascii	"hamfly_telemetry_t\000"
+ 2363      6C795F74 
+ 2363      656C656D 
+ 2363      65747279 
+ 2363      5F7400
+ 2364              	.LASF148:
+ 2365 0013 4552524F 		.ascii	"ERROR\000"
+ 2365      5200
+ 2366              	.LASF153:
+ 2367 0019 4155544F 		.ascii	"AUTO_HOLD\000"
+ 2367      5F484F4C 
+ 2367      4400
+ 2368              	.LASF59:
+ 2369 0023 6770735F 		.ascii	"gps_raw_lat\000"
+ 2369      7261775F 
+ 2369      6C617400 
+ 2370              	.LASF179:
+ 2371 002f 6162735F 		.ascii	"abs_pan_target\000"
+ 2371      70616E5F 
+ 2371      74617267 
+ 2371      657400
+ 2372              	.LASF89:
+ 2373 003e 73797373 		.ascii	"sysstat_cpu_pct\000"
+ 2373      7461745F 
+ 2373      6370755F 
+ 2373      70637400 
+ 2374              	.LASF174:
+ 2375 004e 74656C65 		.ascii	"telem_stable_since_ms\000"
+ 2375      6D5F7374 
+ 2375      61626C65 
+ 2375      5F73696E 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 45
 
 
- 2372              	.LASF219:
- 2373 0070 6170705F 		.ascii	"app_state_error.c\000"
- 2373      73746174 
- 2373      655F6572 
- 2373      726F722E 
- 2373      6300
- 2374              	.LASF39:
- 2375 0082 68616D66 		.ascii	"hamfly_hal_t\000"
- 2375      6C795F68 
- 2375      616C5F74 
- 2375      00
- 2376              	.LASF152:
- 2377 008f 4155544F 		.ascii	"AUTO_HOME\000"
- 2377      5F484F4D 
- 2377      4500
- 2378              	.LASF13:
- 2379 0099 756E7369 		.ascii	"unsigned int\000"
- 2379      676E6564 
- 2379      20696E74 
- 2379      00
- 2380              	.LASF170:
- 2381 00a6 70726576 		.ascii	"prev_leaf\000"
- 2381      5F6C6561 
- 2381      6600
- 2382              	.LASF114:
- 2383 00b0 68656164 		.ascii	"head\000"
- 2383      00
- 2384              	.LASF7:
- 2385 00b5 5F5F696E 		.ascii	"__int32_t\000"
- 2385      7433325F 
- 2385      7400
- 2386              	.LASF216:
- 2387 00bf 6B65795F 		.ascii	"key_error_kill\000"
- 2387      6572726F 
- 2387      725F6B69 
- 2387      6C6C00
- 2388              	.LASF87:
- 2389 00ce 73797373 		.ascii	"sysstat_gps_sats\000"
- 2389      7461745F 
- 2389      6770735F 
- 2389      73617473 
+ 2375      63655F6D 
+ 2376              	.LASF211:
+ 2377 0064 6E756467 		.ascii	"nudge_active\000"
+ 2377      655F6163 
+ 2377      74697665 
+ 2377      00
+ 2378              	.LASF220:
+ 2379 0071 6170705F 		.ascii	"app_state_error.c\000"
+ 2379      73746174 
+ 2379      655F6572 
+ 2379      726F722E 
+ 2379      6300
+ 2380              	.LASF39:
+ 2381 0083 68616D66 		.ascii	"hamfly_hal_t\000"
+ 2381      6C795F68 
+ 2381      616C5F74 
+ 2381      00
+ 2382              	.LASF152:
+ 2383 0090 4155544F 		.ascii	"AUTO_HOME\000"
+ 2383      5F484F4D 
+ 2383      4500
+ 2384              	.LASF13:
+ 2385 009a 756E7369 		.ascii	"unsigned int\000"
+ 2385      676E6564 
+ 2385      20696E74 
+ 2385      00
+ 2386              	.LASF170:
+ 2387 00a7 70726576 		.ascii	"prev_leaf\000"
+ 2387      5F6C6561 
+ 2387      6600
+ 2388              	.LASF114:
+ 2389 00b1 68656164 		.ascii	"head\000"
  2389      00
- 2390              	.LASF218:
- 2391 00df 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
- 2391      43313120 
- 2391      352E342E 
- 2391      31203230 
- 2391      31363036 
- 2392 0112 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
- 2392      20726576 
- 2392      6973696F 
- 2392      6E203233 
- 2392      37373135 
- 2393 0145 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
- 2393      66756E63 
- 2393      74696F6E 
- 2393      2D736563 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 46
+ 2390              	.LASF7:
+ 2391 00b6 5F5F696E 		.ascii	"__int32_t\000"
+ 2391      7433325F 
+ 2391      7400
+ 2392              	.LASF217:
+ 2393 00c0 6B65795F 		.ascii	"key_error_kill\000"
+ 2393      6572726F 
+ 2393      725F6B69 
+ 2393      6C6C00
+ 2394              	.LASF87:
+ 2395 00cf 73797373 		.ascii	"sysstat_gps_sats\000"
+ 2395      7461745F 
+ 2395      6770735F 
+ 2395      73617473 
+ 2395      00
+ 2396              	.LASF219:
+ 2397 00e0 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2397      43313120 
+ 2397      352E342E 
+ 2397      31203230 
+ 2397      31363036 
+ 2398 0113 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 2398      20726576 
+ 2398      6973696F 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 46
 
 
- 2393      74696F6E 
- 2394              	.LASF99:
- 2395 016d 6D61675F 		.ascii	"mag_x\000"
- 2395      7800
- 2396              	.LASF100:
- 2397 0173 6D61675F 		.ascii	"mag_y\000"
- 2397      7900
- 2398              	.LASF101:
- 2399 0179 6D61675F 		.ascii	"mag_z\000"
- 2399      7A00
- 2400              	.LASF41:
- 2401 017f 62617474 		.ascii	"battery_left_v\000"
- 2401      6572795F 
- 2401      6C656674 
- 2401      5F7600
- 2402              	.LASF38:
- 2403 018e 6765745F 		.ascii	"get_tick_ms\000"
- 2403      7469636B 
- 2403      5F6D7300 
- 2404              	.LASF35:
- 2405 019a 6B696C6C 		.ascii	"kill\000"
- 2405      00
- 2406              	.LASF166:
- 2407 019f 5345565F 		.ascii	"SEV_FATAL\000"
- 2407      46415441 
- 2407      4C00
- 2408              	.LASF33:
- 2409 01a9 726F6C6C 		.ascii	"roll_mode\000"
- 2409      5F6D6F64 
- 2409      6500
- 2410              	.LASF131:
- 2411 01b3 70656E64 		.ascii	"pending_attr\000"
- 2411      696E675F 
- 2411      61747472 
+ 2398      6E203233 
+ 2398      37373135 
+ 2399 0146 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 2399      66756E63 
+ 2399      74696F6E 
+ 2399      2D736563 
+ 2399      74696F6E 
+ 2400              	.LASF99:
+ 2401 016e 6D61675F 		.ascii	"mag_x\000"
+ 2401      7800
+ 2402              	.LASF100:
+ 2403 0174 6D61675F 		.ascii	"mag_y\000"
+ 2403      7900
+ 2404              	.LASF101:
+ 2405 017a 6D61675F 		.ascii	"mag_z\000"
+ 2405      7A00
+ 2406              	.LASF41:
+ 2407 0180 62617474 		.ascii	"battery_left_v\000"
+ 2407      6572795F 
+ 2407      6C656674 
+ 2407      5F7600
+ 2408              	.LASF38:
+ 2409 018f 6765745F 		.ascii	"get_tick_ms\000"
+ 2409      7469636B 
+ 2409      5F6D7300 
+ 2410              	.LASF35:
+ 2411 019b 6B696C6C 		.ascii	"kill\000"
  2411      00
- 2412              	.LASF82:
- 2413 01c0 666C6167 		.ascii	"flag_compass_error\000"
- 2413      5F636F6D 
- 2413      70617373 
- 2413      5F657272 
- 2413      6F7200
- 2414              	.LASF103:
- 2415 01d3 6D61675F 		.ascii	"mag_freq\000"
- 2415      66726571 
- 2415      00
- 2416              	.LASF25:
- 2417 01dc 48414D46 		.ascii	"HAMFLY_RATE\000"
- 2417      4C595F52 
- 2417      41544500 
- 2418              	.LASF98:
- 2419 01e8 6D61675F 		.ascii	"mag_valid\000"
- 2419      76616C69 
- 2419      6400
- 2420              	.LASF197:
- 2421 01f2 6F726967 		.ascii	"origin_set\000"
- 2421      696E5F73 
- 2421      657400
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 47
+ 2412              	.LASF166:
+ 2413 01a0 5345565F 		.ascii	"SEV_FATAL\000"
+ 2413      46415441 
+ 2413      4C00
+ 2414              	.LASF33:
+ 2415 01aa 726F6C6C 		.ascii	"roll_mode\000"
+ 2415      5F6D6F64 
+ 2415      6500
+ 2416              	.LASF131:
+ 2417 01b4 70656E64 		.ascii	"pending_attr\000"
+ 2417      696E675F 
+ 2417      61747472 
+ 2417      00
+ 2418              	.LASF82:
+ 2419 01c1 666C6167 		.ascii	"flag_compass_error\000"
+ 2419      5F636F6D 
+ 2419      70617373 
+ 2419      5F657272 
+ 2419      6F7200
+ 2420              	.LASF103:
+ 2421 01d4 6D61675F 		.ascii	"mag_freq\000"
+ 2421      66726571 
+ 2421      00
+ 2422              	.LASF25:
+ 2423 01dd 48414D46 		.ascii	"HAMFLY_RATE\000"
+ 2423      4C595F52 
+ 2423      41544500 
+ 2424              	.LASF175:
+ 2425 01e9 67696D62 		.ascii	"gimbal_last_rx_ms\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 47
 
 
- 2422              	.LASF222:
- 2423 01fd 6261636B 		.ascii	"back\000"
- 2423      00
- 2424              	.LASF73:
- 2425 0202 6174745F 		.ascii	"att_yaw_deg\000"
- 2425      7961775F 
- 2425      64656700 
- 2426              	.LASF111:
- 2427 020e 73797365 		.ascii	"sysecho_imu_rate\000"
- 2427      63686F5F 
- 2427      696D755F 
- 2427      72617465 
- 2427      00
- 2428              	.LASF145:
- 2429 021f 53544259 		.ascii	"STBY\000"
- 2429      00
- 2430              	.LASF18:
- 2431 0224 75696E74 		.ascii	"uint32_t\000"
- 2431      33325F74 
+ 2425      616C5F6C 
+ 2425      6173745F 
+ 2425      72785F6D 
+ 2425      7300
+ 2426              	.LASF98:
+ 2427 01fb 6D61675F 		.ascii	"mag_valid\000"
+ 2427      76616C69 
+ 2427      6400
+ 2428              	.LASF198:
+ 2429 0205 6F726967 		.ascii	"origin_set\000"
+ 2429      696E5F73 
+ 2429      657400
+ 2430              	.LASF223:
+ 2431 0210 6261636B 		.ascii	"back\000"
  2431      00
- 2432              	.LASF54:
- 2433 022d 6770735F 		.ascii	"gps_ground_spd_ms\000"
- 2433      67726F75 
- 2433      6E645F73 
- 2433      70645F6D 
- 2433      7300
- 2434              	.LASF124:
- 2435 023f 75617274 		.ascii	"uart_err_flags\000"
- 2435      5F657272 
- 2435      5F666C61 
- 2435      677300
- 2436              	.LASF199:
- 2437 024e 6C617374 		.ascii	"last_diag_ms\000"
- 2437      5F646961 
- 2437      675F6D73 
+ 2432              	.LASF73:
+ 2433 0215 6174745F 		.ascii	"att_yaw_deg\000"
+ 2433      7961775F 
+ 2433      64656700 
+ 2434              	.LASF111:
+ 2435 0221 73797365 		.ascii	"sysecho_imu_rate\000"
+ 2435      63686F5F 
+ 2435      696D755F 
+ 2435      72617465 
+ 2435      00
+ 2436              	.LASF145:
+ 2437 0232 53544259 		.ascii	"STBY\000"
  2437      00
- 2438              	.LASF37:
- 2439 025b 75617274 		.ascii	"uart_putc\000"
- 2439      5F707574 
- 2439      6300
- 2440              	.LASF19:
- 2441 0265 666C6F61 		.ascii	"float\000"
- 2441      7400
- 2442              	.LASF201:
- 2443 026b 64696167 		.ascii	"diag_active\000"
- 2443      5F616374 
- 2443      69766500 
- 2444              	.LASF29:
- 2445 0277 74696C74 		.ascii	"tilt\000"
+ 2438              	.LASF18:
+ 2439 0237 75696E74 		.ascii	"uint32_t\000"
+ 2439      33325F74 
+ 2439      00
+ 2440              	.LASF54:
+ 2441 0240 6770735F 		.ascii	"gps_ground_spd_ms\000"
+ 2441      67726F75 
+ 2441      6E645F73 
+ 2441      70645F6D 
+ 2441      7300
+ 2442              	.LASF124:
+ 2443 0252 75617274 		.ascii	"uart_err_flags\000"
+ 2443      5F657272 
+ 2443      5F666C61 
+ 2443      677300
+ 2444              	.LASF200:
+ 2445 0261 6C617374 		.ascii	"last_diag_ms\000"
+ 2445      5F646961 
+ 2445      675F6D73 
  2445      00
- 2446              	.LASF15:
- 2447 027c 696E7431 		.ascii	"int16_t\000"
- 2447      365F7400 
- 2448              	.LASF12:
- 2449 0284 6C6F6E67 		.ascii	"long long unsigned int\000"
- 2449      206C6F6E 
- 2449      6720756E 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 48
+ 2446              	.LASF37:
+ 2447 026e 75617274 		.ascii	"uart_putc\000"
+ 2447      5F707574 
+ 2447      6300
+ 2448              	.LASF19:
+ 2449 0278 666C6F61 		.ascii	"float\000"
+ 2449      7400
+ 2450              	.LASF202:
+ 2451 027e 64696167 		.ascii	"diag_active\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 48
 
 
- 2449      7369676E 
- 2449      65642069 
- 2450              	.LASF126:
- 2451 029b 74656C65 		.ascii	"telemetry\000"
- 2451      6D657472 
- 2451      7900
- 2452              	.LASF69:
- 2453 02a5 6261726F 		.ascii	"baro_roc_ms\000"
- 2453      5F726F63 
- 2453      5F6D7300 
- 2454              	.LASF171:
- 2455 02b1 6175746F 		.ascii	"auto_flow\000"
- 2455      5F666C6F 
- 2455      7700
- 2456              	.LASF175:
- 2457 02bb 6572725F 		.ascii	"err_sev\000"
- 2457      73657600 
- 2458              	.LASF158:
- 2459 02c3 4155544F 		.ascii	"AUTO_NO_LOCK\000"
- 2459      5F4E4F5F 
- 2459      4C4F434B 
- 2459      00
- 2460              	.LASF142:
- 2461 02d0 6A6F795F 		.ascii	"joy_sensitivity_t\000"
- 2461      73656E73 
- 2461      69746976 
- 2461      6974795F 
- 2461      7400
- 2462              	.LASF66:
- 2463 02e2 6770735F 		.ascii	"gps_raw_sacc\000"
- 2463      7261775F 
- 2463      73616363 
- 2463      00
- 2464              	.LASF97:
- 2465 02ef 73797373 		.ascii	"sysstat_charge_mah\000"
- 2465      7461745F 
- 2465      63686172 
- 2465      67655F6D 
- 2465      616800
- 2466              	.LASF5:
- 2467 0302 5F5F7569 		.ascii	"__uint16_t\000"
- 2467      6E743136 
- 2467      5F7400
- 2468              	.LASF141:
- 2469 030d 53454E53 		.ascii	"SENSE_HIGH\000"
- 2469      455F4849 
- 2469      474800
- 2470              	.LASF81:
- 2471 0318 73797373 		.ascii	"sysstat_valid\000"
- 2471      7461745F 
- 2471      76616C69 
- 2471      6400
- 2472              	.LASF187:
- 2473 0326 6770735F 		.ascii	"gps_work_alt_mm\000"
- 2473      776F726B 
- 2473      5F616C74 
- 2473      5F6D6D00 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 49
+ 2451      5F616374 
+ 2451      69766500 
+ 2452              	.LASF29:
+ 2453 028a 74696C74 		.ascii	"tilt\000"
+ 2453      00
+ 2454              	.LASF15:
+ 2455 028f 696E7431 		.ascii	"int16_t\000"
+ 2455      365F7400 
+ 2456              	.LASF12:
+ 2457 0297 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2457      206C6F6E 
+ 2457      6720756E 
+ 2457      7369676E 
+ 2457      65642069 
+ 2458              	.LASF126:
+ 2459 02ae 74656C65 		.ascii	"telemetry\000"
+ 2459      6D657472 
+ 2459      7900
+ 2460              	.LASF69:
+ 2461 02b8 6261726F 		.ascii	"baro_roc_ms\000"
+ 2461      5F726F63 
+ 2461      5F6D7300 
+ 2462              	.LASF171:
+ 2463 02c4 6175746F 		.ascii	"auto_flow\000"
+ 2463      5F666C6F 
+ 2463      7700
+ 2464              	.LASF176:
+ 2465 02ce 6572725F 		.ascii	"err_sev\000"
+ 2465      73657600 
+ 2466              	.LASF158:
+ 2467 02d6 4155544F 		.ascii	"AUTO_NO_LOCK\000"
+ 2467      5F4E4F5F 
+ 2467      4C4F434B 
+ 2467      00
+ 2468              	.LASF142:
+ 2469 02e3 6A6F795F 		.ascii	"joy_sensitivity_t\000"
+ 2469      73656E73 
+ 2469      69746976 
+ 2469      6974795F 
+ 2469      7400
+ 2470              	.LASF66:
+ 2471 02f5 6770735F 		.ascii	"gps_raw_sacc\000"
+ 2471      7261775F 
+ 2471      73616363 
+ 2471      00
+ 2472              	.LASF97:
+ 2473 0302 73797373 		.ascii	"sysstat_charge_mah\000"
+ 2473      7461745F 
+ 2473      63686172 
+ 2473      67655F6D 
+ 2473      616800
+ 2474              	.LASF5:
+ 2475 0315 5F5F7569 		.ascii	"__uint16_t\000"
+ 2475      6E743136 
+ 2475      5F7400
+ 2476              	.LASF141:
+ 2477 0320 53454E53 		.ascii	"SENSE_HIGH\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 49
 
 
- 2474              	.LASF84:
- 2475 0336 666C6167 		.ascii	"flag_radio_los\000"
- 2475      5F726164 
- 2475      696F5F6C 
- 2475      6F7300
- 2476              	.LASF71:
- 2477 0345 6174745F 		.ascii	"att_timestamp_ms\000"
- 2477      74696D65 
- 2477      7374616D 
- 2477      705F6D73 
- 2477      00
- 2478              	.LASF34:
- 2479 0356 656E6162 		.ascii	"enable\000"
- 2479      6C6500
- 2480              	.LASF159:
- 2481 035d 4552524F 		.ascii	"ERROR_ACTIVE\000"
- 2481      525F4143 
- 2481      54495645 
- 2481      00
- 2482              	.LASF129:
- 2483 036a 74786275 		.ascii	"txbuf\000"
- 2483      6600
- 2484              	.LASF94:
- 2485 0370 73797373 		.ascii	"sysstat_cam_status\000"
- 2485      7461745F 
- 2485      63616D5F 
- 2485      73746174 
- 2485      757300
- 2486              	.LASF179:
- 2487 0383 6162735F 		.ascii	"abs_tilt_target\000"
- 2487      74696C74 
- 2487      5F746172 
- 2487      67657400 
- 2488              	.LASF90:
- 2489 0393 73797373 		.ascii	"sysstat_status_flags\000"
- 2489      7461745F 
- 2489      73746174 
- 2489      75735F66 
- 2489      6C616773 
- 2490              	.LASF108:
- 2491 03a8 73797365 		.ascii	"sysecho_valid\000"
- 2491      63686F5F 
- 2491      76616C69 
- 2491      6400
- 2492              	.LASF202:
- 2493 03b6 73656E73 		.ascii	"sense\000"
- 2493      6500
- 2494              	.LASF31:
- 2495 03bc 70616E5F 		.ascii	"pan_mode\000"
- 2495      6D6F6465 
- 2495      00
- 2496              	.LASF154:
- 2497 03c5 4155544F 		.ascii	"AUTO_ACQ_GPS\000"
- 2497      5F414351 
- 2497      5F475053 
- 2497      00
- 2498              	.LASF72:
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 50
+ 2477      455F4849 
+ 2477      474800
+ 2478              	.LASF81:
+ 2479 032b 73797373 		.ascii	"sysstat_valid\000"
+ 2479      7461745F 
+ 2479      76616C69 
+ 2479      6400
+ 2480              	.LASF188:
+ 2481 0339 6770735F 		.ascii	"gps_work_alt_mm\000"
+ 2481      776F726B 
+ 2481      5F616C74 
+ 2481      5F6D6D00 
+ 2482              	.LASF84:
+ 2483 0349 666C6167 		.ascii	"flag_radio_los\000"
+ 2483      5F726164 
+ 2483      696F5F6C 
+ 2483      6F7300
+ 2484              	.LASF71:
+ 2485 0358 6174745F 		.ascii	"att_timestamp_ms\000"
+ 2485      74696D65 
+ 2485      7374616D 
+ 2485      705F6D73 
+ 2485      00
+ 2486              	.LASF34:
+ 2487 0369 656E6162 		.ascii	"enable\000"
+ 2487      6C6500
+ 2488              	.LASF159:
+ 2489 0370 4552524F 		.ascii	"ERROR_ACTIVE\000"
+ 2489      525F4143 
+ 2489      54495645 
+ 2489      00
+ 2490              	.LASF129:
+ 2491 037d 74786275 		.ascii	"txbuf\000"
+ 2491      6600
+ 2492              	.LASF94:
+ 2493 0383 73797373 		.ascii	"sysstat_cam_status\000"
+ 2493      7461745F 
+ 2493      63616D5F 
+ 2493      73746174 
+ 2493      757300
+ 2494              	.LASF180:
+ 2495 0396 6162735F 		.ascii	"abs_tilt_target\000"
+ 2495      74696C74 
+ 2495      5F746172 
+ 2495      67657400 
+ 2496              	.LASF90:
+ 2497 03a6 73797373 		.ascii	"sysstat_status_flags\000"
+ 2497      7461745F 
+ 2497      73746174 
+ 2497      75735F66 
+ 2497      6C616773 
+ 2498              	.LASF108:
+ 2499 03bb 73797365 		.ascii	"sysecho_valid\000"
+ 2499      63686F5F 
+ 2499      76616C69 
+ 2499      6400
+ 2500              	.LASF203:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 50
 
 
- 2499 03d2 6174745F 		.ascii	"att_pitch_deg\000"
- 2499      70697463 
- 2499      685F6465 
- 2499      6700
- 2500              	.LASF188:
- 2501 03e0 6770735F 		.ascii	"gps_settled\000"
- 2501      73657474 
- 2501      6C656400 
- 2502              	.LASF194:
- 2503 03ec 74726163 		.ascii	"track_cy_last\000"
- 2503      6B5F6379 
- 2503      5F6C6173 
- 2503      7400
- 2504              	.LASF112:
- 2505 03fa 5F426F6F 		.ascii	"_Bool\000"
- 2505      6C00
- 2506              	.LASF198:
- 2507 0400 6C617374 		.ascii	"last_tx_ms\000"
- 2507      5F74785F 
- 2507      6D7300
- 2508              	.LASF28:
- 2509 040b 68616D66 		.ascii	"hamfly_control_mode_t\000"
- 2509      6C795F63 
- 2509      6F6E7472 
- 2509      6F6C5F6D 
- 2509      6F64655F 
- 2510              	.LASF120:
- 2511 0421 72785F70 		.ascii	"rx_packets\000"
- 2511      61636B65 
- 2511      747300
- 2512              	.LASF52:
- 2513 042c 6770735F 		.ascii	"gps_lon_deg\000"
- 2513      6C6F6E5F 
- 2513      64656700 
- 2514              	.LASF80:
- 2515 0438 6174745F 		.ascii	"att_yaw_err_deg\000"
- 2515      7961775F 
- 2515      6572725F 
- 2515      64656700 
- 2516              	.LASF116:
- 2517 0448 64726F70 		.ascii	"drops\000"
- 2517      7300
- 2518              	.LASF61:
- 2519 044e 6770735F 		.ascii	"gps_raw_alt\000"
- 2519      7261775F 
- 2519      616C7400 
- 2520              	.LASF127:
- 2521 045a 73746174 		.ascii	"statistics\000"
- 2521      69737469 
- 2521      637300
- 2522              	.LASF56:
- 2523 0465 6770735F 		.ascii	"gps_hacc_m\000"
- 2523      68616363 
- 2523      5F6D00
- 2524              	.LASF32:
- 2525 0470 74696C74 		.ascii	"tilt_mode\000"
- 2525      5F6D6F64 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 51
+ 2501 03c9 73656E73 		.ascii	"sense\000"
+ 2501      6500
+ 2502              	.LASF31:
+ 2503 03cf 70616E5F 		.ascii	"pan_mode\000"
+ 2503      6D6F6465 
+ 2503      00
+ 2504              	.LASF154:
+ 2505 03d8 4155544F 		.ascii	"AUTO_ACQ_GPS\000"
+ 2505      5F414351 
+ 2505      5F475053 
+ 2505      00
+ 2506              	.LASF72:
+ 2507 03e5 6174745F 		.ascii	"att_pitch_deg\000"
+ 2507      70697463 
+ 2507      685F6465 
+ 2507      6700
+ 2508              	.LASF189:
+ 2509 03f3 6770735F 		.ascii	"gps_settled\000"
+ 2509      73657474 
+ 2509      6C656400 
+ 2510              	.LASF195:
+ 2511 03ff 74726163 		.ascii	"track_cy_last\000"
+ 2511      6B5F6379 
+ 2511      5F6C6173 
+ 2511      7400
+ 2512              	.LASF112:
+ 2513 040d 5F426F6F 		.ascii	"_Bool\000"
+ 2513      6C00
+ 2514              	.LASF199:
+ 2515 0413 6C617374 		.ascii	"last_tx_ms\000"
+ 2515      5F74785F 
+ 2515      6D7300
+ 2516              	.LASF28:
+ 2517 041e 68616D66 		.ascii	"hamfly_control_mode_t\000"
+ 2517      6C795F63 
+ 2517      6F6E7472 
+ 2517      6F6C5F6D 
+ 2517      6F64655F 
+ 2518              	.LASF120:
+ 2519 0434 72785F70 		.ascii	"rx_packets\000"
+ 2519      61636B65 
+ 2519      747300
+ 2520              	.LASF52:
+ 2521 043f 6770735F 		.ascii	"gps_lon_deg\000"
+ 2521      6C6F6E5F 
+ 2521      64656700 
+ 2522              	.LASF80:
+ 2523 044b 6174745F 		.ascii	"att_yaw_err_deg\000"
+ 2523      7961775F 
+ 2523      6572725F 
+ 2523      64656700 
+ 2524              	.LASF116:
+ 2525 045b 64726F70 		.ascii	"drops\000"
+ 2525      7300
+ 2526              	.LASF61:
+ 2527 0461 6770735F 		.ascii	"gps_raw_alt\000"
+ 2527      7261775F 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 51
 
 
- 2525      6500
- 2526              	.LASF147:
- 2527 047a 4155544F 		.ascii	"AUTO\000"
- 2527      00
- 2528              	.LASF137:
- 2529 047f 70656E64 		.ascii	"pending_payload_len\000"
- 2529      696E675F 
- 2529      7061796C 
- 2529      6F61645F 
- 2529      6C656E00 
- 2530              	.LASF180:
- 2531 0493 6770735F 		.ascii	"gps_target_lat_raw\000"
- 2531      74617267 
- 2531      65745F6C 
- 2531      61745F72 
- 2531      617700
- 2532              	.LASF213:
- 2533 04a6 656E7472 		.ascii	"entry_error_active\000"
- 2533      795F6572 
- 2533      726F725F 
- 2533      61637469 
- 2533      766500
- 2534              	.LASF196:
- 2535 04b9 6F726967 		.ascii	"origin_tilt_deg\000"
- 2535      696E5F74 
- 2535      696C745F 
- 2535      64656700 
- 2536              	.LASF21:
- 2537 04c9 63686172 		.ascii	"char\000"
- 2537      00
- 2538              	.LASF162:
- 2539 04ce 73746174 		.ascii	"state_t\000"
- 2539      655F7400 
- 2540              	.LASF207:
- 2541 04d6 6E756467 		.ascii	"nudge_base_tilt_deg\000"
- 2541      655F6261 
- 2541      73655F74 
- 2541      696C745F 
- 2541      64656700 
- 2542              	.LASF93:
- 2543 04ea 73797373 		.ascii	"sysstat_imu_rate\000"
- 2543      7461745F 
- 2543      696D755F 
- 2543      72617465 
- 2543      00
- 2544              	.LASF217:
- 2545 04fb 6275696C 		.ascii	"build_error\000"
- 2545      645F6572 
- 2545      726F7200 
- 2546              	.LASF44:
- 2547 0507 67696D62 		.ascii	"gimbal_i\000"
- 2547      616C5F69 
- 2547      00
- 2548              	.LASF45:
- 2549 0510 67696D62 		.ascii	"gimbal_j\000"
- 2549      616C5F6A 
- 2549      00
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 52
-
-
- 2550              	.LASF46:
- 2551 0519 67696D62 		.ascii	"gimbal_k\000"
- 2551      616C5F6B 
+ 2527      616C7400 
+ 2528              	.LASF127:
+ 2529 046d 73746174 		.ascii	"statistics\000"
+ 2529      69737469 
+ 2529      637300
+ 2530              	.LASF56:
+ 2531 0478 6770735F 		.ascii	"gps_hacc_m\000"
+ 2531      68616363 
+ 2531      5F6D00
+ 2532              	.LASF32:
+ 2533 0483 74696C74 		.ascii	"tilt_mode\000"
+ 2533      5F6D6F64 
+ 2533      6500
+ 2534              	.LASF147:
+ 2535 048d 4155544F 		.ascii	"AUTO\000"
+ 2535      00
+ 2536              	.LASF137:
+ 2537 0492 70656E64 		.ascii	"pending_payload_len\000"
+ 2537      696E675F 
+ 2537      7061796C 
+ 2537      6F61645F 
+ 2537      6C656E00 
+ 2538              	.LASF181:
+ 2539 04a6 6770735F 		.ascii	"gps_target_lat_raw\000"
+ 2539      74617267 
+ 2539      65745F6C 
+ 2539      61745F72 
+ 2539      617700
+ 2540              	.LASF214:
+ 2541 04b9 656E7472 		.ascii	"entry_error_active\000"
+ 2541      795F6572 
+ 2541      726F725F 
+ 2541      61637469 
+ 2541      766500
+ 2542              	.LASF197:
+ 2543 04cc 6F726967 		.ascii	"origin_tilt_deg\000"
+ 2543      696E5F74 
+ 2543      696C745F 
+ 2543      64656700 
+ 2544              	.LASF21:
+ 2545 04dc 63686172 		.ascii	"char\000"
+ 2545      00
+ 2546              	.LASF162:
+ 2547 04e1 73746174 		.ascii	"state_t\000"
+ 2547      655F7400 
+ 2548              	.LASF208:
+ 2549 04e9 6E756467 		.ascii	"nudge_base_tilt_deg\000"
+ 2549      655F6261 
+ 2549      73655F74 
+ 2549      696C745F 
+ 2549      64656700 
+ 2550              	.LASF93:
+ 2551 04fd 73797373 		.ascii	"sysstat_imu_rate\000"
+ 2551      7461745F 
+ 2551      696D755F 
+ 2551      72617465 
  2551      00
- 2552              	.LASF164:
- 2553 0522 5345565F 		.ascii	"SEV_WARN\000"
- 2553      5741524E 
- 2553      00
- 2554              	.LASF43:
- 2555 052b 67696D62 		.ascii	"gimbal_r\000"
- 2555      616C5F72 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 52
+
+
+ 2552              	.LASF218:
+ 2553 050e 6275696C 		.ascii	"build_error\000"
+ 2553      645F6572 
+ 2553      726F7200 
+ 2554              	.LASF44:
+ 2555 051a 67696D62 		.ascii	"gimbal_i\000"
+ 2555      616C5F69 
  2555      00
- 2556              	.LASF30:
- 2557 0534 726F6C6C 		.ascii	"roll\000"
+ 2556              	.LASF45:
+ 2557 0523 67696D62 		.ascii	"gimbal_j\000"
+ 2557      616C5F6A 
  2557      00
- 2558              	.LASF14:
- 2559 0539 75696E74 		.ascii	"uint8_t\000"
- 2559      385F7400 
- 2560              	.LASF122:
- 2561 0541 72785F62 		.ascii	"rx_bad_checksum\000"
- 2561      61645F63 
- 2561      6865636B 
- 2561      73756D00 
- 2562              	.LASF215:
- 2563 0551 6B65795F 		.ascii	"key_error_active\000"
- 2563      6572726F 
- 2563      725F6163 
- 2563      74697665 
- 2563      00
- 2564              	.LASF173:
- 2565 0562 6175746F 		.ascii	"auto_hold_entry_ms\000"
- 2565      5F686F6C 
- 2565      645F656E 
- 2565      7472795F 
- 2565      6D7300
- 2566              	.LASF144:
- 2567 0575 524F4F54 		.ascii	"ROOT\000"
+ 2558              	.LASF46:
+ 2559 052c 67696D62 		.ascii	"gimbal_k\000"
+ 2559      616C5F6B 
+ 2559      00
+ 2560              	.LASF164:
+ 2561 0535 5345565F 		.ascii	"SEV_WARN\000"
+ 2561      5741524E 
+ 2561      00
+ 2562              	.LASF212:
+ 2563 053e 6E756467 		.ascii	"nudge_burst_start_ms\000"
+ 2563      655F6275 
+ 2563      7273745F 
+ 2563      73746172 
+ 2563      745F6D73 
+ 2564              	.LASF43:
+ 2565 0553 67696D62 		.ascii	"gimbal_r\000"
+ 2565      616C5F72 
+ 2565      00
+ 2566              	.LASF30:
+ 2567 055c 726F6C6C 		.ascii	"roll\000"
  2567      00
- 2568              	.LASF117:
- 2569 057a 68616D66 		.ascii	"hamfly_rb_t\000"
- 2569      6C795F72 
- 2569      625F7400 
- 2570              	.LASF104:
- 2571 0586 6D61675F 		.ascii	"mag_off_x\000"
- 2571      6F66665F 
- 2571      7800
- 2572              	.LASF105:
- 2573 0590 6D61675F 		.ascii	"mag_off_y\000"
- 2573      6F66665F 
- 2573      7900
- 2574              	.LASF106:
- 2575 059a 6D61675F 		.ascii	"mag_off_z\000"
- 2575      6F66665F 
- 2575      7A00
- 2576              	.LASF172:
- 2577 05a4 686F6D65 		.ascii	"home_return_stby\000"
- 2577      5F726574 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 53
-
-
- 2577      75726E5F 
- 2577      73746279 
+ 2568              	.LASF14:
+ 2569 0561 75696E74 		.ascii	"uint8_t\000"
+ 2569      385F7400 
+ 2570              	.LASF122:
+ 2571 0569 72785F62 		.ascii	"rx_bad_checksum\000"
+ 2571      61645F63 
+ 2571      6865636B 
+ 2571      73756D00 
+ 2572              	.LASF216:
+ 2573 0579 6B65795F 		.ascii	"key_error_active\000"
+ 2573      6572726F 
+ 2573      725F6163 
+ 2573      74697665 
+ 2573      00
+ 2574              	.LASF173:
+ 2575 058a 6175746F 		.ascii	"auto_hold_entry_ms\000"
+ 2575      5F686F6C 
+ 2575      645F656E 
+ 2575      7472795F 
+ 2575      6D7300
+ 2576              	.LASF144:
+ 2577 059d 524F4F54 		.ascii	"ROOT\000"
  2577      00
- 2578              	.LASF58:
- 2579 05b5 6770735F 		.ascii	"gps_sacc_ms\000"
- 2579      73616363 
- 2579      5F6D7300 
- 2580              	.LASF11:
- 2581 05c1 6C6F6E67 		.ascii	"long long int\000"
- 2581      206C6F6E 
- 2581      6720696E 
- 2581      7400
- 2582              	.LASF50:
- 2583 05cf 6770735F 		.ascii	"gps_locked\000"
- 2583      6C6F636B 
- 2583      656400
- 2584              	.LASF133:
- 2585 05da 70656E64 		.ascii	"pending_ready\000"
- 2585      696E675F 
- 2585      72656164 
- 2585      7900
- 2586              	.LASF40:
- 2587 05e8 76616C69 		.ascii	"valid\000"
- 2587      6400
- 2588              	.LASF119:
- 2589 05ee 74785F62 		.ascii	"tx_bytes\000"
- 2589      79746573 
- 2589      00
- 2590              	.LASF168:
- 2591 05f7 67696D62 		.ascii	"gimbal\000"
- 2591      616C00
- 2592              	.LASF3:
- 2593 05fe 5F5F696E 		.ascii	"__int16_t\000"
- 2593      7431365F 
- 2593      7400
- 2594              	.LASF49:
- 2595 0608 6770735F 		.ascii	"gps_valid\000"
- 2595      76616C69 
- 2595      6400
- 2596              	.LASF109:
- 2597 0612 73797365 		.ascii	"sysecho_gps_locked\000"
- 2597      63686F5F 
- 2597      6770735F 
- 2597      6C6F636B 
- 2597      656400
- 2598              	.LASF83:
- 2599 0625 666C6167 		.ascii	"flag_gps_los\000"
- 2599      5F677073 
- 2599      5F6C6F73 
+ 2578              	.LASF117:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 53
+
+
+ 2579 05a2 68616D66 		.ascii	"hamfly_rb_t\000"
+ 2579      6C795F72 
+ 2579      625F7400 
+ 2580              	.LASF104:
+ 2581 05ae 6D61675F 		.ascii	"mag_off_x\000"
+ 2581      6F66665F 
+ 2581      7800
+ 2582              	.LASF105:
+ 2583 05b8 6D61675F 		.ascii	"mag_off_y\000"
+ 2583      6F66665F 
+ 2583      7900
+ 2584              	.LASF106:
+ 2585 05c2 6D61675F 		.ascii	"mag_off_z\000"
+ 2585      6F66665F 
+ 2585      7A00
+ 2586              	.LASF172:
+ 2587 05cc 686F6D65 		.ascii	"home_return_stby\000"
+ 2587      5F726574 
+ 2587      75726E5F 
+ 2587      73746279 
+ 2587      00
+ 2588              	.LASF58:
+ 2589 05dd 6770735F 		.ascii	"gps_sacc_ms\000"
+ 2589      73616363 
+ 2589      5F6D7300 
+ 2590              	.LASF11:
+ 2591 05e9 6C6F6E67 		.ascii	"long long int\000"
+ 2591      206C6F6E 
+ 2591      6720696E 
+ 2591      7400
+ 2592              	.LASF50:
+ 2593 05f7 6770735F 		.ascii	"gps_locked\000"
+ 2593      6C6F636B 
+ 2593      656400
+ 2594              	.LASF133:
+ 2595 0602 70656E64 		.ascii	"pending_ready\000"
+ 2595      696E675F 
+ 2595      72656164 
+ 2595      7900
+ 2596              	.LASF40:
+ 2597 0610 76616C69 		.ascii	"valid\000"
+ 2597      6400
+ 2598              	.LASF119:
+ 2599 0616 74785F62 		.ascii	"tx_bytes\000"
+ 2599      79746573 
  2599      00
- 2600              	.LASF156:
- 2601 0632 4155544F 		.ascii	"AUTO_TRACKING\000"
- 2601      5F545241 
- 2601      434B494E 
- 2601      4700
- 2602              	.LASF163:
- 2603 0640 5345565F 		.ascii	"SEV_USER\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 54
+ 2600              	.LASF168:
+ 2601 061f 67696D62 		.ascii	"gimbal\000"
+ 2601      616C00
+ 2602              	.LASF3:
+ 2603 0626 5F5F696E 		.ascii	"__int16_t\000"
+ 2603      7431365F 
+ 2603      7400
+ 2604              	.LASF49:
+ 2605 0630 6770735F 		.ascii	"gps_valid\000"
+ 2605      76616C69 
+ 2605      6400
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 54
 
 
- 2603      55534552 
- 2603      00
- 2604              	.LASF143:
- 2605 0649 6A6F795F 		.ascii	"joy_cmd_t\000"
- 2605      636D645F 
- 2605      7400
- 2606              	.LASF209:
- 2607 0653 7467745F 		.ascii	"tgt_tilt_deg\000"
- 2607      74696C74 
- 2607      5F646567 
- 2607      00
- 2608              	.LASF26:
- 2609 0660 48414D46 		.ascii	"HAMFLY_ABSOLUTE\000"
- 2609      4C595F41 
- 2609      42534F4C 
- 2609      55544500 
- 2610              	.LASF88:
- 2611 0670 73797373 		.ascii	"sysstat_temp_c\000"
- 2611      7461745F 
- 2611      74656D70 
- 2611      5F6300
- 2612              	.LASF63:
- 2613 067f 6770735F 		.ascii	"gps_raw_hdg\000"
- 2613      7261775F 
- 2613      68646700 
- 2614              	.LASF132:
- 2615 068b 70656E64 		.ascii	"pending_sent_ms\000"
- 2615      696E675F 
- 2615      73656E74 
- 2615      5F6D7300 
- 2616              	.LASF134:
- 2617 069b 70656E64 		.ascii	"pending_response_attr\000"
- 2617      696E675F 
- 2617      72657370 
- 2617      6F6E7365 
- 2617      5F617474 
- 2618              	.LASF55:
- 2619 06b1 6770735F 		.ascii	"gps_heading_deg\000"
- 2619      68656164 
- 2619      696E675F 
- 2619      64656700 
- 2620              	.LASF22:
- 2621 06c1 6C6F6E67 		.ascii	"long double\000"
- 2621      20646F75 
- 2621      626C6500 
- 2622              	.LASF16:
- 2623 06cd 75696E74 		.ascii	"uint16_t\000"
- 2623      31365F74 
- 2623      00
- 2624              	.LASF140:
- 2625 06d6 53454E53 		.ascii	"SENSE_MED\000"
- 2625      455F4D45 
- 2625      4400
- 2626              	.LASF107:
- 2627 06e0 6D61675F 		.ascii	"mag_declination\000"
- 2627      6465636C 
- 2627      696E6174 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 55
+ 2606              	.LASF109:
+ 2607 063a 73797365 		.ascii	"sysecho_gps_locked\000"
+ 2607      63686F5F 
+ 2607      6770735F 
+ 2607      6C6F636B 
+ 2607      656400
+ 2608              	.LASF83:
+ 2609 064d 666C6167 		.ascii	"flag_gps_los\000"
+ 2609      5F677073 
+ 2609      5F6C6F73 
+ 2609      00
+ 2610              	.LASF156:
+ 2611 065a 4155544F 		.ascii	"AUTO_TRACKING\000"
+ 2611      5F545241 
+ 2611      434B494E 
+ 2611      4700
+ 2612              	.LASF163:
+ 2613 0668 5345565F 		.ascii	"SEV_USER\000"
+ 2613      55534552 
+ 2613      00
+ 2614              	.LASF143:
+ 2615 0671 6A6F795F 		.ascii	"joy_cmd_t\000"
+ 2615      636D645F 
+ 2615      7400
+ 2616              	.LASF210:
+ 2617 067b 7467745F 		.ascii	"tgt_tilt_deg\000"
+ 2617      74696C74 
+ 2617      5F646567 
+ 2617      00
+ 2618              	.LASF26:
+ 2619 0688 48414D46 		.ascii	"HAMFLY_ABSOLUTE\000"
+ 2619      4C595F41 
+ 2619      42534F4C 
+ 2619      55544500 
+ 2620              	.LASF88:
+ 2621 0698 73797373 		.ascii	"sysstat_temp_c\000"
+ 2621      7461745F 
+ 2621      74656D70 
+ 2621      5F6300
+ 2622              	.LASF63:
+ 2623 06a7 6770735F 		.ascii	"gps_raw_hdg\000"
+ 2623      7261775F 
+ 2623      68646700 
+ 2624              	.LASF132:
+ 2625 06b3 70656E64 		.ascii	"pending_sent_ms\000"
+ 2625      696E675F 
+ 2625      73656E74 
+ 2625      5F6D7300 
+ 2626              	.LASF134:
+ 2627 06c3 70656E64 		.ascii	"pending_response_attr\000"
+ 2627      696E675F 
+ 2627      72657370 
+ 2627      6F6E7365 
+ 2627      5F617474 
+ 2628              	.LASF55:
+ 2629 06d9 6770735F 		.ascii	"gps_heading_deg\000"
+ 2629      68656164 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 55
 
 
- 2627      696F6E00 
- 2628              	.LASF47:
- 2629 06f0 67696D62 		.ascii	"gimbal_status1\000"
- 2629      616C5F73 
- 2629      74617475 
- 2629      733100
- 2630              	.LASF48:
- 2631 06ff 67696D62 		.ascii	"gimbal_status2\000"
- 2631      616C5F73 
- 2631      74617475 
- 2631      733200
- 2632              	.LASF4:
- 2633 070e 73686F72 		.ascii	"short int\000"
- 2633      7420696E 
- 2633      7400
- 2634              	.LASF161:
- 2635 0718 53544154 		.ascii	"STATE_COUNT\000"
- 2635      455F434F 
- 2635      554E5400 
- 2636              	.LASF189:
- 2637 0724 6770735F 		.ascii	"gps_last_pan_deg\000"
- 2637      6C617374 
- 2637      5F70616E 
- 2637      5F646567 
- 2637      00
- 2638              	.LASF190:
- 2639 0735 6770735F 		.ascii	"gps_last_tilt_deg\000"
- 2639      6C617374 
- 2639      5F74696C 
- 2639      745F6465 
- 2639      6700
- 2640              	.LASF8:
- 2641 0747 6C6F6E67 		.ascii	"long int\000"
- 2641      20696E74 
- 2641      00
- 2642              	.LASF223:
- 2643 0750 49544D5F 		.ascii	"ITM_RxBuffer\000"
- 2643      52784275 
- 2643      66666572 
- 2643      00
- 2644              	.LASF149:
- 2645 075d 53544259 		.ascii	"STBY_DEFER\000"
- 2645      5F444546 
- 2645      455200
- 2646              	.LASF193:
- 2647 0768 74726163 		.ascii	"track_cx_last\000"
- 2647      6B5F6378 
- 2647      5F6C6173 
- 2647      7400
- 2648              	.LASF135:
- 2649 0776 70656E64 		.ascii	"pending_response_len\000"
- 2649      696E675F 
- 2649      72657370 
- 2649      6F6E7365 
- 2649      5F6C656E 
- 2650              	.LASF62:
- 2651 078b 6770735F 		.ascii	"gps_raw_spd\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 56
+ 2629      696E675F 
+ 2629      64656700 
+ 2630              	.LASF22:
+ 2631 06e9 6C6F6E67 		.ascii	"long double\000"
+ 2631      20646F75 
+ 2631      626C6500 
+ 2632              	.LASF16:
+ 2633 06f5 75696E74 		.ascii	"uint16_t\000"
+ 2633      31365F74 
+ 2633      00
+ 2634              	.LASF140:
+ 2635 06fe 53454E53 		.ascii	"SENSE_MED\000"
+ 2635      455F4D45 
+ 2635      4400
+ 2636              	.LASF107:
+ 2637 0708 6D61675F 		.ascii	"mag_declination\000"
+ 2637      6465636C 
+ 2637      696E6174 
+ 2637      696F6E00 
+ 2638              	.LASF47:
+ 2639 0718 67696D62 		.ascii	"gimbal_status1\000"
+ 2639      616C5F73 
+ 2639      74617475 
+ 2639      733100
+ 2640              	.LASF48:
+ 2641 0727 67696D62 		.ascii	"gimbal_status2\000"
+ 2641      616C5F73 
+ 2641      74617475 
+ 2641      733200
+ 2642              	.LASF4:
+ 2643 0736 73686F72 		.ascii	"short int\000"
+ 2643      7420696E 
+ 2643      7400
+ 2644              	.LASF161:
+ 2645 0740 53544154 		.ascii	"STATE_COUNT\000"
+ 2645      455F434F 
+ 2645      554E5400 
+ 2646              	.LASF190:
+ 2647 074c 6770735F 		.ascii	"gps_last_pan_deg\000"
+ 2647      6C617374 
+ 2647      5F70616E 
+ 2647      5F646567 
+ 2647      00
+ 2648              	.LASF191:
+ 2649 075d 6770735F 		.ascii	"gps_last_tilt_deg\000"
+ 2649      6C617374 
+ 2649      5F74696C 
+ 2649      745F6465 
+ 2649      6700
+ 2650              	.LASF8:
+ 2651 076f 6C6F6E67 		.ascii	"long int\000"
+ 2651      20696E74 
+ 2651      00
+ 2652              	.LASF224:
+ 2653 0778 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2653      52784275 
+ 2653      66666572 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 56
 
 
- 2651      7261775F 
- 2651      73706400 
- 2652              	.LASF185:
- 2653 0797 6770735F 		.ascii	"gps_work_lat_raw\000"
- 2653      776F726B 
- 2653      5F6C6174 
- 2653      5F726177 
  2653      00
- 2654              	.LASF121:
- 2655 07a8 72785F62 		.ascii	"rx_bytes\000"
- 2655      79746573 
- 2655      00
- 2656              	.LASF53:
- 2657 07b1 6770735F 		.ascii	"gps_alt_m\000"
- 2657      616C745F 
- 2657      6D00
- 2658              	.LASF195:
- 2659 07bb 6F726967 		.ascii	"origin_pan_deg\000"
- 2659      696E5F70 
- 2659      616E5F64 
- 2659      656700
- 2660              	.LASF214:
- 2661 07ca 656E7472 		.ascii	"entry_error_kill\000"
- 2661      795F6572 
- 2661      726F725F 
- 2661      6B696C6C 
- 2661      00
- 2662              	.LASF183:
- 2663 07db 6770735F 		.ascii	"gps_target_set\000"
- 2663      74617267 
- 2663      65745F73 
- 2663      657400
- 2664              	.LASF136:
- 2665 07ea 70656E64 		.ascii	"pending_payload\000"
- 2665      696E675F 
- 2665      7061796C 
- 2665      6F616400 
- 2666              	.LASF51:
- 2667 07fa 6770735F 		.ascii	"gps_lat_deg\000"
- 2667      6C61745F 
- 2667      64656700 
- 2668              	.LASF2:
- 2669 0806 5F5F7569 		.ascii	"__uint8_t\000"
- 2669      6E74385F 
- 2669      7400
- 2670              	.LASF96:
- 2671 0810 73797373 		.ascii	"sysstat_batt_a\000"
- 2671      7461745F 
- 2671      62617474 
- 2671      5F6100
- 2672              	.LASF221:
- 2673 081f 7365765F 		.ascii	"sev_str\000"
- 2673      73747200 
- 2674              	.LASF184:
- 2675 0827 6770735F 		.ascii	"gps_new_target\000"
- 2675      6E65775F 
- 2675      74617267 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 57
+ 2654              	.LASF149:
+ 2655 0785 53544259 		.ascii	"STBY_DEFER\000"
+ 2655      5F444546 
+ 2655      455200
+ 2656              	.LASF194:
+ 2657 0790 74726163 		.ascii	"track_cx_last\000"
+ 2657      6B5F6378 
+ 2657      5F6C6173 
+ 2657      7400
+ 2658              	.LASF135:
+ 2659 079e 70656E64 		.ascii	"pending_response_len\000"
+ 2659      696E675F 
+ 2659      72657370 
+ 2659      6F6E7365 
+ 2659      5F6C656E 
+ 2660              	.LASF62:
+ 2661 07b3 6770735F 		.ascii	"gps_raw_spd\000"
+ 2661      7261775F 
+ 2661      73706400 
+ 2662              	.LASF186:
+ 2663 07bf 6770735F 		.ascii	"gps_work_lat_raw\000"
+ 2663      776F726B 
+ 2663      5F6C6174 
+ 2663      5F726177 
+ 2663      00
+ 2664              	.LASF121:
+ 2665 07d0 72785F62 		.ascii	"rx_bytes\000"
+ 2665      79746573 
+ 2665      00
+ 2666              	.LASF53:
+ 2667 07d9 6770735F 		.ascii	"gps_alt_m\000"
+ 2667      616C745F 
+ 2667      6D00
+ 2668              	.LASF196:
+ 2669 07e3 6F726967 		.ascii	"origin_pan_deg\000"
+ 2669      696E5F70 
+ 2669      616E5F64 
+ 2669      656700
+ 2670              	.LASF215:
+ 2671 07f2 656E7472 		.ascii	"entry_error_kill\000"
+ 2671      795F6572 
+ 2671      726F725F 
+ 2671      6B696C6C 
+ 2671      00
+ 2672              	.LASF184:
+ 2673 0803 6770735F 		.ascii	"gps_target_set\000"
+ 2673      74617267 
+ 2673      65745F73 
+ 2673      657400
+ 2674              	.LASF136:
+ 2675 0812 70656E64 		.ascii	"pending_payload\000"
+ 2675      696E675F 
+ 2675      7061796C 
+ 2675      6F616400 
+ 2676              	.LASF51:
+ 2677 0822 6770735F 		.ascii	"gps_lat_deg\000"
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 57
 
 
- 2675      657400
- 2676              	.LASF42:
- 2677 0836 62617474 		.ascii	"battery_right_v\000"
- 2677      6572795F 
- 2677      72696768 
- 2677      745F7600 
- 2678              	.LASF150:
- 2679 0846 53544259 		.ascii	"STBY_HOLD\000"
- 2679      5F484F4C 
- 2679      4400
- 2680              	.LASF155:
- 2681 0850 4155544F 		.ascii	"AUTO_ACQ_SPIRAL\000"
- 2681      5F414351 
- 2681      5F535049 
- 2681      52414C00 
- 2682              	.LASF191:
- 2683 0860 6770735F 		.ascii	"gps_last_sample_ms\000"
- 2683      6C617374 
- 2683      5F73616D 
- 2683      706C655F 
- 2683      6D7300
- 2684              	.LASF177:
- 2685 0873 66617461 		.ascii	"fatal_latched\000"
- 2685      6C5F6C61 
- 2685      74636865 
- 2685      6400
- 2686              	.LASF86:
- 2687 0881 73797373 		.ascii	"sysstat_batt_v\000"
- 2687      7461745F 
- 2687      62617474 
- 2687      5F7600
- 2688              	.LASF176:
- 2689 0890 6572725F 		.ascii	"err_msg\000"
- 2689      6D736700 
- 2690              	.LASF165:
- 2691 0898 5345565F 		.ascii	"SEV_SOFTWARE\000"
- 2691      534F4654 
- 2691      57415245 
- 2691      00
- 2692              	.LASF23:
- 2693 08a5 73697A65 		.ascii	"sizetype\000"
- 2693      74797065 
- 2693      00
- 2694              	.LASF36:
- 2695 08ae 68616D66 		.ascii	"hamfly_control_t\000"
- 2695      6C795F63 
- 2695      6F6E7472 
- 2695      6F6C5F74 
- 2695      00
- 2696              	.LASF67:
- 2697 08bf 6261726F 		.ascii	"baro_valid\000"
- 2697      5F76616C 
- 2697      696400
- 2698              	.LASF10:
- 2699 08ca 6C6F6E67 		.ascii	"long unsigned int\000"
- 2699      20756E73 
- 2699      69676E65 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 58
+ 2677      6C61745F 
+ 2677      64656700 
+ 2678              	.LASF2:
+ 2679 082e 5F5F7569 		.ascii	"__uint8_t\000"
+ 2679      6E74385F 
+ 2679      7400
+ 2680              	.LASF96:
+ 2681 0838 73797373 		.ascii	"sysstat_batt_a\000"
+ 2681      7461745F 
+ 2681      62617474 
+ 2681      5F6100
+ 2682              	.LASF222:
+ 2683 0847 7365765F 		.ascii	"sev_str\000"
+ 2683      73747200 
+ 2684              	.LASF185:
+ 2685 084f 6770735F 		.ascii	"gps_new_target\000"
+ 2685      6E65775F 
+ 2685      74617267 
+ 2685      657400
+ 2686              	.LASF42:
+ 2687 085e 62617474 		.ascii	"battery_right_v\000"
+ 2687      6572795F 
+ 2687      72696768 
+ 2687      745F7600 
+ 2688              	.LASF150:
+ 2689 086e 53544259 		.ascii	"STBY_HOLD\000"
+ 2689      5F484F4C 
+ 2689      4400
+ 2690              	.LASF155:
+ 2691 0878 4155544F 		.ascii	"AUTO_ACQ_SPIRAL\000"
+ 2691      5F414351 
+ 2691      5F535049 
+ 2691      52414C00 
+ 2692              	.LASF192:
+ 2693 0888 6770735F 		.ascii	"gps_last_sample_ms\000"
+ 2693      6C617374 
+ 2693      5F73616D 
+ 2693      706C655F 
+ 2693      6D7300
+ 2694              	.LASF178:
+ 2695 089b 66617461 		.ascii	"fatal_latched\000"
+ 2695      6C5F6C61 
+ 2695      74636865 
+ 2695      6400
+ 2696              	.LASF86:
+ 2697 08a9 73797373 		.ascii	"sysstat_batt_v\000"
+ 2697      7461745F 
+ 2697      62617474 
+ 2697      5F7600
+ 2698              	.LASF177:
+ 2699 08b8 6572725F 		.ascii	"err_msg\000"
+ 2699      6D736700 
+ 2700              	.LASF165:
+ 2701 08c0 5345565F 		.ascii	"SEV_SOFTWARE\000"
+ 2701      534F4654 
+ 2701      57415245 
+ 2701      00
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 58
 
 
- 2699      6420696E 
- 2699      7400
- 2700              	.LASF157:
- 2701 08dc 4155544F 		.ascii	"AUTO_LOSS\000"
- 2701      5F4C4F53 
- 2701      5300
- 2702              	.LASF160:
- 2703 08e6 4552524F 		.ascii	"ERROR_KILL\000"
- 2703      525F4B49 
- 2703      4C4C00
- 2704              	.LASF182:
- 2705 08f1 6770735F 		.ascii	"gps_target_alt_mm\000"
- 2705      74617267 
- 2705      65745F61 
- 2705      6C745F6D 
- 2705      6D00
- 2706              	.LASF17:
- 2707 0903 696E7433 		.ascii	"int32_t\000"
- 2707      325F7400 
- 2708              	.LASF76:
- 2709 090b 6174745F 		.ascii	"att_yaw_rate_dps\000"
- 2709      7961775F 
- 2709      72617465 
- 2709      5F647073 
- 2709      00
- 2710              	.LASF169:
- 2711 091c 73746174 		.ascii	"state\000"
- 2711      6500
- 2712              	.LASF75:
- 2713 0922 6174745F 		.ascii	"att_pitch_rate_dps\000"
- 2713      70697463 
- 2713      685F7261 
- 2713      74655F64 
- 2713      707300
- 2714              	.LASF212:
- 2715 0935 6170705F 		.ascii	"app_ctx_t\000"
- 2715      6374785F 
- 2715      7400
- 2716              	.LASF167:
- 2717 093f 6572725F 		.ascii	"err_sev_t\000"
- 2717      7365765F 
- 2717      7400
- 2718              	.LASF1:
- 2719 0949 756E7369 		.ascii	"unsigned char\000"
- 2719      676E6564 
- 2719      20636861 
- 2719      7200
- 2720              	.LASF9:
- 2721 0957 5F5F7569 		.ascii	"__uint32_t\000"
- 2721      6E743332 
- 2721      5F7400
- 2722              	.LASF79:
- 2723 0962 6174745F 		.ascii	"att_pitch_err_deg\000"
+ 2702              	.LASF23:
+ 2703 08cd 73697A65 		.ascii	"sizetype\000"
+ 2703      74797065 
+ 2703      00
+ 2704              	.LASF36:
+ 2705 08d6 68616D66 		.ascii	"hamfly_control_t\000"
+ 2705      6C795F63 
+ 2705      6F6E7472 
+ 2705      6F6C5F74 
+ 2705      00
+ 2706              	.LASF67:
+ 2707 08e7 6261726F 		.ascii	"baro_valid\000"
+ 2707      5F76616C 
+ 2707      696400
+ 2708              	.LASF10:
+ 2709 08f2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2709      20756E73 
+ 2709      69676E65 
+ 2709      6420696E 
+ 2709      7400
+ 2710              	.LASF157:
+ 2711 0904 4155544F 		.ascii	"AUTO_LOSS\000"
+ 2711      5F4C4F53 
+ 2711      5300
+ 2712              	.LASF160:
+ 2713 090e 4552524F 		.ascii	"ERROR_KILL\000"
+ 2713      525F4B49 
+ 2713      4C4C00
+ 2714              	.LASF183:
+ 2715 0919 6770735F 		.ascii	"gps_target_alt_mm\000"
+ 2715      74617267 
+ 2715      65745F61 
+ 2715      6C745F6D 
+ 2715      6D00
+ 2716              	.LASF17:
+ 2717 092b 696E7433 		.ascii	"int32_t\000"
+ 2717      325F7400 
+ 2718              	.LASF76:
+ 2719 0933 6174745F 		.ascii	"att_yaw_rate_dps\000"
+ 2719      7961775F 
+ 2719      72617465 
+ 2719      5F647073 
+ 2719      00
+ 2720              	.LASF169:
+ 2721 0944 73746174 		.ascii	"state\000"
+ 2721      6500
+ 2722              	.LASF75:
+ 2723 094a 6174745F 		.ascii	"att_pitch_rate_dps\000"
  2723      70697463 
- 2723      685F6572 
- 2723      725F6465 
- 2723      6700
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 59
+ 2723      685F7261 
+ 2723      74655F64 
+ 2723      707300
+ 2724              	.LASF213:
+ 2725 095d 6170705F 		.ascii	"app_ctx_t\000"
+ 2725      6374785F 
+ 2725      7400
+ 2726              	.LASF167:
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 59
 
 
- 2724              	.LASF91:
- 2725 0974 73797373 		.ascii	"sysstat_time_s\000"
- 2725      7461745F 
- 2725      74696D65 
- 2725      5F7300
- 2726              	.LASF115:
- 2727 0983 7461696C 		.ascii	"tail\000"
- 2727      00
- 2728              	.LASF118:
- 2729 0988 74785F70 		.ascii	"tx_packets\000"
- 2729      61636B65 
- 2729      747300
- 2730              	.LASF24:
- 2731 0993 48414D46 		.ascii	"HAMFLY_DEFER\000"
- 2731      4C595F44 
- 2731      45464552 
- 2731      00
- 2732              	.LASF204:
- 2733 09a0 6E756467 		.ascii	"nudge_hold\000"
- 2733      655F686F 
- 2733      6C6400
- 2734              	.LASF70:
- 2735 09ab 6174745F 		.ascii	"att_valid\000"
- 2735      76616C69 
- 2735      6400
- 2736              	.LASF138:
- 2737 09b5 68616D66 		.ascii	"hamfly_gimbal_t\000"
- 2737      6C795F67 
- 2737      696D6261 
- 2737      6C5F7400 
- 2738              	.LASF174:
- 2739 09c5 74656C65 		.ascii	"telem_good_since_ms\000"
- 2739      6D5F676F 
- 2739      6F645F73 
- 2739      696E6365 
- 2739      5F6D7300 
- 2740              	.LASF206:
- 2741 09d9 6E756467 		.ascii	"nudge_base_pan_deg\000"
- 2741      655F6261 
- 2741      73655F70 
- 2741      616E5F64 
- 2741      656700
- 2742              	.LASF192:
- 2743 09ec 74726163 		.ascii	"track_kp\000"
- 2743      6B5F6B70 
- 2743      00
- 2744              	.LASF57:
- 2745 09f5 6770735F 		.ascii	"gps_vacc_m\000"
- 2745      76616363 
- 2745      5F6D00
- 2746              	.LASF205:
- 2747 0a00 6E756467 		.ascii	"nudge_start_ms\000"
- 2747      655F7374 
- 2747      6172745F 
- 2747      6D7300
- 2748              	.LASF74:
- 2749 0a0f 6174745F 		.ascii	"att_roll_deg\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 60
+ 2727 0967 6572725F 		.ascii	"err_sev_t\000"
+ 2727      7365765F 
+ 2727      7400
+ 2728              	.LASF1:
+ 2729 0971 756E7369 		.ascii	"unsigned char\000"
+ 2729      676E6564 
+ 2729      20636861 
+ 2729      7200
+ 2730              	.LASF9:
+ 2731 097f 5F5F7569 		.ascii	"__uint32_t\000"
+ 2731      6E743332 
+ 2731      5F7400
+ 2732              	.LASF79:
+ 2733 098a 6174745F 		.ascii	"att_pitch_err_deg\000"
+ 2733      70697463 
+ 2733      685F6572 
+ 2733      725F6465 
+ 2733      6700
+ 2734              	.LASF91:
+ 2735 099c 73797373 		.ascii	"sysstat_time_s\000"
+ 2735      7461745F 
+ 2735      74696D65 
+ 2735      5F7300
+ 2736              	.LASF115:
+ 2737 09ab 7461696C 		.ascii	"tail\000"
+ 2737      00
+ 2738              	.LASF118:
+ 2739 09b0 74785F70 		.ascii	"tx_packets\000"
+ 2739      61636B65 
+ 2739      747300
+ 2740              	.LASF24:
+ 2741 09bb 48414D46 		.ascii	"HAMFLY_DEFER\000"
+ 2741      4C595F44 
+ 2741      45464552 
+ 2741      00
+ 2742              	.LASF205:
+ 2743 09c8 6E756467 		.ascii	"nudge_hold\000"
+ 2743      655F686F 
+ 2743      6C6400
+ 2744              	.LASF70:
+ 2745 09d3 6174745F 		.ascii	"att_valid\000"
+ 2745      76616C69 
+ 2745      6400
+ 2746              	.LASF138:
+ 2747 09dd 68616D66 		.ascii	"hamfly_gimbal_t\000"
+ 2747      6C795F67 
+ 2747      696D6261 
+ 2747      6C5F7400 
+ 2748              	.LASF207:
+ 2749 09ed 6E756467 		.ascii	"nudge_base_pan_deg\000"
+ 2749      655F6261 
+ 2749      73655F70 
+ 2749      616E5F64 
+ 2749      656700
+ 2750              	.LASF193:
+ 2751 0a00 74726163 		.ascii	"track_kp\000"
+ 2751      6B5F6B70 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 60
 
 
- 2749      726F6C6C 
- 2749      5F646567 
- 2749      00
- 2750              	.LASF181:
- 2751 0a1c 6770735F 		.ascii	"gps_target_lon_raw\000"
- 2751      74617267 
- 2751      65745F6C 
- 2751      6F6E5F72 
- 2751      617700
- 2752              	.LASF102:
- 2753 0a2f 6D61675F 		.ascii	"mag_magnitude\000"
- 2753      6D61676E 
- 2753      69747564 
- 2753      6500
- 2754              	.LASF186:
- 2755 0a3d 6770735F 		.ascii	"gps_work_lon_raw\000"
- 2755      776F726B 
- 2755      5F6C6F6E 
- 2755      5F726177 
- 2755      00
- 2756              	.LASF110:
- 2757 0a4e 73797365 		.ascii	"sysecho_pressure_mb\000"
- 2757      63686F5F 
- 2757      70726573 
- 2757      73757265 
- 2757      5F6D6200 
- 2758              	.LASF0:
- 2759 0a62 7369676E 		.ascii	"signed char\000"
- 2759      65642063 
- 2759      68617200 
- 2760              	.LASF139:
- 2761 0a6e 53454E53 		.ascii	"SENSE_LOW\000"
- 2761      455F4C4F 
- 2761      5700
- 2762              	.LASF64:
- 2763 0a78 6770735F 		.ascii	"gps_raw_hacc\000"
- 2763      7261775F 
- 2763      68616363 
+ 2751      00
+ 2752              	.LASF57:
+ 2753 0a09 6770735F 		.ascii	"gps_vacc_m\000"
+ 2753      76616363 
+ 2753      5F6D00
+ 2754              	.LASF206:
+ 2755 0a14 6E756467 		.ascii	"nudge_start_ms\000"
+ 2755      655F7374 
+ 2755      6172745F 
+ 2755      6D7300
+ 2756              	.LASF74:
+ 2757 0a23 6174745F 		.ascii	"att_roll_deg\000"
+ 2757      726F6C6C 
+ 2757      5F646567 
+ 2757      00
+ 2758              	.LASF182:
+ 2759 0a30 6770735F 		.ascii	"gps_target_lon_raw\000"
+ 2759      74617267 
+ 2759      65745F6C 
+ 2759      6F6E5F72 
+ 2759      617700
+ 2760              	.LASF102:
+ 2761 0a43 6D61675F 		.ascii	"mag_magnitude\000"
+ 2761      6D61676E 
+ 2761      69747564 
+ 2761      6500
+ 2762              	.LASF187:
+ 2763 0a51 6770735F 		.ascii	"gps_work_lon_raw\000"
+ 2763      776F726B 
+ 2763      5F6C6F6E 
+ 2763      5F726177 
  2763      00
- 2764              	.LASF6:
- 2765 0a85 73686F72 		.ascii	"short unsigned int\000"
- 2765      7420756E 
- 2765      7369676E 
- 2765      65642069 
- 2765      6E7400
- 2766              	.LASF27:
- 2767 0a98 48414D46 		.ascii	"HAMFLY_ABSOLUTE_MAJESTIC\000"
- 2767      4C595F41 
- 2767      42534F4C 
- 2767      5554455F 
- 2767      4D414A45 
- 2768              	.LASF60:
- 2769 0ab1 6770735F 		.ascii	"gps_raw_lon\000"
- 2769      7261775F 
- 2769      6C6F6E00 
- 2770              	.LASF203:
- 2771 0abd 696E7665 		.ascii	"invert_mask\000"
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 61
+ 2764              	.LASF110:
+ 2765 0a62 73797365 		.ascii	"sysecho_pressure_mb\000"
+ 2765      63686F5F 
+ 2765      70726573 
+ 2765      73757265 
+ 2765      5F6D6200 
+ 2766              	.LASF0:
+ 2767 0a76 7369676E 		.ascii	"signed char\000"
+ 2767      65642063 
+ 2767      68617200 
+ 2768              	.LASF139:
+ 2769 0a82 53454E53 		.ascii	"SENSE_LOW\000"
+ 2769      455F4C4F 
+ 2769      5700
+ 2770              	.LASF64:
+ 2771 0a8c 6770735F 		.ascii	"gps_raw_hacc\000"
+ 2771      7261775F 
+ 2771      68616363 
+ 2771      00
+ 2772              	.LASF6:
+ 2773 0a99 73686F72 		.ascii	"short unsigned int\000"
+ 2773      7420756E 
+ 2773      7369676E 
+ 2773      65642069 
+ 2773      6E7400
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 61
 
 
- 2771      72745F6D 
- 2771      61736B00 
- 2772              	.LASF78:
- 2773 0ac9 6174745F 		.ascii	"att_roll_err_deg\000"
- 2773      726F6C6C 
- 2773      5F657272 
- 2773      5F646567 
- 2773      00
- 2774              	.LASF123:
- 2775 0ada 72786275 		.ascii	"rxbuf_drops\000"
- 2775      665F6472 
- 2775      6F707300 
- 2776              	.LASF125:
- 2777 0ae6 68616D66 		.ascii	"hamfly_statistics_t\000"
- 2777      6C795F73 
- 2777      74617469 
- 2777      73746963 
- 2777      735F7400 
- 2778              	.LASF20:
- 2779 0afa 646F7562 		.ascii	"double\000"
- 2779      6C6500
- 2780              	.LASF130:
- 2781 0b01 67696D62 		.ascii	"gimbal_id\000"
- 2781      616C5F69 
- 2781      6400
- 2782              	.LASF220:
- 2783 0b0b 433A5C55 		.ascii	"C:\\Users\\Jennewein\\Documents\\hamish-workspace\\"
- 2783      73657273 
- 2783      5C4A656E 
- 2783      6E657765 
- 2783      696E5C44 
- 2784 0b39 50536F43 		.ascii	"PSoC-Programs\\test_projects\\Proj07_hamflyAPI_stat"
- 2784      2D50726F 
- 2784      6772616D 
- 2784      735C7465 
- 2784      73745F70 
- 2785 0b6a 654D6163 		.ascii	"eMachineUpgrade.cydsn\000"
- 2785      68696E65 
- 2785      55706772 
- 2785      6164652E 
- 2785      63796473 
- 2786              	.LASF151:
- 2787 0b80 4D414E55 		.ascii	"MANU_JOYSTICK\000"
- 2787      5F4A4F59 
- 2787      53544943 
- 2787      4B00
- 2788              	.LASF85:
- 2789 0b8e 666C6167 		.ascii	"flag_gps_locked\000"
- 2789      5F677073 
- 2789      5F6C6F63 
- 2789      6B656400 
- 2790              	.LASF146:
- 2791 0b9e 4D414E55 		.ascii	"MANU\000"
- 2791      00
- 2792              	.LASF208:
- 2793 0ba3 7467745F 		.ascii	"tgt_pan_deg\000"
- 2793      70616E5F 
-ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\ccUmQqRa.s 			page 62
+ 2774              	.LASF27:
+ 2775 0aac 48414D46 		.ascii	"HAMFLY_ABSOLUTE_MAJESTIC\000"
+ 2775      4C595F41 
+ 2775      42534F4C 
+ 2775      5554455F 
+ 2775      4D414A45 
+ 2776              	.LASF60:
+ 2777 0ac5 6770735F 		.ascii	"gps_raw_lon\000"
+ 2777      7261775F 
+ 2777      6C6F6E00 
+ 2778              	.LASF204:
+ 2779 0ad1 696E7665 		.ascii	"invert_mask\000"
+ 2779      72745F6D 
+ 2779      61736B00 
+ 2780              	.LASF78:
+ 2781 0add 6174745F 		.ascii	"att_roll_err_deg\000"
+ 2781      726F6C6C 
+ 2781      5F657272 
+ 2781      5F646567 
+ 2781      00
+ 2782              	.LASF123:
+ 2783 0aee 72786275 		.ascii	"rxbuf_drops\000"
+ 2783      665F6472 
+ 2783      6F707300 
+ 2784              	.LASF125:
+ 2785 0afa 68616D66 		.ascii	"hamfly_statistics_t\000"
+ 2785      6C795F73 
+ 2785      74617469 
+ 2785      73746963 
+ 2785      735F7400 
+ 2786              	.LASF20:
+ 2787 0b0e 646F7562 		.ascii	"double\000"
+ 2787      6C6500
+ 2788              	.LASF130:
+ 2789 0b15 67696D62 		.ascii	"gimbal_id\000"
+ 2789      616C5F69 
+ 2789      6400
+ 2790              	.LASF221:
+ 2791 0b1f 433A5C55 		.ascii	"C:\\Users\\Jennewein\\Documents\\hamish-workspace\\"
+ 2791      73657273 
+ 2791      5C4A656E 
+ 2791      6E657765 
+ 2791      696E5C44 
+ 2792 0b4d 50536F43 		.ascii	"PSoC-Programs\\test_projects\\Proj07_hamflyAPI_stat"
+ 2792      2D50726F 
+ 2792      6772616D 
+ 2792      735C7465 
+ 2792      73745F70 
+ 2793 0b7e 654D6163 		.ascii	"eMachineUpgrade.cydsn\000"
+ 2793      68696E65 
+ 2793      55706772 
+ 2793      6164652E 
+ 2793      63796473 
+ 2794              	.LASF151:
+ 2795 0b94 4D414E55 		.ascii	"MANU_JOYSTICK\000"
+ 2795      5F4A4F59 
+ 2795      53544943 
+ARM GAS  C:\Users\JENNEW~1\AppData\Local\Temp\cc5G6SIG.s 			page 62
 
 
- 2793      64656700 
- 2794              	.LASF68:
- 2795 0baf 6261726F 		.ascii	"baro_alt_m\000"
- 2795      5F616C74 
- 2795      5F6D00
- 2796              	.LASF92:
- 2797 0bba 73797373 		.ascii	"sysstat_pressure_mb\000"
- 2797      7461745F 
- 2797      70726573 
- 2797      73757265 
- 2797      5F6D6200 
- 2798              	.LASF95:
- 2799 0bce 73797373 		.ascii	"sysstat_imu_latency\000"
- 2799      7461745F 
- 2799      696D755F 
- 2799      6C617465 
- 2799      6E637900 
- 2800              	.LASF77:
- 2801 0be2 6174745F 		.ascii	"att_roll_rate_dps\000"
- 2801      726F6C6C 
- 2801      5F726174 
- 2801      655F6470 
- 2801      7300
- 2802              	.LASF65:
- 2803 0bf4 6770735F 		.ascii	"gps_raw_vacc\000"
- 2803      7261775F 
- 2803      76616363 
- 2803      00
- 2804              	.LASF128:
- 2805 0c01 72786275 		.ascii	"rxbuf\000"
- 2805      6600
- 2806              	.LASF200:
- 2807 0c07 73746174 		.ascii	"state_entry_ms\000"
- 2807      655F656E 
- 2807      7472795F 
- 2807      6D7300
- 2808              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+ 2795      4B00
+ 2796              	.LASF85:
+ 2797 0ba2 666C6167 		.ascii	"flag_gps_locked\000"
+ 2797      5F677073 
+ 2797      5F6C6F63 
+ 2797      6B656400 
+ 2798              	.LASF146:
+ 2799 0bb2 4D414E55 		.ascii	"MANU\000"
+ 2799      00
+ 2800              	.LASF209:
+ 2801 0bb7 7467745F 		.ascii	"tgt_pan_deg\000"
+ 2801      70616E5F 
+ 2801      64656700 
+ 2802              	.LASF68:
+ 2803 0bc3 6261726F 		.ascii	"baro_alt_m\000"
+ 2803      5F616C74 
+ 2803      5F6D00
+ 2804              	.LASF92:
+ 2805 0bce 73797373 		.ascii	"sysstat_pressure_mb\000"
+ 2805      7461745F 
+ 2805      70726573 
+ 2805      73757265 
+ 2805      5F6D6200 
+ 2806              	.LASF95:
+ 2807 0be2 73797373 		.ascii	"sysstat_imu_latency\000"
+ 2807      7461745F 
+ 2807      696D755F 
+ 2807      6C617465 
+ 2807      6E637900 
+ 2808              	.LASF77:
+ 2809 0bf6 6174745F 		.ascii	"att_roll_rate_dps\000"
+ 2809      726F6C6C 
+ 2809      5F726174 
+ 2809      655F6470 
+ 2809      7300
+ 2810              	.LASF65:
+ 2811 0c08 6770735F 		.ascii	"gps_raw_vacc\000"
+ 2811      7261775F 
+ 2811      76616363 
+ 2811      00
+ 2812              	.LASF128:
+ 2813 0c15 72786275 		.ascii	"rxbuf\000"
+ 2813      6600
+ 2814              	.LASF201:
+ 2815 0c1b 73746174 		.ascii	"state_entry_ms\000"
+ 2815      655F656E 
+ 2815      7472795F 
+ 2815      6D7300
+ 2816              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

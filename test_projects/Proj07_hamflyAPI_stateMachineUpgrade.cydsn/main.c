@@ -222,11 +222,13 @@ int main(void)
     sbc_init();
     isr_rx_sbc_StartEx(isr_rx_sbc_Handler);
     UART_DEBUG_PutString("[Init] Pi comms ready\r\n");
+    while (UART_SBC_GetRxBufferSize())  { UART_SBC_ReadRxData();  }
     
     // Start Movi comms
     UART_MOVI_Start();
     UART_MOVI_ClearRxBuffer();
     UART_MOVI_ClearTxBuffer();
+    while (UART_MOVI_GetRxBufferSize()) { UART_MOVI_ReadRxData(); }
     
     // Initialize movi object and give to context
     hamfly_init(&g_movi, &MOVI_HAL);

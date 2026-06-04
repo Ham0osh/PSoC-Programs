@@ -152,7 +152,7 @@ static const state_fn_t on_exit[STATE_COUNT] = {
 // Will be superceded by auto flow conditions and SBC commands.
 static const key_fn_t on_key[STATE_COUNT] = {
     [STBY_DEFER]      = NULL,  // TODO
-    [STBY_HOLD]       = NULL,  // TODO
+    [STBY_HOLD]       = key_stby_hold ,  // TODO
     [MANU_JOYSTICK]   = key_manu_joystick,
     [AUTO_HOME]       = key_auto_home,
     [AUTO_HOLD]       = key_auto_hold,
@@ -212,7 +212,8 @@ static state_t lca(state_t a, state_t b)
 void app_transition(app_ctx_t *ctx, state_t target)
 {
     // Check auto state flow pin
-    ctx->auto_flow = Pin_SwitchAuto_Read();  // TODO: Ensure wired
+    ctx->auto_flow = (Pin_SwitchAuto_Read() == 0u) ? 1u : 0u;
+    UART_DEBUG_PutString(ctx->auto_flow ? "[DBG] auto_flow=1\r\n" : "[DBG] auto_flow=0\r\n");
     // Check entry guard
     if (can_enter[target] && !can_enter[target](ctx)) {
         UART_DEBUG_PutString("[FSM] entry guard failed -> STBY_HOLD\r\n");
@@ -309,6 +310,14 @@ void app_telem_tick(app_ctx_t *ctx)
     // Do the telemetry grabs if gimble connected
     if (!ctx->gimbal) return;
 
+    // Watch for a lost gimbal connection
+    if (ctx->gimbal_last_rx_ms != 0u &&
+        g_tick_ms - ctx->gimbal_last_rx_ms > MOVI_TIMEOUT_MS) {
+        app_raise_error(ctx, SEV_WARN, "MoVI comms lost.");
+        app_transition(ctx, STBY_DEFER);
+        ctx->gimbal_last_rx_ms = 0u;  // suppress repeat triggers
+    }
+    
     static uint32_t last_hot_ms  = 0u;  // Hot is the Movi status
     static uint32_t last_link_ms = 0u;  // Cold are all other sensors
     if (g_tick_ms - last_hot_ms  >= CONTROL_PERIOD_MS) {  //  10 Hz
@@ -381,6 +390,8 @@ void set_origin(app_ctx_t *ctx, uint8_t zero_tilt)
     if (!gimbal_pan_tilt_deg(ctx, &pan, &tilt)) {
         app_raise_error(ctx, SEV_USER, "no telemetry (origin not set)");
         return;
+    } else {
+        ctx->gimbal_last_rx_ms = g_tick_ms;
     }
     ctx->origin_pan_deg  = pan;
     ctx->origin_tilt_deg = zero_tilt ? 0.0f : tilt;
@@ -411,6 +422,8 @@ static uint8_t handle_global_key(app_ctx_t *ctx, char k)
                 ctx->err_msg = NULL;
                 UART_DEBUG_PutString("\r\nFATAL cleared.\r\n");
                 app_transition(ctx, STBY_HOLD);
+            } else {
+                app_transition(ctx, STBY_DEFER);
             }
             return 1;
         case 'x':  // Return to HOLD as a safe state

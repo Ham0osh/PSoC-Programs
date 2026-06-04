@@ -29,7 +29,7 @@ extern volatile uint32_t g_tick_ms;
 // On Enter: Print message, wait for user input.
 void entry_stby_defer(app_ctx_t *ctx)
 {
-    (void)ctx;
+    ctx->telem_stable_since_ms  = 0u;
     UART_DEBUG_PutString("\r\n[STBY_DEFER] '1' hold, '2' manual, '3' auto,"
                          " '?' help\r\n> ");
 }
@@ -51,14 +51,15 @@ void app_stby_tick(app_ctx_t *ctx)
     if (ctx->state == STBY_DEFER && ctx->auto_flow) {
         float p, t;
         if (gimbal_pan_tilt_deg(ctx, &p, &t)) {
-            if (ctx->telem_good_since_ms == 0u)
-                ctx->telem_good_since_ms = g_tick_ms;   // start the clock
-            if (g_tick_ms - ctx->telem_good_since_ms >= TELEM_STABLE_MS) {
+            ctx->gimbal_last_rx_ms = g_tick_ms;
+            if (ctx->telem_stable_since_ms  == 0u)
+                ctx->telem_stable_since_ms  = g_tick_ms;   // start the clock
+            if (g_tick_ms - ctx->telem_stable_since_ms  >= TELEM_STABLE_MS) {
                 UART_DEBUG_PutString("[STBY_DEFER] telemetry stable -> STBY_HOLD\r\n");
                 app_transition(ctx, STBY_HOLD);
             }
         } else {
-            ctx->telem_good_since_ms = 0u;  // bad frame resets the clock
+            ctx->telem_stable_since_ms  = 0u;  // bad frame resets the clock
         }
         return;
     }
