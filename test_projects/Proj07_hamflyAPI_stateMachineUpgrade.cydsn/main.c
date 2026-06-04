@@ -289,6 +289,7 @@ int main(void)
         // Always run on tick definition
         // These are by state but only run when in the given state
         // Per state logiv before making acontrol packet or telem etc.
+        app_stby_tick(&ctx);
         app_manual_tick(&ctx);  // For MANU substates
         app_auto_tick(&ctx);  // For AUTO substates
         

@@ -82,6 +82,7 @@ uint16_t sbc_unknown_magic(void);
 uint32_t sbc_rx_pkt_count(void);
 uint16_t sbc_last_centroid_dt_ms(uint8_t stream);
 void     sbc_send_frame(uint8_t type, const uint8_t *payload, uint8_t len);
+void     sbc_discard_centroid(uint8_t stream);
 
 uint8_t sbc_get_state_req (payload_state_req_t  *out);  // 1 if a new request arrived
 uint8_t sbc_get_gps_target(payload_gps_target_t *out);  // 1 if a new target arrived

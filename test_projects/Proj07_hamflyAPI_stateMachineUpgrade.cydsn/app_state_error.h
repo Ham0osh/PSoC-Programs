@@ -27,5 +27,9 @@ void    entry_error_active(app_ctx_t *ctx);
 uint8_t key_error_active  (app_ctx_t *ctx, char k);
 void    build_error       (const app_ctx_t *ctx, hamfly_control_t *out);
 
+// ERROR_KILL tester state, eventualy will be superceded by the FATAL status
+void    entry_error_kill(app_ctx_t *ctx);
+uint8_t key_error_kill  (app_ctx_t *ctx, char k);
+
 #endif /* APP_STATE_ERROR_H */
 /* [] END OF FILE */

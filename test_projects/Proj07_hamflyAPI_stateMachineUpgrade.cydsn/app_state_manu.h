@@ -23,6 +23,7 @@
 #include "hamfly_core_control.h"  // hamfly_control_t
 
 // MANU_JOYSTICK leaf. Rate joystick with folded-in keyboard nudge.
+uint8_t guard_manu_joystick(const app_ctx_t *ctx);
 void    entry_manu_joystick(app_ctx_t *ctx);
 void    exit_manu_joystick (app_ctx_t *ctx);
 uint8_t key_manu_joystick  (app_ctx_t *ctx, char k);

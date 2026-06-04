@@ -37,11 +37,17 @@ static void  gps_update_pointing(app_ctx_t *ctx);
 static void  gps_check_settle   (app_ctx_t *ctx);
 
 // State On-Entry Guards %====================================================%
+uint8_t guard_auto_parent(const app_ctx_t *ctx)
+{
+    // All AUTO states require live telemetry.
+    float p, t;
+    return gimbal_pan_tilt_deg(ctx, &p, &t);
+}
+
 uint8_t guard_auto_home(const app_ctx_t *ctx)
 {
-    // A home origin must be set, and attitude returns properly.
-    float p, t;
-    return ctx->origin_set && gimbal_pan_tilt_deg(ctx, &p, &t);
+    // A home origin must be set.
+    return ctx->origin_set;
 }
 
 uint8_t guard_auto_acq_gps(const app_ctx_t *ctx)
@@ -69,9 +75,28 @@ void app_auto_tick(app_ctx_t *ctx)
                 arrived = (fabsf(p - ctx->tgt_pan_deg)  < NUDGE_SETTLE_DEG) &&
                           (fabsf(t - ctx->tgt_tilt_deg) < NUDGE_SETTLE_DEG);
             if (arrived || elapsed >= NUDGE_TIMEOUT_MS) {
-                UART_DEBUG_PutString("[AUTO_HOME] arrived -> STBY_HOLD\r\n");
-                app_transition(ctx, STBY_HOLD);  // -> STBY_HOLD
+                UART_DEBUG_PutString("[AUTO_HOME] arrived\r\n");
+                state_t dest = ctx->home_return_stby ? STBY_HOLD : AUTO_HOLD;
+                app_transition(ctx, dest);  // -> STBY_HOLD or AUTO_HOLD
             }
+        }
+        return;
+    }
+    
+    // AUTO_HOLD: watch for centroids and wait for timout to spiral search
+    if (ctx->state == AUTO_HOLD) {
+        payload_centroid_t c;
+        if (sbc_get_centroid(STREAM_COARSE, &c)) {
+            ctx->track_cx_last = c.cx;
+            ctx->track_cy_last = c.cy;
+            UART_DEBUG_PutString("[AUTO_HOLD] centroid -> AUTO_TRACKING\r\n");
+            app_transition(ctx, AUTO_TRACKING);
+            return;
+        }
+        if (ctx->auto_flow &&
+            (g_tick_ms - ctx->auto_hold_entry_ms) >= AUTO_HOLD_TO_SPIRAL_MS) {
+            UART_DEBUG_PutString("[AUTO_HOLD] timeout -> AUTO_ACQ_SPIRAL\r\n");
+            app_transition(ctx, AUTO_ACQ_SPIRAL);
         }
         return;
     }
@@ -92,14 +117,17 @@ void app_auto_tick(app_ctx_t *ctx)
 
     // AUTO_TRACKING
     if (ctx->state == AUTO_TRACKING) {
+        uint8_t got_coarse = 0u;
         static const char *tag[STREAM_COUNTS] = { "C", "F" };
         for (uint8_t s = 0u; s < STREAM_COUNTS; s++) {
             payload_centroid_t c;
-            if (!sbc_get_centroid(s, &c)) continue;
-            if (s == STREAM_COARSE) {  // Save coarse tracking centroids
-                ctx->track_cx_last = c.cx;
-                ctx->track_cy_last = c.cy;
+            if (!sbc_get_centroid(s, &c)) continue; // No centroids
+            if (s == STREAM_COARSE) {               // Read corasecentroid
+                ctx->track_cx_last  = c.cx;
+                ctx->track_cy_last  = c.cy;
+                got_coarse = 1u;
             }
+            // Serial debug
             char b[128];
             snprintf(b, sizeof b,
                      "[SBC:%s] cx=%d cy=%d dt=%u rx=%lu crcErr=%u uartErr=%u\r\n",
@@ -109,7 +137,41 @@ void app_auto_tick(app_ctx_t *ctx)
                      sbc_crc_errors(), sbc_uart_errors());
             UART_DEBUG_PutString(b);
         }
+        (void)got_coarse;
+
+        // Loss check: no coarse centroid for TRACKING_LOSS_TIMEOUT_MS -> AUTO_LOSS
+        uint32_t last_c = sbc_last_rx_ms(STREAM_COARSE);
+        if (last_c != 0u &&                  // == No packets ever
+            last_c > ctx->state_entry_ms &&  // == At least one centroidand loss.
+            (g_tick_ms - last_c) >= TRACKING_LOSS_TIMEOUT_MS) {
+            UART_DEBUG_PutString("[AUTO_TRACKING] centroid lost -> AUTO_LOSS\r\n");
+            app_transition(ctx, AUTO_LOSS);
+        }
+        return;
     }
+    
+    // AUTO_LOSS: hold and watch for centroids returning
+    if (ctx->state == AUTO_LOSS) {
+        payload_centroid_t c;
+        if (sbc_get_centroid(STREAM_COARSE, &c)) {
+            ctx->track_cx_last = c.cx;
+            ctx->track_cy_last = c.cy;
+            UART_DEBUG_PutString("[AUTO_LOSS] centroid returned -> AUTO_TRACKING\r\n");
+            app_transition(ctx, AUTO_TRACKING);
+        }
+        return;
+    }
+    
+    // AUTO_NO_LOCK: auto flow re-slews; manual flow waits for user.
+    // TODO: WHat if no GPS set? We should go to AUTO_HOLD rather than GPS maybe
+    if (ctx->state == AUTO_NO_LOCK) {
+        if (ctx->auto_flow && ctx->gps_target_set) {
+            UART_DEBUG_PutString("[AUTO_NO_LOCK] auto -> AUTO_ACQ_GPS\r\n");
+            app_transition(ctx, AUTO_ACQ_GPS);
+        }
+        return;
+    }
+    
 }
 
 
@@ -143,8 +205,12 @@ void entry_auto_home(app_ctx_t *ctx)
 
 void exit_auto_home(app_ctx_t *ctx)
 {
-    // Dissable nudge TODO: Why was it on to begin with??
+    // Clear any nudge hold
     ctx->nudge_hold = 0u;
+    // Flush centroid after slew.
+    sbc_discard_centroid(STREAM_COARSE);
+    // Reset return stby flag to default
+    ctx->home_return_stby = 0u;
 }
 
 uint8_t key_auto_home(app_ctx_t *ctx, char k)
@@ -166,6 +232,26 @@ void build_auto_home(const app_ctx_t *ctx, hamfly_control_t *out)
     out->pan_mode  = out->tilt_mode = HAMFLY_ABSOLUTE;
     out->pan  = DEG_TO_UNIT(ctx->tgt_pan_deg - ctx->nudge_base_pan_deg);
     out->tilt = DEG_TO_UNIT(ctx->tgt_tilt_deg);
+}
+
+// %==========================================================================%
+// %                              AUTO_HOLD                                   %
+// %==========================================================================%
+void entry_auto_hold(app_ctx_t *ctx)
+{
+    // Start timer for how long we are in hold
+    ctx->auto_hold_entry_ms = g_tick_ms;
+    UART_DEBUG_PutString("\r\n[AUTO_HOLD] holding, watching for centroids\r\n> ");
+}
+
+uint8_t key_auto_hold(app_ctx_t *ctx, char k)
+{
+    // Check if we are handling a nudge first
+    if (handle_nudge_key(ctx, k)) return 1;
+    // Serial debug can exit
+    switch (k) {
+        default:  return 0;
+    }
 }
 
 // %==========================================================================%
@@ -287,7 +373,8 @@ static void gps_check_settle(app_ctx_t *ctx)
     // Exit condition for valid finishing of GPS slew.
     if (!ctx->gps_settled && arrived && slow) {
         ctx->gps_settled = 1u;
-        UART_DEBUG_PutString("[AUTO_ACQ_GPS] settled\r\n");
+        UART_DEBUG_PutString("[AUTO_ACQ_GPS] settled -> AUTO_HOLD\r\n");
+        app_transition(ctx, AUTO_HOLD);
     }
 }
 
@@ -310,6 +397,12 @@ void entry_auto_acq_gps(app_ctx_t *ctx)
 
 void exit_auto_acq_gps(app_ctx_t *ctx)
 {
+    // Flush centroid stream to avoid bounce on exit
+    sbc_discard_centroid(STREAM_COARSE);
+    
+    // Set pointing direction as the new origin
+    if (ctx->gps_settled) set_origin(ctx, 1u);
+    
     // Reset target variables
     ctx->abs_pan_target = ctx->abs_tilt_target = 0.0f;
 }
@@ -385,11 +478,13 @@ void entry_auto_loss(app_ctx_t *ctx)
     // TODO: Loss should hold and wait. If packets re-commence go back to tracking,
     // TODO: Let user trigger spiral search, GPS re-acq, or exit to STBY later.
     (void)ctx;
-    UART_DEBUG_PutString("\r\n[AUTO_LOSS] centroid lost  1=hold  3=retry\r\n> ");
+    UART_DEBUG_PutString("\r\n[AUTO_LOSS] centroid lost, holding. "
+                         "Waiting for centroid return or user input.\r\n> ");
 }
 
 uint8_t key_auto_loss(app_ctx_t *ctx, char k)
 {
+    if (handle_nudge_key(ctx, k)) return 1;
     switch (k) {  // Keep stationary, spiral search if requested.
         case '3': app_transition(ctx, AUTO_ACQ_SPIRAL); return 1;
         default:  return 0;
@@ -407,6 +502,7 @@ void entry_auto_no_lock(app_ctx_t *ctx)
 
 uint8_t key_auto_no_lock(app_ctx_t *ctx, char k)
 {
+    if (handle_nudge_key(ctx, k)) return 1;
     switch (k) {
         case '3': app_transition(ctx, AUTO_ACQ_SPIRAL); return 1;
         default:  return 0;

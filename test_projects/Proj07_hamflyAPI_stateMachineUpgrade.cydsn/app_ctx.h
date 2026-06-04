@@ -29,10 +29,14 @@
 #define CH_Y   1u
 
 // Timing constants
-#define CONTROL_PERIOD_MS     100u   // Must be faster than 5 Hz else gimble times out.
-#define DIAG_PERIOD_MS        5000u  // 0.2 Hz diagnostic print
-#define QUERY_TIMEOUT_MS      2000u  // max wait for attr response in QUERY
-
+#define CONTROL_PERIOD_MS       100u   // Must be faster than 5 Hz else gimble times out.
+#define DIAG_PERIOD_MS          5000u  // 0.2 Hz diagnostic print
+#define QUERY_TIMEOUT_MS        2000u  // max wait for attr response in QUERY
+#define AUTO_HOLD_TO_SPIRAL_MS    10000u  // AUTO_HOLD -> SPIRAL if no centroid
+#define TRACKING_LOSS_TIMEOUT_MS   5000u  // TRACKING -> LOSS if no centroid
+#define NUDGE_BURST_MS               80u  // velocity burst, tbd.
+#define TELEM_STABLE_MS         5000u  // Consecutive gimbal telemetry before leaving defer.
+    
 // TEMP: Nudge constants
 #define NUDGE_LSB_DEG     (180.0f/32767.0f)  /* ~0.00549°, one on-wire LSB */
 #define NUDGE_FINE_DEG    0.5f
@@ -54,11 +58,13 @@ typedef enum {
     MANU_JOYSTICK,
     // AUTO leaves
     AUTO_HOME,                      // Go to software origin
+    AUTO_HOLD,                      // Hold vel=0 and look for centroids
     AUTO_ACQ_GPS, AUTO_ACQ_SPIRAL,  // TODO: Open loop acquisition patterns
     AUTO_TRACKING,                  // TODO: Closed loop tracking
     AUTO_LOSS, AUTO_NO_LOCK,        // No lock states.
     // ERROR leaf (one leaf, severity carried on ctx)
     ERROR_ACTIVE,  // Has flag for error severity
+    ERROR_KILL,  // Manual trigger kill
     STATE_COUNT  // THis is the value of the max state!
 } state_t;
 
@@ -83,6 +89,13 @@ typedef struct {
     // HFSM
     state_t   state;  // current leaf (never a parent)
     state_t   prev_leaf;  // for return-to-last-state ergonomics
+    // HFSM Flow
+    uint8_t  auto_flow;  // Bool, if true then auto flow through states
+    uint8_t  home_return_stby;  // Bool, if true then AUTO_HOME exits to STBY
+    // Timer for how long in AUTO HOLD
+    uint32_t auto_hold_entry_ms;
+    // Timer for good telemetry from gimbal
+    uint32_t telem_good_since_ms;
     
     // Error
     err_sev_t   err_sev;
@@ -147,6 +160,8 @@ typedef struct {
     float    nudge_base_tilt_deg;
     float    tgt_pan_deg;         // accumulated targets, MoVI frame degree
     float    tgt_tilt_deg;
+    uint8_t  nudge_active;          // 1 = nudge burst in progress, suppresses state build
+    uint32_t nudge_burst_start_ms;  // when the current burst started
 
 } app_ctx_t;
 

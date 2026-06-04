@@ -48,6 +48,8 @@
 #include "Pin_Debug_SBCComms_aliases.h"
 #include "Pin_Debug_SBCComms.h"
 #include "Clock_MCU.h"
+#include "Pin_SwitchAuto_aliases.h"
+#include "Pin_SwitchAuto.h"
 #include "ADC_DelSig_1_AMux.h"
 #include "ADC_DelSig_1_Ext_CP_Clk.h"
 #include "ADC_DelSig_1_IRQ.h"
