@@ -1,6 +1,6 @@
 // ======================================================================
 // Proj07_hamflyAPI_stateMachineUpgrade.v generated from TopDesign.cysch
-// 06/04/2026 at 15:06
+// 06/05/2026 at 15:13
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -795,15 +795,63 @@ module UART_v2_50_4 (
 
 endmodule
 
+// VDAC8_v1_90(Data_Source=0, Initial_Value=206, Strobe_Mode=0, VDAC_Range=4, VDAC_Speed=0, Voltage=3296, CY_API_CALLBACK_HEADER_INCLUDE=#include "cyapicallbacks.h", CY_COMMENT=, CY_COMPONENT_NAME=VDAC8_v1_90, CY_CONFIG_TITLE=VDAC8_3v3Ref, CY_CONST_CONFIG=true, CY_CONTROL_FILE=<:default:>, CY_DATASHEET_FILE=<:default:>, CY_FITTER_NAME=VDAC8_3v3Ref, CY_INSTANCE_SHORT_NAME=VDAC8_3v3Ref, CY_MAJOR_VERSION=1, CY_MINOR_VERSION=90, CY_PDL_DRIVER_NAME=, CY_PDL_DRIVER_REQ_VERSION=, CY_PDL_DRIVER_SUBGROUP=, CY_PDL_DRIVER_VARIANT=, CY_REMOVE=false, CY_SUPPRESS_API_GEN=false, CY_VERSION=PSoC Creator  4.4, INSTANCE_NAME=VDAC8_3v3Ref, )
+module VDAC8_v1_90_5 (
+    data,
+    strobe,
+    vOut);
+    input      [7:0] data;
+    input       strobe;
+    inout       vOut;
+    electrical  vOut;
+
+    parameter Data_Source = 0;
+    parameter Initial_Value = 206;
+    parameter Strobe_Mode = 0;
+
+    electrical  Net_77;
+          wire  Net_83;
+          wire  Net_82;
+          wire  Net_81;
+
+    cy_psoc3_vidac8_v1_0 viDAC8 (
+        .data(data[7:0]),
+        .idir(Net_81),
+        .ioff(Net_82),
+        .iout(Net_77),
+        .reset(Net_83),
+        .strobe(strobe),
+        .strobe_udb(strobe),
+        .vout(vOut));
+    defparam viDAC8.is_all_if_any = 0;
+    defparam viDAC8.reg_data = 0;
+
+    ZeroTerminal ZeroTerminal_1 (
+        .z(Net_81));
+
+    ZeroTerminal ZeroTerminal_2 (
+        .z(Net_82));
+
+    ZeroTerminal ZeroTerminal_3 (
+        .z(Net_83));
+
+    cy_analog_noconnect_v1_0 cy_analog_noconnect_1 (
+        .noconnect(Net_77));
+
+
+
+endmodule
+
 // top
 module top ;
 
+          wire  Net_438;
+          wire [7:0] Net_439;
           wire  Net_433;
           wire  Net_393;
           wire  Net_392;
           wire  Net_391;
           wire  Net_390;
-          wire  Net_383;
           wire  Net_382;
           wire  Net_389;
           wire  Net_388;
@@ -826,7 +874,6 @@ module top ;
           wire  Net_400;
           wire  Net_399;
           wire  Net_398;
-          wire  Net_306;
           wire  Net_397;
           wire  Net_396;
           wire  Net_395;
@@ -848,11 +895,14 @@ module top ;
           wire  Net_287;
           wire  Net_45;
           wire  Net_286;
+          wire  Net_450;
           wire  Net_412;
+          wire  Net_394;
+    electrical  Net_437;
+          wire  Net_436;
           wire  Net_12;
           wire  Net_123;
           wire  Net_404;
-          wire  Net_394;
           wire  Net_369;
           wire  Net_25;
     electrical  Net_68;
@@ -1226,7 +1276,7 @@ module top ;
         .cts_n(1'b0),
         .reset(1'b0),
         .rts_n(Net_397),
-        .rx(Net_306),
+        .rx(Net_450),
         .rx_clk(Net_398),
         .rx_data(Net_399),
         .rx_interrupt(Net_404),
@@ -1251,7 +1301,6 @@ module top ;
 	wire [0:0] tmpOE__Rx_2_net;
 	wire [0:0] tmpIO_0__Rx_2_net;
 	wire [0:0] tmpINTERRUPT_0__Rx_2_net;
-	electrical [0:0] tmpSIOVREF__Rx_2_net;
 
 	cy_psoc3_pins_v1_10
 		#(.id("27b5dc82-7bc5-4a6c-9890-b31b36cc7cf2"),
@@ -1288,15 +1337,15 @@ module top ;
 		  .pin_aliases(""),
 		  .pin_mode("I"),
 		  .por_state(4),
-		  .sio_group_cnt(0),
-		  .sio_hyst(1'b1),
-		  .sio_ibuf(""),
-		  .sio_info(2'b00),
-		  .sio_obuf(""),
-		  .sio_refsel(""),
-		  .sio_vtrip(""),
-		  .sio_hifreq(""),
-		  .sio_vohsel(""),
+		  .sio_group_cnt(1),
+		  .sio_hyst(1'b0),
+		  .sio_ibuf(1'b1),
+		  .sio_info(2'b01),
+		  .sio_obuf(1'b0),
+		  .sio_refsel(1'b1),
+		  .sio_vtrip(1'b1),
+		  .sio_hifreq(1'b1),
+		  .sio_vohsel(3'b000),
 		  .slew_rate(1'b0),
 		  .spanning(0),
 		  .use_annotation(1'b0),
@@ -1309,9 +1358,9 @@ module top ;
 		Rx_2
 		 (.oe(tmpOE__Rx_2_net),
 		  .y({1'b0}),
-		  .fb({Net_306}),
+		  .fb({Net_450}),
 		  .io({tmpIO_0__Rx_2_net[0:0]}),
-		  .siovref(tmpSIOVREF__Rx_2_net),
+		  .siovref({Net_437}),
 		  .interrupt({tmpINTERRUPT_0__Rx_2_net[0:0]}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
@@ -1326,7 +1375,6 @@ module top ;
 	wire [0:0] tmpFB_0__Tx_2_net;
 	wire [0:0] tmpIO_0__Tx_2_net;
 	wire [0:0] tmpINTERRUPT_0__Tx_2_net;
-	electrical [0:0] tmpSIOVREF__Tx_2_net;
 
 	cy_psoc3_pins_v1_10
 		#(.id("6a89d565-3f6d-45a3-8b8b-4a81359107c9"),
@@ -1363,15 +1411,15 @@ module top ;
 		  .pin_aliases(""),
 		  .pin_mode("O"),
 		  .por_state(4),
-		  .sio_group_cnt(0),
+		  .sio_group_cnt(1),
 		  .sio_hyst(1'b1),
-		  .sio_ibuf(""),
-		  .sio_info(2'b00),
-		  .sio_obuf(""),
-		  .sio_refsel(""),
-		  .sio_vtrip(""),
-		  .sio_hifreq(""),
-		  .sio_vohsel(""),
+		  .sio_ibuf(1'b0),
+		  .sio_info(2'b01),
+		  .sio_obuf(1'b1),
+		  .sio_refsel(1'b1),
+		  .sio_vtrip(1'b1),
+		  .sio_hifreq(1'b1),
+		  .sio_vohsel(3'b000),
 		  .slew_rate(1'b0),
 		  .spanning(0),
 		  .use_annotation(1'b0),
@@ -1386,7 +1434,7 @@ module top ;
 		  .y({Net_394}),
 		  .fb({tmpFB_0__Tx_2_net[0:0]}),
 		  .io({tmpIO_0__Tx_2_net[0:0]}),
-		  .siovref(tmpSIOVREF__Tx_2_net),
+		  .siovref({Net_437}),
 		  .interrupt({tmpINTERRUPT_0__Tx_2_net[0:0]}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
@@ -1539,7 +1587,7 @@ module top ;
         .rx_clk(Net_388),
         .rx_data(Net_389),
         .rx_interrupt(Net_382),
-        .tx(Net_383),
+        .tx(Net_436),
         .tx_clk(Net_390),
         .tx_data(Net_391),
         .tx_en(Net_392),
@@ -1557,10 +1605,9 @@ module top ;
     defparam UART_SBC.RXEnable = 1;
     defparam UART_SBC.TXEnable = 1;
 
-	wire [0:0] tmpOE__Rx_3_net;
-	wire [0:0] tmpIO_0__Rx_3_net;
-	wire [0:0] tmpINTERRUPT_0__Rx_3_net;
-	electrical [0:0] tmpSIOVREF__Rx_3_net;
+	wire [0:0] tmpOE__Rx_SBC_net;
+	wire [0:0] tmpIO_0__Rx_SBC_net;
+	wire [0:0] tmpINTERRUPT_0__Rx_SBC_net;
 
 	cy_psoc3_pins_v1_10
 		#(.id("76286fae-8e70-4a13-8fce-3a253e81f4b7"),
@@ -1597,15 +1644,15 @@ module top ;
 		  .pin_aliases(""),
 		  .pin_mode("I"),
 		  .por_state(4),
-		  .sio_group_cnt(0),
-		  .sio_hyst(1'b1),
-		  .sio_ibuf(""),
-		  .sio_info(2'b00),
-		  .sio_obuf(""),
-		  .sio_refsel(""),
-		  .sio_vtrip(""),
-		  .sio_hifreq(""),
-		  .sio_vohsel(""),
+		  .sio_group_cnt(1),
+		  .sio_hyst(1'b0),
+		  .sio_ibuf(1'b1),
+		  .sio_info(2'b01),
+		  .sio_obuf(1'b0),
+		  .sio_refsel(1'b1),
+		  .sio_vtrip(1'b1),
+		  .sio_hifreq(1'b1),
+		  .sio_vohsel(3'b000),
 		  .slew_rate(1'b0),
 		  .spanning(0),
 		  .use_annotation(1'b0),
@@ -1615,13 +1662,13 @@ module top ;
 		  .ovt_needed(1'b0),
 		  .ovt_slew_control(2'b00),
 		  .input_buffer_sel(2'b00))
-		Rx_3
-		 (.oe(tmpOE__Rx_3_net),
+		Rx_SBC
+		 (.oe(tmpOE__Rx_SBC_net),
 		  .y({1'b0}),
 		  .fb({Net_369}),
-		  .io({tmpIO_0__Rx_3_net[0:0]}),
-		  .siovref(tmpSIOVREF__Rx_3_net),
-		  .interrupt({tmpINTERRUPT_0__Rx_3_net[0:0]}),
+		  .io({tmpIO_0__Rx_SBC_net[0:0]}),
+		  .siovref({Net_437}),
+		  .interrupt({tmpINTERRUPT_0__Rx_SBC_net[0:0]}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1629,13 +1676,12 @@ module top ;
 		  .out_clock_en({1'b1}),
 		  .out_reset({1'b0}));
 
-	assign tmpOE__Rx_3_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+	assign tmpOE__Rx_SBC_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
-	wire [0:0] tmpOE__Tx_3_net;
-	wire [0:0] tmpFB_0__Tx_3_net;
-	wire [0:0] tmpIO_0__Tx_3_net;
-	wire [0:0] tmpINTERRUPT_0__Tx_3_net;
-	electrical [0:0] tmpSIOVREF__Tx_3_net;
+	wire [0:0] tmpOE__Tx_SBC_net;
+	wire [0:0] tmpFB_0__Tx_SBC_net;
+	wire [0:0] tmpIO_0__Tx_SBC_net;
+	wire [0:0] tmpINTERRUPT_0__Tx_SBC_net;
 
 	cy_psoc3_pins_v1_10
 		#(.id("f5f1ab68-5189-41bb-bcd4-e89cb1f41d3f"),
@@ -1672,15 +1718,15 @@ module top ;
 		  .pin_aliases(""),
 		  .pin_mode("O"),
 		  .por_state(4),
-		  .sio_group_cnt(0),
+		  .sio_group_cnt(1),
 		  .sio_hyst(1'b1),
-		  .sio_ibuf(""),
-		  .sio_info(2'b00),
-		  .sio_obuf(""),
-		  .sio_refsel(""),
-		  .sio_vtrip(""),
-		  .sio_hifreq(""),
-		  .sio_vohsel(""),
+		  .sio_ibuf(1'b0),
+		  .sio_info(2'b01),
+		  .sio_obuf(1'b1),
+		  .sio_refsel(1'b1),
+		  .sio_vtrip(1'b1),
+		  .sio_hifreq(1'b1),
+		  .sio_vohsel(3'b000),
 		  .slew_rate(1'b0),
 		  .spanning(0),
 		  .use_annotation(1'b0),
@@ -1690,13 +1736,13 @@ module top ;
 		  .ovt_needed(1'b0),
 		  .ovt_slew_control(2'b00),
 		  .input_buffer_sel(2'b00))
-		Tx_3
-		 (.oe(tmpOE__Tx_3_net),
-		  .y({Net_383}),
-		  .fb({tmpFB_0__Tx_3_net[0:0]}),
-		  .io({tmpIO_0__Tx_3_net[0:0]}),
-		  .siovref(tmpSIOVREF__Tx_3_net),
-		  .interrupt({tmpINTERRUPT_0__Tx_3_net[0:0]}),
+		Tx_SBC
+		 (.oe(tmpOE__Tx_SBC_net),
+		  .y({Net_436}),
+		  .fb({tmpFB_0__Tx_SBC_net[0:0]}),
+		  .io({tmpIO_0__Tx_SBC_net[0:0]}),
+		  .siovref({Net_437}),
+		  .interrupt({tmpINTERRUPT_0__Tx_SBC_net[0:0]}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1704,7 +1750,7 @@ module top ;
 		  .out_clock_en({1'b1}),
 		  .out_reset({1'b0}));
 
-	assign tmpOE__Tx_3_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+	assign tmpOE__Tx_SBC_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
 
 	cy_isr_v1_0
@@ -2174,6 +2220,14 @@ module top ;
 		  .out_reset({1'b0}));
 
 	assign tmpOE__Pin_SwitchAuto_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+
+    VDAC8_v1_90_5 VDAC8_3v3Ref (
+        .data(8'b00000000),
+        .strobe(1'b0),
+        .vOut(Net_437));
+    defparam VDAC8_3v3Ref.Data_Source = 0;
+    defparam VDAC8_3v3Ref.Initial_Value = 206;
+    defparam VDAC8_3v3Ref.Strobe_Mode = 0;
 
 
 

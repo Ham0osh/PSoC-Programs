@@ -309,14 +309,6 @@ void app_telem_tick(app_ctx_t *ctx)
 {
     // Do the telemetry grabs if gimble connected
     if (!ctx->gimbal) return;
-
-    // Watch for a lost gimbal connection
-    if (ctx->gimbal_last_rx_ms != 0u &&
-        g_tick_ms - ctx->gimbal_last_rx_ms > MOVI_TIMEOUT_MS) {
-        app_raise_error(ctx, SEV_WARN, "MoVI comms lost.");
-        app_transition(ctx, STBY_DEFER);
-        ctx->gimbal_last_rx_ms = 0u;  // suppress repeat triggers
-    }
     
     static uint32_t last_hot_ms  = 0u;  // Hot is the Movi status
     static uint32_t last_link_ms = 0u;  // Cold are all other sensors
@@ -390,8 +382,6 @@ void set_origin(app_ctx_t *ctx, uint8_t zero_tilt)
     if (!gimbal_pan_tilt_deg(ctx, &pan, &tilt)) {
         app_raise_error(ctx, SEV_USER, "no telemetry (origin not set)");
         return;
-    } else {
-        ctx->gimbal_last_rx_ms = g_tick_ms;
     }
     ctx->origin_pan_deg  = pan;
     ctx->origin_tilt_deg = zero_tilt ? 0.0f : tilt;

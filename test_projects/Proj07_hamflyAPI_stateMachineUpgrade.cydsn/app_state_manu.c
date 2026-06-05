@@ -86,7 +86,6 @@ void app_manual_tick(app_ctx_t *ctx)
     float p, t;
     uint8_t arrived = 0u;
     if (gimbal_pan_tilt_deg(ctx, &p, &t))
-        ctx->gimbal_last_rx_ms = g_tick_ms;
         arrived = (fabsf(p - ctx->tgt_pan_deg)  < NUDGE_SETTLE_DEG) &&
                   (fabsf(t - ctx->tgt_tilt_deg) < NUDGE_SETTLE_DEG);
     if (arrived || elapsed >= NUDGE_TIMEOUT_MS)

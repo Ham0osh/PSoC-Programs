@@ -73,7 +73,6 @@ void app_auto_tick(app_ctx_t *ctx)
             float p, t;
             uint8_t arrived = 0u;
             if (gimbal_pan_tilt_deg(ctx, &p, &t))
-                ctx->gimbal_last_rx_ms = g_tick_ms;
                 arrived = (fabsf(p - ctx->tgt_pan_deg)  < NUDGE_SETTLE_DEG) &&
                           (fabsf(t - ctx->tgt_tilt_deg) < NUDGE_SETTLE_DEG);
             if (arrived || elapsed >= NUDGE_TIMEOUT_MS) {
@@ -197,7 +196,6 @@ void entry_auto_home(app_ctx_t *ctx)
         app_transition(ctx, STBY_HOLD);
         return;
     }
-    ctx->gimbal_last_rx_ms = g_tick_ms;
     ctx->nudge_base_pan_deg  = pan;  // Init nudge reference
     ctx->nudge_base_tilt_deg = tilt;
     ctx->tgt_pan_deg         = ctx->origin_pan_deg;  // TODO: Do we actualy use these??
@@ -347,10 +345,7 @@ static void gps_check_settle(app_ctx_t *ctx)
     if (!gimbal_pan_tilt_deg(ctx, &pan, &tilt))
     {
         return;
-    } else {
-        ctx->gimbal_last_rx_ms = g_tick_ms;
     }
-
     float speed_dps = 1.0e9f;   // assume moving until we have a valid dt
     if (ctx->gps_last_sample_ms != 0u) {
         float dt = (float)(now - ctx->gps_last_sample_ms) * 0.001f;

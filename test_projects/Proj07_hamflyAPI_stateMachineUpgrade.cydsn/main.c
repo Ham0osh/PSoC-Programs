@@ -211,6 +211,9 @@ int main(void)
     // Initialize hardware %==================================================%
     CyGlobalIntEnable;  // PSoC API enable.
     
+    // Start 3v3 internal reference
+    VDAC8_3v3Ref_Start(); 
+    
     // Start serial monitor comms.
     UART_DEBUG_Start();
     UART_DEBUG_PutString("\r\n=== Gimbal Control  PSoC 5LP ===\r\n");

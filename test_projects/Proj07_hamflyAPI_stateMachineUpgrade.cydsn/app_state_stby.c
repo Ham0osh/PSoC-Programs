@@ -51,7 +51,6 @@ void app_stby_tick(app_ctx_t *ctx)
     if (ctx->state == STBY_DEFER && ctx->auto_flow) {
         float p, t;
         if (gimbal_pan_tilt_deg(ctx, &p, &t)) {
-            ctx->gimbal_last_rx_ms = g_tick_ms;
             if (ctx->telem_stable_since_ms  == 0u)
                 ctx->telem_stable_since_ms  = g_tick_ms;   // start the clock
             if (g_tick_ms - ctx->telem_stable_since_ms  >= TELEM_STABLE_MS) {

@@ -50,6 +50,7 @@
 #include "Clock_MCU.h"
 #include "Pin_SwitchAuto_aliases.h"
 #include "Pin_SwitchAuto.h"
+#include "VDAC8_3v3Ref.h"
 #include "ADC_DelSig_1_AMux.h"
 #include "ADC_DelSig_1_Ext_CP_Clk.h"
 #include "ADC_DelSig_1_IRQ.h"
