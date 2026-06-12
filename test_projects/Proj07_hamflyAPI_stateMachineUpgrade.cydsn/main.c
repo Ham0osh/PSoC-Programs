@@ -211,6 +211,9 @@ int main(void)
     // Initialize hardware %==================================================%
     CyGlobalIntEnable;  // PSoC API enable.
     
+    // Start 3v3 internal reference
+    VDAC8_3v3Ref_Start(); 
+    
     // Start serial monitor comms.
     UART_DEBUG_Start();
     UART_DEBUG_PutString("\r\n=== Gimbal Control  PSoC 5LP ===\r\n");
@@ -222,11 +225,13 @@ int main(void)
     sbc_init();
     isr_rx_sbc_StartEx(isr_rx_sbc_Handler);
     UART_DEBUG_PutString("[Init] Pi comms ready\r\n");
+    while (UART_SBC_GetRxBufferSize())  { UART_SBC_ReadRxData();  }
     
     // Start Movi comms
     UART_MOVI_Start();
     UART_MOVI_ClearRxBuffer();
     UART_MOVI_ClearTxBuffer();
+    while (UART_MOVI_GetRxBufferSize()) { UART_MOVI_ReadRxData(); }
     
     // Initialize movi object and give to context
     hamfly_init(&g_movi, &MOVI_HAL);
@@ -289,6 +294,7 @@ int main(void)
         // Always run on tick definition
         // These are by state but only run when in the given state
         // Per state logiv before making acontrol packet or telem etc.
+        app_stby_tick(&ctx);
         app_manual_tick(&ctx);  // For MANU substates
         app_auto_tick(&ctx);  // For AUTO substates
         

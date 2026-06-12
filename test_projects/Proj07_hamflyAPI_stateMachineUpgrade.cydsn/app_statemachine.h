@@ -36,12 +36,15 @@ void        app_transition(app_ctx_t *ctx, state_t target);
 
 // State based on tick.
 // TEMP: Ticker for manual nudge.
+// Caution: These are declared here and in their own header files, must match.
+void app_stby_tick(app_ctx_t *ctx);   // For auto transition handling
 void app_manual_tick(app_ctx_t *ctx); // For nudge smoothing
 void app_auto_tick(app_ctx_t *ctx);   // Temp for debug prints
 void app_telem_tick(app_ctx_t *ctx);  // Handles Hot and Cold telemetry
-void app_sbc_tick(app_ctx_t *ctx);  // Handles SBC command and GPS target
+void app_sbc_tick(app_ctx_t *ctx);    // Handles SBC command and GPS target
 
 // Shared helpers for leaf handlers to use
+void set_origin(app_ctx_t *ctx, uint8_t zero_tilt);
 // Safe base control packets.
 void build_defer(const app_ctx_t *ctx, hamfly_control_t *out);
 void build_hold (const app_ctx_t *ctx, hamfly_control_t *out);

@@ -248,6 +248,16 @@ uint8_t sbc_get_centroid(uint8_t stream, payload_centroid_t *out)
     return got;  // Caller is told they got a new centroid!
 }
 
+void sbc_discard_centroid(uint8_t stream)
+{
+    // Discard centroid packets during slew process to avoid jumoy snaps on exit.
+    if (stream >= STREAM_COUNTS) return;  // No centroids
+    uint8_t bit = (uint8_t)(1u << stream);
+    uint8_t ist = CyEnterCriticalSection();  // Atomic clear
+    s_fresh_bits &= (uint8_t)~bit;
+    CyExitCriticalSection(ist);
+}
+
 uint16_t sbc_unknown_magic(void)
 {
     // When magic byte unknown

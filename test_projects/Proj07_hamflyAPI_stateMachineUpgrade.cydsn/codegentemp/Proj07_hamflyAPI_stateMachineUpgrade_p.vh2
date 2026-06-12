@@ -1,5 +1,9 @@
 -- Project:   Proj07_hamflyAPI_stateMachineUpgrade
+<<<<<<< HEAD
 -- Generated: 06/12/2026 12:27:30
+=======
+-- Generated: 06/05/2026 15:13:44
+>>>>>>> origin/dev_statemachineflow
 -- PSoC Creator  4.4
 
 ENTITY Proj07_hamflyAPI_stateMachineUpgrade IS
@@ -9,13 +13,14 @@ ENTITY Proj07_hamflyAPI_stateMachineUpgrade IS
         Rx_2(0)_PAD : IN std_ulogic;
         Tx_2(0)_PAD : OUT std_ulogic;
         Pin_LED(0)_PAD : OUT std_ulogic;
-        Rx_3(0)_PAD : IN std_ulogic;
-        Tx_3(0)_PAD : OUT std_ulogic;
+        Rx_SBC(0)_PAD : IN std_ulogic;
+        Tx_SBC(0)_PAD : OUT std_ulogic;
         Pin_Debug_Tick(0)_PAD : OUT std_ulogic;
         Pin_Debug_SuperLoop(0)_PAD : OUT std_ulogic;
         Pin_Debug_CoarseCentroid(0)_PAD : OUT std_ulogic;
         Pin_Debug_GimbalComms(0)_PAD : OUT std_ulogic;
-        Pin_Debug_SBCComms(0)_PAD : OUT std_ulogic);
+        Pin_Debug_SBCComms(0)_PAD : OUT std_ulogic;
+        Pin_SwitchAuto(0)_PAD : IN std_ulogic);
     ATTRIBUTE voltage_VDDABUF OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VDDA OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VUSB OF __DEFAULT__ : ENTITY IS 5e0;
@@ -57,29 +62,30 @@ ARCHITECTURE __DEFAULT__ OF Proj07_hamflyAPI_stateMachineUpgrade IS
     SIGNAL Net_123_local : bit;
     SIGNAL Net_25 : bit;
     SIGNAL Net_298 : bit;
-    SIGNAL Net_306 : bit;
     SIGNAL Net_320 : bit;
     SIGNAL Net_369 : bit;
     SIGNAL Net_382 : bit;
-    SIGNAL Net_383 : bit;
     SIGNAL Net_394 : bit;
     SIGNAL Net_404 : bit;
     SIGNAL Net_412 : bit;
     ATTRIBUTE global_signal OF Net_412 : SIGNAL IS true;
     SIGNAL Net_412_local : bit;
+    SIGNAL Net_436 : bit;
     SIGNAL Net_45 : bit;
+    SIGNAL Net_450 : bit;
     SIGNAL Pin_Debug_CoarseCentroid(0)__PA : bit;
     SIGNAL Pin_Debug_GimbalComms(0)__PA : bit;
     SIGNAL Pin_Debug_SBCComms(0)__PA : bit;
     SIGNAL Pin_Debug_SuperLoop(0)__PA : bit;
     SIGNAL Pin_Debug_Tick(0)__PA : bit;
     SIGNAL Pin_LED(0)__PA : bit;
+    SIGNAL Pin_SwitchAuto(0)__PA : bit;
     SIGNAL Rx_1(0)__PA : bit;
     SIGNAL Rx_2(0)__PA : bit;
-    SIGNAL Rx_3(0)__PA : bit;
+    SIGNAL Rx_SBC(0)__PA : bit;
     SIGNAL Tx_1(0)__PA : bit;
     SIGNAL Tx_2(0)__PA : bit;
-    SIGNAL Tx_3(0)__PA : bit;
+    SIGNAL Tx_SBC(0)__PA : bit;
     SIGNAL VRx(0)__PA : bit;
     SIGNAL VRy(0)__PA : bit;
     SIGNAL \ADC_DelSig_1:Net_245_0\ : bit;
@@ -240,10 +246,10 @@ ARCHITECTURE __DEFAULT__ OF Proj07_hamflyAPI_stateMachineUpgrade IS
     ATTRIBUTE Location OF Tx_2(0) : LABEL IS "P12[5]";
     ATTRIBUTE lib_model OF Pin_LED(0) : LABEL IS "iocell7";
     ATTRIBUTE Location OF Pin_LED(0) : LABEL IS "P2[1]";
-    ATTRIBUTE lib_model OF Rx_3(0) : LABEL IS "iocell8";
-    ATTRIBUTE Location OF Rx_3(0) : LABEL IS "P2[6]";
-    ATTRIBUTE lib_model OF Tx_3(0) : LABEL IS "iocell9";
-    ATTRIBUTE Location OF Tx_3(0) : LABEL IS "P2[7]";
+    ATTRIBUTE lib_model OF Rx_SBC(0) : LABEL IS "iocell8";
+    ATTRIBUTE Location OF Rx_SBC(0) : LABEL IS "P12[2]";
+    ATTRIBUTE lib_model OF Tx_SBC(0) : LABEL IS "iocell9";
+    ATTRIBUTE Location OF Tx_SBC(0) : LABEL IS "P12[3]";
     ATTRIBUTE lib_model OF Pin_Debug_Tick(0) : LABEL IS "iocell10";
     ATTRIBUTE Location OF Pin_Debug_Tick(0) : LABEL IS "P3[0]";
     ATTRIBUTE lib_model OF Pin_Debug_SuperLoop(0) : LABEL IS "iocell11";
@@ -254,6 +260,8 @@ ARCHITECTURE __DEFAULT__ OF Proj07_hamflyAPI_stateMachineUpgrade IS
     ATTRIBUTE Location OF Pin_Debug_GimbalComms(0) : LABEL IS "P3[3]";
     ATTRIBUTE lib_model OF Pin_Debug_SBCComms(0) : LABEL IS "iocell14";
     ATTRIBUTE Location OF Pin_Debug_SBCComms(0) : LABEL IS "P3[4]";
+    ATTRIBUTE lib_model OF Pin_SwitchAuto(0) : LABEL IS "iocell15";
+    ATTRIBUTE Location OF Pin_SwitchAuto(0) : LABEL IS "P0[7]";
     ATTRIBUTE lib_model OF Net_298 : LABEL IS "macrocell1";
     ATTRIBUTE lib_model OF \UART_DEBUG:BUART:counter_load_not\ : LABEL IS "macrocell2";
     ATTRIBUTE lib_model OF \UART_DEBUG:BUART:tx_status_0\ : LABEL IS "macrocell3";
@@ -270,7 +278,7 @@ ARCHITECTURE __DEFAULT__ OF Proj07_hamflyAPI_stateMachineUpgrade IS
     ATTRIBUTE lib_model OF \UART_MOVI:BUART:rx_postpoll\ : LABEL IS "macrocell14";
     ATTRIBUTE lib_model OF \UART_MOVI:BUART:rx_status_4\ : LABEL IS "macrocell15";
     ATTRIBUTE lib_model OF \UART_MOVI:BUART:rx_status_5\ : LABEL IS "macrocell16";
-    ATTRIBUTE lib_model OF Net_383 : LABEL IS "macrocell17";
+    ATTRIBUTE lib_model OF Net_436 : LABEL IS "macrocell17";
     ATTRIBUTE lib_model OF \UART_SBC:BUART:counter_load_not\ : LABEL IS "macrocell18";
     ATTRIBUTE lib_model OF \UART_SBC:BUART:tx_status_0\ : LABEL IS "macrocell19";
     ATTRIBUTE lib_model OF \UART_SBC:BUART:tx_status_2\ : LABEL IS "macrocell20";
@@ -295,6 +303,7 @@ ARCHITECTURE __DEFAULT__ OF Proj07_hamflyAPI_stateMachineUpgrade IS
     ATTRIBUTE lib_model OF \UART_SBC:BUART:sTX:TxSts\ : LABEL IS "statusicell5";
     ATTRIBUTE lib_model OF \UART_SBC:BUART:sRX:RxShifter:u0\ : LABEL IS "datapathcell9";
     ATTRIBUTE lib_model OF \UART_SBC:BUART:sRX:RxSts\ : LABEL IS "statusicell6";
+    ATTRIBUTE Location OF \VDAC8_3v3Ref:viDAC8\ : LABEL IS "F(VIDAC,2)";
     ATTRIBUTE lib_model OF \UART_DEBUG:BUART:txn\ : LABEL IS "macrocell26";
     ATTRIBUTE lib_model OF \UART_DEBUG:BUART:tx_state_1\ : LABEL IS "macrocell27";
     ATTRIBUTE lib_model OF \UART_DEBUG:BUART:tx_state_0\ : LABEL IS "macrocell28";
@@ -692,6 +701,22 @@ ARCHITECTURE __DEFAULT__ OF Proj07_hamflyAPI_stateMachineUpgrade IS
             tc : OUT std_ulogic;
             cmp : OUT std_ulogic;
             irq : OUT std_ulogic);
+    END COMPONENT;
+    COMPONENT vidaccell
+        PORT (
+            data_0 : IN std_ulogic;
+            data_1 : IN std_ulogic;
+            data_2 : IN std_ulogic;
+            data_3 : IN std_ulogic;
+            data_4 : IN std_ulogic;
+            data_5 : IN std_ulogic;
+            data_6 : IN std_ulogic;
+            data_7 : IN std_ulogic;
+            strobe : IN std_ulogic;
+            strobe_udb : IN std_ulogic;
+            reset : IN std_ulogic;
+            idir : IN std_ulogic;
+            ioff : IN std_ulogic);
     END COMPONENT;
 BEGIN
 
@@ -1131,15 +1156,15 @@ BEGIN
             por_state => 4,
             port_alias_group => "",
             port_alias_required => 0,
-            sio_group_cnt => 0,
-            sio_hifreq => "00000000",
-            sio_hyst => "1",
-            sio_ibuf => "00000000",
-            sio_info => "00",
-            sio_obuf => "00000000",
-            sio_refsel => "00000000",
-            sio_vohsel => "00000000",
-            sio_vtrip => "00000000",
+            sio_group_cnt => 1,
+            sio_hifreq => "1",
+            sio_hyst => "0",
+            sio_ibuf => "1",
+            sio_info => "01",
+            sio_obuf => "0",
+            sio_refsel => "1",
+            sio_vohsel => "000",
+            sio_vtrip => "1",
             slew_rate => "0",
             spanning => 0,
             sw_only => 0,
@@ -1168,11 +1193,11 @@ BEGIN
             oe_sync_mode => 0,
             logicalport => "Rx_2",
             logicalport_pin_id => 0,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000101")
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000100101")
         PORT MAP(
             pa_out => Rx_2(0)__PA,
             oe => open,
-            fb => Net_306,
+            fb => Net_450,
             pad_in => Rx_2(0)_PAD,
             in_clock => ClockBlock_BUS_CLK,
             in_clock_en => '1',
@@ -1223,15 +1248,15 @@ BEGIN
             por_state => 4,
             port_alias_group => "",
             port_alias_required => 0,
-            sio_group_cnt => 0,
-            sio_hifreq => "00000000",
+            sio_group_cnt => 1,
+            sio_hifreq => "1",
             sio_hyst => "1",
-            sio_ibuf => "00000000",
-            sio_info => "00",
-            sio_obuf => "00000000",
-            sio_refsel => "00000000",
-            sio_vohsel => "00000000",
-            sio_vtrip => "00000000",
+            sio_ibuf => "0",
+            sio_info => "01",
+            sio_obuf => "1",
+            sio_refsel => "1",
+            sio_vohsel => "000",
+            sio_vtrip => "1",
             slew_rate => "0",
             spanning => 0,
             sw_only => 0,
@@ -1259,7 +1284,7 @@ BEGIN
             oe_sync_mode => 0,
             logicalport => "Tx_2",
             logicalport_pin_id => 0,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000101")
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000100101")
         PORT MAP(
             pa_out => Tx_2(0)__PA,
             oe => open,
@@ -1363,7 +1388,7 @@ BEGIN
             out_clock_en => '1',
             out_reset => '0');
 
-    Rx_3:logicalport
+    Rx_SBC:logicalport
         GENERIC MAP(
             drive_mode => "001",
             ibuf_enabled => "1",
@@ -1405,15 +1430,15 @@ BEGIN
             por_state => 4,
             port_alias_group => "",
             port_alias_required => 0,
-            sio_group_cnt => 0,
-            sio_hifreq => "00000000",
-            sio_hyst => "1",
-            sio_ibuf => "00000000",
-            sio_info => "00",
-            sio_obuf => "00000000",
-            sio_refsel => "00000000",
-            sio_vohsel => "00000000",
-            sio_vtrip => "00000000",
+            sio_group_cnt => 1,
+            sio_hifreq => "1",
+            sio_hyst => "0",
+            sio_ibuf => "1",
+            sio_info => "01",
+            sio_obuf => "0",
+            sio_refsel => "1",
+            sio_vohsel => "000",
+            sio_vtrip => "1",
             slew_rate => "0",
             spanning => 0,
             sw_only => 0,
@@ -1435,19 +1460,19 @@ BEGIN
             out_reset => open,
             in_clock => open);
 
-    Rx_3(0):iocell
+    Rx_SBC(0):iocell
         GENERIC MAP(
             in_sync_mode => 2,
             out_sync_mode => 0,
             oe_sync_mode => 0,
-            logicalport => "Rx_3",
+            logicalport => "Rx_SBC",
             logicalport_pin_id => 0,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000101")
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000100101")
         PORT MAP(
-            pa_out => Rx_3(0)__PA,
+            pa_out => Rx_SBC(0)__PA,
             oe => open,
             fb => Net_369,
-            pad_in => Rx_3(0)_PAD,
+            pad_in => Rx_SBC(0)_PAD,
             in_clock => ClockBlock_BUS_CLK,
             in_clock_en => '1',
             in_reset => '0',
@@ -1455,7 +1480,7 @@ BEGIN
             out_clock_en => '1',
             out_reset => '0');
 
-    Tx_3:logicalport
+    Tx_SBC:logicalport
         GENERIC MAP(
             drive_mode => "110",
             ibuf_enabled => "1",
@@ -1497,15 +1522,15 @@ BEGIN
             por_state => 4,
             port_alias_group => "",
             port_alias_required => 0,
-            sio_group_cnt => 0,
-            sio_hifreq => "00000000",
+            sio_group_cnt => 1,
+            sio_hifreq => "1",
             sio_hyst => "1",
-            sio_ibuf => "00000000",
-            sio_info => "00",
-            sio_obuf => "00000000",
-            sio_refsel => "00000000",
-            sio_vohsel => "00000000",
-            sio_vtrip => "00000000",
+            sio_ibuf => "0",
+            sio_info => "01",
+            sio_obuf => "1",
+            sio_refsel => "1",
+            sio_vohsel => "000",
+            sio_vtrip => "1",
             slew_rate => "0",
             spanning => 0,
             sw_only => 0,
@@ -1526,20 +1551,20 @@ BEGIN
             out_clock_en => open,
             out_reset => open);
 
-    Tx_3(0):iocell
+    Tx_SBC(0):iocell
         GENERIC MAP(
             in_sync_mode => 0,
             out_sync_mode => 0,
             oe_sync_mode => 0,
-            logicalport => "Tx_3",
+            logicalport => "Tx_SBC",
             logicalport_pin_id => 0,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000101")
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000100101")
         PORT MAP(
-            pa_out => Tx_3(0)__PA,
+            pa_out => Tx_SBC(0)__PA,
             oe => open,
-            pin_input => Net_383,
-            pad_out => Tx_3(0)_PAD,
-            pad_in => Tx_3(0)_PAD,
+            pin_input => Net_436,
+            pad_out => Tx_SBC(0)_PAD,
+            pad_in => Tx_SBC(0)_PAD,
             in_clock => open,
             in_clock_en => '1',
             in_reset => '0',
@@ -2003,6 +2028,96 @@ BEGIN
             out_clock_en => '1',
             out_reset => '0');
 
+    Pin_SwitchAuto:logicalport
+        GENERIC MAP(
+            drive_mode => "010",
+            ibuf_enabled => "1",
+            id => "5bcb76eb-b788-4a15-9bc5-086d2fde9cb3",
+            init_dr_st => "1",
+            input_buffer_sel => "00",
+            input_clk_en => 0,
+            input_sync => "0",
+            input_sync_mode => "0",
+            intr_mode => "00",
+            invert_in_clock => 0,
+            invert_in_clock_en => 0,
+            invert_in_reset => 0,
+            invert_out_clock => 0,
+            invert_out_clock_en => 0,
+            invert_out_reset => 0,
+            io_voltage => "",
+            layout_mode => "CONTIGUOUS",
+            oe_conn => "0",
+            oe_reset => 0,
+            oe_sync => "0",
+            output_clk_en => 0,
+            output_clock_mode => "0",
+            output_conn => "0",
+            output_mode => "0",
+            output_reset => 0,
+            output_sync => "0",
+            ovt_hyst_trim => "0",
+            ovt_needed => "0",
+            ovt_slew_control => "00",
+            pa_in_clock => -1,
+            pa_in_clock_en => -1,
+            pa_in_reset => -1,
+            pa_out_clock => -1,
+            pa_out_clock_en => -1,
+            pa_out_reset => -1,
+            pin_aliases => "",
+            pin_mode => "I",
+            por_state => 4,
+            port_alias_group => "",
+            port_alias_required => 0,
+            sio_group_cnt => 0,
+            sio_hifreq => "00000000",
+            sio_hyst => "1",
+            sio_ibuf => "00000000",
+            sio_info => "00",
+            sio_obuf => "00000000",
+            sio_refsel => "00000000",
+            sio_vohsel => "00000000",
+            sio_vtrip => "00000000",
+            slew_rate => "0",
+            spanning => 0,
+            sw_only => 0,
+            use_annotation => "0",
+            vtrip => "00",
+            width => 1,
+            in_clk_inv => 0,
+            in_clken_inv => 0,
+            in_clken_mode => 1,
+            in_rst_inv => 0,
+            out_clk_inv => 0,
+            out_clken_inv => 0,
+            out_clken_mode => 1,
+            out_rst_inv => 0)
+        PORT MAP(
+            in_clock_en => open,
+            in_reset => open,
+            out_clock_en => open,
+            out_reset => open);
+
+    Pin_SwitchAuto(0):iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "Pin_SwitchAuto",
+            logicalport_pin_id => 0,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => Pin_SwitchAuto(0)__PA,
+            oe => open,
+            pad_in => Pin_SwitchAuto(0)_PAD,
+            in_clock => open,
+            in_clock_en => '1',
+            in_reset => '0',
+            out_clock => open,
+            out_clock_en => '1',
+            out_reset => '0');
+
     Net_298:macrocell
         GENERIC MAP(
             eqn_main => "(!main_0)",
@@ -2151,7 +2266,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => \UART_MOVI:BUART:rx_postpoll\,
-            main_0 => Net_306,
+            main_0 => Net_450,
             main_1 => MODIN5_1,
             main_2 => MODIN5_0);
 
@@ -2175,13 +2290,13 @@ BEGIN
             main_0 => \UART_MOVI:BUART:rx_fifonotempty\,
             main_1 => \UART_MOVI:BUART:rx_state_stop1_reg\);
 
-    Net_383:macrocell
+    Net_436:macrocell
         GENERIC MAP(
             eqn_main => "(!main_0)",
             regmode => 0,
             clken_mode => 1)
         PORT MAP(
-            q => Net_383,
+            q => Net_436,
             main_0 => \UART_SBC:BUART:txn\);
 
     \UART_SBC:BUART:counter_load_not\:macrocell
@@ -2874,6 +2989,16 @@ BEGIN
             interrupt => Net_382,
             clock => ClockBlock_BUS_CLK);
 
+    \VDAC8_3v3Ref:viDAC8\:vidaccell
+        GENERIC MAP(
+            cy_registers => "",
+            is_all_if_any => 0,
+            reg_data => 0)
+        PORT MAP(
+            reset => open,
+            idir => open,
+            ioff => open);
+
     \UART_DEBUG:BUART:txn\:macrocell
         GENERIC MAP(
             eqn_main => "(main_0 * main_1 * !main_6) + (main_0 * main_4) + (!main_1 * main_2 * !main_3 * !main_4) + (!main_1 * main_2 * !main_4 * !main_6) + (main_1 * !main_2 * !main_3 * !main_4 * !main_5 * main_6)",
@@ -3228,7 +3353,7 @@ BEGIN
             main_2 => \UART_MOVI:BUART:rx_bitclk_enable\,
             main_3 => \UART_MOVI:BUART:rx_state_3\,
             main_4 => \UART_MOVI:BUART:rx_state_2\,
-            main_5 => Net_306,
+            main_5 => Net_450,
             main_6 => MODIN5_1,
             main_7 => MODIN5_0,
             main_8 => MODIN8_6,
@@ -3285,7 +3410,7 @@ BEGIN
             main_2 => \UART_MOVI:BUART:rx_bitclk_enable\,
             main_3 => \UART_MOVI:BUART:rx_state_3\,
             main_4 => \UART_MOVI:BUART:rx_state_2\,
-            main_5 => Net_306,
+            main_5 => Net_450,
             main_6 => \UART_MOVI:BUART:rx_last\,
             main_7 => MODIN8_6,
             main_8 => MODIN8_5,
@@ -3329,7 +3454,7 @@ BEGIN
             clock_0 => Net_123,
             main_0 => \UART_MOVI:BUART:rx_count_2\,
             main_1 => \UART_MOVI:BUART:rx_count_1\,
-            main_2 => Net_306,
+            main_2 => Net_450,
             main_3 => MODIN5_1,
             main_4 => MODIN5_0);
 
@@ -3344,7 +3469,7 @@ BEGIN
             clock_0 => Net_123,
             main_0 => \UART_MOVI:BUART:rx_count_2\,
             main_1 => \UART_MOVI:BUART:rx_count_1\,
-            main_2 => Net_306,
+            main_2 => Net_450,
             main_3 => MODIN5_0);
 
     \UART_MOVI:BUART:rx_status_3\:macrocell
@@ -3361,7 +3486,7 @@ BEGIN
             main_2 => \UART_MOVI:BUART:rx_bitclk_enable\,
             main_3 => \UART_MOVI:BUART:rx_state_3\,
             main_4 => \UART_MOVI:BUART:rx_state_2\,
-            main_5 => Net_306,
+            main_5 => Net_450,
             main_6 => MODIN5_1,
             main_7 => MODIN5_0);
 
@@ -3374,7 +3499,7 @@ BEGIN
         PORT MAP(
             q => \UART_MOVI:BUART:rx_last\,
             clock_0 => Net_123,
-            main_0 => Net_306);
+            main_0 => Net_450);
 
     \UART_SBC:BUART:txn\:macrocell
         GENERIC MAP(

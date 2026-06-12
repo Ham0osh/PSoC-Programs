@@ -74,11 +74,12 @@ static const state_t parent_of[STATE_COUNT] = {
     [ERROR]           = ROOT,
 
     [STBY_DEFER]      = STBY,  // Two types of standby
-    [STBY_HOLD]       = STBY,
+    [STBY_HOLD]       = STBY,  // Hold and wait
 
     [MANU_JOYSTICK]   = MANU,
 
     [AUTO_HOME]       = AUTO,  // Go to 0, 0
+    [AUTO_HOLD]       = AUTO,  // Hold but accept centroids
     [AUTO_ACQ_GPS]    = AUTO,  // Go to GPS vector pointing
     [AUTO_ACQ_SPIRAL] = AUTO,  // Spiral search for lock
     [AUTO_TRACKING]   = AUTO,  // Closed loop tracking
@@ -86,6 +87,7 @@ static const state_t parent_of[STATE_COUNT] = {
     [AUTO_NO_LOCK]    = AUTO,  // No lock after ACQ attempts
 
     [ERROR_ACTIVE]    = ERROR,  // Error state. TODO: Severity levels.
+    [ERROR_KILL]      = ERROR,  // Sends kill to gimbal.
 };
 
 // Hook table type forward declaration
@@ -101,6 +103,8 @@ typedef uint8_t (*guard_fn_t)(const app_ctx_t *);   // 1=valid, 0=refuse
 
 // Table of entry guards.
 static const guard_fn_t can_enter[STATE_COUNT] = {
+    [MANU_JOYSTICK] = guard_manu_joystick,
+    [AUTO]         = guard_auto_parent,   // need gimbal telemetry to enter
     [AUTO_HOME]    = guard_auto_home,     // needs origin set + live telemetry
     [AUTO_ACQ_GPS] = guard_auto_acq_gps,  // needs a GPS target
 };
@@ -115,12 +119,14 @@ static const state_fn_t on_entry[STATE_COUNT] = {
     [STBY_HOLD]       = entry_stby_hold,
     [MANU_JOYSTICK]   = entry_manu_joystick,
     [AUTO_HOME]       = entry_auto_home,
+    [AUTO_HOLD]       = entry_auto_hold,
     [AUTO_ACQ_GPS]    = entry_auto_acq_gps,
     [AUTO_ACQ_SPIRAL] = entry_auto_acq_spiral,
     [AUTO_TRACKING]   = entry_auto_tracking,
     [AUTO_LOSS]       = entry_auto_loss,
     [AUTO_NO_LOCK]    = entry_auto_no_lock,
     [ERROR_ACTIVE]    = entry_error_active,
+    [ERROR_KILL]      = entry_error_kill,
 };
 
 static const state_fn_t on_exit[STATE_COUNT] = {
@@ -132,27 +138,31 @@ static const state_fn_t on_exit[STATE_COUNT] = {
     [STBY_HOLD]       = NULL,
     [MANU_JOYSTICK]   = exit_manu_joystick,
     [AUTO_HOME]       = exit_auto_home,
+    [AUTO_HOLD]       = NULL,
     [AUTO_ACQ_GPS]    = exit_auto_acq_gps,
     [AUTO_ACQ_SPIRAL] = NULL,   // TODO
     [AUTO_TRACKING]   = NULL,   // TODO
     [AUTO_LOSS]       = NULL,   // TODO
     [AUTO_NO_LOCK]    = NULL,   // TODO
     [ERROR_ACTIVE]    = NULL,   // TODO
+    [ERROR_KILL]      = NULL,
 };
 
 // For key handling over serial
 // Will be superceded by auto flow conditions and SBC commands.
 static const key_fn_t on_key[STATE_COUNT] = {
     [STBY_DEFER]      = NULL,  // TODO
-    [STBY_HOLD]       = NULL,  // TODO
+    [STBY_HOLD]       = key_stby_hold ,  // TODO
     [MANU_JOYSTICK]   = key_manu_joystick,
     [AUTO_HOME]       = key_auto_home,
+    [AUTO_HOLD]       = key_auto_hold,
     [AUTO_ACQ_GPS]    = key_auto_acq_gps,
     [AUTO_ACQ_SPIRAL] = NULL,  // TODO
     [AUTO_TRACKING]   = key_auto_tracking,
     [AUTO_LOSS]       = key_auto_loss,
     [AUTO_NO_LOCK]    = key_auto_no_lock,
     [ERROR_ACTIVE]    = key_error_active,
+    [ERROR_KILL]      = key_error_kill,
 };
 
 static const build_fn_t on_build[STATE_COUNT] = {
@@ -160,12 +170,14 @@ static const build_fn_t on_build[STATE_COUNT] = {
     [STBY_HOLD]       = build_hold,
     [MANU_JOYSTICK]   = build_manu_joystick,  // NOTE: Nudge folded into joysticl leaf.
     [AUTO_HOME]       = build_auto_home,
+    [AUTO_HOLD]       = build_hold,
     [AUTO_ACQ_GPS]    = build_auto_acq_gps,
     [AUTO_ACQ_SPIRAL] = build_hold,          // placeholder: zero rates, hold
     [AUTO_TRACKING]   = build_auto_tracking,
     [AUTO_LOSS]       = build_hold,          // placeholder: hold position
     [AUTO_NO_LOCK]    = build_hold,          // placeholder: hold position
     [ERROR_ACTIVE]    = build_error,
+    [ERROR_KILL]      = build_error,
 };
 
 // %==========================================================================%
@@ -199,6 +211,9 @@ static state_t lca(state_t a, state_t b)
 
 void app_transition(app_ctx_t *ctx, state_t target)
 {
+    // Check auto state flow pin
+    ctx->auto_flow = (Pin_SwitchAuto_Read() == 0u) ? 1u : 0u;
+    UART_DEBUG_PutString(ctx->auto_flow ? "[DBG] auto_flow=1\r\n" : "[DBG] auto_flow=0\r\n");
     // Check entry guard
     if (can_enter[target] && !can_enter[target](ctx)) {
         UART_DEBUG_PutString("[FSM] entry guard failed -> STBY_HOLD\r\n");
@@ -294,7 +309,7 @@ void app_telem_tick(app_ctx_t *ctx)
 {
     // Do the telemetry grabs if gimble connected
     if (!ctx->gimbal) return;
-
+    
     static uint32_t last_hot_ms  = 0u;  // Hot is the Movi status
     static uint32_t last_link_ms = 0u;  // Cold are all other sensors
     if (g_tick_ms - last_hot_ms  >= CONTROL_PERIOD_MS) {  //  10 Hz
@@ -336,6 +351,15 @@ void build_hold(const app_ctx_t *ctx, hamfly_control_t *out)
 // Do build. For states without a build function returns zeroed packet.
 void app_build_control(const app_ctx_t *ctx, hamfly_control_t *out)
 {
+    // Nudge overlay: Allow user triggered nudges to supress state building
+    if (ctx->nudge_hold) {
+        build_manu_joystick(ctx, out);  // Borrow from MANU
+        // TODO: Ensure we return to the correct state.
+        // TODO: Move to utils? Or a less biased name.
+        return;
+    }
+    
+    // No nudge, build from state
     build_fn_t f = on_build[ctx->state];
     if (f)  f(ctx, out);
     else    build_defer(ctx, out);  // Safe default.
@@ -349,8 +373,8 @@ void app_build_control(const app_ctx_t *ctx, hamfly_control_t *out)
 
 
 // Capture current attitude and save as origin
-// TODO: Really this should have a parameter to fix elevation to flat too.
-static void set_origin(app_ctx_t *ctx)
+// zero_tilt is a bool which forces the tilt origin to be level
+void set_origin(app_ctx_t *ctx, uint8_t zero_tilt)
 {
     if (!ctx->gimbal) { app_raise_error(ctx, SEV_USER, "no gimbal handle"); return; }
 
@@ -360,7 +384,7 @@ static void set_origin(app_ctx_t *ctx)
         return;
     }
     ctx->origin_pan_deg  = pan;
-    ctx->origin_tilt_deg = tilt;
+    ctx->origin_tilt_deg = zero_tilt ? 0.0f : tilt;
     ctx->origin_set = 1u;
     UART_DEBUG_PutString("\r\n[ORIGIN] captured.\r\n");
 }
@@ -388,13 +412,15 @@ static uint8_t handle_global_key(app_ctx_t *ctx, char k)
                 ctx->err_msg = NULL;
                 UART_DEBUG_PutString("\r\nFATAL cleared.\r\n");
                 app_transition(ctx, STBY_HOLD);
+            } else {
+                app_transition(ctx, STBY_DEFER);
             }
             return 1;
         case 'x':  // Return to HOLD as a safe state
             if (ctx->gimbal) hamfly_kill(ctx->gimbal);
             app_transition(ctx, STBY_HOLD);
             return 1;
-        case '[': set_origin(ctx);  return 1;
+        case '[': set_origin(ctx, 0u); return 1;
         case '?': print_help(ctx);  return 1;
         default:  return 0;
     }
@@ -454,12 +480,14 @@ static uint8_t sbc_state_is_requestable(uint8_t s)
         case STBY_HOLD:
         case MANU_JOYSTICK:
         case AUTO_HOME:
+        case AUTO_HOLD:
         case AUTO_ACQ_GPS:
         case AUTO_ACQ_SPIRAL:
         case AUTO_TRACKING:
-            return 1u;  // Valid
+            return 1u;
+        case ERROR_KILL:  // Serial only for now
         default:
-            return 0u;  // Invalid
+            return 0u;
     }
 }
 

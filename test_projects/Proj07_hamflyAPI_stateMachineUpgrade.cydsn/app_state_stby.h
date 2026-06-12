@@ -22,8 +22,19 @@
 #include "app_ctx.h"
 
 // STBY leaves. Passive states.
+// Entry enforcers
 void entry_stby_defer(app_ctx_t *ctx);   // DEFER: gimbal released
 void entry_stby_hold (app_ctx_t *ctx);   // HOLD:  rates zeroed
+// On key press
+uint8_t key_stby_defer(app_ctx_t *ctx, char k);
+uint8_t key_stby_hold (app_ctx_t *ctx, char k);
+
+// Flow control handler
+// This ticker handles auto-advancing through leaves.
+// TODO: Can this be folded into the state machine?
+// Or is this already agnostic enough.
+void    app_stby_tick (app_ctx_t *ctx);
+
 
 #endif /* APP_STATE_STBY_H */
 /* [] END OF FILE */
