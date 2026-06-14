@@ -1,9 +1,5 @@
 # Proj07_hamflyAPI_stateMachineUpgrade
-<<<<<<< HEAD
-# 2026-06-12 16:27:30Z
-=======
-# 2026-06-05 22:13:44Z
->>>>>>> origin/dev_statemachineflow
+# 2026-06-14 04:03:09Z
 
 # IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 0
@@ -26,5 +22,8 @@ set_io "Pin_Debug_CoarseCentroid(0)" iocell 3 2
 set_io "Pin_Debug_GimbalComms(0)" iocell 3 3
 set_io "Pin_Debug_SBCComms(0)" iocell 3 4
 set_io "Pin_SwitchAuto(0)" iocell 0 7
+set_io "\USBFS_DEBUG:Dm(0)\" iocell 15 7
+set_io "\USBFS_DEBUG:Dp(0)\" iocell 15 6
 set_location "\ADC_DelSig_1:DSM\" dsmodcell -1 -1 0
-set_location "\VDAC8_3v3Ref:viDAC8\" vidaccell -1 -1 2
+set_location "\VDAC8_3v3Ref:viDAC8\" vidaccell -1 -1 1
+set_location "\USBFS_DEBUG:USB\" usbcell -1 -1 0

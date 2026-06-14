@@ -377,10 +377,8 @@ void telemetry_pump(app_ctx_t *ctx)
     }
     if (chosen == (size_t)-1) return;  // No attr passed its period.
     
-    // Try to request for the attribute
-    if (hamfly_request_attr(ctx->gimbal, s_attrs[chosen].attr_id) == HAMFLY_OK){
-        s_attrs[chosen].last_request_ms = now;
-    }
+    (void)hamfly_request_attr(ctx->gimbal, s_attrs[chosen].attr_id);
+    s_attrs[chosen].last_request_ms = now;
 }
 
 /* [] END OF FILE */
