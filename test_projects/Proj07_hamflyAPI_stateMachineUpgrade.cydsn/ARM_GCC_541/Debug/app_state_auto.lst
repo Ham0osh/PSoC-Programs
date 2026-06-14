@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
   28:app_state_auto.c **** extern volatile uint32_t g_tick_ms;
   29:app_state_auto.c **** 
   30:app_state_auto.c **** // GPS Pointing Math %========================================================%
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 2
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 2
 
 
   31:app_state_auto.c **** // Forward declare here, defined below.
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
   46:app_state_auto.c **** 
   47:app_state_auto.c **** uint8_t guard_auto_home(const app_ctx_t *ctx)
   48:app_state_auto.c **** {
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 3
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 3
 
 
   67              		.loc 1 48 0
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  115 0004 00AF     		add	r7, sp, #0
  116              		.cfi_def_cfa_register 7
  117 0006 7860     		str	r0, [r7, #4]
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 4
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 4
 
 
   55:app_state_auto.c ****     // A target GPS coordinate must be set.
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  152              	.LC4:
  153 00a8 5B415554 		.ascii	"[AUTO_TRACKING] centroid lost -> AUTO_LOSS\015\012\000"
  153      4F5F5452 
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 5
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 5
 
 
  153      41434B49 
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
   70:app_state_auto.c ****     if (ctx->state == AUTO_HOME && ctx->nudge_hold) {
  185              		.loc 1 70 0
  186 0008 FB68     		ldr	r3, [r7, #12]
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 6
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 6
 
 
  187 000a 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
   77:app_state_auto.c ****                           (fabsf(t - ctx->tgt_tilt_deg) < NUDGE_SETTLE_DEG);
  235              		.loc 1 77 0 discriminator 1
  236 0076 D7F8B820 		ldr	r2, [r7, #184]	@ float
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 7
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 7
 
 
  237 007a FB68     		ldr	r3, [r7, #12]
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  284 00cc 0923     		movs	r3, #9
  285              	.L18:
  286              		.loc 1 80 0 discriminator 4
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 8
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 8
 
 
  287 00ce 87F8C730 		strb	r3, [r7, #199]
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  327 0118 FFF7FEFF 		bl	app_transition
   95:app_state_auto.c ****             return;
  328              		.loc 1 95 0
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 9
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 9
 
 
  329 011c F6E0     		b	.L7
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  366 0158 1A68     		ldr	r2, [r3]
  367 015a 734B     		ldr	r3, .L44+20
  368 015c 1B68     		ldr	r3, [r3]
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 10
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 10
 
 
  369 015e D31A     		subs	r3, r2, r3
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  125:app_state_auto.c ****             if (!sbc_get_centroid(s, &c)) continue; // No centroids
  410              		.loc 1 125 0
  411 019e 07F1A002 		add	r2, r7, #160
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 11
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 11
 
 
  412 01a2 97F8CE30 		ldrb	r3, [r7, #206]	@ zero_extendqisi2
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  452              		.loc 1 133 0
  453 01f8 BB60     		str	r3, [r7, #8]
  137:app_state_auto.c ****                      (unsigned long)sbc_rx_pkt_count(),
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 12
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 12
 
 
  454              		.loc 1 137 0
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  141:app_state_auto.c ****         (void)got_coarse;
  142:app_state_auto.c **** 
  143:app_state_auto.c ****         // Loss check: no coarse centroid for TRACKING_LOSS_TIMEOUT_MS -> AUTO_LOSS
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 13
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 13
 
 
  144:app_state_auto.c ****         uint32_t last_c = sbc_last_rx_ms(STREAM_COARSE);
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  540              	.LBB10:
  156:app_state_auto.c ****         payload_centroid_t c;
  157:app_state_auto.c ****         if (sbc_get_centroid(STREAM_COARSE, &c)) {
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 14
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 14
 
 
  541              		.loc 1 157 0
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  583 02e6 10D0     		beq	.L43
  170:app_state_auto.c ****             UART_DEBUG_PutString("[AUTO_NO_LOCK] auto -> AUTO_ACQ_GPS\r\n");
  584              		.loc 1 170 0 is_stmt 1
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 15
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 15
 
 
  585 02e8 1448     		ldr	r0, .L44+40
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  629              	.L45:
  630 0312 00BF     		.align	2
  631              	.L44:
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 16
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 16
 
 
  632 0314 00000000 		.word	g_tick_ms
@@ -906,8 +906,8 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  634 031c 00000000 		.word	.LC0
  635 0320 18000000 		.word	.LC1
  636 0324 40000000 		.word	.LC2
- 637 0328 00000000 		.word	last_pt_ms.8532
- 638 032c 00000000 		.word	tag.8534
+ 637 0328 00000000 		.word	last_pt_ms.8442
+ 638 032c 00000000 		.word	tag.8444
  639 0330 6C000000 		.word	.LC3
  640 0334 A8000000 		.word	.LC4
  641 0338 D8000000 		.word	.LC5
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  667              		@ args = 0, pretend = 0, frame = 16
  668              		@ frame_needed = 1, uses_anonymous_args = 0
  669 0000 80B5     		push	{r7, lr}
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 17
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 17
 
 
  670              		.cfi_def_cfa_offset 8
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  196:app_state_auto.c ****         app_transition(ctx, STBY_HOLD);
  712              		.loc 1 196 0
  713 004c 0621     		movs	r1, #6
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 18
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 18
 
 
  714 004e 7868     		ldr	r0, [r7, #4]
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  759 009c 80010000 		.word	.LC9
  760 00a0 00000000 		.word	g_tick_ms
  761              		.cfi_endproc
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 19
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 19
 
 
  762              	.LFE68:
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  806              		.size	exit_auto_home, .-exit_auto_home
  807              		.section	.text.key_auto_home,"ax",%progbits
  808              		.align	2
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 20
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 20
 
 
  809              		.global	key_auto_home
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  854              		.size	key_auto_home, .-key_auto_home
  855              		.global	__aeabi_fdiv
  856              		.section	.text.build_auto_home,"ax",%progbits
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 21
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 21
 
 
  857              		.align	2
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  901 0032 7B68     		ldr	r3, [r7, #4]
  902 0034 D3F88C30 		ldr	r3, [r3, #140]	@ float
  903 0038 1946     		mov	r1, r3
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 22
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 22
 
 
  904 003a 1046     		mov	r0, r2
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  951              	.LFB72:
  237:app_state_auto.c **** 
  238:app_state_auto.c **** // %==========================================================================%
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 23
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 23
 
 
  239:app_state_auto.c **** // %                              AUTO_HOLD                                   %
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  248:app_state_auto.c **** uint8_t key_auto_hold(app_ctx_t *ctx, char k)
  249:app_state_auto.c **** {
  997              		.loc 1 249 0
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 24
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 24
 
 
  998              		.cfi_startproc
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1045              	gps_bearing_deg:
  1046              	.LFB74:
  257:app_state_auto.c **** 
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 25
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 25
 
 
  258:app_state_auto.c **** // %==========================================================================%
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1080 002e 0346     		mov	r3, r0
  1081 0030 2E49     		ldr	r1, .L73
  1082 0032 1846     		mov	r0, r3
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 26
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 26
 
 
  1083 0034 FFF7FEFF 		bl	__aeabi_fmul
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1134 00ae 3969     		ldr	r1, [r7, #16]	@ float
  1135 00b0 7869     		ldr	r0, [r7, #20]	@ float
  1136 00b2 FFF7FEFF 		bl	atan2f
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 27
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 27
 
 
  1137 00b6 0346     		mov	r3, r0
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1185              		@ args = 8, pretend = 0, frame = 40
  1186              		@ frame_needed = 1, uses_anonymous_args = 0
  1187 0000 B0B5     		push	{r4, r5, r7, lr}
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 28
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 28
 
 
  1188              		.cfi_def_cfa_offset 16
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1237 0060 7869     		ldr	r0, [r7, #20]	@ float
  1238 0062 FFF7FEFF 		bl	__aeabi_fmul
  1239 0066 0346     		mov	r3, r0
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 29
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 29
 
 
  1240 0068 1846     		mov	r0, r3
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1291 00e4 FFF7FEFF 		bl	sqrtf
  1292 00e8 0446     		mov	r4, r0
  1293 00ea 3969     		ldr	r1, [r7, #16]	@ float
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 30
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 30
 
 
  1294 00ec 4FF07E50 		mov	r0, #1065353216
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1345 0154 706D424B 		.word	1262644592
  1346 0158 E62E6542 		.word	1113927398
  1347              		.cfi_endproc
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 31
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 31
 
 
  1348              	.LFE75:
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1392 002c 83F83120 		strb	r2, [r3, #49]
  308:app_state_auto.c **** }
  1393              		.loc 1 308 0
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 32
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 32
 
 
  1394 0030 00BF     		nop
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1436 0018 97F82630 		ldrb	r3, [r7, #38]	@ zero_extendqisi2
  1437 001c 83F00103 		eor	r3, r3, #1
  1438 0020 DBB2     		uxtb	r3, r3
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 33
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 33
 
 
  1439 0022 002B     		cmp	r3, #0
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1487 0094 1846     		mov	r0, r3
  1488 0096 FFF7FEFF 		bl	__aeabi_fdiv
  1489 009a 0346     		mov	r3, r0
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 34
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 34
 
 
  1490 009c 1A46     		mov	r2, r3
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1537 01d0 5B415554 		.ascii	"[AUTO_ACQ_GPS] new target -> re-slew\015\012\000"
  1537      4F5F4143 
  1537      515F4750 
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 35
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 35
 
 
  1537      535D206E 
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1573              		.loc 1 345 0
  1574 001c 07F10802 		add	r2, r7, #8
  1575 0020 07F10C03 		add	r3, r7, #12
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 36
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 36
 
 
  1576 0024 1946     		mov	r1, r3
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1621 0080 BA68     		ldr	r2, [r7, #8]	@ float
  1622 0082 7B68     		ldr	r3, [r7, #4]
  1623 0084 9B6C     		ldr	r3, [r3, #72]	@ float
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 37
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 37
 
 
  1624 0086 1946     		mov	r1, r3
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1667 00d8 0346     		mov	r3, r0
  1668 00da 7B61     		str	r3, [r7, #20]	@ float
  365:app_state_auto.c ****     uint8_t arrived = (fabsf(pan  - cmd_pan_deg)  < GPS_POINT_SETTLE_DEG) &&
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 38
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 38
 
 
  1669              		.loc 1 365 0
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1717 013c E3B2     		uxtb	r3, r4
  1718 013e BB74     		strb	r3, [r7, #18]
  368:app_state_auto.c ****     
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 39
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 39
 
 
  369:app_state_auto.c ****     // Catch new target flag
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1763              		.loc 1 378 0 is_stmt 1
  1764 018a 7B68     		ldr	r3, [r7, #4]
  1765 018c 0122     		movs	r2, #1
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 40
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 40
 
 
  1766 018e 83F84020 		strb	r2, [r3, #64]
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1809      55544F5F 
  1809      4143515F 
  1809      4750535D 
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 41
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 41
 
 
  1809      206F7065 
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1850              		.loc 1 394 0
  1851 0028 7B68     		ldr	r3, [r7, #4]
  1852 002a 0022     		movs	r2, #0
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 42
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 42
 
 
  1853 002c DA64     		str	r2, [r3, #76]
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1897              		.loc 1 404 0
  1898 0008 0020     		movs	r0, #0
  1899 000a FFF7FEFF 		bl	sbc_discard_centroid
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 43
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 43
 
 
  405:app_state_auto.c ****     
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1944              		.cfi_offset 14, -4
  1945 0002 82B0     		sub	sp, sp, #8
  1946              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 44
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 44
 
 
  1947 0004 00AF     		add	r7, sp, #0
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  1993 0002 82B0     		sub	sp, sp, #8
  1994              		.cfi_def_cfa_offset 16
  1995 0004 00AF     		add	r7, sp, #0
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 45
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 45
 
 
  1996              		.cfi_def_cfa_register 7
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2045              		.loc 1 427 0 discriminator 5
  2046 005c 7B68     		ldr	r3, [r7, #4]
  2047 005e DB69     		ldr	r3, [r3, #28]	@ float
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 46
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 46
 
 
  2048              	.L126:
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2100              		.section	.rodata
  2101              		.align	2
  2102              	.LC15:
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 47
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 47
 
 
  2103 0284 0D0A5B41 		.ascii	"\015\012[AUTO_ACQ_SPIRAL] placeholder (NI).\015\012"
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2142              	.LFE83:
  2143              		.size	entry_auto_acq_spiral, .-entry_auto_acq_spiral
  2144              		.section	.rodata
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 48
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 48
 
 
  2145 02ae 0000     		.align	2
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2184              		.cfi_def_cfa_offset 8
  2185 0022 BD46     		mov	sp, r7
  2186              		.cfi_def_cfa_register 13
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 49
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 49
 
 
  2187              		@ sp needed
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  460:app_state_auto.c **** }
  2233              		.loc 1 460 0
  2234 0020 1846     		mov	r0, r3
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 50
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 50
 
 
  2235 0022 0837     		adds	r7, r7, #8
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2281 0022 5A73     		strb	r2, [r3, #13]
  2282 0024 3B68     		ldr	r3, [r7]
  2283 0026 5A7B     		ldrb	r2, [r3, #13]	@ zero_extendqisi2
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 51
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 51
 
 
  2284 0028 3B68     		ldr	r3, [r7]
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2334 0094 FFF7FEFF 		bl	__aeabi_fcmpgt
  2335 0098 0346     		mov	r3, r0
  2336 009a 002B     		cmp	r3, #0
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 52
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 52
 
 
  2337 009c 02D0     		beq	.L175
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2390 00fe B968     		ldr	r1, [r7, #8]	@ float
  2391 0100 1846     		mov	r0, r3
  2392 0102 FFF7FEFF 		bl	__aeabi_fmul
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 53
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 53
 
 
  2393 0106 0346     		mov	r3, r0
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2432 0000 80B5     		push	{r7, lr}
  2433              		.cfi_def_cfa_offset 8
  2434              		.cfi_offset 7, -8
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 54
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 54
 
 
  2435              		.cfi_offset 14, -4
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2480 0008 0B46     		mov	r3, r1
  2481 000a FB70     		strb	r3, [r7, #3]
  490:app_state_auto.c ****     if (handle_nudge_key(ctx, k)) return 1;
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 55
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 55
 
 
  2482              		.loc 1 490 0
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2525              		.align	2
  2526              		.global	entry_auto_no_lock
  2527              		.thumb
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 56
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 56
 
 
  2528              		.thumb_func
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  507:app_state_auto.c **** {
  2571              		.loc 1 507 0
  2572              		.cfi_startproc
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 57
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 57
 
 
  2573              		@ args = 0, pretend = 0, frame = 8
@@ -3418,11 +3418,11 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2621              	.LFE90:
  2622              		.size	key_auto_no_lock, .-key_auto_no_lock
  2623              		.bss
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 58
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 58
 
 
  2624              		.align	2
- 2625              	last_pt_ms.8532:
+ 2625              	last_pt_ms.8442:
  2626 0000 00000000 		.space	4
  2627              		.section	.rodata
  2628 036d 000000   		.align	2
@@ -3433,9 +3433,9 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2633 0374 4600     		.ascii	"F\000"
  2634              		.data
  2635              		.align	2
- 2636              		.type	tag.8534, %object
- 2637              		.size	tag.8534, 8
- 2638              	tag.8534:
+ 2636              		.type	tag.8444, %object
+ 2637              		.size	tag.8444, 8
+ 2638              	tag.8444:
  2639 0000 70030000 		.word	.LC19
  2640 0004 74030000 		.word	.LC20
  2641              		.text
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2678 0038 01       		.byte	0x1
  2679 0039 08       		.byte	0x8
  2680 003a E7020000 		.4byte	.LASF1
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 59
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 59
 
 
  2681 003e 03       		.uleb128 0x3
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2735 00a7 03       		.byte	0x3
  2736 00a8 18       		.byte	0x18
  2737 00a9 2C000000 		.4byte	0x2c
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 60
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 60
 
 
  2738 00ad 03       		.uleb128 0x3
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2792 0119 01       		.byte	0x1
  2793 011a 37000000 		.4byte	0x37
  2794 011e 04       		.byte	0x4
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 61
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 61
 
 
  2795 011f 1E       		.byte	0x1e
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2849 018b 0D       		.byte	0xd
  2850 018c 0D       		.uleb128 0xd
  2851 018d 56080000 		.4byte	.LASF33
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 62
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 62
 
 
  2852 0191 04       		.byte	0x4
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2906 01fa 04       		.byte	0x4
  2907 01fb E9010000 		.4byte	0x1e9
  2908 01ff 10       		.uleb128 0x10
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 63
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 63
 
 
  2909 0200 CE000000 		.4byte	0xce
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  2963 026f 0D       		.uleb128 0xd
  2964 0270 3D020000 		.4byte	.LASF46
  2965 0274 06       		.byte	0x6
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 64
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 64
 
 
  2966 0275 27       		.byte	0x27
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3020 02e1 36       		.byte	0x36
  3021 02e2 D9000000 		.4byte	0xd9
  3022 02e6 30       		.byte	0x30
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 65
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 65
 
 
  3023 02e7 0D       		.uleb128 0xd
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3077 0353 0D       		.uleb128 0xd
  3078 0354 E7010000 		.4byte	.LASF65
  3079 0358 06       		.byte	0x6
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 66
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 66
 
 
  3080 0359 46       		.byte	0x46
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3134 03c5 5B       		.byte	0x5b
  3135 03c6 D9000000 		.4byte	0xd9
  3136 03ca 70       		.byte	0x70
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 67
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 67
 
 
  3137 03cb 0D       		.uleb128 0xd
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3191 0437 0D       		.uleb128 0xd
  3192 0438 84030000 		.4byte	.LASF84
  3193 043c 06       		.byte	0x6
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 68
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 68
 
 
  3194 043d 70       		.byte	0x70
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3248 04a9 79       		.byte	0x79
  3249 04aa AD000000 		.4byte	0xad
  3250 04ae AC       		.byte	0xac
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 69
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 69
 
 
  3251 04af 0D       		.uleb128 0xd
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3305 051b 0D       		.uleb128 0xd
  3306 051c 030D0000 		.4byte	.LASF103
  3307 0520 06       		.byte	0x6
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 70
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 70
 
 
  3308 0521 85       		.byte	0x85
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3362 058a 02       		.byte	0x2
  3363 058b 34030000 		.4byte	.LASF112
  3364 058f 03       		.uleb128 0x3
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 71
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 71
 
 
  3365 0590 A7050000 		.4byte	.LASF113
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3419 0600 920C0000 		.4byte	.LASF118
  3420 0604 08       		.byte	0x8
  3421 0605 30       		.byte	0x30
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 72
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 72
 
 
  3422 0606 CE000000 		.4byte	0xce
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3476 0673 00       		.byte	0
  3477 0674 0C       		.uleb128 0xc
  3478 0675 63746C00 		.ascii	"ctl\000"
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 73
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 73
 
 
  3479 0679 08       		.byte	0x8
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3533 06ec 08       		.byte	0x8
  3534 06ed 4F       		.byte	0x4f
  3535 06ee B8000000 		.4byte	0xb8
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 74
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 74
 
 
  3536 06f2 3A03     		.2byte	0x33a
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3590 0762 08       		.byte	0x8
  3591 0763 09       		.byte	0x9
  3592 0764 50       		.byte	0x50
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 75
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 75
 
 
  3593 0765 74070000 		.4byte	0x774
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3647 07d2 350E0000 		.4byte	.LASF153
  3648 07d6 09       		.byte	0x9
  3649 07d7 0A       		.uleb128 0xa
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 76
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 76
 
 
  3650 07d8 F4010000 		.4byte	.LASF154
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3704 0844 A4       		.byte	0xa4
  3705 0845 0A       		.byte	0xa
  3706 0846 56       		.byte	0x56
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 77
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 77
 
 
  3707 0847 680A0000 		.4byte	0xa68
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3761 08b6 14       		.byte	0x14
  3762 08b7 0D       		.uleb128 0xd
  3763 08b8 88070000 		.4byte	.LASF177
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 78
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 78
 
 
  3764 08bc 0A       		.byte	0xa
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3818 0928 0A       		.byte	0xa
  3819 0929 7D       		.byte	0x7d
  3820 092a C3000000 		.4byte	0xc3
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 79
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 79
 
 
  3821 092e 38       		.byte	0x38
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3875 099a 58       		.byte	0x58
  3876 099b 0D       		.uleb128 0xd
  3877 099c D8040000 		.4byte	.LASF196
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 80
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 80
 
 
  3878 09a0 0A       		.byte	0xa
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3932 0a0c 0A       		.byte	0xa
  3933 0a0d 9E       		.byte	0x9e
  3934 0a0e A2000000 		.4byte	0xa2
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 81
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 81
 
 
  3935 0a12 84       		.byte	0x84
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  3989 0a7b 0B       		.byte	0xb
  3990 0a7c 33       		.byte	0x33
  3991 0a7d BC0A0000 		.4byte	0xabc
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 82
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 82
 
 
  3992 0a81 0D       		.uleb128 0xd
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4046 0aee 17       		.uleb128 0x17
  4047 0aef 7000     		.ascii	"p\000"
  4048 0af1 01       		.byte	0x1
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 83
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 83
 
 
  4049 0af2 2B       		.byte	0x2b
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4103 0b5f 91       		.byte	0x91
  4104 0b60 74       		.sleb128 -12
  4105 0b61 00       		.byte	0
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 84
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 84
 
 
  4106 0b62 19       		.uleb128 0x19
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4160 0bcb 67       		.sleb128 -25
  4161 0bcc 1C       		.uleb128 0x1c
  4162 0bcd BA000000 		.4byte	.LBB4
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 85
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 85
 
 
  4163 0bd1 24000000 		.4byte	.LBE4-.LBB4
@@ -5076,7 +5076,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4195 0c10 CE000000 		.4byte	0xce
  4196 0c14 05       		.uleb128 0x5
  4197 0c15 03       		.byte	0x3
- 4198 0c16 00000000 		.4byte	last_pt_ms.8532
+ 4198 0c16 00000000 		.4byte	last_pt_ms.8442
  4199 0c1a 00       		.byte	0
  4200 0c1b 1A       		.uleb128 0x1a
  4201 0c1c 30000000 		.4byte	.Ldebug_ranges0+0x30
@@ -5096,9 +5096,9 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4215 0c39 A60C0000 		.4byte	0xca6
  4216 0c3d 05       		.uleb128 0x5
  4217 0c3e 03       		.byte	0x3
- 4218 0c3f 00000000 		.4byte	tag.8534
+ 4218 0c3f 00000000 		.4byte	tag.8444
  4219 0c43 1B       		.uleb128 0x1b
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 86
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 86
 
 
  4220 0c44 7C0B0000 		.4byte	.LASF225
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4274 0ca2 6E0A0000 		.4byte	0xa6e
  4275 0ca6 13       		.uleb128 0x13
  4276 0ca7 FE000000 		.4byte	0xfe
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 87
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 87
 
 
  4277 0cab B60C0000 		.4byte	0xcb6
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4331 0d17 2A0D0000 		.4byte	0xd2a
  4332 0d1b 16       		.uleb128 0x16
  4333 0d1c 63747800 		.ascii	"ctx\000"
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 88
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 88
 
 
  4334 0d20 01       		.byte	0x1
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4388 0d87 E2       		.byte	0xe2
  4389 0d88 900D0000 		.4byte	0xd90
  4390 0d8c 02       		.uleb128 0x2
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 89
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 89
 
 
  4391 0d8d 91       		.byte	0x91
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4445 0df4 1201     		.2byte	0x112
  4446 0df6 D9000000 		.4byte	0xd9
  4447 0dfa 00000000 		.4byte	.LFB74
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 90
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 90
 
 
  4448 0dfe F8000000 		.4byte	.LFE74-.LFB74
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4502 0e67 01       		.byte	0x1
  4503 0e68 1601     		.2byte	0x116
  4504 0e6a D9000000 		.4byte	0xd9
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 91
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 91
 
 
  4505 0e6e 02       		.uleb128 0x2
@@ -5458,7 +5458,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4559 0ed1 20       		.uleb128 0x20
  4560 0ed2 FA090000 		.4byte	.LASF239
  4561 0ed6 01       		.byte	0x1
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 92
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 92
 
 
  4562 0ed7 1D01     		.2byte	0x11d
@@ -5518,7 +5518,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4616 0f3b 646C6100 		.ascii	"dla\000"
  4617 0f3f 01       		.byte	0x1
  4618 0f40 2301     		.2byte	0x123
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 93
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 93
 
 
  4619 0f42 D9000000 		.4byte	0xd9
@@ -5578,7 +5578,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4673 0faf 91       		.byte	0x91
  4674 0fb0 FC7D     		.sleb128 -260
  4675 0fb2 21       		.uleb128 0x21
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 94
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 94
 
 
  4676 0fb3 737400   		.ascii	"st\000"
@@ -5638,7 +5638,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4730 1020 02       		.uleb128 0x2
  4731 1021 91       		.byte	0x91
  4732 1022 68       		.sleb128 -24
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 95
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 95
 
 
  4733 1023 21       		.uleb128 0x21
@@ -5698,7 +5698,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4787 108a 91       		.byte	0x91
  4788 108b 5A       		.sleb128 -38
  4789 108c 1C       		.uleb128 0x1c
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 96
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 96
 
 
  4790 108d 40000000 		.4byte	.LBB15
@@ -5758,7 +5758,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4844 1101 28000000 		.4byte	.LFE81-.LFB81
  4845 1105 01       		.uleb128 0x1
  4846 1106 9C       		.byte	0x9c
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 97
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 97
 
 
  4847 1107 28110000 		.4byte	0x1128
@@ -5818,7 +5818,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4901 1174 63747800 		.ascii	"ctx\000"
  4902 1178 01       		.byte	0x1
  4903 1179 B301     		.2byte	0x1b3
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 98
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 98
 
 
  4904 117b A00C0000 		.4byte	0xca0
@@ -5878,7 +5878,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  4958 11e8 00000000 		.4byte	.LFB86
  4959 11ec 20010000 		.4byte	.LFE86-.LFB86
  4960 11f0 01       		.uleb128 0x1
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 99
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 99
 
 
  4961 11f1 9C       		.byte	0x9c
@@ -5938,7 +5938,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5015 125a C4070000 		.4byte	.LASF263
  5016 125e 01       		.byte	0x1
  5017 125f E801     		.2byte	0x1e8
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 100
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 100
 
 
  5018 1261 A2000000 		.4byte	0xa2
@@ -5998,7 +5998,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5072 12d6 FA01     		.2byte	0x1fa
  5073 12d8 A00C0000 		.4byte	0xca0
  5074 12dc 02       		.uleb128 0x2
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 101
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 101
 
 
  5075 12dd 91       		.byte	0x91
@@ -6058,7 +6058,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5129 001c 00       		.byte	0
  5130 001d 00       		.byte	0
  5131 001e 03       		.uleb128 0x3
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 102
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 102
 
 
  5132 001f 16       		.uleb128 0x16
@@ -6118,7 +6118,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5186 0055 04       		.uleb128 0x4
  5187 0056 01       		.byte	0x1
  5188 0057 0B       		.uleb128 0xb
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 103
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 103
 
 
  5189 0058 0B       		.uleb128 0xb
@@ -6178,7 +6178,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5243 008e 0B       		.uleb128 0xb
  5244 008f 3B       		.uleb128 0x3b
  5245 0090 0B       		.uleb128 0xb
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 104
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 104
 
 
  5246 0091 49       		.uleb128 0x49
@@ -6238,7 +6238,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5300 00c7 0B       		.uleb128 0xb
  5301 00c8 49       		.uleb128 0x49
  5302 00c9 13       		.uleb128 0x13
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 105
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 105
 
 
  5303 00ca 38       		.uleb128 0x38
@@ -6298,7 +6298,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5357 0101 3A       		.uleb128 0x3a
  5358 0102 0B       		.uleb128 0xb
  5359 0103 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 106
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 106
 
 
  5360 0104 0B       		.uleb128 0xb
@@ -6358,7 +6358,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5414 013b 03       		.uleb128 0x3
  5415 013c 0E       		.uleb128 0xe
  5416 013d 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 107
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 107
 
 
  5417 013e 0B       		.uleb128 0xb
@@ -6418,7 +6418,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5471 0175 01       		.uleb128 0x1
  5472 0176 12       		.uleb128 0x12
  5473 0177 06       		.uleb128 0x6
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 108
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 108
 
 
  5474 0178 01       		.uleb128 0x1
@@ -6478,7 +6478,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5528 01af 03       		.uleb128 0x3
  5529 01b0 08       		.uleb128 0x8
  5530 01b1 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 109
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 109
 
 
  5531 01b2 0B       		.uleb128 0xb
@@ -6538,7 +6538,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5585 01e9 3B       		.uleb128 0x3b
  5586 01ea 05       		.uleb128 0x5
  5587 01eb 49       		.uleb128 0x49
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 110
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 110
 
 
  5588 01ec 13       		.uleb128 0x13
@@ -6598,7 +6598,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5642 0224 2E       		.uleb128 0x2e
  5643 0225 01       		.byte	0x1
  5644 0226 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 111
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 111
 
 
  5645 0227 19       		.uleb128 0x19
@@ -6658,7 +6658,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5699 025e 19       		.uleb128 0x19
  5700 025f 00       		.byte	0
  5701 0260 00       		.byte	0
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 112
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 112
 
 
  5702 0261 00       		.byte	0
@@ -6718,7 +6718,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5756 00c4 20010000 		.4byte	.LFE86-.LFB86
  5757 00c8 00000000 		.4byte	.LFB87
  5758 00cc 1C000000 		.4byte	.LFE87-.LFB87
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 113
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 113
 
 
  5759 00d0 00000000 		.4byte	.LFB88
@@ -6778,7 +6778,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5813 00b0 00000000 		.4byte	.LFB74
  5814 00b4 F8000000 		.4byte	.LFE74
  5815 00b8 00000000 		.4byte	.LFB75
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 114
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 114
 
 
  5816 00bc 5C010000 		.4byte	.LFE75
@@ -6838,7 +6838,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5857      733200
  5858              	.LASF108:
  5859 002e 73797365 		.ascii	"sysecho_valid\000"
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 115
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 115
 
 
  5859      63686F5F 
@@ -6898,7 +6898,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5883      6700
  5884              	.LASF133:
  5885 00c8 70656E64 		.ascii	"pending_ready\000"
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 116
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 116
 
 
  5885      696E675F 
@@ -6958,7 +6958,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5907      62617474 
  5907      5F6100
  5908              	.LASF172:
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 117
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 117
 
 
  5909 0168 686F6D65 		.ascii	"home_return_stby\000"
@@ -7018,7 +7018,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5934              	.LASF154:
  5935 01f4 4155544F 		.ascii	"AUTO_ACQ_GPS\000"
  5935      5F414351 
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 118
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 118
 
 
  5935      5F475053 
@@ -7078,7 +7078,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5959 028c 6770735F 		.ascii	"gps_work_alt_mm\000"
  5959      776F726B 
  5959      5F616C74 
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 119
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 119
 
 
  5959      5F6D6D00 
@@ -7138,7 +7138,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  5985      5F4C4F53 
  5985      5300
  5986              	.LASF112:
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 120
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 120
 
 
  5987 0334 5F426F6F 		.ascii	"_Bool\000"
@@ -7198,7 +7198,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6010              	.LASF98:
  6011 03c9 6D61675F 		.ascii	"mag_valid\000"
  6011      76616C69 
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 121
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 121
 
 
  6011      6400
@@ -7258,7 +7258,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6033      74696D65 
  6033      5F7300
  6034              	.LASF122:
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 122
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 122
 
 
  6035 0471 72785F62 		.ascii	"rx_bad_checksum\000"
@@ -7318,7 +7318,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6058              	.LASF233:
  6059 0513 6C617431 		.ascii	"lat1\000"
  6059      00
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 123
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 123
 
 
  6060              	.LASF235:
@@ -7378,7 +7378,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6086              	.LASF113:
  6087 05a7 68616D66 		.ascii	"hamfly_telemetry_t\000"
  6087      6C795F74 
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 124
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 124
 
 
  6087      656C656D 
@@ -7438,7 +7438,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6109      31363036 
  6110 0674 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
  6110      20726576 
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 125
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 125
 
 
  6110      6973696F 
@@ -7498,7 +7498,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6131 0756 6770735F 		.ascii	"gps_heading_deg\000"
  6131      68656164 
  6131      696E675F 
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 126
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 126
 
 
  6131      64656700 
@@ -7558,7 +7558,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6155      70616E5F 
  6155      64656700 
  6156              	.LASF13:
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 127
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 127
 
 
  6157 07fe 756E7369 		.ascii	"unsigned int\000"
@@ -7618,7 +7618,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6179 0899 6D61675F 		.ascii	"mag_x\000"
  6179      7800
  6180              	.LASF100:
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 128
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 128
 
 
  6181 089f 6D61675F 		.ascii	"mag_y\000"
@@ -7678,7 +7678,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6208              	.LASF77:
  6209 092c 6174745F 		.ascii	"att_roll_rate_dps\000"
  6209      726F6C6C 
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 129
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 129
 
 
  6209      5F726174 
@@ -7738,7 +7738,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6229      5F4A4F59 
  6229      53544943 
  6229      4B00
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 130
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 130
 
 
  6230              	.LASF16:
@@ -7798,7 +7798,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6251      70697261 
  6252              	.LASF201:
  6253 0ac9 64696167 		.ascii	"diag_active\000"
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 131
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 131
 
 
  6253      5F616374 
@@ -7858,7 +7858,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6277      7700
  6278              	.LASF259:
  6279 0b68 6275696C 		.ascii	"build_auto_tracking\000"
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 132
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 132
 
 
  6279      645F6175 
@@ -7918,7 +7918,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6303      365F7400 
  6304              	.LASF181:
  6305 0c08 6770735F 		.ascii	"gps_target_lon_raw\000"
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 133
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 133
 
 
  6305      74617267 
@@ -7978,7 +7978,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6329      74696C74 
  6329      5F646567 
  6329      00
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 134
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 134
 
 
  6330              	.LASF253:
@@ -8038,7 +8038,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6355 0d3c 6770735F 		.ascii	"gps_update_pointing\000"
  6355      75706461 
  6355      74655F70 
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 135
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 135
 
 
  6355      6F696E74 
@@ -8098,7 +8098,7 @@ ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 1
  6377      525F4B49 
  6377      4C4C00
  6378              	.LASF52:
-ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc7G38Z5.s 			page 136
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccj8VaTo.s 			page 136
 
 
  6379 0df5 6770735F 		.ascii	"gps_lon_deg\000"
