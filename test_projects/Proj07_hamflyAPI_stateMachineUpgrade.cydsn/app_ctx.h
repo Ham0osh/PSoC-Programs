@@ -19,6 +19,7 @@
 #ifndef APP_CTX_H
 #define APP_CTX_H
 
+#include "debug_usbcdc.h"           // For debug UART to go to micro USB.
 #include <project.h>
 #include "hamfly_core_control.h"    // for hamfly_control_mode_t
 #include "hamfly_core_gimbal.h"     // For hamfly_gimbal_t 

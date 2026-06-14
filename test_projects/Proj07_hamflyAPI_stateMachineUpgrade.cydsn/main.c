@@ -283,6 +283,9 @@ int main(void)
         hamfly_pump(&g_movi);
         telemetry_pump(&ctx);
         
+        // Housekeeping for Micro USB (CDC) enumeration.
+        dbg_tick();
+        
         // Always read joystick
         int16_t counts[N_CH];
         if (adc_balanced_poll_frame(counts))
