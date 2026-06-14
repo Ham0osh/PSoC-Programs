@@ -58,6 +58,8 @@
 #include "USBFS_DEBUG_pvt.h"
 #include "USBFS_DEBUG_cydmac.h"
 #include "USBFS_DEBUG_msc.h"
+#include "Pin_Debug_MOVI_RX_aliases.h"
+#include "Pin_Debug_MOVI_RX.h"
 #include "ADC_DelSig_1_AMux.h"
 #include "ADC_DelSig_1_Ext_CP_Clk.h"
 #include "ADC_DelSig_1_IRQ.h"

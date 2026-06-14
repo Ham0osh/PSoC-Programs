@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <blockRegMap version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cypress.com/xsd/cyblockregmap cyblockregmap.xsd" xmlns="http://cypress.com/xsd/cyblockregmap">
-  <block name="Pin_Debug_Tick" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_Debug_SuperLoop" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_Debug_Tick" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_Debug_GimbalComms" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_Debug_CoarseCentroid" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="isr_rx_sbc" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Rx_SBC" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="UART_SBC" BASE="0x0" SIZE="0x0" desc="UART" visible="true" hidden="false">
     <block name="IntClock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="VirtualMux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="BUART" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <register name="RX_UART_SBC_RX_ADDRESS1" address="0x40006425" bitWidth="8" desc="RX Address1 Register" hidden="false" />
     <register name="RX_UART_SBC_RX_ADDRESS2" address="0x40006435" bitWidth="8" desc="RX Address2 Register" hidden="false" />
+    <register name="TX_UART_SBC_TX_DATA" address="0x40006444" bitWidth="8" desc="TX Data Register" hidden="false" />
     <register name="RX_UART_SBC_RX_DATA" address="0x40006445" bitWidth="8" desc="RX Data Register" hidden="false" />
-    <register name="TX_UART_SBC_TX_DATA" address="0x40006446" bitWidth="8" desc="TX Data Register" hidden="false" />
     <register name="RX_UART_SBC_RX_STATUS" address="0x40006461" bitWidth="8" desc="RX status register" hidden="false">
       <field name="UART_SBC_RX_STS_MRKSPC" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
       <field name="UART_SBC_RX_STS_BREAK" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
@@ -21,16 +22,16 @@
       <field name="UART_SBC_RX_STS_FIFO_NOTEMPTY" from="5" to="5" access="R" resetVal="" desc="" hidden="false" />
       <field name="UART_SBC_RX_STS_ADDR_MATCH" from="6" to="6" access="R" resetVal="" desc="" hidden="false" />
     </register>
-    <register name="TX_UART_SBC_TX_STATUS" address="0x40006466" bitWidth="8" desc="TX status register" hidden="false">
+    <register name="TX_UART_SBC_TX_STATUS" address="0x4000646C" bitWidth="8" desc="TX status register" hidden="false">
       <field name="UART_SBC_TX_STS_COMPLETE" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
       <field name="UART_SBC_TX_STS_FIFO_EMPTY" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
       <field name="UART_SBC_TX_STS_FIFO_FULL" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
       <field name="UART_SBC_TX_STS_FIFO_NOT_FULL" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
     </register>
   </block>
-  <block name="Rx_SBC" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="isr_rx_sbc" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Tx_SBC" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Pin_Debug_GimbalComms" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_Debug_MOVI_RX" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="USBFS_DEBUG" BASE="0x0" SIZE="0x0" desc="USBFS" visible="true" hidden="false">
     <block name="ep_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_4" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -887,8 +888,10 @@
       <field name="RA9" from="0" to="0" access="RW" resetVal="" desc="Read Address for EP MSB." hidden="false" />
     </register>
   </block>
-  <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Em_EEPROM_Dynamic" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Clock_MCU" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Pin_Debug_SBCComms" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="VDAC8_3v3Ref" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="viDAC8" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -901,10 +904,10 @@
     <register name="VDAC8_PM_STBY_CFG" address="0x400043B8" bitWidth="8" desc="Standby Power Mode Configuration Register 8" hidden="false">
       <field name="en_dac" from="4" to="0" access="RW" resetVal="" desc="Enable DAC block(s). Populated subsystems are counted from the LSB" hidden="false" />
     </register>
-    <register name="VDAC8_TR" address="0x40004609" bitWidth="8" desc="VDAC8_TR" hidden="false">
+    <register name="VDAC8_TR" address="0x4000460A" bitWidth="8" desc="VDAC8_TR" hidden="false">
       <field name="tr" from="7" to="0" access="RW" resetVal="" desc="8 Calibration bits" hidden="false" />
     </register>
-    <register name="VDAC8_CR0" address="0x40005824" bitWidth="8" desc="DAC Block Control Register 0" hidden="false">
+    <register name="VDAC8_CR0" address="0x40005828" bitWidth="8" desc="DAC Block Control Register 0" hidden="false">
       <field name="mode" from="4" to="4" access="R" resetVal="" desc="Mode Bit" hidden="false">
         <value name="DAC_MODE_V" value="0" desc="voltage DAC" />
         <value name="DAC_MODE_I" value="1" desc="current DAC" />
@@ -920,7 +923,7 @@
         <value name="DAC_HS_HIGHSPEED" value="1" desc="high speed (higher power)" />
       </field>
     </register>
-    <register name="VDAC8_CR1" address="0x40005825" bitWidth="8" desc="DAC Block Control Register 1" hidden="false">
+    <register name="VDAC8_CR1" address="0x40005829" bitWidth="8" desc="DAC Block Control Register 1" hidden="false">
       <field name="mx_data" from="5" to="5" access="RW" resetVal="" desc="Select DATA source" hidden="false">
         <value name="MX_DATA_REG" value="0" desc="Select register source (DACxn_D)" />
         <value name="MX_DATA_UDB" value="1" desc="Select UDB source" />
@@ -938,7 +941,7 @@
         <value name="RESET_UDB_EN_ENABLE" value="1" desc="Enable DAC Reset Source from UDB" />
       </field>
     </register>
-    <register name="VDAC8_SW0" address="0x40005A88" bitWidth="8" desc="DAC Analog Routing Register 0" hidden="false">
+    <register name="VDAC8_SW0" address="0x40005A90" bitWidth="8" desc="DAC Analog Routing Register 0" hidden="false">
       <field name="v_ag1" from="1" to="1" access="RW" resetVal="" desc="Connect voltage output to analog global of same side" hidden="false">
         <value name="AG_NC" value="0" desc="not connected" />
         <value name="AG_CONNECTED" value="1" desc="Connect to Analog Global" />
@@ -948,7 +951,7 @@
         <value name="AG_CONNECTED" value="1" desc="Connect to Analog Global" />
       </field>
     </register>
-    <register name="VDAC8_SW2" address="0x40005A8A" bitWidth="8" desc="DAC Analog Routing Register 2" hidden="false">
+    <register name="VDAC8_SW2" address="0x40005A92" bitWidth="8" desc="DAC Analog Routing Register 2" hidden="false">
       <field name="v_abus3" from="3" to="3" access="RW" resetVal="" desc="Connect voltage output to analog (local) bus of the same side " hidden="false">
         <value name="ABUS_NC" value="0" desc="not connected" />
         <value name="ABUS_CONNECTED" value="1" desc="Connect to Analog (local) Bus" />
@@ -958,7 +961,7 @@
         <value name="ABUS_CONNECTED" value="1" desc="Connect to Analog (local) Bus" />
       </field>
     </register>
-    <register name="VDAC8_SW3" address="0x40005A8B" bitWidth="8" desc="DAC Analog Routing Register 3" hidden="false">
+    <register name="VDAC8_SW3" address="0x40005A93" bitWidth="8" desc="DAC Analog Routing Register 3" hidden="false">
       <field name="iout" from="7" to="7" access="RW" resetVal="" desc="Connect current output to pad" hidden="false">
         <value name="IOUT_NC" value="0" desc="not connected" />
         <value name="IOUT_CONNECT" value="1" desc="Connect to pad" />
@@ -972,7 +975,7 @@
         <value name="AMX_CONNECTED" value="1" desc="Connect to AMUXBUS" />
       </field>
     </register>
-    <register name="VDAC8_SW4" address="0x40005A8C" bitWidth="8" desc="DAC Analog Routing Register 4" hidden="false">
+    <register name="VDAC8_SW4" address="0x40005A94" bitWidth="8" desc="DAC Analog Routing Register 4" hidden="false">
       <field name="i_ag1" from="1" to="1" access="RW" resetVal="" desc="Connect current output to analog global of same side" hidden="false">
         <value name="AG_NC" value="0" desc="not connected" />
         <value name="AG_CONNECTED" value="1" desc="Connect to Analog Global" />
@@ -982,7 +985,7 @@
         <value name="AG_CONNECTED" value="1" desc="Connect to Analog Global" />
       </field>
     </register>
-    <register name="VDAC8_STROBE" address="0x40005A8F" bitWidth="8" desc="DAC Strobe Register" hidden="false">
+    <register name="VDAC8_STROBE" address="0x40005A97" bitWidth="8" desc="DAC Strobe Register" hidden="false">
       <field name="mx_strobe" from="2" to="0" access="RW" resetVal="" desc="Strobe source selection" hidden="false">
         <value name="MX_STROBE_BUSWRITE" value="000" desc="Select bus write strobe source (Enable gater regardless of strobe_en setting)" />
         <value name="MX_STROBE_UDB_SRC" value="001" desc="Select UDB strobe source" />
@@ -998,22 +1001,25 @@
         <value name="STROBE_EN_1" value="1" desc="enable strobe" />
       </field>
     </register>
-    <register name="VDAC8_DATA" address="0x40005B81" bitWidth="8" desc="DAC Data Register" hidden="false">
+    <register name="VDAC8_DATA" address="0x40005B82" bitWidth="8" desc="DAC Data Register" hidden="false">
       <field name="data" from="7" to="0" access="RW" resetVal="" desc="8 DAC Data bits" hidden="false" />
     </register>
   </block>
-  <block name="Pin_Debug_SBCComms" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Clock_MCU" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_SwitchAuto" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="EEPROM_CONFIG" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="isr_adc" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="UART_MOVI" BASE="0x0" SIZE="0x0" desc="UART" visible="true" hidden="false">
     <block name="VirtualMux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="BUART" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <register name="RX_UART_MOVI_RX_ADDRESS1" address="0x40006420" bitWidth="8" desc="RX Address1 Register" hidden="false" />
-    <register name="RX_UART_MOVI_RX_ADDRESS2" address="0x40006430" bitWidth="8" desc="RX Address2 Register" hidden="false" />
-    <register name="RX_UART_MOVI_RX_DATA" address="0x40006440" bitWidth="8" desc="RX Data Register" hidden="false" />
-    <register name="RX_UART_MOVI_RX_STATUS" address="0x40006467" bitWidth="8" desc="RX status register" hidden="false">
+    <register name="RX_UART_MOVI_RX_ADDRESS1" address="0x4000642E" bitWidth="8" desc="RX Address1 Register" hidden="false" />
+    <register name="RX_UART_MOVI_RX_ADDRESS2" address="0x4000643E" bitWidth="8" desc="RX Address2 Register" hidden="false" />
+    <register name="TX_UART_MOVI_TX_DATA" address="0x40006443" bitWidth="8" desc="TX Data Register" hidden="false" />
+    <register name="RX_UART_MOVI_RX_DATA" address="0x4000644E" bitWidth="8" desc="RX Data Register" hidden="false" />
+    <register name="TX_UART_MOVI_TX_STATUS" address="0x40006460" bitWidth="8" desc="TX status register" hidden="false">
+      <field name="UART_MOVI_TX_STS_COMPLETE" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
+      <field name="UART_MOVI_TX_STS_FIFO_EMPTY" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
+      <field name="UART_MOVI_TX_STS_FIFO_FULL" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
+      <field name="UART_MOVI_TX_STS_FIFO_NOT_FULL" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
+    </register>
+    <register name="RX_UART_MOVI_RX_STATUS" address="0x40006464" bitWidth="8" desc="RX status register" hidden="false">
       <field name="UART_MOVI_RX_STS_MRKSPC" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
       <field name="UART_MOVI_RX_STS_BREAK" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
       <field name="UART_MOVI_RX_STS_PAR_ERROR" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
@@ -1022,16 +1028,11 @@
       <field name="UART_MOVI_RX_STS_FIFO_NOTEMPTY" from="5" to="5" access="R" resetVal="" desc="" hidden="false" />
       <field name="UART_MOVI_RX_STS_ADDR_MATCH" from="6" to="6" access="R" resetVal="" desc="" hidden="false" />
     </register>
-    <register name="TX_UART_MOVI_TX_DATA" address="0x40006547" bitWidth="8" desc="TX Data Register" hidden="false" />
-    <register name="TX_UART_MOVI_TX_STATUS" address="0x40006567" bitWidth="8" desc="TX status register" hidden="false">
-      <field name="UART_MOVI_TX_STS_COMPLETE" from="0" to="0" access="R" resetVal="" desc="" hidden="false" />
-      <field name="UART_MOVI_TX_STS_FIFO_EMPTY" from="1" to="1" access="R" resetVal="" desc="" hidden="false" />
-      <field name="UART_MOVI_TX_STS_FIFO_FULL" from="2" to="2" access="R" resetVal="" desc="" hidden="false" />
-      <field name="UART_MOVI_TX_STS_FIFO_NOT_FULL" from="3" to="3" access="R" resetVal="" desc="" hidden="false" />
-    </register>
   </block>
+  <block name="isr_adc" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Tx_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Rx_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="VRy" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="VRx" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="ADC_DelSig_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="cy_analog_virtualmux_5" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="cy_analog_noconnect_5" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -1853,9 +1854,9 @@
       </field>
     </register>
   </block>
-  <block name="VRx" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="VRy" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="AMux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="Tx_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="isr_Looptimer" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Looptimer" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="VirtualMux_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -1913,10 +1914,10 @@
     <register name="Looptimer_PERIOD" address="0x40004F04" bitWidth="16" desc="TMRx.PER0 - Assigned Period" hidden="false" />
     <register name="Looptimer_COUNTER" address="0x40004F06" bitWidth="16" desc="TMRx.CNT_CMP0 - Current Down Counter Value" hidden="false" />
   </block>
-  <block name="isr_Looptimer" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="EEPROM_CONFIG" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Pin_LED" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="isr_rx_movi" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Clock_Movi" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="isr_rx_movi" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="timer_clock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
 </blockRegMap>

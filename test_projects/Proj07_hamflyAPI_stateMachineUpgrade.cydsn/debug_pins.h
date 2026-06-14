@@ -30,5 +30,9 @@
 #define DPIN_CENTROID() \
     Pin_Debug_CoarseCentroid_Write(Pin_Debug_CoarseCentroid_Read() ^ 1u)
 
+// Triggers on Rx of a Movi byte
+#define DPIN_MOVI_RX_TOGGLE()\
+    Pin_Debug_MOVI_RX_Write(Pin_Debug_MOVI_RX_Read() ^ 1u)
+   
 #endif /* DEBUG_PINS_H */
 /* [] END OF FILE */

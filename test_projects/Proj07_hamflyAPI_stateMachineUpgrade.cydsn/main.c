@@ -68,6 +68,13 @@
 #define FALSE  0u
 #define TRUE   1u
 
+// TEMP: Diagnostic test for QX status byte decoding:
+#define MOVI_RX_CAP_LEN 64u
+static volatile uint8_t  g_movi_rx_cap[MOVI_RX_CAP_LEN];
+static volatile uint16_t g_movi_rx_cap_n      = 0u;
+static volatile uint8_t  g_movi_rx_cap_dumped = 0u;
+
+
 // State machine states %=====================================================%
 
 // Gimbal config and HAL
@@ -96,8 +103,13 @@ CY_ISR(isr_rx_movi_Handler)
                   UART_MOVI_RX_STS_STOP_ERROR|
                   UART_MOVI_RX_STS_OVERRUN))
             hamfly_on_uart_err_flags(&g_movi, st);
-        if (st & UART_MOVI_RX_STS_FIFO_NOTEMPTY)
-            hamfly_on_rx_byte(&g_movi, UART_MOVI_RXDATA_REG);
+        if (st & UART_MOVI_RX_STS_FIFO_NOTEMPTY) {  // TEMP DEBUG UPDATE
+            DPIN_MOVI_RX_TOGGLE();
+            uint8_t b = UART_MOVI_RXDATA_REG;
+            if (g_movi_rx_cap_n < MOVI_RX_CAP_LEN)
+                g_movi_rx_cap[g_movi_rx_cap_n++] = b;
+            hamfly_on_rx_byte(&g_movi, b);
+        }
     } while (st & UART_MOVI_RX_STS_FIFO_NOTEMPTY);
 }
 
@@ -285,6 +297,20 @@ int main(void)
         
         // Housekeeping for Micro USB (CDC) enumeration.
         dbg_tick();
+        // TEMP: Debug Rx dump
+        if (!g_movi_rx_cap_dumped && g_movi_rx_cap_n >= MOVI_RX_CAP_LEN) {
+            char line[80];
+            dbg_put("\r\n[MOVI-RX CAP 64B]\r\n");
+            for (uint16_t row = 0u; row < MOVI_RX_CAP_LEN; row += 16u) {
+                int n = sprintf(line, "  %02u: ", (unsigned)row);
+                for (uint16_t col = 0u; col < 16u && (row + col) < MOVI_RX_CAP_LEN; col++)
+                    n += sprintf(line + n, "%02X ", g_movi_rx_cap[row + col]);
+                sprintf(line + n, "\r\n");
+                dbg_put(line);
+            }
+            dbg_put("[/CAP]\r\n");
+            g_movi_rx_cap_dumped = 1u;
+        }
         
         // Always read joystick
         int16_t counts[N_CH];
@@ -324,6 +350,11 @@ int main(void)
                      app_state_name(ctx.state),
                      ps, pi, pf, ts, ti, tf);
             UART_DEBUG_PutString(tx);
+            
+            char rxc[40];
+            snprintf(rxc, sizeof rxc, "  rx_cap=%u/%u\r\n",
+                     (unsigned)g_movi_rx_cap_n, (unsigned)MOVI_RX_CAP_LEN);
+            UART_DEBUG_PutString(rxc);
         }
     }
 }
