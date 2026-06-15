@@ -492,6 +492,21 @@ static uint8_t sbc_state_is_requestable(uint8_t s)
     }
 }
 
+// gate which states are allowed to receive manual nudges from SBC
+static uint8_t nudge_allowed_in(state_t s)
+{
+    switch (s) {
+        case STBY_HOLD:
+        case MANU_JOYSTICK:
+        case AUTO_HOLD:
+        case AUTO_LOSS:
+        case AUTO_NO_LOCK:
+            return 1u;
+        default:
+            return 0u;
+    }
+}
+
 void app_sbc_tick(app_ctx_t *ctx)
 {
     // TODO: Is this the right flow? The ctx should have a target coord,
@@ -512,7 +527,7 @@ void app_sbc_tick(app_ctx_t *ctx)
     // 2 -> Check for nudge (clamped to soft limits of the origin inside nudge_apply)
     payload_nudge_t nz;
     if (sbc_get_nudge(&nz)) {
-        if (ctx->state == MANU_JOYSTICK) {
+        if (nudge_allowed_in(ctx->state)) {
             nudge_apply(ctx,
                         (float)nz.dpan_cdeg  / 100.0f,
                         (float)nz.dtilt_cdeg / 100.0f);
