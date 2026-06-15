@@ -375,19 +375,22 @@ void app_build_control(const app_ctx_t *ctx, hamfly_control_t *out)
 
 // Capture current attitude and save as origin
 // zero_tilt is a bool which forces the tilt origin to be level
-void set_origin(app_ctx_t *ctx, uint8_t zero_tilt)
+uint8_t set_origin(app_ctx_t *ctx, uint8_t zero_tilt)
 {
-    if (!ctx->gimbal) { app_raise_error(ctx, SEV_USER, "no gimbal handle"); return; }
-
+    if (!ctx->gimbal) {
+        app_raise_error(ctx, SEV_USER, "no gimbal handle");
+        return 0u;
+    }
     float pan, tilt;
     if (!gimbal_pan_tilt_deg(ctx, &pan, &tilt)) {
         app_raise_error(ctx, SEV_USER, "no telemetry (origin not set)");
-        return;
+        return 0u;
     }
     ctx->origin_pan_deg  = pan;
     ctx->origin_tilt_deg = zero_tilt ? 0.0f : tilt;
     ctx->origin_set = 1u;
     UART_DEBUG_PutString("\r\n[ORIGIN] captured.\r\n");
+    return 1u;
 }
 
 // Serial key menu, for debugging but superceded soon by SBC comms.
@@ -421,8 +424,12 @@ static uint8_t handle_global_key(app_ctx_t *ctx, char k)
             if (ctx->gimbal) hamfly_kill(ctx->gimbal);
             app_transition(ctx, STBY_HOLD);
             return 1;
-        case '[': set_origin(ctx, 0u); return 1;
-        case '?': print_help(ctx);  return 1;
+        case '[':
+            (void)set_origin(ctx, 0u);
+            return 1;
+        case '?':
+            print_help(ctx); 
+            return 1;
         default:  return 0;
     }
 }
@@ -507,6 +514,20 @@ static uint8_t nudge_allowed_in(state_t s)
     }
 }
 
+// Lookup parameter by id.
+// Return 1 = found and got it.
+// Return 0 = unknown id.
+uint8_t app_param_get(app_ctx_t *ctx, uint8_t id, float *out_value)
+{
+    switch (id) {
+        case PARAM_TRACK_KP:
+            *out_value = ctx->track_kp;
+            return 1u;
+        default:
+            return 0u;
+    }
+}
+
 void app_sbc_tick(app_ctx_t *ctx)
 {
     // TODO: Is this the right flow? The ctx should have a target coord,
@@ -522,6 +543,7 @@ void app_sbc_tick(app_ctx_t *ctx)
         ctx->gps_target_alt_mm  = tgt.alt_mm;
         ctx->gps_target_set     = 1u;
         ctx->gps_new_target     = 1u;   // ACQ_GPS picks this up on next settle
+        sbc_send_cmd_ack(PKT_GPS_TARGET, CMD_ACK_OK);
     }
 
     // 2 -> Check for nudge (clamped to soft limits of the origin inside nudge_apply)
@@ -531,14 +553,17 @@ void app_sbc_tick(app_ctx_t *ctx)
             nudge_apply(ctx,
                         (float)nz.dpan_cdeg  / 100.0f,
                         (float)nz.dtilt_cdeg / 100.0f);
+            sbc_send_cmd_ack(PKT_NUDGE, CMD_ACK_OK);
         } else {
             UART_DEBUG_PutString("[SBC] nudge ignored (not in MANU)\r\n");
+            sbc_send_cmd_ack(PKT_NUDGE, CMD_ACK_REJECTED);
         }
     }
 
-    // 2 -> Parameter tuning
+    // 3 -> Parameter tuning
     payload_param_t pp;
     if (sbc_get_param(&pp)) {
+        uint8_t result = CMD_ACK_OK;
         switch (pp.id) {
             case PARAM_TRACK_KP:
                 ctx->track_kp = pp.value;
@@ -556,16 +581,34 @@ void app_sbc_tick(app_ctx_t *ctx)
                              (unsigned)pp.id);
                     UART_DEBUG_PutString(b);
                 }
+                result = CMD_ACK_INVALID;
                 break;
         }
+        sbc_send_cmd_ack(PKT_PARAM_SET, result);
     }
 
-    // 3 -> Capture software origin from current telemetry
+    // 4 -> Capture software origin from current telemetry
     if (sbc_get_set_origin()) {
-        set_origin(ctx, 0u);    // same path as the '[' key
+        uint8_t ok = set_origin(ctx, 0u);  // same path as the '[' key
+        sbc_send_cmd_ack(PKT_SET_ORIGIN, ok 
+                         ? CMD_ACK_OK 
+                         : CMD_ACK_NO_TELEM);
+    }
+    
+    // 5 -> Clear FATAL latch
+    if (sbc_get_fatal_clear()) {
+        // Mirrors the Ctrl+R path in app_dispatch_key.
+        if (ctx->fatal_latched) {
+            ctx->fatal_latched = 0u;
+            ctx->err_sev = SEV_USER;
+            ctx->err_msg = NULL;
+            UART_DEBUG_PutString("\r\n[SBC] FATAL cleared.\r\n");
+            app_transition(ctx, STBY_HOLD);
+        }
+        sbc_send_cmd_ack(PKT_FATAL_CLEAR, CMD_ACK_OK);
     }
 
-    // 4 -> State change request
+    // 6 -> State change request
     payload_state_req_t req;
     if (!sbc_get_state_req(&req)) return;
 

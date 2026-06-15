@@ -40,7 +40,9 @@
 #define PKT_NUDGE       0x11u  // Pi   -> PSoC General nudge in deg
 #define PKT_PARAM_SET   0x12u  // Pi   -> PSoC Param setter like Kp
 #define PKT_SET_ORIGIN  0x13u  // Pi   -> PSoC Set software origin.
-
+#define PKT_PARAM_GET   0x14u  // Pi   -> PSoC param read
+#define PKT_FATAL_CLEAR 0x15u  // Pi   -> PSoC clear FATAL
+    
 // telemetry
 #define PKT_TELEM_HOT   0x20u  // PSoC -> Pi
 #define PKT_TELEM_POWER 0x21u  // PSoC -> Pi
@@ -49,8 +51,10 @@
 #define PKT_TELEM_GPS   0x24u  // PSoC -> Pi
 #define PKT_TELEM_BARO  0x25u  // PSoC -> Pi
 #define PKT_TELEM_MAG   0x26u  // PSoC -> Pi
+#define PKT_PARAM_VALUE 0x34u  // PSoC -> Pi
     
 #define PKT_STATE_ACK   0x30u  // PSoC -> Pi
+#define PKT_CMD_ACK     0x31u  // PSoC -> Pi
     
 // Incoming packet types from SBC
 typedef struct {
@@ -86,10 +90,38 @@ typedef struct {
 
 #define SBC_SET_ORIGIN_LEN  0u
 
+
+#define SBC_PARAM_GET_LEN     1u
+typedef struct {
+    uint8_t id;
+} payload_param_get_t;
+
+#define SBC_FATAL_CLEAR_LEN   0u
+
+#define SBC_CMD_ACK_LEN       2u
+typedef struct {
+    uint8_t cmd_type;
+    uint8_t result;
+} payload_cmd_ack_t;
+
+#define SBC_PARAM_VALUE_LEN   5u
+typedef struct {
+    uint8_t id;
+    float value;
+} payload_param_value_t;
+
+// TODO: All of these acks can be consolidated now that they speak the same language.
 // Response codes for state change
 #define STATE_ACK_OK        0x00u  // transition accepted
 #define STATE_ACK_REJECTED  0x01u  // FATAL latch active
 #define STATE_ACK_INVALID   0x02u  // state value not a requestable leaf
+// Generic CMD_ACK result codes
+#define CMD_ACK_OK            0x00u
+#define CMD_ACK_REJECTED      0x01u  // state-disallowed (e.g. nudge in bad state)
+#define CMD_ACK_INVALID       0x02u  // unknown id or malformed payload
+#define CMD_ACK_NO_TELEM      0x03u  // operation needs telemetry it doesn't have
+#define CMD_ACK_FATAL_LATCHED 0x04u  // refused while ERROR_KILL / fatal latch active
+
 
 void     sbc_init(void);
 void     sbc_on_rx_byte(uint8_t b);             // fed by isr_rx_sbc_Handler
@@ -111,6 +143,11 @@ void    sbc_send_state_ack(uint8_t actual_state, uint8_t result);
 uint8_t sbc_get_nudge     (payload_nudge_t *out);
 uint8_t sbc_get_param     (payload_param_t *out);
 uint8_t sbc_get_set_origin(void);
+
+uint8_t sbc_get_param_get  (payload_param_get_t *out);
+uint8_t sbc_get_fatal_clear(void);
+void    sbc_send_cmd_ack    (uint8_t cmd_type, uint8_t result);
+void    sbc_send_param_value(uint8_t id, float value);
 
 #endif /* SBC_COMMS_H */
 /* [] END OF FILE */

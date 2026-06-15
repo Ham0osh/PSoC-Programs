@@ -44,7 +44,8 @@ void app_telem_tick(app_ctx_t *ctx);  // Handles Hot and Cold telemetry
 void app_sbc_tick(app_ctx_t *ctx);    // Handles SBC command and GPS target
 
 // Shared helpers for leaf handlers to use
-void set_origin(app_ctx_t *ctx, uint8_t zero_tilt);
+uint8_t set_origin(app_ctx_t *ctx, uint8_t zero_tilt);  // 1 = OK, 0 = no telemetry
+uint8_t app_param_get(app_ctx_t *ctx, uint8_t id, float *out_value);  // 1 = OK, 0 = unknown id
 // Safe base control packets.
 void build_defer(const app_ctx_t *ctx, hamfly_control_t *out);
 void build_hold (const app_ctx_t *ctx, hamfly_control_t *out);

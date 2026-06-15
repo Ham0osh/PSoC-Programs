@@ -87,19 +87,22 @@ static uint16_t s_unknown_magic       = 0u;
 static uint32_t s_rx_pkt_count        = 0u;
 // SBC -> PSoC State Requests
 static payload_state_req_t  s_state_req;
-static volatile uint8_t     s_state_req_fresh  = 0u;
+static volatile uint8_t     s_state_req_fresh   = 0u;
 // SBC -> PSoC GPS Target Sets
 static payload_gps_target_t s_gps_target;
-static volatile uint8_t     s_gps_target_fresh = 0u;
+static volatile uint8_t     s_gps_target_fresh  = 0u;
 // SBC -> PSoC Relative Nudge
 static payload_nudge_t      s_nudge;
-static volatile uint8_t     s_nudge_fresh      = 0u;
+static volatile uint8_t     s_nudge_fresh       = 0u;
 // SBC -> PSoC Parameter Set (kp, etc.)
 static payload_param_t      s_param;
-static volatile uint8_t     s_param_fresh      = 0u;
+static volatile uint8_t     s_param_fresh       = 0u;
 // SBC -> PSoC Software-origin capture request (zero-length payload)
-static volatile uint8_t     s_set_origin_fresh = 0u;
-
+static volatile uint8_t     s_set_origin_fresh  = 0u;
+// TODO: Document the below three.
+static payload_param_get_t s_param_get;
+static volatile uint8_t s_param_get_fresh       = 0u;
+static volatile uint8_t s_fatal_clear_fresh     = 0u;
 
 void sbc_init(void)
 {
@@ -116,12 +119,14 @@ void sbc_init(void)
         s_last_rx_ms[i]          = 0u;
         s_last_centroid_dt_ms[i] = 0u;
     }
-    // Init SBC Setters
+    // Init SBC Setters and getters
     s_state_req_fresh  = 0u;
     s_gps_target_fresh = 0u;
     s_nudge_fresh      = 0u;
     s_param_fresh      = 0u;
     s_set_origin_fresh = 0u;
+    s_param_get_fresh   = 0u;
+    s_fatal_clear_fresh = 0u;
 }
 
 static void decode_centroid(uint8_t stream, const uint8_t *p)
@@ -218,7 +223,7 @@ void sbc_on_rx_byte(uint8_t b)
                             s_gps_target_fresh = 1u;
                         }
                         break;
-                                        case PKT_NUDGE:
+                    case PKT_NUDGE:
                         if (s_len == SBC_NUDGE_LEN) {
                             memcpy(&s_nudge.dpan_cdeg,  s_buf + 0, 2);
                             memcpy(&s_nudge.dtilt_cdeg, s_buf + 2, 2);
@@ -235,6 +240,17 @@ void sbc_on_rx_byte(uint8_t b)
                     case PKT_SET_ORIGIN:
                         if (s_len == SBC_SET_ORIGIN_LEN) {
                             s_set_origin_fresh = 1u;
+                        }
+                        break;
+                    case PKT_PARAM_GET:
+                        if (s_len == SBC_PARAM_GET_LEN) {
+                            s_param_get.id = s_buf[0];
+                            s_param_get_fresh = 1u;
+                        }
+                        break;
+                    case PKT_FATAL_CLEAR:
+                        if (s_len == SBC_FATAL_CLEAR_LEN) {
+                            s_fatal_clear_fresh = 1u;
                         }
                         break;
                     default:
@@ -387,6 +403,33 @@ uint8_t sbc_get_param(payload_param_t *out)
     }
     CyExitCriticalSection(ist);
     return got;
+}
+
+uint8_t sbc_get_fatal_clear(void)
+{
+    uint8_t got = 0u;
+    uint8_t ist = CyEnterCriticalSection();
+    if (s_fatal_clear_fresh)
+    {
+        s_fatal_clear_fresh = 0u;
+        got = 1u;
+    }
+    CyExitCriticalSection(ist);
+    return got;
+}
+
+void sbc_send_cmd_ack(uint8_t cmd_type, uint8_t result)
+{
+    uint8_t payload[2] = { cmd_type, result };
+    sbc_send_frame(PKT_CMD_ACK, payload, sizeof payload);
+}
+
+void sbc_send_param_value(uint8_t id, float value)
+{
+    uint8_t payload[5];
+    payload[0] = id;
+    memcpy(payload + 1, &value, 4);
+    sbc_send_frame(PKT_PARAM_VALUE, payload, sizeof payload);
 }
 
 uint8_t sbc_get_set_origin(void)
