@@ -35,8 +35,8 @@ uint8_t guard_manu_joystick(const app_ctx_t *ctx)
 void entry_manu_joystick(app_ctx_t *ctx)
 {
     ctx->hold_mode = HAMFLY_RATE;
-    UART_DEBUG_PutString("\r\n[MANU] hold: v=vel0 b=abs"
-                         "  nudge: numpad/ijkl/wasd  e=exit\r\n> ");
+    UART_DEBUG_PutString("\r\n[MANU] hold: v=vel0 b=abs m=majestic"
+                        "  nudge: numpad/ijkl/wasd  e=exit\r\n> ");
 }
 // On Exit: clear any nudge in progress.
 void exit_manu_joystick(app_ctx_t *ctx)
@@ -100,7 +100,7 @@ uint8_t key_manu_joystick(app_ctx_t *ctx, char k)
         case '6': nudge_apply(ctx, +NUDGE_LSB_DEG,    0);  return 1;  // Numpad
         case 'v': manu_set_hold(ctx, HAMFLY_RATE);     return 1;
         case 'b': manu_set_hold(ctx, HAMFLY_ABSOLUTE); return 1;
-        // case 'm': manu_set_hold(ctx, HAMFLY_ABSOLUTE_MAJESTIC); return 1;
+        case 'm': manu_set_hold(ctx, HAMFLY_ABSOLUTE_MAJESTIC); return 1;
         case 'e': app_transition(ctx, STBY_HOLD);            return 1;  // Exit
         default:  return 0;
     }
