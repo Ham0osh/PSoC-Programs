@@ -27,7 +27,8 @@ void app_ctx_init(app_ctx_t *ctx)
     ctx->state         = STBY_DEFER;  // boot to defer
     ctx->prev_leaf     = STBY_DEFER;  // boot to defer
     // Orientation context
-    ctx->origin_set      = 1u;          // Origin initialy 0,0.
+    ctx->hold_mode = HAMFLY_RATE;
+    ctx->origin_set      = 1u;  // Origin initialy 0,0.
     ctx->gps_target_set  = 0u;  // TODO: Refactor shared app_ctx and debloat gps params.
     ctx->gps_new_target  = 0u;
     ctx->gps_settled     = 0u;

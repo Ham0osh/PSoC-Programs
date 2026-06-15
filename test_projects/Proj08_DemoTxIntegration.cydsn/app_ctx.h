@@ -105,6 +105,7 @@ typedef struct {
     // Control mode toggle, used for joystick.
     // Depricated, joystick always rate now.
     // hamfly_control_mode_t ctrl_mode;   // DEFER, RATE, ABSOLUTE
+    hamfly_control_mode_t hold_mode;
     
     // Absolute target (used by AUTO_HOME, and eventualy GPS pointing too.)
     float    abs_pan_target;  // units [-1, +1]

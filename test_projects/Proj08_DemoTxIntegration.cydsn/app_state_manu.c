@@ -34,9 +34,9 @@ uint8_t guard_manu_joystick(const app_ctx_t *ctx)
 // On Enter: Enable joystick, print message.
 void entry_manu_joystick(app_ctx_t *ctx)
 {
-    (void)ctx;
-    UART_DEBUG_PutString("\r\n[MANU] nudge: numpad=fine  "
-                         "ijkl=0.5 deg wasd=1 deg e=exit\r\n> ");
+    ctx->hold_mode = HAMFLY_RATE;
+    UART_DEBUG_PutString("\r\n[MANU] hold: v=vel0 b=abs"
+                         "  nudge: numpad/ijkl/wasd  e=exit\r\n> ");
 }
 // On Exit: clear any nudge in progress.
 void exit_manu_joystick(app_ctx_t *ctx)
@@ -55,12 +55,39 @@ void build_manu_joystick(const app_ctx_t *ctx, hamfly_control_t *out)
         out->pan_mode = out->tilt_mode = HAMFLY_ABSOLUTE;
         out->pan  = DEG_TO_UNIT(ctx->tgt_pan_deg - ctx->nudge_base_pan_deg);
         out->tilt = DEG_TO_UNIT(ctx->tgt_tilt_deg);
-    } else {
+        return;
+    }
+    
+    if (ctx->hold_mode == HAMFLY_RATE) {   // vel-zero "stay put"
         out->pan_mode = out->tilt_mode = HAMFLY_RATE;
         out->pan  = 0.0f;  // Joysticks removed so hold and let user nudge.
         out->tilt = 0.0f;
+    } else { // ABSOLUTE TODO: Add Majestic
+        out->pan_mode = out->tilt_mode = ctx->hold_mode;
+        out->pan  = DEG_TO_UNIT(ctx->tgt_pan_deg - ctx->nudge_base_pan_deg);
+        out->tilt = DEG_TO_UNIT(ctx->tgt_tilt_deg);
     }
 }
+
+// helper to set hold mode and capture current position as nudge base if switching to absolute.
+static void manu_set_hold(app_ctx_t *ctx, hamfly_control_mode_t mode)
+{
+    if (mode != HAMFLY_RATE) {
+        float p, t;
+        if (!gimbal_pan_tilt_deg(ctx, &p, &t)) {
+            app_raise_error(ctx, SEV_USER, "no telemetry - hold unchanged");
+            return;
+        }
+        ctx->nudge_base_pan_deg  = p;  ctx->tgt_pan_deg  = p;
+        ctx->nudge_base_tilt_deg = t;  ctx->tgt_tilt_deg = t;
+    }
+    ctx->hold_mode = mode;
+    UART_DEBUG_PutString(
+        (mode == HAMFLY_RATE)     ? "\r\n[HOLD] vel-zero\r\n" :
+        (mode == HAMFLY_ABSOLUTE) ? "\r\n[HOLD] absolute\r\n" :
+                                    "\r\n[HOLD] majestic\r\n");
+}
+
 
 uint8_t key_manu_joystick(app_ctx_t *ctx, char k)
 {
@@ -71,6 +98,9 @@ uint8_t key_manu_joystick(app_ctx_t *ctx, char k)
         case '2': nudge_apply(ctx, 0,    -NUDGE_LSB_DEG);  return 1;  // Numpad
         case '4': nudge_apply(ctx, -NUDGE_LSB_DEG,    0);  return 1;  // Numpad
         case '6': nudge_apply(ctx, +NUDGE_LSB_DEG,    0);  return 1;  // Numpad
+        case 'v': manu_set_hold(ctx, HAMFLY_RATE);     return 1;
+        case 'b': manu_set_hold(ctx, HAMFLY_ABSOLUTE); return 1;
+        // case 'm': manu_set_hold(ctx, HAMFLY_ABSOLUTE_MAJESTIC); return 1;
         case 'e': app_transition(ctx, STBY_HOLD);            return 1;  // Exit
         default:  return 0;
     }
