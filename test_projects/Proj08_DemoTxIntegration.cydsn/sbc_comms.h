@@ -32,11 +32,16 @@
 
 #define SBC_MAGIC   0xAB  // Pi <-> PSoC both; signals packet start
 
+// Control
 #define PKT_CENTROID_C  0x01u  // Pi   -> PSoC Coarse
 #define PKT_CENTROID_F  0x02u  // Pi   -> PSoC Fine
 #define PKT_STATE_REQ   0x10u  // Pi   -> PSoC
 #define PKT_GPS_TARGET  0x0Fu  // Pi   -> PSoC GPS target
+#define PKT_NUDGE       0x11u  // Pi   -> PSoC General nudge in deg
+#define PKT_PARAM_SET   0x12u  // Pi   -> PSoC Param setter like Kp
+#define PKT_SET_ORIGIN  0x13u  // Pi   -> PSoC Set software origin.
 
+// telemetry
 #define PKT_TELEM_HOT   0x20u  // PSoC -> Pi
 #define PKT_TELEM_POWER 0x21u  // PSoC -> Pi
 #define PKT_TELEM_ENV   0x22u  // PSoC -> Pi
@@ -66,6 +71,21 @@ typedef struct {
     int32_t alt_mm;                // mm above MSL
 } payload_gps_target_t;
 
+#define SBC_NUDGE_LEN   4u
+typedef struct {
+    int16_t dpan_cdeg;
+    int16_t dtilt_cdeg;
+} payload_nudge_t;
+
+#define SBC_PARAM_LEN   5u
+#define PARAM_TRACK_KP  0x01u
+typedef struct {
+    uint8_t id;
+    float value;
+} payload_param_t;
+
+#define SBC_SET_ORIGIN_LEN  0u
+
 // Response codes for state change
 #define STATE_ACK_OK        0x00u  // transition accepted
 #define STATE_ACK_REJECTED  0x01u  // FATAL latch active
@@ -88,6 +108,9 @@ uint8_t sbc_get_state_req (payload_state_req_t  *out);  // 1 if a new request ar
 uint8_t sbc_get_gps_target(payload_gps_target_t *out);  // 1 if a new target arrived
 void    sbc_send_state_ack(uint8_t actual_state, uint8_t result);
 
+uint8_t sbc_get_nudge     (payload_nudge_t *out);
+uint8_t sbc_get_param     (payload_param_t *out);
+uint8_t sbc_get_set_origin(void);
 
 #endif /* SBC_COMMS_H */
 /* [] END OF FILE */

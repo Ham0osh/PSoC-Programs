@@ -67,9 +67,10 @@ static const uint8_t crc8_table[256] = {
 #define SBC_RX_MAX        64u
 
 // Packet parser section enum, initialized to magic byte
-// Expects:
-// [MAGIC] [TYPE] [LEN] ... [PAYLOAD] ... [CRC]
+// Expects: [MAGIC] [TYPE] [LEN] ... [PAYLOAD] ... [CRC]
 static enum { S_MAGIC, S_TYPE, S_LEN, S_PAYLOAD, S_CRC } sbc_rx_state = S_MAGIC;
+
+// Variables that packets are loaded into plus flag for "newer" write.
 static uint8_t              s_type;  // Type loaded into here
 static uint8_t              s_len;   // Length loaded into here
 static uint8_t              s_idx;
@@ -90,6 +91,15 @@ static volatile uint8_t     s_state_req_fresh  = 0u;
 // SBC -> PSoC GPS Target Sets
 static payload_gps_target_t s_gps_target;
 static volatile uint8_t     s_gps_target_fresh = 0u;
+// SBC -> PSoC Relative Nudge
+static payload_nudge_t      s_nudge;
+static volatile uint8_t     s_nudge_fresh      = 0u;
+// SBC -> PSoC Parameter Set (kp, etc.)
+static payload_param_t      s_param;
+static volatile uint8_t     s_param_fresh      = 0u;
+// SBC -> PSoC Software-origin capture request (zero-length payload)
+static volatile uint8_t     s_set_origin_fresh = 0u;
+
 
 void sbc_init(void)
 {
@@ -106,10 +116,12 @@ void sbc_init(void)
         s_last_rx_ms[i]          = 0u;
         s_last_centroid_dt_ms[i] = 0u;
     }
-    // Init state change status
+    // Init SBC Setters
     s_state_req_fresh  = 0u;
-    // Init gps setter status
     s_gps_target_fresh = 0u;
+    s_nudge_fresh      = 0u;
+    s_param_fresh      = 0u;
+    s_set_origin_fresh = 0u;
 }
 
 static void decode_centroid(uint8_t stream, const uint8_t *p)
@@ -204,6 +216,25 @@ void sbc_on_rx_byte(uint8_t b)
                             memcpy(&s_gps_target.lon_raw, s_buf + 4, 4);
                             memcpy(&s_gps_target.alt_mm,  s_buf + 8, 4);
                             s_gps_target_fresh = 1u;
+                        }
+                        break;
+                                        case PKT_NUDGE:
+                        if (s_len == SBC_NUDGE_LEN) {
+                            memcpy(&s_nudge.dpan_cdeg,  s_buf + 0, 2);
+                            memcpy(&s_nudge.dtilt_cdeg, s_buf + 2, 2);
+                            s_nudge_fresh = 1u;
+                        }
+                        break;
+                    case PKT_PARAM_SET:
+                        if (s_len == SBC_PARAM_LEN) {
+                            s_param.id = s_buf[0];
+                            memcpy(&s_param.value, s_buf + 1, 4);
+                            s_param_fresh = 1u;
+                        }
+                        break;
+                    case PKT_SET_ORIGIN:
+                        if (s_len == SBC_SET_ORIGIN_LEN) {
+                            s_set_origin_fresh = 1u;
                         }
                         break;
                     default:
@@ -326,6 +357,44 @@ uint8_t sbc_get_gps_target(payload_gps_target_t *out)
     if (s_gps_target_fresh) {
         *out = s_gps_target;
         s_gps_target_fresh = 0u;
+        got = 1u;
+    }
+    CyExitCriticalSection(ist);
+    return got;
+}
+
+uint8_t sbc_get_nudge(payload_nudge_t *out)
+{
+    uint8_t got = 0u;
+    uint8_t ist = CyEnterCriticalSection();
+    if (s_nudge_fresh) {
+        *out = s_nudge;
+        s_nudge_fresh = 0u;
+        got = 1u;
+    }
+    CyExitCriticalSection(ist);
+    return got;
+}
+
+uint8_t sbc_get_param(payload_param_t *out)
+{
+    uint8_t got = 0u;
+    uint8_t ist = CyEnterCriticalSection();
+    if (s_param_fresh) {
+        *out = s_param;
+        s_param_fresh = 0u;
+        got = 1u;
+    }
+    CyExitCriticalSection(ist);
+    return got;
+}
+
+uint8_t sbc_get_set_origin(void)
+{
+    uint8_t got = 0u;
+    uint8_t ist = CyEnterCriticalSection();
+    if (s_set_origin_fresh) {
+        s_set_origin_fresh = 0u;
         got = 1u;
     }
     CyExitCriticalSection(ist);

@@ -48,6 +48,7 @@
 #include "hamfly.h"
 #include "sbc_comms.h"
 #include "telemetry.h"
+#include "utils.h"    // nudge_apply
 #include <project.h>  // For UART
 #include <math.h> // TODO: Remove?
 #include <string.h>
@@ -496,6 +497,8 @@ void app_sbc_tick(app_ctx_t *ctx)
     // TODO: Is this the right flow? The ctx should have a target coord,
     // when the ISR for the SBC comms triggers it should load a new target 
     // into the ctx.
+
+    // 1 -> Check for GPS target
     payload_gps_target_t tgt;
     if (sbc_get_gps_target(&tgt))
     {
@@ -506,7 +509,48 @@ void app_sbc_tick(app_ctx_t *ctx)
         ctx->gps_new_target     = 1u;   // ACQ_GPS picks this up on next settle
     }
 
-    // 2) State change request
+    // 2 -> Check for nudge (clamped to soft limits of the origin inside nudge_apply)
+    payload_nudge_t nz;
+    if (sbc_get_nudge(&nz)) {
+        if (ctx->state == MANU_JOYSTICK) {
+            nudge_apply(ctx,
+                        (float)nz.dpan_cdeg  / 100.0f,
+                        (float)nz.dtilt_cdeg / 100.0f);
+        } else {
+            UART_DEBUG_PutString("[SBC] nudge ignored (not in MANU)\r\n");
+        }
+    }
+
+    // 2 -> Parameter tuning
+    payload_param_t pp;
+    if (sbc_get_param(&pp)) {
+        switch (pp.id) {
+            case PARAM_TRACK_KP:
+                ctx->track_kp = pp.value;
+                {
+                    char b[64];
+                    snprintf(b, sizeof b, "[SBC] track_kp = %.6f\r\n",
+                             (double)ctx->track_kp);
+                    UART_DEBUG_PutString(b);
+                }
+                break;
+            default:
+                {
+                    char b[64];
+                    snprintf(b, sizeof b, "[SBC] unknown param id=%u\r\n",
+                             (unsigned)pp.id);
+                    UART_DEBUG_PutString(b);
+                }
+                break;
+        }
+    }
+
+    // 3 -> Capture software origin from current telemetry
+    if (sbc_get_set_origin()) {
+        set_origin(ctx, 0u);    // same path as the '[' key
+    }
+
+    // 4 -> State change request
     payload_state_req_t req;
     if (!sbc_get_state_req(&req)) return;
 
