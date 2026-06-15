@@ -26,20 +26,25 @@
 // Hot packet
 // Critical telemetry at 10 Hz
 typedef struct {
-    uint32_t t_ms;             //  PSoC monotonic ms
-    uint8_t  state;            //  app state enum (leaf)
-    uint8_t  ctrl_mode_pan;    //  hamfly_control_mode_t
+    uint32_t t_ms;              //  PSoC monotonic ms
+    uint8_t  state;             //  app state enum (leaf)
+    uint8_t  ctrl_mode_pan;     //  hamfly_control_mode_t
     uint8_t  ctrl_mode_tilt;
     uint8_t  ctrl_mode_roll;
-    uint8_t  enable;
+    uint8_t  flags;             // State machine flags (fatsal, origin, nudging)
     uint8_t  kill;
-    int16_t  input_pan;        //  ctl.pan * 100 (units depend on mode)
+    int16_t  input_pan;         //  ctl.pan * 100 (units depend on mode)
     int16_t  input_tilt;
     int16_t  input_roll;
-    uint8_t  gimbal_status1;   //  QX287 raw status bytes
+    uint8_t  gimbal_status1;    //  QX287 raw status bytes
     uint8_t  gimbal_status2;
-    int16_t  q_i, q_j, q_k, q_r;  //  QX quaternion * 32767
+    int16_t  q_i, q_j, q_k, q_r;//  QX quaternion * 32767
 } telem_hot_t;
+
+// For the uint8 state machine flag positions
+#define HOT_FLAG_FATAL_LATCHED 0x01u
+#define HOT_FLAG_ORIGIN_SET    0x02u
+#define HOT_FLAG_NUDGE_HOLD    0x04u
 
 // Link (SBC comms) packet
 // SBC comms quality at 1 Hz
