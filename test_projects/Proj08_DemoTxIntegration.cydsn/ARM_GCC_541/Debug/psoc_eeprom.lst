@@ -1,0 +1,1677 @@
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"psoc_eeprom.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.slot_id_to_row,"ax",%progbits
+  20              		.align	2
+  21              		.thumb
+  22              		.thumb_func
+  23              		.type	slot_id_to_row, %function
+  24              	slot_id_to_row:
+  25              	.LFB63:
+  26              		.file 1 "psoc_eeprom.c"
+   1:psoc_eeprom.c **** /* ========================================
+   2:psoc_eeprom.c ****  *
+   3:psoc_eeprom.c ****  * Copyright Hamish Johnson, 2026
+   4:psoc_eeprom.c ****  * All Rights Reserved
+   5:psoc_eeprom.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:psoc_eeprom.c ****  *
+   7:psoc_eeprom.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:psoc_eeprom.c ****  * WHICH IS THE PROPERTY OF
+   9:psoc_eeprom.c ****  * Quantum Internet Systems Lab (QISL),
+  10:psoc_eeprom.c ****  * Department of Physics, SFU, Canada.
+  11:psoc_eeprom.c ****  *
+  12:psoc_eeprom.c ****  * Author: Hamish Johnson (2026)
+  13:psoc_eeprom.c ****  *
+  14:psoc_eeprom.c ****  * ========================================
+  15:psoc_eeprom.c ****  *
+  16:psoc_eeprom.c ****  * Generic EEPROM slot store implementation for PSoC 5LP.
+  17:psoc_eeprom.c ****  * Uses EEPROM_CONFIG component API:
+  18:psoc_eeprom.c ****  *   EEPROM_CONFIG_Start()
+  19:psoc_eeprom.c ****  *   EEPROM_CONFIG_UpdateTemperature()
+  20:psoc_eeprom.c ****  *   EEPROM_CONFIG_Write(const uint8 *rowData, uint8 rowNumber)
+  21:psoc_eeprom.c ****  *   EEPROM_CONFIG_WriteByte(uint8 dataByte, uint16 address)
+  22:psoc_eeprom.c ****  * Reading is direct via (uint8 *)(CYDEV_EE_BASE + byte_offset).
+  23:psoc_eeprom.c ****  */
+  24:psoc_eeprom.c **** 
+  25:psoc_eeprom.c **** #include "psoc_eeprom.h"
+  26:psoc_eeprom.c **** #include <string.h>
+  27:psoc_eeprom.c **** 
+  28:psoc_eeprom.c **** /* ============================================================
+  29:psoc_eeprom.c ****  * slot_id_to_row
+  30:psoc_eeprom.c ****  * Maps a slot ID to its fixed EEPROM row number.
+  31:psoc_eeprom.c ****  * Returns 0xFF if the slot ID is unknown.
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 2
+
+
+  32:psoc_eeprom.c ****  * Add a case here whenever a new slot is defined in the header.
+  33:psoc_eeprom.c ****  * ============================================================ */
+  34:psoc_eeprom.c **** static uint8 slot_id_to_row(uint8 slot_id)
+  35:psoc_eeprom.c **** {
+  27              		.loc 1 35 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 1, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32 0000 80B4     		push	{r7}
+  33              		.cfi_def_cfa_offset 4
+  34              		.cfi_offset 7, -4
+  35 0002 83B0     		sub	sp, sp, #12
+  36              		.cfi_def_cfa_offset 16
+  37 0004 00AF     		add	r7, sp, #0
+  38              		.cfi_def_cfa_register 7
+  39 0006 0346     		mov	r3, r0
+  40 0008 FB71     		strb	r3, [r7, #7]
+  36:psoc_eeprom.c ****     switch (slot_id) {
+  41              		.loc 1 36 0
+  42 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+  43 000c 012B     		cmp	r3, #1
+  44 000e 02D0     		beq	.L3
+  45 0010 022B     		cmp	r3, #2
+  46 0012 02D0     		beq	.L4
+  47 0014 03E0     		b	.L6
+  48              	.L3:
+  37:psoc_eeprom.c ****         case PSOC_EEPROM_SLOT_JOY_CAL:   return PSOC_EEPROM_ROW_JOY_CAL;
+  49              		.loc 1 37 0
+  50 0016 0023     		movs	r3, #0
+  51 0018 02E0     		b	.L5
+  52              	.L4:
+  38:psoc_eeprom.c ****         case PSOC_EEPROM_SLOT_JOY_SENSE: return PSOC_EEPROM_ROW_JOY_SENSE;
+  53              		.loc 1 38 0
+  54 001a 0123     		movs	r3, #1
+  55 001c 00E0     		b	.L5
+  56              	.L6:
+  39:psoc_eeprom.c ****         /* Add cases here for new slots. */
+  40:psoc_eeprom.c ****         default: return 0xFFu;
+  57              		.loc 1 40 0
+  58 001e FF23     		movs	r3, #255
+  59              	.L5:
+  41:psoc_eeprom.c ****     }
+  42:psoc_eeprom.c **** }
+  60              		.loc 1 42 0
+  61 0020 1846     		mov	r0, r3
+  62 0022 0C37     		adds	r7, r7, #12
+  63              		.cfi_def_cfa_offset 4
+  64 0024 BD46     		mov	sp, r7
+  65              		.cfi_def_cfa_register 13
+  66              		@ sp needed
+  67 0026 80BC     		pop	{r7}
+  68              		.cfi_restore 7
+  69              		.cfi_def_cfa_offset 0
+  70 0028 7047     		bx	lr
+  71              		.cfi_endproc
+  72              	.LFE63:
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 3
+
+
+  73              		.size	slot_id_to_row, .-slot_id_to_row
+  74 002a 00BF     		.section	.text.read_row_byte,"ax",%progbits
+  75              		.align	2
+  76              		.thumb
+  77              		.thumb_func
+  78              		.type	read_row_byte, %function
+  79              	read_row_byte:
+  80              	.LFB64:
+  43:psoc_eeprom.c **** 
+  44:psoc_eeprom.c **** /* ============================================================
+  45:psoc_eeprom.c ****  * read_row_byte
+  46:psoc_eeprom.c ****  * Read one byte from EEPROM by row + byte offset within the row.
+  47:psoc_eeprom.c ****  * ============================================================ */
+  48:psoc_eeprom.c **** static uint8 read_row_byte(uint8 row, uint8 byte_offset)
+  49:psoc_eeprom.c **** {
+  81              		.loc 1 49 0
+  82              		.cfi_startproc
+  83              		@ args = 0, pretend = 0, frame = 16
+  84              		@ frame_needed = 1, uses_anonymous_args = 0
+  85              		@ link register save eliminated.
+  86 0000 80B4     		push	{r7}
+  87              		.cfi_def_cfa_offset 4
+  88              		.cfi_offset 7, -4
+  89 0002 85B0     		sub	sp, sp, #20
+  90              		.cfi_def_cfa_offset 24
+  91 0004 00AF     		add	r7, sp, #0
+  92              		.cfi_def_cfa_register 7
+  93 0006 0346     		mov	r3, r0
+  94 0008 0A46     		mov	r2, r1
+  95 000a FB71     		strb	r3, [r7, #7]
+  96 000c 1346     		mov	r3, r2
+  97 000e BB71     		strb	r3, [r7, #6]
+  50:psoc_eeprom.c ****     uint16 abs_addr = (uint16)((uint16)row * PSOC_EEPROM_ROW_SIZE
+  98              		.loc 1 50 0
+  99 0010 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 100 0012 9BB2     		uxth	r3, r3
+ 101 0014 1B01     		lsls	r3, r3, #4
+ 102 0016 9AB2     		uxth	r2, r3
+ 103 0018 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 104 001a 9BB2     		uxth	r3, r3
+ 105 001c 1344     		add	r3, r3, r2
+ 106 001e FB81     		strh	r3, [r7, #14]	@ movhi
+  51:psoc_eeprom.c ****                                + byte_offset);
+  52:psoc_eeprom.c ****     return *(volatile uint8 *)(CYDEV_EE_BASE + abs_addr);
+ 107              		.loc 1 52 0
+ 108 0020 FB89     		ldrh	r3, [r7, #14]
+ 109 0022 03F18043 		add	r3, r3, #1073741824
+ 110 0026 03F50043 		add	r3, r3, #32768
+ 111 002a 1B78     		ldrb	r3, [r3]
+ 112 002c DBB2     		uxtb	r3, r3
+  53:psoc_eeprom.c **** }
+ 113              		.loc 1 53 0
+ 114 002e 1846     		mov	r0, r3
+ 115 0030 1437     		adds	r7, r7, #20
+ 116              		.cfi_def_cfa_offset 4
+ 117 0032 BD46     		mov	sp, r7
+ 118              		.cfi_def_cfa_register 13
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 4
+
+
+ 119              		@ sp needed
+ 120 0034 80BC     		pop	{r7}
+ 121              		.cfi_restore 7
+ 122              		.cfi_def_cfa_offset 0
+ 123 0036 7047     		bx	lr
+ 124              		.cfi_endproc
+ 125              	.LFE64:
+ 126              		.size	read_row_byte, .-read_row_byte
+ 127              		.section	.text.read_row_data,"ax",%progbits
+ 128              		.align	2
+ 129              		.thumb
+ 130              		.thumb_func
+ 131              		.type	read_row_data, %function
+ 132              	read_row_data:
+ 133              	.LFB65:
+  54:psoc_eeprom.c **** 
+  55:psoc_eeprom.c **** /* ============================================================
+  56:psoc_eeprom.c ****  * read_row_data
+  57:psoc_eeprom.c ****  * Copy len bytes of data from an EEPROM row starting at
+  58:psoc_eeprom.c ****  * PSOC_EEPROM_ROW_DATA offset into dst.
+  59:psoc_eeprom.c ****  * ============================================================ */
+  60:psoc_eeprom.c **** static void read_row_data(uint8 row, void *dst, uint8 len)
+  61:psoc_eeprom.c **** {
+ 134              		.loc 1 61 0
+ 135              		.cfi_startproc
+ 136              		@ args = 0, pretend = 0, frame = 16
+ 137              		@ frame_needed = 1, uses_anonymous_args = 0
+ 138 0000 80B5     		push	{r7, lr}
+ 139              		.cfi_def_cfa_offset 8
+ 140              		.cfi_offset 7, -8
+ 141              		.cfi_offset 14, -4
+ 142 0002 84B0     		sub	sp, sp, #16
+ 143              		.cfi_def_cfa_offset 24
+ 144 0004 00AF     		add	r7, sp, #0
+ 145              		.cfi_def_cfa_register 7
+ 146 0006 0346     		mov	r3, r0
+ 147 0008 3960     		str	r1, [r7]
+ 148 000a FB71     		strb	r3, [r7, #7]
+ 149 000c 1346     		mov	r3, r2
+ 150 000e BB71     		strb	r3, [r7, #6]
+  62:psoc_eeprom.c ****     uint16 abs_addr = (uint16)((uint16)row * PSOC_EEPROM_ROW_SIZE
+ 151              		.loc 1 62 0
+ 152 0010 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 153 0012 9BB2     		uxth	r3, r3
+ 154 0014 1B01     		lsls	r3, r3, #4
+ 155 0016 9BB2     		uxth	r3, r3
+ 156 0018 0233     		adds	r3, r3, #2
+ 157 001a FB81     		strh	r3, [r7, #14]	@ movhi
+  63:psoc_eeprom.c ****                                + PSOC_EEPROM_ROW_DATA);
+  64:psoc_eeprom.c ****     memcpy(dst, (const void *)(CYDEV_EE_BASE + abs_addr), len);
+ 158              		.loc 1 64 0
+ 159 001c FB89     		ldrh	r3, [r7, #14]
+ 160 001e 03F18043 		add	r3, r3, #1073741824
+ 161 0022 03F50043 		add	r3, r3, #32768
+ 162 0026 1946     		mov	r1, r3
+ 163 0028 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 164 002a 1A46     		mov	r2, r3
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 5
+
+
+ 165 002c 3868     		ldr	r0, [r7]
+ 166 002e FFF7FEFF 		bl	memcpy
+  65:psoc_eeprom.c **** }
+ 167              		.loc 1 65 0
+ 168 0032 00BF     		nop
+ 169 0034 1037     		adds	r7, r7, #16
+ 170              		.cfi_def_cfa_offset 8
+ 171 0036 BD46     		mov	sp, r7
+ 172              		.cfi_def_cfa_register 13
+ 173              		@ sp needed
+ 174 0038 80BD     		pop	{r7, pc}
+ 175              		.cfi_endproc
+ 176              	.LFE65:
+ 177              		.size	read_row_data, .-read_row_data
+ 178 003a 00BF     		.section	.text.psoc_eeprom_init,"ax",%progbits
+ 179              		.align	2
+ 180              		.global	psoc_eeprom_init
+ 181              		.thumb
+ 182              		.thumb_func
+ 183              		.type	psoc_eeprom_init, %function
+ 184              	psoc_eeprom_init:
+ 185              	.LFB66:
+  66:psoc_eeprom.c **** 
+  67:psoc_eeprom.c **** /* ============================================================
+  68:psoc_eeprom.c ****  * psoc_eeprom_init
+  69:psoc_eeprom.c ****  * ============================================================ */
+  70:psoc_eeprom.c **** void psoc_eeprom_init(void)
+  71:psoc_eeprom.c **** {
+ 186              		.loc 1 71 0
+ 187              		.cfi_startproc
+ 188              		@ args = 0, pretend = 0, frame = 0
+ 189              		@ frame_needed = 1, uses_anonymous_args = 0
+ 190 0000 80B5     		push	{r7, lr}
+ 191              		.cfi_def_cfa_offset 8
+ 192              		.cfi_offset 7, -8
+ 193              		.cfi_offset 14, -4
+ 194 0002 00AF     		add	r7, sp, #0
+ 195              		.cfi_def_cfa_register 7
+  72:psoc_eeprom.c ****     EEPROM_CONFIG_Start();
+ 196              		.loc 1 72 0
+ 197 0004 FFF7FEFF 		bl	EEPROM_CONFIG_Start
+  73:psoc_eeprom.c **** }
+ 198              		.loc 1 73 0
+ 199 0008 00BF     		nop
+ 200 000a 80BD     		pop	{r7, pc}
+ 201              		.cfi_endproc
+ 202              	.LFE66:
+ 203              		.size	psoc_eeprom_init, .-psoc_eeprom_init
+ 204              		.section	.text.psoc_eeprom_write,"ax",%progbits
+ 205              		.align	2
+ 206              		.global	psoc_eeprom_write
+ 207              		.thumb
+ 208              		.thumb_func
+ 209              		.type	psoc_eeprom_write, %function
+ 210              	psoc_eeprom_write:
+ 211              	.LFB67:
+  74:psoc_eeprom.c **** 
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 6
+
+
+  75:psoc_eeprom.c **** /* ============================================================
+  76:psoc_eeprom.c ****  * psoc_eeprom_write
+  77:psoc_eeprom.c ****  * Builds a 16-byte row buffer and writes it to EEPROM.
+  78:psoc_eeprom.c ****  * ============================================================ */
+  79:psoc_eeprom.c **** uint8 psoc_eeprom_write(uint8 slot_id, const void *data, uint8 len)
+  80:psoc_eeprom.c **** {
+ 212              		.loc 1 80 0
+ 213              		.cfi_startproc
+ 214              		@ args = 0, pretend = 0, frame = 32
+ 215              		@ frame_needed = 1, uses_anonymous_args = 0
+ 216 0000 80B5     		push	{r7, lr}
+ 217              		.cfi_def_cfa_offset 8
+ 218              		.cfi_offset 7, -8
+ 219              		.cfi_offset 14, -4
+ 220 0002 88B0     		sub	sp, sp, #32
+ 221              		.cfi_def_cfa_offset 40
+ 222 0004 00AF     		add	r7, sp, #0
+ 223              		.cfi_def_cfa_register 7
+ 224 0006 0346     		mov	r3, r0
+ 225 0008 3960     		str	r1, [r7]
+ 226 000a FB71     		strb	r3, [r7, #7]
+ 227 000c 1346     		mov	r3, r2
+ 228 000e BB71     		strb	r3, [r7, #6]
+  81:psoc_eeprom.c ****     if (!data) return 0u;
+ 229              		.loc 1 81 0
+ 230 0010 3B68     		ldr	r3, [r7]
+ 231 0012 002B     		cmp	r3, #0
+ 232 0014 01D1     		bne	.L12
+ 233              		.loc 1 81 0 is_stmt 0 discriminator 1
+ 234 0016 0023     		movs	r3, #0
+ 235 0018 35E0     		b	.L19
+ 236              	.L12:
+  82:psoc_eeprom.c ****     if (len == 0u || len > PSOC_EEPROM_ROW_DATA_SIZE) return 0u;
+ 237              		.loc 1 82 0 is_stmt 1
+ 238 001a BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 239 001c 002B     		cmp	r3, #0
+ 240 001e 02D0     		beq	.L14
+ 241              		.loc 1 82 0 is_stmt 0 discriminator 2
+ 242 0020 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 243 0022 0E2B     		cmp	r3, #14
+ 244 0024 01D9     		bls	.L15
+ 245              	.L14:
+ 246              		.loc 1 82 0 discriminator 3
+ 247 0026 0023     		movs	r3, #0
+ 248 0028 2DE0     		b	.L19
+ 249              	.L15:
+  83:psoc_eeprom.c **** 
+  84:psoc_eeprom.c ****     uint8 row = slot_id_to_row(slot_id);
+ 250              		.loc 1 84 0 is_stmt 1
+ 251 002a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 252 002c 1846     		mov	r0, r3
+ 253 002e FFF7FEFF 		bl	slot_id_to_row
+ 254 0032 0346     		mov	r3, r0
+ 255 0034 FB77     		strb	r3, [r7, #31]
+  85:psoc_eeprom.c ****     if (row == 0xFFu) return 0u;
+ 256              		.loc 1 85 0
+ 257 0036 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 7
+
+
+ 258 0038 FF2B     		cmp	r3, #255
+ 259 003a 01D1     		bne	.L16
+ 260              		.loc 1 85 0 is_stmt 0 discriminator 1
+ 261 003c 0023     		movs	r3, #0
+ 262 003e 22E0     		b	.L19
+ 263              	.L16:
+  86:psoc_eeprom.c **** 
+  87:psoc_eeprom.c ****     /* Build a full 16-byte row. Zero-pad unused data bytes. */
+  88:psoc_eeprom.c ****     uint8 row_buf[PSOC_EEPROM_ROW_SIZE];
+  89:psoc_eeprom.c ****     memset(row_buf, 0, sizeof(row_buf));
+ 264              		.loc 1 89 0 is_stmt 1
+ 265 0040 07F10803 		add	r3, r7, #8
+ 266 0044 1022     		movs	r2, #16
+ 267 0046 0021     		movs	r1, #0
+ 268 0048 1846     		mov	r0, r3
+ 269 004a FFF7FEFF 		bl	memset
+  90:psoc_eeprom.c ****     row_buf[PSOC_EEPROM_ROW_MAGIC_LO] = PSOC_EEPROM_MAGIC_LO;
+ 270              		.loc 1 90 0
+ 271 004e A523     		movs	r3, #165
+ 272 0050 3B72     		strb	r3, [r7, #8]
+  91:psoc_eeprom.c ****     row_buf[PSOC_EEPROM_ROW_LEN]      = len;
+ 273              		.loc 1 91 0
+ 274 0052 BB79     		ldrb	r3, [r7, #6]
+ 275 0054 7B72     		strb	r3, [r7, #9]
+  92:psoc_eeprom.c ****     memcpy(&row_buf[PSOC_EEPROM_ROW_DATA], data, len);
+ 276              		.loc 1 92 0
+ 277 0056 BA79     		ldrb	r2, [r7, #6]	@ zero_extendqisi2
+ 278 0058 07F10803 		add	r3, r7, #8
+ 279 005c 0233     		adds	r3, r3, #2
+ 280 005e 3968     		ldr	r1, [r7]
+ 281 0060 1846     		mov	r0, r3
+ 282 0062 FFF7FEFF 		bl	memcpy
+  93:psoc_eeprom.c **** 
+  94:psoc_eeprom.c ****     /* Update temperature before write as per datasheet. */
+  95:psoc_eeprom.c ****     EEPROM_CONFIG_UpdateTemperature();
+ 283              		.loc 1 95 0
+ 284 0066 FFF7FEFF 		bl	EEPROM_CONFIG_UpdateTemperature
+  96:psoc_eeprom.c **** 
+  97:psoc_eeprom.c ****     /* Write the full row. EEPROM_CONFIG_Write takes row number. */
+  98:psoc_eeprom.c ****     cystatus r = EEPROM_CONFIG_Write(row_buf, row);
+ 285              		.loc 1 98 0
+ 286 006a FA7F     		ldrb	r2, [r7, #31]	@ zero_extendqisi2
+ 287 006c 07F10803 		add	r3, r7, #8
+ 288 0070 1146     		mov	r1, r2
+ 289 0072 1846     		mov	r0, r3
+ 290 0074 FFF7FEFF 		bl	EEPROM_CONFIG_Write
+ 291 0078 B861     		str	r0, [r7, #24]
+  99:psoc_eeprom.c ****     return (r == CYRET_SUCCESS) ? 1u : 0u;
+ 292              		.loc 1 99 0
+ 293 007a BB69     		ldr	r3, [r7, #24]
+ 294 007c 002B     		cmp	r3, #0
+ 295 007e 01D1     		bne	.L17
+ 296              		.loc 1 99 0 is_stmt 0 discriminator 1
+ 297 0080 0123     		movs	r3, #1
+ 298 0082 00E0     		b	.L19
+ 299              	.L17:
+ 300              		.loc 1 99 0 discriminator 2
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 8
+
+
+ 301 0084 0023     		movs	r3, #0
+ 302              	.L19:
+ 100:psoc_eeprom.c **** }
+ 303              		.loc 1 100 0 is_stmt 1 discriminator 1
+ 304 0086 1846     		mov	r0, r3
+ 305 0088 2037     		adds	r7, r7, #32
+ 306              		.cfi_def_cfa_offset 8
+ 307 008a BD46     		mov	sp, r7
+ 308              		.cfi_def_cfa_register 13
+ 309              		@ sp needed
+ 310 008c 80BD     		pop	{r7, pc}
+ 311              		.cfi_endproc
+ 312              	.LFE67:
+ 313              		.size	psoc_eeprom_write, .-psoc_eeprom_write
+ 314 008e 00BF     		.section	.text.psoc_eeprom_read,"ax",%progbits
+ 315              		.align	2
+ 316              		.global	psoc_eeprom_read
+ 317              		.thumb
+ 318              		.thumb_func
+ 319              		.type	psoc_eeprom_read, %function
+ 320              	psoc_eeprom_read:
+ 321              	.LFB68:
+ 101:psoc_eeprom.c **** 
+ 102:psoc_eeprom.c **** /* ============================================================
+ 103:psoc_eeprom.c ****  * psoc_eeprom_read
+ 104:psoc_eeprom.c ****  * ============================================================ */
+ 105:psoc_eeprom.c **** uint8 psoc_eeprom_read(uint8 slot_id, void *out, uint8 len)
+ 106:psoc_eeprom.c **** {
+ 322              		.loc 1 106 0
+ 323              		.cfi_startproc
+ 324              		@ args = 0, pretend = 0, frame = 16
+ 325              		@ frame_needed = 1, uses_anonymous_args = 0
+ 326 0000 80B5     		push	{r7, lr}
+ 327              		.cfi_def_cfa_offset 8
+ 328              		.cfi_offset 7, -8
+ 329              		.cfi_offset 14, -4
+ 330 0002 84B0     		sub	sp, sp, #16
+ 331              		.cfi_def_cfa_offset 24
+ 332 0004 00AF     		add	r7, sp, #0
+ 333              		.cfi_def_cfa_register 7
+ 334 0006 0346     		mov	r3, r0
+ 335 0008 3960     		str	r1, [r7]
+ 336 000a FB71     		strb	r3, [r7, #7]
+ 337 000c 1346     		mov	r3, r2
+ 338 000e BB71     		strb	r3, [r7, #6]
+ 107:psoc_eeprom.c ****     if (!out || len == 0u) return 0u;
+ 339              		.loc 1 107 0
+ 340 0010 3B68     		ldr	r3, [r7]
+ 341 0012 002B     		cmp	r3, #0
+ 342 0014 02D0     		beq	.L21
+ 343              		.loc 1 107 0 is_stmt 0 discriminator 2
+ 344 0016 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 345 0018 002B     		cmp	r3, #0
+ 346 001a 01D1     		bne	.L22
+ 347              	.L21:
+ 348              		.loc 1 107 0 discriminator 3
+ 349 001c 0023     		movs	r3, #0
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 9
+
+
+ 350 001e 28E0     		b	.L23
+ 351              	.L22:
+ 108:psoc_eeprom.c **** 
+ 109:psoc_eeprom.c ****     uint8 row = slot_id_to_row(slot_id);
+ 352              		.loc 1 109 0 is_stmt 1
+ 353 0020 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 354 0022 1846     		mov	r0, r3
+ 355 0024 FFF7FEFF 		bl	slot_id_to_row
+ 356 0028 0346     		mov	r3, r0
+ 357 002a FB73     		strb	r3, [r7, #15]
+ 110:psoc_eeprom.c ****     if (row == 0xFFu) return 0u;
+ 358              		.loc 1 110 0
+ 359 002c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 360 002e FF2B     		cmp	r3, #255
+ 361 0030 01D1     		bne	.L24
+ 362              		.loc 1 110 0 is_stmt 0 discriminator 1
+ 363 0032 0023     		movs	r3, #0
+ 364 0034 1DE0     		b	.L23
+ 365              	.L24:
+ 111:psoc_eeprom.c **** 
+ 112:psoc_eeprom.c ****     /* Check magic bytes. */
+ 113:psoc_eeprom.c ****     if (read_row_byte(row, PSOC_EEPROM_ROW_MAGIC_LO) != PSOC_EEPROM_MAGIC_LO)
+ 366              		.loc 1 113 0 is_stmt 1
+ 367 0036 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 368 0038 0021     		movs	r1, #0
+ 369 003a 1846     		mov	r0, r3
+ 370 003c FFF7FEFF 		bl	read_row_byte
+ 371 0040 0346     		mov	r3, r0
+ 372 0042 A52B     		cmp	r3, #165
+ 373 0044 01D0     		beq	.L25
+ 114:psoc_eeprom.c ****         return 0u;
+ 374              		.loc 1 114 0
+ 375 0046 0023     		movs	r3, #0
+ 376 0048 13E0     		b	.L23
+ 377              	.L25:
+ 115:psoc_eeprom.c **** 
+ 116:psoc_eeprom.c ****     /* Check stored length matches requested length. */
+ 117:psoc_eeprom.c ****     uint8 stored_len = read_row_byte(row, PSOC_EEPROM_ROW_LEN);
+ 378              		.loc 1 117 0
+ 379 004a FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 380 004c 0121     		movs	r1, #1
+ 381 004e 1846     		mov	r0, r3
+ 382 0050 FFF7FEFF 		bl	read_row_byte
+ 383 0054 0346     		mov	r3, r0
+ 384 0056 BB73     		strb	r3, [r7, #14]
+ 118:psoc_eeprom.c ****     if (stored_len != len) return 0u;
+ 385              		.loc 1 118 0
+ 386 0058 BA7B     		ldrb	r2, [r7, #14]	@ zero_extendqisi2
+ 387 005a BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 388 005c 9A42     		cmp	r2, r3
+ 389 005e 01D0     		beq	.L26
+ 390              		.loc 1 118 0 is_stmt 0 discriminator 1
+ 391 0060 0023     		movs	r3, #0
+ 392 0062 06E0     		b	.L23
+ 393              	.L26:
+ 119:psoc_eeprom.c **** 
+ 120:psoc_eeprom.c ****     /* Copy data out. */
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 10
+
+
+ 121:psoc_eeprom.c ****     read_row_data(row, out, len);
+ 394              		.loc 1 121 0 is_stmt 1
+ 395 0064 BA79     		ldrb	r2, [r7, #6]	@ zero_extendqisi2
+ 396 0066 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 397 0068 3968     		ldr	r1, [r7]
+ 398 006a 1846     		mov	r0, r3
+ 399 006c FFF7FEFF 		bl	read_row_data
+ 122:psoc_eeprom.c ****     return 1u;
+ 400              		.loc 1 122 0
+ 401 0070 0123     		movs	r3, #1
+ 402              	.L23:
+ 123:psoc_eeprom.c **** }
+ 403              		.loc 1 123 0
+ 404 0072 1846     		mov	r0, r3
+ 405 0074 1037     		adds	r7, r7, #16
+ 406              		.cfi_def_cfa_offset 8
+ 407 0076 BD46     		mov	sp, r7
+ 408              		.cfi_def_cfa_register 13
+ 409              		@ sp needed
+ 410 0078 80BD     		pop	{r7, pc}
+ 411              		.cfi_endproc
+ 412              	.LFE68:
+ 413              		.size	psoc_eeprom_read, .-psoc_eeprom_read
+ 414 007a 00BF     		.section	.text.psoc_eeprom_erase_slot,"ax",%progbits
+ 415              		.align	2
+ 416              		.global	psoc_eeprom_erase_slot
+ 417              		.thumb
+ 418              		.thumb_func
+ 419              		.type	psoc_eeprom_erase_slot, %function
+ 420              	psoc_eeprom_erase_slot:
+ 421              	.LFB69:
+ 124:psoc_eeprom.c **** 
+ 125:psoc_eeprom.c **** /* ============================================================
+ 126:psoc_eeprom.c ****  * psoc_eeprom_erase_slot
+ 127:psoc_eeprom.c ****  * Overwrites the slot's row with zeros, invalidating the magic.
+ 128:psoc_eeprom.c ****  * ============================================================ */
+ 129:psoc_eeprom.c **** void psoc_eeprom_erase_slot(uint8 slot_id)
+ 130:psoc_eeprom.c **** {
+ 422              		.loc 1 130 0
+ 423              		.cfi_startproc
+ 424              		@ args = 0, pretend = 0, frame = 32
+ 425              		@ frame_needed = 1, uses_anonymous_args = 0
+ 426 0000 80B5     		push	{r7, lr}
+ 427              		.cfi_def_cfa_offset 8
+ 428              		.cfi_offset 7, -8
+ 429              		.cfi_offset 14, -4
+ 430 0002 88B0     		sub	sp, sp, #32
+ 431              		.cfi_def_cfa_offset 40
+ 432 0004 00AF     		add	r7, sp, #0
+ 433              		.cfi_def_cfa_register 7
+ 434 0006 0346     		mov	r3, r0
+ 435 0008 FB71     		strb	r3, [r7, #7]
+ 131:psoc_eeprom.c ****     uint8 row = slot_id_to_row(slot_id);
+ 436              		.loc 1 131 0
+ 437 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 438 000c 1846     		mov	r0, r3
+ 439 000e FFF7FEFF 		bl	slot_id_to_row
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 11
+
+
+ 440 0012 0346     		mov	r3, r0
+ 441 0014 FB77     		strb	r3, [r7, #31]
+ 132:psoc_eeprom.c ****     if (row == 0xFFu) return;
+ 442              		.loc 1 132 0
+ 443 0016 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 444 0018 FF2B     		cmp	r3, #255
+ 445 001a 10D0     		beq	.L30
+ 133:psoc_eeprom.c **** 
+ 134:psoc_eeprom.c ****     uint8 zeros[PSOC_EEPROM_ROW_SIZE];
+ 135:psoc_eeprom.c ****     memset(zeros, 0, sizeof(zeros));
+ 446              		.loc 1 135 0
+ 447 001c 07F10C03 		add	r3, r7, #12
+ 448 0020 1022     		movs	r2, #16
+ 449 0022 0021     		movs	r1, #0
+ 450 0024 1846     		mov	r0, r3
+ 451 0026 FFF7FEFF 		bl	memset
+ 136:psoc_eeprom.c ****     EEPROM_CONFIG_UpdateTemperature();
+ 452              		.loc 1 136 0
+ 453 002a FFF7FEFF 		bl	EEPROM_CONFIG_UpdateTemperature
+ 137:psoc_eeprom.c ****     (void)EEPROM_CONFIG_Write(zeros, row);
+ 454              		.loc 1 137 0
+ 455 002e FA7F     		ldrb	r2, [r7, #31]	@ zero_extendqisi2
+ 456 0030 07F10C03 		add	r3, r7, #12
+ 457 0034 1146     		mov	r1, r2
+ 458 0036 1846     		mov	r0, r3
+ 459 0038 FFF7FEFF 		bl	EEPROM_CONFIG_Write
+ 460 003c 00E0     		b	.L27
+ 461              	.L30:
+ 132:psoc_eeprom.c **** 
+ 462              		.loc 1 132 0
+ 463 003e 00BF     		nop
+ 464              	.L27:
+ 138:psoc_eeprom.c **** }
+ 465              		.loc 1 138 0
+ 466 0040 2037     		adds	r7, r7, #32
+ 467              		.cfi_def_cfa_offset 8
+ 468 0042 BD46     		mov	sp, r7
+ 469              		.cfi_def_cfa_register 13
+ 470              		@ sp needed
+ 471 0044 80BD     		pop	{r7, pc}
+ 472              		.cfi_endproc
+ 473              	.LFE69:
+ 474              		.size	psoc_eeprom_erase_slot, .-psoc_eeprom_erase_slot
+ 475 0046 00BF     		.section	.text.psoc_eeprom_erase_all,"ax",%progbits
+ 476              		.align	2
+ 477              		.global	psoc_eeprom_erase_all
+ 478              		.thumb
+ 479              		.thumb_func
+ 480              		.type	psoc_eeprom_erase_all, %function
+ 481              	psoc_eeprom_erase_all:
+ 482              	.LFB70:
+ 139:psoc_eeprom.c **** 
+ 140:psoc_eeprom.c **** /* ============================================================
+ 141:psoc_eeprom.c ****  * psoc_eeprom_erase_all
+ 142:psoc_eeprom.c ****  * Erases all known slots.
+ 143:psoc_eeprom.c ****  * ============================================================ */
+ 144:psoc_eeprom.c **** void psoc_eeprom_erase_all(void)
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 12
+
+
+ 145:psoc_eeprom.c **** {
+ 483              		.loc 1 145 0
+ 484              		.cfi_startproc
+ 485              		@ args = 0, pretend = 0, frame = 0
+ 486              		@ frame_needed = 1, uses_anonymous_args = 0
+ 487 0000 80B5     		push	{r7, lr}
+ 488              		.cfi_def_cfa_offset 8
+ 489              		.cfi_offset 7, -8
+ 490              		.cfi_offset 14, -4
+ 491 0002 00AF     		add	r7, sp, #0
+ 492              		.cfi_def_cfa_register 7
+ 146:psoc_eeprom.c ****     psoc_eeprom_erase_slot(PSOC_EEPROM_SLOT_JOY_CAL);
+ 493              		.loc 1 146 0
+ 494 0004 0120     		movs	r0, #1
+ 495 0006 FFF7FEFF 		bl	psoc_eeprom_erase_slot
+ 147:psoc_eeprom.c ****     psoc_eeprom_erase_slot(PSOC_EEPROM_SLOT_JOY_SENSE);
+ 496              		.loc 1 147 0
+ 497 000a 0220     		movs	r0, #2
+ 498 000c FFF7FEFF 		bl	psoc_eeprom_erase_slot
+ 148:psoc_eeprom.c ****     /* Add erase calls here for new slots. */
+ 149:psoc_eeprom.c **** }
+ 499              		.loc 1 149 0
+ 500 0010 00BF     		nop
+ 501 0012 80BD     		pop	{r7, pc}
+ 502              		.cfi_endproc
+ 503              	.LFE70:
+ 504              		.size	psoc_eeprom_erase_all, .-psoc_eeprom_erase_all
+ 505              		.text
+ 506              	.Letext0:
+ 507              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 508              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 509              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 510              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 511              		.section	.debug_info,"",%progbits
+ 512              	.Ldebug_info0:
+ 513 0000 D7020000 		.4byte	0x2d7
+ 514 0004 0400     		.2byte	0x4
+ 515 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 516 000a 04       		.byte	0x4
+ 517 000b 01       		.uleb128 0x1
+ 518 000c 6E000000 		.4byte	.LASF32
+ 519 0010 0C       		.byte	0xc
+ 520 0011 45020000 		.4byte	.LASF33
+ 521 0015 00000000 		.4byte	.LASF34
+ 522 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 523 001d 00000000 		.4byte	0
+ 524 0021 00000000 		.4byte	.Ldebug_line0
+ 525 0025 02       		.uleb128 0x2
+ 526 0026 01       		.byte	0x1
+ 527 0027 06       		.byte	0x6
+ 528 0028 8E020000 		.4byte	.LASF0
+ 529 002c 02       		.uleb128 0x2
+ 530 002d 01       		.byte	0x1
+ 531 002e 08       		.byte	0x8
+ 532 002f 4D010000 		.4byte	.LASF1
+ 533 0033 02       		.uleb128 0x2
+ 534 0034 02       		.byte	0x2
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 13
+
+
+ 535 0035 05       		.byte	0x5
+ 536 0036 53020000 		.4byte	.LASF2
+ 537 003a 02       		.uleb128 0x2
+ 538 003b 02       		.byte	0x2
+ 539 003c 07       		.byte	0x7
+ 540 003d 6D010000 		.4byte	.LASF3
+ 541 0041 03       		.uleb128 0x3
+ 542 0042 FC000000 		.4byte	.LASF9
+ 543 0046 02       		.byte	0x2
+ 544 0047 3F       		.byte	0x3f
+ 545 0048 4C000000 		.4byte	0x4c
+ 546 004c 02       		.uleb128 0x2
+ 547 004d 04       		.byte	0x4
+ 548 004e 05       		.byte	0x5
+ 549 004f 79020000 		.4byte	.LASF4
+ 550 0053 02       		.uleb128 0x2
+ 551 0054 04       		.byte	0x4
+ 552 0055 07       		.byte	0x7
+ 553 0056 5B010000 		.4byte	.LASF5
+ 554 005a 02       		.uleb128 0x2
+ 555 005b 08       		.byte	0x8
+ 556 005c 05       		.byte	0x5
+ 557 005d 0F020000 		.4byte	.LASF6
+ 558 0061 02       		.uleb128 0x2
+ 559 0062 08       		.byte	0x8
+ 560 0063 07       		.byte	0x7
+ 561 0064 E7010000 		.4byte	.LASF7
+ 562 0068 04       		.uleb128 0x4
+ 563 0069 04       		.byte	0x4
+ 564 006a 05       		.byte	0x5
+ 565 006b 696E7400 		.ascii	"int\000"
+ 566 006f 02       		.uleb128 0x2
+ 567 0070 04       		.byte	0x4
+ 568 0071 07       		.byte	0x7
+ 569 0072 CF010000 		.4byte	.LASF8
+ 570 0076 03       		.uleb128 0x3
+ 571 0077 FE010000 		.4byte	.LASF10
+ 572 007b 03       		.byte	0x3
+ 573 007c 2C       		.byte	0x2c
+ 574 007d 41000000 		.4byte	0x41
+ 575 0081 05       		.uleb128 0x5
+ 576 0082 73020000 		.4byte	.LASF11
+ 577 0086 04       		.byte	0x4
+ 578 0087 E901     		.2byte	0x1e9
+ 579 0089 2C000000 		.4byte	0x2c
+ 580 008d 05       		.uleb128 0x5
+ 581 008e B2010000 		.4byte	.LASF12
+ 582 0092 04       		.byte	0x4
+ 583 0093 EA01     		.2byte	0x1ea
+ 584 0095 3A000000 		.4byte	0x3a
+ 585 0099 02       		.uleb128 0x2
+ 586 009a 04       		.byte	0x4
+ 587 009b 04       		.byte	0x4
+ 588 009c 28010000 		.4byte	.LASF13
+ 589 00a0 02       		.uleb128 0x2
+ 590 00a1 08       		.byte	0x8
+ 591 00a2 04       		.byte	0x4
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 14
+
+
+ 592 00a3 12010000 		.4byte	.LASF14
+ 593 00a7 02       		.uleb128 0x2
+ 594 00a8 01       		.byte	0x1
+ 595 00a9 08       		.byte	0x8
+ 596 00aa 2E020000 		.4byte	.LASF15
+ 597 00ae 05       		.uleb128 0x5
+ 598 00af 65000000 		.4byte	.LASF16
+ 599 00b3 04       		.byte	0x4
+ 600 00b4 8B02     		.2byte	0x28b
+ 601 00b6 53000000 		.4byte	0x53
+ 602 00ba 02       		.uleb128 0x2
+ 603 00bb 08       		.byte	0x8
+ 604 00bc 04       		.byte	0x4
+ 605 00bd 82020000 		.4byte	.LASF17
+ 606 00c1 02       		.uleb128 0x2
+ 607 00c2 04       		.byte	0x4
+ 608 00c3 07       		.byte	0x7
+ 609 00c4 06020000 		.4byte	.LASF18
+ 610 00c8 06       		.uleb128 0x6
+ 611 00c9 04       		.byte	0x4
+ 612 00ca 07       		.uleb128 0x7
+ 613 00cb 04       		.byte	0x4
+ 614 00cc D0000000 		.4byte	0xd0
+ 615 00d0 08       		.uleb128 0x8
+ 616 00d1 09       		.uleb128 0x9
+ 617 00d2 19010000 		.4byte	.LASF19
+ 618 00d6 01       		.byte	0x1
+ 619 00d7 22       		.byte	0x22
+ 620 00d8 81000000 		.4byte	0x81
+ 621 00dc 00000000 		.4byte	.LFB63
+ 622 00e0 2A000000 		.4byte	.LFE63-.LFB63
+ 623 00e4 01       		.uleb128 0x1
+ 624 00e5 9C       		.byte	0x9c
+ 625 00e6 F9000000 		.4byte	0xf9
+ 626 00ea 0A       		.uleb128 0xa
+ 627 00eb C7010000 		.4byte	.LASF21
+ 628 00ef 01       		.byte	0x1
+ 629 00f0 22       		.byte	0x22
+ 630 00f1 81000000 		.4byte	0x81
+ 631 00f5 02       		.uleb128 0x2
+ 632 00f6 91       		.byte	0x91
+ 633 00f7 77       		.sleb128 -9
+ 634 00f8 00       		.byte	0
+ 635 00f9 09       		.uleb128 0x9
+ 636 00fa 8D010000 		.4byte	.LASF20
+ 637 00fe 01       		.byte	0x1
+ 638 00ff 30       		.byte	0x30
+ 639 0100 81000000 		.4byte	0x81
+ 640 0104 00000000 		.4byte	.LFB64
+ 641 0108 38000000 		.4byte	.LFE64-.LFB64
+ 642 010c 01       		.uleb128 0x1
+ 643 010d 9C       		.byte	0x9c
+ 644 010e 3D010000 		.4byte	0x13d
+ 645 0112 0B       		.uleb128 0xb
+ 646 0113 726F7700 		.ascii	"row\000"
+ 647 0117 01       		.byte	0x1
+ 648 0118 30       		.byte	0x30
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 15
+
+
+ 649 0119 81000000 		.4byte	0x81
+ 650 011d 02       		.uleb128 0x2
+ 651 011e 91       		.byte	0x91
+ 652 011f 6F       		.sleb128 -17
+ 653 0120 0A       		.uleb128 0xa
+ 654 0121 06010000 		.4byte	.LASF22
+ 655 0125 01       		.byte	0x1
+ 656 0126 30       		.byte	0x30
+ 657 0127 81000000 		.4byte	0x81
+ 658 012b 02       		.uleb128 0x2
+ 659 012c 91       		.byte	0x91
+ 660 012d 6E       		.sleb128 -18
+ 661 012e 0C       		.uleb128 0xc
+ 662 012f 44010000 		.4byte	.LASF23
+ 663 0133 01       		.byte	0x1
+ 664 0134 32       		.byte	0x32
+ 665 0135 8D000000 		.4byte	0x8d
+ 666 0139 02       		.uleb128 0x2
+ 667 013a 91       		.byte	0x91
+ 668 013b 76       		.sleb128 -10
+ 669 013c 00       		.byte	0
+ 670 013d 0D       		.uleb128 0xd
+ 671 013e B9010000 		.4byte	.LASF35
+ 672 0142 01       		.byte	0x1
+ 673 0143 3C       		.byte	0x3c
+ 674 0144 00000000 		.4byte	.LFB65
+ 675 0148 3A000000 		.4byte	.LFE65-.LFB65
+ 676 014c 01       		.uleb128 0x1
+ 677 014d 9C       		.byte	0x9c
+ 678 014e 8B010000 		.4byte	0x18b
+ 679 0152 0B       		.uleb128 0xb
+ 680 0153 726F7700 		.ascii	"row\000"
+ 681 0157 01       		.byte	0x1
+ 682 0158 3C       		.byte	0x3c
+ 683 0159 81000000 		.4byte	0x81
+ 684 015d 02       		.uleb128 0x2
+ 685 015e 91       		.byte	0x91
+ 686 015f 6F       		.sleb128 -17
+ 687 0160 0B       		.uleb128 0xb
+ 688 0161 64737400 		.ascii	"dst\000"
+ 689 0165 01       		.byte	0x1
+ 690 0166 3C       		.byte	0x3c
+ 691 0167 C8000000 		.4byte	0xc8
+ 692 016b 02       		.uleb128 0x2
+ 693 016c 91       		.byte	0x91
+ 694 016d 68       		.sleb128 -24
+ 695 016e 0B       		.uleb128 0xb
+ 696 016f 6C656E00 		.ascii	"len\000"
+ 697 0173 01       		.byte	0x1
+ 698 0174 3C       		.byte	0x3c
+ 699 0175 81000000 		.4byte	0x81
+ 700 0179 02       		.uleb128 0x2
+ 701 017a 91       		.byte	0x91
+ 702 017b 6E       		.sleb128 -18
+ 703 017c 0C       		.uleb128 0xc
+ 704 017d 44010000 		.4byte	.LASF23
+ 705 0181 01       		.byte	0x1
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 16
+
+
+ 706 0182 3E       		.byte	0x3e
+ 707 0183 8D000000 		.4byte	0x8d
+ 708 0187 02       		.uleb128 0x2
+ 709 0188 91       		.byte	0x91
+ 710 0189 76       		.sleb128 -10
+ 711 018a 00       		.byte	0
+ 712 018b 0E       		.uleb128 0xe
+ 713 018c 33010000 		.4byte	.LASF30
+ 714 0190 01       		.byte	0x1
+ 715 0191 46       		.byte	0x46
+ 716 0192 00000000 		.4byte	.LFB66
+ 717 0196 0C000000 		.4byte	.LFE66-.LFB66
+ 718 019a 01       		.uleb128 0x1
+ 719 019b 9C       		.byte	0x9c
+ 720 019c 0F       		.uleb128 0xf
+ 721 019d 33020000 		.4byte	.LASF26
+ 722 01a1 01       		.byte	0x1
+ 723 01a2 4F       		.byte	0x4f
+ 724 01a3 81000000 		.4byte	0x81
+ 725 01a7 00000000 		.4byte	.LFB67
+ 726 01ab 8E000000 		.4byte	.LFE67-.LFB67
+ 727 01af 01       		.uleb128 0x1
+ 728 01b0 9C       		.byte	0x9c
+ 729 01b1 08020000 		.4byte	0x208
+ 730 01b5 0A       		.uleb128 0xa
+ 731 01b6 C7010000 		.4byte	.LASF21
+ 732 01ba 01       		.byte	0x1
+ 733 01bb 4F       		.byte	0x4f
+ 734 01bc 81000000 		.4byte	0x81
+ 735 01c0 02       		.uleb128 0x2
+ 736 01c1 91       		.byte	0x91
+ 737 01c2 5F       		.sleb128 -33
+ 738 01c3 0A       		.uleb128 0xa
+ 739 01c4 2E010000 		.4byte	.LASF24
+ 740 01c8 01       		.byte	0x1
+ 741 01c9 4F       		.byte	0x4f
+ 742 01ca CA000000 		.4byte	0xca
+ 743 01ce 02       		.uleb128 0x2
+ 744 01cf 91       		.byte	0x91
+ 745 01d0 58       		.sleb128 -40
+ 746 01d1 0B       		.uleb128 0xb
+ 747 01d2 6C656E00 		.ascii	"len\000"
+ 748 01d6 01       		.byte	0x1
+ 749 01d7 4F       		.byte	0x4f
+ 750 01d8 81000000 		.4byte	0x81
+ 751 01dc 02       		.uleb128 0x2
+ 752 01dd 91       		.byte	0x91
+ 753 01de 5E       		.sleb128 -34
+ 754 01df 10       		.uleb128 0x10
+ 755 01e0 726F7700 		.ascii	"row\000"
+ 756 01e4 01       		.byte	0x1
+ 757 01e5 54       		.byte	0x54
+ 758 01e6 81000000 		.4byte	0x81
+ 759 01ea 02       		.uleb128 0x2
+ 760 01eb 91       		.byte	0x91
+ 761 01ec 77       		.sleb128 -9
+ 762 01ed 0C       		.uleb128 0xc
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 17
+
+
+ 763 01ee A0020000 		.4byte	.LASF25
+ 764 01f2 01       		.byte	0x1
+ 765 01f3 58       		.byte	0x58
+ 766 01f4 08020000 		.4byte	0x208
+ 767 01f8 02       		.uleb128 0x2
+ 768 01f9 91       		.byte	0x91
+ 769 01fa 60       		.sleb128 -32
+ 770 01fb 10       		.uleb128 0x10
+ 771 01fc 7200     		.ascii	"r\000"
+ 772 01fe 01       		.byte	0x1
+ 773 01ff 62       		.byte	0x62
+ 774 0200 AE000000 		.4byte	0xae
+ 775 0204 02       		.uleb128 0x2
+ 776 0205 91       		.byte	0x91
+ 777 0206 70       		.sleb128 -16
+ 778 0207 00       		.byte	0
+ 779 0208 11       		.uleb128 0x11
+ 780 0209 81000000 		.4byte	0x81
+ 781 020d 18020000 		.4byte	0x218
+ 782 0211 12       		.uleb128 0x12
+ 783 0212 C1000000 		.4byte	0xc1
+ 784 0216 0F       		.byte	0xf
+ 785 0217 00       		.byte	0
+ 786 0218 0F       		.uleb128 0xf
+ 787 0219 1D020000 		.4byte	.LASF27
+ 788 021d 01       		.byte	0x1
+ 789 021e 69       		.byte	0x69
+ 790 021f 81000000 		.4byte	0x81
+ 791 0223 00000000 		.4byte	.LFB68
+ 792 0227 7A000000 		.4byte	.LFE68-.LFB68
+ 793 022b 01       		.uleb128 0x1
+ 794 022c 9C       		.byte	0x9c
+ 795 022d 78020000 		.4byte	0x278
+ 796 0231 0A       		.uleb128 0xa
+ 797 0232 C7010000 		.4byte	.LASF21
+ 798 0236 01       		.byte	0x1
+ 799 0237 69       		.byte	0x69
+ 800 0238 81000000 		.4byte	0x81
+ 801 023c 02       		.uleb128 0x2
+ 802 023d 91       		.byte	0x91
+ 803 023e 6F       		.sleb128 -17
+ 804 023f 0B       		.uleb128 0xb
+ 805 0240 6F757400 		.ascii	"out\000"
+ 806 0244 01       		.byte	0x1
+ 807 0245 69       		.byte	0x69
+ 808 0246 C8000000 		.4byte	0xc8
+ 809 024a 02       		.uleb128 0x2
+ 810 024b 91       		.byte	0x91
+ 811 024c 68       		.sleb128 -24
+ 812 024d 0B       		.uleb128 0xb
+ 813 024e 6C656E00 		.ascii	"len\000"
+ 814 0252 01       		.byte	0x1
+ 815 0253 69       		.byte	0x69
+ 816 0254 81000000 		.4byte	0x81
+ 817 0258 02       		.uleb128 0x2
+ 818 0259 91       		.byte	0x91
+ 819 025a 6E       		.sleb128 -18
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 18
+
+
+ 820 025b 10       		.uleb128 0x10
+ 821 025c 726F7700 		.ascii	"row\000"
+ 822 0260 01       		.byte	0x1
+ 823 0261 6D       		.byte	0x6d
+ 824 0262 81000000 		.4byte	0x81
+ 825 0266 02       		.uleb128 0x2
+ 826 0267 91       		.byte	0x91
+ 827 0268 77       		.sleb128 -9
+ 828 0269 0C       		.uleb128 0xc
+ 829 026a DC010000 		.4byte	.LASF28
+ 830 026e 01       		.byte	0x1
+ 831 026f 75       		.byte	0x75
+ 832 0270 81000000 		.4byte	0x81
+ 833 0274 02       		.uleb128 0x2
+ 834 0275 91       		.byte	0x91
+ 835 0276 76       		.sleb128 -10
+ 836 0277 00       		.byte	0
+ 837 0278 13       		.uleb128 0x13
+ 838 0279 9B010000 		.4byte	.LASF36
+ 839 027d 01       		.byte	0x1
+ 840 027e 81       		.byte	0x81
+ 841 027f 00000000 		.4byte	.LFB69
+ 842 0283 46000000 		.4byte	.LFE69-.LFB69
+ 843 0287 01       		.uleb128 0x1
+ 844 0288 9C       		.byte	0x9c
+ 845 0289 B8020000 		.4byte	0x2b8
+ 846 028d 0A       		.uleb128 0xa
+ 847 028e C7010000 		.4byte	.LASF21
+ 848 0292 01       		.byte	0x1
+ 849 0293 81       		.byte	0x81
+ 850 0294 81000000 		.4byte	0x81
+ 851 0298 02       		.uleb128 0x2
+ 852 0299 91       		.byte	0x91
+ 853 029a 5F       		.sleb128 -33
+ 854 029b 10       		.uleb128 0x10
+ 855 029c 726F7700 		.ascii	"row\000"
+ 856 02a0 01       		.byte	0x1
+ 857 02a1 83       		.byte	0x83
+ 858 02a2 81000000 		.4byte	0x81
+ 859 02a6 02       		.uleb128 0x2
+ 860 02a7 91       		.byte	0x91
+ 861 02a8 77       		.sleb128 -9
+ 862 02a9 0C       		.uleb128 0xc
+ 863 02aa 9A020000 		.4byte	.LASF29
+ 864 02ae 01       		.byte	0x1
+ 865 02af 86       		.byte	0x86
+ 866 02b0 08020000 		.4byte	0x208
+ 867 02b4 02       		.uleb128 0x2
+ 868 02b5 91       		.byte	0x91
+ 869 02b6 64       		.sleb128 -28
+ 870 02b7 00       		.byte	0
+ 871 02b8 0E       		.uleb128 0xe
+ 872 02b9 5D020000 		.4byte	.LASF31
+ 873 02bd 01       		.byte	0x1
+ 874 02be 90       		.byte	0x90
+ 875 02bf 00000000 		.4byte	.LFB70
+ 876 02c3 14000000 		.4byte	.LFE70-.LFB70
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 19
+
+
+ 877 02c7 01       		.uleb128 0x1
+ 878 02c8 9C       		.byte	0x9c
+ 879 02c9 14       		.uleb128 0x14
+ 880 02ca 80010000 		.4byte	.LASF37
+ 881 02ce 05       		.byte	0x5
+ 882 02cf 1207     		.2byte	0x712
+ 883 02d1 D5020000 		.4byte	0x2d5
+ 884 02d5 15       		.uleb128 0x15
+ 885 02d6 76000000 		.4byte	0x76
+ 886 02da 00       		.byte	0
+ 887              		.section	.debug_abbrev,"",%progbits
+ 888              	.Ldebug_abbrev0:
+ 889 0000 01       		.uleb128 0x1
+ 890 0001 11       		.uleb128 0x11
+ 891 0002 01       		.byte	0x1
+ 892 0003 25       		.uleb128 0x25
+ 893 0004 0E       		.uleb128 0xe
+ 894 0005 13       		.uleb128 0x13
+ 895 0006 0B       		.uleb128 0xb
+ 896 0007 03       		.uleb128 0x3
+ 897 0008 0E       		.uleb128 0xe
+ 898 0009 1B       		.uleb128 0x1b
+ 899 000a 0E       		.uleb128 0xe
+ 900 000b 55       		.uleb128 0x55
+ 901 000c 17       		.uleb128 0x17
+ 902 000d 11       		.uleb128 0x11
+ 903 000e 01       		.uleb128 0x1
+ 904 000f 10       		.uleb128 0x10
+ 905 0010 17       		.uleb128 0x17
+ 906 0011 00       		.byte	0
+ 907 0012 00       		.byte	0
+ 908 0013 02       		.uleb128 0x2
+ 909 0014 24       		.uleb128 0x24
+ 910 0015 00       		.byte	0
+ 911 0016 0B       		.uleb128 0xb
+ 912 0017 0B       		.uleb128 0xb
+ 913 0018 3E       		.uleb128 0x3e
+ 914 0019 0B       		.uleb128 0xb
+ 915 001a 03       		.uleb128 0x3
+ 916 001b 0E       		.uleb128 0xe
+ 917 001c 00       		.byte	0
+ 918 001d 00       		.byte	0
+ 919 001e 03       		.uleb128 0x3
+ 920 001f 16       		.uleb128 0x16
+ 921 0020 00       		.byte	0
+ 922 0021 03       		.uleb128 0x3
+ 923 0022 0E       		.uleb128 0xe
+ 924 0023 3A       		.uleb128 0x3a
+ 925 0024 0B       		.uleb128 0xb
+ 926 0025 3B       		.uleb128 0x3b
+ 927 0026 0B       		.uleb128 0xb
+ 928 0027 49       		.uleb128 0x49
+ 929 0028 13       		.uleb128 0x13
+ 930 0029 00       		.byte	0
+ 931 002a 00       		.byte	0
+ 932 002b 04       		.uleb128 0x4
+ 933 002c 24       		.uleb128 0x24
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 20
+
+
+ 934 002d 00       		.byte	0
+ 935 002e 0B       		.uleb128 0xb
+ 936 002f 0B       		.uleb128 0xb
+ 937 0030 3E       		.uleb128 0x3e
+ 938 0031 0B       		.uleb128 0xb
+ 939 0032 03       		.uleb128 0x3
+ 940 0033 08       		.uleb128 0x8
+ 941 0034 00       		.byte	0
+ 942 0035 00       		.byte	0
+ 943 0036 05       		.uleb128 0x5
+ 944 0037 16       		.uleb128 0x16
+ 945 0038 00       		.byte	0
+ 946 0039 03       		.uleb128 0x3
+ 947 003a 0E       		.uleb128 0xe
+ 948 003b 3A       		.uleb128 0x3a
+ 949 003c 0B       		.uleb128 0xb
+ 950 003d 3B       		.uleb128 0x3b
+ 951 003e 05       		.uleb128 0x5
+ 952 003f 49       		.uleb128 0x49
+ 953 0040 13       		.uleb128 0x13
+ 954 0041 00       		.byte	0
+ 955 0042 00       		.byte	0
+ 956 0043 06       		.uleb128 0x6
+ 957 0044 0F       		.uleb128 0xf
+ 958 0045 00       		.byte	0
+ 959 0046 0B       		.uleb128 0xb
+ 960 0047 0B       		.uleb128 0xb
+ 961 0048 00       		.byte	0
+ 962 0049 00       		.byte	0
+ 963 004a 07       		.uleb128 0x7
+ 964 004b 0F       		.uleb128 0xf
+ 965 004c 00       		.byte	0
+ 966 004d 0B       		.uleb128 0xb
+ 967 004e 0B       		.uleb128 0xb
+ 968 004f 49       		.uleb128 0x49
+ 969 0050 13       		.uleb128 0x13
+ 970 0051 00       		.byte	0
+ 971 0052 00       		.byte	0
+ 972 0053 08       		.uleb128 0x8
+ 973 0054 26       		.uleb128 0x26
+ 974 0055 00       		.byte	0
+ 975 0056 00       		.byte	0
+ 976 0057 00       		.byte	0
+ 977 0058 09       		.uleb128 0x9
+ 978 0059 2E       		.uleb128 0x2e
+ 979 005a 01       		.byte	0x1
+ 980 005b 03       		.uleb128 0x3
+ 981 005c 0E       		.uleb128 0xe
+ 982 005d 3A       		.uleb128 0x3a
+ 983 005e 0B       		.uleb128 0xb
+ 984 005f 3B       		.uleb128 0x3b
+ 985 0060 0B       		.uleb128 0xb
+ 986 0061 27       		.uleb128 0x27
+ 987 0062 19       		.uleb128 0x19
+ 988 0063 49       		.uleb128 0x49
+ 989 0064 13       		.uleb128 0x13
+ 990 0065 11       		.uleb128 0x11
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 21
+
+
+ 991 0066 01       		.uleb128 0x1
+ 992 0067 12       		.uleb128 0x12
+ 993 0068 06       		.uleb128 0x6
+ 994 0069 40       		.uleb128 0x40
+ 995 006a 18       		.uleb128 0x18
+ 996 006b 9742     		.uleb128 0x2117
+ 997 006d 19       		.uleb128 0x19
+ 998 006e 01       		.uleb128 0x1
+ 999 006f 13       		.uleb128 0x13
+ 1000 0070 00       		.byte	0
+ 1001 0071 00       		.byte	0
+ 1002 0072 0A       		.uleb128 0xa
+ 1003 0073 05       		.uleb128 0x5
+ 1004 0074 00       		.byte	0
+ 1005 0075 03       		.uleb128 0x3
+ 1006 0076 0E       		.uleb128 0xe
+ 1007 0077 3A       		.uleb128 0x3a
+ 1008 0078 0B       		.uleb128 0xb
+ 1009 0079 3B       		.uleb128 0x3b
+ 1010 007a 0B       		.uleb128 0xb
+ 1011 007b 49       		.uleb128 0x49
+ 1012 007c 13       		.uleb128 0x13
+ 1013 007d 02       		.uleb128 0x2
+ 1014 007e 18       		.uleb128 0x18
+ 1015 007f 00       		.byte	0
+ 1016 0080 00       		.byte	0
+ 1017 0081 0B       		.uleb128 0xb
+ 1018 0082 05       		.uleb128 0x5
+ 1019 0083 00       		.byte	0
+ 1020 0084 03       		.uleb128 0x3
+ 1021 0085 08       		.uleb128 0x8
+ 1022 0086 3A       		.uleb128 0x3a
+ 1023 0087 0B       		.uleb128 0xb
+ 1024 0088 3B       		.uleb128 0x3b
+ 1025 0089 0B       		.uleb128 0xb
+ 1026 008a 49       		.uleb128 0x49
+ 1027 008b 13       		.uleb128 0x13
+ 1028 008c 02       		.uleb128 0x2
+ 1029 008d 18       		.uleb128 0x18
+ 1030 008e 00       		.byte	0
+ 1031 008f 00       		.byte	0
+ 1032 0090 0C       		.uleb128 0xc
+ 1033 0091 34       		.uleb128 0x34
+ 1034 0092 00       		.byte	0
+ 1035 0093 03       		.uleb128 0x3
+ 1036 0094 0E       		.uleb128 0xe
+ 1037 0095 3A       		.uleb128 0x3a
+ 1038 0096 0B       		.uleb128 0xb
+ 1039 0097 3B       		.uleb128 0x3b
+ 1040 0098 0B       		.uleb128 0xb
+ 1041 0099 49       		.uleb128 0x49
+ 1042 009a 13       		.uleb128 0x13
+ 1043 009b 02       		.uleb128 0x2
+ 1044 009c 18       		.uleb128 0x18
+ 1045 009d 00       		.byte	0
+ 1046 009e 00       		.byte	0
+ 1047 009f 0D       		.uleb128 0xd
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 22
+
+
+ 1048 00a0 2E       		.uleb128 0x2e
+ 1049 00a1 01       		.byte	0x1
+ 1050 00a2 03       		.uleb128 0x3
+ 1051 00a3 0E       		.uleb128 0xe
+ 1052 00a4 3A       		.uleb128 0x3a
+ 1053 00a5 0B       		.uleb128 0xb
+ 1054 00a6 3B       		.uleb128 0x3b
+ 1055 00a7 0B       		.uleb128 0xb
+ 1056 00a8 27       		.uleb128 0x27
+ 1057 00a9 19       		.uleb128 0x19
+ 1058 00aa 11       		.uleb128 0x11
+ 1059 00ab 01       		.uleb128 0x1
+ 1060 00ac 12       		.uleb128 0x12
+ 1061 00ad 06       		.uleb128 0x6
+ 1062 00ae 40       		.uleb128 0x40
+ 1063 00af 18       		.uleb128 0x18
+ 1064 00b0 9642     		.uleb128 0x2116
+ 1065 00b2 19       		.uleb128 0x19
+ 1066 00b3 01       		.uleb128 0x1
+ 1067 00b4 13       		.uleb128 0x13
+ 1068 00b5 00       		.byte	0
+ 1069 00b6 00       		.byte	0
+ 1070 00b7 0E       		.uleb128 0xe
+ 1071 00b8 2E       		.uleb128 0x2e
+ 1072 00b9 00       		.byte	0
+ 1073 00ba 3F       		.uleb128 0x3f
+ 1074 00bb 19       		.uleb128 0x19
+ 1075 00bc 03       		.uleb128 0x3
+ 1076 00bd 0E       		.uleb128 0xe
+ 1077 00be 3A       		.uleb128 0x3a
+ 1078 00bf 0B       		.uleb128 0xb
+ 1079 00c0 3B       		.uleb128 0x3b
+ 1080 00c1 0B       		.uleb128 0xb
+ 1081 00c2 27       		.uleb128 0x27
+ 1082 00c3 19       		.uleb128 0x19
+ 1083 00c4 11       		.uleb128 0x11
+ 1084 00c5 01       		.uleb128 0x1
+ 1085 00c6 12       		.uleb128 0x12
+ 1086 00c7 06       		.uleb128 0x6
+ 1087 00c8 40       		.uleb128 0x40
+ 1088 00c9 18       		.uleb128 0x18
+ 1089 00ca 9642     		.uleb128 0x2116
+ 1090 00cc 19       		.uleb128 0x19
+ 1091 00cd 00       		.byte	0
+ 1092 00ce 00       		.byte	0
+ 1093 00cf 0F       		.uleb128 0xf
+ 1094 00d0 2E       		.uleb128 0x2e
+ 1095 00d1 01       		.byte	0x1
+ 1096 00d2 3F       		.uleb128 0x3f
+ 1097 00d3 19       		.uleb128 0x19
+ 1098 00d4 03       		.uleb128 0x3
+ 1099 00d5 0E       		.uleb128 0xe
+ 1100 00d6 3A       		.uleb128 0x3a
+ 1101 00d7 0B       		.uleb128 0xb
+ 1102 00d8 3B       		.uleb128 0x3b
+ 1103 00d9 0B       		.uleb128 0xb
+ 1104 00da 27       		.uleb128 0x27
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 23
+
+
+ 1105 00db 19       		.uleb128 0x19
+ 1106 00dc 49       		.uleb128 0x49
+ 1107 00dd 13       		.uleb128 0x13
+ 1108 00de 11       		.uleb128 0x11
+ 1109 00df 01       		.uleb128 0x1
+ 1110 00e0 12       		.uleb128 0x12
+ 1111 00e1 06       		.uleb128 0x6
+ 1112 00e2 40       		.uleb128 0x40
+ 1113 00e3 18       		.uleb128 0x18
+ 1114 00e4 9642     		.uleb128 0x2116
+ 1115 00e6 19       		.uleb128 0x19
+ 1116 00e7 01       		.uleb128 0x1
+ 1117 00e8 13       		.uleb128 0x13
+ 1118 00e9 00       		.byte	0
+ 1119 00ea 00       		.byte	0
+ 1120 00eb 10       		.uleb128 0x10
+ 1121 00ec 34       		.uleb128 0x34
+ 1122 00ed 00       		.byte	0
+ 1123 00ee 03       		.uleb128 0x3
+ 1124 00ef 08       		.uleb128 0x8
+ 1125 00f0 3A       		.uleb128 0x3a
+ 1126 00f1 0B       		.uleb128 0xb
+ 1127 00f2 3B       		.uleb128 0x3b
+ 1128 00f3 0B       		.uleb128 0xb
+ 1129 00f4 49       		.uleb128 0x49
+ 1130 00f5 13       		.uleb128 0x13
+ 1131 00f6 02       		.uleb128 0x2
+ 1132 00f7 18       		.uleb128 0x18
+ 1133 00f8 00       		.byte	0
+ 1134 00f9 00       		.byte	0
+ 1135 00fa 11       		.uleb128 0x11
+ 1136 00fb 01       		.uleb128 0x1
+ 1137 00fc 01       		.byte	0x1
+ 1138 00fd 49       		.uleb128 0x49
+ 1139 00fe 13       		.uleb128 0x13
+ 1140 00ff 01       		.uleb128 0x1
+ 1141 0100 13       		.uleb128 0x13
+ 1142 0101 00       		.byte	0
+ 1143 0102 00       		.byte	0
+ 1144 0103 12       		.uleb128 0x12
+ 1145 0104 21       		.uleb128 0x21
+ 1146 0105 00       		.byte	0
+ 1147 0106 49       		.uleb128 0x49
+ 1148 0107 13       		.uleb128 0x13
+ 1149 0108 2F       		.uleb128 0x2f
+ 1150 0109 0B       		.uleb128 0xb
+ 1151 010a 00       		.byte	0
+ 1152 010b 00       		.byte	0
+ 1153 010c 13       		.uleb128 0x13
+ 1154 010d 2E       		.uleb128 0x2e
+ 1155 010e 01       		.byte	0x1
+ 1156 010f 3F       		.uleb128 0x3f
+ 1157 0110 19       		.uleb128 0x19
+ 1158 0111 03       		.uleb128 0x3
+ 1159 0112 0E       		.uleb128 0xe
+ 1160 0113 3A       		.uleb128 0x3a
+ 1161 0114 0B       		.uleb128 0xb
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 24
+
+
+ 1162 0115 3B       		.uleb128 0x3b
+ 1163 0116 0B       		.uleb128 0xb
+ 1164 0117 27       		.uleb128 0x27
+ 1165 0118 19       		.uleb128 0x19
+ 1166 0119 11       		.uleb128 0x11
+ 1167 011a 01       		.uleb128 0x1
+ 1168 011b 12       		.uleb128 0x12
+ 1169 011c 06       		.uleb128 0x6
+ 1170 011d 40       		.uleb128 0x40
+ 1171 011e 18       		.uleb128 0x18
+ 1172 011f 9642     		.uleb128 0x2116
+ 1173 0121 19       		.uleb128 0x19
+ 1174 0122 01       		.uleb128 0x1
+ 1175 0123 13       		.uleb128 0x13
+ 1176 0124 00       		.byte	0
+ 1177 0125 00       		.byte	0
+ 1178 0126 14       		.uleb128 0x14
+ 1179 0127 34       		.uleb128 0x34
+ 1180 0128 00       		.byte	0
+ 1181 0129 03       		.uleb128 0x3
+ 1182 012a 0E       		.uleb128 0xe
+ 1183 012b 3A       		.uleb128 0x3a
+ 1184 012c 0B       		.uleb128 0xb
+ 1185 012d 3B       		.uleb128 0x3b
+ 1186 012e 05       		.uleb128 0x5
+ 1187 012f 49       		.uleb128 0x49
+ 1188 0130 13       		.uleb128 0x13
+ 1189 0131 3F       		.uleb128 0x3f
+ 1190 0132 19       		.uleb128 0x19
+ 1191 0133 3C       		.uleb128 0x3c
+ 1192 0134 19       		.uleb128 0x19
+ 1193 0135 00       		.byte	0
+ 1194 0136 00       		.byte	0
+ 1195 0137 15       		.uleb128 0x15
+ 1196 0138 35       		.uleb128 0x35
+ 1197 0139 00       		.byte	0
+ 1198 013a 49       		.uleb128 0x49
+ 1199 013b 13       		.uleb128 0x13
+ 1200 013c 00       		.byte	0
+ 1201 013d 00       		.byte	0
+ 1202 013e 00       		.byte	0
+ 1203              		.section	.debug_aranges,"",%progbits
+ 1204 0000 54000000 		.4byte	0x54
+ 1205 0004 0200     		.2byte	0x2
+ 1206 0006 00000000 		.4byte	.Ldebug_info0
+ 1207 000a 04       		.byte	0x4
+ 1208 000b 00       		.byte	0
+ 1209 000c 0000     		.2byte	0
+ 1210 000e 0000     		.2byte	0
+ 1211 0010 00000000 		.4byte	.LFB63
+ 1212 0014 2A000000 		.4byte	.LFE63-.LFB63
+ 1213 0018 00000000 		.4byte	.LFB64
+ 1214 001c 38000000 		.4byte	.LFE64-.LFB64
+ 1215 0020 00000000 		.4byte	.LFB65
+ 1216 0024 3A000000 		.4byte	.LFE65-.LFB65
+ 1217 0028 00000000 		.4byte	.LFB66
+ 1218 002c 0C000000 		.4byte	.LFE66-.LFB66
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 25
+
+
+ 1219 0030 00000000 		.4byte	.LFB67
+ 1220 0034 8E000000 		.4byte	.LFE67-.LFB67
+ 1221 0038 00000000 		.4byte	.LFB68
+ 1222 003c 7A000000 		.4byte	.LFE68-.LFB68
+ 1223 0040 00000000 		.4byte	.LFB69
+ 1224 0044 46000000 		.4byte	.LFE69-.LFB69
+ 1225 0048 00000000 		.4byte	.LFB70
+ 1226 004c 14000000 		.4byte	.LFE70-.LFB70
+ 1227 0050 00000000 		.4byte	0
+ 1228 0054 00000000 		.4byte	0
+ 1229              		.section	.debug_ranges,"",%progbits
+ 1230              	.Ldebug_ranges0:
+ 1231 0000 00000000 		.4byte	.LFB63
+ 1232 0004 2A000000 		.4byte	.LFE63
+ 1233 0008 00000000 		.4byte	.LFB64
+ 1234 000c 38000000 		.4byte	.LFE64
+ 1235 0010 00000000 		.4byte	.LFB65
+ 1236 0014 3A000000 		.4byte	.LFE65
+ 1237 0018 00000000 		.4byte	.LFB66
+ 1238 001c 0C000000 		.4byte	.LFE66
+ 1239 0020 00000000 		.4byte	.LFB67
+ 1240 0024 8E000000 		.4byte	.LFE67
+ 1241 0028 00000000 		.4byte	.LFB68
+ 1242 002c 7A000000 		.4byte	.LFE68
+ 1243 0030 00000000 		.4byte	.LFB69
+ 1244 0034 46000000 		.4byte	.LFE69
+ 1245 0038 00000000 		.4byte	.LFB70
+ 1246 003c 14000000 		.4byte	.LFE70
+ 1247 0040 00000000 		.4byte	0
+ 1248 0044 00000000 		.4byte	0
+ 1249              		.section	.debug_line,"",%progbits
+ 1250              	.Ldebug_line0:
+ 1251 0000 47020000 		.section	.debug_str,"MS",%progbits,1
+ 1251      02005301 
+ 1251      00000201 
+ 1251      FB0E0D00 
+ 1251      01010101 
+ 1252              	.LASF34:
+ 1253 0000 433A5C55 		.ascii	"C:\\Users\\yoons\\Documents\\wprkspace-hamish\\PSoC"
+ 1253      73657273 
+ 1253      5C796F6F 
+ 1253      6E735C44 
+ 1253      6F63756D 
+ 1254 002e 2D50726F 		.ascii	"-Programs\\test_projects\\Proj08_DemoTxIntegration."
+ 1254      6772616D 
+ 1254      735C7465 
+ 1254      73745F70 
+ 1254      726F6A65 
+ 1255 005f 63796473 		.ascii	"cydsn\000"
+ 1255      6E00
+ 1256              	.LASF16:
+ 1257 0065 63797374 		.ascii	"cystatus\000"
+ 1257      61747573 
+ 1257      00
+ 1258              	.LASF32:
+ 1259 006e 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1259      43313120 
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 26
+
+
+ 1259      352E342E 
+ 1259      31203230 
+ 1259      31363036 
+ 1260 00a1 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1260      20726576 
+ 1260      6973696F 
+ 1260      6E203233 
+ 1260      37373135 
+ 1261 00d4 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 1261      66756E63 
+ 1261      74696F6E 
+ 1261      2D736563 
+ 1261      74696F6E 
+ 1262              	.LASF9:
+ 1263 00fc 5F5F696E 		.ascii	"__int32_t\000"
+ 1263      7433325F 
+ 1263      7400
+ 1264              	.LASF22:
+ 1265 0106 62797465 		.ascii	"byte_offset\000"
+ 1265      5F6F6666 
+ 1265      73657400 
+ 1266              	.LASF14:
+ 1267 0112 646F7562 		.ascii	"double\000"
+ 1267      6C6500
+ 1268              	.LASF19:
+ 1269 0119 736C6F74 		.ascii	"slot_id_to_row\000"
+ 1269      5F69645F 
+ 1269      746F5F72 
+ 1269      6F7700
+ 1270              	.LASF13:
+ 1271 0128 666C6F61 		.ascii	"float\000"
+ 1271      7400
+ 1272              	.LASF24:
+ 1273 012e 64617461 		.ascii	"data\000"
+ 1273      00
+ 1274              	.LASF30:
+ 1275 0133 70736F63 		.ascii	"psoc_eeprom_init\000"
+ 1275      5F656570 
+ 1275      726F6D5F 
+ 1275      696E6974 
+ 1275      00
+ 1276              	.LASF23:
+ 1277 0144 6162735F 		.ascii	"abs_addr\000"
+ 1277      61646472 
+ 1277      00
+ 1278              	.LASF1:
+ 1279 014d 756E7369 		.ascii	"unsigned char\000"
+ 1279      676E6564 
+ 1279      20636861 
+ 1279      7200
+ 1280              	.LASF5:
+ 1281 015b 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1281      20756E73 
+ 1281      69676E65 
+ 1281      6420696E 
+ 1281      7400
+ 1282              	.LASF3:
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 27
+
+
+ 1283 016d 73686F72 		.ascii	"short unsigned int\000"
+ 1283      7420756E 
+ 1283      7369676E 
+ 1283      65642069 
+ 1283      6E7400
+ 1284              	.LASF37:
+ 1285 0180 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1285      52784275 
+ 1285      66666572 
+ 1285      00
+ 1286              	.LASF20:
+ 1287 018d 72656164 		.ascii	"read_row_byte\000"
+ 1287      5F726F77 
+ 1287      5F627974 
+ 1287      6500
+ 1288              	.LASF36:
+ 1289 019b 70736F63 		.ascii	"psoc_eeprom_erase_slot\000"
+ 1289      5F656570 
+ 1289      726F6D5F 
+ 1289      65726173 
+ 1289      655F736C 
+ 1290              	.LASF12:
+ 1291 01b2 75696E74 		.ascii	"uint16\000"
+ 1291      313600
+ 1292              	.LASF35:
+ 1293 01b9 72656164 		.ascii	"read_row_data\000"
+ 1293      5F726F77 
+ 1293      5F646174 
+ 1293      6100
+ 1294              	.LASF21:
+ 1295 01c7 736C6F74 		.ascii	"slot_id\000"
+ 1295      5F696400 
+ 1296              	.LASF8:
+ 1297 01cf 756E7369 		.ascii	"unsigned int\000"
+ 1297      676E6564 
+ 1297      20696E74 
+ 1297      00
+ 1298              	.LASF28:
+ 1299 01dc 73746F72 		.ascii	"stored_len\000"
+ 1299      65645F6C 
+ 1299      656E00
+ 1300              	.LASF7:
+ 1301 01e7 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1301      206C6F6E 
+ 1301      6720756E 
+ 1301      7369676E 
+ 1301      65642069 
+ 1302              	.LASF10:
+ 1303 01fe 696E7433 		.ascii	"int32_t\000"
+ 1303      325F7400 
+ 1304              	.LASF18:
+ 1305 0206 73697A65 		.ascii	"sizetype\000"
+ 1305      74797065 
+ 1305      00
+ 1306              	.LASF6:
+ 1307 020f 6C6F6E67 		.ascii	"long long int\000"
+ 1307      206C6F6E 
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccrF5rAx.s 			page 28
+
+
+ 1307      6720696E 
+ 1307      7400
+ 1308              	.LASF27:
+ 1309 021d 70736F63 		.ascii	"psoc_eeprom_read\000"
+ 1309      5F656570 
+ 1309      726F6D5F 
+ 1309      72656164 
+ 1309      00
+ 1310              	.LASF15:
+ 1311 022e 63686172 		.ascii	"char\000"
+ 1311      00
+ 1312              	.LASF26:
+ 1313 0233 70736F63 		.ascii	"psoc_eeprom_write\000"
+ 1313      5F656570 
+ 1313      726F6D5F 
+ 1313      77726974 
+ 1313      6500
+ 1314              	.LASF33:
+ 1315 0245 70736F63 		.ascii	"psoc_eeprom.c\000"
+ 1315      5F656570 
+ 1315      726F6D2E 
+ 1315      6300
+ 1316              	.LASF2:
+ 1317 0253 73686F72 		.ascii	"short int\000"
+ 1317      7420696E 
+ 1317      7400
+ 1318              	.LASF31:
+ 1319 025d 70736F63 		.ascii	"psoc_eeprom_erase_all\000"
+ 1319      5F656570 
+ 1319      726F6D5F 
+ 1319      65726173 
+ 1319      655F616C 
+ 1320              	.LASF11:
+ 1321 0273 75696E74 		.ascii	"uint8\000"
+ 1321      3800
+ 1322              	.LASF4:
+ 1323 0279 6C6F6E67 		.ascii	"long int\000"
+ 1323      20696E74 
+ 1323      00
+ 1324              	.LASF17:
+ 1325 0282 6C6F6E67 		.ascii	"long double\000"
+ 1325      20646F75 
+ 1325      626C6500 
+ 1326              	.LASF0:
+ 1327 028e 7369676E 		.ascii	"signed char\000"
+ 1327      65642063 
+ 1327      68617200 
+ 1328              	.LASF29:
+ 1329 029a 7A65726F 		.ascii	"zeros\000"
+ 1329      7300
+ 1330              	.LASF25:
+ 1331 02a0 726F775F 		.ascii	"row_buf\000"
+ 1331      62756600 
+ 1332              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,4775 @@
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text._hamfly_psoc5_putc,"ax",%progbits
+  20              		.align	2
+  21              		.thumb
+  22              		.thumb_func
+  23              		.type	_hamfly_psoc5_putc, %function
+  24              	_hamfly_psoc5_putc:
+  25              	.LFB64:
+  26              		.file 1 "..\\..\\..\\HamFlyAPI\\platform/hamfly_platform_psoc5.h"
+   1:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** /* SPDX-License-Identifier: Apache-2.0
+   2:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  *
+   3:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * Copyright 2026 Hamish Johnson
+   4:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * Quantum Information Systems Lab, SFU Physics
+   5:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  *
+   6:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * Licensed under the Apache License, Version 2.0 (the "License");
+   7:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * you may not use this file except in compliance with the License.
+   8:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * You may obtain a copy of the License at
+   9:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  *
+  10:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  *     http://www.apache.org/licenses/LICENSE-2.0
+  11:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  *
+  12:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * Unless required by applicable law or agreed to in writing, software
+  13:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * distributed under the License is distributed on an "AS IS" BASIS,
+  14:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+  15:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * implied. See the License for the specific language governing
+  16:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * permissions and limitations under the License.
+  17:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * 
+  18:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * ============================================================================
+  19:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * PSoC 5 LP concrete implementation of hamfly_hal_t.
+  20:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  * Only file in HamflyAPI that includes <project.h>.
+  21:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****  */
+  22:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** 
+  23:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** #ifndef HAMFLY_PLATFORM_PSOC5_H
+  24:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** #define HAMFLY_PLATFORM_PSOC5_H
+  25:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** 
+  26:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** #include "hamfly_core_hal.h"
+  27:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** #include "project.h"  // PSoC creator specific from its UDB registrations.
+  28:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** 
+  29:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** // PUTC functions assumes a UART UDB called "UART_MOVI" is present in the PSoC
+  30:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** // 5 design.
+  31:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** static void _hamfly_psoc5_putc(void *ctx, uint8_t b)
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 2
+
+
+  32:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** {
+  27              		.loc 1 32 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 1, uses_anonymous_args = 0
+  31 0000 80B5     		push	{r7, lr}
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 7, -8
+  34              		.cfi_offset 14, -4
+  35 0002 82B0     		sub	sp, sp, #8
+  36              		.cfi_def_cfa_offset 16
+  37 0004 00AF     		add	r7, sp, #0
+  38              		.cfi_def_cfa_register 7
+  39 0006 7860     		str	r0, [r7, #4]
+  40 0008 0B46     		mov	r3, r1
+  41 000a FB70     		strb	r3, [r7, #3]
+  33:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****     (void)ctx;
+  34:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h ****     UART_MOVI_PutChar((char)b);
+  42              		.loc 1 34 0
+  43 000c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+  44 000e 1846     		mov	r0, r3
+  45 0010 FFF7FEFF 		bl	UART_MOVI_PutChar
+  35:..\..\..\HamFlyAPI\platform/hamfly_platform_psoc5.h **** }
+  46              		.loc 1 35 0
+  47 0014 00BF     		nop
+  48 0016 0837     		adds	r7, r7, #8
+  49              		.cfi_def_cfa_offset 8
+  50 0018 BD46     		mov	sp, r7
+  51              		.cfi_def_cfa_register 13
+  52              		@ sp needed
+  53 001a 80BD     		pop	{r7, pc}
+  54              		.cfi_endproc
+  55              	.LFE64:
+  56              		.size	_hamfly_psoc5_putc, .-_hamfly_psoc5_putc
+  57              		.bss
+  58              		.align	2
+  59              	g_movi:
+  60 0000 00000000 		.space	896
+  60      00000000 
+  60      00000000 
+  60      00000000 
+  60      00000000 
+  61              		.global	g_tick_ms
+  62              		.align	2
+  63              		.type	g_tick_ms, %object
+  64              		.size	g_tick_ms, 4
+  65              	g_tick_ms:
+  66 0380 00000000 		.space	4
+  67              		.section	.text.psoc_get_tick,"ax",%progbits
+  68              		.align	2
+  69              		.thumb
+  70              		.thumb_func
+  71              		.type	psoc_get_tick, %function
+  72              	psoc_get_tick:
+  73              	.LFB66:
+  74              		.file 2 "main.c"
+   1:main.c        **** /* ========================================
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 3
+
+
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright Hamish Johnson, 2026
+   4:main.c        ****  * All Rights Reserved
+   5:main.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main.c        ****  *
+   7:main.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main.c        ****  * WHICH IS THE PROPERTY OF 
+   9:main.c        ****  * Quantum Internet Systems Lab (QISL),
+  10:main.c        ****  * Department of Physics, SFU, Canada.
+  11:main.c        ****  *
+  12:main.c        ****  * Author: Hamish Johnson (2026)
+  13:main.c        ****  *
+  14:main.c        ****  * ========================================
+  15:main.c        ****  *
+  16:main.c        ****  * Uses HamflyAPI (hamfly.h) for all gimbal communication.
+  17:main.c        ****  *
+  18:main.c        ****  * Modes:
+  19:main.c        ****  *   STANDBY   passive; pump runs; 1 Hz status if telemetry valid.
+  20:main.c        ****  *             Set boresight origin here before entering other modes.
+  21:main.c        ****  *   JOYSTICK  10 Hz QX277 TX.  Joystick (rate) and numpad presets
+  22:main.c        ****  *             share the mode — preset executes, settles to within
+  23:main.c        ****  *             PRESET_SETTLE_DEG of target (or PRESET_SETTLE_MS
+  24:main.c        ****  *             timeout), then joystick resumes automatically.
+  25:main.c        ****  *   NUDGE     keyboard-driven absolute accumulation for beam-profiler
+  26:main.c        ****  *             calibration.  Each keypress adds a fixed step to the
+  27:main.c        ****  *             accumulated pan/tilt target, clamped to software limits.
+  28:main.c        ****  *             Current accumulated position prints after every step.
+  29:main.c        ****  *             No joystick input in this mode.
+  30:main.c        ****  *
+  31:main.c        ****  *   t  exit to STANDBY     
+  32:main.c        ****  *   x  kill + exit
+  33:main.c        ****  */
+  34:main.c        **** 
+  35:main.c        **** #include <project.h>
+  36:main.c        **** #include <stdio.h>
+  37:main.c        **** #include <math.h>
+  38:main.c        **** #include <string.h>
+  39:main.c        **** 
+  40:main.c        **** // Gimbal stuff
+  41:main.c        **** #include "hamfly.h"
+  42:main.c        **** #include "hamfly_platform_psoc5.h"
+  43:main.c        **** 
+  44:main.c        **** // Implementation specific stuff (joystick and ADC removed because no joystick)
+  45:main.c        **** #include "debug_pins.h"
+  46:main.c        **** #include "utils.h"
+  47:main.c        **** 
+  48:main.c        **** // PSoC state machine stuff
+  49:main.c        **** #include "psoc_eeprom.h"
+  50:main.c        **** #include "app_ctx.h"
+  51:main.c        **** #include "app_statemachine.h"
+  52:main.c        **** 
+  53:main.c        **** // Rasp Pi communications stuff
+  54:main.c        **** #include "sbc_comms.h"
+  55:main.c        **** #include "telemetry.h"
+  56:main.c        **** 
+  57:main.c        **** #define TX_BUF_SIZE           160u
+  58:main.c        **** 
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 4
+
+
+  59:main.c        **** // Soft limits relative to origin (degrees)
+  60:main.c        **** // Origin set by pressing '[' in any mode
+  61:main.c        **** // Nudge config
+  62:main.c        **** #define NUDGE_RATE              0.5f
+  63:main.c        **** #define NUDGE_TIME_SMALL        50u   // ms
+  64:main.c        **** #define NUDGE_TIME_LARGE        200u  // ms
+  65:main.c        **** 
+  66:main.c        **** // Utilities
+  67:main.c        **** #define FALSE  0u
+  68:main.c        **** #define TRUE   1u
+  69:main.c        **** 
+  70:main.c        **** 
+  71:main.c        **** // State machine states %=====================================================%
+  72:main.c        **** 
+  73:main.c        **** // Gimbal config and HAL
+  74:main.c        **** static hamfly_gimbal_t g_movi;
+  75:main.c        **** volatile uint32_t      g_tick_ms = 0u;
+  76:main.c        **** 
+  77:main.c        **** static uint32_t psoc_get_tick(void *ctx)
+  78:main.c        **** {
+  75              		.loc 2 78 0
+  76              		.cfi_startproc
+  77              		@ args = 0, pretend = 0, frame = 8
+  78              		@ frame_needed = 1, uses_anonymous_args = 0
+  79              		@ link register save eliminated.
+  80 0000 80B4     		push	{r7}
+  81              		.cfi_def_cfa_offset 4
+  82              		.cfi_offset 7, -4
+  83 0002 83B0     		sub	sp, sp, #12
+  84              		.cfi_def_cfa_offset 16
+  85 0004 00AF     		add	r7, sp, #0
+  86              		.cfi_def_cfa_register 7
+  87 0006 7860     		str	r0, [r7, #4]
+  79:main.c        ****     (void)ctx;
+  80:main.c        ****     return g_tick_ms;
+  88              		.loc 2 80 0
+  89 0008 034B     		ldr	r3, .L4
+  90 000a 1B68     		ldr	r3, [r3]
+  81:main.c        **** }
+  91              		.loc 2 81 0
+  92 000c 1846     		mov	r0, r3
+  93 000e 0C37     		adds	r7, r7, #12
+  94              		.cfi_def_cfa_offset 4
+  95 0010 BD46     		mov	sp, r7
+  96              		.cfi_def_cfa_register 13
+  97              		@ sp needed
+  98 0012 80BC     		pop	{r7}
+  99              		.cfi_restore 7
+ 100              		.cfi_def_cfa_offset 0
+ 101 0014 7047     		bx	lr
+ 102              	.L5:
+ 103 0016 00BF     		.align	2
+ 104              	.L4:
+ 105 0018 00000000 		.word	g_tick_ms
+ 106              		.cfi_endproc
+ 107              	.LFE66:
+ 108              		.size	psoc_get_tick, .-psoc_get_tick
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 5
+
+
+ 109              		.section	.rodata
+ 110              		.align	2
+ 111              		.type	MOVI_HAL, %object
+ 112              		.size	MOVI_HAL, 12
+ 113              	MOVI_HAL:
+ 114 0000 00000000 		.word	0
+ 115 0004 00000000 		.word	_hamfly_psoc5_putc
+ 116 0008 00000000 		.word	psoc_get_tick
+ 117              		.section	.text.isr_rx_movi_Handler,"ax",%progbits
+ 118              		.align	2
+ 119              		.global	isr_rx_movi_Handler
+ 120              		.thumb
+ 121              		.thumb_func
+ 122              		.type	isr_rx_movi_Handler, %function
+ 123              	isr_rx_movi_Handler:
+ 124              	.LFB67:
+  82:main.c        **** static const hamfly_hal_t MOVI_HAL = {
+  83:main.c        ****     .ctx         = NULL,
+  84:main.c        ****     .uart_putc   = _hamfly_psoc5_putc,   // exposed by the header
+  85:main.c        ****     .get_tick_ms = psoc_get_tick,
+  86:main.c        **** };
+  87:main.c        **** 
+  88:main.c        **** // ISRs %=====================================================================%
+  89:main.c        **** CY_ISR(isr_rx_movi_Handler)
+  90:main.c        **** {
+ 125              		.loc 2 90 0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 8
+ 128              		@ frame_needed = 1, uses_anonymous_args = 0
+ 129 0000 80B5     		push	{r7, lr}
+ 130              		.cfi_def_cfa_offset 8
+ 131              		.cfi_offset 7, -8
+ 132              		.cfi_offset 14, -4
+ 133 0002 82B0     		sub	sp, sp, #8
+ 134              		.cfi_def_cfa_offset 16
+ 135 0004 00AF     		add	r7, sp, #0
+ 136              		.cfi_def_cfa_register 7
+ 137              	.L9:
+  91:main.c        ****     uint8_t st;
+  92:main.c        ****     do {
+  93:main.c        ****         st = UART_MOVI_RXSTATUS_REG;
+ 138              		.loc 2 93 0
+ 139 0006 114B     		ldr	r3, .L10
+ 140 0008 1B78     		ldrb	r3, [r3]
+ 141 000a FB71     		strb	r3, [r7, #7]
+  94:main.c        ****         if (st & (UART_MOVI_RX_STS_BREAK     |
+ 142              		.loc 2 94 0
+ 143 000c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 144 000e 03F01E03 		and	r3, r3, #30
+ 145 0012 002B     		cmp	r3, #0
+ 146 0014 04D0     		beq	.L7
+  95:main.c        ****                   UART_MOVI_RX_STS_PAR_ERROR |
+  96:main.c        ****                   UART_MOVI_RX_STS_STOP_ERROR|
+  97:main.c        ****                   UART_MOVI_RX_STS_OVERRUN))
+  98:main.c        ****             hamfly_on_uart_err_flags(&g_movi, st);
+ 147              		.loc 2 98 0
+ 148 0016 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 6
+
+
+ 149 0018 1946     		mov	r1, r3
+ 150 001a 0D48     		ldr	r0, .L10+4
+ 151 001c FFF7FEFF 		bl	hamfly_on_uart_err_flags
+ 152              	.L7:
+  99:main.c        ****         if (st & UART_MOVI_RX_STS_FIFO_NOTEMPTY)
+ 153              		.loc 2 99 0
+ 154 0020 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 155 0022 03F02003 		and	r3, r3, #32
+ 156 0026 002B     		cmp	r3, #0
+ 157 0028 06D0     		beq	.L8
+ 100:main.c        ****             hamfly_on_rx_byte(&g_movi, UART_MOVI_RXDATA_REG);
+ 158              		.loc 2 100 0
+ 159 002a 0A4B     		ldr	r3, .L10+8
+ 160 002c 1B78     		ldrb	r3, [r3]
+ 161 002e DBB2     		uxtb	r3, r3
+ 162 0030 1946     		mov	r1, r3
+ 163 0032 0748     		ldr	r0, .L10+4
+ 164 0034 FFF7FEFF 		bl	hamfly_on_rx_byte
+ 165              	.L8:
+ 101:main.c        ****     } while (st & UART_MOVI_RX_STS_FIFO_NOTEMPTY);
+ 166              		.loc 2 101 0
+ 167 0038 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 168 003a 03F02003 		and	r3, r3, #32
+ 169 003e 002B     		cmp	r3, #0
+ 170 0040 E1D1     		bne	.L9
+ 102:main.c        **** }
+ 171              		.loc 2 102 0
+ 172 0042 00BF     		nop
+ 173 0044 0837     		adds	r7, r7, #8
+ 174              		.cfi_def_cfa_offset 8
+ 175 0046 BD46     		mov	sp, r7
+ 176              		.cfi_def_cfa_register 13
+ 177              		@ sp needed
+ 178 0048 80BD     		pop	{r7, pc}
+ 179              	.L11:
+ 180 004a 00BF     		.align	2
+ 181              	.L10:
+ 182 004c 6E640040 		.word	1073767534
+ 183 0050 00000000 		.word	g_movi
+ 184 0054 4D640040 		.word	1073767501
+ 185              		.cfi_endproc
+ 186              	.LFE67:
+ 187              		.size	isr_rx_movi_Handler, .-isr_rx_movi_Handler
+ 188              		.section	.text.isr_Looptimer_Handler,"ax",%progbits
+ 189              		.align	2
+ 190              		.global	isr_Looptimer_Handler
+ 191              		.thumb
+ 192              		.thumb_func
+ 193              		.type	isr_Looptimer_Handler, %function
+ 194              	isr_Looptimer_Handler:
+ 195              	.LFB68:
+ 103:main.c        **** 
+ 104:main.c        **** CY_ISR(isr_Looptimer_Handler)
+ 105:main.c        **** {
+ 196              		.loc 2 105 0
+ 197              		.cfi_startproc
+ 198              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 7
+
+
+ 199              		@ frame_needed = 1, uses_anonymous_args = 0
+ 200 0000 80B5     		push	{r7, lr}
+ 201              		.cfi_def_cfa_offset 8
+ 202              		.cfi_offset 7, -8
+ 203              		.cfi_offset 14, -4
+ 204 0002 00AF     		add	r7, sp, #0
+ 205              		.cfi_def_cfa_register 7
+ 106:main.c        ****     g_tick_ms++;
+ 206              		.loc 2 106 0
+ 207 0004 044B     		ldr	r3, .L13
+ 208 0006 1B68     		ldr	r3, [r3]
+ 209 0008 0133     		adds	r3, r3, #1
+ 210 000a 034A     		ldr	r2, .L13
+ 211 000c 1360     		str	r3, [r2]
+ 107:main.c        ****     Looptimer_ReadStatusRegister();
+ 212              		.loc 2 107 0
+ 213 000e FFF7FEFF 		bl	Looptimer_ReadStatusRegister
+ 108:main.c        **** }
+ 214              		.loc 2 108 0
+ 215 0012 00BF     		nop
+ 216 0014 80BD     		pop	{r7, pc}
+ 217              	.L14:
+ 218 0016 00BF     		.align	2
+ 219              	.L13:
+ 220 0018 00000000 		.word	g_tick_ms
+ 221              		.cfi_endproc
+ 222              	.LFE68:
+ 223              		.size	isr_Looptimer_Handler, .-isr_Looptimer_Handler
+ 224              		.section	.text.isr_rx_sbc_Handler,"ax",%progbits
+ 225              		.align	2
+ 226              		.global	isr_rx_sbc_Handler
+ 227              		.thumb
+ 228              		.thumb_func
+ 229              		.type	isr_rx_sbc_Handler, %function
+ 230              	isr_rx_sbc_Handler:
+ 231              	.LFB69:
+ 109:main.c        **** 
+ 110:main.c        **** // For Raspberry Pi communications
+ 111:main.c        **** CY_ISR(isr_rx_sbc_Handler)
+ 112:main.c        **** {
+ 232              		.loc 2 112 0
+ 233              		.cfi_startproc
+ 234              		@ args = 0, pretend = 0, frame = 8
+ 235              		@ frame_needed = 1, uses_anonymous_args = 0
+ 236 0000 80B5     		push	{r7, lr}
+ 237              		.cfi_def_cfa_offset 8
+ 238              		.cfi_offset 7, -8
+ 239              		.cfi_offset 14, -4
+ 240 0002 82B0     		sub	sp, sp, #8
+ 241              		.cfi_def_cfa_offset 16
+ 242 0004 00AF     		add	r7, sp, #0
+ 243              		.cfi_def_cfa_register 7
+ 244              	.L18:
+ 113:main.c        ****     uint8_t st;
+ 114:main.c        ****     do {
+ 115:main.c        ****         st = UART_SBC_RXSTATUS_REG;
+ 245              		.loc 2 115 0
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 8
+
+
+ 246 0006 104B     		ldr	r3, .L19
+ 247 0008 1B78     		ldrb	r3, [r3]
+ 248 000a FB71     		strb	r3, [r7, #7]
+ 116:main.c        ****         if (st & (UART_SBC_RX_STS_BREAK     |
+ 249              		.loc 2 116 0
+ 250 000c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 251 000e 03F01E03 		and	r3, r3, #30
+ 252 0012 002B     		cmp	r3, #0
+ 253 0014 03D0     		beq	.L16
+ 117:main.c        ****                   UART_SBC_RX_STS_PAR_ERROR |
+ 118:main.c        ****                   UART_SBC_RX_STS_STOP_ERROR|
+ 119:main.c        ****                   UART_SBC_RX_STS_OVERRUN))
+ 120:main.c        ****             sbc_on_uart_err_flags(st);
+ 254              		.loc 2 120 0
+ 255 0016 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 256 0018 1846     		mov	r0, r3
+ 257 001a FFF7FEFF 		bl	sbc_on_uart_err_flags
+ 258              	.L16:
+ 121:main.c        ****         if (st & UART_SBC_RX_STS_FIFO_NOTEMPTY)
+ 259              		.loc 2 121 0
+ 260 001e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 261 0020 03F02003 		and	r3, r3, #32
+ 262 0024 002B     		cmp	r3, #0
+ 263 0026 05D0     		beq	.L17
+ 122:main.c        ****             sbc_on_rx_byte(UART_SBC_RXDATA_REG);
+ 264              		.loc 2 122 0
+ 265 0028 084B     		ldr	r3, .L19+4
+ 266 002a 1B78     		ldrb	r3, [r3]
+ 267 002c DBB2     		uxtb	r3, r3
+ 268 002e 1846     		mov	r0, r3
+ 269 0030 FFF7FEFF 		bl	sbc_on_rx_byte
+ 270              	.L17:
+ 123:main.c        ****     } while (st & UART_SBC_RX_STS_FIFO_NOTEMPTY);
+ 271              		.loc 2 123 0
+ 272 0034 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 273 0036 03F02003 		and	r3, r3, #32
+ 274 003a 002B     		cmp	r3, #0
+ 275 003c E3D1     		bne	.L18
+ 124:main.c        **** }
+ 276              		.loc 2 124 0
+ 277 003e 00BF     		nop
+ 278 0040 0837     		adds	r7, r7, #8
+ 279              		.cfi_def_cfa_offset 8
+ 280 0042 BD46     		mov	sp, r7
+ 281              		.cfi_def_cfa_register 13
+ 282              		@ sp needed
+ 283 0044 80BD     		pop	{r7, pc}
+ 284              	.L20:
+ 285 0046 00BF     		.align	2
+ 286              	.L19:
+ 287 0048 65640040 		.word	1073767525
+ 288 004c 45640040 		.word	1073767493
+ 289              		.cfi_endproc
+ 290              	.LFE69:
+ 291              		.size	isr_rx_sbc_Handler, .-isr_rx_sbc_Handler
+ 292              		.global	__aeabi_fcmplt
+ 293              		.global	__aeabi_f2iz
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 9
+
+
+ 294              		.global	__aeabi_i2f
+ 295              		.global	__aeabi_fsub
+ 296              		.global	__aeabi_fmul
+ 297              		.section	.text.decomp,"ax",%progbits
+ 298              		.align	2
+ 299              		.thumb
+ 300              		.thumb_func
+ 301              		.type	decomp, %function
+ 302              	decomp:
+ 303              	.LFB70:
+ 125:main.c        **** 
+ 126:main.c        **** // Helper Functions  %========================================================%
+ 127:main.c        **** static void decomp(float val, int16_t *i_out, int16_t *f_out, char *sign)
+ 128:main.c        **** {
+ 304              		.loc 2 128 0
+ 305              		.cfi_startproc
+ 306              		@ args = 0, pretend = 0, frame = 16
+ 307              		@ frame_needed = 1, uses_anonymous_args = 0
+ 308 0000 80B5     		push	{r7, lr}
+ 309              		.cfi_def_cfa_offset 8
+ 310              		.cfi_offset 7, -8
+ 311              		.cfi_offset 14, -4
+ 312 0002 84B0     		sub	sp, sp, #16
+ 313              		.cfi_def_cfa_offset 24
+ 314 0004 00AF     		add	r7, sp, #0
+ 315              		.cfi_def_cfa_register 7
+ 316 0006 F860     		str	r0, [r7, #12]	@ float
+ 317 0008 B960     		str	r1, [r7, #8]
+ 318 000a 7A60     		str	r2, [r7, #4]
+ 319 000c 3B60     		str	r3, [r7]
+ 129:main.c        ****     *sign  = (val < 0.0f) ? '-' : ' ';
+ 320              		.loc 2 129 0
+ 321 000e 4FF00001 		mov	r1, #0
+ 322 0012 F868     		ldr	r0, [r7, #12]	@ float
+ 323 0014 FFF7FEFF 		bl	__aeabi_fcmplt
+ 324 0018 0346     		mov	r3, r0
+ 325 001a 002B     		cmp	r3, #0
+ 326 001c 01D0     		beq	.L30
+ 327              		.loc 2 129 0 is_stmt 0 discriminator 1
+ 328 001e 2D22     		movs	r2, #45
+ 329 0020 00E0     		b	.L24
+ 330              	.L30:
+ 331              		.loc 2 129 0 discriminator 2
+ 332 0022 2022     		movs	r2, #32
+ 333              	.L24:
+ 334              		.loc 2 129 0 discriminator 4
+ 335 0024 3B68     		ldr	r3, [r7]
+ 336 0026 1A70     		strb	r2, [r3]
+ 130:main.c        ****     if (val < 0.0f) val = -val;
+ 337              		.loc 2 130 0 is_stmt 1 discriminator 4
+ 338 0028 4FF00001 		mov	r1, #0
+ 339 002c F868     		ldr	r0, [r7, #12]	@ float
+ 340 002e FFF7FEFF 		bl	__aeabi_fcmplt
+ 341 0032 0346     		mov	r3, r0
+ 342 0034 002B     		cmp	r3, #0
+ 343 0036 03D0     		beq	.L25
+ 344              		.loc 2 130 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 10
+
+
+ 345 0038 FB68     		ldr	r3, [r7, #12]
+ 346 003a 83F00043 		eor	r3, r3, #-2147483648
+ 347 003e FB60     		str	r3, [r7, #12]	@ float
+ 348              	.L25:
+ 131:main.c        ****     *i_out = (int16_t)val;
+ 349              		.loc 2 131 0 is_stmt 1
+ 350 0040 F868     		ldr	r0, [r7, #12]	@ float
+ 351 0042 FFF7FEFF 		bl	__aeabi_f2iz
+ 352 0046 0346     		mov	r3, r0
+ 353 0048 1AB2     		sxth	r2, r3
+ 354 004a BB68     		ldr	r3, [r7, #8]
+ 355 004c 1A80     		strh	r2, [r3]	@ movhi
+ 132:main.c        ****     *f_out = (int16_t)((val - (float)*i_out) * 100.0f);
+ 356              		.loc 2 132 0
+ 357 004e BB68     		ldr	r3, [r7, #8]
+ 358 0050 B3F90030 		ldrsh	r3, [r3]
+ 359 0054 1846     		mov	r0, r3
+ 360 0056 FFF7FEFF 		bl	__aeabi_i2f
+ 361 005a 0346     		mov	r3, r0
+ 362 005c 1946     		mov	r1, r3
+ 363 005e F868     		ldr	r0, [r7, #12]	@ float
+ 364 0060 FFF7FEFF 		bl	__aeabi_fsub
+ 365 0064 0346     		mov	r3, r0
+ 366 0066 0F49     		ldr	r1, .L32
+ 367 0068 1846     		mov	r0, r3
+ 368 006a FFF7FEFF 		bl	__aeabi_fmul
+ 369 006e 0346     		mov	r3, r0
+ 370 0070 1846     		mov	r0, r3
+ 371 0072 FFF7FEFF 		bl	__aeabi_f2iz
+ 372 0076 0346     		mov	r3, r0
+ 373 0078 1AB2     		sxth	r2, r3
+ 374 007a 7B68     		ldr	r3, [r7, #4]
+ 375 007c 1A80     		strh	r2, [r3]	@ movhi
+ 133:main.c        ****     if (*f_out < 0) *f_out = -*f_out;
+ 376              		.loc 2 133 0
+ 377 007e 7B68     		ldr	r3, [r7, #4]
+ 378 0080 B3F90030 		ldrsh	r3, [r3]
+ 379 0084 002B     		cmp	r3, #0
+ 380 0086 08DA     		bge	.L31
+ 381              		.loc 2 133 0 is_stmt 0 discriminator 1
+ 382 0088 7B68     		ldr	r3, [r7, #4]
+ 383 008a B3F90030 		ldrsh	r3, [r3]
+ 384 008e 9BB2     		uxth	r3, r3
+ 385 0090 5B42     		negs	r3, r3
+ 386 0092 9BB2     		uxth	r3, r3
+ 387 0094 1AB2     		sxth	r2, r3
+ 388 0096 7B68     		ldr	r3, [r7, #4]
+ 389 0098 1A80     		strh	r2, [r3]	@ movhi
+ 390              	.L31:
+ 134:main.c        **** }
+ 391              		.loc 2 134 0 is_stmt 1
+ 392 009a 00BF     		nop
+ 393 009c 1037     		adds	r7, r7, #16
+ 394              		.cfi_def_cfa_offset 8
+ 395 009e BD46     		mov	sp, r7
+ 396              		.cfi_def_cfa_register 13
+ 397              		@ sp needed
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 11
+
+
+ 398 00a0 80BD     		pop	{r7, pc}
+ 399              	.L33:
+ 400 00a2 00BF     		.align	2
+ 401              	.L32:
+ 402 00a4 0000C842 		.word	1120403456
+ 403              		.cfi_endproc
+ 404              	.LFE70:
+ 405              		.size	decomp, .-decomp
+ 406              		.section	.rodata
+ 407              		.align	2
+ 408              	.LC0:
+ 409 000c 52415445 		.ascii	"RATE\000"
+ 409      00
+ 410 0011 000000   		.align	2
+ 411              	.LC1:
+ 412 0014 41425320 		.ascii	"ABS \000"
+ 412      00
+ 413 0019 000000   		.align	2
+ 414              	.LC2:
+ 415 001c 44454652 		.ascii	"DEFR\000"
+ 415      00
+ 416              		.section	.text.mode_str,"ax",%progbits
+ 417              		.align	2
+ 418              		.thumb
+ 419              		.thumb_func
+ 420              		.type	mode_str, %function
+ 421              	mode_str:
+ 422              	.LFB71:
+ 135:main.c        **** 
+ 136:main.c        **** // Enum translator for Movi 
+ 137:main.c        **** static const char *mode_str(hamfly_control_mode_t m)
+ 138:main.c        **** {
+ 423              		.loc 2 138 0
+ 424              		.cfi_startproc
+ 425              		@ args = 0, pretend = 0, frame = 8
+ 426              		@ frame_needed = 1, uses_anonymous_args = 0
+ 427              		@ link register save eliminated.
+ 428 0000 80B4     		push	{r7}
+ 429              		.cfi_def_cfa_offset 4
+ 430              		.cfi_offset 7, -4
+ 431 0002 83B0     		sub	sp, sp, #12
+ 432              		.cfi_def_cfa_offset 16
+ 433 0004 00AF     		add	r7, sp, #0
+ 434              		.cfi_def_cfa_register 7
+ 435 0006 0346     		mov	r3, r0
+ 436 0008 FB71     		strb	r3, [r7, #7]
+ 139:main.c        ****     switch (m) {
+ 437              		.loc 2 139 0
+ 438 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 439 000c 012B     		cmp	r3, #1
+ 440 000e 02D0     		beq	.L36
+ 441 0010 022B     		cmp	r3, #2
+ 442 0012 02D0     		beq	.L37
+ 443 0014 03E0     		b	.L39
+ 444              	.L36:
+ 140:main.c        ****         case HAMFLY_RATE:     return "RATE";
+ 445              		.loc 2 140 0
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 12
+
+
+ 446 0016 054B     		ldr	r3, .L40
+ 447 0018 02E0     		b	.L38
+ 448              	.L37:
+ 141:main.c        ****         case HAMFLY_ABSOLUTE: return "ABS ";
+ 449              		.loc 2 141 0
+ 450 001a 054B     		ldr	r3, .L40+4
+ 451 001c 00E0     		b	.L38
+ 452              	.L39:
+ 142:main.c        ****         default:              return "DEFR";
+ 453              		.loc 2 142 0
+ 454 001e 054B     		ldr	r3, .L40+8
+ 455              	.L38:
+ 143:main.c        ****     }
+ 144:main.c        **** }
+ 456              		.loc 2 144 0
+ 457 0020 1846     		mov	r0, r3
+ 458 0022 0C37     		adds	r7, r7, #12
+ 459              		.cfi_def_cfa_offset 4
+ 460 0024 BD46     		mov	sp, r7
+ 461              		.cfi_def_cfa_register 13
+ 462              		@ sp needed
+ 463 0026 80BC     		pop	{r7}
+ 464              		.cfi_restore 7
+ 465              		.cfi_def_cfa_offset 0
+ 466 0028 7047     		bx	lr
+ 467              	.L41:
+ 468 002a 00BF     		.align	2
+ 469              	.L40:
+ 470 002c 0C000000 		.word	.LC0
+ 471 0030 14000000 		.word	.LC1
+ 472 0034 1C000000 		.word	.LC2
+ 473              		.cfi_endproc
+ 474              	.LFE71:
+ 475              		.size	mode_str, .-mode_str
+ 476              		.section	.rodata
+ 477 0021 000000   		.align	2
+ 478              	.LC3:
+ 479 0024 20206F66 		.ascii	"  off%02u:\000"
+ 479      66253032 
+ 479      753A00
+ 480 002f 00       		.align	2
+ 481              	.LC4:
+ 482 0030 20253032 		.ascii	" %02X\000"
+ 482      5800
+ 483 0036 0000     		.align	2
+ 484              	.LC5:
+ 485 0038 0D0A00   		.ascii	"\015\012\000"
+ 486              		.section	.text.print_hex_dump,"ax",%progbits
+ 487              		.align	2
+ 488              		.thumb
+ 489              		.thumb_func
+ 490              		.type	print_hex_dump, %function
+ 491              	print_hex_dump:
+ 492              	.LFB72:
+ 145:main.c        **** 
+ 146:main.c        **** static void print_hex_dump(const uint8_t *p, uint8_t plen)
+ 147:main.c        **** {
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 13
+
+
+ 493              		.loc 2 147 0
+ 494              		.cfi_startproc
+ 495              		@ args = 0, pretend = 0, frame = 176
+ 496              		@ frame_needed = 1, uses_anonymous_args = 0
+ 497 0000 80B5     		push	{r7, lr}
+ 498              		.cfi_def_cfa_offset 8
+ 499              		.cfi_offset 7, -8
+ 500              		.cfi_offset 14, -4
+ 501 0002 ACB0     		sub	sp, sp, #176
+ 502              		.cfi_def_cfa_offset 184
+ 503 0004 00AF     		add	r7, sp, #0
+ 504              		.cfi_def_cfa_register 7
+ 505 0006 7860     		str	r0, [r7, #4]
+ 506 0008 0B46     		mov	r3, r1
+ 507 000a FB70     		strb	r3, [r7, #3]
+ 148:main.c        ****     char buf[TX_BUF_SIZE];
+ 149:main.c        ****     uint8_t row, col;
+ 150:main.c        ****     for (row = 0u; row < plen; row += 8u) {
+ 508              		.loc 2 150 0
+ 509 000c 0023     		movs	r3, #0
+ 510 000e 87F8AF30 		strb	r3, [r7, #175]
+ 511 0012 55E0     		b	.L43
+ 512              	.L47:
+ 513              	.LBB2:
+ 151:main.c        ****         char *bp = buf;
+ 514              		.loc 2 151 0
+ 515 0014 07F10803 		add	r3, r7, #8
+ 516 0018 C7F8A830 		str	r3, [r7, #168]
+ 152:main.c        ****         bp += sprintf(bp, "  off%02u:", (unsigned)row);
+ 517              		.loc 2 152 0
+ 518 001c 97F8AF30 		ldrb	r3, [r7, #175]	@ zero_extendqisi2
+ 519 0020 1A46     		mov	r2, r3
+ 520 0022 2C49     		ldr	r1, .L48
+ 521 0024 D7F8A800 		ldr	r0, [r7, #168]
+ 522 0028 FFF7FEFF 		bl	sprintf
+ 523 002c 0346     		mov	r3, r0
+ 524 002e 1A46     		mov	r2, r3
+ 525 0030 D7F8A830 		ldr	r3, [r7, #168]
+ 526 0034 1344     		add	r3, r3, r2
+ 527 0036 C7F8A830 		str	r3, [r7, #168]
+ 153:main.c        ****         for (col = 0u; col < 8u && (row+col) < plen; col++)
+ 528              		.loc 2 153 0
+ 529 003a 0023     		movs	r3, #0
+ 530 003c 87F8AE30 		strb	r3, [r7, #174]
+ 531 0040 1AE0     		b	.L44
+ 532              	.L46:
+ 154:main.c        ****             bp += sprintf(bp, " %02X", (unsigned)p[row+col]);
+ 533              		.loc 2 154 0 discriminator 4
+ 534 0042 97F8AF20 		ldrb	r2, [r7, #175]	@ zero_extendqisi2
+ 535 0046 97F8AE30 		ldrb	r3, [r7, #174]	@ zero_extendqisi2
+ 536 004a 1344     		add	r3, r3, r2
+ 537 004c 1A46     		mov	r2, r3
+ 538 004e 7B68     		ldr	r3, [r7, #4]
+ 539 0050 1344     		add	r3, r3, r2
+ 540 0052 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 541 0054 1A46     		mov	r2, r3
+ 542 0056 2049     		ldr	r1, .L48+4
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 14
+
+
+ 543 0058 D7F8A800 		ldr	r0, [r7, #168]
+ 544 005c FFF7FEFF 		bl	sprintf
+ 545 0060 0346     		mov	r3, r0
+ 546 0062 1A46     		mov	r2, r3
+ 547 0064 D7F8A830 		ldr	r3, [r7, #168]
+ 548 0068 1344     		add	r3, r3, r2
+ 549 006a C7F8A830 		str	r3, [r7, #168]
+ 153:main.c        ****         for (col = 0u; col < 8u && (row+col) < plen; col++)
+ 550              		.loc 2 153 0 discriminator 4
+ 551 006e 97F8AE30 		ldrb	r3, [r7, #174]	@ zero_extendqisi2
+ 552 0072 0133     		adds	r3, r3, #1
+ 553 0074 87F8AE30 		strb	r3, [r7, #174]
+ 554              	.L44:
+ 153:main.c        ****         for (col = 0u; col < 8u && (row+col) < plen; col++)
+ 555              		.loc 2 153 0 is_stmt 0 discriminator 1
+ 556 0078 97F8AE30 		ldrb	r3, [r7, #174]	@ zero_extendqisi2
+ 557 007c 072B     		cmp	r3, #7
+ 558 007e 07D8     		bhi	.L45
+ 153:main.c        ****         for (col = 0u; col < 8u && (row+col) < plen; col++)
+ 559              		.loc 2 153 0 discriminator 3
+ 560 0080 97F8AF20 		ldrb	r2, [r7, #175]	@ zero_extendqisi2
+ 561 0084 97F8AE30 		ldrb	r3, [r7, #174]	@ zero_extendqisi2
+ 562 0088 1A44     		add	r2, r2, r3
+ 563 008a FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 564 008c 9A42     		cmp	r2, r3
+ 565 008e D8DB     		blt	.L46
+ 566              	.L45:
+ 155:main.c        ****         bp += sprintf(bp, "\r\n");
+ 567              		.loc 2 155 0 is_stmt 1 discriminator 2
+ 568 0090 D7F8A830 		ldr	r3, [r7, #168]
+ 569 0094 114A     		ldr	r2, .L48+8
+ 570 0096 1188     		ldrh	r1, [r2]	@ unaligned
+ 571 0098 9278     		ldrb	r2, [r2, #2]
+ 572 009a 1980     		strh	r1, [r3]	@ unaligned
+ 573 009c 9A70     		strb	r2, [r3, #2]
+ 574 009e 0223     		movs	r3, #2
+ 575 00a0 1A46     		mov	r2, r3
+ 576 00a2 D7F8A830 		ldr	r3, [r7, #168]
+ 577 00a6 1344     		add	r3, r3, r2
+ 578 00a8 C7F8A830 		str	r3, [r7, #168]
+ 156:main.c        ****         UART_DEBUG_PutString(buf);
+ 579              		.loc 2 156 0 discriminator 2
+ 580 00ac 07F10803 		add	r3, r7, #8
+ 581 00b0 1846     		mov	r0, r3
+ 582 00b2 FFF7FEFF 		bl	dbg_put
+ 583              	.LBE2:
+ 150:main.c        ****         char *bp = buf;
+ 584              		.loc 2 150 0 discriminator 2
+ 585 00b6 97F8AF30 		ldrb	r3, [r7, #175]
+ 586 00ba 0833     		adds	r3, r3, #8
+ 587 00bc 87F8AF30 		strb	r3, [r7, #175]
+ 588              	.L43:
+ 150:main.c        ****         char *bp = buf;
+ 589              		.loc 2 150 0 is_stmt 0 discriminator 1
+ 590 00c0 97F8AF20 		ldrb	r2, [r7, #175]	@ zero_extendqisi2
+ 591 00c4 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 592 00c6 9A42     		cmp	r2, r3
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 15
+
+
+ 593 00c8 A4D3     		bcc	.L47
+ 157:main.c        ****     }
+ 158:main.c        **** }
+ 594              		.loc 2 158 0 is_stmt 1
+ 595 00ca 00BF     		nop
+ 596 00cc B037     		adds	r7, r7, #176
+ 597              		.cfi_def_cfa_offset 8
+ 598 00ce BD46     		mov	sp, r7
+ 599              		.cfi_def_cfa_register 13
+ 600              		@ sp needed
+ 601 00d0 80BD     		pop	{r7, pc}
+ 602              	.L49:
+ 603 00d2 00BF     		.align	2
+ 604              	.L48:
+ 605 00d4 24000000 		.word	.LC3
+ 606 00d8 30000000 		.word	.LC4
+ 607 00dc 38000000 		.word	.LC5
+ 608              		.cfi_endproc
+ 609              	.LFE72:
+ 610              		.size	print_hex_dump, .-print_hex_dump
+ 611              		.section	.rodata
+ 612 003b 00       		.align	2
+ 613              	.LC6:
+ 614 003c 0D0A3D3D 		.ascii	"\015\012=== Gimbal Control  PSoC 5LP ===\015\012\000"
+ 614      3D204769 
+ 614      6D62616C 
+ 614      20436F6E 
+ 614      74726F6C 
+ 615 0061 000000   		.align	2
+ 616              	.LC7:
+ 617 0064 5B496E69 		.ascii	"[Init] Pi comms ready\015\012\000"
+ 617      745D2050 
+ 617      6920636F 
+ 617      6D6D7320 
+ 617      72656164 
+ 618              		.align	2
+ 619              	.LC8:
+ 620 007c 5B496E69 		.ascii	"[Init] Gimbal UART ready\015\012\000"
+ 620      745D2047 
+ 620      696D6261 
+ 620      6C205541 
+ 620      52542072 
+ 621 0097 00       		.align	2
+ 622              	.LC9:
+ 623 0098 5B496E69 		.ascii	"[Init] Ready  Mode: STANDBY.\015\012\000"
+ 623      745D2052 
+ 623      65616479 
+ 623      20204D6F 
+ 623      64653A20 
+ 624 00b7 00       		.align	2
+ 625              	.LC10:
+ 626 00b8 5B256C75 		.ascii	"[%lu] state=%s pan=%c%d.%02d tilt=%c%d.%02d\015\012"
+ 626      5D207374 
+ 626      6174653D 
+ 626      25732070 
+ 626      616E3D25 
+ 627 00e5 00       		.ascii	"\000"
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 16
+
+
+ 628              		.section	.text.main,"ax",%progbits
+ 629              		.align	2
+ 630              		.global	main
+ 631              		.thumb
+ 632              		.thumb_func
+ 633              		.type	main, %function
+ 634              	main:
+ 635              	.LFB73:
+ 159:main.c        **** 
+ 160:main.c        **** /* =========================================================================
+ 161:main.c        ****  * main
+ 162:main.c        ****  * ========================================================================= */
+ 163:main.c        **** int main(void)
+ 164:main.c        **** {
+ 636              		.loc 2 164 0
+ 637              		.cfi_startproc
+ 638              		@ args = 0, pretend = 0, frame = 360
+ 639              		@ frame_needed = 1, uses_anonymous_args = 0
+ 640 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 641              		.cfi_def_cfa_offset 20
+ 642              		.cfi_offset 4, -20
+ 643              		.cfi_offset 5, -16
+ 644              		.cfi_offset 6, -12
+ 645              		.cfi_offset 7, -8
+ 646              		.cfi_offset 14, -4
+ 647 0002 E3B0     		sub	sp, sp, #396
+ 648              		.cfi_def_cfa_offset 416
+ 649 0004 08AF     		add	r7, sp, #32
+ 650              		.cfi_def_cfa 7, 384
+ 165:main.c        ****     char tx[TX_BUF_SIZE];  // Tx buffer for serial monitor
+ 166:main.c        ****     
+ 167:main.c        ****     // Initialize states
+ 168:main.c        ****     hamfly_control_t      ctl;  // Control packet object
+ 169:main.c        ****     app_ctx_t             ctx;  // Shared context for state machine
+ 170:main.c        ****     // Default values
+ 171:main.c        ****     app_ctx_init(&ctx);
+ 651              		.loc 2 171 0
+ 652 0006 07F11C03 		add	r3, r7, #28
+ 653 000a 1846     		mov	r0, r3
+ 654 000c FFF7FEFF 		bl	app_ctx_init
+ 172:main.c        ****     memset(&ctl, 0, sizeof ctl);
+ 655              		.loc 2 172 0
+ 656 0010 07F1AC03 		add	r3, r7, #172
+ 657 0014 1422     		movs	r2, #20
+ 658 0016 0021     		movs	r1, #0
+ 659 0018 1846     		mov	r0, r3
+ 660 001a FFF7FEFF 		bl	memset
+ 173:main.c        ****     
+ 174:main.c        ****     // Initialize hardware %==================================================%
+ 175:main.c        ****     CyGlobalIntEnable;  // PSoC API enable.
+ 661              		.loc 2 175 0
+ 662              		.syntax unified
+ 663              	@ 175 "main.c" 1
+ 664 001e 62B6     		CPSIE   i
+ 665              	@ 0 "" 2
+ 176:main.c        ****     
+ 177:main.c        ****     // Start 3v3 internal reference
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 17
+
+
+ 178:main.c        ****     VDAC8_3v3Ref_Start(); 
+ 666              		.loc 2 178 0
+ 667              		.thumb
+ 668              		.syntax unified
+ 669 0020 FFF7FEFF 		bl	VDAC8_3v3Ref_Start
+ 179:main.c        ****     
+ 180:main.c        ****     // Start serial monitor comms.
+ 181:main.c        ****     UART_DEBUG_Start();
+ 670              		.loc 2 181 0
+ 671 0024 FFF7FEFF 		bl	dbg_init
+ 182:main.c        ****     UART_DEBUG_PutString("\r\n=== Gimbal Control  PSoC 5LP ===\r\n");
+ 672              		.loc 2 182 0
+ 673 0028 8A48     		ldr	r0, .L59
+ 674 002a FFF7FEFF 		bl	dbg_put
+ 183:main.c        ****     
+ 184:main.c        ****     // Start Raspberry Pi comms.
+ 185:main.c        ****     UART_SBC_Start();
+ 675              		.loc 2 185 0
+ 676 002e FFF7FEFF 		bl	UART_SBC_Start
+ 186:main.c        ****     UART_SBC_ClearRxBuffer();
+ 677              		.loc 2 186 0
+ 678 0032 FFF7FEFF 		bl	UART_SBC_ClearRxBuffer
+ 187:main.c        ****     UART_SBC_ClearTxBuffer();
+ 679              		.loc 2 187 0
+ 680 0036 FFF7FEFF 		bl	UART_SBC_ClearTxBuffer
+ 188:main.c        ****     sbc_init();
+ 681              		.loc 2 188 0
+ 682 003a FFF7FEFF 		bl	sbc_init
+ 189:main.c        ****     isr_rx_sbc_StartEx(isr_rx_sbc_Handler);
+ 683              		.loc 2 189 0
+ 684 003e 8648     		ldr	r0, .L59+4
+ 685 0040 FFF7FEFF 		bl	isr_rx_sbc_StartEx
+ 190:main.c        ****     UART_DEBUG_PutString("[Init] Pi comms ready\r\n");
+ 686              		.loc 2 190 0
+ 687 0044 8548     		ldr	r0, .L59+8
+ 688 0046 FFF7FEFF 		bl	dbg_put
+ 191:main.c        ****     while (UART_SBC_GetRxBufferSize())  { UART_SBC_ReadRxData();  }
+ 689              		.loc 2 191 0
+ 690 004a 01E0     		b	.L51
+ 691              	.L52:
+ 692              		.loc 2 191 0 is_stmt 0 discriminator 2
+ 693 004c FFF7FEFF 		bl	UART_SBC_ReadRxData
+ 694              	.L51:
+ 695              		.loc 2 191 0 discriminator 1
+ 696 0050 FFF7FEFF 		bl	UART_SBC_GetRxBufferSize
+ 697 0054 0346     		mov	r3, r0
+ 698 0056 002B     		cmp	r3, #0
+ 699 0058 F8D1     		bne	.L52
+ 192:main.c        ****     
+ 193:main.c        ****     // Start Movi comms
+ 194:main.c        ****     UART_MOVI_Start();
+ 700              		.loc 2 194 0 is_stmt 1
+ 701 005a FFF7FEFF 		bl	UART_MOVI_Start
+ 195:main.c        ****     UART_MOVI_ClearRxBuffer();
+ 702              		.loc 2 195 0
+ 703 005e FFF7FEFF 		bl	UART_MOVI_ClearRxBuffer
+ 196:main.c        ****     UART_MOVI_ClearTxBuffer();
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 18
+
+
+ 704              		.loc 2 196 0
+ 705 0062 FFF7FEFF 		bl	UART_MOVI_ClearTxBuffer
+ 197:main.c        ****     while (UART_MOVI_GetRxBufferSize()) { UART_MOVI_ReadRxData(); }
+ 706              		.loc 2 197 0
+ 707 0066 01E0     		b	.L53
+ 708              	.L54:
+ 709              		.loc 2 197 0 is_stmt 0 discriminator 2
+ 710 0068 FFF7FEFF 		bl	UART_MOVI_ReadRxData
+ 711              	.L53:
+ 712              		.loc 2 197 0 discriminator 1
+ 713 006c FFF7FEFF 		bl	UART_MOVI_GetRxBufferSize
+ 714 0070 0346     		mov	r3, r0
+ 715 0072 002B     		cmp	r3, #0
+ 716 0074 F8D1     		bne	.L54
+ 198:main.c        ****     
+ 199:main.c        ****     // Initialize movi object and give to context
+ 200:main.c        ****     hamfly_init(&g_movi, &MOVI_HAL);
+ 717              		.loc 2 200 0 is_stmt 1
+ 718 0076 7A49     		ldr	r1, .L59+12
+ 719 0078 7A48     		ldr	r0, .L59+16
+ 720 007a FFF7FEFF 		bl	hamfly_init
+ 201:main.c        ****     ctx.gimbal = &g_movi;
+ 721              		.loc 2 201 0
+ 722 007e 07F11C03 		add	r3, r7, #28
+ 723 0082 784A     		ldr	r2, .L59+16
+ 724 0084 1A60     		str	r2, [r3]
+ 202:main.c        ****     isr_rx_movi_StartEx(isr_rx_movi_Handler);  // Rx handler
+ 725              		.loc 2 202 0
+ 726 0086 7848     		ldr	r0, .L59+20
+ 727 0088 FFF7FEFF 		bl	isr_rx_movi_StartEx
+ 203:main.c        ****     UART_DEBUG_PutString("[Init] Gimbal UART ready\r\n");
+ 728              		.loc 2 203 0
+ 729 008c 7748     		ldr	r0, .L59+24
+ 730 008e FFF7FEFF 		bl	dbg_put
+ 204:main.c        ****     
+ 205:main.c        ****     // Init eeprom (Joystick removed, was initialized here)
+ 206:main.c        ****     psoc_eeprom_init();
+ 731              		.loc 2 206 0
+ 732 0092 FFF7FEFF 		bl	psoc_eeprom_init
+ 207:main.c        **** 
+ 208:main.c        ****     // Initialize looptimer
+ 209:main.c        ****     Looptimer_Start();
+ 733              		.loc 2 209 0
+ 734 0096 FFF7FEFF 		bl	Looptimer_Start
+ 210:main.c        ****     isr_Looptimer_StartEx(isr_Looptimer_Handler);
+ 735              		.loc 2 210 0
+ 736 009a 7548     		ldr	r0, .L59+28
+ 737 009c FFF7FEFF 		bl	isr_Looptimer_StartEx
+ 211:main.c        ****     UART_DEBUG_PutString("[Init] Ready  Mode: STANDBY.\r\n");
+ 738              		.loc 2 211 0
+ 739 00a0 7448     		ldr	r0, .L59+32
+ 740 00a2 FFF7FEFF 		bl	dbg_put
+ 212:main.c        **** 
+ 213:main.c        ****     // Fire state machine "on entry" function
+ 214:main.c        ****     app_start(&ctx);
+ 741              		.loc 2 214 0
+ 742 00a6 07F11C03 		add	r3, r7, #28
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 19
+
+
+ 743 00aa 1846     		mov	r0, r3
+ 744 00ac FFF7FEFF 		bl	app_start
+ 745              	.L58:
+ 746              	.LBB3:
+ 215:main.c        ****     
+ 216:main.c        ****     // %======================================================================%
+ 217:main.c        ****     // Main Loop %============================================================%
+ 218:main.c        ****     // %======================================================================%
+ 219:main.c        ****     for (;;)
+ 220:main.c        ****     {
+ 221:main.c        ****         DPIN_LOOP_TOGGLE();  // Toggle debug pin
+ 747              		.loc 2 221 0
+ 748 00b0 FFF7FEFF 		bl	Pin_Debug_SuperLoop_Read
+ 749 00b4 0346     		mov	r3, r0
+ 750 00b6 83F00103 		eor	r3, r3, #1
+ 751 00ba DBB2     		uxtb	r3, r3
+ 752 00bc 1846     		mov	r0, r3
+ 753 00be FFF7FEFF 		bl	Pin_Debug_SuperLoop_Write
+ 222:main.c        ****         uint32_t  now = g_tick_ms;
+ 754              		.loc 2 222 0
+ 755 00c2 6D4B     		ldr	r3, .L59+36
+ 756 00c4 1B68     		ldr	r3, [r3]
+ 757 00c6 C7F86431 		str	r3, [r7, #356]
+ 223:main.c        ****         // Get serial monitor input and handle common keys.
+ 224:main.c        ****         // 'app_dispatch_key' handles the state machine input logic
+ 225:main.c        ****         uint8_t ch = (uint8_t)UART_DEBUG_GetChar();
+ 758              		.loc 2 225 0
+ 759 00ca FFF7FEFF 		bl	dbg_get
+ 760 00ce 0346     		mov	r3, r0
+ 761 00d0 87F86331 		strb	r3, [r7, #355]
+ 226:main.c        ****         if (ch) app_dispatch_key(&ctx, ch);
+ 762              		.loc 2 226 0
+ 763 00d4 97F86331 		ldrb	r3, [r7, #355]	@ zero_extendqisi2
+ 764 00d8 002B     		cmp	r3, #0
+ 765 00da 07D0     		beq	.L55
+ 766              		.loc 2 226 0 is_stmt 0 discriminator 1
+ 767 00dc 97F86321 		ldrb	r2, [r7, #355]	@ zero_extendqisi2
+ 768 00e0 07F11C03 		add	r3, r7, #28
+ 769 00e4 1146     		mov	r1, r2
+ 770 00e6 1846     		mov	r0, r3
+ 771 00e8 FFF7FEFF 		bl	app_dispatch_key
+ 772              	.L55:
+ 227:main.c        ****         
+ 228:main.c        ****         // Always pump gimbal Rx
+ 229:main.c        ****         hamfly_pump(&g_movi);
+ 773              		.loc 2 229 0 is_stmt 1
+ 774 00ec 5D48     		ldr	r0, .L59+16
+ 775 00ee FFF7FEFF 		bl	hamfly_pump
+ 230:main.c        ****         telemetry_pump(&ctx);
+ 776              		.loc 2 230 0
+ 777 00f2 07F11C03 		add	r3, r7, #28
+ 778 00f6 1846     		mov	r0, r3
+ 779 00f8 FFF7FEFF 		bl	telemetry_pump
+ 231:main.c        ****         
+ 232:main.c        ****         // Housekeeping for Micro USB (CDC) enumeration.
+ 233:main.c        ****         dbg_tick();
+ 780              		.loc 2 233 0
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 20
+
+
+ 781 00fc FFF7FEFF 		bl	dbg_tick
+ 234:main.c        ****         
+ 235:main.c        ****         // Always run on tick definition
+ 236:main.c        ****         // These are by state but only run when in the given state
+ 237:main.c        ****         // Per state logiv before making acontrol packet or telem etc.
+ 238:main.c        ****         app_stby_tick(&ctx);
+ 782              		.loc 2 238 0
+ 783 0100 07F11C03 		add	r3, r7, #28
+ 784 0104 1846     		mov	r0, r3
+ 785 0106 FFF7FEFF 		bl	app_stby_tick
+ 239:main.c        ****         app_manual_tick(&ctx);  // For MANU substates
+ 786              		.loc 2 239 0
+ 787 010a 07F11C03 		add	r3, r7, #28
+ 788 010e 1846     		mov	r0, r3
+ 789 0110 FFF7FEFF 		bl	app_manual_tick
+ 240:main.c        ****         app_auto_tick(&ctx);  // For AUTO substates
+ 790              		.loc 2 240 0
+ 791 0114 07F11C03 		add	r3, r7, #28
+ 792 0118 1846     		mov	r0, r3
+ 793 011a FFF7FEFF 		bl	app_auto_tick
+ 241:main.c        ****         
+ 242:main.c        ****         app_telem_tick(&ctx);  // Telemetry getting and scheduling
+ 794              		.loc 2 242 0
+ 795 011e 07F11C03 		add	r3, r7, #28
+ 796 0122 1846     		mov	r0, r3
+ 797 0124 FFF7FEFF 		bl	app_telem_tick
+ 243:main.c        ****         app_sbc_tick(&ctx);  // SBC communications processing
+ 798              		.loc 2 243 0
+ 799 0128 07F11C03 		add	r3, r7, #28
+ 800 012c 1846     		mov	r0, r3
+ 801 012e FFF7FEFF 		bl	app_sbc_tick
+ 244:main.c        ****         
+ 245:main.c        ****         // At 'CONTROL_PERIOD_MS' build and send control packet
+ 246:main.c        ****         // app_build_control handles the state of the state machine
+ 247:main.c        ****         if ((now - ctx.last_tx_ms) >= CONTROL_PERIOD_MS) {
+ 802              		.loc 2 247 0
+ 803 0132 07F11C03 		add	r3, r7, #28
+ 804 0136 5B6E     		ldr	r3, [r3, #100]
+ 805 0138 D7F86421 		ldr	r2, [r7, #356]
+ 806 013c D31A     		subs	r3, r2, r3
+ 807 013e 632B     		cmp	r3, #99
+ 808 0140 12D9     		bls	.L56
+ 248:main.c        ****             ctx.last_tx_ms = now;
+ 809              		.loc 2 248 0
+ 810 0142 07F11C03 		add	r3, r7, #28
+ 811 0146 D7F86421 		ldr	r2, [r7, #356]
+ 812 014a 5A66     		str	r2, [r3, #100]
+ 249:main.c        ****             app_build_control(&ctx, &ctl);
+ 813              		.loc 2 249 0
+ 814 014c 07F1AC02 		add	r2, r7, #172
+ 815 0150 07F11C03 		add	r3, r7, #28
+ 816 0154 1146     		mov	r1, r2
+ 817 0156 1846     		mov	r0, r3
+ 818 0158 FFF7FEFF 		bl	app_build_control
+ 250:main.c        ****             hamfly_send_control(&g_movi, &ctl);
+ 819              		.loc 2 250 0
+ 820 015c 07F1AC03 		add	r3, r7, #172
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 21
+
+
+ 821 0160 1946     		mov	r1, r3
+ 822 0162 4048     		ldr	r0, .L59+16
+ 823 0164 FFF7FEFF 		bl	hamfly_send_control
+ 824              	.L56:
+ 251:main.c        ****         }
+ 252:main.c        ****         
+ 253:main.c        ****         // At 'DIAG_PERIOD_MS' share telemetry to monitor
+ 254:main.c        ****         if (ctx.diag_active && (now - ctx.last_diag_ms) >= DIAG_PERIOD_MS) {
+ 825              		.loc 2 254 0
+ 826 0168 07F11C03 		add	r3, r7, #28
+ 827 016c 93F87030 		ldrb	r3, [r3, #112]	@ zero_extendqisi2
+ 828 0170 002B     		cmp	r3, #0
+ 829 0172 9DD0     		beq	.L58
+ 830              		.loc 2 254 0 is_stmt 0 discriminator 1
+ 831 0174 07F11C03 		add	r3, r7, #28
+ 832 0178 9B6E     		ldr	r3, [r3, #104]
+ 833 017a D7F86421 		ldr	r2, [r7, #356]
+ 834 017e D31A     		subs	r3, r2, r3
+ 835 0180 41F28732 		movw	r2, #4999
+ 836 0184 9342     		cmp	r3, r2
+ 837 0186 93D9     		bls	.L58
+ 838              	.LBB4:
+ 255:main.c        ****             ctx.last_diag_ms = now;
+ 839              		.loc 2 255 0 is_stmt 1
+ 840 0188 07F11C03 		add	r3, r7, #28
+ 841 018c D7F86421 		ldr	r2, [r7, #356]
+ 842 0190 9A66     		str	r2, [r3, #104]
+ 256:main.c        ****             float p = 0.0f, t = 0.0f;
+ 843              		.loc 2 256 0
+ 844 0192 07F11803 		add	r3, r7, #24
+ 845 0196 4FF00002 		mov	r2, #0
+ 846 019a 1A60     		str	r2, [r3]	@ float
+ 847 019c 07F11403 		add	r3, r7, #20
+ 848 01a0 4FF00002 		mov	r2, #0
+ 849 01a4 1A60     		str	r2, [r3]	@ float
+ 257:main.c        ****             gimbal_pan_tilt_deg(&ctx, &p, &t);
+ 850              		.loc 2 257 0
+ 851 01a6 07F11402 		add	r2, r7, #20
+ 852 01aa 07F11801 		add	r1, r7, #24
+ 853 01ae 07F11C03 		add	r3, r7, #28
+ 854 01b2 1846     		mov	r0, r3
+ 855 01b4 FFF7FEFF 		bl	gimbal_pan_tilt_deg
+ 258:main.c        ****             int16_t pi, pf, ti, tf; char ps, ts;
+ 259:main.c        ****             decomp(p, &pi, &pf, &ps);
+ 856              		.loc 2 259 0
+ 857 01b8 07F11803 		add	r3, r7, #24
+ 858 01bc 1868     		ldr	r0, [r3]	@ float
+ 859 01be 07F10B03 		add	r3, r7, #11
+ 860 01c2 07F11002 		add	r2, r7, #16
+ 861 01c6 07F11201 		add	r1, r7, #18
+ 862 01ca FFF7FEFF 		bl	decomp
+ 260:main.c        ****             decomp(t, &ti, &tf, &ts);
+ 863              		.loc 2 260 0
+ 864 01ce 07F11403 		add	r3, r7, #20
+ 865 01d2 1868     		ldr	r0, [r3]	@ float
+ 866 01d4 07F10A03 		add	r3, r7, #10
+ 867 01d8 07F10C02 		add	r2, r7, #12
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 22
+
+
+ 868 01dc 07F10E01 		add	r1, r7, #14
+ 869 01e0 FFF7FEFF 		bl	decomp
+ 261:main.c        ****             snprintf(tx, sizeof tx,
+ 870              		.loc 2 261 0
+ 871 01e4 07F11C03 		add	r3, r7, #28
+ 872 01e8 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 873 01ea 1846     		mov	r0, r3
+ 874 01ec FFF7FEFF 		bl	app_state_name
+ 875 01f0 0246     		mov	r2, r0
+ 876 01f2 07F10B03 		add	r3, r7, #11
+ 877 01f6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 878 01f8 1946     		mov	r1, r3
+ 879 01fa 07F11203 		add	r3, r7, #18
+ 880 01fe B3F90030 		ldrsh	r3, [r3]
+ 881 0202 1C46     		mov	r4, r3
+ 882 0204 07F11003 		add	r3, r7, #16
+ 883 0208 B3F90030 		ldrsh	r3, [r3]
+ 884 020c 1D46     		mov	r5, r3
+ 885 020e 07F10A03 		add	r3, r7, #10
+ 886 0212 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 887 0214 1E46     		mov	r6, r3
+ 888 0216 07F10E03 		add	r3, r7, #14
+ 889 021a B3F90030 		ldrsh	r3, [r3]
+ 890 021e 7B60     		str	r3, [r7, #4]
+ 891 0220 07F10C03 		add	r3, r7, #12
+ 892 0224 B3F90030 		ldrsh	r3, [r3]
+ 893 0228 07F1C000 		add	r0, r7, #192
+ 894 022c 0693     		str	r3, [sp, #24]
+ 895 022e 7B68     		ldr	r3, [r7, #4]
+ 896 0230 0593     		str	r3, [sp, #20]
+ 897 0232 0496     		str	r6, [sp, #16]
+ 898 0234 0395     		str	r5, [sp, #12]
+ 899 0236 0294     		str	r4, [sp, #8]
+ 900 0238 0191     		str	r1, [sp, #4]
+ 901 023a 0092     		str	r2, [sp]
+ 902 023c D7F86431 		ldr	r3, [r7, #356]
+ 903 0240 0E4A     		ldr	r2, .L59+40
+ 904 0242 A021     		movs	r1, #160
+ 905 0244 FFF7FEFF 		bl	snprintf
+ 262:main.c        ****                      "[%lu] state=%s pan=%c%d.%02d tilt=%c%d.%02d\r\n",
+ 263:main.c        ****                      (unsigned long)now, app_state_name(ctx.state),
+ 264:main.c        ****                      ps, pi, pf, ts, ti, tf);
+ 265:main.c        ****             UART_DEBUG_PutString(tx);
+ 906              		.loc 2 265 0
+ 907 0248 07F1C003 		add	r3, r7, #192
+ 908 024c 1846     		mov	r0, r3
+ 909 024e FFF7FEFF 		bl	dbg_put
+ 910              	.LBE4:
+ 911              	.LBE3:
+ 266:main.c        ****         }
+ 267:main.c        ****     }
+ 912              		.loc 2 267 0
+ 913 0252 2DE7     		b	.L58
+ 914              	.L60:
+ 915              		.align	2
+ 916              	.L59:
+ 917 0254 3C000000 		.word	.LC6
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 23
+
+
+ 918 0258 00000000 		.word	isr_rx_sbc_Handler
+ 919 025c 64000000 		.word	.LC7
+ 920 0260 00000000 		.word	MOVI_HAL
+ 921 0264 00000000 		.word	g_movi
+ 922 0268 00000000 		.word	isr_rx_movi_Handler
+ 923 026c 7C000000 		.word	.LC8
+ 924 0270 00000000 		.word	isr_Looptimer_Handler
+ 925 0274 98000000 		.word	.LC9
+ 926 0278 00000000 		.word	g_tick_ms
+ 927 027c B8000000 		.word	.LC10
+ 928              		.cfi_endproc
+ 929              	.LFE73:
+ 930              		.size	main, .-main
+ 931              		.text
+ 932              	.Letext0:
+ 933              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 934              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 935              		.file 5 "Generated_Source\\PSoC5/cytypes.h"
+ 936              		.file 6 "..\\..\\..\\HamFlyAPI\\src/hamfly_core_hal.h"
+ 937              		.file 7 "..\\..\\..\\HamFlyAPI\\src/hamfly_core_control.h"
+ 938              		.file 8 "..\\..\\..\\HamFlyAPI\\src/hamfly_core_telemetry.h"
+ 939              		.file 9 "..\\..\\..\\HamFlyAPI\\src/hamfly_comm_rb.h"
+ 940              		.file 10 "..\\..\\..\\HamFlyAPI\\src/hamfly_core_gimbal.h"
+ 941              		.file 11 "app_ctx.h"
+ 942              		.file 12 "Generated_Source\\PSoC5/core_cm3.h"
+ 943              		.section	.debug_info,"",%progbits
+ 944              	.Ldebug_info0:
+ 945 0000 090D0000 		.4byte	0xd09
+ 946 0004 0400     		.2byte	0x4
+ 947 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 948 000a 04       		.byte	0x4
+ 949 000b 01       		.uleb128 0x1
+ 950 000c DC000000 		.4byte	.LASF223
+ 951 0010 0C       		.byte	0xc
+ 952 0011 AE050000 		.4byte	.LASF224
+ 953 0015 05020000 		.4byte	.LASF225
+ 954 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 955 001d 00000000 		.4byte	0
+ 956 0021 00000000 		.4byte	.Ldebug_line0
+ 957 0025 02       		.uleb128 0x2
+ 958 0026 01       		.byte	0x1
+ 959 0027 06       		.byte	0x6
+ 960 0028 A5020000 		.4byte	.LASF0
+ 961 002c 03       		.uleb128 0x3
+ 962 002d 90000000 		.4byte	.LASF2
+ 963 0031 03       		.byte	0x3
+ 964 0032 1D       		.byte	0x1d
+ 965 0033 37000000 		.4byte	0x37
+ 966 0037 02       		.uleb128 0x2
+ 967 0038 01       		.byte	0x1
+ 968 0039 08       		.byte	0x8
+ 969 003a E8070000 		.4byte	.LASF1
+ 970 003e 03       		.uleb128 0x3
+ 971 003f F5060000 		.4byte	.LASF3
+ 972 0043 03       		.byte	0x3
+ 973 0044 29       		.byte	0x29
+ 974 0045 49000000 		.4byte	0x49
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 24
+
+
+ 975 0049 02       		.uleb128 0x2
+ 976 004a 02       		.byte	0x2
+ 977 004b 05       		.byte	0x5
+ 978 004c 08080000 		.4byte	.LASF4
+ 979 0050 03       		.uleb128 0x3
+ 980 0051 10090000 		.4byte	.LASF5
+ 981 0055 03       		.byte	0x3
+ 982 0056 2B       		.byte	0x2b
+ 983 0057 5B000000 		.4byte	0x5b
+ 984 005b 02       		.uleb128 0x2
+ 985 005c 02       		.byte	0x2
+ 986 005d 07       		.byte	0x7
+ 987 005e F5090000 		.4byte	.LASF6
+ 988 0062 03       		.uleb128 0x3
+ 989 0063 05060000 		.4byte	.LASF7
+ 990 0067 03       		.byte	0x3
+ 991 0068 3F       		.byte	0x3f
+ 992 0069 6D000000 		.4byte	0x6d
+ 993 006d 02       		.uleb128 0x2
+ 994 006e 04       		.byte	0x4
+ 995 006f 05       		.byte	0x5
+ 996 0070 27030000 		.4byte	.LASF8
+ 997 0074 03       		.uleb128 0x3
+ 998 0075 EF030000 		.4byte	.LASF9
+ 999 0079 03       		.byte	0x3
+ 1000 007a 41       		.byte	0x41
+ 1001 007b 7F000000 		.4byte	0x7f
+ 1002 007f 02       		.uleb128 0x2
+ 1003 0080 04       		.byte	0x4
+ 1004 0081 07       		.byte	0x7
+ 1005 0082 CC040000 		.4byte	.LASF10
+ 1006 0086 02       		.uleb128 0x2
+ 1007 0087 08       		.byte	0x8
+ 1008 0088 05       		.byte	0x5
+ 1009 0089 97020000 		.4byte	.LASF11
+ 1010 008d 02       		.uleb128 0x2
+ 1011 008e 08       		.byte	0x8
+ 1012 008f 07       		.byte	0x7
+ 1013 0090 A4010000 		.4byte	.LASF12
+ 1014 0094 04       		.uleb128 0x4
+ 1015 0095 04       		.byte	0x4
+ 1016 0096 05       		.byte	0x5
+ 1017 0097 696E7400 		.ascii	"int\000"
+ 1018 009b 02       		.uleb128 0x2
+ 1019 009c 04       		.byte	0x4
+ 1020 009d 07       		.byte	0x7
+ 1021 009e 54030000 		.4byte	.LASF13
+ 1022 00a2 03       		.uleb128 0x3
+ 1023 00a3 930A0000 		.4byte	.LASF14
+ 1024 00a7 04       		.byte	0x4
+ 1025 00a8 18       		.byte	0x18
+ 1026 00a9 2C000000 		.4byte	0x2c
+ 1027 00ad 03       		.uleb128 0x3
+ 1028 00ae CF0B0000 		.4byte	.LASF15
+ 1029 00b2 04       		.byte	0x4
+ 1030 00b3 20       		.byte	0x20
+ 1031 00b4 3E000000 		.4byte	0x3e
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 25
+
+
+ 1032 00b8 03       		.uleb128 0x3
+ 1033 00b9 B5050000 		.4byte	.LASF16
+ 1034 00bd 04       		.byte	0x4
+ 1035 00be 24       		.byte	0x24
+ 1036 00bf 50000000 		.4byte	0x50
+ 1037 00c3 03       		.uleb128 0x3
+ 1038 00c4 E0070000 		.4byte	.LASF17
+ 1039 00c8 04       		.byte	0x4
+ 1040 00c9 2C       		.byte	0x2c
+ 1041 00ca 62000000 		.4byte	0x62
+ 1042 00ce 03       		.uleb128 0x3
+ 1043 00cf 310A0000 		.4byte	.LASF18
+ 1044 00d3 04       		.byte	0x4
+ 1045 00d4 30       		.byte	0x30
+ 1046 00d5 74000000 		.4byte	0x74
+ 1047 00d9 05       		.uleb128 0x5
+ 1048 00da 76030000 		.4byte	.LASF19
+ 1049 00de 05       		.byte	0x5
+ 1050 00df E901     		.2byte	0x1e9
+ 1051 00e1 37000000 		.4byte	0x37
+ 1052 00e5 02       		.uleb128 0x2
+ 1053 00e6 04       		.byte	0x4
+ 1054 00e7 04       		.byte	0x4
+ 1055 00e8 F5080000 		.4byte	.LASF20
+ 1056 00ec 02       		.uleb128 0x2
+ 1057 00ed 08       		.byte	0x8
+ 1058 00ee 04       		.byte	0x4
+ 1059 00ef 83030000 		.4byte	.LASF21
+ 1060 00f3 02       		.uleb128 0x2
+ 1061 00f4 01       		.byte	0x1
+ 1062 00f5 08       		.byte	0x8
+ 1063 00f6 0B090000 		.4byte	.LASF22
+ 1064 00fa 05       		.uleb128 0x5
+ 1065 00fb 5D080000 		.4byte	.LASF23
+ 1066 00ff 05       		.byte	0x5
+ 1067 0100 9302     		.2byte	0x293
+ 1068 0102 06010000 		.4byte	0x106
+ 1069 0106 06       		.uleb128 0x6
+ 1070 0107 D9000000 		.4byte	0xd9
+ 1071 010b 02       		.uleb128 0x2
+ 1072 010c 08       		.byte	0x8
+ 1073 010d 04       		.byte	0x4
+ 1074 010e CD030000 		.4byte	.LASF24
+ 1075 0112 02       		.uleb128 0x2
+ 1076 0113 04       		.byte	0x4
+ 1077 0114 07       		.byte	0x7
+ 1078 0115 8C060000 		.4byte	.LASF25
+ 1079 0119 07       		.uleb128 0x7
+ 1080 011a 04       		.byte	0x4
+ 1081 011b 08       		.uleb128 0x8
+ 1082 011c 04       		.byte	0x4
+ 1083 011d F3000000 		.4byte	0xf3
+ 1084 0121 08       		.uleb128 0x8
+ 1085 0122 04       		.byte	0x4
+ 1086 0123 27010000 		.4byte	0x127
+ 1087 0127 09       		.uleb128 0x9
+ 1088 0128 F3000000 		.4byte	0xf3
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 26
+
+
+ 1089 012c 06       		.uleb128 0x6
+ 1090 012d CE000000 		.4byte	0xce
+ 1091 0131 06       		.uleb128 0x6
+ 1092 0132 A2000000 		.4byte	0xa2
+ 1093 0136 06       		.uleb128 0x6
+ 1094 0137 B8000000 		.4byte	0xb8
+ 1095 013b 0A       		.uleb128 0xa
+ 1096 013c 0C       		.byte	0xc
+ 1097 013d 06       		.byte	0x6
+ 1098 013e 24       		.byte	0x24
+ 1099 013f 68010000 		.4byte	0x168
+ 1100 0143 0B       		.uleb128 0xb
+ 1101 0144 63747800 		.ascii	"ctx\000"
+ 1102 0148 06       		.byte	0x6
+ 1103 0149 25       		.byte	0x25
+ 1104 014a 19010000 		.4byte	0x119
+ 1105 014e 00       		.byte	0
+ 1106 014f 0C       		.uleb128 0xc
+ 1107 0150 0F060000 		.4byte	.LASF26
+ 1108 0154 06       		.byte	0x6
+ 1109 0155 26       		.byte	0x26
+ 1110 0156 78010000 		.4byte	0x178
+ 1111 015a 04       		.byte	0x4
+ 1112 015b 0C       		.uleb128 0xc
+ 1113 015c 95060000 		.4byte	.LASF27
+ 1114 0160 06       		.byte	0x6
+ 1115 0161 27       		.byte	0x27
+ 1116 0162 8D010000 		.4byte	0x18d
+ 1117 0166 08       		.byte	0x8
+ 1118 0167 00       		.byte	0
+ 1119 0168 0D       		.uleb128 0xd
+ 1120 0169 78010000 		.4byte	0x178
+ 1121 016d 0E       		.uleb128 0xe
+ 1122 016e 19010000 		.4byte	0x119
+ 1123 0172 0E       		.uleb128 0xe
+ 1124 0173 A2000000 		.4byte	0xa2
+ 1125 0177 00       		.byte	0
+ 1126 0178 08       		.uleb128 0x8
+ 1127 0179 04       		.byte	0x4
+ 1128 017a 68010000 		.4byte	0x168
+ 1129 017e 0F       		.uleb128 0xf
+ 1130 017f CE000000 		.4byte	0xce
+ 1131 0183 8D010000 		.4byte	0x18d
+ 1132 0187 0E       		.uleb128 0xe
+ 1133 0188 19010000 		.4byte	0x119
+ 1134 018c 00       		.byte	0
+ 1135 018d 08       		.uleb128 0x8
+ 1136 018e 04       		.byte	0x4
+ 1137 018f 7E010000 		.4byte	0x17e
+ 1138 0193 03       		.uleb128 0x3
+ 1139 0194 8A030000 		.4byte	.LASF28
+ 1140 0198 06       		.byte	0x6
+ 1141 0199 28       		.byte	0x28
+ 1142 019a 3B010000 		.4byte	0x13b
+ 1143 019e 10       		.uleb128 0x10
+ 1144 019f 01       		.byte	0x1
+ 1145 01a0 37000000 		.4byte	0x37
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 27
+
+
+ 1146 01a4 07       		.byte	0x7
+ 1147 01a5 1E       		.byte	0x1e
+ 1148 01a6 C3010000 		.4byte	0x1c3
+ 1149 01aa 11       		.uleb128 0x11
+ 1150 01ab 5E000000 		.4byte	.LASF29
+ 1151 01af 00       		.byte	0
+ 1152 01b0 11       		.uleb128 0x11
+ 1153 01b1 78080000 		.4byte	.LASF30
+ 1154 01b5 01       		.byte	0x1
+ 1155 01b6 11       		.uleb128 0x11
+ 1156 01b7 FB080000 		.4byte	.LASF31
+ 1157 01bb 02       		.byte	0x2
+ 1158 01bc 11       		.uleb128 0x11
+ 1159 01bd E50A0000 		.4byte	.LASF32
+ 1160 01c1 03       		.byte	0x3
+ 1161 01c2 00       		.byte	0
+ 1162 01c3 03       		.uleb128 0x3
+ 1163 01c4 FE0A0000 		.4byte	.LASF33
+ 1164 01c8 07       		.byte	0x7
+ 1165 01c9 2A       		.byte	0x2a
+ 1166 01ca 9E010000 		.4byte	0x19e
+ 1167 01ce 0A       		.uleb128 0xa
+ 1168 01cf 14       		.byte	0x14
+ 1169 01d0 07       		.byte	0x7
+ 1170 01d1 2E       		.byte	0x2e
+ 1171 01d2 37020000 		.4byte	0x237
+ 1172 01d6 0B       		.uleb128 0xb
+ 1173 01d7 70616E00 		.ascii	"pan\000"
+ 1174 01db 07       		.byte	0x7
+ 1175 01dc 2F       		.byte	0x2f
+ 1176 01dd E5000000 		.4byte	0xe5
+ 1177 01e1 00       		.byte	0
+ 1178 01e2 0C       		.uleb128 0xc
+ 1179 01e3 28060000 		.4byte	.LASF34
+ 1180 01e7 07       		.byte	0x7
+ 1181 01e8 30       		.byte	0x30
+ 1182 01e9 E5000000 		.4byte	0xe5
+ 1183 01ed 04       		.byte	0x4
+ 1184 01ee 0C       		.uleb128 0xc
+ 1185 01ef 4F070000 		.4byte	.LASF35
+ 1186 01f3 07       		.byte	0x7
+ 1187 01f4 31       		.byte	0x31
+ 1188 01f5 E5000000 		.4byte	0xe5
+ 1189 01f9 08       		.byte	0x8
+ 1190 01fa 0C       		.uleb128 0xc
+ 1191 01fb F60B0000 		.4byte	.LASF36
+ 1192 01ff 07       		.byte	0x7
+ 1193 0200 32       		.byte	0x32
+ 1194 0201 C3010000 		.4byte	0x1c3
+ 1195 0205 0C       		.byte	0xc
+ 1196 0206 0C       		.uleb128 0xc
+ 1197 0207 CB010000 		.4byte	.LASF37
+ 1198 020b 07       		.byte	0x7
+ 1199 020c 33       		.byte	0x33
+ 1200 020d C3010000 		.4byte	0x1c3
+ 1201 0211 0D       		.byte	0xd
+ 1202 0212 0C       		.uleb128 0xc
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 28
+
+
+ 1203 0213 95050000 		.4byte	.LASF38
+ 1204 0217 07       		.byte	0x7
+ 1205 0218 34       		.byte	0x34
+ 1206 0219 C3010000 		.4byte	0x1c3
+ 1207 021d 0E       		.byte	0xe
+ 1208 021e 0C       		.uleb128 0xc
+ 1209 021f 7C030000 		.4byte	.LASF39
+ 1210 0223 07       		.byte	0x7
+ 1211 0224 35       		.byte	0x35
+ 1212 0225 A2000000 		.4byte	0xa2
+ 1213 0229 0F       		.byte	0xf
+ 1214 022a 0C       		.uleb128 0xc
+ 1215 022b 83020000 		.4byte	.LASF40
+ 1216 022f 07       		.byte	0x7
+ 1217 0230 36       		.byte	0x36
+ 1218 0231 A2000000 		.4byte	0xa2
+ 1219 0235 10       		.byte	0x10
+ 1220 0236 00       		.byte	0
+ 1221 0237 03       		.uleb128 0x3
+ 1222 0238 2D050000 		.4byte	.LASF41
+ 1223 023c 07       		.byte	0x7
+ 1224 023d 37       		.byte	0x37
+ 1225 023e CE010000 		.4byte	0x1ce
+ 1226 0242 0A       		.uleb128 0xa
+ 1227 0243 EC       		.byte	0xec
+ 1228 0244 08       		.byte	0x8
+ 1229 0245 1F       		.byte	0x1f
+ 1230 0246 AB050000 		.4byte	0x5ab
+ 1231 024a 0C       		.uleb128 0xc
+ 1232 024b 9D080000 		.4byte	.LASF42
+ 1233 024f 08       		.byte	0x8
+ 1234 0250 21       		.byte	0x21
+ 1235 0251 AB050000 		.4byte	0x5ab
+ 1236 0255 00       		.byte	0
+ 1237 0256 0C       		.uleb128 0xc
+ 1238 0257 88020000 		.4byte	.LASF43
+ 1239 025b 08       		.byte	0x8
+ 1240 025c 22       		.byte	0x22
+ 1241 025d E5000000 		.4byte	0xe5
+ 1242 0261 04       		.byte	0x4
+ 1243 0262 0C       		.uleb128 0xc
+ 1244 0263 F5010000 		.4byte	.LASF44
+ 1245 0267 08       		.byte	0x8
+ 1246 0268 23       		.byte	0x23
+ 1247 0269 E5000000 		.4byte	0xe5
+ 1248 026d 08       		.byte	0x8
+ 1249 026e 0C       		.uleb128 0xc
+ 1250 026f 7D010000 		.4byte	.LASF45
+ 1251 0273 08       		.byte	0x8
+ 1252 0274 24       		.byte	0x24
+ 1253 0275 E5000000 		.4byte	0xe5
+ 1254 0279 0C       		.byte	0xc
+ 1255 027a 0C       		.uleb128 0xc
+ 1256 027b B6000000 		.4byte	.LASF46
+ 1257 027f 08       		.byte	0x8
+ 1258 0280 25       		.byte	0x25
+ 1259 0281 E5000000 		.4byte	0xe5
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 29
+
+
+ 1260 0285 10       		.byte	0x10
+ 1261 0286 0C       		.uleb128 0xc
+ 1262 0287 BF000000 		.4byte	.LASF47
+ 1263 028b 08       		.byte	0x8
+ 1264 028c 26       		.byte	0x26
+ 1265 028d E5000000 		.4byte	0xe5
+ 1266 0291 14       		.byte	0x14
+ 1267 0292 0C       		.uleb128 0xc
+ 1268 0293 C8000000 		.4byte	.LASF48
+ 1269 0297 08       		.byte	0x8
+ 1270 0298 27       		.byte	0x27
+ 1271 0299 E5000000 		.4byte	0xe5
+ 1272 029d 18       		.byte	0x18
+ 1273 029e 0C       		.uleb128 0xc
+ 1274 029f C70A0000 		.4byte	.LASF49
+ 1275 02a3 08       		.byte	0x8
+ 1276 02a4 28       		.byte	0x28
+ 1277 02a5 A2000000 		.4byte	0xa2
+ 1278 02a9 1C       		.byte	0x1c
+ 1279 02aa 0C       		.uleb128 0xc
+ 1280 02ab D60A0000 		.4byte	.LASF50
+ 1281 02af 08       		.byte	0x8
+ 1282 02b0 29       		.byte	0x29
+ 1283 02b1 A2000000 		.4byte	0xa2
+ 1284 02b5 1D       		.byte	0x1d
+ 1285 02b6 0C       		.uleb128 0xc
+ 1286 02b7 08070000 		.4byte	.LASF51
+ 1287 02bb 08       		.byte	0x8
+ 1288 02bc 2C       		.byte	0x2c
+ 1289 02bd AB050000 		.4byte	0x5ab
+ 1290 02c1 1E       		.byte	0x1e
+ 1291 02c2 0C       		.uleb128 0xc
+ 1292 02c3 63060000 		.4byte	.LASF52
+ 1293 02c7 08       		.byte	0x8
+ 1294 02c8 2E       		.byte	0x2e
+ 1295 02c9 AB050000 		.4byte	0x5ab
+ 1296 02cd 1F       		.byte	0x1f
+ 1297 02ce 0C       		.uleb128 0xc
+ 1298 02cf 39000000 		.4byte	.LASF53
+ 1299 02d3 08       		.byte	0x8
+ 1300 02d4 31       		.byte	0x31
+ 1301 02d5 E5000000 		.4byte	0xe5
+ 1302 02d9 20       		.byte	0x20
+ 1303 02da 0C       		.uleb128 0xc
+ 1304 02db 080A0000 		.4byte	.LASF54
+ 1305 02df 08       		.byte	0x8
+ 1306 02e0 32       		.byte	0x32
+ 1307 02e1 E5000000 		.4byte	0xe5
+ 1308 02e5 24       		.byte	0x24
+ 1309 02e6 0C       		.uleb128 0xc
+ 1310 02e7 78050000 		.4byte	.LASF55
+ 1311 02eb 08       		.byte	0x8
+ 1312 02ec 33       		.byte	0x33
+ 1313 02ed E5000000 		.4byte	0xe5
+ 1314 02f1 28       		.byte	0x28
+ 1315 02f2 0C       		.uleb128 0xc
+ 1316 02f3 600A0000 		.4byte	.LASF56
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 30
+
+
+ 1317 02f7 08       		.byte	0x8
+ 1318 02f8 34       		.byte	0x34
+ 1319 02f9 E5000000 		.4byte	0xe5
+ 1320 02fd 2C       		.byte	0x2c
+ 1321 02fe 0C       		.uleb128 0xc
+ 1322 02ff 1A000000 		.4byte	.LASF57
+ 1323 0303 08       		.byte	0x8
+ 1324 0304 36       		.byte	0x36
+ 1325 0305 E5000000 		.4byte	0xe5
+ 1326 0309 30       		.byte	0x30
+ 1327 030a 0C       		.uleb128 0xc
+ 1328 030b 29070000 		.4byte	.LASF58
+ 1329 030f 08       		.byte	0x8
+ 1330 0310 37       		.byte	0x37
+ 1331 0311 E5000000 		.4byte	0xe5
+ 1332 0315 34       		.byte	0x34
+ 1333 0316 0C       		.uleb128 0xc
+ 1334 0317 58060000 		.4byte	.LASF59
+ 1335 031b 08       		.byte	0x8
+ 1336 031c 38       		.byte	0x38
+ 1337 031d E5000000 		.4byte	0xe5
+ 1338 0321 38       		.byte	0x38
+ 1339 0322 0C       		.uleb128 0xc
+ 1340 0323 84000000 		.4byte	.LASF60
+ 1341 0327 08       		.byte	0x8
+ 1342 0328 39       		.byte	0x39
+ 1343 0329 E5000000 		.4byte	0xe5
+ 1344 032d 3C       		.byte	0x3c
+ 1345 032e 0C       		.uleb128 0xc
+ 1346 032f 9A000000 		.4byte	.LASF61
+ 1347 0333 08       		.byte	0x8
+ 1348 0334 3B       		.byte	0x3b
+ 1349 0335 C3000000 		.4byte	0xc3
+ 1350 0339 40       		.byte	0x40
+ 1351 033a 0C       		.uleb128 0xc
+ 1352 033b 720A0000 		.4byte	.LASF62
+ 1353 033f 08       		.byte	0x8
+ 1354 0340 3C       		.byte	0x3c
+ 1355 0341 C3000000 		.4byte	0xc3
+ 1356 0345 44       		.byte	0x44
+ 1357 0346 0C       		.uleb128 0xc
+ 1358 0347 6E060000 		.4byte	.LASF63
+ 1359 034b 08       		.byte	0x8
+ 1360 034c 41       		.byte	0x41
+ 1361 034d C3000000 		.4byte	0xc3
+ 1362 0351 48       		.byte	0x48
+ 1363 0352 0C       		.uleb128 0xc
+ 1364 0353 A3080000 		.4byte	.LASF64
+ 1365 0357 08       		.byte	0x8
+ 1366 0358 42       		.byte	0x42
+ 1367 0359 AD000000 		.4byte	0xad
+ 1368 035d 4C       		.byte	0x4c
+ 1369 035e 0C       		.uleb128 0xc
+ 1370 035f B1020000 		.4byte	.LASF65
+ 1371 0363 08       		.byte	0x8
+ 1372 0364 44       		.byte	0x44
+ 1373 0365 AD000000 		.4byte	0xad
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 31
+
+
+ 1374 0369 4E       		.byte	0x4e
+ 1375 036a 0C       		.uleb128 0xc
+ 1376 036b 6B080000 		.4byte	.LASF66
+ 1377 036f 08       		.byte	0x8
+ 1378 0370 45       		.byte	0x45
+ 1379 0371 B8000000 		.4byte	0xb8
+ 1380 0375 50       		.byte	0x50
+ 1381 0376 0C       		.uleb128 0xc
+ 1382 0377 D4020000 		.4byte	.LASF67
+ 1383 037b 08       		.byte	0x8
+ 1384 037c 46       		.byte	0x46
+ 1385 037d B8000000 		.4byte	0xb8
+ 1386 0381 52       		.byte	0x52
+ 1387 0382 0C       		.uleb128 0xc
+ 1388 0383 7F060000 		.4byte	.LASF68
+ 1389 0387 08       		.byte	0x8
+ 1390 0388 47       		.byte	0x47
+ 1391 0389 B8000000 		.4byte	0xb8
+ 1392 038d 54       		.byte	0x54
+ 1393 038e 0C       		.uleb128 0xc
+ 1394 038f 97030000 		.4byte	.LASF69
+ 1395 0393 08       		.byte	0x8
+ 1396 0394 4A       		.byte	0x4a
+ 1397 0395 AB050000 		.4byte	0x5ab
+ 1398 0399 56       		.byte	0x56
+ 1399 039a 0C       		.uleb128 0xc
+ 1400 039b 99010000 		.4byte	.LASF70
+ 1401 039f 08       		.byte	0x8
+ 1402 03a0 4E       		.byte	0x4e
+ 1403 03a1 E5000000 		.4byte	0xe5
+ 1404 03a5 58       		.byte	0x58
+ 1405 03a6 0C       		.uleb128 0xc
+ 1406 03a7 99090000 		.4byte	.LASF71
+ 1407 03ab 08       		.byte	0x8
+ 1408 03ac 52       		.byte	0x52
+ 1409 03ad E5000000 		.4byte	0xe5
+ 1410 03b1 5C       		.byte	0x5c
+ 1411 03b2 0C       		.uleb128 0xc
+ 1412 03b3 C00B0000 		.4byte	.LASF72
+ 1413 03b7 08       		.byte	0x8
+ 1414 03b8 57       		.byte	0x57
+ 1415 03b9 AB050000 		.4byte	0x5ab
+ 1416 03bd 60       		.byte	0x60
+ 1417 03be 0C       		.uleb128 0xc
+ 1418 03bf E50B0000 		.4byte	.LASF73
+ 1419 03c3 08       		.byte	0x8
+ 1420 03c4 58       		.byte	0x58
+ 1421 03c5 CE000000 		.4byte	0xce
+ 1422 03c9 64       		.byte	0x64
+ 1423 03ca 0C       		.uleb128 0xc
+ 1424 03cb 1B070000 		.4byte	.LASF74
+ 1425 03cf 08       		.byte	0x8
+ 1426 03d0 59       		.byte	0x59
+ 1427 03d1 E5000000 		.4byte	0xe5
+ 1428 03d5 68       		.byte	0x68
+ 1429 03d6 0C       		.uleb128 0xc
+ 1430 03d7 58090000 		.4byte	.LASF75
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 32
+
+
+ 1431 03db 08       		.byte	0x8
+ 1432 03dc 5A       		.byte	0x5a
+ 1433 03dd E5000000 		.4byte	0xe5
+ 1434 03e1 6C       		.byte	0x6c
+ 1435 03e2 0C       		.uleb128 0xc
+ 1436 03e3 6A010000 		.4byte	.LASF76
+ 1437 03e7 08       		.byte	0x8
+ 1438 03e8 5B       		.byte	0x5b
+ 1439 03e9 E5000000 		.4byte	0xe5
+ 1440 03ed 70       		.byte	0x70
+ 1441 03ee 0C       		.uleb128 0xc
+ 1442 03ef BA070000 		.4byte	.LASF77
+ 1443 03f3 08       		.byte	0x8
+ 1444 03f4 5F       		.byte	0x5f
+ 1445 03f5 E5000000 		.4byte	0xe5
+ 1446 03f9 74       		.byte	0x74
+ 1447 03fa 0C       		.uleb128 0xc
+ 1448 03fb FF0B0000 		.4byte	.LASF78
+ 1449 03ff 08       		.byte	0x8
+ 1450 0400 60       		.byte	0x60
+ 1451 0401 E5000000 		.4byte	0xe5
+ 1452 0405 78       		.byte	0x78
+ 1453 0406 0C       		.uleb128 0xc
+ 1454 0407 CF090000 		.4byte	.LASF79
+ 1455 040b 08       		.byte	0x8
+ 1456 040c 61       		.byte	0x61
+ 1457 040d E5000000 		.4byte	0xe5
+ 1458 0411 7C       		.byte	0x7c
+ 1459 0412 0C       		.uleb128 0xc
+ 1460 0413 A8040000 		.4byte	.LASF80
+ 1461 0417 08       		.byte	0x8
+ 1462 0418 65       		.byte	0x65
+ 1463 0419 E5000000 		.4byte	0xe5
+ 1464 041d 80       		.byte	0x80
+ 1465 041e 0C       		.uleb128 0xc
+ 1466 041f 54070000 		.4byte	.LASF81
+ 1467 0423 08       		.byte	0x8
+ 1468 0424 66       		.byte	0x66
+ 1469 0425 E5000000 		.4byte	0xe5
+ 1470 0429 84       		.byte	0x84
+ 1471 042a 0C       		.uleb128 0xc
+ 1472 042b 3C040000 		.4byte	.LASF82
+ 1473 042f 08       		.byte	0x8
+ 1474 0430 67       		.byte	0x67
+ 1475 0431 E5000000 		.4byte	0xe5
+ 1476 0435 88       		.byte	0x88
+ 1477 0436 0C       		.uleb128 0xc
+ 1478 0437 50000000 		.4byte	.LASF83
+ 1479 043b 08       		.byte	0x8
+ 1480 043c 6A       		.byte	0x6a
+ 1481 043d AB050000 		.4byte	0x5ab
+ 1482 0441 8C       		.byte	0x8c
+ 1483 0442 0C       		.uleb128 0xc
+ 1484 0443 BE050000 		.4byte	.LASF84
+ 1485 0447 08       		.byte	0x8
+ 1486 0448 6E       		.byte	0x6e
+ 1487 0449 AB050000 		.4byte	0x5ab
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 33
+
+
+ 1488 044d 8D       		.byte	0x8d
+ 1489 044e 0C       		.uleb128 0xc
+ 1490 044f CD070000 		.4byte	.LASF85
+ 1491 0453 08       		.byte	0x8
+ 1492 0454 6F       		.byte	0x6f
+ 1493 0455 AB050000 		.4byte	0x5ab
+ 1494 0459 8E       		.byte	0x8e
+ 1495 045a 0C       		.uleb128 0xc
+ 1496 045b E0060000 		.4byte	.LASF86
+ 1497 045f 08       		.byte	0x8
+ 1498 0460 70       		.byte	0x70
+ 1499 0461 AB050000 		.4byte	0x5ab
+ 1500 0465 8F       		.byte	0x8f
+ 1501 0466 0C       		.uleb128 0xc
+ 1502 0467 E1020000 		.4byte	.LASF87
+ 1503 046b 08       		.byte	0x8
+ 1504 046c 71       		.byte	0x71
+ 1505 046d AB050000 		.4byte	0x5ab
+ 1506 0471 90       		.byte	0x90
+ 1507 0472 0C       		.uleb128 0xc
+ 1508 0473 9F050000 		.4byte	.LASF88
+ 1509 0477 08       		.byte	0x8
+ 1510 0478 72       		.byte	0x72
+ 1511 0479 E5000000 		.4byte	0xe5
+ 1512 047d 94       		.byte	0x94
+ 1513 047e 0C       		.uleb128 0xc
+ 1514 047f 880B0000 		.4byte	.LASF89
+ 1515 0483 08       		.byte	0x8
+ 1516 0484 73       		.byte	0x73
+ 1517 0485 A2000000 		.4byte	0xa2
+ 1518 0489 98       		.byte	0x98
+ 1519 048a 0C       		.uleb128 0xc
+ 1520 048b 69050000 		.4byte	.LASF90
+ 1521 048f 08       		.byte	0x8
+ 1522 0490 74       		.byte	0x74
+ 1523 0491 E5000000 		.4byte	0xe5
+ 1524 0495 9C       		.byte	0x9c
+ 1525 0496 0C       		.uleb128 0xc
+ 1526 0497 83070000 		.4byte	.LASF91
+ 1527 049b 08       		.byte	0x8
+ 1528 049c 75       		.byte	0x75
+ 1529 049d A2000000 		.4byte	0xa2
+ 1530 04a1 A0       		.byte	0xa0
+ 1531 04a2 0C       		.uleb128 0xc
+ 1532 04a3 500B0000 		.4byte	.LASF92
+ 1533 04a7 08       		.byte	0x8
+ 1534 04a8 76       		.byte	0x76
+ 1535 04a9 AD000000 		.4byte	0xad
+ 1536 04ad A2       		.byte	0xa2
+ 1537 04ae 0C       		.uleb128 0xc
+ 1538 04af 280B0000 		.4byte	.LASF93
+ 1539 04b3 08       		.byte	0x8
+ 1540 04b4 77       		.byte	0x77
+ 1541 04b5 AD000000 		.4byte	0xad
+ 1542 04b9 A4       		.byte	0xa4
+ 1543 04ba 0C       		.uleb128 0xc
+ 1544 04bb 7C040000 		.4byte	.LASF94
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 34
+
+
+ 1545 04bf 08       		.byte	0x8
+ 1546 04c0 78       		.byte	0x78
+ 1547 04c1 E5000000 		.4byte	0xe5
+ 1548 04c5 A8       		.byte	0xa8
+ 1549 04c6 0C       		.uleb128 0xc
+ 1550 04c7 D1050000 		.4byte	.LASF95
+ 1551 04cb 08       		.byte	0x8
+ 1552 04cc 79       		.byte	0x79
+ 1553 04cd AD000000 		.4byte	0xad
+ 1554 04d1 AC       		.byte	0xac
+ 1555 04d2 0C       		.uleb128 0xc
+ 1556 04d3 86010000 		.4byte	.LASF96
+ 1557 04d7 08       		.byte	0x8
+ 1558 04d8 7A       		.byte	0x7a
+ 1559 04d9 AD000000 		.4byte	0xad
+ 1560 04dd AE       		.byte	0xae
+ 1561 04de 0C       		.uleb128 0xc
+ 1562 04df 37080000 		.4byte	.LASF97
+ 1563 04e3 08       		.byte	0x8
+ 1564 04e4 7B       		.byte	0x7b
+ 1565 04e5 AD000000 		.4byte	0xad
+ 1566 04e9 B0       		.byte	0xb0
+ 1567 04ea 0C       		.uleb128 0xc
+ 1568 04eb 45030000 		.4byte	.LASF98
+ 1569 04ef 08       		.byte	0x8
+ 1570 04f0 7C       		.byte	0x7c
+ 1571 04f1 E5000000 		.4byte	0xe5
+ 1572 04f5 B4       		.byte	0xb4
+ 1573 04f6 0C       		.uleb128 0xc
+ 1574 04f7 AC030000 		.4byte	.LASF99
+ 1575 04fb 08       		.byte	0x8
+ 1576 04fc 7D       		.byte	0x7d
+ 1577 04fd AD000000 		.4byte	0xad
+ 1578 0501 B8       		.byte	0xb8
+ 1579 0502 0C       		.uleb128 0xc
+ 1580 0503 A7060000 		.4byte	.LASF100
+ 1581 0507 08       		.byte	0x8
+ 1582 0508 80       		.byte	0x80
+ 1583 0509 AB050000 		.4byte	0x5ab
+ 1584 050d BA       		.byte	0xba
+ 1585 050e 0C       		.uleb128 0xc
+ 1586 050f 5D050000 		.4byte	.LASF101
+ 1587 0513 08       		.byte	0x8
+ 1588 0514 81       		.byte	0x81
+ 1589 0515 E5000000 		.4byte	0xe5
+ 1590 0519 BC       		.byte	0xbc
+ 1591 051a 0C       		.uleb128 0xc
+ 1592 051b 63050000 		.4byte	.LASF102
+ 1593 051f 08       		.byte	0x8
+ 1594 0520 82       		.byte	0x82
+ 1595 0521 E5000000 		.4byte	0xe5
+ 1596 0525 C0       		.byte	0xc0
+ 1597 0526 0C       		.uleb128 0xc
+ 1598 0527 FC070000 		.4byte	.LASF103
+ 1599 052b 08       		.byte	0x8
+ 1600 052c 83       		.byte	0x83
+ 1601 052d E5000000 		.4byte	0xe5
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 35
+
+
+ 1602 0531 C4       		.byte	0xc4
+ 1603 0532 0C       		.uleb128 0xc
+ 1604 0533 4C040000 		.4byte	.LASF104
+ 1605 0537 08       		.byte	0x8
+ 1606 0538 84       		.byte	0x84
+ 1607 0539 E5000000 		.4byte	0xe5
+ 1608 053d C8       		.byte	0xc8
+ 1609 053e 0C       		.uleb128 0xc
+ 1610 053f 24050000 		.4byte	.LASF105
+ 1611 0543 08       		.byte	0x8
+ 1612 0544 85       		.byte	0x85
+ 1613 0545 E5000000 		.4byte	0xe5
+ 1614 0549 CC       		.byte	0xcc
+ 1615 054a 0C       		.uleb128 0xc
+ 1616 054b 27090000 		.4byte	.LASF106
+ 1617 054f 08       		.byte	0x8
+ 1618 0550 86       		.byte	0x86
+ 1619 0551 E5000000 		.4byte	0xe5
+ 1620 0555 D0       		.byte	0xd0
+ 1621 0556 0C       		.uleb128 0xc
+ 1622 0557 31090000 		.4byte	.LASF107
+ 1623 055b 08       		.byte	0x8
+ 1624 055c 87       		.byte	0x87
+ 1625 055d E5000000 		.4byte	0xe5
+ 1626 0561 D4       		.byte	0xd4
+ 1627 0562 0C       		.uleb128 0xc
+ 1628 0563 CA020000 		.4byte	.LASF108
+ 1629 0567 08       		.byte	0x8
+ 1630 0568 88       		.byte	0x88
+ 1631 0569 E5000000 		.4byte	0xe5
+ 1632 056d D8       		.byte	0xd8
+ 1633 056e 0C       		.uleb128 0xc
+ 1634 056f A6000000 		.4byte	.LASF109
+ 1635 0573 08       		.byte	0x8
+ 1636 0574 89       		.byte	0x89
+ 1637 0575 E5000000 		.4byte	0xe5
+ 1638 0579 DC       		.byte	0xdc
+ 1639 057a 0C       		.uleb128 0xc
+ 1640 057b 04040000 		.4byte	.LASF110
+ 1641 057f 08       		.byte	0x8
+ 1642 0580 94       		.byte	0x94
+ 1643 0581 AB050000 		.4byte	0x5ab
+ 1644 0585 E0       		.byte	0xe0
+ 1645 0586 0C       		.uleb128 0xc
+ 1646 0587 82050000 		.4byte	.LASF111
+ 1647 058b 08       		.byte	0x8
+ 1648 058c 95       		.byte	0x95
+ 1649 058d AB050000 		.4byte	0x5ab
+ 1650 0591 E1       		.byte	0xe1
+ 1651 0592 0C       		.uleb128 0xc
+ 1652 0593 6A020000 		.4byte	.LASF112
+ 1653 0597 08       		.byte	0x8
+ 1654 0598 96       		.byte	0x96
+ 1655 0599 E5000000 		.4byte	0xe5
+ 1656 059d E4       		.byte	0xe4
+ 1657 059e 0C       		.uleb128 0xc
+ 1658 059f 04030000 		.4byte	.LASF113
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 36
+
+
+ 1659 05a3 08       		.byte	0x8
+ 1660 05a4 97       		.byte	0x97
+ 1661 05a5 AD000000 		.4byte	0xad
+ 1662 05a9 E8       		.byte	0xe8
+ 1663 05aa 00       		.byte	0
+ 1664 05ab 02       		.uleb128 0x2
+ 1665 05ac 01       		.byte	0x1
+ 1666 05ad 02       		.byte	0x2
+ 1667 05ae DA070000 		.4byte	.LASF114
+ 1668 05b2 03       		.uleb128 0x3
+ 1669 05b3 F1020000 		.4byte	.LASF115
+ 1670 05b7 08       		.byte	0x8
+ 1671 05b8 99       		.byte	0x99
+ 1672 05b9 42020000 		.4byte	0x242
+ 1673 05bd 12       		.uleb128 0x12
+ 1674 05be 0601     		.2byte	0x106
+ 1675 05c0 09       		.byte	0x9
+ 1676 05c1 22       		.byte	0x22
+ 1677 05c2 FA050000 		.4byte	0x5fa
+ 1678 05c6 0B       		.uleb128 0xb
+ 1679 05c7 62756600 		.ascii	"buf\000"
+ 1680 05cb 09       		.byte	0x9
+ 1681 05cc 23       		.byte	0x23
+ 1682 05cd 0A060000 		.4byte	0x60a
+ 1683 05d1 00       		.byte	0
+ 1684 05d2 13       		.uleb128 0x13
+ 1685 05d3 98080000 		.4byte	.LASF116
+ 1686 05d7 09       		.byte	0x9
+ 1687 05d8 24       		.byte	0x24
+ 1688 05d9 36010000 		.4byte	0x136
+ 1689 05dd 0001     		.2byte	0x100
+ 1690 05df 13       		.uleb128 0x13
+ 1691 05e0 7A060000 		.4byte	.LASF117
+ 1692 05e4 09       		.byte	0x9
+ 1693 05e5 25       		.byte	0x25
+ 1694 05e6 36010000 		.4byte	0x136
+ 1695 05ea 0201     		.2byte	0x102
+ 1696 05ec 13       		.uleb128 0x13
+ 1697 05ed F6070000 		.4byte	.LASF118
+ 1698 05f1 09       		.byte	0x9
+ 1699 05f2 26       		.byte	0x26
+ 1700 05f3 36010000 		.4byte	0x136
+ 1701 05f7 0401     		.2byte	0x104
+ 1702 05f9 00       		.byte	0
+ 1703 05fa 14       		.uleb128 0x14
+ 1704 05fb 31010000 		.4byte	0x131
+ 1705 05ff 0A060000 		.4byte	0x60a
+ 1706 0603 15       		.uleb128 0x15
+ 1707 0604 12010000 		.4byte	0x112
+ 1708 0608 FF       		.byte	0xff
+ 1709 0609 00       		.byte	0
+ 1710 060a 06       		.uleb128 0x6
+ 1711 060b FA050000 		.4byte	0x5fa
+ 1712 060f 03       		.uleb128 0x3
+ 1713 0610 25040000 		.4byte	.LASF119
+ 1714 0614 09       		.byte	0x9
+ 1715 0615 27       		.byte	0x27
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 37
+
+
+ 1716 0616 BD050000 		.4byte	0x5bd
+ 1717 061a 0A       		.uleb128 0xa
+ 1718 061b 18       		.byte	0x18
+ 1719 061c 0A       		.byte	0xa
+ 1720 061d 2F       		.byte	0x2f
+ 1721 061e 77060000 		.4byte	0x677
+ 1722 0622 0C       		.uleb128 0xc
+ 1723 0623 6B000000 		.4byte	.LASF120
+ 1724 0627 0A       		.byte	0xa
+ 1725 0628 30       		.byte	0x30
+ 1726 0629 CE000000 		.4byte	0xce
+ 1727 062d 00       		.byte	0
+ 1728 062e 0C       		.uleb128 0xc
+ 1729 062f 12070000 		.4byte	.LASF121
+ 1730 0633 0A       		.byte	0xa
+ 1731 0634 31       		.byte	0x31
+ 1732 0635 CE000000 		.4byte	0xce
+ 1733 0639 04       		.byte	0x4
+ 1734 063a 0C       		.uleb128 0xc
+ 1735 063b 45000000 		.4byte	.LASF122
+ 1736 063f 0A       		.byte	0xa
+ 1737 0640 32       		.byte	0x32
+ 1738 0641 CE000000 		.4byte	0xce
+ 1739 0645 08       		.byte	0x8
+ 1740 0646 0C       		.uleb128 0xc
+ 1741 0647 3A0A0000 		.4byte	.LASF123
+ 1742 064b 0A       		.byte	0xa
+ 1743 064c 33       		.byte	0x33
+ 1744 064d CE000000 		.4byte	0xce
+ 1745 0651 0C       		.byte	0xc
+ 1746 0652 0C       		.uleb128 0xc
+ 1747 0653 35030000 		.4byte	.LASF124
+ 1748 0657 0A       		.byte	0xa
+ 1749 0658 34       		.byte	0x34
+ 1750 0659 CE000000 		.4byte	0xce
+ 1751 065d 10       		.byte	0x10
+ 1752 065e 0C       		.uleb128 0xc
+ 1753 065f 00000000 		.4byte	.LASF125
+ 1754 0663 0A       		.byte	0xa
+ 1755 0664 35       		.byte	0x35
+ 1756 0665 B8000000 		.4byte	0xb8
+ 1757 0669 14       		.byte	0x14
+ 1758 066a 0C       		.uleb128 0xc
+ 1759 066b 36060000 		.4byte	.LASF126
+ 1760 066f 0A       		.byte	0xa
+ 1761 0670 36       		.byte	0x36
+ 1762 0671 A2000000 		.4byte	0xa2
+ 1763 0675 16       		.byte	0x16
+ 1764 0676 00       		.byte	0
+ 1765 0677 03       		.uleb128 0x3
+ 1766 0678 990B0000 		.4byte	.LASF127
+ 1767 067c 0A       		.byte	0xa
+ 1768 067d 37       		.byte	0x37
+ 1769 067e 1A060000 		.4byte	0x61a
+ 1770 0682 12       		.uleb128 0x12
+ 1771 0683 8003     		.2byte	0x380
+ 1772 0685 0A       		.byte	0xa
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 38
+
+
+ 1773 0686 3E       		.byte	0x3e
+ 1774 0687 3F070000 		.4byte	0x73f
+ 1775 068b 0B       		.uleb128 0xb
+ 1776 068c 68616C00 		.ascii	"hal\000"
+ 1777 0690 0A       		.byte	0xa
+ 1778 0691 3F       		.byte	0x3f
+ 1779 0692 93010000 		.4byte	0x193
+ 1780 0696 00       		.byte	0
+ 1781 0697 0B       		.uleb128 0xb
+ 1782 0698 63746C00 		.ascii	"ctl\000"
+ 1783 069c 0A       		.byte	0xa
+ 1784 069d 40       		.byte	0x40
+ 1785 069e 37020000 		.4byte	0x237
+ 1786 06a2 0C       		.byte	0xc
+ 1787 06a3 0C       		.uleb128 0xc
+ 1788 06a4 D5010000 		.4byte	.LASF128
+ 1789 06a8 0A       		.byte	0xa
+ 1790 06a9 41       		.byte	0x41
+ 1791 06aa B2050000 		.4byte	0x5b2
+ 1792 06ae 20       		.byte	0x20
+ 1793 06af 13       		.uleb128 0x13
+ 1794 06b0 7E0A0000 		.4byte	.LASF129
+ 1795 06b4 0A       		.byte	0xa
+ 1796 06b5 42       		.byte	0x42
+ 1797 06b6 77060000 		.4byte	0x677
+ 1798 06ba 0C01     		.2byte	0x10c
+ 1799 06bc 13       		.uleb128 0x13
+ 1800 06bd 77010000 		.4byte	.LASF130
+ 1801 06c1 0A       		.byte	0xa
+ 1802 06c2 43       		.byte	0x43
+ 1803 06c3 0F060000 		.4byte	0x60f
+ 1804 06c7 2401     		.2byte	0x124
+ 1805 06c9 13       		.uleb128 0x13
+ 1806 06ca A2040000 		.4byte	.LASF131
+ 1807 06ce 0A       		.byte	0xa
+ 1808 06cf 44       		.byte	0x44
+ 1809 06d0 0F060000 		.4byte	0x60f
+ 1810 06d4 2A02     		.2byte	0x22a
+ 1811 06d6 13       		.uleb128 0x13
+ 1812 06d7 890A0000 		.4byte	.LASF132
+ 1813 06db 0A       		.byte	0xa
+ 1814 06dc 48       		.byte	0x48
+ 1815 06dd A2000000 		.4byte	0xa2
+ 1816 06e1 3003     		.2byte	0x330
+ 1817 06e3 13       		.uleb128 0x13
+ 1818 06e4 140A0000 		.4byte	.LASF133
+ 1819 06e8 0A       		.byte	0xa
+ 1820 06e9 4C       		.byte	0x4c
+ 1821 06ea B8000000 		.4byte	0xb8
+ 1822 06ee 3203     		.2byte	0x332
+ 1823 06f0 13       		.uleb128 0x13
+ 1824 06f1 48090000 		.4byte	.LASF134
+ 1825 06f5 0A       		.byte	0xa
+ 1826 06f6 4D       		.byte	0x4d
+ 1827 06f7 CE000000 		.4byte	0xce
+ 1828 06fb 3403     		.2byte	0x334
+ 1829 06fd 13       		.uleb128 0x13
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 39
+
+
+ 1830 06fe D70B0000 		.4byte	.LASF135
+ 1831 0702 0A       		.byte	0xa
+ 1832 0703 4E       		.byte	0x4e
+ 1833 0704 AB050000 		.4byte	0x5ab
+ 1834 0708 3803     		.2byte	0x338
+ 1835 070a 13       		.uleb128 0x13
+ 1836 070b EF050000 		.4byte	.LASF136
+ 1837 070f 0A       		.byte	0xa
+ 1838 0710 4F       		.byte	0x4f
+ 1839 0711 B8000000 		.4byte	0xb8
+ 1840 0715 3A03     		.2byte	0x33a
+ 1841 0717 13       		.uleb128 0x13
+ 1842 0718 84090000 		.4byte	.LASF137
+ 1843 071c 0A       		.byte	0xa
+ 1844 071d 50       		.byte	0x50
+ 1845 071e B8000000 		.4byte	0xb8
+ 1846 0722 3C03     		.2byte	0x33c
+ 1847 0724 13       		.uleb128 0x13
+ 1848 0725 C0080000 		.4byte	.LASF138
+ 1849 0729 0A       		.byte	0xa
+ 1850 072a 51       		.byte	0x51
+ 1851 072b 3F070000 		.4byte	0x73f
+ 1852 072f 3E03     		.2byte	0x33e
+ 1853 0731 13       		.uleb128 0x13
+ 1854 0732 E1090000 		.4byte	.LASF139
+ 1855 0736 0A       		.byte	0xa
+ 1856 0737 54       		.byte	0x54
+ 1857 0738 A2000000 		.4byte	0xa2
+ 1858 073c 7E03     		.2byte	0x37e
+ 1859 073e 00       		.byte	0
+ 1860 073f 14       		.uleb128 0x14
+ 1861 0740 A2000000 		.4byte	0xa2
+ 1862 0744 4F070000 		.4byte	0x74f
+ 1863 0748 15       		.uleb128 0x15
+ 1864 0749 12010000 		.4byte	0x112
+ 1865 074d 3F       		.byte	0x3f
+ 1866 074e 00       		.byte	0
+ 1867 074f 03       		.uleb128 0x3
+ 1868 0750 210A0000 		.4byte	.LASF140
+ 1869 0754 0A       		.byte	0xa
+ 1870 0755 56       		.byte	0x56
+ 1871 0756 82060000 		.4byte	0x682
+ 1872 075a 10       		.uleb128 0x10
+ 1873 075b 01       		.byte	0x1
+ 1874 075c 37000000 		.4byte	0x37
+ 1875 0760 0B       		.byte	0xb
+ 1876 0761 33       		.byte	0x33
+ 1877 0762 D3070000 		.4byte	0x7d3
+ 1878 0766 11       		.uleb128 0x11
+ 1879 0767 89080000 		.4byte	.LASF141
+ 1880 076b 00       		.byte	0
+ 1881 076c 11       		.uleb128 0x11
+ 1882 076d 84080000 		.4byte	.LASF142
+ 1883 0771 01       		.byte	0x1
+ 1884 0772 11       		.uleb128 0x11
+ 1885 0773 30030000 		.4byte	.LASF143
+ 1886 0777 02       		.byte	0x2
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 40
+
+
+ 1887 0778 11       		.uleb128 0x11
+ 1888 0779 34070000 		.4byte	.LASF144
+ 1889 077d 03       		.byte	0x3
+ 1890 077e 11       		.uleb128 0x11
+ 1891 077f A1060000 		.4byte	.LASF145
+ 1892 0783 04       		.byte	0x4
+ 1893 0784 11       		.uleb128 0x11
+ 1894 0785 52080000 		.4byte	.LASF146
+ 1895 0789 05       		.byte	0x5
+ 1896 078a 11       		.uleb128 0x11
+ 1897 078b 72040000 		.4byte	.LASF147
+ 1898 078f 06       		.byte	0x6
+ 1899 0790 11       		.uleb128 0x11
+ 1900 0791 0C000000 		.4byte	.LASF148
+ 1901 0795 07       		.byte	0x7
+ 1902 0796 11       		.uleb128 0x11
+ 1903 0797 AA0A0000 		.4byte	.LASF149
+ 1904 079b 08       		.byte	0x8
+ 1905 079c 11       		.uleb128 0x11
+ 1906 079d 720B0000 		.4byte	.LASF150
+ 1907 07a1 09       		.byte	0x9
+ 1908 07a2 11       		.uleb128 0x11
+ 1909 07a3 3B090000 		.4byte	.LASF151
+ 1910 07a7 0A       		.byte	0xa
+ 1911 07a8 11       		.uleb128 0x11
+ 1912 07a9 E5080000 		.4byte	.LASF152
+ 1913 07ad 0B       		.byte	0xb
+ 1914 07ae 11       		.uleb128 0x11
+ 1915 07af 76000000 		.4byte	.LASF153
+ 1916 07b3 0C       		.byte	0xc
+ 1917 07b4 11       		.uleb128 0x11
+ 1918 07b5 FA030000 		.4byte	.LASF154
+ 1919 07b9 0D       		.byte	0xd
+ 1920 07ba 11       		.uleb128 0x11
+ 1921 07bb BD020000 		.4byte	.LASF155
+ 1922 07bf 0E       		.byte	0xe
+ 1923 07c0 11       		.uleb128 0x11
+ 1924 07c1 61030000 		.4byte	.LASF156
+ 1925 07c5 0F       		.byte	0xf
+ 1926 07c6 11       		.uleb128 0x11
+ 1927 07c7 D1000000 		.4byte	.LASF157
+ 1928 07cb 10       		.byte	0x10
+ 1929 07cc 11       		.uleb128 0x11
+ 1930 07cd 1B080000 		.4byte	.LASF158
+ 1931 07d1 11       		.byte	0x11
+ 1932 07d2 00       		.byte	0
+ 1933 07d3 03       		.uleb128 0x3
+ 1934 07d4 DD080000 		.4byte	.LASF159
+ 1935 07d8 0B       		.byte	0xb
+ 1936 07d9 45       		.byte	0x45
+ 1937 07da 5A070000 		.4byte	0x75a
+ 1938 07de 10       		.uleb128 0x10
+ 1939 07df 01       		.byte	0x1
+ 1940 07e0 37000000 		.4byte	0x37
+ 1941 07e4 0B       		.byte	0xb
+ 1942 07e5 4D       		.byte	0x4d
+ 1943 07e6 03080000 		.4byte	0x803
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 41
+
+
+ 1944 07ea 11       		.uleb128 0x11
+ 1945 07eb 62080000 		.4byte	.LASF160
+ 1946 07ef 00       		.byte	0
+ 1947 07f0 11       		.uleb128 0x11
+ 1948 07f1 12080000 		.4byte	.LASF161
+ 1949 07f5 01       		.byte	0x1
+ 1950 07f6 11       		.uleb128 0x11
+ 1951 07f7 E2050000 		.4byte	.LASF162
+ 1952 07fb 02       		.byte	0x2
+ 1953 07fc 11       		.uleb128 0x11
+ 1954 07fd A00A0000 		.4byte	.LASF163
+ 1955 0801 03       		.byte	0x3
+ 1956 0802 00       		.byte	0
+ 1957 0803 03       		.uleb128 0x3
+ 1958 0804 8E080000 		.4byte	.LASF164
+ 1959 0808 0B       		.byte	0xb
+ 1960 0809 52       		.byte	0x52
+ 1961 080a DE070000 		.4byte	0x7de
+ 1962 080e 0A       		.uleb128 0xa
+ 1963 080f 90       		.byte	0x90
+ 1964 0810 0B       		.byte	0xb
+ 1965 0811 55       		.byte	0x55
+ 1966 0812 0F0A0000 		.4byte	0xa0f
+ 1967 0816 0C       		.uleb128 0xc
+ 1968 0817 39070000 		.4byte	.LASF165
+ 1969 081b 0B       		.byte	0xb
+ 1970 081c 57       		.byte	0x57
+ 1971 081d 0F0A0000 		.4byte	0xa0f
+ 1972 0821 00       		.byte	0
+ 1973 0822 0C       		.uleb128 0xc
+ 1974 0823 21030000 		.4byte	.LASF166
+ 1975 0827 0B       		.byte	0xb
+ 1976 0828 5A       		.byte	0x5a
+ 1977 0829 D3070000 		.4byte	0x7d3
+ 1978 082d 04       		.byte	0x4
+ 1979 082e 0C       		.uleb128 0xc
+ 1980 082f A2030000 		.4byte	.LASF167
+ 1981 0833 0B       		.byte	0xb
+ 1982 0834 5B       		.byte	0x5b
+ 1983 0835 D3070000 		.4byte	0x7d3
+ 1984 0839 05       		.byte	0x5
+ 1985 083a 0C       		.uleb128 0xc
+ 1986 083b 460B0000 		.4byte	.LASF168
+ 1987 083f 0B       		.byte	0xb
+ 1988 0840 5D       		.byte	0x5d
+ 1989 0841 A2000000 		.4byte	0xa2
+ 1990 0845 06       		.byte	0x6
+ 1991 0846 0C       		.uleb128 0xc
+ 1992 0847 FE040000 		.4byte	.LASF169
+ 1993 084b 0B       		.byte	0xb
+ 1994 084c 5E       		.byte	0x5e
+ 1995 084d A2000000 		.4byte	0xa2
+ 1996 0851 07       		.byte	0x7
+ 1997 0852 0C       		.uleb128 0xc
+ 1998 0853 45060000 		.4byte	.LASF170
+ 1999 0857 0B       		.byte	0xb
+ 2000 0858 60       		.byte	0x60
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 42
+
+
+ 2001 0859 CE000000 		.4byte	0xce
+ 2002 085d 08       		.byte	0x8
+ 2003 085e 0C       		.uleb128 0xc
+ 2004 085f D9030000 		.4byte	.LASF171
+ 2005 0863 0B       		.byte	0xb
+ 2006 0864 62       		.byte	0x62
+ 2007 0865 CE000000 		.4byte	0xce
+ 2008 0869 0C       		.byte	0xc
+ 2009 086a 0C       		.uleb128 0xc
+ 2010 086b 6A040000 		.4byte	.LASF172
+ 2011 086f 0B       		.byte	0xb
+ 2012 0870 65       		.byte	0x65
+ 2013 0871 03080000 		.4byte	0x803
+ 2014 0875 10       		.byte	0x10
+ 2015 0876 0C       		.uleb128 0xc
+ 2016 0877 6E030000 		.4byte	.LASF173
+ 2017 087b 0B       		.byte	0xb
+ 2018 087c 66       		.byte	0x66
+ 2019 087d 21010000 		.4byte	0x121
+ 2020 0881 14       		.byte	0x14
+ 2021 0882 0C       		.uleb128 0xc
+ 2022 0883 C7060000 		.4byte	.LASF174
+ 2023 0887 0B       		.byte	0xb
+ 2024 0888 67       		.byte	0x67
+ 2025 0889 A2000000 		.4byte	0xa2
+ 2026 088d 18       		.byte	0x18
+ 2027 088e 0C       		.uleb128 0xc
+ 2028 088f EF040000 		.4byte	.LASF175
+ 2029 0893 0B       		.byte	0xb
+ 2030 0894 6E       		.byte	0x6e
+ 2031 0895 E5000000 		.4byte	0xe5
+ 2032 0899 1C       		.byte	0x1c
+ 2033 089a 0C       		.uleb128 0xc
+ 2034 089b 27080000 		.4byte	.LASF176
+ 2035 089f 0B       		.byte	0xb
+ 2036 08a0 6F       		.byte	0x6f
+ 2037 08a1 E5000000 		.4byte	0xe5
+ 2038 08a5 20       		.byte	0x20
+ 2039 08a6 0C       		.uleb128 0xc
+ 2040 08a7 B9040000 		.4byte	.LASF177
+ 2041 08ab 0B       		.byte	0xb
+ 2042 08ac 74       		.byte	0x74
+ 2043 08ad C3000000 		.4byte	0xc3
+ 2044 08b1 24       		.byte	0x24
+ 2045 08b2 0C       		.uleb128 0xc
+ 2046 08b3 71090000 		.4byte	.LASF178
+ 2047 08b7 0B       		.byte	0xb
+ 2048 08b8 75       		.byte	0x75
+ 2049 08b9 C3000000 		.4byte	0xc3
+ 2050 08bd 28       		.byte	0x28
+ 2051 08be 0C       		.uleb128 0xc
+ 2052 08bf 90040000 		.4byte	.LASF179
+ 2053 08c3 0B       		.byte	0xb
+ 2054 08c4 76       		.byte	0x76
+ 2055 08c5 C3000000 		.4byte	0xc3
+ 2056 08c9 2C       		.byte	0x2c
+ 2057 08ca 0C       		.uleb128 0xc
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 43
+
+
+ 2058 08cb 430A0000 		.4byte	.LASF180
+ 2059 08cf 0B       		.byte	0xb
+ 2060 08d0 77       		.byte	0x77
+ 2061 08d1 A2000000 		.4byte	0xa2
+ 2062 08d5 30       		.byte	0x30
+ 2063 08d6 0C       		.uleb128 0xc
+ 2064 08d7 370B0000 		.4byte	.LASF181
+ 2065 08db 0B       		.byte	0xb
+ 2066 08dc 78       		.byte	0x78
+ 2067 08dd A2000000 		.4byte	0xa2
+ 2068 08e1 31       		.byte	0x31
+ 2069 08e2 0C       		.uleb128 0xc
+ 2070 08e3 DE040000 		.4byte	.LASF182
+ 2071 08e7 0B       		.byte	0xb
+ 2072 08e8 7B       		.byte	0x7b
+ 2073 08e9 C3000000 		.4byte	0xc3
+ 2074 08ed 34       		.byte	0x34
+ 2075 08ee 0C       		.uleb128 0xc
+ 2076 08ef AF080000 		.4byte	.LASF183
+ 2077 08f3 0B       		.byte	0xb
+ 2078 08f4 7C       		.byte	0x7c
+ 2079 08f5 C3000000 		.4byte	0xc3
+ 2080 08f9 38       		.byte	0x38
+ 2081 08fa 0C       		.uleb128 0xc
+ 2082 08fb 5A040000 		.4byte	.LASF184
+ 2083 08ff 0B       		.byte	0xb
+ 2084 0900 7D       		.byte	0x7d
+ 2085 0901 C3000000 		.4byte	0xc3
+ 2086 0905 3C       		.byte	0x3c
+ 2087 0906 0C       		.uleb128 0xc
+ 2088 0907 7C0B0000 		.4byte	.LASF185
+ 2089 090b 0B       		.byte	0xb
+ 2090 090c 80       		.byte	0x80
+ 2091 090d A2000000 		.4byte	0xa2
+ 2092 0911 40       		.byte	0x40
+ 2093 0912 0C       		.uleb128 0xc
+ 2094 0913 A5090000 		.4byte	.LASF186
+ 2095 0917 0B       		.byte	0xb
+ 2096 0918 81       		.byte	0x81
+ 2097 0919 E5000000 		.4byte	0xe5
+ 2098 091d 44       		.byte	0x44
+ 2099 091e 0C       		.uleb128 0xc
+ 2100 091f B6090000 		.4byte	.LASF187
+ 2101 0923 0B       		.byte	0xb
+ 2102 0924 82       		.byte	0x82
+ 2103 0925 E5000000 		.4byte	0xe5
+ 2104 0929 48       		.byte	0x48
+ 2105 092a 0C       		.uleb128 0xc
+ 2106 092b AD0B0000 		.4byte	.LASF188
+ 2107 092f 0B       		.byte	0xb
+ 2108 0930 83       		.byte	0x83
+ 2109 0931 CE000000 		.4byte	0xce
+ 2110 0935 4C       		.byte	0x4c
+ 2111 0936 0C       		.uleb128 0xc
+ 2112 0937 2D060000 		.4byte	.LASF189
+ 2113 093b 0B       		.byte	0xb
+ 2114 093c 86       		.byte	0x86
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 44
+
+
+ 2115 093d E5000000 		.4byte	0xe5
+ 2116 0941 50       		.byte	0x50
+ 2117 0942 0C       		.uleb128 0xc
+ 2118 0943 BF030000 		.4byte	.LASF190
+ 2119 0947 0B       		.byte	0xb
+ 2120 0948 88       		.byte	0x88
+ 2121 0949 AD000000 		.4byte	0xad
+ 2122 094d 54       		.byte	0x54
+ 2123 094e 0C       		.uleb128 0xc
+ 2124 094f 93070000 		.4byte	.LASF191
+ 2125 0953 0B       		.byte	0xb
+ 2126 0954 89       		.byte	0x89
+ 2127 0955 AD000000 		.4byte	0xad
+ 2128 0959 56       		.byte	0x56
+ 2129 095a 0C       		.uleb128 0xc
+ 2130 095b 19060000 		.4byte	.LASF192
+ 2131 095f 0B       		.byte	0xb
+ 2132 0960 8D       		.byte	0x8d
+ 2133 0961 E5000000 		.4byte	0xe5
+ 2134 0965 58       		.byte	0x58
+ 2135 0966 0C       		.uleb128 0xc
+ 2136 0967 BB010000 		.4byte	.LASF193
+ 2137 096b 0B       		.byte	0xb
+ 2138 096c 8E       		.byte	0x8e
+ 2139 096d E5000000 		.4byte	0xe5
+ 2140 0971 5C       		.byte	0x5c
+ 2141 0972 0C       		.uleb128 0xc
+ 2142 0973 3E050000 		.4byte	.LASF194
+ 2143 0977 0B       		.byte	0xb
+ 2144 0978 8F       		.byte	0x8f
+ 2145 0979 A2000000 		.4byte	0xa2
+ 2146 097d 60       		.byte	0x60
+ 2147 097e 0C       		.uleb128 0xc
+ 2148 097f D5060000 		.4byte	.LASF195
+ 2149 0983 0B       		.byte	0xb
+ 2150 0984 92       		.byte	0x92
+ 2151 0985 CE000000 		.4byte	0xce
+ 2152 0989 64       		.byte	0x64
+ 2153 098a 0C       		.uleb128 0xc
+ 2154 098b 64090000 		.4byte	.LASF196
+ 2155 098f 0B       		.byte	0xb
+ 2156 0990 93       		.byte	0x93
+ 2157 0991 CE000000 		.4byte	0xce
+ 2158 0995 68       		.byte	0x68
+ 2159 0996 0C       		.uleb128 0xc
+ 2160 0997 40070000 		.4byte	.LASF197
+ 2161 099b 0B       		.byte	0xb
+ 2162 099c 94       		.byte	0x94
+ 2163 099d CE000000 		.4byte	0xce
+ 2164 09a1 6C       		.byte	0x6c
+ 2165 09a2 0C       		.uleb128 0xc
+ 2166 09a3 15030000 		.4byte	.LASF198
+ 2167 09a7 0B       		.byte	0xb
+ 2168 09a8 95       		.byte	0x95
+ 2169 09a9 A2000000 		.4byte	0xa2
+ 2170 09ad 70       		.byte	0x70
+ 2171 09ae 0C       		.uleb128 0xc
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 45
+
+
+ 2172 09af 31040000 		.4byte	.LASF199
+ 2173 09b3 0B       		.byte	0xb
+ 2174 09b4 98       		.byte	0x98
+ 2175 09b5 A2000000 		.4byte	0xa2
+ 2176 09b9 71       		.byte	0x71
+ 2177 09ba 0C       		.uleb128 0xc
+ 2178 09bb A1070000 		.4byte	.LASF200
+ 2179 09bf 0B       		.byte	0xb
+ 2180 09c0 99       		.byte	0x99
+ 2181 09c1 CE000000 		.4byte	0xce
+ 2182 09c5 74       		.byte	0x74
+ 2183 09c6 0C       		.uleb128 0xc
+ 2184 09c7 B40A0000 		.4byte	.LASF201
+ 2185 09cb 0B       		.byte	0xb
+ 2186 09cc 9A       		.byte	0x9a
+ 2187 09cd E5000000 		.4byte	0xe5
+ 2188 09d1 78       		.byte	0x78
+ 2189 09d2 0C       		.uleb128 0xc
+ 2190 09d3 49050000 		.4byte	.LASF202
+ 2191 09d7 0B       		.byte	0xb
+ 2192 09d8 9B       		.byte	0x9b
+ 2193 09d9 E5000000 		.4byte	0xe5
+ 2194 09dd 7C       		.byte	0x7c
+ 2195 09de 0C       		.uleb128 0xc
+ 2196 09df 1B090000 		.4byte	.LASF203
+ 2197 09e3 0B       		.byte	0xb
+ 2198 09e4 9C       		.byte	0x9c
+ 2199 09e5 E5000000 		.4byte	0xe5
+ 2200 09e9 80       		.byte	0x80
+ 2201 09ea 0C       		.uleb128 0xc
+ 2202 09eb D0080000 		.4byte	.LASF204
+ 2203 09ef 0B       		.byte	0xb
+ 2204 09f0 9D       		.byte	0x9d
+ 2205 09f1 E5000000 		.4byte	0xe5
+ 2206 09f5 84       		.byte	0x84
+ 2207 09f6 0C       		.uleb128 0xc
+ 2208 09f7 650B0000 		.4byte	.LASF205
+ 2209 09fb 0B       		.byte	0xb
+ 2210 09fc 9E       		.byte	0x9e
+ 2211 09fd A2000000 		.4byte	0xa2
+ 2212 0a01 88       		.byte	0x88
+ 2213 0a02 0C       		.uleb128 0xc
+ 2214 0a03 0F050000 		.4byte	.LASF206
+ 2215 0a07 0B       		.byte	0xb
+ 2216 0a08 9F       		.byte	0x9f
+ 2217 0a09 CE000000 		.4byte	0xce
+ 2218 0a0d 8C       		.byte	0x8c
+ 2219 0a0e 00       		.byte	0
+ 2220 0a0f 08       		.uleb128 0x8
+ 2221 0a10 04       		.byte	0x4
+ 2222 0a11 4F070000 		.4byte	0x74f
+ 2223 0a15 03       		.uleb128 0x3
+ 2224 0a16 B0070000 		.4byte	.LASF207
+ 2225 0a1a 0B       		.byte	0xb
+ 2226 0a1b A1       		.byte	0xa1
+ 2227 0a1c 0E080000 		.4byte	0x80e
+ 2228 0a20 16       		.uleb128 0x16
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 46
+
+
+ 2229 0a21 12040000 		.4byte	.LASF210
+ 2230 0a25 01       		.byte	0x1
+ 2231 0a26 1F       		.byte	0x1f
+ 2232 0a27 00000000 		.4byte	.LFB64
+ 2233 0a2b 1C000000 		.4byte	.LFE64-.LFB64
+ 2234 0a2f 01       		.uleb128 0x1
+ 2235 0a30 9C       		.byte	0x9c
+ 2236 0a31 500A0000 		.4byte	0xa50
+ 2237 0a35 17       		.uleb128 0x17
+ 2238 0a36 63747800 		.ascii	"ctx\000"
+ 2239 0a3a 01       		.byte	0x1
+ 2240 0a3b 1F       		.byte	0x1f
+ 2241 0a3c 19010000 		.4byte	0x119
+ 2242 0a40 02       		.uleb128 0x2
+ 2243 0a41 91       		.byte	0x91
+ 2244 0a42 74       		.sleb128 -12
+ 2245 0a43 17       		.uleb128 0x17
+ 2246 0a44 6200     		.ascii	"b\000"
+ 2247 0a46 01       		.byte	0x1
+ 2248 0a47 1F       		.byte	0x1f
+ 2249 0a48 A2000000 		.4byte	0xa2
+ 2250 0a4c 02       		.uleb128 0x2
+ 2251 0a4d 91       		.byte	0x91
+ 2252 0a4e 73       		.sleb128 -13
+ 2253 0a4f 00       		.byte	0
+ 2254 0a50 18       		.uleb128 0x18
+ 2255 0a51 520A0000 		.4byte	.LASF215
+ 2256 0a55 02       		.byte	0x2
+ 2257 0a56 4D       		.byte	0x4d
+ 2258 0a57 CE000000 		.4byte	0xce
+ 2259 0a5b 00000000 		.4byte	.LFB66
+ 2260 0a5f 1C000000 		.4byte	.LFE66-.LFB66
+ 2261 0a63 01       		.uleb128 0x1
+ 2262 0a64 9C       		.byte	0x9c
+ 2263 0a65 780A0000 		.4byte	0xa78
+ 2264 0a69 17       		.uleb128 0x17
+ 2265 0a6a 63747800 		.ascii	"ctx\000"
+ 2266 0a6e 02       		.byte	0x2
+ 2267 0a6f 4D       		.byte	0x4d
+ 2268 0a70 19010000 		.4byte	0x119
+ 2269 0a74 02       		.uleb128 0x2
+ 2270 0a75 91       		.byte	0x91
+ 2271 0a76 74       		.sleb128 -12
+ 2272 0a77 00       		.byte	0
+ 2273 0a78 19       		.uleb128 0x19
+ 2274 0a79 140B0000 		.4byte	.LASF208
+ 2275 0a7d 02       		.byte	0x2
+ 2276 0a7e 59       		.byte	0x59
+ 2277 0a7f 00000000 		.4byte	.LFB67
+ 2278 0a83 58000000 		.4byte	.LFE67-.LFB67
+ 2279 0a87 01       		.uleb128 0x1
+ 2280 0a88 9C       		.byte	0x9c
+ 2281 0a89 9B0A0000 		.4byte	0xa9b
+ 2282 0a8d 1A       		.uleb128 0x1a
+ 2283 0a8e 737400   		.ascii	"st\000"
+ 2284 0a91 02       		.byte	0x2
+ 2285 0a92 5B       		.byte	0x5b
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 47
+
+
+ 2286 0a93 A2000000 		.4byte	0xa2
+ 2287 0a97 02       		.uleb128 0x2
+ 2288 0a98 91       		.byte	0x91
+ 2289 0a99 77       		.sleb128 -9
+ 2290 0a9a 00       		.byte	0
+ 2291 0a9b 1B       		.uleb128 0x1b
+ 2292 0a9c B1060000 		.4byte	.LASF226
+ 2293 0aa0 02       		.byte	0x2
+ 2294 0aa1 68       		.byte	0x68
+ 2295 0aa2 00000000 		.4byte	.LFB68
+ 2296 0aa6 1C000000 		.4byte	.LFE68-.LFB68
+ 2297 0aaa 01       		.uleb128 0x1
+ 2298 0aab 9C       		.byte	0x9c
+ 2299 0aac 19       		.uleb128 0x19
+ 2300 0aad 66070000 		.4byte	.LASF209
+ 2301 0ab1 02       		.byte	0x2
+ 2302 0ab2 6F       		.byte	0x6f
+ 2303 0ab3 00000000 		.4byte	.LFB69
+ 2304 0ab7 50000000 		.4byte	.LFE69-.LFB69
+ 2305 0abb 01       		.uleb128 0x1
+ 2306 0abc 9C       		.byte	0x9c
+ 2307 0abd CF0A0000 		.4byte	0xacf
+ 2308 0ac1 1A       		.uleb128 0x1a
+ 2309 0ac2 737400   		.ascii	"st\000"
+ 2310 0ac5 02       		.byte	0x2
+ 2311 0ac6 71       		.byte	0x71
+ 2312 0ac7 A2000000 		.4byte	0xa2
+ 2313 0acb 02       		.uleb128 0x2
+ 2314 0acc 91       		.byte	0x91
+ 2315 0acd 77       		.sleb128 -9
+ 2316 0ace 00       		.byte	0
+ 2317 0acf 16       		.uleb128 0x16
+ 2318 0ad0 C8090000 		.4byte	.LASF211
+ 2319 0ad4 02       		.byte	0x2
+ 2320 0ad5 7F       		.byte	0x7f
+ 2321 0ad6 00000000 		.4byte	.LFB70
+ 2322 0ada A8000000 		.4byte	.LFE70-.LFB70
+ 2323 0ade 01       		.uleb128 0x1
+ 2324 0adf 9C       		.byte	0x9c
+ 2325 0ae0 1D0B0000 		.4byte	0xb1d
+ 2326 0ae4 17       		.uleb128 0x17
+ 2327 0ae5 76616C00 		.ascii	"val\000"
+ 2328 0ae9 02       		.byte	0x2
+ 2329 0aea 7F       		.byte	0x7f
+ 2330 0aeb E5000000 		.4byte	0xe5
+ 2331 0aef 02       		.uleb128 0x2
+ 2332 0af0 91       		.byte	0x91
+ 2333 0af1 74       		.sleb128 -12
+ 2334 0af2 1C       		.uleb128 0x1c
+ 2335 0af3 EF060000 		.4byte	.LASF212
+ 2336 0af7 02       		.byte	0x2
+ 2337 0af8 7F       		.byte	0x7f
+ 2338 0af9 1D0B0000 		.4byte	0xb1d
+ 2339 0afd 02       		.uleb128 0x2
+ 2340 0afe 91       		.byte	0x91
+ 2341 0aff 70       		.sleb128 -16
+ 2342 0b00 1C       		.uleb128 0x1c
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 48
+
+
+ 2343 0b01 02080000 		.4byte	.LASF213
+ 2344 0b05 02       		.byte	0x2
+ 2345 0b06 7F       		.byte	0x7f
+ 2346 0b07 1D0B0000 		.4byte	0xb1d
+ 2347 0b0b 02       		.uleb128 0x2
+ 2348 0b0c 91       		.byte	0x91
+ 2349 0b0d 6C       		.sleb128 -20
+ 2350 0b0e 1C       		.uleb128 0x1c
+ 2351 0b0f 9B0A0000 		.4byte	.LASF214
+ 2352 0b13 02       		.byte	0x2
+ 2353 0b14 7F       		.byte	0x7f
+ 2354 0b15 1B010000 		.4byte	0x11b
+ 2355 0b19 02       		.uleb128 0x2
+ 2356 0b1a 91       		.byte	0x91
+ 2357 0b1b 68       		.sleb128 -24
+ 2358 0b1c 00       		.byte	0
+ 2359 0b1d 08       		.uleb128 0x8
+ 2360 0b1e 04       		.byte	0x4
+ 2361 0b1f AD000000 		.4byte	0xad
+ 2362 0b23 18       		.uleb128 0x18
+ 2363 0b24 FF060000 		.4byte	.LASF216
+ 2364 0b28 02       		.byte	0x2
+ 2365 0b29 89       		.byte	0x89
+ 2366 0b2a 21010000 		.4byte	0x121
+ 2367 0b2e 00000000 		.4byte	.LFB71
+ 2368 0b32 38000000 		.4byte	.LFE71-.LFB71
+ 2369 0b36 01       		.uleb128 0x1
+ 2370 0b37 9C       		.byte	0x9c
+ 2371 0b38 490B0000 		.4byte	0xb49
+ 2372 0b3c 17       		.uleb128 0x17
+ 2373 0b3d 6D00     		.ascii	"m\000"
+ 2374 0b3f 02       		.byte	0x2
+ 2375 0b40 89       		.byte	0x89
+ 2376 0b41 C3010000 		.4byte	0x1c3
+ 2377 0b45 02       		.uleb128 0x2
+ 2378 0b46 91       		.byte	0x91
+ 2379 0b47 77       		.sleb128 -9
+ 2380 0b48 00       		.byte	0
+ 2381 0b49 16       		.uleb128 0x16
+ 2382 0b4a 2A000000 		.4byte	.LASF217
+ 2383 0b4e 02       		.byte	0x2
+ 2384 0b4f 92       		.byte	0x92
+ 2385 0b50 00000000 		.4byte	.LFB72
+ 2386 0b54 E0000000 		.4byte	.LFE72-.LFB72
+ 2387 0b58 01       		.uleb128 0x1
+ 2388 0b59 9C       		.byte	0x9c
+ 2389 0b5a BD0B0000 		.4byte	0xbbd
+ 2390 0b5e 17       		.uleb128 0x17
+ 2391 0b5f 7000     		.ascii	"p\000"
+ 2392 0b61 02       		.byte	0x2
+ 2393 0b62 92       		.byte	0x92
+ 2394 0b63 BD0B0000 		.4byte	0xbbd
+ 2395 0b67 03       		.uleb128 0x3
+ 2396 0b68 91       		.byte	0x91
+ 2397 0b69 CC7E     		.sleb128 -180
+ 2398 0b6b 1C       		.uleb128 0x1c
+ 2399 0b6c 7E020000 		.4byte	.LASF218
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 49
+
+
+ 2400 0b70 02       		.byte	0x2
+ 2401 0b71 92       		.byte	0x92
+ 2402 0b72 A2000000 		.4byte	0xa2
+ 2403 0b76 03       		.uleb128 0x3
+ 2404 0b77 91       		.byte	0x91
+ 2405 0b78 CB7E     		.sleb128 -181
+ 2406 0b7a 1A       		.uleb128 0x1a
+ 2407 0b7b 62756600 		.ascii	"buf\000"
+ 2408 0b7f 02       		.byte	0x2
+ 2409 0b80 94       		.byte	0x94
+ 2410 0b81 C80B0000 		.4byte	0xbc8
+ 2411 0b85 03       		.uleb128 0x3
+ 2412 0b86 91       		.byte	0x91
+ 2413 0b87 D07E     		.sleb128 -176
+ 2414 0b89 1A       		.uleb128 0x1a
+ 2415 0b8a 726F7700 		.ascii	"row\000"
+ 2416 0b8e 02       		.byte	0x2
+ 2417 0b8f 95       		.byte	0x95
+ 2418 0b90 A2000000 		.4byte	0xa2
+ 2419 0b94 02       		.uleb128 0x2
+ 2420 0b95 91       		.byte	0x91
+ 2421 0b96 77       		.sleb128 -9
+ 2422 0b97 1A       		.uleb128 0x1a
+ 2423 0b98 636F6C00 		.ascii	"col\000"
+ 2424 0b9c 02       		.byte	0x2
+ 2425 0b9d 95       		.byte	0x95
+ 2426 0b9e A2000000 		.4byte	0xa2
+ 2427 0ba2 02       		.uleb128 0x2
+ 2428 0ba3 91       		.byte	0x91
+ 2429 0ba4 76       		.sleb128 -10
+ 2430 0ba5 1D       		.uleb128 0x1d
+ 2431 0ba6 14000000 		.4byte	.LBB2
+ 2432 0baa A2000000 		.4byte	.LBE2-.LBB2
+ 2433 0bae 1A       		.uleb128 0x1a
+ 2434 0baf 627000   		.ascii	"bp\000"
+ 2435 0bb2 02       		.byte	0x2
+ 2436 0bb3 97       		.byte	0x97
+ 2437 0bb4 1B010000 		.4byte	0x11b
+ 2438 0bb8 02       		.uleb128 0x2
+ 2439 0bb9 91       		.byte	0x91
+ 2440 0bba 70       		.sleb128 -16
+ 2441 0bbb 00       		.byte	0
+ 2442 0bbc 00       		.byte	0
+ 2443 0bbd 08       		.uleb128 0x8
+ 2444 0bbe 04       		.byte	0x4
+ 2445 0bbf C30B0000 		.4byte	0xbc3
+ 2446 0bc3 09       		.uleb128 0x9
+ 2447 0bc4 A2000000 		.4byte	0xa2
+ 2448 0bc8 14       		.uleb128 0x14
+ 2449 0bc9 F3000000 		.4byte	0xf3
+ 2450 0bcd D80B0000 		.4byte	0xbd8
+ 2451 0bd1 15       		.uleb128 0x15
+ 2452 0bd2 12010000 		.4byte	0x112
+ 2453 0bd6 9F       		.byte	0x9f
+ 2454 0bd7 00       		.byte	0
+ 2455 0bd8 1E       		.uleb128 0x1e
+ 2456 0bd9 CA0B0000 		.4byte	.LASF227
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 50
+
+
+ 2457 0bdd 02       		.byte	0x2
+ 2458 0bde A3       		.byte	0xa3
+ 2459 0bdf 94000000 		.4byte	0x94
+ 2460 0be3 00000000 		.4byte	.LFB73
+ 2461 0be7 80020000 		.4byte	.LFE73-.LFB73
+ 2462 0beb 01       		.uleb128 0x1
+ 2463 0bec 9C       		.byte	0x9c
+ 2464 0bed C30C0000 		.4byte	0xcc3
+ 2465 0bf1 1A       		.uleb128 0x1a
+ 2466 0bf2 747800   		.ascii	"tx\000"
+ 2467 0bf5 02       		.byte	0x2
+ 2468 0bf6 A5       		.byte	0xa5
+ 2469 0bf7 C80B0000 		.4byte	0xbc8
+ 2470 0bfb 03       		.uleb128 0x3
+ 2471 0bfc 91       		.byte	0x91
+ 2472 0bfd C07E     		.sleb128 -192
+ 2473 0bff 1A       		.uleb128 0x1a
+ 2474 0c00 63746C00 		.ascii	"ctl\000"
+ 2475 0c04 02       		.byte	0x2
+ 2476 0c05 A8       		.byte	0xa8
+ 2477 0c06 37020000 		.4byte	0x237
+ 2478 0c0a 03       		.uleb128 0x3
+ 2479 0c0b 91       		.byte	0x91
+ 2480 0c0c AC7E     		.sleb128 -212
+ 2481 0c0e 1A       		.uleb128 0x1a
+ 2482 0c0f 63747800 		.ascii	"ctx\000"
+ 2483 0c13 02       		.byte	0x2
+ 2484 0c14 A9       		.byte	0xa9
+ 2485 0c15 150A0000 		.4byte	0xa15
+ 2486 0c19 03       		.uleb128 0x3
+ 2487 0c1a 91       		.byte	0x91
+ 2488 0c1b 9C7D     		.sleb128 -356
+ 2489 0c1d 1D       		.uleb128 0x1d
+ 2490 0c1e B0000000 		.4byte	.LBB3
+ 2491 0c22 A2010000 		.4byte	.LBE3-.LBB3
+ 2492 0c26 1A       		.uleb128 0x1a
+ 2493 0c27 6E6F7700 		.ascii	"now\000"
+ 2494 0c2b 02       		.byte	0x2
+ 2495 0c2c DE       		.byte	0xde
+ 2496 0c2d CE000000 		.4byte	0xce
+ 2497 0c31 02       		.uleb128 0x2
+ 2498 0c32 91       		.byte	0x91
+ 2499 0c33 64       		.sleb128 -28
+ 2500 0c34 1A       		.uleb128 0x1a
+ 2501 0c35 636800   		.ascii	"ch\000"
+ 2502 0c38 02       		.byte	0x2
+ 2503 0c39 E1       		.byte	0xe1
+ 2504 0c3a A2000000 		.4byte	0xa2
+ 2505 0c3e 02       		.uleb128 0x2
+ 2506 0c3f 91       		.byte	0x91
+ 2507 0c40 63       		.sleb128 -29
+ 2508 0c41 1D       		.uleb128 0x1d
+ 2509 0c42 88010000 		.4byte	.LBB4
+ 2510 0c46 CA000000 		.4byte	.LBE4-.LBB4
+ 2511 0c4a 1F       		.uleb128 0x1f
+ 2512 0c4b 7000     		.ascii	"p\000"
+ 2513 0c4d 02       		.byte	0x2
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 51
+
+
+ 2514 0c4e 0001     		.2byte	0x100
+ 2515 0c50 E5000000 		.4byte	0xe5
+ 2516 0c54 03       		.uleb128 0x3
+ 2517 0c55 91       		.byte	0x91
+ 2518 0c56 987D     		.sleb128 -360
+ 2519 0c58 1F       		.uleb128 0x1f
+ 2520 0c59 7400     		.ascii	"t\000"
+ 2521 0c5b 02       		.byte	0x2
+ 2522 0c5c 0001     		.2byte	0x100
+ 2523 0c5e E5000000 		.4byte	0xe5
+ 2524 0c62 03       		.uleb128 0x3
+ 2525 0c63 91       		.byte	0x91
+ 2526 0c64 947D     		.sleb128 -364
+ 2527 0c66 1F       		.uleb128 0x1f
+ 2528 0c67 706900   		.ascii	"pi\000"
+ 2529 0c6a 02       		.byte	0x2
+ 2530 0c6b 0201     		.2byte	0x102
+ 2531 0c6d AD000000 		.4byte	0xad
+ 2532 0c71 03       		.uleb128 0x3
+ 2533 0c72 91       		.byte	0x91
+ 2534 0c73 927D     		.sleb128 -366
+ 2535 0c75 1F       		.uleb128 0x1f
+ 2536 0c76 706600   		.ascii	"pf\000"
+ 2537 0c79 02       		.byte	0x2
+ 2538 0c7a 0201     		.2byte	0x102
+ 2539 0c7c AD000000 		.4byte	0xad
+ 2540 0c80 03       		.uleb128 0x3
+ 2541 0c81 91       		.byte	0x91
+ 2542 0c82 907D     		.sleb128 -368
+ 2543 0c84 1F       		.uleb128 0x1f
+ 2544 0c85 746900   		.ascii	"ti\000"
+ 2545 0c88 02       		.byte	0x2
+ 2546 0c89 0201     		.2byte	0x102
+ 2547 0c8b AD000000 		.4byte	0xad
+ 2548 0c8f 03       		.uleb128 0x3
+ 2549 0c90 91       		.byte	0x91
+ 2550 0c91 8E7D     		.sleb128 -370
+ 2551 0c93 1F       		.uleb128 0x1f
+ 2552 0c94 746600   		.ascii	"tf\000"
+ 2553 0c97 02       		.byte	0x2
+ 2554 0c98 0201     		.2byte	0x102
+ 2555 0c9a AD000000 		.4byte	0xad
+ 2556 0c9e 03       		.uleb128 0x3
+ 2557 0c9f 91       		.byte	0x91
+ 2558 0ca0 8C7D     		.sleb128 -372
+ 2559 0ca2 1F       		.uleb128 0x1f
+ 2560 0ca3 707300   		.ascii	"ps\000"
+ 2561 0ca6 02       		.byte	0x2
+ 2562 0ca7 0201     		.2byte	0x102
+ 2563 0ca9 F3000000 		.4byte	0xf3
+ 2564 0cad 03       		.uleb128 0x3
+ 2565 0cae 91       		.byte	0x91
+ 2566 0caf 8B7D     		.sleb128 -373
+ 2567 0cb1 1F       		.uleb128 0x1f
+ 2568 0cb2 747300   		.ascii	"ts\000"
+ 2569 0cb5 02       		.byte	0x2
+ 2570 0cb6 0201     		.2byte	0x102
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 52
+
+
+ 2571 0cb8 F3000000 		.4byte	0xf3
+ 2572 0cbc 03       		.uleb128 0x3
+ 2573 0cbd 91       		.byte	0x91
+ 2574 0cbe 8A7D     		.sleb128 -374
+ 2575 0cc0 00       		.byte	0
+ 2576 0cc1 00       		.byte	0
+ 2577 0cc2 00       		.byte	0
+ 2578 0cc3 20       		.uleb128 0x20
+ 2579 0cc4 4B080000 		.4byte	.LASF219
+ 2580 0cc8 02       		.byte	0x2
+ 2581 0cc9 4A       		.byte	0x4a
+ 2582 0cca 4F070000 		.4byte	0x74f
+ 2583 0cce 05       		.uleb128 0x5
+ 2584 0ccf 03       		.byte	0x3
+ 2585 0cd0 00000000 		.4byte	g_movi
+ 2586 0cd4 20       		.uleb128 0x20
+ 2587 0cd5 DF010000 		.4byte	.LASF220
+ 2588 0cd9 02       		.byte	0x2
+ 2589 0cda 52       		.byte	0x52
+ 2590 0cdb E50C0000 		.4byte	0xce5
+ 2591 0cdf 05       		.uleb128 0x5
+ 2592 0ce0 03       		.byte	0x3
+ 2593 0ce1 00000000 		.4byte	MOVI_HAL
+ 2594 0ce5 09       		.uleb128 0x9
+ 2595 0ce6 93010000 		.4byte	0x193
+ 2596 0cea 21       		.uleb128 0x21
+ 2597 0ceb E8010000 		.4byte	.LASF221
+ 2598 0cef 0C       		.byte	0xc
+ 2599 0cf0 1207     		.2byte	0x712
+ 2600 0cf2 F60C0000 		.4byte	0xcf6
+ 2601 0cf6 06       		.uleb128 0x6
+ 2602 0cf7 C3000000 		.4byte	0xc3
+ 2603 0cfb 22       		.uleb128 0x22
+ 2604 0cfc 79070000 		.4byte	.LASF222
+ 2605 0d00 02       		.byte	0x2
+ 2606 0d01 4B       		.byte	0x4b
+ 2607 0d02 2C010000 		.4byte	0x12c
+ 2608 0d06 05       		.uleb128 0x5
+ 2609 0d07 03       		.byte	0x3
+ 2610 0d08 00000000 		.4byte	g_tick_ms
+ 2611 0d0c 00       		.byte	0
+ 2612              		.section	.debug_abbrev,"",%progbits
+ 2613              	.Ldebug_abbrev0:
+ 2614 0000 01       		.uleb128 0x1
+ 2615 0001 11       		.uleb128 0x11
+ 2616 0002 01       		.byte	0x1
+ 2617 0003 25       		.uleb128 0x25
+ 2618 0004 0E       		.uleb128 0xe
+ 2619 0005 13       		.uleb128 0x13
+ 2620 0006 0B       		.uleb128 0xb
+ 2621 0007 03       		.uleb128 0x3
+ 2622 0008 0E       		.uleb128 0xe
+ 2623 0009 1B       		.uleb128 0x1b
+ 2624 000a 0E       		.uleb128 0xe
+ 2625 000b 55       		.uleb128 0x55
+ 2626 000c 17       		.uleb128 0x17
+ 2627 000d 11       		.uleb128 0x11
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 53
+
+
+ 2628 000e 01       		.uleb128 0x1
+ 2629 000f 10       		.uleb128 0x10
+ 2630 0010 17       		.uleb128 0x17
+ 2631 0011 00       		.byte	0
+ 2632 0012 00       		.byte	0
+ 2633 0013 02       		.uleb128 0x2
+ 2634 0014 24       		.uleb128 0x24
+ 2635 0015 00       		.byte	0
+ 2636 0016 0B       		.uleb128 0xb
+ 2637 0017 0B       		.uleb128 0xb
+ 2638 0018 3E       		.uleb128 0x3e
+ 2639 0019 0B       		.uleb128 0xb
+ 2640 001a 03       		.uleb128 0x3
+ 2641 001b 0E       		.uleb128 0xe
+ 2642 001c 00       		.byte	0
+ 2643 001d 00       		.byte	0
+ 2644 001e 03       		.uleb128 0x3
+ 2645 001f 16       		.uleb128 0x16
+ 2646 0020 00       		.byte	0
+ 2647 0021 03       		.uleb128 0x3
+ 2648 0022 0E       		.uleb128 0xe
+ 2649 0023 3A       		.uleb128 0x3a
+ 2650 0024 0B       		.uleb128 0xb
+ 2651 0025 3B       		.uleb128 0x3b
+ 2652 0026 0B       		.uleb128 0xb
+ 2653 0027 49       		.uleb128 0x49
+ 2654 0028 13       		.uleb128 0x13
+ 2655 0029 00       		.byte	0
+ 2656 002a 00       		.byte	0
+ 2657 002b 04       		.uleb128 0x4
+ 2658 002c 24       		.uleb128 0x24
+ 2659 002d 00       		.byte	0
+ 2660 002e 0B       		.uleb128 0xb
+ 2661 002f 0B       		.uleb128 0xb
+ 2662 0030 3E       		.uleb128 0x3e
+ 2663 0031 0B       		.uleb128 0xb
+ 2664 0032 03       		.uleb128 0x3
+ 2665 0033 08       		.uleb128 0x8
+ 2666 0034 00       		.byte	0
+ 2667 0035 00       		.byte	0
+ 2668 0036 05       		.uleb128 0x5
+ 2669 0037 16       		.uleb128 0x16
+ 2670 0038 00       		.byte	0
+ 2671 0039 03       		.uleb128 0x3
+ 2672 003a 0E       		.uleb128 0xe
+ 2673 003b 3A       		.uleb128 0x3a
+ 2674 003c 0B       		.uleb128 0xb
+ 2675 003d 3B       		.uleb128 0x3b
+ 2676 003e 05       		.uleb128 0x5
+ 2677 003f 49       		.uleb128 0x49
+ 2678 0040 13       		.uleb128 0x13
+ 2679 0041 00       		.byte	0
+ 2680 0042 00       		.byte	0
+ 2681 0043 06       		.uleb128 0x6
+ 2682 0044 35       		.uleb128 0x35
+ 2683 0045 00       		.byte	0
+ 2684 0046 49       		.uleb128 0x49
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 54
+
+
+ 2685 0047 13       		.uleb128 0x13
+ 2686 0048 00       		.byte	0
+ 2687 0049 00       		.byte	0
+ 2688 004a 07       		.uleb128 0x7
+ 2689 004b 0F       		.uleb128 0xf
+ 2690 004c 00       		.byte	0
+ 2691 004d 0B       		.uleb128 0xb
+ 2692 004e 0B       		.uleb128 0xb
+ 2693 004f 00       		.byte	0
+ 2694 0050 00       		.byte	0
+ 2695 0051 08       		.uleb128 0x8
+ 2696 0052 0F       		.uleb128 0xf
+ 2697 0053 00       		.byte	0
+ 2698 0054 0B       		.uleb128 0xb
+ 2699 0055 0B       		.uleb128 0xb
+ 2700 0056 49       		.uleb128 0x49
+ 2701 0057 13       		.uleb128 0x13
+ 2702 0058 00       		.byte	0
+ 2703 0059 00       		.byte	0
+ 2704 005a 09       		.uleb128 0x9
+ 2705 005b 26       		.uleb128 0x26
+ 2706 005c 00       		.byte	0
+ 2707 005d 49       		.uleb128 0x49
+ 2708 005e 13       		.uleb128 0x13
+ 2709 005f 00       		.byte	0
+ 2710 0060 00       		.byte	0
+ 2711 0061 0A       		.uleb128 0xa
+ 2712 0062 13       		.uleb128 0x13
+ 2713 0063 01       		.byte	0x1
+ 2714 0064 0B       		.uleb128 0xb
+ 2715 0065 0B       		.uleb128 0xb
+ 2716 0066 3A       		.uleb128 0x3a
+ 2717 0067 0B       		.uleb128 0xb
+ 2718 0068 3B       		.uleb128 0x3b
+ 2719 0069 0B       		.uleb128 0xb
+ 2720 006a 01       		.uleb128 0x1
+ 2721 006b 13       		.uleb128 0x13
+ 2722 006c 00       		.byte	0
+ 2723 006d 00       		.byte	0
+ 2724 006e 0B       		.uleb128 0xb
+ 2725 006f 0D       		.uleb128 0xd
+ 2726 0070 00       		.byte	0
+ 2727 0071 03       		.uleb128 0x3
+ 2728 0072 08       		.uleb128 0x8
+ 2729 0073 3A       		.uleb128 0x3a
+ 2730 0074 0B       		.uleb128 0xb
+ 2731 0075 3B       		.uleb128 0x3b
+ 2732 0076 0B       		.uleb128 0xb
+ 2733 0077 49       		.uleb128 0x49
+ 2734 0078 13       		.uleb128 0x13
+ 2735 0079 38       		.uleb128 0x38
+ 2736 007a 0B       		.uleb128 0xb
+ 2737 007b 00       		.byte	0
+ 2738 007c 00       		.byte	0
+ 2739 007d 0C       		.uleb128 0xc
+ 2740 007e 0D       		.uleb128 0xd
+ 2741 007f 00       		.byte	0
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 55
+
+
+ 2742 0080 03       		.uleb128 0x3
+ 2743 0081 0E       		.uleb128 0xe
+ 2744 0082 3A       		.uleb128 0x3a
+ 2745 0083 0B       		.uleb128 0xb
+ 2746 0084 3B       		.uleb128 0x3b
+ 2747 0085 0B       		.uleb128 0xb
+ 2748 0086 49       		.uleb128 0x49
+ 2749 0087 13       		.uleb128 0x13
+ 2750 0088 38       		.uleb128 0x38
+ 2751 0089 0B       		.uleb128 0xb
+ 2752 008a 00       		.byte	0
+ 2753 008b 00       		.byte	0
+ 2754 008c 0D       		.uleb128 0xd
+ 2755 008d 15       		.uleb128 0x15
+ 2756 008e 01       		.byte	0x1
+ 2757 008f 27       		.uleb128 0x27
+ 2758 0090 19       		.uleb128 0x19
+ 2759 0091 01       		.uleb128 0x1
+ 2760 0092 13       		.uleb128 0x13
+ 2761 0093 00       		.byte	0
+ 2762 0094 00       		.byte	0
+ 2763 0095 0E       		.uleb128 0xe
+ 2764 0096 05       		.uleb128 0x5
+ 2765 0097 00       		.byte	0
+ 2766 0098 49       		.uleb128 0x49
+ 2767 0099 13       		.uleb128 0x13
+ 2768 009a 00       		.byte	0
+ 2769 009b 00       		.byte	0
+ 2770 009c 0F       		.uleb128 0xf
+ 2771 009d 15       		.uleb128 0x15
+ 2772 009e 01       		.byte	0x1
+ 2773 009f 27       		.uleb128 0x27
+ 2774 00a0 19       		.uleb128 0x19
+ 2775 00a1 49       		.uleb128 0x49
+ 2776 00a2 13       		.uleb128 0x13
+ 2777 00a3 01       		.uleb128 0x1
+ 2778 00a4 13       		.uleb128 0x13
+ 2779 00a5 00       		.byte	0
+ 2780 00a6 00       		.byte	0
+ 2781 00a7 10       		.uleb128 0x10
+ 2782 00a8 04       		.uleb128 0x4
+ 2783 00a9 01       		.byte	0x1
+ 2784 00aa 0B       		.uleb128 0xb
+ 2785 00ab 0B       		.uleb128 0xb
+ 2786 00ac 49       		.uleb128 0x49
+ 2787 00ad 13       		.uleb128 0x13
+ 2788 00ae 3A       		.uleb128 0x3a
+ 2789 00af 0B       		.uleb128 0xb
+ 2790 00b0 3B       		.uleb128 0x3b
+ 2791 00b1 0B       		.uleb128 0xb
+ 2792 00b2 01       		.uleb128 0x1
+ 2793 00b3 13       		.uleb128 0x13
+ 2794 00b4 00       		.byte	0
+ 2795 00b5 00       		.byte	0
+ 2796 00b6 11       		.uleb128 0x11
+ 2797 00b7 28       		.uleb128 0x28
+ 2798 00b8 00       		.byte	0
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 56
+
+
+ 2799 00b9 03       		.uleb128 0x3
+ 2800 00ba 0E       		.uleb128 0xe
+ 2801 00bb 1C       		.uleb128 0x1c
+ 2802 00bc 0B       		.uleb128 0xb
+ 2803 00bd 00       		.byte	0
+ 2804 00be 00       		.byte	0
+ 2805 00bf 12       		.uleb128 0x12
+ 2806 00c0 13       		.uleb128 0x13
+ 2807 00c1 01       		.byte	0x1
+ 2808 00c2 0B       		.uleb128 0xb
+ 2809 00c3 05       		.uleb128 0x5
+ 2810 00c4 3A       		.uleb128 0x3a
+ 2811 00c5 0B       		.uleb128 0xb
+ 2812 00c6 3B       		.uleb128 0x3b
+ 2813 00c7 0B       		.uleb128 0xb
+ 2814 00c8 01       		.uleb128 0x1
+ 2815 00c9 13       		.uleb128 0x13
+ 2816 00ca 00       		.byte	0
+ 2817 00cb 00       		.byte	0
+ 2818 00cc 13       		.uleb128 0x13
+ 2819 00cd 0D       		.uleb128 0xd
+ 2820 00ce 00       		.byte	0
+ 2821 00cf 03       		.uleb128 0x3
+ 2822 00d0 0E       		.uleb128 0xe
+ 2823 00d1 3A       		.uleb128 0x3a
+ 2824 00d2 0B       		.uleb128 0xb
+ 2825 00d3 3B       		.uleb128 0x3b
+ 2826 00d4 0B       		.uleb128 0xb
+ 2827 00d5 49       		.uleb128 0x49
+ 2828 00d6 13       		.uleb128 0x13
+ 2829 00d7 38       		.uleb128 0x38
+ 2830 00d8 05       		.uleb128 0x5
+ 2831 00d9 00       		.byte	0
+ 2832 00da 00       		.byte	0
+ 2833 00db 14       		.uleb128 0x14
+ 2834 00dc 01       		.uleb128 0x1
+ 2835 00dd 01       		.byte	0x1
+ 2836 00de 49       		.uleb128 0x49
+ 2837 00df 13       		.uleb128 0x13
+ 2838 00e0 01       		.uleb128 0x1
+ 2839 00e1 13       		.uleb128 0x13
+ 2840 00e2 00       		.byte	0
+ 2841 00e3 00       		.byte	0
+ 2842 00e4 15       		.uleb128 0x15
+ 2843 00e5 21       		.uleb128 0x21
+ 2844 00e6 00       		.byte	0
+ 2845 00e7 49       		.uleb128 0x49
+ 2846 00e8 13       		.uleb128 0x13
+ 2847 00e9 2F       		.uleb128 0x2f
+ 2848 00ea 0B       		.uleb128 0xb
+ 2849 00eb 00       		.byte	0
+ 2850 00ec 00       		.byte	0
+ 2851 00ed 16       		.uleb128 0x16
+ 2852 00ee 2E       		.uleb128 0x2e
+ 2853 00ef 01       		.byte	0x1
+ 2854 00f0 03       		.uleb128 0x3
+ 2855 00f1 0E       		.uleb128 0xe
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 57
+
+
+ 2856 00f2 3A       		.uleb128 0x3a
+ 2857 00f3 0B       		.uleb128 0xb
+ 2858 00f4 3B       		.uleb128 0x3b
+ 2859 00f5 0B       		.uleb128 0xb
+ 2860 00f6 27       		.uleb128 0x27
+ 2861 00f7 19       		.uleb128 0x19
+ 2862 00f8 11       		.uleb128 0x11
+ 2863 00f9 01       		.uleb128 0x1
+ 2864 00fa 12       		.uleb128 0x12
+ 2865 00fb 06       		.uleb128 0x6
+ 2866 00fc 40       		.uleb128 0x40
+ 2867 00fd 18       		.uleb128 0x18
+ 2868 00fe 9642     		.uleb128 0x2116
+ 2869 0100 19       		.uleb128 0x19
+ 2870 0101 01       		.uleb128 0x1
+ 2871 0102 13       		.uleb128 0x13
+ 2872 0103 00       		.byte	0
+ 2873 0104 00       		.byte	0
+ 2874 0105 17       		.uleb128 0x17
+ 2875 0106 05       		.uleb128 0x5
+ 2876 0107 00       		.byte	0
+ 2877 0108 03       		.uleb128 0x3
+ 2878 0109 08       		.uleb128 0x8
+ 2879 010a 3A       		.uleb128 0x3a
+ 2880 010b 0B       		.uleb128 0xb
+ 2881 010c 3B       		.uleb128 0x3b
+ 2882 010d 0B       		.uleb128 0xb
+ 2883 010e 49       		.uleb128 0x49
+ 2884 010f 13       		.uleb128 0x13
+ 2885 0110 02       		.uleb128 0x2
+ 2886 0111 18       		.uleb128 0x18
+ 2887 0112 00       		.byte	0
+ 2888 0113 00       		.byte	0
+ 2889 0114 18       		.uleb128 0x18
+ 2890 0115 2E       		.uleb128 0x2e
+ 2891 0116 01       		.byte	0x1
+ 2892 0117 03       		.uleb128 0x3
+ 2893 0118 0E       		.uleb128 0xe
+ 2894 0119 3A       		.uleb128 0x3a
+ 2895 011a 0B       		.uleb128 0xb
+ 2896 011b 3B       		.uleb128 0x3b
+ 2897 011c 0B       		.uleb128 0xb
+ 2898 011d 27       		.uleb128 0x27
+ 2899 011e 19       		.uleb128 0x19
+ 2900 011f 49       		.uleb128 0x49
+ 2901 0120 13       		.uleb128 0x13
+ 2902 0121 11       		.uleb128 0x11
+ 2903 0122 01       		.uleb128 0x1
+ 2904 0123 12       		.uleb128 0x12
+ 2905 0124 06       		.uleb128 0x6
+ 2906 0125 40       		.uleb128 0x40
+ 2907 0126 18       		.uleb128 0x18
+ 2908 0127 9742     		.uleb128 0x2117
+ 2909 0129 19       		.uleb128 0x19
+ 2910 012a 01       		.uleb128 0x1
+ 2911 012b 13       		.uleb128 0x13
+ 2912 012c 00       		.byte	0
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 58
+
+
+ 2913 012d 00       		.byte	0
+ 2914 012e 19       		.uleb128 0x19
+ 2915 012f 2E       		.uleb128 0x2e
+ 2916 0130 01       		.byte	0x1
+ 2917 0131 3F       		.uleb128 0x3f
+ 2918 0132 19       		.uleb128 0x19
+ 2919 0133 03       		.uleb128 0x3
+ 2920 0134 0E       		.uleb128 0xe
+ 2921 0135 3A       		.uleb128 0x3a
+ 2922 0136 0B       		.uleb128 0xb
+ 2923 0137 3B       		.uleb128 0x3b
+ 2924 0138 0B       		.uleb128 0xb
+ 2925 0139 27       		.uleb128 0x27
+ 2926 013a 19       		.uleb128 0x19
+ 2927 013b 11       		.uleb128 0x11
+ 2928 013c 01       		.uleb128 0x1
+ 2929 013d 12       		.uleb128 0x12
+ 2930 013e 06       		.uleb128 0x6
+ 2931 013f 40       		.uleb128 0x40
+ 2932 0140 18       		.uleb128 0x18
+ 2933 0141 9642     		.uleb128 0x2116
+ 2934 0143 19       		.uleb128 0x19
+ 2935 0144 01       		.uleb128 0x1
+ 2936 0145 13       		.uleb128 0x13
+ 2937 0146 00       		.byte	0
+ 2938 0147 00       		.byte	0
+ 2939 0148 1A       		.uleb128 0x1a
+ 2940 0149 34       		.uleb128 0x34
+ 2941 014a 00       		.byte	0
+ 2942 014b 03       		.uleb128 0x3
+ 2943 014c 08       		.uleb128 0x8
+ 2944 014d 3A       		.uleb128 0x3a
+ 2945 014e 0B       		.uleb128 0xb
+ 2946 014f 3B       		.uleb128 0x3b
+ 2947 0150 0B       		.uleb128 0xb
+ 2948 0151 49       		.uleb128 0x49
+ 2949 0152 13       		.uleb128 0x13
+ 2950 0153 02       		.uleb128 0x2
+ 2951 0154 18       		.uleb128 0x18
+ 2952 0155 00       		.byte	0
+ 2953 0156 00       		.byte	0
+ 2954 0157 1B       		.uleb128 0x1b
+ 2955 0158 2E       		.uleb128 0x2e
+ 2956 0159 00       		.byte	0
+ 2957 015a 3F       		.uleb128 0x3f
+ 2958 015b 19       		.uleb128 0x19
+ 2959 015c 03       		.uleb128 0x3
+ 2960 015d 0E       		.uleb128 0xe
+ 2961 015e 3A       		.uleb128 0x3a
+ 2962 015f 0B       		.uleb128 0xb
+ 2963 0160 3B       		.uleb128 0x3b
+ 2964 0161 0B       		.uleb128 0xb
+ 2965 0162 27       		.uleb128 0x27
+ 2966 0163 19       		.uleb128 0x19
+ 2967 0164 11       		.uleb128 0x11
+ 2968 0165 01       		.uleb128 0x1
+ 2969 0166 12       		.uleb128 0x12
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 59
+
+
+ 2970 0167 06       		.uleb128 0x6
+ 2971 0168 40       		.uleb128 0x40
+ 2972 0169 18       		.uleb128 0x18
+ 2973 016a 9642     		.uleb128 0x2116
+ 2974 016c 19       		.uleb128 0x19
+ 2975 016d 00       		.byte	0
+ 2976 016e 00       		.byte	0
+ 2977 016f 1C       		.uleb128 0x1c
+ 2978 0170 05       		.uleb128 0x5
+ 2979 0171 00       		.byte	0
+ 2980 0172 03       		.uleb128 0x3
+ 2981 0173 0E       		.uleb128 0xe
+ 2982 0174 3A       		.uleb128 0x3a
+ 2983 0175 0B       		.uleb128 0xb
+ 2984 0176 3B       		.uleb128 0x3b
+ 2985 0177 0B       		.uleb128 0xb
+ 2986 0178 49       		.uleb128 0x49
+ 2987 0179 13       		.uleb128 0x13
+ 2988 017a 02       		.uleb128 0x2
+ 2989 017b 18       		.uleb128 0x18
+ 2990 017c 00       		.byte	0
+ 2991 017d 00       		.byte	0
+ 2992 017e 1D       		.uleb128 0x1d
+ 2993 017f 0B       		.uleb128 0xb
+ 2994 0180 01       		.byte	0x1
+ 2995 0181 11       		.uleb128 0x11
+ 2996 0182 01       		.uleb128 0x1
+ 2997 0183 12       		.uleb128 0x12
+ 2998 0184 06       		.uleb128 0x6
+ 2999 0185 00       		.byte	0
+ 3000 0186 00       		.byte	0
+ 3001 0187 1E       		.uleb128 0x1e
+ 3002 0188 2E       		.uleb128 0x2e
+ 3003 0189 01       		.byte	0x1
+ 3004 018a 3F       		.uleb128 0x3f
+ 3005 018b 19       		.uleb128 0x19
+ 3006 018c 03       		.uleb128 0x3
+ 3007 018d 0E       		.uleb128 0xe
+ 3008 018e 3A       		.uleb128 0x3a
+ 3009 018f 0B       		.uleb128 0xb
+ 3010 0190 3B       		.uleb128 0x3b
+ 3011 0191 0B       		.uleb128 0xb
+ 3012 0192 27       		.uleb128 0x27
+ 3013 0193 19       		.uleb128 0x19
+ 3014 0194 49       		.uleb128 0x49
+ 3015 0195 13       		.uleb128 0x13
+ 3016 0196 11       		.uleb128 0x11
+ 3017 0197 01       		.uleb128 0x1
+ 3018 0198 12       		.uleb128 0x12
+ 3019 0199 06       		.uleb128 0x6
+ 3020 019a 40       		.uleb128 0x40
+ 3021 019b 18       		.uleb128 0x18
+ 3022 019c 9642     		.uleb128 0x2116
+ 3023 019e 19       		.uleb128 0x19
+ 3024 019f 01       		.uleb128 0x1
+ 3025 01a0 13       		.uleb128 0x13
+ 3026 01a1 00       		.byte	0
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 60
+
+
+ 3027 01a2 00       		.byte	0
+ 3028 01a3 1F       		.uleb128 0x1f
+ 3029 01a4 34       		.uleb128 0x34
+ 3030 01a5 00       		.byte	0
+ 3031 01a6 03       		.uleb128 0x3
+ 3032 01a7 08       		.uleb128 0x8
+ 3033 01a8 3A       		.uleb128 0x3a
+ 3034 01a9 0B       		.uleb128 0xb
+ 3035 01aa 3B       		.uleb128 0x3b
+ 3036 01ab 05       		.uleb128 0x5
+ 3037 01ac 49       		.uleb128 0x49
+ 3038 01ad 13       		.uleb128 0x13
+ 3039 01ae 02       		.uleb128 0x2
+ 3040 01af 18       		.uleb128 0x18
+ 3041 01b0 00       		.byte	0
+ 3042 01b1 00       		.byte	0
+ 3043 01b2 20       		.uleb128 0x20
+ 3044 01b3 34       		.uleb128 0x34
+ 3045 01b4 00       		.byte	0
+ 3046 01b5 03       		.uleb128 0x3
+ 3047 01b6 0E       		.uleb128 0xe
+ 3048 01b7 3A       		.uleb128 0x3a
+ 3049 01b8 0B       		.uleb128 0xb
+ 3050 01b9 3B       		.uleb128 0x3b
+ 3051 01ba 0B       		.uleb128 0xb
+ 3052 01bb 49       		.uleb128 0x49
+ 3053 01bc 13       		.uleb128 0x13
+ 3054 01bd 02       		.uleb128 0x2
+ 3055 01be 18       		.uleb128 0x18
+ 3056 01bf 00       		.byte	0
+ 3057 01c0 00       		.byte	0
+ 3058 01c1 21       		.uleb128 0x21
+ 3059 01c2 34       		.uleb128 0x34
+ 3060 01c3 00       		.byte	0
+ 3061 01c4 03       		.uleb128 0x3
+ 3062 01c5 0E       		.uleb128 0xe
+ 3063 01c6 3A       		.uleb128 0x3a
+ 3064 01c7 0B       		.uleb128 0xb
+ 3065 01c8 3B       		.uleb128 0x3b
+ 3066 01c9 05       		.uleb128 0x5
+ 3067 01ca 49       		.uleb128 0x49
+ 3068 01cb 13       		.uleb128 0x13
+ 3069 01cc 3F       		.uleb128 0x3f
+ 3070 01cd 19       		.uleb128 0x19
+ 3071 01ce 3C       		.uleb128 0x3c
+ 3072 01cf 19       		.uleb128 0x19
+ 3073 01d0 00       		.byte	0
+ 3074 01d1 00       		.byte	0
+ 3075 01d2 22       		.uleb128 0x22
+ 3076 01d3 34       		.uleb128 0x34
+ 3077 01d4 00       		.byte	0
+ 3078 01d5 03       		.uleb128 0x3
+ 3079 01d6 0E       		.uleb128 0xe
+ 3080 01d7 3A       		.uleb128 0x3a
+ 3081 01d8 0B       		.uleb128 0xb
+ 3082 01d9 3B       		.uleb128 0x3b
+ 3083 01da 0B       		.uleb128 0xb
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 61
+
+
+ 3084 01db 49       		.uleb128 0x49
+ 3085 01dc 13       		.uleb128 0x13
+ 3086 01dd 3F       		.uleb128 0x3f
+ 3087 01de 19       		.uleb128 0x19
+ 3088 01df 02       		.uleb128 0x2
+ 3089 01e0 18       		.uleb128 0x18
+ 3090 01e1 00       		.byte	0
+ 3091 01e2 00       		.byte	0
+ 3092 01e3 00       		.byte	0
+ 3093              		.section	.debug_aranges,"",%progbits
+ 3094 0000 5C000000 		.4byte	0x5c
+ 3095 0004 0200     		.2byte	0x2
+ 3096 0006 00000000 		.4byte	.Ldebug_info0
+ 3097 000a 04       		.byte	0x4
+ 3098 000b 00       		.byte	0
+ 3099 000c 0000     		.2byte	0
+ 3100 000e 0000     		.2byte	0
+ 3101 0010 00000000 		.4byte	.LFB64
+ 3102 0014 1C000000 		.4byte	.LFE64-.LFB64
+ 3103 0018 00000000 		.4byte	.LFB66
+ 3104 001c 1C000000 		.4byte	.LFE66-.LFB66
+ 3105 0020 00000000 		.4byte	.LFB67
+ 3106 0024 58000000 		.4byte	.LFE67-.LFB67
+ 3107 0028 00000000 		.4byte	.LFB68
+ 3108 002c 1C000000 		.4byte	.LFE68-.LFB68
+ 3109 0030 00000000 		.4byte	.LFB69
+ 3110 0034 50000000 		.4byte	.LFE69-.LFB69
+ 3111 0038 00000000 		.4byte	.LFB70
+ 3112 003c A8000000 		.4byte	.LFE70-.LFB70
+ 3113 0040 00000000 		.4byte	.LFB71
+ 3114 0044 38000000 		.4byte	.LFE71-.LFB71
+ 3115 0048 00000000 		.4byte	.LFB72
+ 3116 004c E0000000 		.4byte	.LFE72-.LFB72
+ 3117 0050 00000000 		.4byte	.LFB73
+ 3118 0054 80020000 		.4byte	.LFE73-.LFB73
+ 3119 0058 00000000 		.4byte	0
+ 3120 005c 00000000 		.4byte	0
+ 3121              		.section	.debug_ranges,"",%progbits
+ 3122              	.Ldebug_ranges0:
+ 3123 0000 00000000 		.4byte	.LFB64
+ 3124 0004 1C000000 		.4byte	.LFE64
+ 3125 0008 00000000 		.4byte	.LFB66
+ 3126 000c 1C000000 		.4byte	.LFE66
+ 3127 0010 00000000 		.4byte	.LFB67
+ 3128 0014 58000000 		.4byte	.LFE67
+ 3129 0018 00000000 		.4byte	.LFB68
+ 3130 001c 1C000000 		.4byte	.LFE68
+ 3131 0020 00000000 		.4byte	.LFB69
+ 3132 0024 50000000 		.4byte	.LFE69
+ 3133 0028 00000000 		.4byte	.LFB70
+ 3134 002c A8000000 		.4byte	.LFE70
+ 3135 0030 00000000 		.4byte	.LFB71
+ 3136 0034 38000000 		.4byte	.LFE71
+ 3137 0038 00000000 		.4byte	.LFB72
+ 3138 003c E0000000 		.4byte	.LFE72
+ 3139 0040 00000000 		.4byte	.LFB73
+ 3140 0044 80020000 		.4byte	.LFE73
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 62
+
+
+ 3141 0048 00000000 		.4byte	0
+ 3142 004c 00000000 		.4byte	0
+ 3143              		.section	.debug_line,"",%progbits
+ 3144              	.Ldebug_line0:
+ 3145 0000 94030000 		.section	.debug_str,"MS",%progbits,1
+ 3145      02001C02 
+ 3145      00000201 
+ 3145      FB0E0D00 
+ 3145      01010101 
+ 3146              	.LASF125:
+ 3147 0000 72786275 		.ascii	"rxbuf_drops\000"
+ 3147      665F6472 
+ 3147      6F707300 
+ 3148              	.LASF148:
+ 3149 000c 4D414E55 		.ascii	"MANU_JOYSTICK\000"
+ 3149      5F4A4F59 
+ 3149      53544943 
+ 3149      4B00
+ 3150              	.LASF57:
+ 3151 001a 6770735F 		.ascii	"gps_heading_deg\000"
+ 3151      68656164 
+ 3151      696E675F 
+ 3151      64656700 
+ 3152              	.LASF217:
+ 3153 002a 7072696E 		.ascii	"print_hex_dump\000"
+ 3153      745F6865 
+ 3153      785F6475 
+ 3153      6D7000
+ 3154              	.LASF53:
+ 3155 0039 6770735F 		.ascii	"gps_lat_deg\000"
+ 3155      6C61745F 
+ 3155      64656700 
+ 3156              	.LASF122:
+ 3157 0045 72785F70 		.ascii	"rx_packets\000"
+ 3157      61636B65 
+ 3157      747300
+ 3158              	.LASF83:
+ 3159 0050 73797373 		.ascii	"sysstat_valid\000"
+ 3159      7461745F 
+ 3159      76616C69 
+ 3159      6400
+ 3160              	.LASF29:
+ 3161 005e 48414D46 		.ascii	"HAMFLY_DEFER\000"
+ 3161      4C595F44 
+ 3161      45464552 
+ 3161      00
+ 3162              	.LASF120:
+ 3163 006b 74785F70 		.ascii	"tx_packets\000"
+ 3163      61636B65 
+ 3163      747300
+ 3164              	.LASF153:
+ 3165 0076 4155544F 		.ascii	"AUTO_TRACKING\000"
+ 3165      5F545241 
+ 3165      434B494E 
+ 3165      4700
+ 3166              	.LASF60:
+ 3167 0084 6770735F 		.ascii	"gps_sacc_ms\000"
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 63
+
+
+ 3167      73616363 
+ 3167      5F6D7300 
+ 3168              	.LASF2:
+ 3169 0090 5F5F7569 		.ascii	"__uint8_t\000"
+ 3169      6E74385F 
+ 3169      7400
+ 3170              	.LASF61:
+ 3171 009a 6770735F 		.ascii	"gps_raw_lat\000"
+ 3171      7261775F 
+ 3171      6C617400 
+ 3172              	.LASF109:
+ 3173 00a6 6D61675F 		.ascii	"mag_declination\000"
+ 3173      6465636C 
+ 3173      696E6174 
+ 3173      696F6E00 
+ 3174              	.LASF46:
+ 3175 00b6 67696D62 		.ascii	"gimbal_i\000"
+ 3175      616C5F69 
+ 3175      00
+ 3176              	.LASF47:
+ 3177 00bf 67696D62 		.ascii	"gimbal_j\000"
+ 3177      616C5F6A 
+ 3177      00
+ 3178              	.LASF48:
+ 3179 00c8 67696D62 		.ascii	"gimbal_k\000"
+ 3179      616C5F6B 
+ 3179      00
+ 3180              	.LASF157:
+ 3181 00d1 4552524F 		.ascii	"ERROR_KILL\000"
+ 3181      525F4B49 
+ 3181      4C4C00
+ 3182              	.LASF223:
+ 3183 00dc 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3183      43313120 
+ 3183      352E342E 
+ 3183      31203230 
+ 3183      31363036 
+ 3184 010f 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 3184      20726576 
+ 3184      6973696F 
+ 3184      6E203233 
+ 3184      37373135 
+ 3185 0142 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 3185      66756E63 
+ 3185      74696F6E 
+ 3185      2D736563 
+ 3185      74696F6E 
+ 3186              	.LASF76:
+ 3187 016a 6174745F 		.ascii	"att_roll_deg\000"
+ 3187      726F6C6C 
+ 3187      5F646567 
+ 3187      00
+ 3188              	.LASF130:
+ 3189 0177 72786275 		.ascii	"rxbuf\000"
+ 3189      6600
+ 3190              	.LASF45:
+ 3191 017d 67696D62 		.ascii	"gimbal_r\000"
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 64
+
+
+ 3191      616C5F72 
+ 3191      00
+ 3192              	.LASF96:
+ 3193 0186 73797373 		.ascii	"sysstat_cam_status\000"
+ 3193      7461745F 
+ 3193      63616D5F 
+ 3193      73746174 
+ 3193      757300
+ 3194              	.LASF70:
+ 3195 0199 6261726F 		.ascii	"baro_alt_m\000"
+ 3195      5F616C74 
+ 3195      5F6D00
+ 3196              	.LASF12:
+ 3197 01a4 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3197      206C6F6E 
+ 3197      6720756E 
+ 3197      7369676E 
+ 3197      65642069 
+ 3198              	.LASF193:
+ 3199 01bb 6F726967 		.ascii	"origin_tilt_deg\000"
+ 3199      696E5F74 
+ 3199      696C745F 
+ 3199      64656700 
+ 3200              	.LASF37:
+ 3201 01cb 74696C74 		.ascii	"tilt_mode\000"
+ 3201      5F6D6F64 
+ 3201      6500
+ 3202              	.LASF128:
+ 3203 01d5 74656C65 		.ascii	"telemetry\000"
+ 3203      6D657472 
+ 3203      7900
+ 3204              	.LASF220:
+ 3205 01df 4D4F5649 		.ascii	"MOVI_HAL\000"
+ 3205      5F48414C 
+ 3205      00
+ 3206              	.LASF221:
+ 3207 01e8 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 3207      52784275 
+ 3207      66666572 
+ 3207      00
+ 3208              	.LASF44:
+ 3209 01f5 62617474 		.ascii	"battery_right_v\000"
+ 3209      6572795F 
+ 3209      72696768 
+ 3209      745F7600 
+ 3210              	.LASF225:
+ 3211 0205 433A5C55 		.ascii	"C:\\Users\\yoons\\Documents\\wprkspace-hamish\\PSoC"
+ 3211      73657273 
+ 3211      5C796F6F 
+ 3211      6E735C44 
+ 3211      6F63756D 
+ 3212 0233 2D50726F 		.ascii	"-Programs\\test_projects\\Proj08_DemoTxIntegration."
+ 3212      6772616D 
+ 3212      735C7465 
+ 3212      73745F70 
+ 3212      726F6A65 
+ 3213 0264 63796473 		.ascii	"cydsn\000"
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 65
+
+
+ 3213      6E00
+ 3214              	.LASF112:
+ 3215 026a 73797365 		.ascii	"sysecho_pressure_mb\000"
+ 3215      63686F5F 
+ 3215      70726573 
+ 3215      73757265 
+ 3215      5F6D6200 
+ 3216              	.LASF218:
+ 3217 027e 706C656E 		.ascii	"plen\000"
+ 3217      00
+ 3218              	.LASF40:
+ 3219 0283 6B696C6C 		.ascii	"kill\000"
+ 3219      00
+ 3220              	.LASF43:
+ 3221 0288 62617474 		.ascii	"battery_left_v\000"
+ 3221      6572795F 
+ 3221      6C656674 
+ 3221      5F7600
+ 3222              	.LASF11:
+ 3223 0297 6C6F6E67 		.ascii	"long long int\000"
+ 3223      206C6F6E 
+ 3223      6720696E 
+ 3223      7400
+ 3224              	.LASF0:
+ 3225 02a5 7369676E 		.ascii	"signed char\000"
+ 3225      65642063 
+ 3225      68617200 
+ 3226              	.LASF65:
+ 3227 02b1 6770735F 		.ascii	"gps_raw_hdg\000"
+ 3227      7261775F 
+ 3227      68646700 
+ 3228              	.LASF155:
+ 3229 02bd 4155544F 		.ascii	"AUTO_NO_LOCK\000"
+ 3229      5F4E4F5F 
+ 3229      4C4F434B 
+ 3229      00
+ 3230              	.LASF108:
+ 3231 02ca 6D61675F 		.ascii	"mag_off_z\000"
+ 3231      6F66665F 
+ 3231      7A00
+ 3232              	.LASF67:
+ 3233 02d4 6770735F 		.ascii	"gps_raw_vacc\000"
+ 3233      7261775F 
+ 3233      76616363 
+ 3233      00
+ 3234              	.LASF87:
+ 3235 02e1 666C6167 		.ascii	"flag_gps_locked\000"
+ 3235      5F677073 
+ 3235      5F6C6F63 
+ 3235      6B656400 
+ 3236              	.LASF115:
+ 3237 02f1 68616D66 		.ascii	"hamfly_telemetry_t\000"
+ 3237      6C795F74 
+ 3237      656C656D 
+ 3237      65747279 
+ 3237      5F7400
+ 3238              	.LASF113:
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 66
+
+
+ 3239 0304 73797365 		.ascii	"sysecho_imu_rate\000"
+ 3239      63686F5F 
+ 3239      696D755F 
+ 3239      72617465 
+ 3239      00
+ 3240              	.LASF198:
+ 3241 0315 64696167 		.ascii	"diag_active\000"
+ 3241      5F616374 
+ 3241      69766500 
+ 3242              	.LASF166:
+ 3243 0321 73746174 		.ascii	"state\000"
+ 3243      6500
+ 3244              	.LASF8:
+ 3245 0327 6C6F6E67 		.ascii	"long int\000"
+ 3245      20696E74 
+ 3245      00
+ 3246              	.LASF143:
+ 3247 0330 4D414E55 		.ascii	"MANU\000"
+ 3247      00
+ 3248              	.LASF124:
+ 3249 0335 72785F62 		.ascii	"rx_bad_checksum\000"
+ 3249      61645F63 
+ 3249      6865636B 
+ 3249      73756D00 
+ 3250              	.LASF98:
+ 3251 0345 73797373 		.ascii	"sysstat_batt_a\000"
+ 3251      7461745F 
+ 3251      62617474 
+ 3251      5F6100
+ 3252              	.LASF13:
+ 3253 0354 756E7369 		.ascii	"unsigned int\000"
+ 3253      676E6564 
+ 3253      20696E74 
+ 3253      00
+ 3254              	.LASF156:
+ 3255 0361 4552524F 		.ascii	"ERROR_ACTIVE\000"
+ 3255      525F4143 
+ 3255      54495645 
+ 3255      00
+ 3256              	.LASF173:
+ 3257 036e 6572725F 		.ascii	"err_msg\000"
+ 3257      6D736700 
+ 3258              	.LASF19:
+ 3259 0376 75696E74 		.ascii	"uint8\000"
+ 3259      3800
+ 3260              	.LASF39:
+ 3261 037c 656E6162 		.ascii	"enable\000"
+ 3261      6C6500
+ 3262              	.LASF21:
+ 3263 0383 646F7562 		.ascii	"double\000"
+ 3263      6C6500
+ 3264              	.LASF28:
+ 3265 038a 68616D66 		.ascii	"hamfly_hal_t\000"
+ 3265      6C795F68 
+ 3265      616C5F74 
+ 3265      00
+ 3266              	.LASF69:
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 67
+
+
+ 3267 0397 6261726F 		.ascii	"baro_valid\000"
+ 3267      5F76616C 
+ 3267      696400
+ 3268              	.LASF167:
+ 3269 03a2 70726576 		.ascii	"prev_leaf\000"
+ 3269      5F6C6561 
+ 3269      6600
+ 3270              	.LASF99:
+ 3271 03ac 73797373 		.ascii	"sysstat_charge_mah\000"
+ 3271      7461745F 
+ 3271      63686172 
+ 3271      67655F6D 
+ 3271      616800
+ 3272              	.LASF190:
+ 3273 03bf 74726163 		.ascii	"track_cx_last\000"
+ 3273      6B5F6378 
+ 3273      5F6C6173 
+ 3273      7400
+ 3274              	.LASF24:
+ 3275 03cd 6C6F6E67 		.ascii	"long double\000"
+ 3275      20646F75 
+ 3275      626C6500 
+ 3276              	.LASF171:
+ 3277 03d9 74656C65 		.ascii	"telem_stable_since_ms\000"
+ 3277      6D5F7374 
+ 3277      61626C65 
+ 3277      5F73696E 
+ 3277      63655F6D 
+ 3278              	.LASF9:
+ 3279 03ef 5F5F7569 		.ascii	"__uint32_t\000"
+ 3279      6E743332 
+ 3279      5F7400
+ 3280              	.LASF154:
+ 3281 03fa 4155544F 		.ascii	"AUTO_LOSS\000"
+ 3281      5F4C4F53 
+ 3281      5300
+ 3282              	.LASF110:
+ 3283 0404 73797365 		.ascii	"sysecho_valid\000"
+ 3283      63686F5F 
+ 3283      76616C69 
+ 3283      6400
+ 3284              	.LASF210:
+ 3285 0412 5F68616D 		.ascii	"_hamfly_psoc5_putc\000"
+ 3285      666C795F 
+ 3285      70736F63 
+ 3285      355F7075 
+ 3285      746300
+ 3286              	.LASF119:
+ 3287 0425 68616D66 		.ascii	"hamfly_rb_t\000"
+ 3287      6C795F72 
+ 3287      625F7400 
+ 3288              	.LASF199:
+ 3289 0431 6E756467 		.ascii	"nudge_hold\000"
+ 3289      655F686F 
+ 3289      6C6400
+ 3290              	.LASF82:
+ 3291 043c 6174745F 		.ascii	"att_yaw_err_deg\000"
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 68
+
+
+ 3291      7961775F 
+ 3291      6572725F 
+ 3291      64656700 
+ 3292              	.LASF104:
+ 3293 044c 6D61675F 		.ascii	"mag_magnitude\000"
+ 3293      6D61676E 
+ 3293      69747564 
+ 3293      6500
+ 3294              	.LASF184:
+ 3295 045a 6770735F 		.ascii	"gps_work_alt_mm\000"
+ 3295      776F726B 
+ 3295      5F616C74 
+ 3295      5F6D6D00 
+ 3296              	.LASF172:
+ 3297 046a 6572725F 		.ascii	"err_sev\000"
+ 3297      73657600 
+ 3298              	.LASF147:
+ 3299 0472 53544259 		.ascii	"STBY_HOLD\000"
+ 3299      5F484F4C 
+ 3299      4400
+ 3300              	.LASF94:
+ 3301 047c 73797373 		.ascii	"sysstat_pressure_mb\000"
+ 3301      7461745F 
+ 3301      70726573 
+ 3301      73757265 
+ 3301      5F6D6200 
+ 3302              	.LASF179:
+ 3303 0490 6770735F 		.ascii	"gps_target_alt_mm\000"
+ 3303      74617267 
+ 3303      65745F61 
+ 3303      6C745F6D 
+ 3303      6D00
+ 3304              	.LASF131:
+ 3305 04a2 74786275 		.ascii	"txbuf\000"
+ 3305      6600
+ 3306              	.LASF80:
+ 3307 04a8 6174745F 		.ascii	"att_roll_err_deg\000"
+ 3307      726F6C6C 
+ 3307      5F657272 
+ 3307      5F646567 
+ 3307      00
+ 3308              	.LASF177:
+ 3309 04b9 6770735F 		.ascii	"gps_target_lat_raw\000"
+ 3309      74617267 
+ 3309      65745F6C 
+ 3309      61745F72 
+ 3309      617700
+ 3310              	.LASF10:
+ 3311 04cc 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3311      20756E73 
+ 3311      69676E65 
+ 3311      6420696E 
+ 3311      7400
+ 3312              	.LASF182:
+ 3313 04de 6770735F 		.ascii	"gps_work_lat_raw\000"
+ 3313      776F726B 
+ 3313      5F6C6174 
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 69
+
+
+ 3313      5F726177 
+ 3313      00
+ 3314              	.LASF175:
+ 3315 04ef 6162735F 		.ascii	"abs_pan_target\000"
+ 3315      70616E5F 
+ 3315      74617267 
+ 3315      657400
+ 3316              	.LASF169:
+ 3317 04fe 686F6D65 		.ascii	"home_return_stby\000"
+ 3317      5F726574 
+ 3317      75726E5F 
+ 3317      73746279 
+ 3317      00
+ 3318              	.LASF206:
+ 3319 050f 6E756467 		.ascii	"nudge_burst_start_ms\000"
+ 3319      655F6275 
+ 3319      7273745F 
+ 3319      73746172 
+ 3319      745F6D73 
+ 3320              	.LASF105:
+ 3321 0524 6D61675F 		.ascii	"mag_freq\000"
+ 3321      66726571 
+ 3321      00
+ 3322              	.LASF41:
+ 3323 052d 68616D66 		.ascii	"hamfly_control_t\000"
+ 3323      6C795F63 
+ 3323      6F6E7472 
+ 3323      6F6C5F74 
+ 3323      00
+ 3324              	.LASF194:
+ 3325 053e 6F726967 		.ascii	"origin_set\000"
+ 3325      696E5F73 
+ 3325      657400
+ 3326              	.LASF202:
+ 3327 0549 6E756467 		.ascii	"nudge_base_tilt_deg\000"
+ 3327      655F6261 
+ 3327      73655F74 
+ 3327      696C745F 
+ 3327      64656700 
+ 3328              	.LASF101:
+ 3329 055d 6D61675F 		.ascii	"mag_x\000"
+ 3329      7800
+ 3330              	.LASF102:
+ 3331 0563 6D61675F 		.ascii	"mag_y\000"
+ 3331      7900
+ 3332              	.LASF90:
+ 3333 0569 73797373 		.ascii	"sysstat_temp_c\000"
+ 3333      7461745F 
+ 3333      74656D70 
+ 3333      5F6300
+ 3334              	.LASF55:
+ 3335 0578 6770735F 		.ascii	"gps_alt_m\000"
+ 3335      616C745F 
+ 3335      6D00
+ 3336              	.LASF111:
+ 3337 0582 73797365 		.ascii	"sysecho_gps_locked\000"
+ 3337      63686F5F 
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 70
+
+
+ 3337      6770735F 
+ 3337      6C6F636B 
+ 3337      656400
+ 3338              	.LASF38:
+ 3339 0595 726F6C6C 		.ascii	"roll_mode\000"
+ 3339      5F6D6F64 
+ 3339      6500
+ 3340              	.LASF88:
+ 3341 059f 73797373 		.ascii	"sysstat_batt_v\000"
+ 3341      7461745F 
+ 3341      62617474 
+ 3341      5F7600
+ 3342              	.LASF224:
+ 3343 05ae 6D61696E 		.ascii	"main.c\000"
+ 3343      2E6300
+ 3344              	.LASF16:
+ 3345 05b5 75696E74 		.ascii	"uint16_t\000"
+ 3345      31365F74 
+ 3345      00
+ 3346              	.LASF84:
+ 3347 05be 666C6167 		.ascii	"flag_compass_error\000"
+ 3347      5F636F6D 
+ 3347      70617373 
+ 3347      5F657272 
+ 3347      6F7200
+ 3348              	.LASF95:
+ 3349 05d1 73797373 		.ascii	"sysstat_imu_rate\000"
+ 3349      7461745F 
+ 3349      696D755F 
+ 3349      72617465 
+ 3349      00
+ 3350              	.LASF162:
+ 3351 05e2 5345565F 		.ascii	"SEV_SOFTWARE\000"
+ 3351      534F4654 
+ 3351      57415245 
+ 3351      00
+ 3352              	.LASF136:
+ 3353 05ef 70656E64 		.ascii	"pending_response_attr\000"
+ 3353      696E675F 
+ 3353      72657370 
+ 3353      6F6E7365 
+ 3353      5F617474 
+ 3354              	.LASF7:
+ 3355 0605 5F5F696E 		.ascii	"__int32_t\000"
+ 3355      7433325F 
+ 3355      7400
+ 3356              	.LASF26:
+ 3357 060f 75617274 		.ascii	"uart_putc\000"
+ 3357      5F707574 
+ 3357      6300
+ 3358              	.LASF192:
+ 3359 0619 6F726967 		.ascii	"origin_pan_deg\000"
+ 3359      696E5F70 
+ 3359      616E5F64 
+ 3359      656700
+ 3360              	.LASF34:
+ 3361 0628 74696C74 		.ascii	"tilt\000"
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 71
+
+
+ 3361      00
+ 3362              	.LASF189:
+ 3363 062d 74726163 		.ascii	"track_kp\000"
+ 3363      6B5F6B70 
+ 3363      00
+ 3364              	.LASF126:
+ 3365 0636 75617274 		.ascii	"uart_err_flags\000"
+ 3365      5F657272 
+ 3365      5F666C61 
+ 3365      677300
+ 3366              	.LASF170:
+ 3367 0645 6175746F 		.ascii	"auto_hold_entry_ms\000"
+ 3367      5F686F6C 
+ 3367      645F656E 
+ 3367      7472795F 
+ 3367      6D7300
+ 3368              	.LASF59:
+ 3369 0658 6770735F 		.ascii	"gps_vacc_m\000"
+ 3369      76616363 
+ 3369      5F6D00
+ 3370              	.LASF52:
+ 3371 0663 6770735F 		.ascii	"gps_locked\000"
+ 3371      6C6F636B 
+ 3371      656400
+ 3372              	.LASF63:
+ 3373 066e 6770735F 		.ascii	"gps_raw_alt\000"
+ 3373      7261775F 
+ 3373      616C7400 
+ 3374              	.LASF117:
+ 3375 067a 7461696C 		.ascii	"tail\000"
+ 3375      00
+ 3376              	.LASF68:
+ 3377 067f 6770735F 		.ascii	"gps_raw_sacc\000"
+ 3377      7261775F 
+ 3377      73616363 
+ 3377      00
+ 3378              	.LASF25:
+ 3379 068c 73697A65 		.ascii	"sizetype\000"
+ 3379      74797065 
+ 3379      00
+ 3380              	.LASF27:
+ 3381 0695 6765745F 		.ascii	"get_tick_ms\000"
+ 3381      7469636B 
+ 3381      5F6D7300 
+ 3382              	.LASF145:
+ 3383 06a1 4552524F 		.ascii	"ERROR\000"
+ 3383      5200
+ 3384              	.LASF100:
+ 3385 06a7 6D61675F 		.ascii	"mag_valid\000"
+ 3385      76616C69 
+ 3385      6400
+ 3386              	.LASF226:
+ 3387 06b1 6973725F 		.ascii	"isr_Looptimer_Handler\000"
+ 3387      4C6F6F70 
+ 3387      74696D65 
+ 3387      725F4861 
+ 3387      6E646C65 
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 72
+
+
+ 3388              	.LASF174:
+ 3389 06c7 66617461 		.ascii	"fatal_latched\000"
+ 3389      6C5F6C61 
+ 3389      74636865 
+ 3389      6400
+ 3390              	.LASF195:
+ 3391 06d5 6C617374 		.ascii	"last_tx_ms\000"
+ 3391      5F74785F 
+ 3391      6D7300
+ 3392              	.LASF86:
+ 3393 06e0 666C6167 		.ascii	"flag_radio_los\000"
+ 3393      5F726164 
+ 3393      696F5F6C 
+ 3393      6F7300
+ 3394              	.LASF212:
+ 3395 06ef 695F6F75 		.ascii	"i_out\000"
+ 3395      7400
+ 3396              	.LASF3:
+ 3397 06f5 5F5F696E 		.ascii	"__int16_t\000"
+ 3397      7431365F 
+ 3397      7400
+ 3398              	.LASF216:
+ 3399 06ff 6D6F6465 		.ascii	"mode_str\000"
+ 3399      5F737472 
+ 3399      00
+ 3400              	.LASF51:
+ 3401 0708 6770735F 		.ascii	"gps_valid\000"
+ 3401      76616C69 
+ 3401      6400
+ 3402              	.LASF121:
+ 3403 0712 74785F62 		.ascii	"tx_bytes\000"
+ 3403      79746573 
+ 3403      00
+ 3404              	.LASF74:
+ 3405 071b 6174745F 		.ascii	"att_pitch_deg\000"
+ 3405      70697463 
+ 3405      685F6465 
+ 3405      6700
+ 3406              	.LASF58:
+ 3407 0729 6770735F 		.ascii	"gps_hacc_m\000"
+ 3407      68616363 
+ 3407      5F6D00
+ 3408              	.LASF144:
+ 3409 0734 4155544F 		.ascii	"AUTO\000"
+ 3409      00
+ 3410              	.LASF165:
+ 3411 0739 67696D62 		.ascii	"gimbal\000"
+ 3411      616C00
+ 3412              	.LASF197:
+ 3413 0740 73746174 		.ascii	"state_entry_ms\000"
+ 3413      655F656E 
+ 3413      7472795F 
+ 3413      6D7300
+ 3414              	.LASF35:
+ 3415 074f 726F6C6C 		.ascii	"roll\000"
+ 3415      00
+ 3416              	.LASF81:
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 73
+
+
+ 3417 0754 6174745F 		.ascii	"att_pitch_err_deg\000"
+ 3417      70697463 
+ 3417      685F6572 
+ 3417      725F6465 
+ 3417      6700
+ 3418              	.LASF209:
+ 3419 0766 6973725F 		.ascii	"isr_rx_sbc_Handler\000"
+ 3419      72785F73 
+ 3419      62635F48 
+ 3419      616E646C 
+ 3419      657200
+ 3420              	.LASF222:
+ 3421 0779 675F7469 		.ascii	"g_tick_ms\000"
+ 3421      636B5F6D 
+ 3421      7300
+ 3422              	.LASF91:
+ 3423 0783 73797373 		.ascii	"sysstat_cpu_pct\000"
+ 3423      7461745F 
+ 3423      6370755F 
+ 3423      70637400 
+ 3424              	.LASF191:
+ 3425 0793 74726163 		.ascii	"track_cy_last\000"
+ 3425      6B5F6379 
+ 3425      5F6C6173 
+ 3425      7400
+ 3426              	.LASF200:
+ 3427 07a1 6E756467 		.ascii	"nudge_start_ms\000"
+ 3427      655F7374 
+ 3427      6172745F 
+ 3427      6D7300
+ 3428              	.LASF207:
+ 3429 07b0 6170705F 		.ascii	"app_ctx_t\000"
+ 3429      6374785F 
+ 3429      7400
+ 3430              	.LASF77:
+ 3431 07ba 6174745F 		.ascii	"att_pitch_rate_dps\000"
+ 3431      70697463 
+ 3431      685F7261 
+ 3431      74655F64 
+ 3431      707300
+ 3432              	.LASF85:
+ 3433 07cd 666C6167 		.ascii	"flag_gps_los\000"
+ 3433      5F677073 
+ 3433      5F6C6F73 
+ 3433      00
+ 3434              	.LASF114:
+ 3435 07da 5F426F6F 		.ascii	"_Bool\000"
+ 3435      6C00
+ 3436              	.LASF17:
+ 3437 07e0 696E7433 		.ascii	"int32_t\000"
+ 3437      325F7400 
+ 3438              	.LASF1:
+ 3439 07e8 756E7369 		.ascii	"unsigned char\000"
+ 3439      676E6564 
+ 3439      20636861 
+ 3439      7200
+ 3440              	.LASF118:
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 74
+
+
+ 3441 07f6 64726F70 		.ascii	"drops\000"
+ 3441      7300
+ 3442              	.LASF103:
+ 3443 07fc 6D61675F 		.ascii	"mag_z\000"
+ 3443      7A00
+ 3444              	.LASF213:
+ 3445 0802 665F6F75 		.ascii	"f_out\000"
+ 3445      7400
+ 3446              	.LASF4:
+ 3447 0808 73686F72 		.ascii	"short int\000"
+ 3447      7420696E 
+ 3447      7400
+ 3448              	.LASF161:
+ 3449 0812 5345565F 		.ascii	"SEV_WARN\000"
+ 3449      5741524E 
+ 3449      00
+ 3450              	.LASF158:
+ 3451 081b 53544154 		.ascii	"STATE_COUNT\000"
+ 3451      455F434F 
+ 3451      554E5400 
+ 3452              	.LASF176:
+ 3453 0827 6162735F 		.ascii	"abs_tilt_target\000"
+ 3453      74696C74 
+ 3453      5F746172 
+ 3453      67657400 
+ 3454              	.LASF97:
+ 3455 0837 73797373 		.ascii	"sysstat_imu_latency\000"
+ 3455      7461745F 
+ 3455      696D755F 
+ 3455      6C617465 
+ 3455      6E637900 
+ 3456              	.LASF219:
+ 3457 084b 675F6D6F 		.ascii	"g_movi\000"
+ 3457      766900
+ 3458              	.LASF146:
+ 3459 0852 53544259 		.ascii	"STBY_DEFER\000"
+ 3459      5F444546 
+ 3459      455200
+ 3460              	.LASF23:
+ 3461 085d 72656738 		.ascii	"reg8\000"
+ 3461      00
+ 3462              	.LASF160:
+ 3463 0862 5345565F 		.ascii	"SEV_USER\000"
+ 3463      55534552 
+ 3463      00
+ 3464              	.LASF66:
+ 3465 086b 6770735F 		.ascii	"gps_raw_hacc\000"
+ 3465      7261775F 
+ 3465      68616363 
+ 3465      00
+ 3466              	.LASF30:
+ 3467 0878 48414D46 		.ascii	"HAMFLY_RATE\000"
+ 3467      4C595F52 
+ 3467      41544500 
+ 3468              	.LASF142:
+ 3469 0884 53544259 		.ascii	"STBY\000"
+ 3469      00
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 75
+
+
+ 3470              	.LASF141:
+ 3471 0889 524F4F54 		.ascii	"ROOT\000"
+ 3471      00
+ 3472              	.LASF164:
+ 3473 088e 6572725F 		.ascii	"err_sev_t\000"
+ 3473      7365765F 
+ 3473      7400
+ 3474              	.LASF116:
+ 3475 0898 68656164 		.ascii	"head\000"
+ 3475      00
+ 3476              	.LASF42:
+ 3477 089d 76616C69 		.ascii	"valid\000"
+ 3477      6400
+ 3478              	.LASF64:
+ 3479 08a3 6770735F 		.ascii	"gps_raw_spd\000"
+ 3479      7261775F 
+ 3479      73706400 
+ 3480              	.LASF183:
+ 3481 08af 6770735F 		.ascii	"gps_work_lon_raw\000"
+ 3481      776F726B 
+ 3481      5F6C6F6E 
+ 3481      5F726177 
+ 3481      00
+ 3482              	.LASF138:
+ 3483 08c0 70656E64 		.ascii	"pending_payload\000"
+ 3483      696E675F 
+ 3483      7061796C 
+ 3483      6F616400 
+ 3484              	.LASF204:
+ 3485 08d0 7467745F 		.ascii	"tgt_tilt_deg\000"
+ 3485      74696C74 
+ 3485      5F646567 
+ 3485      00
+ 3486              	.LASF159:
+ 3487 08dd 73746174 		.ascii	"state_t\000"
+ 3487      655F7400 
+ 3488              	.LASF152:
+ 3489 08e5 4155544F 		.ascii	"AUTO_ACQ_SPIRAL\000"
+ 3489      5F414351 
+ 3489      5F535049 
+ 3489      52414C00 
+ 3490              	.LASF20:
+ 3491 08f5 666C6F61 		.ascii	"float\000"
+ 3491      7400
+ 3492              	.LASF31:
+ 3493 08fb 48414D46 		.ascii	"HAMFLY_ABSOLUTE\000"
+ 3493      4C595F41 
+ 3493      42534F4C 
+ 3493      55544500 
+ 3494              	.LASF22:
+ 3495 090b 63686172 		.ascii	"char\000"
+ 3495      00
+ 3496              	.LASF5:
+ 3497 0910 5F5F7569 		.ascii	"__uint16_t\000"
+ 3497      6E743136 
+ 3497      5F7400
+ 3498              	.LASF203:
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 76
+
+
+ 3499 091b 7467745F 		.ascii	"tgt_pan_deg\000"
+ 3499      70616E5F 
+ 3499      64656700 
+ 3500              	.LASF106:
+ 3501 0927 6D61675F 		.ascii	"mag_off_x\000"
+ 3501      6F66665F 
+ 3501      7800
+ 3502              	.LASF107:
+ 3503 0931 6D61675F 		.ascii	"mag_off_y\000"
+ 3503      6F66665F 
+ 3503      7900
+ 3504              	.LASF151:
+ 3505 093b 4155544F 		.ascii	"AUTO_ACQ_GPS\000"
+ 3505      5F414351 
+ 3505      5F475053 
+ 3505      00
+ 3506              	.LASF134:
+ 3507 0948 70656E64 		.ascii	"pending_sent_ms\000"
+ 3507      696E675F 
+ 3507      73656E74 
+ 3507      5F6D7300 
+ 3508              	.LASF75:
+ 3509 0958 6174745F 		.ascii	"att_yaw_deg\000"
+ 3509      7961775F 
+ 3509      64656700 
+ 3510              	.LASF196:
+ 3511 0964 6C617374 		.ascii	"last_diag_ms\000"
+ 3511      5F646961 
+ 3511      675F6D73 
+ 3511      00
+ 3512              	.LASF178:
+ 3513 0971 6770735F 		.ascii	"gps_target_lon_raw\000"
+ 3513      74617267 
+ 3513      65745F6C 
+ 3513      6F6E5F72 
+ 3513      617700
+ 3514              	.LASF137:
+ 3515 0984 70656E64 		.ascii	"pending_response_len\000"
+ 3515      696E675F 
+ 3515      72657370 
+ 3515      6F6E7365 
+ 3515      5F6C656E 
+ 3516              	.LASF71:
+ 3517 0999 6261726F 		.ascii	"baro_roc_ms\000"
+ 3517      5F726F63 
+ 3517      5F6D7300 
+ 3518              	.LASF186:
+ 3519 09a5 6770735F 		.ascii	"gps_last_pan_deg\000"
+ 3519      6C617374 
+ 3519      5F70616E 
+ 3519      5F646567 
+ 3519      00
+ 3520              	.LASF187:
+ 3521 09b6 6770735F 		.ascii	"gps_last_tilt_deg\000"
+ 3521      6C617374 
+ 3521      5F74696C 
+ 3521      745F6465 
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 77
+
+
+ 3521      6700
+ 3522              	.LASF211:
+ 3523 09c8 6465636F 		.ascii	"decomp\000"
+ 3523      6D7000
+ 3524              	.LASF79:
+ 3525 09cf 6174745F 		.ascii	"att_roll_rate_dps\000"
+ 3525      726F6C6C 
+ 3525      5F726174 
+ 3525      655F6470 
+ 3525      7300
+ 3526              	.LASF139:
+ 3527 09e1 70656E64 		.ascii	"pending_payload_len\000"
+ 3527      696E675F 
+ 3527      7061796C 
+ 3527      6F61645F 
+ 3527      6C656E00 
+ 3528              	.LASF6:
+ 3529 09f5 73686F72 		.ascii	"short unsigned int\000"
+ 3529      7420756E 
+ 3529      7369676E 
+ 3529      65642069 
+ 3529      6E7400
+ 3530              	.LASF54:
+ 3531 0a08 6770735F 		.ascii	"gps_lon_deg\000"
+ 3531      6C6F6E5F 
+ 3531      64656700 
+ 3532              	.LASF133:
+ 3533 0a14 70656E64 		.ascii	"pending_attr\000"
+ 3533      696E675F 
+ 3533      61747472 
+ 3533      00
+ 3534              	.LASF140:
+ 3535 0a21 68616D66 		.ascii	"hamfly_gimbal_t\000"
+ 3535      6C795F67 
+ 3535      696D6261 
+ 3535      6C5F7400 
+ 3536              	.LASF18:
+ 3537 0a31 75696E74 		.ascii	"uint32_t\000"
+ 3537      33325F74 
+ 3537      00
+ 3538              	.LASF123:
+ 3539 0a3a 72785F62 		.ascii	"rx_bytes\000"
+ 3539      79746573 
+ 3539      00
+ 3540              	.LASF180:
+ 3541 0a43 6770735F 		.ascii	"gps_target_set\000"
+ 3541      74617267 
+ 3541      65745F73 
+ 3541      657400
+ 3542              	.LASF215:
+ 3543 0a52 70736F63 		.ascii	"psoc_get_tick\000"
+ 3543      5F676574 
+ 3543      5F746963 
+ 3543      6B00
+ 3544              	.LASF56:
+ 3545 0a60 6770735F 		.ascii	"gps_ground_spd_ms\000"
+ 3545      67726F75 
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 78
+
+
+ 3545      6E645F73 
+ 3545      70645F6D 
+ 3545      7300
+ 3546              	.LASF62:
+ 3547 0a72 6770735F 		.ascii	"gps_raw_lon\000"
+ 3547      7261775F 
+ 3547      6C6F6E00 
+ 3548              	.LASF129:
+ 3549 0a7e 73746174 		.ascii	"statistics\000"
+ 3549      69737469 
+ 3549      637300
+ 3550              	.LASF132:
+ 3551 0a89 67696D62 		.ascii	"gimbal_id\000"
+ 3551      616C5F69 
+ 3551      6400
+ 3552              	.LASF14:
+ 3553 0a93 75696E74 		.ascii	"uint8_t\000"
+ 3553      385F7400 
+ 3554              	.LASF214:
+ 3555 0a9b 7369676E 		.ascii	"sign\000"
+ 3555      00
+ 3556              	.LASF163:
+ 3557 0aa0 5345565F 		.ascii	"SEV_FATAL\000"
+ 3557      46415441 
+ 3557      4C00
+ 3558              	.LASF149:
+ 3559 0aaa 4155544F 		.ascii	"AUTO_HOME\000"
+ 3559      5F484F4D 
+ 3559      4500
+ 3560              	.LASF201:
+ 3561 0ab4 6E756467 		.ascii	"nudge_base_pan_deg\000"
+ 3561      655F6261 
+ 3561      73655F70 
+ 3561      616E5F64 
+ 3561      656700
+ 3562              	.LASF49:
+ 3563 0ac7 67696D62 		.ascii	"gimbal_status1\000"
+ 3563      616C5F73 
+ 3563      74617475 
+ 3563      733100
+ 3564              	.LASF50:
+ 3565 0ad6 67696D62 		.ascii	"gimbal_status2\000"
+ 3565      616C5F73 
+ 3565      74617475 
+ 3565      733200
+ 3566              	.LASF32:
+ 3567 0ae5 48414D46 		.ascii	"HAMFLY_ABSOLUTE_MAJESTIC\000"
+ 3567      4C595F41 
+ 3567      42534F4C 
+ 3567      5554455F 
+ 3567      4D414A45 
+ 3568              	.LASF33:
+ 3569 0afe 68616D66 		.ascii	"hamfly_control_mode_t\000"
+ 3569      6C795F63 
+ 3569      6F6E7472 
+ 3569      6F6C5F6D 
+ 3569      6F64655F 
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 79
+
+
+ 3570              	.LASF208:
+ 3571 0b14 6973725F 		.ascii	"isr_rx_movi_Handler\000"
+ 3571      72785F6D 
+ 3571      6F76695F 
+ 3571      48616E64 
+ 3571      6C657200 
+ 3572              	.LASF93:
+ 3573 0b28 73797373 		.ascii	"sysstat_time_s\000"
+ 3573      7461745F 
+ 3573      74696D65 
+ 3573      5F7300
+ 3574              	.LASF181:
+ 3575 0b37 6770735F 		.ascii	"gps_new_target\000"
+ 3575      6E65775F 
+ 3575      74617267 
+ 3575      657400
+ 3576              	.LASF168:
+ 3577 0b46 6175746F 		.ascii	"auto_flow\000"
+ 3577      5F666C6F 
+ 3577      7700
+ 3578              	.LASF92:
+ 3579 0b50 73797373 		.ascii	"sysstat_status_flags\000"
+ 3579      7461745F 
+ 3579      73746174 
+ 3579      75735F66 
+ 3579      6C616773 
+ 3580              	.LASF205:
+ 3581 0b65 6E756467 		.ascii	"nudge_active\000"
+ 3581      655F6163 
+ 3581      74697665 
+ 3581      00
+ 3582              	.LASF150:
+ 3583 0b72 4155544F 		.ascii	"AUTO_HOLD\000"
+ 3583      5F484F4C 
+ 3583      4400
+ 3584              	.LASF185:
+ 3585 0b7c 6770735F 		.ascii	"gps_settled\000"
+ 3585      73657474 
+ 3585      6C656400 
+ 3586              	.LASF89:
+ 3587 0b88 73797373 		.ascii	"sysstat_gps_sats\000"
+ 3587      7461745F 
+ 3587      6770735F 
+ 3587      73617473 
+ 3587      00
+ 3588              	.LASF127:
+ 3589 0b99 68616D66 		.ascii	"hamfly_statistics_t\000"
+ 3589      6C795F73 
+ 3589      74617469 
+ 3589      73746963 
+ 3589      735F7400 
+ 3590              	.LASF188:
+ 3591 0bad 6770735F 		.ascii	"gps_last_sample_ms\000"
+ 3591      6C617374 
+ 3591      5F73616D 
+ 3591      706C655F 
+ 3591      6D7300
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\cc8d2bx7.s 			page 80
+
+
+ 3592              	.LASF72:
+ 3593 0bc0 6174745F 		.ascii	"att_valid\000"
+ 3593      76616C69 
+ 3593      6400
+ 3594              	.LASF227:
+ 3595 0bca 6D61696E 		.ascii	"main\000"
+ 3595      00
+ 3596              	.LASF15:
+ 3597 0bcf 696E7431 		.ascii	"int16_t\000"
+ 3597      365F7400 
+ 3598              	.LASF135:
+ 3599 0bd7 70656E64 		.ascii	"pending_ready\000"
+ 3599      696E675F 
+ 3599      72656164 
+ 3599      7900
+ 3600              	.LASF73:
+ 3601 0be5 6174745F 		.ascii	"att_timestamp_ms\000"
+ 3601      74696D65 
+ 3601      7374616D 
+ 3601      705F6D73 
+ 3601      00
+ 3602              	.LASF36:
+ 3603 0bf6 70616E5F 		.ascii	"pan_mode\000"
+ 3603      6D6F6465 
+ 3603      00
+ 3604              	.LASF78:
+ 3605 0bff 6174745F 		.ascii	"att_yaw_rate_dps\000"
+ 3605      7961775F 
+ 3605      72617465 
+ 3605      5F647073 
+ 3605      00
+ 3606              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

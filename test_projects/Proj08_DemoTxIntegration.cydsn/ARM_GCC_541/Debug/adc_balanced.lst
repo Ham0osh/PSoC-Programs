@@ -1,0 +1,1454 @@
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"adc_balanced.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.bss
+  20              	s_eoc_flag:
+  21 0000 00       		.space	1
+  22              	s_frame_ready:
+  23 0001 00       		.space	1
+  24              	s_ch_idx:
+  25 0002 00       		.space	1
+  26 0003 00       		.align	2
+  27              	s_counts:
+  28 0004 00000000 		.space	4
+  29              		.section	.text.isr_adc_Handler,"ax",%progbits
+  30              		.align	2
+  31              		.global	isr_adc_Handler
+  32              		.thumb
+  33              		.thumb_func
+  34              		.type	isr_adc_Handler, %function
+  35              	isr_adc_Handler:
+  36              	.LFB63:
+  37              		.file 1 "adc_balanced.c"
+   1:adc_balanced.c **** /* ========================================
+   2:adc_balanced.c ****  *
+   3:adc_balanced.c ****  * Copyright Hamish Johnson, 2026
+   4:adc_balanced.c ****  * All Rights Reserved
+   5:adc_balanced.c ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:adc_balanced.c ****  *
+   7:adc_balanced.c ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:adc_balanced.c ****  * WHICH IS THE PROPERTY OF 
+   9:adc_balanced.c ****  * Quantum Internet Systems Lab (QISL),
+  10:adc_balanced.c ****  * Department of Physics, SFU, Canada.
+  11:adc_balanced.c ****  *
+  12:adc_balanced.c ****  * Author: Hamish Johnson (2026)
+  13:adc_balanced.c ****  *
+  14:adc_balanced.c ****  * ========================================
+  15:adc_balanced.c ****  *
+  16:adc_balanced.c ****  * This code helps collect data from a
+  17:adc_balanced.c ****  * multiplexed ADC Del Sig.
+  18:adc_balanced.c **** */
+  19:adc_balanced.c **** 
+  20:adc_balanced.c **** #include "adc_balanced.h"
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 2
+
+
+  21:adc_balanced.c **** 
+  22:adc_balanced.c **** // ADC state
+  23:adc_balanced.c **** static volatile uint8 s_eoc_flag = 0;     // set by ISR on EOC
+  24:adc_balanced.c **** static volatile uint8 s_frame_ready = 0;  // set when we finish channel N_CH-1
+  25:adc_balanced.c **** static volatile uint8 s_ch_idx = 0;       // current mux channel index
+  26:adc_balanced.c **** static volatile int16 s_counts[N_CH];     // latest counts per channel
+  27:adc_balanced.c **** 
+  28:adc_balanced.c **** // ISR prototype, PSoC generates
+  29:adc_balanced.c **** CY_ISR_PROTO(isr_adc_Handler);
+  30:adc_balanced.c **** 
+  31:adc_balanced.c **** // ISR - Fires after ADC conversion finishes
+  32:adc_balanced.c **** CY_ISR(isr_adc_Handler)
+  33:adc_balanced.c **** {
+  38              		.loc 1 33 0
+  39              		.cfi_startproc
+  40              		@ args = 0, pretend = 0, frame = 0
+  41              		@ frame_needed = 1, uses_anonymous_args = 0
+  42 0000 80B5     		push	{r7, lr}
+  43              		.cfi_def_cfa_offset 8
+  44              		.cfi_offset 7, -8
+  45              		.cfi_offset 14, -4
+  46 0002 00AF     		add	r7, sp, #0
+  47              		.cfi_def_cfa_register 7
+  34:adc_balanced.c ****     // Clear pending IRQ and set received flag
+  35:adc_balanced.c ****     isr_adc_ClearPending();
+  48              		.loc 1 35 0
+  49 0004 FFF7FEFF 		bl	isr_adc_ClearPending
+  36:adc_balanced.c ****     s_eoc_flag = 1u;
+  50              		.loc 1 36 0
+  51 0008 024B     		ldr	r3, .L2
+  52 000a 0122     		movs	r2, #1
+  53 000c 1A70     		strb	r2, [r3]
+  37:adc_balanced.c **** }
+  54              		.loc 1 37 0
+  55 000e 00BF     		nop
+  56 0010 80BD     		pop	{r7, pc}
+  57              	.L3:
+  58 0012 00BF     		.align	2
+  59              	.L2:
+  60 0014 00000000 		.word	s_eoc_flag
+  61              		.cfi_endproc
+  62              	.LFE63:
+  63              		.size	isr_adc_Handler, .-isr_adc_Handler
+  64              		.section	.text.adc_balanced_init,"ax",%progbits
+  65              		.align	2
+  66              		.global	adc_balanced_init
+  67              		.thumb
+  68              		.thumb_func
+  69              		.type	adc_balanced_init, %function
+  70              	adc_balanced_init:
+  71              	.LFB64:
+  38:adc_balanced.c **** 
+  39:adc_balanced.c **** // Initialzie the ADC and MUX
+  40:adc_balanced.c **** void adc_balanced_init(void)
+  41:adc_balanced.c **** {
+  72              		.loc 1 41 0
+  73              		.cfi_startproc
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 3
+
+
+  74              		@ args = 0, pretend = 0, frame = 8
+  75              		@ frame_needed = 1, uses_anonymous_args = 0
+  76 0000 80B5     		push	{r7, lr}
+  77              		.cfi_def_cfa_offset 8
+  78              		.cfi_offset 7, -8
+  79              		.cfi_offset 14, -4
+  80 0002 82B0     		sub	sp, sp, #8
+  81              		.cfi_def_cfa_offset 16
+  82 0004 00AF     		add	r7, sp, #0
+  83              		.cfi_def_cfa_register 7
+  42:adc_balanced.c ****     CyGlobalIntEnable;
+  84              		.loc 1 42 0
+  85              		.syntax unified
+  86              	@ 42 "adc_balanced.c" 1
+  87 0006 62B6     		CPSIE   i
+  88              	@ 0 "" 2
+  43:adc_balanced.c **** 
+  44:adc_balanced.c ****     // Start UDBs - USER EDIT THESE, MUST MATCH TopDesign.cysch
+  45:adc_balanced.c ****     ADC_DelSig_1_Start();
+  89              		.loc 1 45 0
+  90              		.thumb
+  91              		.syntax unified
+  92 0008 FFF7FEFF 		bl	ADC_DelSig_1_Start
+  46:adc_balanced.c ****     AMux_1_Start();
+  93              		.loc 1 46 0
+  94 000c FFF7FEFF 		bl	AMux_1_Start
+  47:adc_balanced.c **** 
+  48:adc_balanced.c ****     // Start ISR handler
+  49:adc_balanced.c ****     isr_adc_StartEx(isr_adc_Handler);
+  95              		.loc 1 49 0
+  96 0010 1148     		ldr	r0, .L7
+  97 0012 FFF7FEFF 		bl	isr_adc_StartEx
+  50:adc_balanced.c **** 
+  51:adc_balanced.c ****     // Initialize state variables
+  52:adc_balanced.c ****     s_ch_idx = 0u;
+  98              		.loc 1 52 0
+  99 0016 114B     		ldr	r3, .L7+4
+ 100 0018 0022     		movs	r2, #0
+ 101 001a 1A70     		strb	r2, [r3]
+  53:adc_balanced.c ****     s_eoc_flag = 0u;
+ 102              		.loc 1 53 0
+ 103 001c 104B     		ldr	r3, .L7+8
+ 104 001e 0022     		movs	r2, #0
+ 105 0020 1A70     		strb	r2, [r3]
+  54:adc_balanced.c ****     s_frame_ready = 0u;
+ 106              		.loc 1 54 0
+ 107 0022 104B     		ldr	r3, .L7+12
+ 108 0024 0022     		movs	r2, #0
+ 109 0026 1A70     		strb	r2, [r3]
+ 110              	.LBB2:
+  55:adc_balanced.c **** 
+  56:adc_balanced.c ****     // zero our buffer
+  57:adc_balanced.c ****     for (uint8 i = 0u; i < (uint8)N_CH; i++)
+ 111              		.loc 1 57 0
+ 112 0028 0023     		movs	r3, #0
+ 113 002a FB71     		strb	r3, [r7, #7]
+ 114 002c 07E0     		b	.L5
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 4
+
+
+ 115              	.L6:
+  58:adc_balanced.c ****         s_counts[i] = 0;
+ 116              		.loc 1 58 0 discriminator 3
+ 117 002e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 118 0030 0D4A     		ldr	r2, .L7+16
+ 119 0032 0021     		movs	r1, #0
+ 120 0034 22F81310 		strh	r1, [r2, r3, lsl #1]	@ movhi
+  57:adc_balanced.c ****         s_counts[i] = 0;
+ 121              		.loc 1 57 0 discriminator 3
+ 122 0038 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 123 003a 0133     		adds	r3, r3, #1
+ 124 003c FB71     		strb	r3, [r7, #7]
+ 125              	.L5:
+  57:adc_balanced.c ****         s_counts[i] = 0;
+ 126              		.loc 1 57 0 is_stmt 0 discriminator 1
+ 127 003e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 128 0040 012B     		cmp	r3, #1
+ 129 0042 F4D9     		bls	.L6
+ 130              	.LBE2:
+  59:adc_balanced.c **** 
+  60:adc_balanced.c ****     // Select first channel
+  61:adc_balanced.c ****     AMux_1_Select(0u);
+ 131              		.loc 1 61 0 is_stmt 1
+ 132 0044 0020     		movs	r0, #0
+ 133 0046 FFF7FEFF 		bl	AMux_1_Select
+  62:adc_balanced.c **** 
+  63:adc_balanced.c ****     // Start ADC converting!
+  64:adc_balanced.c ****     ADC_DelSig_1_StartConvert();
+ 134              		.loc 1 64 0
+ 135 004a FFF7FEFF 		bl	ADC_DelSig_1_StartConvert
+  65:adc_balanced.c **** }
+ 136              		.loc 1 65 0
+ 137 004e 00BF     		nop
+ 138 0050 0837     		adds	r7, r7, #8
+ 139              		.cfi_def_cfa_offset 8
+ 140 0052 BD46     		mov	sp, r7
+ 141              		.cfi_def_cfa_register 13
+ 142              		@ sp needed
+ 143 0054 80BD     		pop	{r7, pc}
+ 144              	.L8:
+ 145 0056 00BF     		.align	2
+ 146              	.L7:
+ 147 0058 00000000 		.word	isr_adc_Handler
+ 148 005c 02000000 		.word	s_ch_idx
+ 149 0060 00000000 		.word	s_eoc_flag
+ 150 0064 01000000 		.word	s_frame_ready
+ 151 0068 04000000 		.word	s_counts
+ 152              		.cfi_endproc
+ 153              	.LFE64:
+ 154              		.size	adc_balanced_init, .-adc_balanced_init
+ 155              		.section	.text.adc_balanced_advance_on_eoc,"ax",%progbits
+ 156              		.align	2
+ 157              		.thumb
+ 158              		.thumb_func
+ 159              		.type	adc_balanced_advance_on_eoc, %function
+ 160              	adc_balanced_advance_on_eoc:
+ 161              	.LFB65:
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 5
+
+
+  66:adc_balanced.c **** 
+  67:adc_balanced.c **** // Function that advances on each "End of Conversion"
+  68:adc_balanced.c **** static void adc_balanced_advance_on_eoc(void)
+  69:adc_balanced.c **** {
+ 162              		.loc 1 69 0
+ 163              		.cfi_startproc
+ 164              		@ args = 0, pretend = 0, frame = 0
+ 165              		@ frame_needed = 1, uses_anonymous_args = 0
+ 166 0000 98B5     		push	{r3, r4, r7, lr}
+ 167              		.cfi_def_cfa_offset 16
+ 168              		.cfi_offset 3, -16
+ 169              		.cfi_offset 4, -12
+ 170              		.cfi_offset 7, -8
+ 171              		.cfi_offset 14, -4
+ 172 0002 00AF     		add	r7, sp, #0
+ 173              		.cfi_def_cfa_register 7
+  70:adc_balanced.c ****     // Ensure conversion stopped before advancing
+  71:adc_balanced.c ****     ADC_DelSig_1_StopConvert();
+ 174              		.loc 1 71 0
+ 175 0004 FFF7FEFF 		bl	ADC_DelSig_1_StopConvert
+  72:adc_balanced.c **** 
+  73:adc_balanced.c ****     // Read last ADC result
+  74:adc_balanced.c ****     s_counts[s_ch_idx] = ADC_DelSig_1_GetResult16();
+ 176              		.loc 1 74 0
+ 177 0008 134B     		ldr	r3, .L12
+ 178 000a 1B78     		ldrb	r3, [r3]
+ 179 000c DBB2     		uxtb	r3, r3
+ 180 000e 1C46     		mov	r4, r3
+ 181 0010 FFF7FEFF 		bl	ADC_DelSig_1_GetResult16
+ 182 0014 0346     		mov	r3, r0
+ 183 0016 1AB2     		sxth	r2, r3
+ 184 0018 104B     		ldr	r3, .L12+4
+ 185 001a 23F81420 		strh	r2, [r3, r4, lsl #1]	@ movhi
+  75:adc_balanced.c **** 
+  76:adc_balanced.c ****     // Mark state variable that we have received a frame
+  77:adc_balanced.c ****     if (s_ch_idx == (uint8)(N_CH - 1u))
+ 186              		.loc 1 77 0
+ 187 001e 0E4B     		ldr	r3, .L12
+ 188 0020 1B78     		ldrb	r3, [r3]
+ 189 0022 DBB2     		uxtb	r3, r3
+ 190 0024 012B     		cmp	r3, #1
+ 191 0026 06D1     		bne	.L10
+  78:adc_balanced.c ****     {
+  79:adc_balanced.c ****         s_frame_ready = 1u;
+ 192              		.loc 1 79 0
+ 193 0028 0D4B     		ldr	r3, .L12+8
+ 194 002a 0122     		movs	r2, #1
+ 195 002c 1A70     		strb	r2, [r3]
+  80:adc_balanced.c ****         s_ch_idx = 0u;
+ 196              		.loc 1 80 0
+ 197 002e 0A4B     		ldr	r3, .L12
+ 198 0030 0022     		movs	r2, #0
+ 199 0032 1A70     		strb	r2, [r3]
+ 200 0034 06E0     		b	.L11
+ 201              	.L10:
+  81:adc_balanced.c ****     }
+  82:adc_balanced.c ****     else
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 6
+
+
+  83:adc_balanced.c ****     {
+  84:adc_balanced.c ****         s_ch_idx++;
+ 202              		.loc 1 84 0
+ 203 0036 084B     		ldr	r3, .L12
+ 204 0038 1B78     		ldrb	r3, [r3]
+ 205 003a DBB2     		uxtb	r3, r3
+ 206 003c 0133     		adds	r3, r3, #1
+ 207 003e DAB2     		uxtb	r2, r3
+ 208 0040 054B     		ldr	r3, .L12
+ 209 0042 1A70     		strb	r2, [r3]
+ 210              	.L11:
+  85:adc_balanced.c ****     }
+  86:adc_balanced.c **** 
+  87:adc_balanced.c ****     // Switch to next channel
+  88:adc_balanced.c ****     AMux_1_Select(s_ch_idx);
+ 211              		.loc 1 88 0
+ 212 0044 044B     		ldr	r3, .L12
+ 213 0046 1B78     		ldrb	r3, [r3]
+ 214 0048 DBB2     		uxtb	r3, r3
+ 215 004a 1846     		mov	r0, r3
+ 216 004c FFF7FEFF 		bl	AMux_1_Select
+  89:adc_balanced.c **** 
+  90:adc_balanced.c ****     // Advance done, continue converting!
+  91:adc_balanced.c ****     ADC_DelSig_1_StartConvert();
+ 217              		.loc 1 91 0
+ 218 0050 FFF7FEFF 		bl	ADC_DelSig_1_StartConvert
+  92:adc_balanced.c **** }
+ 219              		.loc 1 92 0
+ 220 0054 00BF     		nop
+ 221 0056 98BD     		pop	{r3, r4, r7, pc}
+ 222              	.L13:
+ 223              		.align	2
+ 224              	.L12:
+ 225 0058 02000000 		.word	s_ch_idx
+ 226 005c 04000000 		.word	s_counts
+ 227 0060 01000000 		.word	s_frame_ready
+ 228              		.cfi_endproc
+ 229              	.LFE65:
+ 230              		.size	adc_balanced_advance_on_eoc, .-adc_balanced_advance_on_eoc
+ 231              		.section	.text.adc_balanced_poll_frame,"ax",%progbits
+ 232              		.align	2
+ 233              		.global	adc_balanced_poll_frame
+ 234              		.thumb
+ 235              		.thumb_func
+ 236              		.type	adc_balanced_poll_frame, %function
+ 237              	adc_balanced_poll_frame:
+ 238              	.LFB66:
+  93:adc_balanced.c **** 
+  94:adc_balanced.c **** // Consume "End of Conversion" events
+  95:adc_balanced.c **** uint8 adc_balanced_poll_frame(int16 out_counts[N_CH])
+  96:adc_balanced.c **** {
+ 239              		.loc 1 96 0
+ 240              		.cfi_startproc
+ 241              		@ args = 0, pretend = 0, frame = 16
+ 242              		@ frame_needed = 1, uses_anonymous_args = 0
+ 243 0000 80B5     		push	{r7, lr}
+ 244              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 7
+
+
+ 245              		.cfi_offset 7, -8
+ 246              		.cfi_offset 14, -4
+ 247 0002 84B0     		sub	sp, sp, #16
+ 248              		.cfi_def_cfa_offset 24
+ 249 0004 00AF     		add	r7, sp, #0
+ 250              		.cfi_def_cfa_register 7
+ 251 0006 7860     		str	r0, [r7, #4]
+  97:adc_balanced.c ****     if (s_eoc_flag)  // If EoC triggered from interrupt
+ 252              		.loc 1 97 0
+ 253 0008 154B     		ldr	r3, .L20
+ 254 000a 1B78     		ldrb	r3, [r3]
+ 255 000c DBB2     		uxtb	r3, r3
+ 256 000e 002B     		cmp	r3, #0
+ 257 0010 04D0     		beq	.L15
+  98:adc_balanced.c ****     {
+  99:adc_balanced.c ****         s_eoc_flag = 0u;                // Reset flag
+ 258              		.loc 1 99 0
+ 259 0012 134B     		ldr	r3, .L20
+ 260 0014 0022     		movs	r2, #0
+ 261 0016 1A70     		strb	r2, [r3]
+ 100:adc_balanced.c ****         adc_balanced_advance_on_eoc();  // Advance MUX
+ 262              		.loc 1 100 0
+ 263 0018 FFF7FEFF 		bl	adc_balanced_advance_on_eoc
+ 264              	.L15:
+ 101:adc_balanced.c ****     }
+ 102:adc_balanced.c **** 
+ 103:adc_balanced.c ****     if (s_frame_ready)  // If frame received from "adc_balanced_advance_on_eoc"
+ 265              		.loc 1 103 0
+ 266 001c 114B     		ldr	r3, .L20+4
+ 267 001e 1B78     		ldrb	r3, [r3]
+ 268 0020 DBB2     		uxtb	r3, r3
+ 269 0022 002B     		cmp	r3, #0
+ 270 0024 17D0     		beq	.L16
+ 104:adc_balanced.c ****     {
+ 105:adc_balanced.c ****         s_frame_ready = 0u;  // Reset flag
+ 271              		.loc 1 105 0
+ 272 0026 0F4B     		ldr	r3, .L20+4
+ 273 0028 0022     		movs	r2, #0
+ 274 002a 1A70     		strb	r2, [r3]
+ 275              	.LBB3:
+ 106:adc_balanced.c ****         
+ 107:adc_balanced.c ****         // Copy results into out_counts
+ 108:adc_balanced.c ****         for (uint8 i = 0u; i < (uint8)N_CH; i++)
+ 276              		.loc 1 108 0
+ 277 002c 0023     		movs	r3, #0
+ 278 002e FB73     		strb	r3, [r7, #15]
+ 279 0030 0CE0     		b	.L17
+ 280              	.L18:
+ 109:adc_balanced.c ****             out_counts[i] = s_counts[i];
+ 281              		.loc 1 109 0 discriminator 3
+ 282 0032 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 283 0034 5B00     		lsls	r3, r3, #1
+ 284 0036 7A68     		ldr	r2, [r7, #4]
+ 285 0038 1344     		add	r3, r3, r2
+ 286 003a FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 287 003c 0A49     		ldr	r1, .L20+8
+ 288 003e 31F81220 		ldrh	r2, [r1, r2, lsl #1]	@ movhi
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 8
+
+
+ 289 0042 12B2     		sxth	r2, r2
+ 290 0044 1A80     		strh	r2, [r3]	@ movhi
+ 108:adc_balanced.c ****             out_counts[i] = s_counts[i];
+ 291              		.loc 1 108 0 discriminator 3
+ 292 0046 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 293 0048 0133     		adds	r3, r3, #1
+ 294 004a FB73     		strb	r3, [r7, #15]
+ 295              	.L17:
+ 108:adc_balanced.c ****             out_counts[i] = s_counts[i];
+ 296              		.loc 1 108 0 is_stmt 0 discriminator 1
+ 297 004c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 298 004e 012B     		cmp	r3, #1
+ 299 0050 EFD9     		bls	.L18
+ 300              	.LBE3:
+ 110:adc_balanced.c **** 
+ 111:adc_balanced.c ****         return 1u;  // Return true that frame is available to poll
+ 301              		.loc 1 111 0 is_stmt 1
+ 302 0052 0123     		movs	r3, #1
+ 303 0054 00E0     		b	.L19
+ 304              	.L16:
+ 112:adc_balanced.c ****     }
+ 113:adc_balanced.c **** 
+ 114:adc_balanced.c ****     return 0u;  // Frame not ready to poll
+ 305              		.loc 1 114 0
+ 306 0056 0023     		movs	r3, #0
+ 307              	.L19:
+ 115:adc_balanced.c **** }
+ 308              		.loc 1 115 0
+ 309 0058 1846     		mov	r0, r3
+ 310 005a 1037     		adds	r7, r7, #16
+ 311              		.cfi_def_cfa_offset 8
+ 312 005c BD46     		mov	sp, r7
+ 313              		.cfi_def_cfa_register 13
+ 314              		@ sp needed
+ 315 005e 80BD     		pop	{r7, pc}
+ 316              	.L21:
+ 317              		.align	2
+ 318              	.L20:
+ 319 0060 00000000 		.word	s_eoc_flag
+ 320 0064 01000000 		.word	s_frame_ready
+ 321 0068 04000000 		.word	s_counts
+ 322              		.cfi_endproc
+ 323              	.LFE66:
+ 324              		.size	adc_balanced_poll_frame, .-adc_balanced_poll_frame
+ 325              		.section	.text.adc_balanced_counts_to_mv,"ax",%progbits
+ 326              		.align	2
+ 327              		.global	adc_balanced_counts_to_mv
+ 328              		.thumb
+ 329              		.thumb_func
+ 330              		.type	adc_balanced_counts_to_mv, %function
+ 331              	adc_balanced_counts_to_mv:
+ 332              	.LFB67:
+ 116:adc_balanced.c **** 
+ 117:adc_balanced.c **** // Convert counts to mV using PSoC API
+ 118:adc_balanced.c **** int32 adc_balanced_counts_to_mv(int16 counts)
+ 119:adc_balanced.c **** {
+ 333              		.loc 1 119 0
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 9
+
+
+ 334              		.cfi_startproc
+ 335              		@ args = 0, pretend = 0, frame = 8
+ 336              		@ frame_needed = 1, uses_anonymous_args = 0
+ 337 0000 80B5     		push	{r7, lr}
+ 338              		.cfi_def_cfa_offset 8
+ 339              		.cfi_offset 7, -8
+ 340              		.cfi_offset 14, -4
+ 341 0002 82B0     		sub	sp, sp, #8
+ 342              		.cfi_def_cfa_offset 16
+ 343 0004 00AF     		add	r7, sp, #0
+ 344              		.cfi_def_cfa_register 7
+ 345 0006 0346     		mov	r3, r0
+ 346 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 120:adc_balanced.c ****     return (int32)ADC_DelSig_1_CountsTo_mVolts(counts);
+ 347              		.loc 1 120 0
+ 348 000a B7F90630 		ldrsh	r3, [r7, #6]
+ 349 000e 1846     		mov	r0, r3
+ 350 0010 FFF7FEFF 		bl	ADC_DelSig_1_CountsTo_mVolts
+ 351 0014 0346     		mov	r3, r0
+ 121:adc_balanced.c **** }
+ 352              		.loc 1 121 0
+ 353 0016 1846     		mov	r0, r3
+ 354 0018 0837     		adds	r7, r7, #8
+ 355              		.cfi_def_cfa_offset 8
+ 356 001a BD46     		mov	sp, r7
+ 357              		.cfi_def_cfa_register 13
+ 358              		@ sp needed
+ 359 001c 80BD     		pop	{r7, pc}
+ 360              		.cfi_endproc
+ 361              	.LFE67:
+ 362              		.size	adc_balanced_counts_to_mv, .-adc_balanced_counts_to_mv
+ 363 001e 00BF     		.text
+ 364              	.Letext0:
+ 365              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 366              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.4\\psoc creator\\import\\gnu\\arm\\5.4.
+ 367              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 368              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 369              		.section	.debug_info,"",%progbits
+ 370              	.Ldebug_info0:
+ 371 0000 AC020000 		.4byte	0x2ac
+ 372 0004 0400     		.2byte	0x4
+ 373 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 374 000a 04       		.byte	0x4
+ 375 000b 01       		.uleb128 0x1
+ 376 000c 75000000 		.4byte	.LASF38
+ 377 0010 0C       		.byte	0xc
+ 378 0011 03010000 		.4byte	.LASF39
+ 379 0015 00000000 		.4byte	.LASF40
+ 380 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 381 001d 00000000 		.4byte	0
+ 382 0021 00000000 		.4byte	.Ldebug_line0
+ 383 0025 02       		.uleb128 0x2
+ 384 0026 01       		.byte	0x1
+ 385 0027 06       		.byte	0x6
+ 386 0028 84010000 		.4byte	.LASF0
+ 387 002c 02       		.uleb128 0x2
+ 388 002d 01       		.byte	0x1
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 10
+
+
+ 389 002e 08       		.byte	0x8
+ 390 002f 90010000 		.4byte	.LASF1
+ 391 0033 02       		.uleb128 0x2
+ 392 0034 02       		.byte	0x2
+ 393 0035 05       		.byte	0x5
+ 394 0036 91020000 		.4byte	.LASF2
+ 395 003a 02       		.uleb128 0x2
+ 396 003b 02       		.byte	0x2
+ 397 003c 07       		.byte	0x7
+ 398 003d 1C030000 		.4byte	.LASF3
+ 399 0041 03       		.uleb128 0x3
+ 400 0042 2C010000 		.4byte	.LASF9
+ 401 0046 02       		.byte	0x2
+ 402 0047 3F       		.byte	0x3f
+ 403 0048 4C000000 		.4byte	0x4c
+ 404 004c 02       		.uleb128 0x2
+ 405 004d 04       		.byte	0x4
+ 406 004e 05       		.byte	0x5
+ 407 004f 4F010000 		.4byte	.LASF4
+ 408 0053 02       		.uleb128 0x2
+ 409 0054 04       		.byte	0x4
+ 410 0055 07       		.byte	0x7
+ 411 0056 A4010000 		.4byte	.LASF5
+ 412 005a 02       		.uleb128 0x2
+ 413 005b 08       		.byte	0x8
+ 414 005c 05       		.byte	0x5
+ 415 005d 7E020000 		.4byte	.LASF6
+ 416 0061 02       		.uleb128 0x2
+ 417 0062 08       		.byte	0x8
+ 418 0063 07       		.byte	0x7
+ 419 0064 4D020000 		.4byte	.LASF7
+ 420 0068 04       		.uleb128 0x4
+ 421 0069 04       		.byte	0x4
+ 422 006a 05       		.byte	0x5
+ 423 006b 696E7400 		.ascii	"int\000"
+ 424 006f 02       		.uleb128 0x2
+ 425 0070 04       		.byte	0x4
+ 426 0071 07       		.byte	0x7
+ 427 0072 19020000 		.4byte	.LASF8
+ 428 0076 03       		.uleb128 0x3
+ 429 0077 6D020000 		.4byte	.LASF10
+ 430 007b 03       		.byte	0x3
+ 431 007c 2C       		.byte	0x2c
+ 432 007d 41000000 		.4byte	0x41
+ 433 0081 05       		.uleb128 0x5
+ 434 0082 A2020000 		.4byte	.LASF11
+ 435 0086 04       		.byte	0x4
+ 436 0087 E901     		.2byte	0x1e9
+ 437 0089 2C000000 		.4byte	0x2c
+ 438 008d 05       		.uleb128 0x5
+ 439 008e 9E010000 		.4byte	.LASF12
+ 440 0092 04       		.byte	0x4
+ 441 0093 ED01     		.2byte	0x1ed
+ 442 0095 33000000 		.4byte	0x33
+ 443 0099 05       		.uleb128 0x5
+ 444 009a B6010000 		.4byte	.LASF13
+ 445 009e 04       		.byte	0x4
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 11
+
+
+ 446 009f EE01     		.2byte	0x1ee
+ 447 00a1 4C000000 		.4byte	0x4c
+ 448 00a5 02       		.uleb128 0x2
+ 449 00a6 04       		.byte	0x4
+ 450 00a7 04       		.byte	0x4
+ 451 00a8 7E010000 		.4byte	.LASF14
+ 452 00ac 02       		.uleb128 0x2
+ 453 00ad 08       		.byte	0x8
+ 454 00ae 04       		.byte	0x4
+ 455 00af CC010000 		.4byte	.LASF15
+ 456 00b3 02       		.uleb128 0x2
+ 457 00b4 01       		.byte	0x1
+ 458 00b5 08       		.byte	0x8
+ 459 00b6 8C020000 		.4byte	.LASF16
+ 460 00ba 06       		.uleb128 0x6
+ 461 00bb 81000000 		.4byte	0x81
+ 462 00bf 02       		.uleb128 0x2
+ 463 00c0 08       		.byte	0x8
+ 464 00c1 04       		.byte	0x4
+ 465 00c2 02030000 		.4byte	.LASF17
+ 466 00c6 02       		.uleb128 0x2
+ 467 00c7 04       		.byte	0x4
+ 468 00c8 07       		.byte	0x7
+ 469 00c9 75020000 		.4byte	.LASF18
+ 470 00cd 07       		.uleb128 0x7
+ 471 00ce BC010000 		.4byte	.LASF19
+ 472 00d2 01       		.byte	0x1
+ 473 00d3 20       		.byte	0x20
+ 474 00d4 00000000 		.4byte	.LFB63
+ 475 00d8 18000000 		.4byte	.LFE63-.LFB63
+ 476 00dc 01       		.uleb128 0x1
+ 477 00dd 9C       		.byte	0x9c
+ 478 00de F0000000 		.4byte	0xf0
+ 479 00e2 08       		.uleb128 0x8
+ 480 00e3 D3020000 		.4byte	.LASF28
+ 481 00e7 01       		.byte	0x1
+ 482 00e8 23       		.byte	0x23
+ 483 00e9 68000000 		.4byte	0x68
+ 484 00ed 09       		.uleb128 0x9
+ 485 00ee 00       		.byte	0
+ 486 00ef 00       		.byte	0
+ 487 00f0 07       		.uleb128 0x7
+ 488 00f1 61010000 		.4byte	.LASF20
+ 489 00f5 01       		.byte	0x1
+ 490 00f6 28       		.byte	0x28
+ 491 00f7 00000000 		.4byte	.LFB64
+ 492 00fb 6C000000 		.4byte	.LFE64-.LFB64
+ 493 00ff 01       		.uleb128 0x1
+ 494 0100 9C       		.byte	0x9c
+ 495 0101 71010000 		.4byte	0x171
+ 496 0105 0A       		.uleb128 0xa
+ 497 0106 06020000 		.4byte	.LASF21
+ 498 010a 01       		.byte	0x1
+ 499 010b 2D       		.byte	0x2d
+ 500 010c 68000000 		.4byte	0x68
+ 501 0110 16010000 		.4byte	0x116
+ 502 0114 09       		.uleb128 0x9
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 12
+
+
+ 503 0115 00       		.byte	0
+ 504 0116 0A       		.uleb128 0xa
+ 505 0117 D3010000 		.4byte	.LASF22
+ 506 011b 01       		.byte	0x1
+ 507 011c 2E       		.byte	0x2e
+ 508 011d 68000000 		.4byte	0x68
+ 509 0121 27010000 		.4byte	0x127
+ 510 0125 09       		.uleb128 0x9
+ 511 0126 00       		.byte	0
+ 512 0127 0A       		.uleb128 0xa
+ 513 0128 65000000 		.4byte	.LASF23
+ 514 012c 01       		.byte	0x1
+ 515 012d 31       		.byte	0x31
+ 516 012e 68000000 		.4byte	0x68
+ 517 0132 38010000 		.4byte	0x138
+ 518 0136 09       		.uleb128 0x9
+ 519 0137 00       		.byte	0
+ 520 0138 0A       		.uleb128 0xa
+ 521 0139 0E030000 		.4byte	.LASF24
+ 522 013d 01       		.byte	0x1
+ 523 013e 3D       		.byte	0x3d
+ 524 013f 68000000 		.4byte	0x68
+ 525 0143 49010000 		.4byte	0x149
+ 526 0147 09       		.uleb128 0x9
+ 527 0148 00       		.byte	0
+ 528 0149 0A       		.uleb128 0xa
+ 529 014a E8020000 		.4byte	.LASF25
+ 530 014e 01       		.byte	0x1
+ 531 014f 40       		.byte	0x40
+ 532 0150 68000000 		.4byte	0x68
+ 533 0154 5A010000 		.4byte	0x15a
+ 534 0158 09       		.uleb128 0x9
+ 535 0159 00       		.byte	0
+ 536 015a 0B       		.uleb128 0xb
+ 537 015b 28000000 		.4byte	.LBB2
+ 538 015f 1C000000 		.4byte	.LBE2-.LBB2
+ 539 0163 0C       		.uleb128 0xc
+ 540 0164 6900     		.ascii	"i\000"
+ 541 0166 01       		.byte	0x1
+ 542 0167 39       		.byte	0x39
+ 543 0168 81000000 		.4byte	0x81
+ 544 016c 02       		.uleb128 0x2
+ 545 016d 91       		.byte	0x91
+ 546 016e 77       		.sleb128 -9
+ 547 016f 00       		.byte	0
+ 548 0170 00       		.byte	0
+ 549 0171 0D       		.uleb128 0xd
+ 550 0172 31020000 		.4byte	.LASF41
+ 551 0176 01       		.byte	0x1
+ 552 0177 44       		.byte	0x44
+ 553 0178 00000000 		.4byte	.LFB65
+ 554 017c 64000000 		.4byte	.LFE65-.LFB65
+ 555 0180 01       		.uleb128 0x1
+ 556 0181 9C       		.byte	0x9c
+ 557 0182 C7010000 		.4byte	0x1c7
+ 558 0186 0A       		.uleb128 0xa
+ 559 0187 36010000 		.4byte	.LASF26
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 13
+
+
+ 560 018b 01       		.byte	0x1
+ 561 018c 47       		.byte	0x47
+ 562 018d 68000000 		.4byte	0x68
+ 563 0191 97010000 		.4byte	0x197
+ 564 0195 09       		.uleb128 0x9
+ 565 0196 00       		.byte	0
+ 566 0197 0A       		.uleb128 0xa
+ 567 0198 ED010000 		.4byte	.LASF27
+ 568 019c 01       		.byte	0x1
+ 569 019d 4A       		.byte	0x4a
+ 570 019e 68000000 		.4byte	0x68
+ 571 01a2 A8010000 		.4byte	0x1a8
+ 572 01a6 09       		.uleb128 0x9
+ 573 01a7 00       		.byte	0
+ 574 01a8 0A       		.uleb128 0xa
+ 575 01a9 0E030000 		.4byte	.LASF24
+ 576 01ad 01       		.byte	0x1
+ 577 01ae 3D       		.byte	0x3d
+ 578 01af 68000000 		.4byte	0x68
+ 579 01b3 B9010000 		.4byte	0x1b9
+ 580 01b7 09       		.uleb128 0x9
+ 581 01b8 00       		.byte	0
+ 582 01b9 08       		.uleb128 0x8
+ 583 01ba E8020000 		.4byte	.LASF25
+ 584 01be 01       		.byte	0x1
+ 585 01bf 40       		.byte	0x40
+ 586 01c0 68000000 		.4byte	0x68
+ 587 01c4 09       		.uleb128 0x9
+ 588 01c5 00       		.byte	0
+ 589 01c6 00       		.byte	0
+ 590 01c7 0E       		.uleb128 0xe
+ 591 01c8 2F030000 		.4byte	.LASF29
+ 592 01cc 01       		.byte	0x1
+ 593 01cd 5F       		.byte	0x5f
+ 594 01ce 81000000 		.4byte	0x81
+ 595 01d2 00000000 		.4byte	.LFB66
+ 596 01d6 6C000000 		.4byte	.LFE66-.LFB66
+ 597 01da 01       		.uleb128 0x1
+ 598 01db 9C       		.byte	0x9c
+ 599 01dc 05020000 		.4byte	0x205
+ 600 01e0 0F       		.uleb128 0xf
+ 601 01e1 73010000 		.4byte	.LASF31
+ 602 01e5 01       		.byte	0x1
+ 603 01e6 5F       		.byte	0x5f
+ 604 01e7 05020000 		.4byte	0x205
+ 605 01eb 02       		.uleb128 0x2
+ 606 01ec 91       		.byte	0x91
+ 607 01ed 6C       		.sleb128 -20
+ 608 01ee 0B       		.uleb128 0xb
+ 609 01ef 2C000000 		.4byte	.LBB3
+ 610 01f3 26000000 		.4byte	.LBE3-.LBB3
+ 611 01f7 0C       		.uleb128 0xc
+ 612 01f8 6900     		.ascii	"i\000"
+ 613 01fa 01       		.byte	0x1
+ 614 01fb 6C       		.byte	0x6c
+ 615 01fc 81000000 		.4byte	0x81
+ 616 0200 02       		.uleb128 0x2
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 14
+
+
+ 617 0201 91       		.byte	0x91
+ 618 0202 77       		.sleb128 -9
+ 619 0203 00       		.byte	0
+ 620 0204 00       		.byte	0
+ 621 0205 10       		.uleb128 0x10
+ 622 0206 04       		.byte	0x4
+ 623 0207 8D000000 		.4byte	0x8d
+ 624 020b 0E       		.uleb128 0xe
+ 625 020c 12010000 		.4byte	.LASF30
+ 626 0210 01       		.byte	0x1
+ 627 0211 76       		.byte	0x76
+ 628 0212 99000000 		.4byte	0x99
+ 629 0216 00000000 		.4byte	.LFB67
+ 630 021a 1E000000 		.4byte	.LFE67-.LFB67
+ 631 021e 01       		.uleb128 0x1
+ 632 021f 9C       		.byte	0x9c
+ 633 0220 40020000 		.4byte	0x240
+ 634 0224 0F       		.uleb128 0xf
+ 635 0225 9B020000 		.4byte	.LASF32
+ 636 0229 01       		.byte	0x1
+ 637 022a 76       		.byte	0x76
+ 638 022b 8D000000 		.4byte	0x8d
+ 639 022f 02       		.uleb128 0x2
+ 640 0230 91       		.byte	0x91
+ 641 0231 76       		.sleb128 -10
+ 642 0232 08       		.uleb128 0x8
+ 643 0233 A8020000 		.4byte	.LASF33
+ 644 0237 01       		.byte	0x1
+ 645 0238 78       		.byte	0x78
+ 646 0239 68000000 		.4byte	0x68
+ 647 023d 09       		.uleb128 0x9
+ 648 023e 00       		.byte	0
+ 649 023f 00       		.byte	0
+ 650 0240 11       		.uleb128 0x11
+ 651 0241 26020000 		.4byte	.LASF34
+ 652 0245 01       		.byte	0x1
+ 653 0246 17       		.byte	0x17
+ 654 0247 BA000000 		.4byte	0xba
+ 655 024b 05       		.uleb128 0x5
+ 656 024c 03       		.byte	0x3
+ 657 024d 00000000 		.4byte	s_eoc_flag
+ 658 0251 11       		.uleb128 0x11
+ 659 0252 C5020000 		.4byte	.LASF35
+ 660 0256 01       		.byte	0x1
+ 661 0257 18       		.byte	0x18
+ 662 0258 BA000000 		.4byte	0xba
+ 663 025c 05       		.uleb128 0x5
+ 664 025d 03       		.byte	0x3
+ 665 025e 01000000 		.4byte	s_frame_ready
+ 666 0262 11       		.uleb128 0x11
+ 667 0263 58010000 		.4byte	.LASF36
+ 668 0267 01       		.byte	0x1
+ 669 0268 19       		.byte	0x19
+ 670 0269 BA000000 		.4byte	0xba
+ 671 026d 05       		.uleb128 0x5
+ 672 026e 03       		.byte	0x3
+ 673 026f 02000000 		.4byte	s_ch_idx
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 15
+
+
+ 674 0273 12       		.uleb128 0x12
+ 675 0274 83020000 		.4byte	0x283
+ 676 0278 83020000 		.4byte	0x283
+ 677 027c 13       		.uleb128 0x13
+ 678 027d C6000000 		.4byte	0xc6
+ 679 0281 01       		.byte	0x1
+ 680 0282 00       		.byte	0
+ 681 0283 06       		.uleb128 0x6
+ 682 0284 8D000000 		.4byte	0x8d
+ 683 0288 11       		.uleb128 0x11
+ 684 0289 64020000 		.4byte	.LASF37
+ 685 028d 01       		.byte	0x1
+ 686 028e 1A       		.byte	0x1a
+ 687 028f 99020000 		.4byte	0x299
+ 688 0293 05       		.uleb128 0x5
+ 689 0294 03       		.byte	0x3
+ 690 0295 04000000 		.4byte	s_counts
+ 691 0299 06       		.uleb128 0x6
+ 692 029a 73020000 		.4byte	0x273
+ 693 029e 14       		.uleb128 0x14
+ 694 029f E0010000 		.4byte	.LASF42
+ 695 02a3 05       		.byte	0x5
+ 696 02a4 1207     		.2byte	0x712
+ 697 02a6 AA020000 		.4byte	0x2aa
+ 698 02aa 06       		.uleb128 0x6
+ 699 02ab 76000000 		.4byte	0x76
+ 700 02af 00       		.byte	0
+ 701              		.section	.debug_abbrev,"",%progbits
+ 702              	.Ldebug_abbrev0:
+ 703 0000 01       		.uleb128 0x1
+ 704 0001 11       		.uleb128 0x11
+ 705 0002 01       		.byte	0x1
+ 706 0003 25       		.uleb128 0x25
+ 707 0004 0E       		.uleb128 0xe
+ 708 0005 13       		.uleb128 0x13
+ 709 0006 0B       		.uleb128 0xb
+ 710 0007 03       		.uleb128 0x3
+ 711 0008 0E       		.uleb128 0xe
+ 712 0009 1B       		.uleb128 0x1b
+ 713 000a 0E       		.uleb128 0xe
+ 714 000b 55       		.uleb128 0x55
+ 715 000c 17       		.uleb128 0x17
+ 716 000d 11       		.uleb128 0x11
+ 717 000e 01       		.uleb128 0x1
+ 718 000f 10       		.uleb128 0x10
+ 719 0010 17       		.uleb128 0x17
+ 720 0011 00       		.byte	0
+ 721 0012 00       		.byte	0
+ 722 0013 02       		.uleb128 0x2
+ 723 0014 24       		.uleb128 0x24
+ 724 0015 00       		.byte	0
+ 725 0016 0B       		.uleb128 0xb
+ 726 0017 0B       		.uleb128 0xb
+ 727 0018 3E       		.uleb128 0x3e
+ 728 0019 0B       		.uleb128 0xb
+ 729 001a 03       		.uleb128 0x3
+ 730 001b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 16
+
+
+ 731 001c 00       		.byte	0
+ 732 001d 00       		.byte	0
+ 733 001e 03       		.uleb128 0x3
+ 734 001f 16       		.uleb128 0x16
+ 735 0020 00       		.byte	0
+ 736 0021 03       		.uleb128 0x3
+ 737 0022 0E       		.uleb128 0xe
+ 738 0023 3A       		.uleb128 0x3a
+ 739 0024 0B       		.uleb128 0xb
+ 740 0025 3B       		.uleb128 0x3b
+ 741 0026 0B       		.uleb128 0xb
+ 742 0027 49       		.uleb128 0x49
+ 743 0028 13       		.uleb128 0x13
+ 744 0029 00       		.byte	0
+ 745 002a 00       		.byte	0
+ 746 002b 04       		.uleb128 0x4
+ 747 002c 24       		.uleb128 0x24
+ 748 002d 00       		.byte	0
+ 749 002e 0B       		.uleb128 0xb
+ 750 002f 0B       		.uleb128 0xb
+ 751 0030 3E       		.uleb128 0x3e
+ 752 0031 0B       		.uleb128 0xb
+ 753 0032 03       		.uleb128 0x3
+ 754 0033 08       		.uleb128 0x8
+ 755 0034 00       		.byte	0
+ 756 0035 00       		.byte	0
+ 757 0036 05       		.uleb128 0x5
+ 758 0037 16       		.uleb128 0x16
+ 759 0038 00       		.byte	0
+ 760 0039 03       		.uleb128 0x3
+ 761 003a 0E       		.uleb128 0xe
+ 762 003b 3A       		.uleb128 0x3a
+ 763 003c 0B       		.uleb128 0xb
+ 764 003d 3B       		.uleb128 0x3b
+ 765 003e 05       		.uleb128 0x5
+ 766 003f 49       		.uleb128 0x49
+ 767 0040 13       		.uleb128 0x13
+ 768 0041 00       		.byte	0
+ 769 0042 00       		.byte	0
+ 770 0043 06       		.uleb128 0x6
+ 771 0044 35       		.uleb128 0x35
+ 772 0045 00       		.byte	0
+ 773 0046 49       		.uleb128 0x49
+ 774 0047 13       		.uleb128 0x13
+ 775 0048 00       		.byte	0
+ 776 0049 00       		.byte	0
+ 777 004a 07       		.uleb128 0x7
+ 778 004b 2E       		.uleb128 0x2e
+ 779 004c 01       		.byte	0x1
+ 780 004d 3F       		.uleb128 0x3f
+ 781 004e 19       		.uleb128 0x19
+ 782 004f 03       		.uleb128 0x3
+ 783 0050 0E       		.uleb128 0xe
+ 784 0051 3A       		.uleb128 0x3a
+ 785 0052 0B       		.uleb128 0xb
+ 786 0053 3B       		.uleb128 0x3b
+ 787 0054 0B       		.uleb128 0xb
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 17
+
+
+ 788 0055 27       		.uleb128 0x27
+ 789 0056 19       		.uleb128 0x19
+ 790 0057 11       		.uleb128 0x11
+ 791 0058 01       		.uleb128 0x1
+ 792 0059 12       		.uleb128 0x12
+ 793 005a 06       		.uleb128 0x6
+ 794 005b 40       		.uleb128 0x40
+ 795 005c 18       		.uleb128 0x18
+ 796 005d 9642     		.uleb128 0x2116
+ 797 005f 19       		.uleb128 0x19
+ 798 0060 01       		.uleb128 0x1
+ 799 0061 13       		.uleb128 0x13
+ 800 0062 00       		.byte	0
+ 801 0063 00       		.byte	0
+ 802 0064 08       		.uleb128 0x8
+ 803 0065 2E       		.uleb128 0x2e
+ 804 0066 01       		.byte	0x1
+ 805 0067 3F       		.uleb128 0x3f
+ 806 0068 19       		.uleb128 0x19
+ 807 0069 03       		.uleb128 0x3
+ 808 006a 0E       		.uleb128 0xe
+ 809 006b 3A       		.uleb128 0x3a
+ 810 006c 0B       		.uleb128 0xb
+ 811 006d 3B       		.uleb128 0x3b
+ 812 006e 0B       		.uleb128 0xb
+ 813 006f 49       		.uleb128 0x49
+ 814 0070 13       		.uleb128 0x13
+ 815 0071 3C       		.uleb128 0x3c
+ 816 0072 19       		.uleb128 0x19
+ 817 0073 00       		.byte	0
+ 818 0074 00       		.byte	0
+ 819 0075 09       		.uleb128 0x9
+ 820 0076 18       		.uleb128 0x18
+ 821 0077 00       		.byte	0
+ 822 0078 00       		.byte	0
+ 823 0079 00       		.byte	0
+ 824 007a 0A       		.uleb128 0xa
+ 825 007b 2E       		.uleb128 0x2e
+ 826 007c 01       		.byte	0x1
+ 827 007d 3F       		.uleb128 0x3f
+ 828 007e 19       		.uleb128 0x19
+ 829 007f 03       		.uleb128 0x3
+ 830 0080 0E       		.uleb128 0xe
+ 831 0081 3A       		.uleb128 0x3a
+ 832 0082 0B       		.uleb128 0xb
+ 833 0083 3B       		.uleb128 0x3b
+ 834 0084 0B       		.uleb128 0xb
+ 835 0085 49       		.uleb128 0x49
+ 836 0086 13       		.uleb128 0x13
+ 837 0087 3C       		.uleb128 0x3c
+ 838 0088 19       		.uleb128 0x19
+ 839 0089 01       		.uleb128 0x1
+ 840 008a 13       		.uleb128 0x13
+ 841 008b 00       		.byte	0
+ 842 008c 00       		.byte	0
+ 843 008d 0B       		.uleb128 0xb
+ 844 008e 0B       		.uleb128 0xb
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 18
+
+
+ 845 008f 01       		.byte	0x1
+ 846 0090 11       		.uleb128 0x11
+ 847 0091 01       		.uleb128 0x1
+ 848 0092 12       		.uleb128 0x12
+ 849 0093 06       		.uleb128 0x6
+ 850 0094 00       		.byte	0
+ 851 0095 00       		.byte	0
+ 852 0096 0C       		.uleb128 0xc
+ 853 0097 34       		.uleb128 0x34
+ 854 0098 00       		.byte	0
+ 855 0099 03       		.uleb128 0x3
+ 856 009a 08       		.uleb128 0x8
+ 857 009b 3A       		.uleb128 0x3a
+ 858 009c 0B       		.uleb128 0xb
+ 859 009d 3B       		.uleb128 0x3b
+ 860 009e 0B       		.uleb128 0xb
+ 861 009f 49       		.uleb128 0x49
+ 862 00a0 13       		.uleb128 0x13
+ 863 00a1 02       		.uleb128 0x2
+ 864 00a2 18       		.uleb128 0x18
+ 865 00a3 00       		.byte	0
+ 866 00a4 00       		.byte	0
+ 867 00a5 0D       		.uleb128 0xd
+ 868 00a6 2E       		.uleb128 0x2e
+ 869 00a7 01       		.byte	0x1
+ 870 00a8 03       		.uleb128 0x3
+ 871 00a9 0E       		.uleb128 0xe
+ 872 00aa 3A       		.uleb128 0x3a
+ 873 00ab 0B       		.uleb128 0xb
+ 874 00ac 3B       		.uleb128 0x3b
+ 875 00ad 0B       		.uleb128 0xb
+ 876 00ae 27       		.uleb128 0x27
+ 877 00af 19       		.uleb128 0x19
+ 878 00b0 11       		.uleb128 0x11
+ 879 00b1 01       		.uleb128 0x1
+ 880 00b2 12       		.uleb128 0x12
+ 881 00b3 06       		.uleb128 0x6
+ 882 00b4 40       		.uleb128 0x40
+ 883 00b5 18       		.uleb128 0x18
+ 884 00b6 9642     		.uleb128 0x2116
+ 885 00b8 19       		.uleb128 0x19
+ 886 00b9 01       		.uleb128 0x1
+ 887 00ba 13       		.uleb128 0x13
+ 888 00bb 00       		.byte	0
+ 889 00bc 00       		.byte	0
+ 890 00bd 0E       		.uleb128 0xe
+ 891 00be 2E       		.uleb128 0x2e
+ 892 00bf 01       		.byte	0x1
+ 893 00c0 3F       		.uleb128 0x3f
+ 894 00c1 19       		.uleb128 0x19
+ 895 00c2 03       		.uleb128 0x3
+ 896 00c3 0E       		.uleb128 0xe
+ 897 00c4 3A       		.uleb128 0x3a
+ 898 00c5 0B       		.uleb128 0xb
+ 899 00c6 3B       		.uleb128 0x3b
+ 900 00c7 0B       		.uleb128 0xb
+ 901 00c8 27       		.uleb128 0x27
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 19
+
+
+ 902 00c9 19       		.uleb128 0x19
+ 903 00ca 49       		.uleb128 0x49
+ 904 00cb 13       		.uleb128 0x13
+ 905 00cc 11       		.uleb128 0x11
+ 906 00cd 01       		.uleb128 0x1
+ 907 00ce 12       		.uleb128 0x12
+ 908 00cf 06       		.uleb128 0x6
+ 909 00d0 40       		.uleb128 0x40
+ 910 00d1 18       		.uleb128 0x18
+ 911 00d2 9642     		.uleb128 0x2116
+ 912 00d4 19       		.uleb128 0x19
+ 913 00d5 01       		.uleb128 0x1
+ 914 00d6 13       		.uleb128 0x13
+ 915 00d7 00       		.byte	0
+ 916 00d8 00       		.byte	0
+ 917 00d9 0F       		.uleb128 0xf
+ 918 00da 05       		.uleb128 0x5
+ 919 00db 00       		.byte	0
+ 920 00dc 03       		.uleb128 0x3
+ 921 00dd 0E       		.uleb128 0xe
+ 922 00de 3A       		.uleb128 0x3a
+ 923 00df 0B       		.uleb128 0xb
+ 924 00e0 3B       		.uleb128 0x3b
+ 925 00e1 0B       		.uleb128 0xb
+ 926 00e2 49       		.uleb128 0x49
+ 927 00e3 13       		.uleb128 0x13
+ 928 00e4 02       		.uleb128 0x2
+ 929 00e5 18       		.uleb128 0x18
+ 930 00e6 00       		.byte	0
+ 931 00e7 00       		.byte	0
+ 932 00e8 10       		.uleb128 0x10
+ 933 00e9 0F       		.uleb128 0xf
+ 934 00ea 00       		.byte	0
+ 935 00eb 0B       		.uleb128 0xb
+ 936 00ec 0B       		.uleb128 0xb
+ 937 00ed 49       		.uleb128 0x49
+ 938 00ee 13       		.uleb128 0x13
+ 939 00ef 00       		.byte	0
+ 940 00f0 00       		.byte	0
+ 941 00f1 11       		.uleb128 0x11
+ 942 00f2 34       		.uleb128 0x34
+ 943 00f3 00       		.byte	0
+ 944 00f4 03       		.uleb128 0x3
+ 945 00f5 0E       		.uleb128 0xe
+ 946 00f6 3A       		.uleb128 0x3a
+ 947 00f7 0B       		.uleb128 0xb
+ 948 00f8 3B       		.uleb128 0x3b
+ 949 00f9 0B       		.uleb128 0xb
+ 950 00fa 49       		.uleb128 0x49
+ 951 00fb 13       		.uleb128 0x13
+ 952 00fc 02       		.uleb128 0x2
+ 953 00fd 18       		.uleb128 0x18
+ 954 00fe 00       		.byte	0
+ 955 00ff 00       		.byte	0
+ 956 0100 12       		.uleb128 0x12
+ 957 0101 01       		.uleb128 0x1
+ 958 0102 01       		.byte	0x1
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 20
+
+
+ 959 0103 49       		.uleb128 0x49
+ 960 0104 13       		.uleb128 0x13
+ 961 0105 01       		.uleb128 0x1
+ 962 0106 13       		.uleb128 0x13
+ 963 0107 00       		.byte	0
+ 964 0108 00       		.byte	0
+ 965 0109 13       		.uleb128 0x13
+ 966 010a 21       		.uleb128 0x21
+ 967 010b 00       		.byte	0
+ 968 010c 49       		.uleb128 0x49
+ 969 010d 13       		.uleb128 0x13
+ 970 010e 2F       		.uleb128 0x2f
+ 971 010f 0B       		.uleb128 0xb
+ 972 0110 00       		.byte	0
+ 973 0111 00       		.byte	0
+ 974 0112 14       		.uleb128 0x14
+ 975 0113 34       		.uleb128 0x34
+ 976 0114 00       		.byte	0
+ 977 0115 03       		.uleb128 0x3
+ 978 0116 0E       		.uleb128 0xe
+ 979 0117 3A       		.uleb128 0x3a
+ 980 0118 0B       		.uleb128 0xb
+ 981 0119 3B       		.uleb128 0x3b
+ 982 011a 05       		.uleb128 0x5
+ 983 011b 49       		.uleb128 0x49
+ 984 011c 13       		.uleb128 0x13
+ 985 011d 3F       		.uleb128 0x3f
+ 986 011e 19       		.uleb128 0x19
+ 987 011f 3C       		.uleb128 0x3c
+ 988 0120 19       		.uleb128 0x19
+ 989 0121 00       		.byte	0
+ 990 0122 00       		.byte	0
+ 991 0123 00       		.byte	0
+ 992              		.section	.debug_aranges,"",%progbits
+ 993 0000 3C000000 		.4byte	0x3c
+ 994 0004 0200     		.2byte	0x2
+ 995 0006 00000000 		.4byte	.Ldebug_info0
+ 996 000a 04       		.byte	0x4
+ 997 000b 00       		.byte	0
+ 998 000c 0000     		.2byte	0
+ 999 000e 0000     		.2byte	0
+ 1000 0010 00000000 		.4byte	.LFB63
+ 1001 0014 18000000 		.4byte	.LFE63-.LFB63
+ 1002 0018 00000000 		.4byte	.LFB64
+ 1003 001c 6C000000 		.4byte	.LFE64-.LFB64
+ 1004 0020 00000000 		.4byte	.LFB65
+ 1005 0024 64000000 		.4byte	.LFE65-.LFB65
+ 1006 0028 00000000 		.4byte	.LFB66
+ 1007 002c 6C000000 		.4byte	.LFE66-.LFB66
+ 1008 0030 00000000 		.4byte	.LFB67
+ 1009 0034 1E000000 		.4byte	.LFE67-.LFB67
+ 1010 0038 00000000 		.4byte	0
+ 1011 003c 00000000 		.4byte	0
+ 1012              		.section	.debug_ranges,"",%progbits
+ 1013              	.Ldebug_ranges0:
+ 1014 0000 00000000 		.4byte	.LFB63
+ 1015 0004 18000000 		.4byte	.LFE63
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 21
+
+
+ 1016 0008 00000000 		.4byte	.LFB64
+ 1017 000c 6C000000 		.4byte	.LFE64
+ 1018 0010 00000000 		.4byte	.LFB65
+ 1019 0014 64000000 		.4byte	.LFE65
+ 1020 0018 00000000 		.4byte	.LFB66
+ 1021 001c 6C000000 		.4byte	.LFE66
+ 1022 0020 00000000 		.4byte	.LFB67
+ 1023 0024 1E000000 		.4byte	.LFE67
+ 1024 0028 00000000 		.4byte	0
+ 1025 002c 00000000 		.4byte	0
+ 1026              		.section	.debug_line,"",%progbits
+ 1027              	.Ldebug_line0:
+ 1028 0000 EC010000 		.section	.debug_str,"MS",%progbits,1
+ 1028      02005401 
+ 1028      00000201 
+ 1028      FB0E0D00 
+ 1028      01010101 
+ 1029              	.LASF40:
+ 1030 0000 433A5C55 		.ascii	"C:\\Users\\yoons\\Documents\\wprkspace-hamish\\PSoC"
+ 1030      73657273 
+ 1030      5C796F6F 
+ 1030      6E735C44 
+ 1030      6F63756D 
+ 1031 002e 2D50726F 		.ascii	"-Programs\\test_projects\\Proj08_DemoTxIntegration."
+ 1031      6772616D 
+ 1031      735C7465 
+ 1031      73745F70 
+ 1031      726F6A65 
+ 1032 005f 63796473 		.ascii	"cydsn\000"
+ 1032      6E00
+ 1033              	.LASF23:
+ 1034 0065 6973725F 		.ascii	"isr_adc_StartEx\000"
+ 1034      6164635F 
+ 1034      53746172 
+ 1034      74457800 
+ 1035              	.LASF38:
+ 1036 0075 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1036      43313120 
+ 1036      352E342E 
+ 1036      31203230 
+ 1036      31363036 
+ 1037 00a8 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 1037      20726576 
+ 1037      6973696F 
+ 1037      6E203233 
+ 1037      37373135 
+ 1038 00db 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 1038      66756E63 
+ 1038      74696F6E 
+ 1038      2D736563 
+ 1038      74696F6E 
+ 1039              	.LASF39:
+ 1040 0103 6164635F 		.ascii	"adc_balanced.c\000"
+ 1040      62616C61 
+ 1040      6E636564 
+ 1040      2E6300
+ 1041              	.LASF30:
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 22
+
+
+ 1042 0112 6164635F 		.ascii	"adc_balanced_counts_to_mv\000"
+ 1042      62616C61 
+ 1042      6E636564 
+ 1042      5F636F75 
+ 1042      6E74735F 
+ 1043              	.LASF9:
+ 1044 012c 5F5F696E 		.ascii	"__int32_t\000"
+ 1044      7433325F 
+ 1044      7400
+ 1045              	.LASF26:
+ 1046 0136 4144435F 		.ascii	"ADC_DelSig_1_StopConvert\000"
+ 1046      44656C53 
+ 1046      69675F31 
+ 1046      5F53746F 
+ 1046      70436F6E 
+ 1047              	.LASF4:
+ 1048 014f 6C6F6E67 		.ascii	"long int\000"
+ 1048      20696E74 
+ 1048      00
+ 1049              	.LASF36:
+ 1050 0158 735F6368 		.ascii	"s_ch_idx\000"
+ 1050      5F696478 
+ 1050      00
+ 1051              	.LASF20:
+ 1052 0161 6164635F 		.ascii	"adc_balanced_init\000"
+ 1052      62616C61 
+ 1052      6E636564 
+ 1052      5F696E69 
+ 1052      7400
+ 1053              	.LASF31:
+ 1054 0173 6F75745F 		.ascii	"out_counts\000"
+ 1054      636F756E 
+ 1054      747300
+ 1055              	.LASF14:
+ 1056 017e 666C6F61 		.ascii	"float\000"
+ 1056      7400
+ 1057              	.LASF0:
+ 1058 0184 7369676E 		.ascii	"signed char\000"
+ 1058      65642063 
+ 1058      68617200 
+ 1059              	.LASF1:
+ 1060 0190 756E7369 		.ascii	"unsigned char\000"
+ 1060      676E6564 
+ 1060      20636861 
+ 1060      7200
+ 1061              	.LASF12:
+ 1062 019e 696E7431 		.ascii	"int16\000"
+ 1062      3600
+ 1063              	.LASF5:
+ 1064 01a4 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1064      20756E73 
+ 1064      69676E65 
+ 1064      6420696E 
+ 1064      7400
+ 1065              	.LASF13:
+ 1066 01b6 696E7433 		.ascii	"int32\000"
+ 1066      3200
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 23
+
+
+ 1067              	.LASF19:
+ 1068 01bc 6973725F 		.ascii	"isr_adc_Handler\000"
+ 1068      6164635F 
+ 1068      48616E64 
+ 1068      6C657200 
+ 1069              	.LASF15:
+ 1070 01cc 646F7562 		.ascii	"double\000"
+ 1070      6C6500
+ 1071              	.LASF22:
+ 1072 01d3 414D7578 		.ascii	"AMux_1_Start\000"
+ 1072      5F315F53 
+ 1072      74617274 
+ 1072      00
+ 1073              	.LASF42:
+ 1074 01e0 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1074      52784275 
+ 1074      66666572 
+ 1074      00
+ 1075              	.LASF27:
+ 1076 01ed 4144435F 		.ascii	"ADC_DelSig_1_GetResult16\000"
+ 1076      44656C53 
+ 1076      69675F31 
+ 1076      5F476574 
+ 1076      52657375 
+ 1077              	.LASF21:
+ 1078 0206 4144435F 		.ascii	"ADC_DelSig_1_Start\000"
+ 1078      44656C53 
+ 1078      69675F31 
+ 1078      5F537461 
+ 1078      727400
+ 1079              	.LASF8:
+ 1080 0219 756E7369 		.ascii	"unsigned int\000"
+ 1080      676E6564 
+ 1080      20696E74 
+ 1080      00
+ 1081              	.LASF34:
+ 1082 0226 735F656F 		.ascii	"s_eoc_flag\000"
+ 1082      635F666C 
+ 1082      616700
+ 1083              	.LASF41:
+ 1084 0231 6164635F 		.ascii	"adc_balanced_advance_on_eoc\000"
+ 1084      62616C61 
+ 1084      6E636564 
+ 1084      5F616476 
+ 1084      616E6365 
+ 1085              	.LASF7:
+ 1086 024d 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1086      206C6F6E 
+ 1086      6720756E 
+ 1086      7369676E 
+ 1086      65642069 
+ 1087              	.LASF37:
+ 1088 0264 735F636F 		.ascii	"s_counts\000"
+ 1088      756E7473 
+ 1088      00
+ 1089              	.LASF10:
+ 1090 026d 696E7433 		.ascii	"int32_t\000"
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 24
+
+
+ 1090      325F7400 
+ 1091              	.LASF18:
+ 1092 0275 73697A65 		.ascii	"sizetype\000"
+ 1092      74797065 
+ 1092      00
+ 1093              	.LASF6:
+ 1094 027e 6C6F6E67 		.ascii	"long long int\000"
+ 1094      206C6F6E 
+ 1094      6720696E 
+ 1094      7400
+ 1095              	.LASF16:
+ 1096 028c 63686172 		.ascii	"char\000"
+ 1096      00
+ 1097              	.LASF2:
+ 1098 0291 73686F72 		.ascii	"short int\000"
+ 1098      7420696E 
+ 1098      7400
+ 1099              	.LASF32:
+ 1100 029b 636F756E 		.ascii	"counts\000"
+ 1100      747300
+ 1101              	.LASF11:
+ 1102 02a2 75696E74 		.ascii	"uint8\000"
+ 1102      3800
+ 1103              	.LASF33:
+ 1104 02a8 4144435F 		.ascii	"ADC_DelSig_1_CountsTo_mVolts\000"
+ 1104      44656C53 
+ 1104      69675F31 
+ 1104      5F436F75 
+ 1104      6E747354 
+ 1105              	.LASF35:
+ 1106 02c5 735F6672 		.ascii	"s_frame_ready\000"
+ 1106      616D655F 
+ 1106      72656164 
+ 1106      7900
+ 1107              	.LASF28:
+ 1108 02d3 6973725F 		.ascii	"isr_adc_ClearPending\000"
+ 1108      6164635F 
+ 1108      436C6561 
+ 1108      7250656E 
+ 1108      64696E67 
+ 1109              	.LASF25:
+ 1110 02e8 4144435F 		.ascii	"ADC_DelSig_1_StartConvert\000"
+ 1110      44656C53 
+ 1110      69675F31 
+ 1110      5F537461 
+ 1110      7274436F 
+ 1111              	.LASF17:
+ 1112 0302 6C6F6E67 		.ascii	"long double\000"
+ 1112      20646F75 
+ 1112      626C6500 
+ 1113              	.LASF24:
+ 1114 030e 414D7578 		.ascii	"AMux_1_Select\000"
+ 1114      5F315F53 
+ 1114      656C6563 
+ 1114      7400
+ 1115              	.LASF3:
+ 1116 031c 73686F72 		.ascii	"short unsigned int\000"
+ARM GAS  C:\Users\yoons\AppData\Local\Temp\ccXj38Kb.s 			page 25
+
+
+ 1116      7420756E 
+ 1116      7369676E 
+ 1116      65642069 
+ 1116      6E7400
+ 1117              	.LASF29:
+ 1118 032f 6164635F 		.ascii	"adc_balanced_poll_frame\000"
+ 1118      62616C61 
+ 1118      6E636564 
+ 1118      5F706F6C 
+ 1118      6C5F6672 
+ 1119              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
