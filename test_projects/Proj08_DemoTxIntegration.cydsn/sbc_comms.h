@@ -144,7 +144,6 @@ uint8_t sbc_get_nudge     (payload_nudge_t *out);
 uint8_t sbc_get_param     (payload_param_t *out);
 uint8_t sbc_get_set_origin(void);
 
-uint8_t sbc_get_param_get  (payload_param_get_t *out);
 uint8_t sbc_get_fatal_clear(void);
 void    sbc_send_cmd_ack    (uint8_t cmd_type, uint8_t result);
 void    sbc_send_param_value(uint8_t id, float value);
