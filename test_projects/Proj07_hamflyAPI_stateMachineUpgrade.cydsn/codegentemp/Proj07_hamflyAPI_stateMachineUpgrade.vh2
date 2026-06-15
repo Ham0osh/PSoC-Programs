@@ -2,7 +2,7 @@
 --	Conversion of Proj07_hamflyAPI_stateMachineUpgrade.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Sun Jun 14 13:50:08 2026
+--	Sun Jun 14 19:35:39 2026
 --
 
 USE cypress.cypress.all;
@@ -2754,9 +2754,9 @@ Clock_MCU:cy_clock_v1_0
 		dig_domain_out=>open);
 Pin_SwitchAuto:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"5bcb76eb-b788-4a15-9bc5-086d2fde9cb3",
-		drive_mode=>"010",
+		drive_mode=>"011",
 		ibuf_enabled=>"1",
-		init_dr_st=>"1",
+		init_dr_st=>"0",
 		input_sync=>"0",
 		input_clk_en=>'0',
 		input_sync_mode=>"0",

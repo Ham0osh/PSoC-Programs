@@ -212,7 +212,7 @@ static state_t lca(state_t a, state_t b)
 void app_transition(app_ctx_t *ctx, state_t target)
 {
     // Check auto state flow pin
-    ctx->auto_flow = (Pin_SwitchAuto_Read() == 0u) ? 1u : 0u;
+    ctx->auto_flow = (Pin_SwitchAuto_Read() == 1u) ? 1u : 0u;
     UART_DEBUG_PutString(ctx->auto_flow ? "[DBG] auto_flow=1\r\n" : "[DBG] auto_flow=0\r\n");
     // Check entry guard
     if (can_enter[target] && !can_enter[target](ctx)) {

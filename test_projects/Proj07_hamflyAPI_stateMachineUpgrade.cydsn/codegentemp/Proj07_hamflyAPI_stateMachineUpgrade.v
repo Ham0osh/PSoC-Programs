@@ -1,6 +1,6 @@
 // ======================================================================
 // Proj07_hamflyAPI_stateMachineUpgrade.v generated from TopDesign.cysch
-// 06/14/2026 at 13:50
+// 06/14/2026 at 19:35
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -2197,9 +2197,9 @@ module top ;
 
 	cy_psoc3_pins_v1_10
 		#(.id("5bcb76eb-b788-4a15-9bc5-086d2fde9cb3"),
-		  .drive_mode(3'b010),
+		  .drive_mode(3'b011),
 		  .ibuf_enabled(1'b1),
-		  .init_dr_st(1'b1),
+		  .init_dr_st(1'b0),
 		  .input_clk_en(0),
 		  .input_sync(1'b0),
 		  .input_sync_mode(1'b0),
