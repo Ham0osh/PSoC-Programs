@@ -405,6 +405,19 @@ uint8_t sbc_get_param(payload_param_t *out)
     return got;
 }
 
+uint8_t sbc_get_param_read(payload_param_get_t *out)
+{
+    uint8_t got = 0u;
+    uint8_t ist = CyEnterCriticalSection();
+    if (s_param_get_fresh) {
+        *out = s_param_get;
+        s_param_get_fresh = 0u;
+        got = 1u;
+    }
+    CyExitCriticalSection(ist);
+    return got;
+}
+
 uint8_t sbc_get_fatal_clear(void)
 {
     uint8_t got = 0u;

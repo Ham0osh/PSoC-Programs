@@ -608,13 +608,9 @@ void app_sbc_tick(app_ctx_t *ctx)
         sbc_send_cmd_ack(PKT_FATAL_CLEAR, CMD_ACK_OK);
     }
 
-    // 6 -> State change request
-    payload_state_req_t req;
-    if (!sbc_get_state_req(&req)) return;
-
-    // 7 -> Parameter GET
-    payload_param_t pg;
-    if (sbc_get_param(&pg)) {  // Load parameter request into struct
+    // 6 -> Parameter GET
+    payload_param_get_t pg;
+    if (sbc_get_param_read(&pg)) {  // Load parameter request into struct
         float v = 0.0f;
         if (app_param_get(ctx, pg.id, &v)) {  // Try to get and send param back
             sbc_send_param_value(pg.id, v);
@@ -626,6 +622,10 @@ void app_sbc_tick(app_ctx_t *ctx)
             sbc_send_cmd_ack(PKT_PARAM_GET, CMD_ACK_INVALID);
         }
     }
+    
+    // 7 -> State change request
+    payload_state_req_t req;
+    if (!sbc_get_state_req(&req)) return;
     
     // Lock out if in FATAL error until ctrl-R.
     // TODO: SBC needs a way to get out of error state too.

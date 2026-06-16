@@ -142,6 +142,7 @@ void    sbc_send_state_ack(uint8_t actual_state, uint8_t result);
 
 uint8_t sbc_get_nudge     (payload_nudge_t *out);
 uint8_t sbc_get_param     (payload_param_t *out);
+uint8_t sbc_get_param_read(payload_param_get_t *out);  // TODO: Fix ambiguous get/set wording
 uint8_t sbc_get_set_origin(void);
 
 uint8_t sbc_get_fatal_clear(void);
