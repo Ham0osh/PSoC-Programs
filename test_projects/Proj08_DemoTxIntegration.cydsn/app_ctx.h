@@ -132,7 +132,17 @@ typedef struct {
     uint32_t gps_last_sample_ms;
 
     // AUTO_TRACKING proportional control
-    float    track_kp;             // norm_rate per mrad, tune on hardware
+    float    track_kp;             // P gain  (norm_rate per mrad)
+    float    track_ki;             // I gain  (norm_rate per (mrad·s))
+    float    track_kd;             // D gain  (norm_rate per (mrad/s))
+    float    track_rate_max;
+
+    // PID running state values
+    float    track_i_pan;
+    float    track_i_tilt;
+    float    track_pan_cmd;   // Cached command
+    float    track_tilt_cmd;
+
     // TODO: track_kd;
     int16_t  track_cx_last;
     int16_t  track_cy_last;
@@ -176,6 +186,9 @@ void app_ctx_init(app_ctx_t *ctx);
 #define LIMIT_TILT_MIN_DEG -20.0f
 
 #define TRACK_KP_DEFAULT      0.001f    // norm_rate per mrad, tune on hardware
+#define TRACK_KI_DEFAULT        0.0f    // Off
+#define TRACK_KD_DEFAULT        0.0f    // Off
+#define TRACK_RATE_MAX_DEFAULT  0.20f   // Hard cut off for oscillations.
 
 // Todo: Update with relevant params for pointing when in Vancouver and in Waterloo.
 // Todo: Think about letting the GPS hand off early as long as speed is low enough, and centroids coming.

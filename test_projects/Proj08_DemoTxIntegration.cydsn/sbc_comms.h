@@ -82,7 +82,13 @@ typedef struct {
 } payload_nudge_t;
 
 #define SBC_PARAM_LEN   5u
-#define PARAM_TRACK_KP  0x01u
+
+// PID Tuning Parameters
+#define PARAM_TRACK_KP        0x01u
+#define PARAM_TRACK_KI        0x02u
+#define PARAM_TRACK_KD        0x03u
+#define PARAM_TRACK_RATE_MAX  0x04u   // normalized rate clamp, e.g. 0.20
+
 typedef struct {
     uint8_t id;
     float value;
