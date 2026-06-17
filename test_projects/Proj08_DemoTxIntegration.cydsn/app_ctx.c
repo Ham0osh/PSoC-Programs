@@ -33,7 +33,7 @@ void app_ctx_init(app_ctx_t *ctx)
     ctx->gps_new_target  = 0u;
     ctx->gps_settled     = 0u;
     // Tracking context
-        ctx->track_kp        = TRACK_KP_DEFAULT;
+    ctx->track_kp        = TRACK_KP_DEFAULT;
     ctx->track_ki        = TRACK_KI_DEFAULT;
     ctx->track_kd        = TRACK_KD_DEFAULT;
     ctx->track_rate_max  = TRACK_RATE_MAX_DEFAULT;
@@ -43,6 +43,9 @@ void app_ctx_init(app_ctx_t *ctx)
     ctx->track_cy_last   = 0;
     ctx->track_pan_cmd   = 0.0f;
     ctx->track_tilt_cmd  = 0.0f;
+    ctx->track_de_pan    = 0.0f;
+    ctx->track_de_tilt   = 0.0f;
+    ctx->track_dt        = 0.0f;
 }
 
 /* [] END OF FILE */

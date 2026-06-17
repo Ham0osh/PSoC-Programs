@@ -523,6 +523,15 @@ uint8_t app_param_get(app_ctx_t *ctx, uint8_t id, float *out_value)
         case PARAM_TRACK_KP:
             *out_value = ctx->track_kp;
             return 1u;
+        case PARAM_TRACK_KI:
+            *out_value = ctx->track_ki;
+            return 1u;
+        case PARAM_TRACK_KD:
+            *out_value = ctx->track_kd; 
+            return 1u;
+        case PARAM_TRACK_RATE_MAX:
+            *out_value = ctx->track_rate_max;
+            return 1u;
         default:
             return 0u;
     }
@@ -571,6 +580,37 @@ void app_sbc_tick(app_ctx_t *ctx)
                     char b[64];
                     snprintf(b, sizeof b, "[SBC] track_kp = %.6f\r\n",
                              (double)ctx->track_kp);
+                    UART_DEBUG_PutString(b);
+                }
+                break;
+            case PARAM_TRACK_KI:
+                ctx->track_ki = pp.value;
+                // Reset integrator on Ki change so old accumulator doesn't bleed
+                // through the new gain.
+                ctx->track_i_pan  = 0.0f;
+                ctx->track_i_tilt = 0.0f;
+                {
+                    char b[64];
+                    snprintf(b, sizeof b, "[SBC] track_ki = %.6f\r\n",
+                             (double)ctx->track_ki);
+                    UART_DEBUG_PutString(b);
+                }
+                break;
+            case PARAM_TRACK_KD:
+                ctx->track_kd = pp.value;
+                {
+                    char b[64];
+                    snprintf(b, sizeof b, "[SBC] track_kd = %.6f\r\n",
+                             (double)ctx->track_kd);
+                    UART_DEBUG_PutString(b);
+                }
+                break;
+            case PARAM_TRACK_RATE_MAX:
+                ctx->track_rate_max = CLAMP(pp.value, 0.0f, 1.0f);
+                {
+                    char b[64];
+                    snprintf(b, sizeof b, "[SBC] track_rate_max = %.4f\r\n",
+                             (double)ctx->track_rate_max);
                     UART_DEBUG_PutString(b);
                 }
                 break;

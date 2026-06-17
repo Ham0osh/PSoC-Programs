@@ -142,8 +142,11 @@ typedef struct {
     float    track_i_tilt;
     float    track_pan_cmd;   // Cached command
     float    track_tilt_cmd;
+    // Differential errors
+    float    track_de_pan;    // d(error)/dt, mrad/s
+    float    track_de_tilt;
+    float    track_dt;
 
-    // TODO: track_kd;
     int16_t  track_cx_last;
     int16_t  track_cy_last;
     

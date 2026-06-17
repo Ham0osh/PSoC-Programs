@@ -35,6 +35,7 @@ static float gps_elev_deg    (float lat1, float lon1, float alt1_m,
 static void  gps_start_slew     (app_ctx_t *ctx);
 static void  gps_update_pointing(app_ctx_t *ctx);
 static void  gps_check_settle   (app_ctx_t *ctx);
+static void  tracking_pid_step  (app_ctx_t *ctx);
 
 // State On-Entry Guards %====================================================%
 uint8_t guard_auto_parent(const app_ctx_t *ctx)
@@ -123,10 +124,25 @@ void app_auto_tick(app_ctx_t *ctx)
         for (uint8_t s = 0u; s < STREAM_COUNTS; s++) {
             payload_centroid_t c;
             if (!sbc_get_centroid(s, &c)) continue; // No centroids
-            if (s == STREAM_COARSE) {               // Read corasecentroid
+            if (s == STREAM_COARSE) {               // Read corase centroid
+                // Save previous TODO: Why not use cx0 and cy0?
+                int16_t cx_prev = ctx->track_cx_last;
+                int16_t cy_prev = ctx->track_cy_last;
+
                 ctx->track_cx_last  = c.cx;
                 ctx->track_cy_last  = c.cy;
                 got_coarse = 1u;
+
+                // Compute time-domain differentials
+                uint16_t dt_ms = sbc_last_centroid_dt_ms(STREAM_COARSE);
+                if (dt_ms == 0u || dt_ms > 1000u) dt_ms = 33u;  // sane fallback
+                ctx->track_dt      = (float)dt_ms * 0.001f;
+                ctx->track_de_pan  = ((float)c.cx - (float)cx_prev) * 0.1f / ctx->track_dt;
+                ctx->track_de_tilt = ((float)c.cy - (float)cy_prev) * 0.1f / ctx->track_dt;
+
+                // Hand off to the controller.
+                tracking_pid_step(ctx);
+                
             }
             // Serial debug
             char b[128];
@@ -447,6 +463,13 @@ void entry_auto_tracking(app_ctx_t *ctx)
     // Clear any old values for clean handover.
     ctx->track_cx_last = 0;  // Clear last centroid value
     ctx->track_cy_last = 0;
+    ctx->track_i_pan    = 0.0f;  // Reset integrator
+    ctx->track_i_tilt   = 0.0f;
+    ctx->track_pan_cmd  = 0.0f;
+    ctx->track_tilt_cmd = 0.0f;
+    ctx->track_de_pan   = 0.0f;
+    ctx->track_de_tilt  = 0.0f;
+    ctx->track_dt       = 0.0f;
     UART_DEBUG_PutString("\r\n[AUTO_TRACKING] closed-loop  e=exit\r\n> ");
 }
 
@@ -459,18 +482,50 @@ uint8_t key_auto_tracking(app_ctx_t *ctx, char k)
     }
 }
 
+// Time domai nfree PID control.
+static void tracking_pid_step(app_ctx_t *ctx)
+{
+    float dt     = ctx->track_dt;
+    float e_pan  = (float)ctx->track_cx_last * 0.1f;   // mrad
+    float e_tilt = (float)ctx->track_cy_last * 0.1f;
+    float de_p   = ctx->track_de_pan;
+    float de_t   = ctx->track_de_tilt;
+
+    // Un-clamped omega for the anti-windup test.
+    float omega_pan_raw  = ctx->track_kp * e_pan
+                         + ctx->track_ki * ctx->track_i_pan
+                         + ctx->track_kd * de_p;
+    float omega_tilt_raw = ctx->track_kp * e_tilt
+                         + ctx->track_ki * ctx->track_i_tilt
+                         + ctx->track_kd * de_t;
+
+    // Anti-windup: integrate only while we have rate headroom.
+    float rmax = ctx->track_rate_max;
+    if (fabsf(omega_pan_raw)  < rmax) ctx->track_i_pan  += e_pan  * dt;
+    if (fabsf(omega_tilt_raw) < rmax) ctx->track_i_tilt += e_tilt * dt;
+
+    // Final omega with possibly-updated I, then clamp.
+    float omega_pan  = ctx->track_kp * e_pan
+                     + ctx->track_ki * ctx->track_i_pan
+                     + ctx->track_kd * de_p;
+    float omega_tilt = ctx->track_kp * e_tilt
+                     + ctx->track_ki * ctx->track_i_tilt
+                     + ctx->track_kd * de_t;
+
+    // Avoid rocket ship takeoff.
+    ctx->track_pan_cmd  =  CLAMP(omega_pan,  -rmax, rmax);
+    ctx->track_tilt_cmd = -CLAMP(omega_tilt, -rmax, rmax);   // +cy = up
+}
+
 void build_auto_tracking(const app_ctx_t *ctx, hamfly_control_t *out)
 {
-    // Construct control packet from centroid error signal.
+    // PID is computed inside app_auto_tick on each centroid; publish only.
     out->kill      = 0u;
-    out->roll_mode = HAMFLY_DEFER;  // No roll
+    out->roll_mode = HAMFLY_DEFER;
     out->roll      = 0.0f;
-    out->pan_mode  = out->tilt_mode = HAMFLY_RATE;  // Rate mode
-    float cx_mrad = (float)ctx->track_cx_last * 0.1f;  // 0.1 mrad to mrad
-    float cy_mrad = (float)ctx->track_cy_last * 0.1f;
-    // Simple proportional gain linear feedback.
-    out->pan  =  CLAMP(ctx->track_kp * cx_mrad, -1.0f, 1.0f);  // TODO: Confirm direction
-    out->tilt = -CLAMP(ctx->track_kp * cy_mrad, -1.0f, 1.0f);  // +cy = up
+    out->pan_mode  = out->tilt_mode = HAMFLY_RATE;
+    out->pan       = ctx->track_pan_cmd;
+    out->tilt      = ctx->track_tilt_cmd;
 }
 
 // %==========================================================================%
