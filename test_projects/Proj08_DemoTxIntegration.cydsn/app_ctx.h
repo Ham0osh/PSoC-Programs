@@ -167,6 +167,14 @@ typedef struct {
     uint32_t nudge_start_ms;      // episode start, for the release timeout
     float    nudge_base_pan_deg;  // attitude captured at episode start
     float    nudge_base_tilt_deg;
+
+    // Constant-rate test (MANU diagnostic)
+    uint8_t  rate_burst_active;     // 1 while a test is in flight
+    float    rate_burst_pan;        // normalized rate to emit
+    float    rate_burst_tilt;
+    uint32_t rate_burst_start_ms;   // wall clock at test start
+    uint32_t rate_burst_dur_ms;     // requested duration
+
     float    tgt_pan_deg;         // accumulated targets, MoVI frame degree
     float    tgt_tilt_deg;
     uint8_t  nudge_active;          // 1 = nudge burst in progress, suppresses state build

@@ -38,6 +38,7 @@
 #define PKT_STATE_REQ   0x10u  // Pi   -> PSoC
 #define PKT_GPS_TARGET  0x0Fu  // Pi   -> PSoC GPS target
 #define PKT_NUDGE       0x11u  // Pi   -> PSoC General nudge in deg
+#define PKT_RATE_BURST  0x16u  // Pi   -> PSoC Rate based nudge
 #define PKT_PARAM_SET   0x12u  // Pi   -> PSoC Param setter like Kp
 #define PKT_SET_ORIGIN  0x13u  // Pi   -> PSoC Set software origin.
 #define PKT_PARAM_GET   0x14u  // Pi   -> PSoC param read
@@ -81,8 +82,15 @@ typedef struct {
     int16_t dtilt_cdeg;
 } payload_nudge_t;
 
-#define SBC_PARAM_LEN   5u
+#define SBC_RATE_BURST_LEN 10u
+typedef struct {
+    float    pan;
+    float    tilt;
+    uint16_t duration_ms;
+    // TODO: float ramp_ms — accel/decel ramp at start/end of burst (future)
+} payload_rate_burst_t;
 
+#define SBC_PARAM_LEN   5u
 // PID Tuning Parameters
 #define PARAM_TRACK_KP        0x01u
 #define PARAM_TRACK_KI        0x02u
@@ -95,7 +103,6 @@ typedef struct {
 } payload_param_t;
 
 #define SBC_SET_ORIGIN_LEN  0u
-
 
 #define SBC_PARAM_GET_LEN     1u
 typedef struct {
@@ -149,6 +156,7 @@ void    sbc_send_state_ack(uint8_t actual_state, uint8_t result);
 uint8_t sbc_get_nudge     (payload_nudge_t *out);
 uint8_t sbc_get_param     (payload_param_t *out);
 uint8_t sbc_get_param_read(payload_param_get_t *out);  // TODO: Fix ambiguous get/set wording
+uint8_t sbc_get_rate_burst(payload_rate_burst_t *out);
 uint8_t sbc_get_set_origin(void);
 
 uint8_t sbc_get_fatal_clear(void);

@@ -569,6 +569,30 @@ void app_sbc_tick(app_ctx_t *ctx)
         }
     }
 
+    // 2.2 -> Rate burst consumer
+    payload_rate_burst_t rt;
+    if (sbc_get_rate_burst(&rt)) {
+        if (ctx->state == MANU_JOYSTICK) {
+            ctx->rate_burst_pan      = CLAMP(rt.pan,  -1.0f, 1.0f);
+            ctx->rate_burst_tilt     = CLAMP(rt.tilt, -1.0f, 1.0f);
+            ctx->rate_burst_start_ms = g_tick_ms;
+            ctx->rate_burst_dur_ms   = rt.duration_ms;
+            ctx->rate_burst_active   = 1u;
+            ctx->nudge_hold         = 0u;   // cancel any pending nudge target
+            char b[96];
+            snprintf(b, sizeof b,
+                     "[SBC] rate burst pan=%.4f tilt=%.4f dur=%u ms\r\n",
+                     (double)ctx->rate_burst_pan,
+                     (double)ctx->rate_burst_tilt,
+                     (unsigned)rt.duration_ms);
+            UART_DEBUG_PutString(b);
+            sbc_send_cmd_ack(PKT_RATE_BURST, CMD_ACK_OK);
+        } else {
+            UART_DEBUG_PutString("[SBC] rate burst ignored (not in MANU)\r\n");
+            sbc_send_cmd_ack(PKT_RATE_BURST, CMD_ACK_REJECTED);
+        }
+    }
+
     // 3 -> Parameter tuning
     payload_param_t pp;
     if (sbc_get_param(&pp)) {

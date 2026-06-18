@@ -94,6 +94,9 @@ static volatile uint8_t     s_gps_target_fresh  = 0u;
 // SBC -> PSoC Relative Nudge
 static payload_nudge_t      s_nudge;
 static volatile uint8_t     s_nudge_fresh       = 0u;
+// SBC -> PSoC Rate burst
+static payload_rate_burst_t s_rate_burst;
+static volatile uint8_t     s_rate_burst_fresh = 0u;
 // SBC -> PSoC Parameter Set (kp, etc.)
 static payload_param_t      s_param;
 static volatile uint8_t     s_param_fresh       = 0u;
@@ -123,6 +126,7 @@ void sbc_init(void)
     s_state_req_fresh  = 0u;
     s_gps_target_fresh = 0u;
     s_nudge_fresh      = 0u;
+    s_rate_burst_fresh = 0u;
     s_param_fresh      = 0u;
     s_set_origin_fresh = 0u;
     s_param_get_fresh   = 0u;
@@ -228,6 +232,14 @@ void sbc_on_rx_byte(uint8_t b)
                             memcpy(&s_nudge.dpan_cdeg,  s_buf + 0, 2);
                             memcpy(&s_nudge.dtilt_cdeg, s_buf + 2, 2);
                             s_nudge_fresh = 1u;
+                        }
+                        break;
+                    case PKT_RATE_BURST:
+                        if (s_len == SBC_RATE_BURST_LEN) {
+                            memcpy(&s_rate_burst.pan,         s_buf + 0, 4);
+                            memcpy(&s_rate_burst.tilt,        s_buf + 4, 4);
+                            memcpy(&s_rate_burst.duration_ms, s_buf + 8, 2);
+                            s_rate_burst_fresh = 1u;
                         }
                         break;
                     case PKT_PARAM_SET:
@@ -386,6 +398,19 @@ uint8_t sbc_get_nudge(payload_nudge_t *out)
     if (s_nudge_fresh) {
         *out = s_nudge;
         s_nudge_fresh = 0u;
+        got = 1u;
+    }
+    CyExitCriticalSection(ist);
+    return got;
+}
+
+uint8_t sbc_get_rate_burst(payload_rate_burst_t *out)
+{
+    uint8_t got = 0u;
+    uint8_t ist = CyEnterCriticalSection();
+    if (s_rate_burst_fresh) {
+        *out = s_rate_burst;
+        s_rate_burst_fresh = 0u;
         got = 1u;
     }
     CyExitCriticalSection(ist);

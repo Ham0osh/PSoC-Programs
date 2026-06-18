@@ -32,6 +32,12 @@ void app_ctx_init(app_ctx_t *ctx)
     ctx->gps_target_set  = 0u;  // TODO: Refactor shared app_ctx and debloat gps params.
     ctx->gps_new_target  = 0u;
     ctx->gps_settled     = 0u;
+    // Manual control context (for rate burst)
+    ctx->rate_burst_active   = 0u;
+    ctx->rate_burst_pan      = 0.0f;
+    ctx->rate_burst_tilt     = 0.0f;
+    ctx->rate_burst_start_ms = 0u;
+    ctx->rate_burst_dur_ms   = 0u;
     // Tracking context
     ctx->track_kp        = TRACK_KP_DEFAULT;
     ctx->track_ki        = TRACK_KI_DEFAULT;

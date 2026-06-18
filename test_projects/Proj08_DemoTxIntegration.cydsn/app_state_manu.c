@@ -41,6 +41,7 @@ void entry_manu_joystick(app_ctx_t *ctx)
 // On Exit: clear any nudge in progress.
 void exit_manu_joystick(app_ctx_t *ctx)
 {
+    ctx->rate_burst_active = 0u;
     ctx->nudge_hold = 0u;
 }
 
@@ -50,22 +51,23 @@ void build_manu_joystick(const app_ctx_t *ctx, hamfly_control_t *out)
     out->roll_mode = HAMFLY_DEFER;
     out->roll      = 0.0f;
     out->kill      = 0u;
+
+    // Rate boost override. Takes precedence over nudge.
+    if (ctx->rate_burst_active) {
+        out->pan_mode = out->tilt_mode = HAMFLY_RATE;
+        out->pan  = ctx->rate_burst_pan;
+        out->tilt = ctx->rate_burst_tilt;
+        return;
+    }
+
     if (ctx->nudge_hold) {
-        // In nudge: pan is relative. TODO: Document why.
         out->pan_mode = out->tilt_mode = HAMFLY_ABSOLUTE;
         out->pan  = DEG_TO_UNIT(ctx->tgt_pan_deg - ctx->nudge_base_pan_deg);
         out->tilt = DEG_TO_UNIT(ctx->tgt_tilt_deg);
-        return;
-    }
-    
-    if (ctx->hold_mode == HAMFLY_RATE) {   // vel-zero "stay put"
+    } else {
         out->pan_mode = out->tilt_mode = HAMFLY_RATE;
-        out->pan  = 0.0f;  // Joysticks removed so hold and let user nudge.
+        out->pan  = 0.0f;
         out->tilt = 0.0f;
-    } else { // ABSOLUTE TODO: Add Majestic
-        out->pan_mode = out->tilt_mode = ctx->hold_mode;
-        out->pan  = DEG_TO_UNIT(ctx->tgt_pan_deg - ctx->nudge_base_pan_deg);
-        out->tilt = DEG_TO_UNIT(ctx->tgt_tilt_deg);
     }
 }
 
@@ -112,6 +114,13 @@ void app_manual_tick(app_ctx_t *ctx)
     if (!ctx->nudge_hold) return;
     uint32_t elapsed = g_tick_ms - ctx->nudge_start_ms;
     if (elapsed < NUDGE_MIN_DWELL_MS) return;  // Wait for the nudge to land
+
+    // Rate burst durration. Precidence over nudge hold.
+    if (ctx->rate_burst_active &&
+        (g_tick_ms - ctx->rate_burst_start_ms) >= ctx->rate_burst_dur_ms) {
+        ctx->rate_burst_active = 0u;
+        UART_DEBUG_PutString("[MANU] rate burst complete -> vel=0\r\n");
+    }
 
     float p, t;
     uint8_t arrived = 0u;
