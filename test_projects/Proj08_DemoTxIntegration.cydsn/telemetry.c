@@ -26,6 +26,11 @@
 
 extern volatile uint32_t g_tick_ms;
 
+// Movi Link freshness:
+static uint32_t s_movi_last_valid_ms = 0u;
+static uint16_t s_movi_invalid_count = 0u;
+static uint16_t s_movi_ctrl_tx       = 0u;
+
 // Quaternion encoding helper
 static int16_t sat_i16(float f)
 {
@@ -91,7 +96,14 @@ void telemetry_collect_link(const app_ctx_t *ctx, telem_link_t *out)
     out->unknown_magic       = sbc_unknown_magic();
     out->rx_pkt_count        = sbc_rx_pkt_count();
     out->last_centroid_dt_ms = sbc_last_centroid_dt_ms(STREAM_COARSE);
+    uint32_t age = g_tick_ms - s_movi_last_valid_ms;
+    out->movi_telem_age_ms   = (age > 0xFFFFu)
+                             ? 0xFFFFu
+                             : (uint16_t)age;
+    out->movi_invalid_count  = s_movi_invalid_count;
+    out->movi_ctrl_tx        = s_movi_ctrl_tx;
 }
+
 void telemetry_collect_power(const app_ctx_t *ctx, telem_power_t *out)
 {
     memset(out, 0, sizeof *out);
@@ -176,14 +188,32 @@ void telemetry_collect_mag(const app_ctx_t *ctx, telem_mag_t *out)
     out->decl_raw = sat_i16(tel.mag_declination * 10.0f);
 }
 
+void telemetry_observe_movi(const app_ctx_t *ctx)
+{
+    if (!ctx->gimbal) return;
+    hamfly_telemetry_t tel;
+    hamfly_get_telemetry(ctx->gimbal, &tel);
+    if (tel.valid) {
+        s_movi_last_valid_ms = g_tick_ms;
+    } else if (s_movi_invalid_count < 0xFFFFu) {
+        s_movi_invalid_count++;
+    }
+}
+
+// Hook called from main.c immediately after hamfly_send_control.
+void telemetry_note_ctrl_tx(void)
+{
+    if (s_movi_ctrl_tx < 0xFFFFu) s_movi_ctrl_tx++;
+}
+
 // Packet encoders on the SBC wire
 #define TELEM_HOT_LEN   26u
-#define TELEM_LINK_LEN  16u
+#define TELEM_LINK_LEN  22u
 #define TELEM_POWER_LEN 14u
 #define TELEM_ENV_LEN   10u
 #define TELEM_GPS_LEN   28u
 #define TELEM_BARO_LEN  11u
-#define TELEM_MAG_LEN  13u
+#define TELEM_MAG_LEN   13u
 
 static uint8_t encode_hot(const telem_hot_t *h, uint8_t *buf)
 {
@@ -216,6 +246,9 @@ static uint8_t encode_link(const telem_link_t *l, uint8_t *buf)
     memcpy(p, &l->unknown_magic,       2); p += 2;
     memcpy(p, &l->rx_pkt_count,        4); p += 4;
     memcpy(p, &l->last_centroid_dt_ms, 2); p += 2;
+    memcpy(p, &l->movi_telem_age_ms,   2); p += 2;
+    memcpy(p, &l->movi_invalid_count,  2); p += 2;
+    memcpy(p, &l->movi_ctrl_tx,        2); p += 2;
     return (uint8_t)(p - buf);  //  == TELEM_LINK_LEN
 }
 

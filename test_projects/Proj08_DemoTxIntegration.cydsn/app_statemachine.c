@@ -310,6 +310,8 @@ void app_telem_tick(app_ctx_t *ctx)
 {
     // Do the telemetry grabs if gimble connected
     if (!ctx->gimbal) return;
+    // Poll Movi comms freshness
+    telemetry_observe_movi(ctx);
     
     static uint32_t last_hot_ms  = 0u;  // Hot is the Movi status
     static uint32_t last_link_ms = 0u;  // Cold are all other sensors

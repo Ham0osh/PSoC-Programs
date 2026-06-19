@@ -54,8 +54,11 @@ typedef struct {
     uint16_t uart_err;
     uint16_t unknown_magic;
     uint32_t rx_pkt_count;
-    uint16_t last_centroid_dt_ms;  //  coarse stream
-} telem_link_t;
+    uint16_t last_centroid_dt_ms;   // coarse stream
+    uint16_t movi_telem_age_ms;     // ms since last valid MoVI telemetry, clamped 65535
+    uint16_t movi_invalid_count;    // cumulative invalid/stale reads (loop-rate scaled)
+    uint16_t movi_ctrl_tx;          // cumulative control packets sent to MoVI
+} telem_link_t;   // wire: 22 B (was 16)
 
 // Power telemetry from all relevant ATTRs for validation
 // TODO: Validate and trim
@@ -115,6 +118,8 @@ void telemetry_collect_env  (const app_ctx_t *ctx, telem_env_t  *out);
 void telemetry_collect_gps  (const app_ctx_t *ctx, telem_gps_t  *out);
 void telemetry_collect_baro (const app_ctx_t *ctx, telem_baro_t *out);
 void telemetry_collect_mag  (const app_ctx_t *ctx, telem_mag_t *out);
+void telemetry_observe_movi(const app_ctx_t *ctx);   // call each main loop
+void telemetry_note_ctrl_tx(void);                   // call after each hamfly_send_control
 
 // Transport convenience function: collect + encode + sbc_send_frame
 void telemetry_send_hot_sbc  (const app_ctx_t *ctx);

@@ -248,6 +248,7 @@ int main(void)
             ctx.last_tx_ms = now;
             app_build_control(&ctx, &ctl);
             hamfly_send_control(&g_movi, &ctl);
+            telemetry_note_ctrl_tx();  // Monitors Movi comms freshness.
         }
         
         // At 'DIAG_PERIOD_MS' share telemetry to monitor
