@@ -137,8 +137,8 @@ void app_auto_tick(app_ctx_t *ctx)
                 uint16_t dt_ms = sbc_last_centroid_dt_ms(STREAM_COARSE);
                 if (dt_ms == 0u || dt_ms > 1000u) dt_ms = 33u;  // sane fallback
                 ctx->track_dt      = (float)dt_ms * 0.001f;
-                ctx->track_de_pan  = ((float)c.cx - (float)cx_prev) * 0.1f / ctx->track_dt;
-                ctx->track_de_tilt = ((float)c.cy - (float)cy_prev) * 0.1f / ctx->track_dt;
+                ctx->track_de_pan  = ((float)c.cx - (float)cx_prev) * 0.01f / ctx->track_dt;
+                ctx->track_de_tilt = ((float)c.cy - (float)cy_prev) * 0.01f / ctx->track_dt;
 
                 // Hand off to the controller.
                 tracking_pid_step(ctx);
@@ -486,8 +486,8 @@ uint8_t key_auto_tracking(app_ctx_t *ctx, char k)
 static void tracking_pid_step(app_ctx_t *ctx)
 {
     float dt     = ctx->track_dt;
-    float e_pan  = (float)ctx->track_cx_last * 0.1f;   // mrad
-    float e_tilt = (float)ctx->track_cy_last * 0.1f;
+    float e_pan  = (float)ctx->track_cx_last * 0.01f;   // in mrad
+    float e_tilt = (float)ctx->track_cy_last * 0.01f;   // 0.001 mrad LSB
     float de_p   = ctx->track_de_pan;
     float de_t   = ctx->track_de_tilt;
 
