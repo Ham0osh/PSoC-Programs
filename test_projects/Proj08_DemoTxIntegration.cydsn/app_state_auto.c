@@ -499,11 +499,22 @@ static void tracking_pid_step(app_ctx_t *ctx)
                          + ctx->track_ki * ctx->track_i_tilt
                          + ctx->track_kd * de_t;
 
-    // Anti-windup: integrate only while we have rate headroom.
+    // Anti-windup integrator limit with two conditions:
+    // A) Saturation gate -> Only wind up when output we are not saturated.
+    // B) Acquisition gate -> Only wind up when err sufficiently low
     float rmax = ctx->track_rate_max;
-    if (fabsf(omega_pan_raw)  < rmax) ctx->track_i_pan  += e_pan  * dt;
-    if (fabsf(omega_tilt_raw) < rmax) ctx->track_i_tilt += e_tilt * dt;
-
+    if (fabsf(omega_pan_raw)  < rmax && fabsf(e_pan)  < TRACK_I_GATE_MRAD)
+        ctx->track_i_pan  += e_pan  * dt;
+    if (fabsf(omega_tilt_raw) < rmax && fabsf(e_tilt) < TRACK_I_GATE_MRAD)
+        ctx->track_i_tilt += e_tilt * dt;
+    // Bounded integrator: the I term alone can never saturate the output.
+    if (ctx->track_ki > 1e-9f) {
+        // Ensures Ki * track_i_xxx <= rmax.
+        float i_max = rmax / ctx->track_ki;
+        ctx->track_i_pan  = CLAMP(ctx->track_i_pan,  -i_max, i_max);
+        ctx->track_i_tilt = CLAMP(ctx->track_i_tilt, -i_max, i_max);
+    }
+    
     // Final omega with possibly-updated I, then clamp.
     float omega_pan  = ctx->track_kp * e_pan
                      + ctx->track_ki * ctx->track_i_pan
@@ -534,7 +545,7 @@ void build_auto_tracking(const app_ctx_t *ctx, hamfly_control_t *out)
 void entry_auto_loss(app_ctx_t *ctx)
 {
     // TODO: Loss should hold and wait. If packets re-commence go back to tracking,
-    // TODO: Let user trigger spiral search, GPS re-acq, or exit to STBY later.
+    // TODO: Let user trigger spiral search, GPS re-acq, or exit to  tracking_pid_stepSTBY later.
     (void)ctx;
     UART_DEBUG_PutString("\r\n[AUTO_LOSS] centroid lost, holding. "
                          "Waiting for centroid return or user input.\r\n> ");

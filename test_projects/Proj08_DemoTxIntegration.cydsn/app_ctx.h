@@ -201,6 +201,11 @@ void app_ctx_init(app_ctx_t *ctx);
 #define TRACK_KD_DEFAULT        0.0f    // Off
 #define TRACK_RATE_MAX_DEFAULT  0.20f   // Hard cut off for oscillations.
 
+// Gate for integrator: Only accumulate integration error when err is small
+// enough that we are in the linear regime and dont wind-up duing acq.
+// TODO: expose later if we want user control. 
+#define TRACK_I_GATE_MRAD     2.5f
+
 // Todo: Update with relevant params for pointing when in Vancouver and in Waterloo.
 // Todo: Think about letting the GPS hand off early as long as speed is low enough, and centroids coming.
 #define GPS_EARTH_R_M         6371000.0f
