@@ -200,6 +200,7 @@ void app_ctx_init(app_ctx_t *ctx);
 #define TRACK_KI_DEFAULT        0.0f    // Off
 #define TRACK_KD_DEFAULT        0.0f    // Off
 #define TRACK_RATE_MAX_DEFAULT  0.20f   // Hard cut off for oscillations.
+#define TRACK_DEADBAND_MRAD     0.05f   // Deadband to counter stick slip jerk
 
 // Gate for integrator: Only accumulate integration error when err is small
 // enough that we are in the linear regime and dont wind-up duing acq.

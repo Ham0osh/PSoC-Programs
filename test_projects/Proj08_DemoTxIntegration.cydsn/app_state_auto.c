@@ -482,50 +482,61 @@ uint8_t key_auto_tracking(app_ctx_t *ctx, char k)
     }
 }
 
-// Time domai nfree PID control.
+// Shared tracking code for both axes.
+// Error e in mrad
+// Error rate de in mrad/s
+// Pointer to this axis integrator state, dt
+// dt, gains.
+// Returns normalized rate command clamped to rmax.
+static float track_axis(float e, float de, float *i,
+                        float dt, float rmax, float kp, float ki, float kd)
+{
+    // Deadband: Close enough to stop fighting but smaller than stick-slid (approx 400urad).
+    if (fabsf(e) < TRACK_DEADBAND_MRAD)
+        return 0.0f;  // Zero command to avoid integrator wind up.
+
+    // TODO: For long range we should clap error so a large error will not fling the gimbal
+    // and lose beacon (deffered until we can test). e = CLAMP(e, -E_MAX, E_MAX)
+
+    // Raw command before anti-windup test. Before updating integrator.
+    float omega_raw = kp * e + ki * (*i) + kd * de;
+
+    // Only wind up integrator when:
+    // A) We are not commanding max rate,
+    // B) We are within the acquisition gate where we want to fight steady state error.
+    if (fabsf(omega_raw) < rmax && fabsf(e) < TRACK_I_GATE_MRAD)
+        *i += e * dt;
+
+    // Bound integrator so it cannot saturate output alone.
+    if (ki > 1e-9f) {
+        float i_max = rmax / ki;
+        *i = CLAMP(*i, -i_max, i_max);
+    }
+
+    // Final command pre clap.
+    float omega = kp * e + ki * (*i) + kd * de;
+    return CLAMP(omega, -rmax, rmax);
+}
+
+// Time domain aware PID controller.
 static void tracking_pid_step(app_ctx_t *ctx)
 {
-    float dt     = ctx->track_dt;
-    float e_pan  = (float)ctx->track_cx_last * 0.01f;   // in mrad
-    float e_tilt = (float)ctx->track_cy_last * 0.01f;   // 0.001 mrad LSB
-    float de_p   = ctx->track_de_pan;
-    float de_t   = ctx->track_de_tilt;
-
-    // Un-clamped omega for the anti-windup test.
-    float omega_pan_raw  = ctx->track_kp * e_pan
-                         + ctx->track_ki * ctx->track_i_pan
-                         + ctx->track_kd * de_p;
-    float omega_tilt_raw = ctx->track_kp * e_tilt
-                         + ctx->track_ki * ctx->track_i_tilt
-                         + ctx->track_kd * de_t;
-
-    // Anti-windup integrator limit with two conditions:
-    // A) Saturation gate -> Only wind up when output we are not saturated.
-    // B) Acquisition gate -> Only wind up when err sufficiently low
+    float dt   = ctx->track_dt;
     float rmax = ctx->track_rate_max;
-    if (fabsf(omega_pan_raw)  < rmax && fabsf(e_pan)  < TRACK_I_GATE_MRAD)
-        ctx->track_i_pan  += e_pan  * dt;
-    if (fabsf(omega_tilt_raw) < rmax && fabsf(e_tilt) < TRACK_I_GATE_MRAD)
-        ctx->track_i_tilt += e_tilt * dt;
-    // Bounded integrator: the I term alone can never saturate the output.
-    if (ctx->track_ki > 1e-9f) {
-        // Ensures Ki * track_i_xxx <= rmax.
-        float i_max = rmax / ctx->track_ki;
-        ctx->track_i_pan  = CLAMP(ctx->track_i_pan,  -i_max, i_max);
-        ctx->track_i_tilt = CLAMP(ctx->track_i_tilt, -i_max, i_max);
-    }
-    
-    // Final omega with possibly-updated I, then clamp.
-    float omega_pan  = ctx->track_kp * e_pan
-                     + ctx->track_ki * ctx->track_i_pan
-                     + ctx->track_kd * de_p;
-    float omega_tilt = ctx->track_kp * e_tilt
-                     + ctx->track_ki * ctx->track_i_tilt
-                     + ctx->track_kd * de_t;
+    float kp   = ctx->track_kp;
+    float ki   = ctx->track_ki;
+    float kd   = ctx->track_kd;
 
-    // Avoid rocket ship takeoff.
-    ctx->track_pan_cmd  =  CLAMP(omega_pan,  -rmax, rmax);
-    ctx->track_tilt_cmd = -CLAMP(omega_tilt, -rmax, rmax);   // +cy = up
+    // Entroid wire LSB is 0.01 mrad.
+    float e_pan  = (float)ctx->track_cx_last * 0.01f;
+    float e_tilt = (float)ctx->track_cy_last * 0.01f;
+
+    ctx->track_pan_cmd  =  track_axis(e_pan,  ctx->track_de_pan,
+                                      &ctx->track_i_pan,  dt, rmax, kp, ki, kd);
+    ctx->track_tilt_cmd = -track_axis(e_tilt, ctx->track_de_tilt,
+                                      &ctx->track_i_tilt, dt, rmax, kp, ki, kd);
+    // +cy = up
+    // +cx = right
 }
 
 void build_auto_tracking(const app_ctx_t *ctx, hamfly_control_t *out)
